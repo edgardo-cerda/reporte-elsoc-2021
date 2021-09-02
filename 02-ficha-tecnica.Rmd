@@ -1,0 +1,203 @@
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+
+# Ficha Técnica
+
+- Diseño: Estudio cuantitativo por medio de un cuestionario estructurado.
+
+- Periodicidad: Anual. 
+
+- Diseño Longitudinal: panel repetido (misma encuesta se aplica a dos muestras independientes). Segunda muestra se implementó a partir del tercer año de medición (2018).
+
+- Período de Aplicación: entre Julio y Noviembre de cada año. Cuarta medición se aplico entre el 21 de noviembre de 2019 y el 9 de marzo de 2020
+
+- Instrumento: Cuestionario compuesto por preguntas cerradas de carácter simple y múltiple junto a algunas preguntas abiertas. Combina módulos de preguntas permanentes (medidas en todas las olas) y otras intercaladas entre olas.
+
+- Cobertura Temática: Contiene siete módulos temáticos: Territorio, Redes y actitudes sociales, Ciudadanía y democracia, Desigualdad y legitimidad, Conflicto social, Salud y bienestar y Caracterización sociodemográfica.
+
+## Dimension longitudinal del Diseño
+
+```{r echo=FALSE, fig.align='center', fig.height=1, out.height="150%", out.width="150%"}
+knitr::include_graphics("inputs/images/longitudinal.jpg")
+```
+
+- Unidad de Análisis: Individuos.
+
+- Población Objetivo: Hombres y mujeres de 18 a 75 años, residentes habituales de viviendas particulares ocupadas en zonas urbanas, localizadas en 40 ciudades (92 comunas, 13 regiones) del país.
+
+- Marco Muestral: Marco de muestreo de manzanas del pre-censo 2011, trabajo elaborado por el Centro de Inteligencia Territorial (CIT) de la Universidad Adolfo Ibáñez.
+
+- Diseño Muestral: Probabilístico, estratificado (por tamaño de ciudades), por conglomerados y multietápico.
+
+- Unidades de Muestreo: Primero se eligen ciudades (UPM), luego manzanas (USM), y sub-bloques y viviendas (UTM). La unidad final de selección es la persona.
+
+## Dimensión Territorial del Diseño Muestral
+
+
+|               Estrato                | Definición | N° de ciudades en marco muestral | N° de ciuades seleccionadas 	|
+| :--- |:--- | :---: | :---: |
+| Áreas metropolitana de Santiago    |            | 1   | 1  |
+| Áreas metropolitana de Valparaíso  |            | 1   | 1  |
+| Áreas metropolitana de Concepción  |            | 1   | 1  |
+| Ciudades grandes    | Más de 100.000 habitantes | 18  | 8  |
+| Ciudades medianas   | Más de 30.000 habitantes  | 28  | 10 |
+| Ciudades pequeñas   | Más de 10.000 habitantes  | 73  | 19 |
+|   Total             |                           | 122 | 40 |
+
+
+# Etapas de Selección en el Diseño Muestral
+```{r echo=FALSE, fig.align='center', fig.height=1, out.height="150%", out.width="150%"}
+knitr::include_graphics("inputs/images/etapas_seleccion.jpg")
+```
+
+
+**Organismo Ejecutor**: Consultora Stephanie Eckman y Centro de Inteligencia Territorial (CIT) de la Universidad Adolfo Ibáñez (diseño muestral). Centro Micro Datos (CMD) de la Universidad de Chile (levantamiento, procesamiento de la información y construcción de factores de expansión).
+
+
+**Entrenamiento y Ejecución**: Contratación de entrevistadores con experiencia en encuestas complejas y/o longitudinales. Capacitación centralizada y presencial para coordinadores de campo y un subconjunto de entrevistadores en Santiago (incluidos ejercicios prácticos para la implementación del cuestionario, uso de tabletas y protocolo de contacto). Actividades adicionales en otras regiones de Chile. Diseño de un Manual de entrevistador especializado para el proyecto.
+
+
+**Operaciones de Control y Supervisión**: Entrega de incentivos monetarios para el encuestado ($ 6.000 CLP) y de material sobre el estudio (ELSOC y COES). Acciones de seguimiento basadas en la información de contacto (correo electrónico para cumpleaños y días festivos). Los coordinadores de campo supervisan el trabajo de los entrevistadores, verificando el número de visitas, el contacto, la identidad del participante y algunas preguntas claves. El Centro Micro Datos realiza una supervisión interna de al menos el 10% de la muestra (entrevistando nuevamente a algunos encuestados), verificando la duración y la respuesta de los participantes.
+
+
+# Descripción de atrición
+
+ELSOC al ser un estudio panel longitudinal nos permite observar cambios en los individuos a lo largo del tiempo. Sin embargo, esta misma naturaleza del diseño del estudio pone en juego el desafío de retener a los participantes. En este sentido es que cobra importancia observar el proceso de abandono de un estudio panel, denominado atrición. Uno de los aspectos más importante para medir la calidad de los datos en las encuestas de panel es el nivel de atrición, ya que incluso si un panel comienza con una buena representación de la población de interés, las pequeñas tasas de deserción pueden acumularse rápidamente y hacer que la muestra ya no sea representativa, sobretodo cuando la deserción es sesgada. En teoría, deberíamos ser capaces de aprender bastante de las primeras olas de un panel sobre qué políticas de campo funcionan para reducir el desgaste y cuáles no [@hill_Reducing_2001a].
+
+
+## Tamaño muestral
+
+El diseño de ELSOC contempló entrevistar a 3.000 personas en su primera medición, reconociendo que año tras año, se reduciría el número de participantes, dado que algunos optarían voluntariamente por dejar de participar en el estudio y otras personas no podrían ser recontactadas o incluso algunas fallecerían. Este fenómeno es conocido como atrición, y pueden tener efectos nocivos sobre la utilidad de los datos longitudinales. Para cada año se planifica obtener un número de entrevistados (Muestra Objetivo) considerando una proyección de la atrición definida al momento de diseñar el estudio. ELSOC tiene buenos números en este aspecto. Incluso, en 2018 se logró recontactar a un número de participantes mayor al proyectado.
+
+
+
+|        Medición       	| Muestra Objetivo 	| Muestra Lograda 	| Porcentaje de Logro 	|
+|:---------------------:	|:----------------:	|:---------------:	|:-------------------:	|
+| Muestra Original 2016 	|       3000       	|       2927      	|        97.6%        	|
+| Muestra Original 2017 	|       2536       	|       2473      	|        97.5%        	|
+| Muestra Original 2018 	|       2131       	|       2229      	|        104.6%       	|
+| Muestra Original 2019 	|       1790       	|       2153      	|        120.3%       	|
+| Muestra Refresco 2018 	|       1500       	|       1519      	|        101.3%       	|
+| Muestra Refresco 2019 	|       1275       	|       1264      	|        99.1%        	|
+
+
+## Atrición de la Muestra Original y Muestra Refresco
+
+
+|        Medición       | Muestra Lograda | Porcentaje Recuperado | Atrición |
+|:---------------------:|:---------------:|:---------------------:|:--------:|
+| Muestra Original 2016 |       2927      |           -           |          |
+| Muestra Original 2017 |       2473      |         84.5%         |   15.5%  |
+| Muestra Original 2018 |       2229      |         90.1%         |   9.9%   |
+| Muestra Original 2019 |       2153      |         96.6%         |   3.4%   |
+| Muestra Refresco 2018 |       1519      |           -           |          |
+| Muestra Refresco 2019 |       1264      |         83.2%         |   16.8%  |
+
+
+
+
+<!-- ## Atrición de la Muestra Original según Territorio -->
+
+
+```{r atricion-territorio, fig.align='center', fig.height=1, out.height="150%", out.width="150%", fig.cap='Atrición de la Muestra Original según Territorio',results='asis'}
+# knitr::include_graphics("inputs/images/atricion_territorio.jpg")
+options(knitr.kable.NA = '')
+col_names <- c("","","2016","2017","2018","2019","2016-2017","2017-2018","2016-2018","2016-2019")
+xlsx::read.xlsx(file = "inputs/tables.xlsx",sheetName = "atri-territorio",encoding = "UTF-8",startRow = 2) %>% 
+  kable(col.names = col_names,align = "llcccccccc",
+        caption = "Atrición de la Muestra Original según Territorio") %>% 
+  kable_styling(full_width = F, font_size = 10) %>%  
+  add_header_above(c("Macrozona" = 1, "Estrato" = 1, "Tamaño Muestral Logrado" = 4, "Porcentaje Recuperado" = 4))
+```
+
+
+<!-- ## Atrición Muestral Original según sexo y edad* -->
+
+```{r atricion-sexo-edad, fig.align='center', fig.height=1, out.height="150%", out.width="150%", fig.cap="Atrición Muestral Original según sexo y edad*"}
+# knitr::include_graphics("inputs/images/atricion_sexo_edad.jpg")
+col_names <- c("","2016","2017","2018","2019","2016-2017","2017-2018","2016-2018","2016-2019")
+
+xlsx::read.xlsx(file = "inputs/tables.xlsx",sheetName = "atri-sexo-edad",encoding = "UTF-8",startRow = 2) %>% 
+  kable(col.names = col_names,align = "lcccccccc",
+        caption = "Atrición Muestral Original según sexo y edad",escape = TRUE) %>% 
+  kable_styling(full_width = F, font_size = 10) %>%  
+  add_header_above(c("Categoría" = 1, "Tamaño Muestral Logrado" = 4, "Porcentaje Recuperado" = 4)) %>% 
+  row_spec(row = 4,bold = T) %>% 
+  add_footnote(label = "El paso de los años entre olas hace que los sujetos cambien de categoría etaria. El porcentaje recuperado asociado a edad debe considerarse como indicativo.",notation = "symbol")
+```
+
+<!-- *El paso de los años entre olas hace que los sujetos cambien de categoría etaria. El porcentaje recuperado asociado a edad debe considerarse como indicativo. -->
+ 
+<!-- ## Atrición de la Muestra refresco según Territorio -->
+```{r atricion-ref-territorio, fig.align='center', fig.height=1, out.height="150%", out.width="150%",fig.cap="Atrición de la Muestra refresco según Territorio"}
+# knitr::include_graphics("inputs/images/atricion_ref_territorio.jpg")
+col_names <- c("","","2018","2019","2016-2019") 
+xlsx::read.xlsx(file = "inputs/tables.xlsx",sheetName = "atri-refresco-territorio",encoding = "UTF-8",startRow = 2) %>% 
+  kable(col.names = col_names,align = "lcccc",
+        caption = "Atrición de la Muestra refresco según Territorio",escape = TRUE) %>%  
+  kable_styling(full_width = F, font_size = 10) %>%  
+  add_header_above(c("Macrozona" = 1, "Estrato" = 1, "Tamaño Muestral Logrado" = 2, "Porcentaje Recuperado" = 1))
+```
+
+
+<!-- ## Atrición de la Muestra Refresco según sexo y edad* -->
+```{r atricion-ref-sexo-edad, fig.align='center', fig.height=1, out.height="100%", out.width="100%",fig.cap="Atrición de la Muestra Refresco según sexo y edad*"}
+# knitr::include_graphics("inputs/images/atricion_ref_sexo_edad.jpg") 
+col_names <- c("","2018","2019","2018-2019") 
+
+xlsx::read.xlsx(file = "inputs/tables.xlsx",sheetName = "atri-refresxo-sex-edad",encoding = "UTF-8",startRow = 2) %>% 
+  kable(col.names = col_names,align = "lccc",
+        caption = "Atrición de la Muestra Refresco según sexo y edad*",escape = TRUE) %>% 
+  kable_styling(full_width = F, font_size = 10) %>%  
+  add_header_above(c("Categoría" = 1, "Tamaño Muestral Logrado" = 2, "Porcentaje Recuperado" = 1)) %>% 
+  row_spec(row = 4,bold = T) %>% 
+  add_footnote(label = "El paso de los años entre olas hace que los sujetos cambien de categoría etaria. El porcentaje recuperado asociado a edad debe considerarse como indicativo.",notation = "symbol")
+```
+
+# Composición de la Muestra
+
+
+ELSOC ha ya completado cuatro mediciones anuales (2016, 2017, 2018 y 2019), lapso temporal dentro del cual es posible analizar la evolución de la sociedad chilena en todas las dimensiones medidas. Antes de proceder a la presentación de los principales hallazgos, este apartado caracteriza sociodemográficamente la muestra bajo estudio. 
+
+
+A continuación, describimos la muestra original de ELSOC en sus mediciones 2016 (N = 2.927), 2017 (N = 2.473), 2018 (N = 2.229) y 2019 (N = 2.153), según sexo, edad, educación, religión y zona de residencia. Todos los resultados presentados incorporan las principales características del diseño muestral complejo del estudio. Es decir, Se utiliza el ponderador muestral ajustado a población regional y sexo, estrato y conglomerado muestral.
+
+<!-- ##  Composición de Muestra según sexo y ola del estudio -->
+```{r m0-sexo, fig.align='center',fig.cap=" Composición de Muestra según sexo y ola del estudio"}
+gr.bar.n('m0_sexo', 'ola', 'muestra', data = elsoc_long, limits_y=c(0,3000), posicion = 'stack')
+```
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo) 
+
+
+<!-- ##  Composición de Muestra según edad y ola del estudio -->
+```{r edadt, fig.align='center',fig.cap="Composición de Muestra según edad y ola del estudio"}
+gr.bar.n('edadt', 'ola', 'muestra', data = elsoc_long, limits_y=c(0,3000), posicion = 'stack')
+```
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo) 
+
+<!-- ##  Composición de Muestra según educación y ola del estudio -->
+```{r educ, fig.align='center',fig.cap="Composición de Muestra según educación y ola del estudio"}
+gr.bar.n('educ', 'ola', 'muestra', data = elsoc_long, limits_y=c(0,3000), posicion = 'stack')
+```
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo) 
+
+<!-- ##  Composición de Muestra según religión y ola del estudio -->
+```{r relig, fig.align='center',fig.cap="Composición de Muestra según religión y ola del estudio"}
+gr.bar.n('relig', 'ola', 'muestra', data = elsoc_long, limits_y=c(0,3000), posicion = 'stack')
+```
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo) 
+
+<!-- ## Composición de Muestra según zona de residencia y ola del estudio -->
+```{r estrato, fig.align='center',fig.cap="Composición de Muestra según zona de residencia y ola del estudio"}
+gr.bar.n('estrato', 'ola', 'muestra', data = elsoc_long, limits_y=c(0,3000), posicion = 'stack')
+```
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo) 

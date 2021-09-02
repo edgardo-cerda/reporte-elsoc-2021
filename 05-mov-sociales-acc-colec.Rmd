@@ -1,0 +1,195 @@
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+# Movimientos Sociales y Acciones Colectivas
+
+
+
+## Ciclo de movilización política y estallido social
+
+
+<!-- ### 1.1 ¿Cuál es el movimiento social que usted más valora de esta lista? Según ola del estudio  -->
+```{r mov, fig.align='left',fig.cap="¿Cuál es el movimiento social que usted más valora de esta lista? Según ola del estudio"}
+g1.1 <- gr.bar.freq(var_y = 'ola', var_x = 'mov', suma100 = 'y', no_label_texto = T,
+                    data = subset(elsoc_panel_m1, ola == 2018 | ola == 2019), expand=T, limits_y = c(0,.4),
+                    reverse_x=T, reverse_y = T, posicion_leyenda = 'right', invertir_labels = T,
+                    colores = c(.33,.66,1)) +
+  coord_flip() + theme(axis.text.x = element_text(size=rel(.9))) +
+  scale_x_discrete(labels = waiver())
+g1.1
+
+```
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.1, 'var_y')` 
+
+<!-- ### 1.2 Frecuencia de participación en movimientos sociales, según Ola de encuesta. Porcentaje que responde A veces, Frecuentemente o Muy frecuentemente  -->
+```{r freq-mov, fig.align='center', fig.cap="Frecuencia de participación en movimientos sociales, según Ola de encuesta. Porcentaje que responde A veces, Frecuentemente o Muy frecuentemente"}
+g1.2 <-  gr.bar.freq.rec.list(c('freq_mov_w04','freq_mov_w03', 'freq_mov_w02', 'freq_mov_w01'),  var_z=NULL,
+                              REC = c('A veces', 'Frecuentemente o muy frecuentemente'),
+                          data = elsoc_wide_m1, ponderador = 'ponderador02_w04', reverse_y=T,
+                          label_x = c('2016', '2017', '2018', '2019'), posicion = 'stack')
+g1.2
+```
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N=`r getN(g1.2)` 
+
+## Estallido social y aumento en la participación en movimientos sociales
+
+
+<!-- ### 1.3 Cambio en Frecuencia de participación en movimientos sociales, según ola de encuesta -->
+```{r cambio-freq, fig.align='center',fig.cap="Cambio en Frecuencia de participación en movimientos sociales, según ola de encuesta"}
+g1.3 <- gr.bar.freq.list(c('cambio_freq_mov_w04','cambio_freq_mov_w03', 'cambio_freq_mov_w02'), 
+                         data = elsoc_wide_m1, ponderador = 'ponderador02_w04', reverse_y=T,
+                         label_x = c('2016-2017', '2017-2018', '2018-2019'),
+                         label_color = c('Disminuye participación','Se mantiene nivel de participación','Aumenta participación'),
+                         posicion = 'stack',
+                    colores = c(0,.85,1))
+
+g1.3
+```
+
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.3)` 
+
+
+<!-- ### 1.4 Cambio en Frecuencia de participación en movimientos sociales entre 2018 y 2019, según edad del entrevistado -->
+```{r cambio-freq-edad, fig.align='center',fig.cap="Cambio en Frecuencia de participación en movimientos sociales entre 2018 y 2019, según edad del entrevistado"}
+g1.4 <- gr.bar.freq('cambio_freq_mov_w04', var_x = 'edad_w03', data = subset(elsoc_wide_m1), reverse_y=T, ponderador = 'ponderador02_w03',
+                 posicion = 'stack',
+                    colores = c(0,.85,1))
+g1.4
+```
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.4, NULL)` 
+
+<!-- ### 1.5 Cambio en Frecuencia de participación en movimientos sociales entre 2018 y 2019, según nivel educacional del entrevistado -->
+```{r cambio-freq-educ, fig.align='center',fig.cap="Cambio en Frecuencia de participación en movimientos sociales entre 2018 y 2019, según nivel educacional del entrevistado"}
+g1.5 <- gr.bar.freq('cambio_freq_mov_w04', var_x = 'educ_w03', data = subset(elsoc_wide_m1), reverse_y=T, ponderador = 'ponderador02_w03',
+                 posicion = 'stack',
+                    colores = c(0,.85,1))
+g1.5
+
+```
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.5, NULL)`
+
+<!-- ### 1.6 Cambio en Frecuencia de participación en movimientos sociales entre 2018 y 2019, según posición ideológica del entrevistado (de año previo) -->
+```{r cambio-freq-ideo, fig.align='center', fig.cap="Cambio en Frecuencia de participación en movimientos sociales entre 2018 y 2019, según posición ideológica del entrevistado (de año previo)"}
+g1.6 <- gr.bar.freq('cambio_freq_mov_w04', var_x = 'pos_id_w03', 
+                    data = subset(elsoc_wide_m1), ponderador = 'ponderador02_w03', reverse_y=T, posicion = 'stack',
+                    colores = c(0,.85,1))
+g1.6
+```
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.6, NULL)`
+
+
+<!-- ### 1.7 Cambio en Frecuencia de participación en movimientos sociales entre 2018 y 2019, según participación de amigos en movimiento social -->
+```{r cambio-freq-amig, fig.align='center',fig.cap="Cambio en Frecuencia de participación en movimientos sociales entre 2018 y 2019, según participación de amigos en movimiento social"}
+elsoc_wide_m1 <- elsoc_wide_m1 %>% 
+  mutate(c24_w04_rec = case_when(c24_w04 == '1' | c24_w04 == '2' ~ 1,
+                             c24_w04 == '3' ~ 2,
+                             c24_w04 == '4' | c24_w04 == '5' ~ 3))
+
+g1.7 <- gr.bar.freq('cambio_freq_mov_w04', var_x = 'c24_w04_rec', 
+                    data = subset(elsoc_wide_m1), ponderador = 'ponderador02_w03', reverse_y=T,
+                    posicion = 'stack',
+                    label_x = c('Nunca o casi nunca', 'A veces', 'Frecuentemente o Muy frecuentemente'),
+                    titulo_x = 'Participación de amigos en movimiento social',
+                    colores = c(0,.85,1))
+g1.7
+```
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.7, NULL)`
+
+
+```{r echo = FALSE}
+elsoc_wide_m1 <- elsoc_wide_m1 %>% 
+  mutate(c41_01_w04_rec = factor(case_when(c41_01_w04 == 1 ~ 1,
+                                   c41_01_w04 == 2 | c41_01_w04 == 3 ~2,
+                                   c41_01_w04 == 4 | c41_01_w04 == 5 ~3),
+                                 labels = c('Nada', 'Poca o Algo', 'Bastante o Mucha')),
+         c41_02_w04_rec = factor(case_when(c41_02_w04 == 1 ~ 1,
+                                   c41_02_w04 == 2 | c41_02_w04 == 3 ~2,
+                                   c41_02_w04 == 4 | c41_02_w04 == 5 ~3),
+                                 labels = c('Nada', 'Poca o Algo', 'Bastante o Mucha')))
+
+elsoc_wide_m1 <- elsoc_wide_m1 %>% 
+  mutate(c41_04_w04_rec = factor(case_when(c41_04_w04 == 1 ~ 1,
+                                   c41_04_w04 == 2 | c41_04_w04 == 3 ~2,
+                                   c41_04_w04 == 4 | c41_04_w04 == 5 ~3),
+                                 labels = c('Nada', 'Poca o Algo', 'Bastante o Mucha')),
+         c42_04_w04_rec = factor(case_when(c42_04_w04 == 1 ~ 1,
+                                   c42_04_w04 == 2 | c42_04_w04 == 3 ~2,
+                                   c42_04_w04 == 4 | c42_04_w04 == 5 ~3),
+                                 labels = c('Nada', 'Poca o Algo', 'Bastante o Mucha')))
+
+elsoc_wide_m1 <- elsoc_wide_m1 %>% 
+  mutate(c41_03_w04_rec = factor(case_when(c41_03_w04 == 1 ~ 1,
+                                   c41_03_w04 == 2 | c41_03_w04 == 3 ~2,
+                                   c41_03_w04 == 4 | c41_03_w04 == 5 ~3),
+                                 labels = c('Nada', 'Poca o Algo', 'Bastante o Mucha')),
+         c42_03_w04_rec = factor(case_when(c42_03_w04 == 1 ~ 1,
+                                   c42_03_w04 == 2 | c42_03_w04 == 3 ~2,
+                                   c42_03_w04 == 4 | c42_03_w04 == 5 ~3),
+                                 labels = c('Nada', 'Poca o Algo', 'Bastante o Mucha')))
+
+```
+
+<!-- ### 1.8 Rabia y miedo hacia nivel de desigualdad, costo de la vida en Chile, actuar de carabineros y actuar de manifestantes violentos (2019) -->
+
+```{r rabia-miedo, fig.align='center',fig.cap="Rabia y miedo hacia nivel de desigualdad, costo de la vida en Chile, actuar de carabineros y actuar de manifestantes violentos (2019)"}
+g1.8a <- gr.bar.freq.list(c('c41_01_w04_rec', 'c41_02_w04_rec', 'c41_03_w04_rec', 'c42_03_w04_rec', 'c41_04_w04_rec', 'c42_04_w04_rec'), posicion = 'stack', 
+                         data = elsoc_wide_m1, ponderador = 'ponderador02_w04',
+                 label_list = c('Rabia Nivel de desigualdad', 'Rabia Costo de la vida', 'Rabia Manifestantes violentos', 'Rabia Actuar Carabineros', 'Miedo Manifestantes violentos', 'Miedo Actuar Carabineros')) 
+g1.8a
+
+```
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.8a, 'var_x')` 
+
+
+
+<!-- ### 1.9 Frecuencia de participación en movimiento social (2019), según rabia hacia nivel de desigualdad y costo de la vida en Chile -->
+
+```{r freq-rabia-ineq, fig.align='center',fig.cap="Frecuencia de participación en movimiento social (2019), según rabia hacia nivel de desigualdad y costo de la vida en Chile"}
+
+g1.8 <- gr.bar.freq.list('freq_mov_w04', c('c41_01_w04_rec', 'c41_02_w04_rec'), posicion = 'stack', reverse_y=T,
+                         data = elsoc_wide_m1, ponderador = 'ponderador02_w04', 
+                         label_list = c('Rabia por nivel de desigualdad', 'Rabia por costo de vida'),
+                    colores = c(0,.85,1))
+g1.8
+
+```
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.8, 'var_z')` 
+
+<!-- ### 1.10 Frecuencia de participación en movimiento social (2019), según rabia y miedo hacia el accionar de Carabineros en manifestaciones -->
+```{r freq-rabia-carab, fig.align='center',fig.cap="Frecuencia de participación en movimiento social (2019), según rabia y miedo hacia el accionar de Carabineros en manifestaciones"}
+
+g1.9 <- gr.bar.freq.list('freq_mov_w04', c('c41_04_w04_rec', 'c42_04_w04_rec'), posicion = 'stack', reverse_y=T,
+                         data = elsoc_wide_m1, ponderador = 'ponderador02_w04',
+                         label_list = c('Rabia Carabineros', 'Miedo Carabineros'),
+                    colores = c(0,.85,1))
+g1.9
+
+
+```
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.9, 'var_z')` 
+
+<!-- ### 1.11 Frecuencia de participación en movimiento social (2019), según rabia y miedo hacia manifestantes violentos en protestas -->
+
+```{r freq-rabia-violent, fig.align='center',fig.cap="Frecuencia de participación en movimiento social (2019), según rabia y miedo hacia manifestantes violentos en protestas"}
+
+g1.10 <- gr.bar.freq.list('freq_mov_w04', c('c41_03_w04_rec', 'c42_03_w04_rec'), posicion = 'stack', reverse_y=T,
+                          data = elsoc_wide_m1, ponderador = 'ponderador02_w04',
+                          label_list = c('Rabia manifestantes violentos', 'Miedo manifestantes violentos'),
+                    colores = c(0,.85,1))
+g1.10
+
+```
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.10, 'var_z')` 

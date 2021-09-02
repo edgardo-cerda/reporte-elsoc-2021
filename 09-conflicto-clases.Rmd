@@ -1,0 +1,155 @@
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+# Conflicto de Clases y Élites
+
+## Relaciones inter-clases
+
+<!-- ### 5.1 Frecuencia de contacto con clase alta y clase baja, según clase social subjetiva del entrevistado (2019) -->
+```{r d01-d13, fig.align='center',fig.cap='Frecuencia de contacto con clase alta y clase baja, según clase social subjetiva del entrevistado (2019)'}
+g5.1 <- gr.bar.freq.rec.list(c("d07", 'd13'), 'clase.sub', data = subset(elsoc_panel_m2, ola == 2019),
+                    label_x = c('Contacto con clase alta', 'Contacto con clase baja'))
+g5.1
+
+```
+
+> **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g5.1, 'var_x')`
+
+
+
+<!-- ### 5.2 Contacto positivo con personas de clase alta y clase baja, según clase social subjetiva del entrevistado (2019) -->
+```{r d08-d14, fig.align='center',fig.cap='Contacto positivo con personas de clase alta y clase baja, según clase social subjetiva del entrevistado (2019)'}
+g5.2 <- gr.bar.freq.rec.list(c("d08", 'd14'), 'clase.sub', data = subset(elsoc_panel_m2, ola == 2019),
+                    label_x = c('Contacto positivo con clase alta', 'Contacto positivo con clase baja'))
+
+g5.2
+```
+
+> **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g5.2, 'var_x')`
+
+
+<!-- ### 5.3 Contacto negativo con personas de clase alta y clase baja, según clase social subjetiva del entrevistado (2019) -->
+```{r d09-d15, fig.align='center',fig.cap='Contacto negativo con personas de clase alta y clase baja, según clase social subjetiva del entrevistado (2019)'}
+g5.3 <- gr.bar.freq.rec.list(c("d09", 'd15'), 'clase.sub', data = subset(elsoc_panel_m2, ola == 2019),
+                    label_x = c('Contacto negativo con clase alta', 'Contacto negativo con clase baja'))
+g5.3
+
+```
+
+> **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g5.3, 'var_x')`
+
+
+
+### Clases sociales y Trato Justo
+
+<!-- ### 5.7 ¿Con cuánta frecuencia diría que personas de los siguientes grupos son tratadas con respeto...? Porcentaje que responde frecuencia "Alta"    -->
+```{r freq-respeto, fig.align='center',fig.cap='¿Con cuánta frecuencia diría que personas de los siguientes grupos son tratadas con respeto...? Porcentaje que responde frecuencia "Alta"'}
+g3.7 <- gr.bar.freq.rec.list(c("d25_01", "d25_02", "d25_03", "d25_04", "d25_05", "d25_06"),
+                   label_x = c("Pobres", "Clase media", "Clase alta", "Jovenes", "Adultos mayores", "Mujeres"),
+                    data = elsoc_panel,
+                   limits_y = c(0,1),
+                   REC = c('7', '8', '9', '10'))
+g3.7
+
+```
+> **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g3.7)`
+
+
+<!-- ### 5.8 ¿Con cuánta frecuencia diría que las personas de su clase social son tratadas con respeto en los servicios de salud?, según clase social subjetiva del entrevistado Porcentaje que responde "Casi siempre" o "Siempre"  -->
+```{r c35-1-clasesub, fig.align='center',fig.cap='¿Con cuánta frecuencia diría que las personas de su clase social son tratadas con respeto en los servicios de salud?, según clase social subjetiva del entrevistado Porcentaje que responde "Casi siempre" o "Siempre"'}
+g3.8 <- gr.bar.freq.rec("c35_01", var_x = "clase.sub", 
+              var_z = 'ola',
+             data = elsoc_panel_m2)
+g3.8
+```
+> **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g3.8, 'var_z')`
+
+
+<!-- ### 5.9 ¿Con cuánta frecuencia diría que las personas de su clase social son tratadas con respeto en el trabajo?, según clase social subjetiva del entrevistado -->
+<!-- Porcentaje que responde "Casi siempre" o "Siempre"  -->
+```{r c35-2-clasesub, fig.align='center',fig.cap='¿Con cuánta frecuencia diría que las personas de su clase social son tratadas con respeto en el trabajo?, según clase social subjetiva del entrevistado Porcentaje que responde "Casi siempre" o "Siempre"'}
+
+g3.9 <- gr.bar.freq.rec("c35_02", var_x = "clase.sub", 
+              var_z = 'ola',
+             data = elsoc_panel_m2)
+g3.9
+```
+> **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g3.9, 'var_z')`
+
+<!-- ### 5.10 ¿Con cuánta frecuencia diría que las personas de su clase social son tratadas con respeto por parte de Carabineros?, según clase social subjetiva del entrevistado Porcentaje que responde "Casi siempre" o "Siempre"  -->
+
+```{r c35-3-clasesub, fig.align='center',fig.cap='¿Con cuánta frecuencia diría que las personas de su clase social son tratadas con respeto por parte de Carabineros?, según clase social subjetiva del entrevistado Porcentaje que responde "Casi siempre" o "Siempre"'}
+g3.10 <- gr.bar.freq.rec("c35_03", var_x = "clase.sub", 
+              var_z = 'ola',
+             data = elsoc_panel_m2)
+g3.10
+```
+> **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g3.10, 'var_z')`
+
+<!-- ### 5.11 ¿Con cuánta frecuencia diría que las personas de su clase social son tratadas con respeto por parte de la Clase Alta?, según clase social subjetiva del entrevistado Porcentaje que responde "Casi siempre" o "Siempre"  -->
+
+```{r c35-4-clasesub, fig.align='center',fig.cap='¿Con cuánta frecuencia diría que las personas de su clase social son tratadas con respeto por parte de la Clase Alta?, según clase social subjetiva del entrevistado Porcentaje que responde "Casi siempre" o "Siempre"'}
+g3.11 <- gr.bar.freq.rec("c35_04", var_x = "clase.sub", 
+              var_z = 'ola',
+             data = elsoc_panel_m2)
+g3.11 
+```
+
+> **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g3.11, 'var_z')`
+
+## Deprivación Relativa
+
+
+<!-- ### 5.12 Grado de deprivación Relativa según las siguientes categorías (2019) Suma de Respuestas "De acuerdo" y ”Totalmente de acuerdo"  -->
+```{r depriv-rel, fig.align='center',fig.cap='Grado de deprivación Relativa según las siguientes categorías (2019) Suma de Respuestas "De acuerdo" y ”Totalmente de acuerdo"'}
+g3.12 <- gr.bar.freq.rec.list(c("d27_01", "d27_02", "d27_03", "d27_04", "d27_05"),
+                     label_x = c("Insatisfaccion al compararme con otros",
+                                 "Privilegiado en comparacion a otros",
+                                 "Insatisfaccion al compararme con clases altas",
+                                 "Mi clase social es privilegiada",
+                                "Personas de mi clase peor que las mas altas"),
+                     data = subset(elsoc_panel, ola == 2019))
+g3.12
+
+```
+
+> **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g3.12)`
+
+<!-- ### 5.13 Grado de deprivación relativa individual y grupal, según clase social subjetiva (2019) -->
+```{r depriv-estatus, fig.align='center',fig.cap="Grado de deprivación relativa individual y grupal, según clase social subjetiva (2019)"}
+g3.13 <- gr.bar.media.list(c("dep.grup", "dep.indi"),
+                     var_z = "clase.sub",
+                    data = subset(elsoc_panel, ola == 2019),
+                    label_x = c("Deprivación Relativa Grupal", "Deprivación Relativa individual"),
+                    limits_y = c(1, 5))
+
+g3.13
+
+```
+
+
+> **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g3.13)`
+
+
+## Percepción de elites
+
+
+<!-- ### 5.14 Percepción de las elites, según clase social subjetiva (2019) Porcentaje que responde "De acuerdo" y "Totalmente de acuerdo"  -->
+```{r elites-estatus, fig.align='center',fig.cap='Percepción de las elites, según clase social subjetiva (2019) Porcentaje que responde "De acuerdo" y "Totalmente de acuerdo"'}
+g3.14 <- gr.bar.freq.rec.list(c("d24_01", "d24_02", "d24_03", "d24_04"), var_z='clase.sub',
+                     label_x = c("A los poderosos no le importan personas como uno",
+                                 "Los poderosos son indolentes con problemas de mi barrio",
+                                 "Los poderosos favorecen a grandes empresarios",
+                                 "La justicia favorece a los poderosos"),
+                     data = subset(elsoc_panel, ola == 2019))
+g3.14
+
+```
+
+> **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g3.14)`
+
+
+

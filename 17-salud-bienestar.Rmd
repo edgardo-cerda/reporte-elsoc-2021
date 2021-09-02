@@ -1,0 +1,89 @@
+# Salud Mental y Bienestar 
+
+La salud mental es un indicador del bienestar de la población. La depresión es una afección mental caracterizada por un bajo estado de ánimo, pérdida de energía y desinterés generalizado. En todas las mediciones de ELSOC se ha incluido una batería de preguntas para detectar sintomatología depresiva (PHQ-9). En base a este instrumento se pueden catalogar a los participantes según sus síntomas de depresión: “Sin síntomas o depresión mínima”, “Depresión media”, “Depresión Moderada” y “Depresión Moderada Severa o Severa”.
+
+Cabe señalar que en el mundo occidental, la depresión es aproximadamente el doble de frecuente en las mujeres que en los hombres [@piccinelli_Gender_2000]. La mayoría de las investigaciones actuales aceptan que las diferencias de género en la depresión son el resultado de una interacción variable entre factores biológicos, psicológicos y sociales [@hopcroft_Sex_2007; @kuehner_Gender_2003].  
+
+## Salud mental y bienestar
+
+En general, se aprecia preocupantemente, un incremento de las personas que declaran tener síntomas de depresión a lo largo del tiempo (Figura \@ref(fig:depre-wave)). El cambio más relevante ocurre entre el 2017 y 2019, específicamente en la categoría Depresión Media, que el año 2017 la padecía el 29,4% de las personas mientras que el 2019 aumenta al 40,3% (las demás categorías permanecen relativamente estables). 
+
+**Nota 1:** es necesario aclarar que este índice no constituye un diagnóstico clínico de depresión. 
+
+**Nota 2:** Se combinan las categorías "Depresión Moderada Severa" y "Depresión Severa" por su baja frecuencia por separado.
+
+<!-- ### 13.1 Síntomas de Depresión, según Ola del Estudio -->
+```{r depre-wave, fig.align='center',fig.cap='Síntomas de Depresión, según Ola del Estudio'}
+g13.1 <- gr.bar.freq("depr", posicion = 'stack', reverse_y=T, colores = c(0,.85,1))
+g13.1
+```
+
+
+>**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g13.1)`
+
+## Brecha de género en Salud Mental
+
+En el mundo occidental, la depresión es aproximadamente el doble de frecuente en las mujeres que en los hombres [@piccinelli_Gender_2000]. La mayoría de las investigaciones actuales aceptan que las diferencias de género en la depresión son el resultado de una interacción variable entre factores biológicos, psicológicos y sociales [@hopcroft_Sex_2007; @kuehner_Gender_2003]. Esta brecha de género se evidencia la Figura \@ref(fig:depre-year-sexo), donde se observa que entre 2016 y 2019 existe una mayor proporción de mujeres que hombres que tiene síntomas de Depresión Moderada o Depresión Moderada Severa a Severa.  Por ejemplo, el año 2016, el 12,9% de los hombres se encontraba en dichas categorías, en comparación al 28,5% de las mujeres. Si bien esta brecha de género disminuye en los años 2017 y 2018, el año 2019 post estallido social, son las mujeres quienes incrementan sustantivamente los síntomas de Depresión Moderada o más, llegando a duplicar al grupo de los hombres.
+
+
+La Figura \@ref(fig:depre-sexo) revela que las trayectorias de síntomas de depresión entre el año 2016 y 2019 son bastante similares entre hombres y mujeres. Por ejemplo, alrededor de la mitad de hombres y de mujeres que el año 2016 no presentaban síntomas si lo hacen el año 2019; migrando principalmente a la categoría de depresión media. Por su parte, la mayoría de hombres y mujeres que el año 2016 tenía síntomas de depresión media, se mantiene en dicha categoría el año 2019. En las categorías de mayor depresión, los hombres parecen mayoritariamente disminuir la cantidad de síntomas de depresión, mientras que en las mujeres no se revela un patrón de trayectoria predominante.
+
+
+
+<!-- ### 13.2 Sintomatología Depresiva por año, según sexo. Porcentaje con síntomas de "Depresion Moderada" o "Depresion Moderada Severa a Severa".  -->
+```{r depre-year-sexo, fig.align='center',fig.cap='Sintomatología Depresiva por año, según sexo. Porcentaje con síntomas de "Depresion Moderada" o "Depresion Moderada Severa a Severa".'}
+g13.3 <- gr.line.freq.rec("depr", var_x = "ola", var_z ="m0_sexo", REC=c('Depresion Moderada', 'Depresion Moderada Severa a Severa'),
+                 data = subset(elsoc_panel_m1, empleo != 'Otros'), limits_y = c(0,.5),
+                 colores = c(.33,.66,-1))
+g13.3   
+```
+>**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g13.3)` 
+
+<!-- ### 13.3 Cambios en Síntomas de depresión entre años 2016 y 2019, según sexo -->
+```{r depre-sexo, fig.align='center',fig.cap='Cambios en Síntomas de depresión entre años 2016 y 2019, según sexo'}
+g13.2 <- gr.alluvial.freq("depr", 'm0_sexo', data = subset(elsoc_panel_m1, ola==2016 |ola == 2019), reverse_y = T,  colores = c(0,.85,1), posicion_leyenda = 'top')
+g13.2
+```
+
+>**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N=`r getN(g13.2)` 
+
+Al analizar la sintomatología por tramos de edad y sexo, el 2019 se constata que son las mujeres quienes, en comparación a los hombres, exhiben más altos niveles de depresión moderada y moderada severa en todos los tramos etarios excepto en el tramo de 18 a 29 años donde ambos se igualan en torno a 30,5% para mujeres, y 34,5% para hombres  (Figura \@ref(fig:depre-edad-sexo)).
+
+<!-- ### 13.4 Síntomas de Depresión según tramos de edad y sexo (2019). Porcentaje con síntomas de "Depresion Moderada" o "Depresion Moderada Severa a Severa". -->
+```{r depre-edad-sexo, fig.align='center',fig.cap='Síntomas de Depresión según tramos de edad y sexo (2019). Porcentaje con síntomas de "Depresion Moderada" o "Depresion Moderada Severa a Severa".'}
+g13.4 <- gr.line.freq.rec("depr", 'edadt', 'm0_sexo',
+                 data= subset(elsoc_panel_m1, ola == 2019),
+                 REC = c('Depresion Moderada', 'Depresion Moderada Severa a Severa'), limits_y = c(0,0.5),
+                 colores = c(.33,.66,-1))
+g13.4   
+```
+
+>**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N=`r getN(g13.4, NULL)` 
+
+## Sintomatología depresiva, sexo y ocupación
+
+La literatura revela que esta brecha de género en salud mental encuentra también relacionada con los roles de género tradicionales y las posiciones sociales dentro de los diferentes ámbitos de la vida privada y social, donde los roles femeninos se encuentran más asociados a la falta de elección, sobrecarga de roles y la subvaloración [@piccinelli_Gender_2000; @stoppard_Understanding_2000]. Estos roles de género tradicionales vinculan lo masculino con el ámbito laboral y el sustento económico familiar, mientras que lo femenino con el cuidado de los hijos(as) y tareas del hogar.
+
+
+Sin embargo, producto de los cambios estructurales y culturales que se han producido en las últimas décadas, las mujeres que se quedan en la casa son cada vez menos valoradas. A su vez, las mujeres que se incorporan a la fuerza laboral enfrentan mayor riesgo de discriminación económica y desigualdad laboral que los hombres, además de exhibir un mayor riesgo de depresión debido a la sobrecarga de funciones y al conflicto de roles, ya que pese a tener un trabajo remunerado siguen estando al cuidado del hogar y los niños [@bebbington_origins_1996; @piccinelli_Gender_2000].
+
+
+Por su parte, el ingreso cada vez mayor de las mujeres al mercado laboral se presenta como un desafío para los hombres respecto a la definición tradicional de masculinidad, principalmente a su rol de sostenedor económico del hogar [@courtenay_Constructions_2000; @garfield_Fatherhood_2006].
+
+
+Esta relación entre roles de género tradicionales, ocupación y depresión se observan en la Figura \@ref(fig:depre-labstat). En primer lugar, se observa que en cada categoría ocupacional existe una mayor proporción de mujeres con síntomas de depresión moderada o severa en comparación a los hombres, a excepción de la categoría desempleado, donde el 34% de los hombres tiene síntomas de depresión moderada o severa en comparación al 27% de las mujeres. Es posible que los hombres al no poder cumplir con su rol masculino de sostenedor económico del hogar experimentan mayores síntomas depresivos en comparación a las mujeres. Esto se complementa con que los hombres con trabajo remunerado son aquellos que tienen menor proporción con síntomas de depresión moderado a severo.
+
+<!-- ### 13.5 Síntomas de Depresión según categoría ocupacional (año 2019). Porcentaje con síntomas de "Depresion Moderada" o "Depresion Moderada Severa a Severa". -->
+```{r depre-labstat, fig.align='center',fig.cap='Síntomas de Depresión según categoría ocupacional (año 2019). Porcentaje con síntomas de "Depresion Moderada" o "Depresion Moderada Severa a Severa".'}
+g13.5 <- gr.bar.freq.rec("depr", var_x = "empleo", 'm0_sexo', REC=c('Depresion Moderada', 'Depresion Moderada Severa a Severa'), 
+                data = subset(elsoc_panel_m1, ola == 2019 & empleo != 'Otras categorías'), expand = T,
+                label_x = c('Trabajo remunerado','Trabajo doméstico no remunerado*','Desempleado/a', 'Jubilado/a o pensionado/a'))
+g13.5
+```
+
+En 2019 no hay hombres en la categoría Trabajo doméstico no remunerado $^{*}$
+
+>**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g13.5, NULL)`
+
+Por otra parte, en torno a un 28% de las mujeres que tienen trabajo remunerado, o bien que están desempleadas o jubiladas/pensionadas exhiben síntomas de depresión moderada o severa. Donde se observa con preocupación una alta proporción de mujeres que experimentan síntomas de depresión moderada o moda severa es en el caso de aquellas donde se desempeñan en trabajos del hogar no remunerado. Cabe mencionar que no hay hombres en el estudio que se desempeñen en esta categoría de trabajo del hogar no remunerado, por lo que no es posible estimar este valor (Figura \@ref(fig:depre-labstat)).
+

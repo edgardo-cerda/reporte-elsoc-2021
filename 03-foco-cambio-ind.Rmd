@@ -1,0 +1,52 @@
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+# Foco en el cambio individual
+
+Radiografía del Cambio Social tiene como objetivo fundamental caracterizar la estabilidad y el cambio en opiniones, actitudes y conductas de los participantes a lo largo del tiempo, enfocándose en distintas dimensiones de la cohesión y conflicto en Chile. 
+
+
+Para el logro de dicho objetivo, el presente reporte se centrará en un subconjunto de participantes del estudio: los 2096 entrevistados que participaron en las cuatro primeras olas de ELSOC (como parte de la muestra original). Dicha submuestra será la base empírica de los hallazgos expuestos en las siguientes secciones. 
+
+
+A continuación se describe a este grupo de participantes según los mismos atributos sociodemográficos (sexo, edad, educación, zona de residencia y religión), considerando la primera medición. Todos los resultados presentados incorporan el diseño muestral complejo de la encuesta.
+
+**Nota 1:** El promedio de edad de los participantes se ha incrementado entre estos años. También hay evidencia de un descenso en la identificación religiosa al comparar distintos años del estudio. Las otras variables no presentan variaciones relevantes a lo largo del tiempo.
+
+**Nota 2:** Se utiliza el ponderador muestral ajustado a población regional y sexo, estrato y conglomerado muestral.
+
+<!-- ## Distribución de Sub-Muestra de Participantes en las cuatro olas ELSOC según sexo -->
+```{r m0sexo-2019, fig.align='center',fig.cap="Distribución de Sub-Muestra de Participantes en las cuatro olas ELSOC según sexo"}
+gr.bar.freq("m0_sexo", data = subset(elsoc_panel_m1, ola == 2019))
+```
+
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo) 
+
+<!-- ## Distribución de Sub-Muestra de Participantes en las cuatro olas ELSOC según edad -->
+```{r edadt-2019, fig.align='center',fig.cap="Distribución de Sub-Muestra de Participantes en las cuatro olas ELSOC según edad"}
+gr.bar.freq("edadt", data = subset(elsoc_panel_m1, ola == 2019))
+```
+
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo) 
+
+<!-- ## Distribución de Sub-muestra de Participantes en las cuatro olas ELSOC según Nivel educacional -->
+```{r educ-2019, fig.align='center',fig.cap="Distribución de Sub-muestra de Participantes en las cuatro olas ELSOC según Nivel educacional"}
+gr.bar.freq("educ", data = subset(elsoc_panel_m1, ola == 2019))
+```
+
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo) 
+
+
+<!-- ## Distribución de Sub-Muestra de Participantes en las cuatro olas ELSOC según zona de residencia -->
+```{r estrato-2019, fig.align='center',fig.cap="Distribución de Sub-Muestra de Participantes en las cuatro olas ELSOC según zona de residencia"}
+gr.bar.freq("estrato", data = subset(elsoc_panel_m1, ola == 2019))
+```
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo) 
+

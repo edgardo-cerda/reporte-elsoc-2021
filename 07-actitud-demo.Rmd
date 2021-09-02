@@ -1,0 +1,66 @@
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+# Actitudes hacia la democracia
+
+
+
+## Apoyo a la Democracia
+
+
+<!-- ### 3.1 ¿Con cuál de las siguientes frases está usted más de acuerdo? -->
+```{r c25, fig.align='center', fig.cap="¿Con cuál de las siguientes frases está usted más de acuerdo?"}
+g3.2 <- gr.alluvial.freq('c25', data = subset(elsoc_panel_m1, ola == 2016 | ola == 2019),
+                          posicion_leyenda = 'top', reverse_y = T, invertir_label = T, colores = c(0,.85,1), 
+                         label_y = c('Ninguna',
+                                     'Da lo mismo régimen democrático o autoritario',
+                                     'En algunos casos, gobierno autoritario puede ser preferible',
+                                     'Democracia es preferible a cualquier otra forma de gobierno'))       
+g3.2    
+``` 
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g3.2)`
+
+
+<!-- ### 3.2 ¿Cuán satisfecho o insatisfecho está usted con el funcionamiento de la democracia en Chile? -->
+```{r ola-c01, fig.align='center', fig.cap="¿Cuán satisfecho o insatisfecho está usted con el funcionamiento de la democracia en Chile?"}
+g2.12 <- gr.bar.freq(var_x = 'ola', var_y = 'c01', posicion = 'stack', reverse_y=T)
+g2.12 
+```
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g2.12)`
+
+
+<!-- ### 3.3. ¿Con cuál de las siguientes frases está usted más de acuerdo? (2019), según posición ideológica -->
+
+```{r c25-pos-id, fig.aligN='center',fig.cap="¿Con cuál de las siguientes frases está usted más de acuerdo? (2019), según posición ideológica"}
+g13.a <- gr.bar.freq('c25', 'pos_id', data = subset(elsoc_panel_m1, ola == 2019), posicion = 'stack',
+            reverse_y = T, colores = c(0,.85,1), invertir_label = T,
+            label_color = c('Ninguna',
+                            'Da lo mismo régimen democrático o autoritario',
+                            'En algunos casos, gobierno autoritario puede ser preferible',
+                            'Democracia es preferible a cualquier otra forma de gobierno'))
+g13.a 
+
+```
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g13.a, NULL)`
+
+
+
+<!-- ### 3.4 Grado de acuerdo con las siguientes afirmaciones Porcentaje que responde De acuerdo o Totalmente de acuerdo  -->
+```{r c18-04-07, fig.aligN='center',fig.cap="Grado de acuerdo con las siguientes afirmaciones Porcentaje que responde De acuerdo o Totalmente de acuerdo"}
+
+g2.14 <- gr.bar.freq.rec.list(c('c18_04', 'c18_05', 'c18_06', 'c18_07'),
+                     label_x = c('En vez de derechos, lo que este país necesita es un gobierno firme',
+                                 'El país necesita un mandatario fuerte y con determinación',
+                                 'Lo más importante que aprendan los niños es obediencia y respeto por autoridad',
+                                 'Las claves para una buena vida son la obediencia y la disciplina'))
+g2.14 
+```
+
+
+> **Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g2.14, 'var_x', 'var_z')`
+

@@ -1,0 +1,62 @@
+--- 
+title: "Estudio Longitudinal Social de Chile"
+subtitle: "Resultados longitudinales 2016-2021"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+classoption: openany
+bibliography:
+- book.bib
+- packages.bib
+biblio-style: apalike
+link-citations: yes
+
+geometry: "left=4cm, right=3cm, top=2.5cm, bottom=2.5cm"
+fontsize: 12pt
+linestretch: 1.5
+toc-depth: 1
+lof: True
+lot: True
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r message=FALSE, warning=FALSE, include=FALSE, echo=FALSE,cache=FALSE} 
+pacman::p_load(knitr, kableExtra, dplyr,gridExtra,tidyverse,sjmisc,sjlabelled,sticky,ggrepel,ggalluvial,survey,spatstat,readxl,forcats)
+```
+
+```{r cargar objetos, include=FALSE, cache = FALSE}
+#base de datos
+load("1_input/datos_elsoc.RData")      
+```
+
+```{r echo=FALSE }
+table_format = if(is_html_output()) {
+  "html"
+} else if(is_latex_output()) {
+  "latex" 
+}
+
+fullw = if(is_html_output()) {T} else if(is_latex_output()) {F}
+fsize = if(is_html_output()) {14} else if(is_latex_output()) {8}
+
+ggplot2::theme_set(new = theme_test(base_family = "serif"))
+```
+
+# Introducción al reporte
+
+```{r out.width = '70%', echo = FALSE, fig.align = 'center'}
+knitr::include_graphics("1_input/images/logos.png") 
+```
+
+El Centro de Estudios de Conflicto y Cohesión Social (COES) desarrolla investigación colaborativa en temas relacionados al conflicto social y la cohesión (convivencia) en Chile, por medio de un equipo multidisciplinario proveniente de las ciencias sociales y humanidades. COES centra sus actividades académicas y de difusión en el análisis de las múltiples manifestaciones del conflicto y cohesión social en Chile, sus causas, así como también su contexto cultural e histórico.
+
+
+COES está patrocinado por la Universidad de Chile y la Pontificia Universidad Católica de Chile, y como instituciones asociadas se encuentran la Universidad Diego Portales y la Universidad Adolfo Ibáñez. COES cuenta con el apoyo del Fondo de Financiamiento de Centros de Investigación en Áreas Prioritarias (FONDAP, dependiente de la Agencia Nacional de Investigación y Desarrollo (ANID) del Ministerio de Ciencia, Tecnología, Conocimiento e Innovación. ELSOC además cuenta como socio al Instituto Milenio para la Investigación en Depresión y Personalidad (MIDAP).
+
+
+```{r out.width = '30%', echo = FALSE, fig.align = 'center'}
+knitr::include_graphics("1_input/images/anid_midap.png") 
+```
+

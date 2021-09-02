@@ -1,0 +1,121 @@
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+# Identificación Política
+
+
+
+## Identificación con Partidos y Coaliciones
+
+
+<!-- ### 2.1 ¿Cuál de los siguientes partidos políticos representa mejor sus intereses, creencias y valores? Según Ola del Estudio -->
+```{r idpart, fig.align='center', fig.cap="¿Cuál de los siguientes partidos políticos representa mejor sus intereses, creencias y valores? Según Ola del Estudio"}
+g2.1 <- gr.bar.freq(var_x = 'idpart', var_y = 'ola', suma100 = 'y')
+g2.1
+```
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g2.1, 'var_y')`
+
+<!-- ### 2.2 ¿Cuál de las siguientes coaliciones políticas representa mejor sus intereses, creencias y valores? Según Ola del Estudio -->
+```{r idcoal, fig.align='center',fig.cap="¿Cuál de las siguientes coaliciones políticas representa mejor sus intereses, creencias y valores? Según Ola del Estudio"}
+g2.2 <- gr.bar.freq(var_x = 'idcoal', var_y = 'ola', suma100 = 'y', data = elsoc_panel_m1, expand=T)
+g2.2
+```
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g2.2, 'var_y')`
+
+<!-- ### 2.3 Identificación con partidos políticos, según identificación con coalición política (2019) -->
+```{r idpart-by-idcoal, fig.align='center',fig.cap="Identificación con partidos políticos, según identificación con coalición política (2019)"}
+g2.3 <- gr.bar.freq(var_y = 'idpart', var_x = 'idcoal', data = subset(elsoc_panel_m1, ola == 2019 & idcoal != 'Otro'),
+            posicion = 'stack')
+g2.3
+```
+
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g2.3, NULL)`
+
+<!-- ### 2.4 Cambios en identificación con coaliciones políticas, entre 2016 y 2019 -->
+```{r idcoal-aluv, fig.align='center',fig.cap="Cambios en identificación con coaliciones políticas, entre 2016 y 2019"}
+
+g2.4 <- gr.alluvial.freq('idcoal', data = subset(elsoc_panel_m1, ola == 2016 | ola == 2018 | ola == 2019))
+g2.4 
+
+```
+
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g2.4)`
+
+
+<!-- ### 2.5 Posición ideológica, según ola de estudio -->
+```{r pos-id-aluv, fig.align='center', fig.cap="Posición ideológica"}
+g2.5 <- gr.bar.freq(var_x = 'pos_id', var_y = 'ola', suma100 = 'y', data = subset(elsoc_panel_m1, ola == 2016 | ola == 2019), limits_y = c(0,.5))
+g2.5
+```
+
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g2.5, 'var_y')`
+
+<!-- ### 2.6 Cambios en Posición ideológica, según ola de estudio -->
+```{r pos-id, fig.align='center',fig.cap="Cambios en Posición ideológica, según ola de estudio"}
+g2.6 <- gr.alluvial.freq( 'pos_id', data = subset(elsoc_panel_m1, ola == 2016 | ola == 2019))
+g2.6 
+```
+
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g2.6)`
+
+<!-- ### 2.7 Porcentaje que se identifica con algún partido o coalición política, según Ola del estudio -->
+```{r id-sin, fig.align='center',fig.cap="Porcentaje que se identifica con algún partido o coalición política, según Ola del estudio"}
+g2.7 <- gr.bar.freq('id_sin', posicion = 'stack')
+g2.7
+```
+
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g2.7)`
+
+<!-- ### 2.8 Cambios en identificación con algún partido o coalición política, según Ola del estudio -->
+```{r id-sin-by-wave, fig.align='center',fig.cap="Cambios en identificación con algún partido o coalición política, según Ola del estudio"}
+g2.8 <- gr.alluvial.freq('id_sin', data = subset(elsoc_panel_m1, ola == 2016 | ola == 2019), posicion_leyenda = 'top')
+g2.8 
+```
+
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g2.8)`
+
+<!-- ### 2.9 Cambios en identificación con algún partido o coalición política entre 2016 y 2019, según grupo etáreo (en 2016) -->
+```{r id-sin-edad, fig.align='center',fig.cap="Cambios en identificación con algún partido o coalición política entre 2016 y 2019, según grupo etáreo (en 2016)"}
+g2.9 <- gr.bar.freq(var_y = 'id_sin', var_x = 'edad_w01', 
+            data = elsoc_wide_m1,
+            ponderador = 'ponderador02_w04',
+            posicion = 'stack')
+g2.9
+```
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g2.9, NULL)`
+
+
+<!-- ### 2.10 Cambios en identificación con algún partido o coalición política entre 2016 y 2019, según posición ideológica (en 2016) -->
+```{r id-sin-ideol, fig.align='center',fig.cap="Cambios en identificación con algún partido o coalición política entre 2016 y 2019, según posición ideológica (en 2016)"}
+g2.10 <- gr.bar.freq(var_y = 'id_sin', var_x = 'pos_id_w01', 
+            data = elsoc_wide_m1,
+            ponderador = 'ponderador02_w04',
+            posicion = 'stack')
+g2.10
+```
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g2.10, NULL)`
+
+
+<!-- ### 2.11 Cambios en identificación con algún partido o coalición política entre 2016 y 2019, según interés (en 2016) -->
+```{r id-sin-interes, fig.align='center',fig.cap="Cambios en identificación con algún partido o coalición política entre 2016 y 2019, según interés (en 2016)"}
+g2.11 <- gr.bar.freq(var_y = 'id_sin', var_x = 'interes_politica_w01', 
+            data = elsoc_wide_m1,
+            ponderador = 'ponderador02_w04',
+            posicion = 'stack')
+g2.11
+```
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g2.11, NULL)`

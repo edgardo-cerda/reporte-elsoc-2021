@@ -1,0 +1,71 @@
+# Estatus subjetivo y Percepción de Mérito
+
+Estatus subjetivo refiere a la ubicación subjetiva de las personas respecto a su clase social, en función de la posición relativa que ellas perciben que ocupan en relación al resto. 
+
+Por su parte, el mérito, entendido como la combinación de esfuerzo y habilidades individuales [@Sen2000], constituye el fundamento de una sociedad basada en el principio de igualdad de oportunidades. Estudiar la meritocracia, implica estudiar una de las formas en que las personas legitiman la desigualdad social. El mérito se vuelve el principio fundamental a partir del cual se deben asignar o distribuir los bienes [@Young1961].
+
+
+## Estatus subjetivo
+
+ELSOC analizó el estatus subjetivo y constató que en general las personas tienden a ubicarse mayoritariamente en las clases sociales medias (Figura \@ref(fig:essind-ola)), aún cuando se constata un aumento importante el 2019 de personas que se declaran pertenecer a clases bajas. Al analizar las trayectorias a lo largo del tiempo, los resultados revelan movimientos ascendentes (desde clases bajas a medias) y descendentes (desde clases medias a bajas) que explica la estabilidad de la clase social subjetiva (Figura \@ref(fig:ess-wave)). Como es esperable, existe una asociación con ingresos, donde aumenta la proporción de personas que se declara de clase baja a medida que caen los ingresos (Figura \@ref(fig:ess-quintil)). Finalmente, al analizar las expectativas que las personas tienen de sus hijos(as) en el futuro existe una alta correspondencia con la clase social subjetiva, y se constata que, a medida que ésta aumenta, mayor es la proporción de personas que piensa que hijos(as) tendrán una posición alta en el futuro (Figura \@ref(fig:esshijos-ess)).
+
+
+<!-- ### 11.1 En nuestra sociedad, hay grupos que tienden a ubicarse en los niveles más altos y grupos que tienden a ubicarse en los niveles más bajos de la sociedad ¿Dónde se ubicaría usted?, según ola de estudio. -->
+```{r essind-ola, fig.align='center',fig.cap='En nuestra sociedad, hay grupos que tienden a ubicarse en los niveles más altos y grupos que tienden a ubicarse en los niveles más bajos de la sociedad ¿Dónde se ubicaría usted?, según ola de estudio.'}
+g11.1 <- gr.bar.freq(var_y = "clase.sub", var_x = "ola", posicion = 'stack', reverse_y = T)
+g11.1
+```
+>**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N=`r getN(g11.1)` 
+
+<!-- ### 11.2 Cambios de Clase social subjetiva entre 2016 y 2019 -->
+```{r ess-wave, fig.align='center',fig.cap='Cambios de Clase social subjetiva entre 2016 y 2019'}
+g11.2 <- gr.alluvial.freq("clase.sub", data = subset(elsoc_panel_m1, ola == 2016 | ola == 2019), reverse_y=T)
+g11.2 
+```
+
+>**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g11.2)` 
+
+<!-- ### 11.3 Clase social subjetiva, según quintiles de ingreso (2019) -->
+```{r ess-quintil, fig.align='center',fig.cap='Clase social subjetiva, según quintiles de ingreso (2019)'}
+g11.3 <- gr.bar.freq('clase.sub', var_x = 'quintil', data = subset(elsoc_panel, ola == 2019),
+            posicion = 'stack', reverse_y = T)
+g11.3
+```
+
+>**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g11.3, NULL)`
+
+<!-- ### 11.4  Si usted tiene actualmente hijos o si los tuviera en el futuro, ¿dónde cree usted que se ubicarían ellos?, según Clase social subjetiva (2019) -->
+```{r esshijos-ess, fig.align='center',fig.cap='Si usted tiene actualmente hijos o si los tuviera en el futuro, ¿dónde cree usted que se ubicarían ellos?, según Clase social subjetiva (2019)'}
+g11.4 <- gr.bar.freq('clase.sub.hijos', 'clase.sub', data = subset(elsoc_panel, ola == 2019),
+            posicion = 'stack', reverse_y = T, titulo_x = 'Clase social subjetiva propia')  
+g11.4 
+```
+
+>**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g11.4, NULL)` 
+
+
+## Percepción de meritocracia
+
+
+Los resultados en la Figura \@ref(fig:merit-wave) revelan un alto consenso al identificar a la educación como el criterio más importante para surgir en la vida, seguido por el trabajo duro. En el otro extremo figuran en muy baja proporción la importancia que le atribuyen a la inteligencia a la hora de ser recompensadas. Por ultimo, se constata otro hecho que es estable en el tiempo, en torno a un 23,6% de las personas piensa que las personas son recompensadas por su esfuerzo. Todos estos aspectos evaluados se han mantenido estables en el tiempo.
+
+
+<!-- ### 11.5  Percepción de importancia y recompensas del mérito, según ola de estudio. Porcentaje de Respuestas "De acuerdo" y ”Totalmente de acuerdo".  -->
+```{r merit-wave, fig.align='center',fig.cap='Percepción de importancia y recompensas del mérito, según ola de estudio. Porcentaje de Respuestas "De acuerdo" y ”Totalmente de acuerdo".'}
+elsoc_panel_m1 <- elsoc_panel_m1 %>%
+  mutate(d05_02_rec = factor(d05_02, labels = c('1','2','3','4','5')),
+         d05_04_rec = factor(d05_04, labels = c('1','2','3','4','5')),
+         c18_09_rec = factor(c18_09, labels = c('1','2','3','4','5')),
+         c18_10_rec = factor(c18_10, labels = c('1','2','3','4','5')))
+
+g11.5 <- gr.line.freq.rec.list(c('c18_09_rec', 'c18_10_rec', 'd05_02_rec', 'd05_04_rec'), 'ola', data = elsoc_panel_m1, 
+                      label_color = c('Personas son recompensadas por su esfuerzo', 
+                                      'Personas son recompensadas por su inteligencia',
+                                      'Educación es importante para surgir en la vida',
+                                      'Trabajo duro es importante para surgir en la vida'),
+                      colores = c(0, .66, -1))  
+g11.5
+
+```
+
+>**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g11.5, 'var_x', 'var_z')` 
