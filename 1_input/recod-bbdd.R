@@ -20,7 +20,7 @@ pasar_a_factor <- function(var) {
 }
 
 elsoc_long <- lapply(elsoc_long, pasar_a_factor) %>% data.frame()
-elsoc_long <- sjlabelled::set_label(elsoc_long, var_labels)
+elsoc_long <- sjlabelled::set_label(elsoc_long, var_labels) 
 
 #---------RECODIFICACION OLAS--------------------
 elsoc_long$ola <- factor(elsoc_long$ola,labels = c('2016', '2017', '2018', '2019', '2021'))
@@ -276,7 +276,7 @@ elsoc_wide$cambio_freq_mov_w02 <- factor(with(elsoc_wide, case_when(
   c22_w02 < c22_w01  & !is.na(c22_w02) & !is.na(c22_w01) ~ 3)),
   labels = c('Aumenta', 'Se mantiene', 'Disminuye'))
 
-##################### Relacion con migrantes ###################
+#------------- X. Relación con inmigrantes -------------------------
 
 elsoc_long$migrantes <- factor(with(elsoc_long, case_when(cuestion_mig == 'Haitianos' ~ 3,
                                                           cuestion_mig == 'Venezolanos' & ola == 2019 ~ 2,
@@ -290,16 +290,15 @@ elsoc_long <- elsoc_long %>%
                            as.numeric(r12_01) + as.numeric(r12_02) <= 10 ~ 3),
          amenaza_simbolica = r12_03,
          amenaza_realista = r12_04,
-         frecuencia_contacto = factor(case_when(r06 == 'Nunca' | r06 == 'Casi nunca' ~ 1,
-                                                r06 == 'A veces' ~ 2,
-                                                r06 == 'Casi siempre' | r06 == 'Siempre' ~ 3),
+         frecuencia_contacto = factor(car::recode(r06, "c(1,2)=1;c(3)=2;c(4,5)=3"),
                                       labels = c('Contacto Bajo',
                                                  'Contacto Medio',
                                                  'Contacto Alto')),
          calidad_contacto = r07,
          ola_mig = interaction(ola, cuestion_mig))
 
-# Amenaza realista y simbólica dicotómica:
+
+# Amenaza realista y simbólica dicotómica (FALTA AGREGAR OLA 5):
 elsoc_wide$amenaza_realista_w01 <- factor(car::recode(elsoc_wide$r12_03_w01, "c(1,2,3)='En desacuerdo'; c(4,5)='De acuerdo'"),
                                           levels = c("En desacuerdo", "De acuerdo"))
 elsoc_wide$amenaza_realista_w02 <- factor(car::recode(elsoc_wide$r12_03_w02, "c(1,2,3)='En desacuerdo'; c(4,5)='De acuerdo'"),
@@ -795,8 +794,8 @@ elsoc_long <- lapply(elsoc_long, sticky::sticky) %>% data.frame()
 
 #Separar las muestras
 elsoc_panel <- elsoc_long %>% filter(tipo_atricion == 1 | tipo_atricion == 17)
-elsoc_panel_m1 <- dplyr::filter(elsoc_long, muestra == 'Muestra Original' & tipo_atricion == 1)
-elsoc_panel_m2 <- dplyr::filter(elsoc_long, muestra == 'Muestra Refresco' & tipo_atricion == 17 )
+elsoc_panel_m1 <- dplyr::filter(elsoc_long, muestra == 1 & tipo_atricion == 1)
+elsoc_panel_m2 <- dplyr::filter(elsoc_long, muestra == 2 & tipo_atricion == 17)
 
 # Bases wide por submuestra
 elsoc_wide_m1 <- elsoc_wide %>% dplyr::filter(tipo_atricion == 1| tipo_atricion == 17)
