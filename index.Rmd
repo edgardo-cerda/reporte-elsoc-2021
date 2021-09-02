@@ -27,8 +27,17 @@ pacman::p_load(knitr, kableExtra, dplyr,gridExtra,tidyverse,sjmisc,sjlabelled,st
 ```
 
 ```{r cargar objetos, include=FALSE, cache = FALSE}
+remove(list = ls())
 #base de datos
 load("1_input/datos_elsoc.RData")      
+```
+
+```{r diseno, echo=TRUE}
+elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
+                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
+                          weights = ~ponderador02, #ponderador de corte transversal
+                          nest = TRUE,
+                          data = elsoc_panel_m1)
 ```
 
 ```{r echo=FALSE }
