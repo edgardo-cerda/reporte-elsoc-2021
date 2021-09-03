@@ -1,0 +1,303 @@
+--- 
+title: "Estudio Longitudinal Social de Chile"
+subtitle: Resultados longitudinales 2016-2021
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+classoption: openany
+bibliography:
+- book.bib
+- packages.bib
+biblio-style: apalike
+link-citations: yes
+geometry: left=4cm, right=3cm, top=2.5cm, bottom=2.5cm
+fontsize: 12pt
+linestretch: 1.5
+toc-depth: 1
+lof: yes
+lot: yes
+editor_options:
+  markdown:
+    wrap: 72
+---
+
+```{r message=FALSE, warning=FALSE, include=FALSE, echo=FALSE,cache=FALSE} 
+pacman::p_load(knitr, kableExtra, dplyr,gridExtra,tidyverse,sjmisc,sjlabelled,sticky,ggrepel,ggalluvial,survey,spatstat,readxl,forcats)
+```
+
+```{r cargar objetos, include=FALSE, cache = FALSE}
+remove(list = ls())
+#base de datos
+load("1_input/datos_elsoc.RData")      
+```
+
+```{r diseno, echo=TRUE}
+elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
+                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
+                          weights = ~ponderador02, #ponderador de corte transversal
+                          nest = TRUE,
+                          data = elsoc_panel_m1)
+```
+
+```{r echo=FALSE }
+table_format = if(is_html_output()) {
+  "html"
+} else if(is_latex_output()) {
+  "latex" 
+}
+
+fullw = if(is_html_output()) {T} else if(is_latex_output()) {F}
+fsize = if(is_html_output()) {14} else if(is_latex_output()) {8}
+
+ggplot2::theme_set(new = theme_test(base_family = "serif"))
+```
+
+# Introducción al reporte
+
+```{r out.width = '70%', echo = FALSE, fig.align = 'center'}
+knitr::include_graphics("1_input/images/logos.png") 
+```
+
+El Centro de Estudios de Conflicto y Cohesión Social (COES) desarrolla investigación colaborativa en temas relacionados al conflicto social y la cohesión (convivencia) en Chile, por medio de un equipo multidisciplinario proveniente de las ciencias sociales y humanidades. COES centra sus actividades académicas y de difusión en el análisis de las múltiples manifestaciones del conflicto y cohesión social en Chile, sus causas, así como también su contexto cultural e histórico.
+
+
+COES está patrocinado por la Universidad de Chile y la Pontificia Universidad Católica de Chile, y como instituciones asociadas se encuentran la Universidad Diego Portales y la Universidad Adolfo Ibáñez. COES cuenta con el apoyo del Fondo de Financiamiento de Centros de Investigación en Áreas Prioritarias (FONDAP, dependiente de la Agencia Nacional de Investigación y Desarrollo (ANID) del Ministerio de Ciencia, Tecnología, Conocimiento e Innovación. ELSOC además cuenta como socio al Instituto Milenio para la Investigación en Depresión y Personalidad (MIDAP).
+
+
+```{r out.width = '30%', echo = FALSE, fig.align = 'center'}
+knitr::include_graphics("1_input/images/anid_midap.png") 
+```
+
+
+<!--chapter:end:index.Rmd-->
+
+
+# Ficha Técnica
+
+Placeholder
+
+
+## Dimension longitudinal del Diseño
+## Dimensión Territorial del Diseño Muestral
+## Tamaño muestral
+## Atrición de la Muestra Original y Muestra Refresco
+
+<!--chapter:end:02-ficha-tecnica.Rmd-->
+
+
+# Foco en el cambio individual
+
+Placeholder
+
+
+
+<!--chapter:end:03-foco-cambio-ind.Rmd-->
+
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+# Principales hallazgos longitudinales
+
+**Nota Explicativa**
+
+A continuación, se presentan los principales resultados de la encuesta ELSOC elaborados por investigadores del Centro de Conflicto y Cohesión Social (COES). Dada la diversidad de temas que son abordados en la encuesta, los investigadores colaboradores utilizaron diversos enfoques teóricos y herramientas empíricas en su análisis. Sin embargo, en Radiografía del Cambio Social se han definido una serie de criterios comunes para el desarrollo de resultados empíricos:
+
+- Foco en la evolución y cambio en las actitudes de la población, aún cuando en ocasiones se analizan preguntas incluidas en una o dos olas del estudio. 
+- Uso de pruebas estadísticas específicas para el análisis longitudinal. 
+- Utilización de submuestra de XXXX participantes del estudio presentes en las cinco mediciones (2016, 2017, 2018, 2019 y 2021). 
+- Tamaños muestrales reportados menores se explican exclusivamente por no respuesta a ítemes específicos.
+- Utilización del diseño muestral complejo (ponderador muestral ajustado a población regional y sexo, estrato y conglomerado muestral) en el desarrollo de figuras descriptivas y pruebas inferenciales. 
+
+
+**Levantamiento durante COVID-19**
+
+
+
+<!--chapter:end:04-cambio-long.Rmd-->
+
+
+# Movimientos Sociales y Acciones Colectivas
+
+Placeholder
+
+
+## Ciclo de movilización política y estallido social
+## Estallido social y aumento en la participación en movimientos sociales
+
+<!--chapter:end:05-mov-sociales-acc-colec.Rmd-->
+
+
+# Identificación Política
+
+Placeholder
+
+
+## Identificación con Partidos y Coaliciones
+
+<!--chapter:end:06-id-politica.Rmd-->
+
+
+# Actitudes hacia la democracia
+
+Placeholder
+
+
+## Apoyo a la Democracia
+
+<!--chapter:end:07-actitud-demo.Rmd-->
+
+
+# Perfiles Ideológicos de los Chilenos 
+
+Placeholder
+
+
+## Clases latentes: Motivación
+### Batería de preguntas
+## Modelo teórico de perfiles ideólogicos
+### Aproximación Empírica
+### Perfiles ideológicos: Resultados principales
+
+<!--chapter:end:08-perfiles-ideo.Rmd-->
+
+
+# Conflicto de Clases y Élites
+
+Placeholder
+
+
+## Relaciones inter-clases
+### Clases sociales y Trato Justo
+## Deprivación Relativa
+## Percepción de elites
+
+<!--chapter:end:09-conflicto-clases.Rmd-->
+
+
+# Justificación de la Violencia
+
+Placeholder
+
+
+## Justificación de la violencia para el control social – a manos de ciudadanos
+## Justificación de la violencia para el control social – a manos de carabineros
+## Justificación de la violencia para el cambio social
+
+<!--chapter:end:10-just-viol.Rmd-->
+
+
+# Cambio Constitucional
+
+Placeholder
+
+
+## Caracterización de la opinión publica respecto al cambio constitucional
+## ¿Quiénes cambiaron de opinión sobre la constitución con el estallido social?
+## Desigualdad de participación en el proceso constituyente
+
+<!--chapter:end:11-camb-constiucional.Rmd-->
+
+
+# Conflictividad y sociabilidad barrial
+
+Placeholder
+
+
+## Conflictividad barrial
+
+<!--chapter:end:12-confli-barrial.Rmd-->
+
+
+# Sociabilidad barrial
+
+Placeholder
+
+
+## Sociabilidad barrial
+
+<!--chapter:end:13-socia-barrial.Rmd-->
+
+
+# Confianza y seguridad con perspectiva territorial
+
+Placeholder
+
+
+
+<!--chapter:end:14-confianza-territ.Rmd-->
+
+
+# Estatus subjetivo y Percepción de Mérito
+
+Placeholder
+
+
+## Estatus subjetivo
+## Percepción de meritocracia
+
+<!--chapter:end:15-merito-desig.Rmd-->
+
+
+# Género
+
+Placeholder
+
+
+## Sexismo hostil y benevolente
+## Expectativas y roles de género
+## Derechos y roles de género
+## Trabajo y género
+## Identidad de género y sororidad
+
+<!--chapter:end:16-genero.Rmd-->
+
+
+# Salud Mental y Bienestar 
+
+Placeholder
+
+
+## Salud mental y bienestar
+## Brecha de género en Salud Mental
+## Sintomatología depresiva, sexo y ocupación
+
+<!--chapter:end:17-salud-bienestar.Rmd-->
+
+
+# Migración
+
+Placeholder
+
+
+## Amenaza realista y amenaza simbólica respecto a inmigrantes
+## Amenaza realista y simbólica respecto a inmigrantes según nivel educacional
+## Amenaza realista y simbólica respecto a inmigrantes según frecuencia de contacto
+## Frecuencia de Contacto y Confianza hacia los Inmigrantes
+## Relevancia de las normas pro-contacto de cercanos
+
+<!--chapter:end:18-migracion.Rmd-->
+
+# Cómo citar este informe: {-}
+
+:::{.blue-box}
+> COES (2021) Radiografía del Cambio Social: Análisis de Resultados Longitudinales ELSOC 2016-2021. Presentación de Resultados COES. Septiembre, Santiago de Chile.
+:::
+
+**Entrada Bibtex:**
+
+```{r,echo=TRUE,eval=FALSE}
+@techreport{coes_Radiografia_2021,
+  title = {Radiograf\'ia Del {{Cambio Social}}: {{An\'alisis}} de {{Resultados Longitudinales ELSOC}} 2016-2021.},
+  author = {COES},
+  year = {2021},
+  month = sep,
+  address = {{Santiago de Chile, Chile}},
+  institution = {{Centro de Estudios de Conflicto y Cohesi\'on Social}}
+}
+```
+
+<!--chapter:end:19-como-citar.Rmd-->
+

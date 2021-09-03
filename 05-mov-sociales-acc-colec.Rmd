@@ -12,20 +12,68 @@ editor_options:
 
 
 <!-- ### 1.1 ¿Cuál es el movimiento social que usted más valora de esta lista? Según ola del estudio  -->
-```{r mov, fig.align='left',fig.cap="¿Cuál es el movimiento social que usted más valora de esta lista? Según ola del estudio"}
+
+```{r diseno, echo=FALSE}
+elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
+                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
+                          weights = ~ponderador02, #ponderador de corte transversal
+                          nest = TRUE,
+                          data = elsoc_panel_m1)
+```
+
+```{r echo=FALSE}
+datos.grafico1 <- data.frame((svytable(~mov + ola, elsoc_diseno, round = F))) %>%
+  group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
+  na.omit()
+
+datos.subset <- droplevels(subset(datos.grafico1, datos.grafico1$ola == '2019' | datos.grafico1$ola == '2021'))
+
+```
+
+
+```{r echo=FALSE}
+graf.mov <-datos.subset %>% 
+  ggplot(aes(y = porcentaje, x = mov, fill = ola, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'dodge2') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0,0.3)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  coord_flip() +
+  theme(axis.text.x = element_text(size=rel(.9))) +
+  scale_x_discrete(labels = waiver( ))
+
+graf.mov
+
+
+
+
+```
+
+
+
+```{r mov, eval=FALSE, fig.align='left', fig.cap="¿Cuál, include=FALSE}
+
 g1.1 <- gr.bar.freq(var_y = 'ola', var_x = 'mov', suma100 = 'y', no_label_texto = T,
                     data = subset(elsoc_panel_m1, ola == 2018 | ola == 2019), expand=T, limits_y = c(0,.4),
                     reverse_x=T, reverse_y = T, posicion_leyenda = 'right', invertir_labels = T,
                     colores = c(.33,.66,1)) +
   coord_flip() + theme(axis.text.x = element_text(size=rel(.9))) +
   scale_x_discrete(labels = waiver())
+
 g1.1
 
 ```
 >  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.1, 'var_y')` 
 
 <!-- ### 1.2 Frecuencia de participación en movimientos sociales, según Ola de encuesta. Porcentaje que responde A veces, Frecuentemente o Muy frecuentemente  -->
-```{r freq-mov, fig.align='center', fig.cap="Frecuencia de participación en movimientos sociales, según Ola de encuesta. Porcentaje que responde A veces, Frecuentemente o Muy frecuentemente"}
+
+
+
+```{r freq-mov, eval=FALSE, fig.align='center', fig.cap="Frecuencia de participación en movimientos sociales, include=FALSE}
 g1.2 <-  gr.bar.freq.rec.list(c('freq_mov_w04','freq_mov_w03', 'freq_mov_w02', 'freq_mov_w01'),  var_z=NULL,
                               REC = c('A veces', 'Frecuentemente o muy frecuentemente'),
                           data = elsoc_wide_m1, ponderador = 'ponderador02_w04', reverse_y=T,
@@ -39,7 +87,7 @@ g1.2
 
 
 <!-- ### 1.3 Cambio en Frecuencia de participación en movimientos sociales, según ola de encuesta -->
-```{r cambio-freq, fig.align='center',fig.cap="Cambio en Frecuencia de participación en movimientos sociales, según ola de encuesta"}
+```{r cambio-freq, eval=FALSE, fig.align='center', fig.cap="Cambio en Frecuencia de participación en movimientos sociales, include=FALSE}
 g1.3 <- gr.bar.freq.list(c('cambio_freq_mov_w04','cambio_freq_mov_w03', 'cambio_freq_mov_w02'), 
                          data = elsoc_wide_m1, ponderador = 'ponderador02_w04', reverse_y=T,
                          label_x = c('2016-2017', '2017-2018', '2018-2019'),
@@ -55,8 +103,9 @@ g1.3
 
 
 <!-- ### 1.4 Cambio en Frecuencia de participación en movimientos sociales entre 2018 y 2019, según edad del entrevistado -->
-```{r cambio-freq-edad, fig.align='center',fig.cap="Cambio en Frecuencia de participación en movimientos sociales entre 2018 y 2019, según edad del entrevistado"}
-g1.4 <- gr.bar.freq('cambio_freq_mov_w04', var_x = 'edad_w03', data = subset(elsoc_wide_m1), reverse_y=T, ponderador = 'ponderador02_w03',
+
+```{r cambio-freq-edad, eval=FALSE, fig.align='center', fig.cap="Cambio en Frecuencia de participación en movimientos sociales entre 2018 y 2019, include=FALSE}
+# g1.4 <- gr.bar.freq('cambio_freq_mov_w04', var_x = 'edad_w03', data = subset(elsoc_wide_m1), reverse_y=T, ponderador = 'ponderador02_w03',
                  posicion = 'stack',
                     colores = c(0,.85,1))
 g1.4
