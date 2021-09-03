@@ -5,143 +5,96 @@ editor_options:
 ---
 
 # Justificación de la Violencia
-¿En qué medida se justifica la violencia para el control social? ¿Y para exigir cambios sociales? ¿Ha cambiado su grado de justificación post estallido social 18/O?
-
-Todas las sociedades se ven enfrentadas al desafío de reducir el uso de la violencia para resolver las controversias o conflictos. Cuando los miembros de una sociedad justifican el uso de la violencia, la probabilidad de ocurrencia de hechos violentos aumenta sistemáticamente [@markowitz_Attitudes_2001] y se corre el riesgo de que ocurra una escalada que lleve a disminuir drásticamente la seguridad de las personas.
-
-La diversidad de formas de la violencia que se encuentran tanto en el Chile de hoy, como en cualquier sociedad a lo largo de su historia, justifica la necesidad de abordar su evolución a lo largo del tiempo. En ELSOC se analizará la evolución de dos tipos de violencia: violencia para el control social y violencia para el cambio social.
 
 
 ## Justificación de la violencia para el control social – a manos de ciudadanos
 
-La violencia para el control social, corresponde a actos de agresión física que tienen como finalidad mantener o restablecer el orden social imperante. Normalmente este tipo de violencia es ejercida por miembros de grupos mayoritarios o de alto estatus o por las instituciones que actúan en su nombre, sobre individuos o grupos minoritarios o de bajo estatus, por ejemplo, los delincuentes. En este contexto, se distingue entre violencia llevada a cabo de manera privada por ciudadanos (linchamientos) y violencia institucional (violencia de Carabineros).
-
-
-Tal como se aprecia en la Figura \@ref(fig:just-vio-ola), existe en general, un grado importante de justificación del uso de la violencia para ejercer control social de los delincuentes, el cual se mantiene relativamente estable en el tiempo. Perseguir y golpear a un delincuente que acaba de cometer un asalto, por ejemplo, alcanza 26% de alta justificación y 47 % considera que pocas o algunas veces se justifica el 2019.  Este patrón de justificación del uso de la violencia se reduce de manera importante cuando se consulta por la conducta de amarrar a un poste y desnudar a un delincuente que acaba de cometer un asalto. En este caso, solo un 14% lo justifica, encontrándose en este caso que 55% de las personas derechamente consideran que nunca se justifica este tipo de acto. Este tipo de justificación de violencia experimenta variaciones menores entre 2016 y 2019).
-
-
 <!-- ### 6.1 Justificación de la violencia en relación a delincuencia, según ola de encuesta -->
 
 ```{r just-vio-ola, fig.aligN='center', fig.cap='Justificación de la violencia en relación a delincuencia, según ola de encuesta'}
-g4.1 <- gr.bar.freq.list(c('f05_01_rec', 'f05_02_rec'), 'ola', modo = 2, posicion = 'stack',
-                     label_list = c('Personas persigan y golpeen a un delincuente\n que acaba de cometer un asalto',
-                                 'Personas amarren a un poste y desnuden a un\n delincuente que acaba de cometer un asalto'), 
-                     reverse_y=F) + theme(strip.text = element_text(size = rel(.75)))
-g4.1
+datos.alta <- data.frame((svytable(~f05_01_rec + ola, elsoc_diseno, round = F))) %>% group_by( ola) %>% mutate(p_alta=Freq/sum(Freq))
+datos.alta$ola <- NULL
+datos.baja <- data.frame((svytable(~f05_02_rec + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(p_baja=Freq/sum(Freq))
 
+datos.grafico1<- cbind(datos.alta, datos.baja)
+
+#trasponer según variable
+datos.grafico <- datos.grafico1 %>% 
+  pivot_longer(cols = starts_with('f05_'))  %>%
+  mutate(variable = factor(name, labels = c('Personas persigan y golpeen a un delincuente\n que acaba de cometer un asalto', 'Personas amarren a un poste y desnuden a un\n delincuente que acaba de cometer un asalto'))) %>% 
+  drop_na()
+
+datos.grafico$porcentaje <- with(datos.grafico, case_when(
+  variable == 'Personas persigan y golpeen a un delincuente\n que acaba de cometer un asalto' ~ p_alta,
+  variable == 'Personas amarren a un poste y desnuden a un\n delincuente que acaba de cometer un asalto' ~ p_baja))
+
+#graficamos
+
+gr.10.1 <-datos.grafico %>% 
+  ggplot(aes(y = porcentaje, x = ola, fill = value, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+  theme_bw() + 
+  geom_col(position = "Stack") +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  facet_wrap(datos.grafico$variable) +
+  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') + 
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75) +
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+gr.10.1
 ```
 
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g4.1, 'var_x', 'var_z')`
 
 
 ## Justificación de la violencia para el control social – a manos de carabineros
 
-Tal como lo revela la Figura \@ref(fig:just-carab-ola), existe un alto consenso en la población respecto de no justificar el uso de la fuerza por parte de Carabineros para reprimir una marcha pacífica. En torno al 65% de las personas señala el 2016 que nunca se justifica este actuar. Esta cifra, que se mantiene relativamente estable en el tiempo, aumenta de manera significativa post estallido social de octubre 2019 alcanzando un 79%.
-
-
-Un patrón distinto de justificación del uso de la fuerza se constata cuando se analiza que Carabineros desaloje a la fuerza a estudiantes de liceo en toma. Si el 2016, se encontraba que un 43% lo justificaba a veces y un 16% siempre lo justificaba, estas cifras caen de manera muy significativa el 2019, llegando a un 29% y 8,4% respectivamente. Claramente, post estallido social, se justifica en menor medida esta forma de control social ejercido por Carabineros.
-
-
-Cuando se consulta por el nivel de justificación de la violencia en contra de Carabineros -que los estudiantes tiren piedras a Carabineros en marchas por la educación-, se constata un alto consenso en indicar que nunca justifica este accionar. Sin embargo, llama la atención, que post estallido social, esta cifra cambia, aumentando la proporción de personas que la justifica a veces (19%) y en torno a un 8% que siempre se justifica.
-
-
 
 <!-- ### 6.2 Justificación de la violencia en relación al actuar de Carabineros, según ola -->
 ```{r just-carab-ola, fig.aligN='center',fig.cap="Justificación de la violencia en relación al actuar de Carabineros, según ola"}
-g4.2 <- gr.bar.freq.list(c('f05_03_rec', 'f05_04_rec', 'f05_07_rec'),
-                         'ola', modo = 2, posicion = 'stack',
-                     label_list = c('Carabineros use la fuerza para\n reprimir manifestación pacífica',
+datos.alta <- data.frame((svytable(~f05_03_rec + ola, elsoc_diseno, round = F))) %>% group_by( ola) %>% mutate(p_alta=Freq/sum(Freq))
+datos.alta$ola <- NULL
+datos.baja <- data.frame((svytable(~f05_04_rec + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(p_baja=Freq/sum(Freq))
+datos.alta$ola <- NULL
+datos.media <- data.frame((svytable(~f05_07_rec + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(p_media=Freq/sum(Freq))
+datos.grafico1<- cbind(datos.alta, datos.baja, datos.media)
+
+#trasponer según variable
+datos.grafico <- datos.grafico1 %>% 
+  pivot_longer(cols = starts_with('f05_'))  %>%
+  mutate(variable = factor(name, labels = c('Carabineros use la fuerza para\n reprimir manifestación pacífica',
                                  'Carabineros desaloje a la fuerza\na estudiantes de liceo en toma',
-                                 'Estudiantes tiren piedras a Carabi-\nneros en marcha por la educación'), 
-                     reverse_y=F, tamano_letra = .9) + theme(strip.text = element_text(size = rel(.75)))
-g4.2
+                                 'Estudiantes tiren piedras a Carabi-\nneros en marcha por la educación'))) %>% 
+  drop_na()
 
-```
- >  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g4.2, 'var_x', 'var_z')`
+datos.grafico$porcentaje <- with(datos.grafico, case_when(
+  variable == 'Carabineros use la fuerza para\n reprimir manifestación pacífica' ~ p_alta,
+  variable == 'Carabineros desaloje a la fuerza\na estudiantes de liceo en toma' ~ p_baja,
+  variable == 'Estudiantes tiren piedras a Carabi-\nneros en marcha por la educación' ~ p_media))
 
+#graficamos
 
-## Justificación de la violencia para el cambio social
+gr.10.2 <-datos.grafico %>% 
+  ggplot(aes(y = porcentaje, x = ola, fill = value, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+  theme_bw() + 
+  geom_col(position = "Stack") +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  facet_wrap(datos.grafico$variable) +
+  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') + 
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75) +
+  theme(legend.position = 'top',
+        legend.title = element_blank())
 
-La violencia para el cambio social, por su parte, corresponde a actos de agresión instrumental perpetrados habitualmente por individuos o miembros de grupos (muchas veces desaventajados) que aspiran a promover un cambio en la forma en que se organiza la sociedad [@gerber_Development_2016].
-
-
-Los resultados reportados en la Figura \@ref(fig:just-vio-cambio)revelan de manera sistemática y estable a lo largo del tiempo (entre 2016-2019), que existe alto consenso en indicar que nunca se justifica que personas incendien o dañen inmobiliario público y/o medios de transporte y/o locales comerciales para exigir cambios sociales; tampoco que personas dañen bienes o propiedades en el barrio que vive ni en otros barrios. En definitiva, existe un rechazo fuerte y claro hacia este tipo de actos de violencia como medio para exigir cambios sociales.
-
-
-Sin embargo, se constatan importantes variaciones en función de la edad, el nivel educacional, y la orientación política de las personas. Específicamente, en términos relativos son los jóvenes entre 18 y 29 años (Figura \@ref(fig:just-cambio-edad)); las personas que cuentan con educación universitaria (Figura \@ref(fig:just-cambio-educ) ) y quienes tienen una orientación política de izquierda (Figura \@ref(fig:radical-ideol)) quienes más justifican este tipo de violencia instrumental.
-
-
-
-<!-- ### 6.3 Justificación de la violencia para el cambio social (2019) -->
-```{r just-vio-cambio, fig.aligN='center',fig.cap="Justificación de la violencia para el cambio social (2019)"}
-g4.3 <- gr.bar.freq.list(c('f05_09_rec', 'f05_10_rec', 'f05_11_rec', 't16_rec', 't17_rec'), posicion = 'stack',
-                     label_list = c('Personas incendien o dañen inmobiliario publico',
-                                 'Personas incendien o dañen medios de transporte',
-                                 'Personas incendien o dañen locales comerciales',
-                                 'Personas dañen bienes y propiedades en el barrio en que usted vive',
-                                 'Personas dañen bienes y propiedades en barrios distintos al que usted vive'),
-                 reverse_y=F)
-g4.3
-```
- >  **Nota:**  para las categorías "Personas dañen bienes y propiedades del barrio en que usted vive", y "Personas dañen propiedades en barrios distintos al que usted vive", se pregunta específicamente en relación a las movilizaciones del 18/O. Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g4.3)` 
-
-
-<!-- ### 6.4 Justificación de la violencia para el cambio social (2019), según tramo de edad -->
-```{r just-cambio-edad, fig.aligN='center',fig.cap="Justificación de la violencia para el cambio social (2019), según tramo de edad"}
-g4.4 <- gr.bar.freq('just_violencia_cambio', 'edadt', posicion = 'stack', reverse_y=F)
-g4.4
+gr.10.2
 ```
 
 
- >  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g4.4, NULL)`
-
-<!-- ### 6.5 Justificación de la violencia para el cambio social (2019), según nivel educacional -->
-```{r just-cambio-educ, fig.aligN='center',fig.cap="Justificación de la violencia para el cambio social (2019), según nivel educacional"}
-g4.5 <- gr.bar.freq('just_violencia_cambio', 'educ', posicion = 'stack')
-g4.5
-```
-
-
- >  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g4.5, NULL)`
-
-<!-- ### 6.6 Justificación de la violencia para el cambio social (2019), según asistencia a marchas pacíficas -->
-```{r just-cambio-marcha, fig.align='center',fig.cap="Justificación de la violencia para el cambio social (2019), según asistencia a marchas pacíficas"}
-g4.6 <- gr.bar.freq('just_violencia_cambio', 'c08_02', posicion = 'stack', titulo_x = 'Frecuencia de asistencia a marchas pacificas')
-g4.6
-```
-
-
- >  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g4.6, NULL)`
-
-<!-- ### 6.7 Yo estaría dispuesto a participar en acciones más radicales, si pensara que no existen otras alternativas viables para promover el cambio social -->
-```{r radical, fig.align='center',fig.cap="Yo estaría dispuesto a participar en acciones más radicales, si pensara que no existen otras alternativas viables para promover el cambio social"}
-g4.7 <- gr.bar.freq('f07_02')
-g4.7
-```
-
- >  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g4.7)`
-
-<!-- ### 6.8 Estaría dispuesto a participar en acciones radicales, según grupo de edad y sexo (2019) Porcentaje que responde "De acuerdo" o "Totalmente de acuerdo"  -->
-```{r radical-sexo-edad, fig.align='center',fig.cap='Estaría dispuesto a participar en acciones radicales, según grupo de edad y sexo (2019). Porcentaje que responde "De acuerdo" o "Totalmente de acuerdo"'}
-g4.8 <- gr.bar.freq.rec('f07_02',  'm0_sexo', 'edadt', data = subset(elsoc_panel, ola == 2019))
-g4.8
-```
-
- >  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g4.8, NULL)`
-
-<!-- ### 6.9 Estaría dispuesto a participar en acciones radicales, según Posición ideológica (2019) Porcentaje que responde "De acuerdo" o "Totalmente de acuerdo"  -->
-```{r radical-ideol, fig.align='center',fig.cap='Estaría dispuesto a participar en acciones radicales, según Posición ideológica (2019). Porcentaje que responde "De acuerdo" o "Totalmente de acuerdo"'}
-g4.9 <- gr.bar.freq.rec('f07_02', 'pos_id', data = subset(elsoc_panel, ola == 2019))
-g4.9
-```
-
- >  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g4.9, NULL)`
-
-<!-- ### 6.10 Estaría dispuesto a acciones radicales, según Justificación de la violencia para el cambio social -->
-```{r radical-cambio, fig.align='center',fig.cap="Estaría dispuesto a acciones radicales, según Justificación de la violencia para el cambio social"}
-g4.10 <- gr.bar.freq.rec('f07_02', 'just_violencia_cambio',
-                         data = subset(elsoc_panel_m1, ola == 2019))
-g4.10
-```
-
- >  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g4.10, NULL)`

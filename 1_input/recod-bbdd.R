@@ -499,61 +499,61 @@ elsoc_long$just_violencia_cambio <- factor(with(elsoc_long,
                                                           just_violencia_cambio_prom <= 5 ~ 3)),
                                            labels = c('Nunca se justifica', 'Pocas o algunas veces se justifica', 'Muchas veces o siempre se justifica'))
 elsoc_long$f05_01_rec <- factor(with(elsoc_long, 
-                                     case_when(f05_01 == 'Nunca se justifica' ~ 1,
-                                               f05_01 == 'Pocas veces se justifica' | f05_01 == 'Algunas veces se justifica' ~ 2,
-                                               f05_01 == 'Muchas veces se justifica' | f05_01 == 'Siempre se justifica' ~ 3)),
+                                     case_when(f05_01 == '1' ~ 1,
+                                               f05_01 == '2' | f05_01 == '3' ~ 2,
+                                               f05_01 == '4' | f05_01 == '5' ~ 3)),
                                 labels = c('Nunca se justifica', 'Pocas o algunas veces se justifica', 'Muchas veces o siempre se justifica'))
 
 elsoc_long$f05_02_rec <- factor(with(elsoc_long, 
-                                     case_when(f05_02 == 'Nunca se justifica' ~ 1,
-                                               f05_02 == 'Pocas veces se justifica' | f05_02 == 'Algunas veces se justifica' ~ 2,
-                                               f05_02 == 'Muchas veces se justifica' | f05_02 == 'Siempre se justifica' ~ 3)),
+                                     case_when(f05_02 == '1' ~ 1,
+                                               f05_02 == '2' | f05_02 == '3' ~ 2,
+                                               f05_02 == '4' | f05_02 == '5' ~ 3)),
                                 labels = c('Nunca se justifica', 'Pocas o algunas veces se justifica', 'Muchas veces o siempre se justifica'))
 
 elsoc_long$f05_03_rec <- factor(with(elsoc_long, 
-                                     case_when(f05_03 == 'Nunca se justifica' ~ 1,
-                                               f05_03 == 'Pocas veces se justifica' | f05_03 == 'Algunas veces se justifica' ~ 2,
-                                               f05_03 == 'Muchas veces se justifica' | f05_03 == 'Siempre se justifica' ~ 3)),
+                                     case_when(f05_03 == '1' ~ 1,
+                                               f05_03 == '2' | f05_03 == '3' ~ 2,
+                                               f05_03 == '4' | f05_03 == '5' ~ 3)),
                                 labels = c('Nunca se justifica', 'Pocas o algunas veces se justifica', 'Muchas veces o siempre se justifica'))
 elsoc_long$f05_04_rec <- factor(with(elsoc_long, 
-                                     case_when(f05_04 == 'Nunca se justifica' ~ 1,
-                                               f05_04 == 'Pocas veces se justifica' | f05_04 == 'Algunas veces se justifica' ~ 2,
-                                               f05_04 == 'Muchas veces se justifica' | f05_04 == 'Siempre se justifica' ~ 3)),
+                                     case_when(f05_04 == '1' ~ 1,
+                                               f05_04 == '2' | f05_04 == '3' ~ 2,
+                                               f05_04 == '4' | f05_04 == '4' ~ 3)),
                                 labels = c('Nunca se justifica', 'Pocas o algunas veces se justifica', 'Muchas veces o siempre se justifica'))
 elsoc_long$f05_07_rec <- factor(with(elsoc_long, 
-                                     case_when(f05_07 == 'Nunca se justifica' ~ 1,
-                                               f05_07 == 'Pocas veces se justifica' | f05_07 == 'Algunas veces se justifica' ~ 2,
-                                               f05_07 == 'Muchas veces se justifica' | f05_07 == 'Siempre se justifica' ~ 3)),
+                                     case_when(f05_07 == '1' ~ 1,
+                                               f05_07 == '2' | f05_07 == '3' ~ 2,
+                                               f05_07 == '4' | f05_07 == '4' ~ 3)),
                                 labels = c('Nunca se justifica', 'Pocas o algunas veces se justifica', 'Muchas veces o siempre se justifica'))
 
 elsoc_long$f05_09_rec <- factor(with(elsoc_long, 
-                                     case_when(f05_09 == 'Nunca se justifica' ~ 1,
-                                               f05_09 == 'Pocas veces se justifica' | f05_09 == 'Algunas veces se justifica' ~ 2,
-                                               f05_09 == 'Muchas veces se justifica' | f05_09 == 'Siempre se justifica' ~ 3)),
+                                     case_when(f05_09 == '1' ~ 1,
+                                               f05_09 == '2' | f05_09 == '3' ~ 2,
+                                               f05_09 == '4' | f05_09 == '5' ~ 3)),
                                 labels = c('Nunca se justifica', 'Pocas o algunas veces se justifica', 'Muchas veces o siempre se justifica'))
 
 elsoc_long$f05_10_rec <- factor(with(elsoc_long, 
-                                     case_when(f05_10 == 'Nunca se justifica' ~ 1,
-                                               f05_10 == 'Pocas veces se justifica' | f05_10 == 'Algunas veces se justifica' ~ 2,
-                                               f05_10 == 'Muchas veces se justifica' | f05_10 == 'Siempre se justifica' ~ 3)),
+                                     case_when(f05_10 == '1' ~ 1,
+                                               f05_10 == '2' | f05_10 == '3' ~ 2,
+                                               f05_10 == '4' | f05_10 == '5' ~ 3)),
                                 labels = c('Nunca se justifica', 'Pocas o algunas veces se justifica', 'Muchas veces o siempre se justifica'))
 
 elsoc_long$f05_11_rec <- factor(with(elsoc_long, 
-                                     case_when(f05_11 == 'Nunca se justifica' ~ 1,
-                                               f05_11 == 'Pocas veces se justifica' | f05_11 == 'Algunas veces se justifica' ~ 2,
-                                               f05_11 == 'Muchas veces se justifica' | f05_11 == 'Siempre se justifica' ~ 3)),
+                                     case_when(f05_11 == '1' ~ 1,
+                                               f05_11 == '2' | f05_11 == '3' ~ 2,
+                                               f05_11 == '4' | f05_11 == '5' ~ 3)),
                                 labels = c('Nunca se justifica', 'Pocas o algunas veces se justifica', 'Muchas veces o siempre se justifica'))
 
 elsoc_long$t16_rec <- factor(with(elsoc_long, 
-                                  case_when(t16 == 'Nunca se justifica' ~ 1,
-                                            t16 == 'Pocas veces se justifica' | t16 == 'Algunas veces se justifica' ~ 2,
-                                            t16 == 'Muchas veces se justifica' | t16 == 'Siempre se justifica' ~ 3)),
+                                  case_when(t16 == '1' ~ 1,
+                                            t16 == '2' | t16 == '3' ~ 2,
+                                            t16 == '4' | t16 == '5' ~ 3)),
                              labels = c('Nunca se justifica', 'Pocas o algunas veces se justifica', 'Muchas veces o siempre se justifica'))
 
 elsoc_long$t17_rec <- factor(with(elsoc_long, 
-                                  case_when(t17 == 'Nunca se justifica' ~ 1,
-                                            t17 == 'Pocas veces se justifica' | t17 == 'Algunas veces se justifica' ~ 2,
-                                            t17 == 'Muchas veces se justifica' | t17 == 'Siempre se justifica' ~ 3)),
+                                  case_when(t17 == '1' ~ 1,
+                                            t17 == '2' | t17 == '3' ~ 2,
+                                            t17 == '4' | t17 == '5' ~ 3)),
                              labels = c('Nunca se justifica', 'Pocas o algunas veces se justifica', 'Muchas veces o siempre se justifica'))
 
 ### PERCEPCION DE DESIGUALDAD Y MERITO
@@ -623,6 +623,24 @@ elsoc_long$d15_rec <- factor(car::recode(as.numeric(elsoc_long$d15), 'c(1,2)=1;3
                              labels = c('Bajo Contacto Negativo', 'Medio Contacto Negativo', 'Alto Contacto Negativo'))
 
 # TRato Justo por grupos (d25)
+elsoc_long$d25_01_rec <- factor(car::recode(as.numeric(elsoc_long$d25_01), 'c(1,2,3)=1;c(4,5,6)=2;c(7,8,9,10)= 3; else=NA', as.factor = TRUE),
+                                levels = c(1,2,3),
+                                labels = c('Mal Trato', 'Trato Medio', 'Trato Alto'))
+elsoc_long$d25_02_rec <- factor(car::recode(as.numeric(elsoc_long$d25_02), 'c(1,2,3)=1;c(4,5,6)=2;c(7,8,9,10)= 3; else=NA', as.factor = TRUE),
+                                levels = c(1,2,3),
+                                labels = c('Mal Trato', 'Trato Medio', 'Trato Alto'))
+elsoc_long$d25_03_rec <- factor(car::recode(as.numeric(elsoc_long$d25_03), 'c(1,2,3)=1;c(4,5,6)=2;c(7,8,9,10)= 3; else=NA', as.factor = TRUE),
+                                levels = c(1,2,3),
+                                labels = c('Mal Trato', 'Trato Medio', 'Trato Alto'))
+elsoc_long$d25_04_rec <- factor(car::recode(as.numeric(elsoc_long$d25_04), 'c(1,2,3)=1;c(4,5,6)=2;c(7,8,9,10)= 3; else=NA', as.factor = TRUE),
+                                levels = c(1,2,3),
+                                labels = c('Mal Trato', 'Trato Medio', 'Trato Alto'))
+elsoc_long$d25_05_rec <- factor(car::recode(as.numeric(elsoc_long$d25_05), 'c(1,2,3)=1;c(4,5,6)=2;c(7,8,9,10)= 3; else=NA', as.factor = TRUE),
+                                levels = c(1,2,3),
+                                labels = c('Mal Trato', 'Trato Medio', 'Trato Alto'))
+elsoc_long$d25_06_rec <- factor(car::recode(as.numeric(elsoc_long$d25_06), 'c(1,2,3)=1;c(4,5,6)=2;c(7,8,9,10)= 3; else=NA', as.factor = TRUE),
+                                levels = c(1,2,3),
+                                labels = c('Mal Trato', 'Trato Medio', 'Trato Alto'))
 elsoc_long$trato_justo_cambio_prom <- with(elsoc_long, c(as.numeric(d25_01)+as.numeric(d25_02)+ as.numeric(d25_03) +
                                                            as.numeric(d25_04) + as.numeric(d25_05) + as.numeric(d25_06))/6)
 
@@ -659,6 +677,22 @@ elsoc_long$dep.grup.rec <- factor(with(elsoc_long, case_when(dep.grup < 3 ~ 1,
 elsoc_long$depriva <- c(as.numeric(elsoc_long$d27_01) + as.numeric(elsoc_long$d27_02) +
                           as.numeric(elsoc_long$d27_03) + as.numeric(elsoc_long$d27_04)+as.numeric(elsoc_long$d27_05)) /5
 
+#general d27
+elsoc_long$d27_01_rec <- factor(car::recode(as.numeric(elsoc_long$d27_01), 'c(1,2)=1;c(3)=2;c(4,5)= 3; else=NA', as.factor = TRUE),
+                                levels = c(1,2,3),
+                                labels = c('Desacuerdo', 'Ni acuerdo ni desacuerdo', 'De Acuerdo'))
+elsoc_long$d27_02_rec <- factor(car::recode(as.numeric(elsoc_long$d27_02), 'c(1,2)=1;c(3)=2;c(4,5)= 3; else=NA', as.factor = TRUE),
+                                levels = c(1,2,3),
+                                labels = c('Desacuerdo', 'Ni acuerdo ni desacuerdo', 'De Acuerdo'))
+elsoc_long$d27_03_rec <- factor(car::recode(as.numeric(elsoc_long$d27_03), 'c(1,2)=1;c(3)=2;c(4,5)= 3; else=NA', as.factor = TRUE),
+                                levels = c(1,2,3),
+                                labels = c('Desacuerdo', 'Ni acuerdo ni desacuerdo', 'De Acuerdo'))
+elsoc_long$d27_04_rec <- factor(car::recode(as.numeric(elsoc_long$d27_04), 'c(1,2)=1;c(3)=2;c(4,5)= 3; else=NA', as.factor = TRUE),
+                                levels = c(1,2,3),
+                                labels = c('Desacuerdo', 'Ni acuerdo ni desacuerdo', 'De Acuerdo'))
+elsoc_long$d27_05_rec <- factor(car::recode(as.numeric(elsoc_long$d27_05), 'c(1,2)=1;c(3)=2;c(4,5)= 3; else=NA', as.factor = TRUE),
+                                levels = c(1,2,3),
+                                labels = c('Desacuerdo', 'Ni acuerdo ni desacuerdo', 'De Acuerdo'))
 
 ################################# Cambios en base WIDE #####################
 
@@ -791,6 +825,11 @@ elsoc_wide$interes_politica_w01 <- factor(with(elsoc_wide,
 #-----------------------------------
 #Poner la clase S3 sitcky para que no se pierdan los atributos con subsets
 elsoc_long <- lapply(elsoc_long, sticky::sticky) %>% data.frame()
+
+#arreglo por falta de ponderador02
+as.ordered(elsoc_long$ponderador02)
+elsoc_long=elsoc_long %>% filter(!is.na(ponderador02))
+sjmisc::frq(elsoc_long$ponderador02)
 
 #Separar las muestras
 elsoc_panel <- elsoc_long %>% filter(tipo_atricion == 1 | tipo_atricion == 17)

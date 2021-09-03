@@ -1,89 +1,225 @@
-# Salud Mental y Bienestar 
-
-La salud mental es un indicador del bienestar de la población. La depresión es una afección mental caracterizada por un bajo estado de ánimo, pérdida de energía y desinterés generalizado. En todas las mediciones de ELSOC se ha incluido una batería de preguntas para detectar sintomatología depresiva (PHQ-9). En base a este instrumento se pueden catalogar a los participantes según sus síntomas de depresión: “Sin síntomas o depresión mínima”, “Depresión media”, “Depresión Moderada” y “Depresión Moderada Severa o Severa”.
-
-Cabe señalar que en el mundo occidental, la depresión es aproximadamente el doble de frecuente en las mujeres que en los hombres [@piccinelli_Gender_2000]. La mayoría de las investigaciones actuales aceptan que las diferencias de género en la depresión son el resultado de una interacción variable entre factores biológicos, psicológicos y sociales [@hopcroft_Sex_2007; @kuehner_Gender_2003].  
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
 
 ## Salud mental y bienestar
 
-En general, se aprecia preocupantemente, un incremento de las personas que declaran tener síntomas de depresión a lo largo del tiempo (Figura \@ref(fig:depre-wave)). El cambio más relevante ocurre entre el 2017 y 2019, específicamente en la categoría Depresión Media, que el año 2017 la padecía el 29,4% de las personas mientras que el 2019 aumenta al 40,3% (las demás categorías permanecen relativamente estables). 
+<!-- ###  1 Síntomas de Depresión, según Ola del Estudio -->
+```{r depre-wave, echo=FALSE, fig.align='center'}
+#------------------GR.1---------------
+datos.grafico <- data.frame((svytable(~depr + ola, 
+                                      elsoc_diseno, round = F))) %>% 
+  group_by(ola) %>% 
+  mutate(porcentaje=Freq/sum(Freq)) %>%
+  drop_na()
 
-**Nota 1:** es necesario aclarar que este índice no constituye un diagnóstico clínico de depresión. 
+gr.1 <- datos.grafico %>% 
+  ggplot(aes(y = porcentaje, x = ola, fill = depr, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .33, end = .85, direction = -1, option = 'viridis') +
+  #cambiar geom_text tal que: Stack y cambio colores
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75, color = rep.int(c('black', 'black', 'white', 'white'), 5)) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  ggtitle('Síntomas de Depresión, según Ola del Estudio')
 
-**Nota 2:** Se combinan las categorías "Depresión Moderada Severa" y "Depresión Severa" por su baja frecuencia por separado.
+gr.1
 
-<!-- ### 13.1 Síntomas de Depresión, según Ola del Estudio -->
-```{r depre-wave, fig.align='center',fig.cap='Síntomas de Depresión, según Ola del Estudio'}
-g13.1 <- gr.bar.freq("depr", posicion = 'stack', reverse_y=T, colores = c(0,.85,1))
-g13.1
 ```
 
-
->**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g13.1)`
-
+```{r N1, include=FALSE}
+N<-round(sum(datos.grafico$Freq),0)
+```
 ## Brecha de género en Salud Mental
 
-En el mundo occidental, la depresión es aproximadamente el doble de frecuente en las mujeres que en los hombres [@piccinelli_Gender_2000]. La mayoría de las investigaciones actuales aceptan que las diferencias de género en la depresión son el resultado de una interacción variable entre factores biológicos, psicológicos y sociales [@hopcroft_Sex_2007; @kuehner_Gender_2003]. Esta brecha de género se evidencia la Figura \@ref(fig:depre-year-sexo), donde se observa que entre 2016 y 2019 existe una mayor proporción de mujeres que hombres que tiene síntomas de Depresión Moderada o Depresión Moderada Severa a Severa.  Por ejemplo, el año 2016, el 12,9% de los hombres se encontraba en dichas categorías, en comparación al 28,5% de las mujeres. Si bien esta brecha de género disminuye en los años 2017 y 2018, el año 2019 post estallido social, son las mujeres quienes incrementan sustantivamente los síntomas de Depresión Moderada o más, llegando a duplicar al grupo de los hombres.
 
+<!-- ###  2 Sintomatología Depresiva por año, según sexo. Porcentaje con síntomas de "Depresion Moderada" o "Depresion Moderada Severa a Severa".  -->
+```{r depre-year-sexo, echo=FALSE, fig.align='center'}
+#------------------GR.6---------------
+elsoc_long$depr_rec <- car::recode(elsoc_long$suma_dep,
+                               "c(0,1,2,3,4)='1';
+c(5,6,7,8,9)='2';
+c(10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27)='3'")
 
-La Figura \@ref(fig:depre-sexo) revela que las trayectorias de síntomas de depresión entre el año 2016 y 2019 son bastante similares entre hombres y mujeres. Por ejemplo, alrededor de la mitad de hombres y de mujeres que el año 2016 no presentaban síntomas si lo hacen el año 2019; migrando principalmente a la categoría de depresión media. Por su parte, la mayoría de hombres y mujeres que el año 2016 tenía síntomas de depresión media, se mantiene en dicha categoría el año 2019. En las categorías de mayor depresión, los hombres parecen mayoritariamente disminuir la cantidad de síntomas de depresión, mientras que en las mujeres no se revela un patrón de trayectoria predominante.
+elsoc_diseno <- svydesign(ids = ~segmento, strata = ~estrato, 
+                          weights = ~ponderador02, nest = TRUE, data = elsoc_long)
+datos.grafico <- data.frame((svytable(~depr_rec + ola + m0_sexo, 
+                                      elsoc_diseno, round = F))) %>% 
+  group_by(ola, m0_sexo) %>% 
+  mutate(porcentaje=Freq/sum(Freq))
 
+datos.subset <- droplevels(subset(datos.grafico, datos.grafico$depr_rec == '3'))
 
+gr.6 <- ggplot(datos.subset, 
+               aes(y = porcentaje, x = ola, 
+                   color = m0_sexo, group = m0_sexo,
+              label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+  theme_bw() +   
+  geom_line(size = 1) +
+  geom_point(size = 1.8) +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0,0.5)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_color_viridis_d(begin = .33, end = .55, direction = 1, option = 'viridis') +
+  geom_text_repel(posilinetion = position_dodge(width = .9),
+                  size= 2.25) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  ggtitle('Sintomatología Depresiva por año, según sexo. Porcentaje con síntomas de “Depresion Moderada” o “Depresion Moderada Severa a Severa”.')
 
-<!-- ### 13.2 Sintomatología Depresiva por año, según sexo. Porcentaje con síntomas de "Depresion Moderada" o "Depresion Moderada Severa a Severa".  -->
-```{r depre-year-sexo, fig.align='center',fig.cap='Sintomatología Depresiva por año, según sexo. Porcentaje con síntomas de "Depresion Moderada" o "Depresion Moderada Severa a Severa".'}
-g13.3 <- gr.line.freq.rec("depr", var_x = "ola", var_z ="m0_sexo", REC=c('Depresion Moderada', 'Depresion Moderada Severa a Severa'),
-                 data = subset(elsoc_panel_m1, empleo != 'Otros'), limits_y = c(0,.5),
-                 colores = c(.33,.66,-1))
-g13.3   
+gr.6
+ 
 ```
->**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g13.3)` 
+```{r N2, include=FALSE}
+N<-round(sum(datos.grafico$Freq),0)
+```
+<!-- ###  3 Cambios en Síntomas de depresión entre años 2018 y 2021, según sexo -->
+```{r depre-sexo, echo=FALSE, fig.align='center'}
+#------------------GR.7---------------
+#1
+elsoc_long$depr <- na.replace(elsoc_long$depr, "NS/NR") #recode NA en categoría "NS/NR"
 
-<!-- ### 13.3 Cambios en Síntomas de depresión entre años 2016 y 2019, según sexo -->
-```{r depre-sexo, fig.align='center',fig.cap='Cambios en Síntomas de depresión entre años 2016 y 2019, según sexo'}
-g13.2 <- gr.alluvial.freq("depr", 'm0_sexo', data = subset(elsoc_panel_m1, ola==2016 |ola == 2019), reverse_y = T,  colores = c(0,.85,1), posicion_leyenda = 'top')
-g13.2
+elsoc_diseno <- svydesign(ids = ~segmento, strata = ~estrato, 
+                          weights = ~ponderador02, nest = TRUE, data = elsoc_long)
+
+datos.grafico <- data.frame((svytable(~depr + ola + idencuesta + 
+                                        m0_sexo, elsoc_diseno, round = F))) %>% 
+  dplyr::filter(Freq>0)  %>% 
+  group_by(ola,m0_sexo) %>% 
+  mutate(porcentaje=Freq/sum(Freq)) %>% na.omit()
+
+#1.1
+subset.grafico <- droplevels(subset(datos.grafico, datos.grafico$ola == '2018' | datos.grafico$ola == '2021'))
+
+#2
+etiquetas.grafico <- data.frame((svytable(~depr + ola + m0_sexo, 
+                                          elsoc_diseno, round = F))) %>% 
+  group_by(ola, m0_sexo) %>% 
+  mutate(porcentaje=Freq/sum(Freq)) %>% 
+  na.omit() %>% 
+  mutate(idencuesta = 1)
+
+#Paso 2.2: crear un subset sólo para los años 2017 y 2019
+etiquetas.grafico <- droplevels(subset(etiquetas.grafico, 
+                     etiquetas.grafico$ola == '2018' | etiquetas.grafico$ola == '2021'))
+
+gr.7 <- ggplot(subset.grafico, aes(x = ola, fill = depr, stratum = depr, 
+                              alluvium = idencuesta, y = porcentaje)) +
+  theme_bw() +
+  ggalluvial::geom_flow(alpha = .66) + 
+  ggalluvial::geom_stratum(linetype = 0) +
+  scale_y_continuous(labels = scales::percent) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  scale_fill_viridis_d(begin = 0, end = .9, direction = -1, option = 'viridis') +
+  facet_wrap(.~m0_sexo)+
+  geom_text(data = etiquetas.grafico, 
+            aes(label = ifelse(porcentaje > 0.1 , scales::percent(porcentaje, accuracy = .1),"")),
+            position = position_stack(vjust = .5),
+            show.legend = FALSE,
+            size = 2.75,
+            color = rep('white'))+
+  ggtitle('Cambios en Síntomas de depresión entre años 2016 y 2019, según sexo')
+
+gr.7
+
 ```
 
->**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N=`r getN(g13.2)` 
-
-Al analizar la sintomatología por tramos de edad y sexo, el 2019 se constata que son las mujeres quienes, en comparación a los hombres, exhiben más altos niveles de depresión moderada y moderada severa en todos los tramos etarios excepto en el tramo de 18 a 29 años donde ambos se igualan en torno a 30,5% para mujeres, y 34,5% para hombres  (Figura \@ref(fig:depre-edad-sexo)).
-
-<!-- ### 13.4 Síntomas de Depresión según tramos de edad y sexo (2019). Porcentaje con síntomas de "Depresion Moderada" o "Depresion Moderada Severa a Severa". -->
-```{r depre-edad-sexo, fig.align='center',fig.cap='Síntomas de Depresión según tramos de edad y sexo (2019). Porcentaje con síntomas de "Depresion Moderada" o "Depresion Moderada Severa a Severa".'}
-g13.4 <- gr.line.freq.rec("depr", 'edadt', 'm0_sexo',
-                 data= subset(elsoc_panel_m1, ola == 2019),
-                 REC = c('Depresion Moderada', 'Depresion Moderada Severa a Severa'), limits_y = c(0,0.5),
-                 colores = c(.33,.66,-1))
-g13.4   
+```{r N3, include=FALSE}
+N<-round(sum(datos.grafico$Freq),0)
 ```
 
->**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N=`r getN(g13.4, NULL)` 
+
+<!-- ###  4 Síntomas de Depresión según tramos de edad y sexo (2021). Porcentaje con síntomas de "Depresion Moderada" o "Depresion Moderada Severa a Severa". -->
+```{r depre-edad-sexo, echo=FALSE, fig.align='center'}
+#------------------GR.8---------------
+datos.grafico <- data.frame((svytable(~depr_rec + ola + m0_sexo + edad, 
+                                      elsoc_diseno, round = F))) %>% 
+  group_by(ola, m0_sexo, edad) %>% 
+  mutate(porcentaje=Freq/sum(Freq))
+
+datos.subset <- droplevels(subset(datos.grafico, datos.grafico$ola == '2021' & datos.grafico$depr_rec == '3'))
+
+gr.8 <- ggplot(datos.subset, 
+               aes(y = porcentaje, x = edad, 
+                   color = m0_sexo, group = m0_sexo,
+                   label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+  theme_bw() +   
+  geom_line(size = 1) +
+  geom_point(size = 1.8) +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0,0.5)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_color_viridis_d(begin = .33, end = .55, direction = 1, option = 'viridis') +
+  geom_text_repel(posilinetion = position_dodge(width = .9),
+                  size= 2.25) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  ggtitle('Síntomas de Depresión según tramos de edad y sexo (2021). Porcentaje con síntomas de “Depresion Moderada” o “Depresion Moderada Severa a Severa')
+
+gr.8
+
+```
+
+```{r N4, include=FALSE}
+N<-round(sum(datos.grafico$Freq),0)
+``` 
 
 ## Sintomatología depresiva, sexo y ocupación
 
-La literatura revela que esta brecha de género en salud mental encuentra también relacionada con los roles de género tradicionales y las posiciones sociales dentro de los diferentes ámbitos de la vida privada y social, donde los roles femeninos se encuentran más asociados a la falta de elección, sobrecarga de roles y la subvaloración [@piccinelli_Gender_2000; @stoppard_Understanding_2000]. Estos roles de género tradicionales vinculan lo masculino con el ámbito laboral y el sustento económico familiar, mientras que lo femenino con el cuidado de los hijos(as) y tareas del hogar.
+
+<!-- ### 5 Síntomas de Depresión según categoría ocupacional (año 2021). Porcentaje con síntomas de "Depresion Moderada" o "Depresion Moderada Severa a Severa". -->
+```{r depre-labstat, echo=FALSE, fig.align='center'}
+#------------------GR.9---------------
+datos.grafico <- data.frame((svytable(~depr_rec + ola + m0_sexo + socup, 
+                                      elsoc_diseno, round = F))) %>% 
+  group_by(ola, m0_sexo, socup) %>% 
+  mutate(porcentaje=Freq/sum(Freq))
+
+datos.subset <- droplevels(subset(datos.grafico, datos.grafico$ola == '2021' & datos.grafico$depr_rec == '3'))
+
+gr.9 <- datos.subset %>% 
+  ggplot(aes(y = porcentaje, x = socup, fill = m0_sexo, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'dodge2') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .33, end = .65, direction = -1, option = 'viridis') +
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75) +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  ggtitle('Síntomas de Depresión según categoría ocupacional (año 2021). Porcentaje con síntomas de “Depresion Moderada” o “Depresion Moderada Severa a Severa”')
+
+gr.9
 
 
-Sin embargo, producto de los cambios estructurales y culturales que se han producido en las últimas décadas, las mujeres que se quedan en la casa son cada vez menos valoradas. A su vez, las mujeres que se incorporan a la fuerza laboral enfrentan mayor riesgo de discriminación económica y desigualdad laboral que los hombres, además de exhibir un mayor riesgo de depresión debido a la sobrecarga de funciones y al conflicto de roles, ya que pese a tener un trabajo remunerado siguen estando al cuidado del hogar y los niños [@bebbington_origins_1996; @piccinelli_Gender_2000].
-
-
-Por su parte, el ingreso cada vez mayor de las mujeres al mercado laboral se presenta como un desafío para los hombres respecto a la definición tradicional de masculinidad, principalmente a su rol de sostenedor económico del hogar [@courtenay_Constructions_2000; @garfield_Fatherhood_2006].
-
-
-Esta relación entre roles de género tradicionales, ocupación y depresión se observan en la Figura \@ref(fig:depre-labstat). En primer lugar, se observa que en cada categoría ocupacional existe una mayor proporción de mujeres con síntomas de depresión moderada o severa en comparación a los hombres, a excepción de la categoría desempleado, donde el 34% de los hombres tiene síntomas de depresión moderada o severa en comparación al 27% de las mujeres. Es posible que los hombres al no poder cumplir con su rol masculino de sostenedor económico del hogar experimentan mayores síntomas depresivos en comparación a las mujeres. Esto se complementa con que los hombres con trabajo remunerado son aquellos que tienen menor proporción con síntomas de depresión moderado a severo.
-
-<!-- ### 13.5 Síntomas de Depresión según categoría ocupacional (año 2019). Porcentaje con síntomas de "Depresion Moderada" o "Depresion Moderada Severa a Severa". -->
-```{r depre-labstat, fig.align='center',fig.cap='Síntomas de Depresión según categoría ocupacional (año 2019). Porcentaje con síntomas de "Depresion Moderada" o "Depresion Moderada Severa a Severa".'}
-g13.5 <- gr.bar.freq.rec("depr", var_x = "empleo", 'm0_sexo', REC=c('Depresion Moderada', 'Depresion Moderada Severa a Severa'), 
-                data = subset(elsoc_panel_m1, ola == 2019 & empleo != 'Otras categorías'), expand = T,
-                label_x = c('Trabajo remunerado','Trabajo doméstico no remunerado*','Desempleado/a', 'Jubilado/a o pensionado/a'))
-g13.5
 ```
 
-En 2019 no hay hombres en la categoría Trabajo doméstico no remunerado $^{*}$
+En 2021 no hay hombres en la categoría Trabajo doméstico no remunerado $^{*}$
 
->**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g13.5, NULL)`
+```{r N5, include=FALSE}
+N<-round(sum(datos.grafico$Freq),0)
+```
 
-Por otra parte, en torno a un 28% de las mujeres que tienen trabajo remunerado, o bien que están desempleadas o jubiladas/pensionadas exhiben síntomas de depresión moderada o severa. Donde se observa con preocupación una alta proporción de mujeres que experimentan síntomas de depresión moderada o moda severa es en el caso de aquellas donde se desempeñan en trabajos del hogar no remunerado. Cabe mencionar que no hay hombres en el estudio que se desempeñen en esta categoría de trabajo del hogar no remunerado, por lo que no es posible estimar este valor (Figura \@ref(fig:depre-labstat)).
+
+
+
 

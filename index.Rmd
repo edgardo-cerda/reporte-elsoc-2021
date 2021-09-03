@@ -38,6 +38,13 @@ elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de
                           weights = ~ponderador02, #ponderador de corte transversal
                           nest = TRUE,
                           data = elsoc_panel_m1)
+
+#cuando es necesario usar todo el panel (independiente la muestra)
+elsoc_diseno_2 <- svydesign(ids = ~segmento,
+                          strata = ~estrato, 
+                          weights = ~ponderador02,
+                          nest = TRUE,
+                          data = elsoc_panel)
 ```
 
 ```{r echo=FALSE }

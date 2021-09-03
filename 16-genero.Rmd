@@ -5,21 +5,8 @@ output:
 ---
 # Género
 
-El término "género" es un término social que a menudo se confunde con el término "sexo", pero no son lo mismo. Mientras que el sexo es un concepto biológico, determinado sobre la base de las características sexuales primarias de los individuos, el género refiere a los significados, los valores, y características que la gente atribuye a diferentes sexos [@blackstone_Gender_2003]. 
-
-La construcción social del género es demostrado por el hecho de que los individuos, los grupos, y las sociedades atribuyen rasgos particulares, estatus, o valores a los individuos por el mero hecho de su sexo, sin embargo, estas atribuciones difieren entre las sociedades y culturas, y con el tiempo dentro de la misma sociedad [@blackstone_Gender_2003].
-
-Tradicionalmente, muchas sociedades occidentales han creído que el papel masculino sugiere que los hombres deben ser los jefes de sus hogares al proveer económicamente a la familia y tomar decisiones familiares, mientras que el rol femenino sería cuidar de los niños y preocuparse de los quehaceres del hogar. Además, los estereotipos de género tienden a incluir afirmaciones exageradas o erróneas sobre la naturaleza de los hombres y las mujeres. Por ejemplo, un estereotipo de género común es que los hombres son racionales, mientras que las mujeres son demasiado emocionales [@blackstone_Gender_2003].
-
-Los movimientos políticos, como el feminista, siguen trabajando para deconstruir los estereotipos de género y ofrecer visiones alternativas de los roles de género que enfaticen la igualdad entre mujeres y hombres [@blackstone_Gender_2003].
-
 
 ## Sexismo hostil y benevolente
-
-El concepto de sexismo ambivalente [@glick_Hostile_1997] identifica dos tipos de prejuicio hacia las mujeres, que involucran tanto evaluaciones negativas como positivas. El sexismo hostil es un prejuicio que concibe a las mujeres de forma negativa, derogatoria, y en un lugar inferior a los hombres. En contraste, el sexismo benévolo se muestra en apariencia como una visión positiva sobre las mujeres, sin embargo, se acompaña de una visión paternalista y de protección hacia las mujeres, que las limita a roles de género tradicionales. Ambas formas de sexismo difieren en el tipo de evaluación (positiva o negativa) hacia las mujeres, pero comparten su utilidad para justificar una estructura patriarcal y asumir una división tradicional de los roles de género.
-
-
-ELSOC desde el año 2019 incorpora una batería de preguntas para medir ambos tipos de sexismo. La Figura \@ref(fig:sexismo-sexo), muestra los niveles de sexismo según sexo de los participantes. En primer lugar, si bien tanto hombres como mujeres exhiben altos niveles de sexismo benevolente, estando de acuerdo y muy de acuerdo con que las mujeres son más refinadas que los hombres y que ellas debieran ser queridas y protegidas por los hombres, las mujeres tienden en términos relativos a exhibir menores niveles que los hombres. Respecto de los niveles de sexismo hostil, no se constatan diferencias por sexo, exhibiendo en general niveles relativamente alto de esta forma de prejuicio. 
 
 
 ```{r objetos, include=FALSE}
@@ -30,26 +17,89 @@ elsoc_panel$sexismo <- c( as.numeric(elsoc_panel$g01_01) + as.numeric(elsoc_pane
 elsoc_panel$sexismo_benevolo <- c( as.numeric(elsoc_panel$g01_01) + as.numeric(elsoc_panel$g01_02))/2
 elsoc_panel$sexismo_hostil <- c(as.numeric(elsoc_panel$g01_03) + as.numeric(elsoc_panel$g01_04))/2
 
+elsoc_panel$g01_01_rec <- factor(car::recode(as.numeric(elsoc_panel$g01_01), 'c(1,2)=1;c(3)=2;c(4,5)= 3; else=NA', as.factor = TRUE),
+                                levels = c(1,2,3),
+                                labels = c('Desacuerdo', 'Ni acuerdo ni desacuerdo', 'De Acuerdo'))
+elsoc_panel$g01_02_rec <- factor(car::recode(as.numeric(elsoc_panel$g01_02), 'c(1,2)=1;c(3)=2;c(4,5)= 3; else=NA', as.factor = TRUE),
+                                levels = c(1,2,3),
+                                labels = c('Desacuerdo', 'Ni acuerdo ni desacuerdo', 'De Acuerdo'))
+
+elsoc_panel$g01_03_rec <- factor(car::recode(as.numeric(elsoc_panel$g01_03), 'c(1,2)=1;c(3)=2;c(4,5)= 3; else=NA', as.factor = TRUE),
+                                levels = c(1,2,3),
+                                labels = c('Desacuerdo', 'Ni acuerdo ni desacuerdo', 'De Acuerdo'))
+
+elsoc_panel$g01_04_rec <- factor(car::recode(as.numeric(elsoc_panel$g01_04), 'c(1,2)=1;c(3)=2;c(4,5)= 3; else=NA', as.factor = TRUE),
+                                levels = c(1,2,3),
+                                labels = c('Desacuerdo', 'Ni acuerdo ni desacuerdo', 'De Acuerdo'))
+elsoc_diseno_2 <- svydesign(ids = ~segmento,
+                          strata = ~estrato, 
+                          weights = ~ponderador02,
+                          nest = TRUE,
+                          data = elsoc_panel)
+
 ```
 
 <!-- ### 12.1 Sexismo benévolo y hostil, según sexo (2019). Porcentaje que responde "De acuerdo" o "Totalmente de acuerdo". -->
 ```{r sexismo-sexo, fig.align='center', fig.cap='Sexismo benévolo y hostil, según sexo (2019). Porcentaje que responde "De acuerdo" o "Totalmente de acuerdo".'}
-g12.1 <- gr.bar.freq.rec.list(c('g01_01', 'g01_02', 'g01_03', 'g01_04'), var_z = 'm0_sexo',
-                     label_x = c('Mujeres son más refinadas y con mejor gusto que los hombres',
+datos.01 <- data.frame((svytable(~g01_01_rec + m0_sexo + ola, elsoc_diseno_2, round = F))) %>% group_by(ola, m0_sexo) %>% mutate(p_01=Freq/sum(Freq))
+datos.01$ola <- NULL
+datos.01$m0_sexo <- NULL
+datos.02 <- data.frame((svytable(~g01_02_rec+m0_sexo +  ola, elsoc_diseno_2, round = F))) %>% group_by(ola, m0_sexo) %>% mutate(p_02=Freq/sum(Freq))
+datos.02$ola <- NULL
+datos.02$m0_sexo <- NULL
+datos.03 <- data.frame((svytable(~g01_03_rec+m0_sexo +  ola, elsoc_diseno_2, round = F))) %>% group_by(ola, m0_sexo) %>% mutate(p_03=Freq/sum(Freq))
+datos.03$ola <- NULL
+datos.03$m0_sexo <- NULL
+datos.04 <- data.frame((svytable(~g01_04_rec+m0_sexo +  ola, elsoc_diseno_2, round = F))) %>% group_by(ola, m0_sexo) %>% mutate(p_04=Freq/sum(Freq))
+
+datos.grafico1<- cbind(datos.01, datos.02, datos.03, datos.04)
+
+subset.grafico <- droplevels(subset(datos.grafico1, datos.grafico1$ola == '2021' & 
+                                      g01_01_rec == 'De Acuerdo' & 
+                                      g01_02_rec == 'De Acuerdo' &
+                                      g01_03_rec == 'De Acuerdo' & 
+                                      g01_04_rec == 'De Acuerdo'))
+
+#trasponer según variable
+datos.grafico <- subset.grafico %>% 
+  pivot_longer(cols = starts_with('g01'))  %>%
+  mutate(variable = factor(name, labels = c('Mujeres son más refinadas y con mejor gusto que los hombres',
                      'Mujeres debieran ser queridas y protegidas por los hombres',
                      'Mujeres consiguen privilegios en nombre de igualdad',
-                     'Cuando mujeres son derrotadas limpiamente, se quejan de discriminación'))
+                     'Cuando mujeres son derrotadas limpiamente, se quejan de discriminación'))) %>% 
+  drop_na()
 
-g12.1
+datos.grafico$porcentaje <- with(datos.grafico, case_when(
+  variable == 'Mujeres son más refinadas y con mejor gusto que los hombres' ~ p_01,
+  variable == 'Mujeres debieran ser queridas y protegidas por los hombres' ~ p_02,
+  variable == 'Mujeres consiguen privilegios en nombre de igualdad' ~ p_03,
+  variable == 'Cuando mujeres son derrotadas limpiamente, se quejan de discriminación' ~ p_04))
+
+#graficamos
+
+gr.16.1 <-datos.grafico %>% 
+  ggplot(aes(y = porcentaje, x = variable, fill = m0_sexo, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+  theme_bw() + 
+  geom_col(position = "dodge2") +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') + 
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75)  +
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+gr.16.1
+
 ```
 
 
 <!-- ## Sexismo hostil y benevolente -->
 
-Al analizar los niveles de sexismo benevolente por edad, se observan importantes diferencias especialmente cuando se evalúa el grado de acuerdo con que las mujeres son más refinadas que los hombres (Figura \@ref(fig:sexismo-edad)). Claramente existe una asociación positiva, en que a mayor edad aumentan sustantivamente los grados de acuerdo con esta afirmación. Son especialmente llamativas las diferencias entre hombres y mujeres jóvenes, y adultos jóvenes donde son los primeros quienes adhieren más a la idea de que las mujeres son más refinadas que los hombres.  Sin embargo, existe un altísimo consenso para hombres y mujeres con independencia de la edad de que las mujeres debieran ser queridas y protegidas por los hombres, confirmando cuan arraigada esta esta forma de sexismo benevolente. Respecto del sexismo hostil (Figura \@ref(fig:sexismoh-edad)), las únicas diferencias importantes se observan en el grupo de los jóvenes donde claramente las mujeres exhiben menor nivel de adhesión a la creencia de que las mujeres consiguen privilegios en nombre de la igualdad o cuando las mujeres son derrotadas limpiamente se quejan de discriminación.
-
-
->**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N=`r getN(g12.1, 'var_x')` 
 
 <!-- ### 12.2 Sexismo benévolo,según sexo y tramo de edad (2019). Porcentaje que responde "De acuerdo" o "Totalmente de acuerdo". -->
 ```{r sexismo-edad, fig.align='center',fig.cap='Sexismo benévolo,según sexo y tramo de edad (2019). Porcentaje que responde "De acuerdo" o "Totalmente de acuerdo".'}
