@@ -98,136 +98,149 @@ gr.16.1
 ```
 
 
-<!-- ## Sexismo hostil y benevolente -->
-
-
-<!-- ### 12.2 Sexismo benévolo,según sexo y tramo de edad (2019). Porcentaje que responde "De acuerdo" o "Totalmente de acuerdo". -->
-```{r sexismo-edad, fig.align='center',fig.cap='Sexismo benévolo,según sexo y tramo de edad (2019). Porcentaje que responde "De acuerdo" o "Totalmente de acuerdo".'}
-
-g12.2 <- gr.bar.freq.rec.list(c('g01_01', 'g01_02'), 'edadt', 'm0_sexo', modo = 3,
-                     label_list = c('Mujeres son más refinadas y con\n mejor gusto que los hombres',
-                                    'Mujeres debieran ser queridas y\n protegidas por los hombres')) + theme(strip.text = element_text(size = rel(.8)))
-g12.2
-```
-
->**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g12.2, 'var_w')`
-
-
-
-<!-- ### 12.3 Sexismo hostil, según sexo y tramo de edad (2019). Porcentaje que responde "De acuerdo" o "Totalmente de acuerdo". -->
-```{r sexismoh-edad, fig.align='center',fig.cap='Sexismo hostil, según sexo y tramo de edad (2019). Porcentaje que responde "De acuerdo" o "Totalmente de acuerdo".'}
-g12.3 <-   gr.bar.freq.rec.list(c('g01_03', 'g01_04'), 'edadt', 'm0_sexo', modo = 3,
-                     label_list = c('Mujeres consiguen privilegios en nombre de igualdad',
-                                 'Cuando mujeres son derrotadas limpiamente,\n se quejan de discriminación')) + theme(strip.text = element_text(size = rel(.8)))
-g12.3
-```
-
->**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g12.3, 'var_w')`
-
-
-El sexismo benévolo y hostil cambia sustantivamente según nivel de escolaridad, observándose que a media que aumenta el nivel de escolaridad disminuye de manera muy sustantiva las expresiones de ambas formas de sexismo (Figura \@ref(fig:sexismo-educ)).
-
-
 <!-- ### 12.4 Sexismo benévolo y hostil, según nivel educacional (2019). Porcentaje que responde "De acuerdo" o "Totalmente de acuerdo". -->
 
 ```{r sexismo-educ, fig.align='center',fig.cap='Sexismo benévolo y hostil, según nivel educacional (2019). Porcentaje que responde "De acuerdo" o "Totalmente de acuerdo".'}
-g12.4 <- gr.bar.freq.rec.list(c('g01_01', 'g01_02', 'g01_03', 'g01_04'), var_z = 'educ',
-                     label_x = c('Mujeres son más refinadas y con mejor gusto que los hombres',
+datos.01 <- data.frame((svytable(~g01_01_rec + educ + ola, elsoc_diseno_2, round = F))) %>% group_by(ola, educ) %>% mutate(p_01=Freq/sum(Freq))
+datos.01$ola <- NULL
+datos.01$educ <- NULL
+datos.02 <- data.frame((svytable(~g01_02_rec+educ +  ola, elsoc_diseno_2, round = F))) %>% group_by(ola, educ) %>% mutate(p_02=Freq/sum(Freq))
+datos.02$ola <- NULL
+datos.02$educ <- NULL
+datos.03 <- data.frame((svytable(~g01_03_rec+educ +  ola, elsoc_diseno_2, round = F))) %>% group_by(ola, educ) %>% mutate(p_03=Freq/sum(Freq))
+datos.03$ola <- NULL
+datos.03$educ <- NULL
+datos.04 <- data.frame((svytable(~g01_04_rec+educ +  ola, elsoc_diseno_2, round = F))) %>% group_by(ola, educ) %>% mutate(p_04=Freq/sum(Freq))
+
+datos.grafico1<- cbind(datos.01, datos.02, datos.03, datos.04)
+
+subset.grafico <- droplevels(subset(datos.grafico1, datos.grafico1$ola == '2021' & 
+                                      g01_01_rec == 'De Acuerdo' & 
+                                      g01_02_rec == 'De Acuerdo' &
+                                      g01_03_rec == 'De Acuerdo' & 
+                                      g01_04_rec == 'De Acuerdo'))
+
+#trasponer según variable
+datos.grafico <- subset.grafico %>% 
+  pivot_longer(cols = starts_with('g01'))  %>%
+  mutate(variable = factor(name, labels = c('Mujeres son más refinadas y con mejor gusto que los hombres',
                      'Mujeres debieran ser queridas y protegidas por los hombres',
                      'Mujeres consiguen privilegios en nombre de igualdad',
-                     'Cuando mujeres son derrotadas limpiamente, se quejan de discriminación'))
-g12.4
+                     'Cuando mujeres son derrotadas limpiamente, se quejan de discriminación'))) %>% 
+  drop_na()
+
+datos.grafico$porcentaje <- with(datos.grafico, case_when(
+  variable == 'Mujeres son más refinadas y con mejor gusto que los hombres' ~ p_01,
+  variable == 'Mujeres debieran ser queridas y protegidas por los hombres' ~ p_02,
+  variable == 'Mujeres consiguen privilegios en nombre de igualdad' ~ p_03,
+  variable == 'Cuando mujeres son derrotadas limpiamente, se quejan de discriminación' ~ p_04))
+
+#graficamos
+
+gr.16.2 <-datos.grafico %>% 
+  ggplot(aes(y = porcentaje, x = variable, fill = educ, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+  theme_bw() + 
+  geom_col(position = "dodge2") +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') + 
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75)  +
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+gr.16.2
 ```
 
->**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g12.4, 'var_x')` 
-
-## Expectativas y roles de género
-
-La literatura especializada muestra que en general, son los hombres de quienes se espera realicen roles y trabajos de alto estatus, mientras que a las mujeres les corresponde llevar a cabo roles domésticos y de menor estatus [@glick_Hostile_1997]. Esta diferenciación de género es de alguna forma complementaria, ya que asume que las mujeres tienen una serie de características para asumir estos roles (por ejemplo, pureza para ser una buena esposa, o afectividad para ser una buena madre), que complementan las características de los hombres (por ejemplo, competitividad para ser un trabajador exitoso). Por lo tanto, las expresiones de estos roles de género tradicionales pueden considerarse como una forma de expresión del prejuicio hacia la mujer que todavía están vigentes [@figueiredo_Modulo_2017].
-
-
-Tal como se aprecia en la Figura \@ref(fig:expectativas-sexo), el 85,4% de los hombres está de acuerdo en que sus familias y amigos esperan que ellos sean una persona laboralmente exitosa. Esta cifra sin embargo cae sustantivamente en el caso de las mujeres llegando a un 75,6%. Según los estereotipos tradicionales de género, se presume que sean las mujeres y en menor proporción los hombres, quienes piensen que la familia y los amigos esperan que los hijos sean su primera prioridad en la vida. Los resultados de ELSOC no confirman esta hipótesis, revelando muy altas expectativas tanto en las mujeres como en los hombres (Figura \@ref(fig:expectativas-sexo)). 
-
-<!-- ### 12.5 Expectativas y Normas de género (2019), según sexo del entrevistado. Porcentaje que responde "De acuerdo" o "Totalmente de acuerdo". -->
-```{r expectativas-sexo, fig.align='center',fig.cap='Expectativas y Normas de género (2019), según sexo del entrevistado. Porcentaje que responde "De acuerdo" o "Totalmente de acuerdo".'}
-g12.5 <- gr.bar.freq.rec.list(c('g02_03', 'g02_04'), var_z = 'm0_sexo',
-                     label_x = c('Mi familia y mis amigos esperan que sea una persona laboralmente exitosa',
-                                 'Mi familia y mis amigos esperan que mis hijos sean mi primera prioridad'),
-                     REC = c('De acuerdo', 'Totalmente de acuerdo'))
-g12.5
-```
-
->**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g12.5, 'var_x')` 
-
-## Derechos y roles de género
-
-En cuanto a derechos y roles de género, la Figura \@ref(fig:derechos-sexo) revela que una muy baja proporción de hombres (16,6%) y mujeres (14,5%) está de acuerdo con la idea de que, en ausencia de trabajos disponibles, sean los hombres quienes deberían tener más derecho a un trabajo que las mujeres. Esta baja adhesión revela un distanciamiento importante de los roles estereotipados de género. Sin embargo, y en consonancia con los roles tradicionales de género, dicho hallazgo contrasta fuertemente con altísimo consenso que existe entre hombres y mujeres al pensar que la vida familiar sufre cuando la mujer tiene un trabajo a tiempo completo. Ambos datos dan cuenta de la ambivalencia que existe en la población respecto de la participación de la mujer en el mundo del trabajo y el impacto que produce ello en la vida familiar.  
-
-<!-- ### 12.6 Derechos y Roles de género (2019), según sexo del entrevistado. Porcentaje que responde "De acuerdo" o "Totalmente de acuerdo". -->
-```{r derechos-sexo, fig.align='center',fig.cap='Derechos y Roles de género (2019), según sexo del entrevistado. Porcentaje que responde "De acuerdo" o "Totalmente de acuerdo".'}
-g12.6 <- gr.bar.freq.rec.list(c('g01_05', 'g02_05'), var_z = 'm0_sexo',
-                     label_x = c('Cuando no hay muchos trabajos disponibles, los hombres deberían tener más derecho a un trabajo que las mujeres',
-                                 'En general, la vida familiar sufre cuando la mujer tiene un trabajo a tiempo completo'))
-
-g12.6
-```
-
->**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N=`r getN(g12.6, 'var_x')` 
 
 ## Trabajo y género
 
-En línea con los roles de género, no sorprende que en el año 2019 el 82,6% de los hombres tenga un trabajo remunerado, en comparación al 52,3% de las mujeres (Figura \@ref(fig:ocup-sexo)). Esto se complementa con el hecho que el 24,7% de las mujeres realizan trabajo doméstico no remunerado, en comparación al 0% de los hombres. Al igual que los resultados reportados por la Encuesta Nacional de Uso del Tiempo (ENUT 2015), se refleja que no existe una distribución de tareas domésticas y de cuidado paritaria. Esto resulta relevante cuando existen políticas públicas que se han creado para facilitar el acceso de las mujeres al mercado laboral, compatibilizando la carga del trabajo doméstico con el trabajo remunerado y, sobre todo, promoviendo una distribución más equitativa entre hombres y mujeres de las labores domésticas [@figueiredo_Modulo_2017].
-
-
-Es interesante constatar que al analizar las trayectorias que han experimentado las personas en cuanto a su actividad principal a lo largo del tiempo (trabajo remunerado, no remunerado, etc.) son las mujeres quienes exhiben mayor dinamismo, incrementándose desde el 2016 al 2019 la proporción de mujeres que trabaja remuneradamente.
-
-
-Finalmente, ELSOC revela la persistencia de una brecha salarial entre hombres y mujeres que trabajan a tiempo parcial o completo entre el 2016 y 2019. Tal como se observa en la Figura \@ref(fig:jorparcial-sexo-ola) el salario promedio de las mujeres oscila alrededor de \$430.000, mientras que el de los hombres alrededor de \$660.000.
-
-
 <!-- ### 12.7 Porcentaje de trabajadores y trabajadoras por situación ocupacional (2019), según sexo del entrevistado -->
-```{r ocup-sexo, fig.align='center',fig.cap='Porcentaje de trabajadores y trabajadoras por situación ocupacional (2019), según sexo del entrevistado'}
-g12.7 <- gr.bar.freq(var_x = 'm0_sexo', var_y = 'empleo', var_z = 'ola', posicion = 'stack', 
-            data = subset(elsoc_panel_m1, ola == 2016 | ola == 2019))
-g12.7
+```{r ocup-sexo, fig.align='center',fig.cap='Porcentaje de trabajadores y trabajadoras por situación ocupacional (2021), según sexo del entrevistado'}
+datos.grafico <- data.frame((svytable(~m0_sexo + ola + empleo, 
+                                      elsoc_diseno, round = F))) %>% 
+  group_by(ola, m0_sexo) %>% 
+  mutate(porcentaje=Freq/sum(Freq)) %>%
+  drop_na()
+
+datos.subset <- droplevels(subset(datos.grafico, datos.grafico$ola == '2018' | datos.grafico$ola == '2021' ))
+
+gr.16.3 <- datos.subset %>% 
+  ggplot(aes(y = porcentaje, x = m0_sexo, fill = empleo, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  facet_wrap(.~ola)+
+  scale_fill_viridis_d(begin = .13, end = .85, direction = -1, option = 'viridis') +
+  #cambiar geom_text tal que: Stack y cambio colores
+  geom_text(aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")), position = position_stack(vjust = .5),
+            show.legend = FALSE,
+            size = 2.75,
+            color = rep('black')) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+gr.16.3
+
 ```
 
->**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g12.7, 'var_z')` 
 
 <!-- ### 12.8 Porcentaje de trabajadores y trabajadoras no remunerados, según ola y sexo del entrevistado -->
 ```{r ocup-sexo-ola, fig.align='center',fig.cap='Porcentaje de trabajadores y trabajadoras no remunerados, según ola y sexo del entrevistado'}
-g12.8 <- gr.alluvial.freq('empleo', var_z = 'm0_sexo',
-                       data = subset(elsoc_panel_m1, ola == 2016 | ola == 2019),
-                 posicion_leyenda = 'top')
-g12.8
+#1
+elsoc_long$empleo <- na.replace(elsoc_long$empleo, "NS/NR") #recode NA en categoría "NS/NR"
+
+elsoc_diseno_3 <- svydesign(ids = ~segmento, strata = ~estrato, 
+                          weights = ~ponderador02, nest = TRUE, data = elsoc_long)
+
+datos.grafico <- data.frame((svytable(~empleo + ola + idencuesta + 
+                                        m0_sexo, elsoc_diseno_3, round = F))) %>% 
+  dplyr::filter(Freq>0)  %>% 
+  group_by(ola,m0_sexo) %>% 
+  mutate(porcentaje=Freq/sum(Freq)) %>% na.omit()
+
+#1.1
+subset.grafico <- droplevels(subset(datos.grafico, datos.grafico$ola == '2018' | datos.grafico$ola == '2021'))
+
+#2
+etiquetas.grafico <- data.frame((svytable(~empleo + ola + m0_sexo, 
+                                          elsoc_diseno, round = F))) %>% 
+  group_by(ola, m0_sexo) %>% 
+  mutate(porcentaje=Freq/sum(Freq)) %>% 
+  na.omit() %>% 
+  mutate(idencuesta = 1)
+
+#Paso 2.2: crear un subset sólo para los años 2017 y 2019
+etiquetas.grafico <- droplevels(subset(etiquetas.grafico, 
+                     etiquetas.grafico$ola == '2018' | etiquetas.grafico$ola == '2021'))
+
+gr.16.4 <- ggplot(subset.grafico, aes(x = ola, fill = empleo, stratum = empleo, 
+                              alluvium = idencuesta, y = porcentaje)) +
+  theme_bw() +
+  ggalluvial::geom_flow(alpha = .66) + 
+  ggalluvial::geom_stratum(linetype = 0) +
+  scale_y_continuous(labels = scales::percent) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  scale_fill_viridis_d(begin = 0, end = .9, direction = -1, option = 'viridis') +
+  facet_wrap(.~m0_sexo)+
+  geom_text(data = etiquetas.grafico, 
+            aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")),
+            position = position_stack(vjust = .5),
+            show.legend = FALSE,
+            size = 2.75,
+            color = rep('white'))
+
+gr.16.4
 ```
 
->**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g12.8)` 
-
-<!-- ### 12.9 Ingreso medio de ocupados y ocupadas a tiempo completo o parcial, según ola y sexo del entrevistado -->
-```{r jorparcial-sexo-ola, fig.align='center',fig.cap='Ingreso medio de ocupados y ocupadas a tiempo completo o parcial, según ola y sexo del entrevistado'}
-g12.9 <- gr.line.media('m13', var_x = 'ola', var_z = 'm0_sexo', 
-              data = subset(elsoc_panel_m1, empleo == 'Trabajo remunerado'),
-              limits_y = c(0,1000000),
-              colores = c(.33,.66,-1))
-g12.9   
-```
-
->**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g12.9)` 
- 
-## Identidad de género y sororidad
-
-El concepto de género es principalmente de orden cultural y social, pero también, tiene una dimensión subjetiva en tanto es constituyente de la identidad.  ELSOC indagó en qué medida hombres y mujeres se identifican con su género. Tal como es esperable para una identidad tan saliente, la gran mayoría de los hombres (78%) y de las mujeres (89%) está de acuerdo con la afirmación que su género es parte importante de su identidad. Es decir, ser hombre o mujeres constituye un aspecto importante de su identidad subjetiva (Figura \@ref(fig:idgenero-sexo)).
-
-
-Al preguntar por el grado de compromiso con personas del mismo sexo, se constatan diferencias importantes entre hombres y mujeres.  Son las mujeres (38%) en comparación a los hombres (22%) quienes se sienten más comprometidas con personas de su mismo sexo.  Es esperable que este resultado se relacione con la alta visibilidad que ha tenido el movimiento feminista, tanto en Chile como en el mundo, donde ha tomado fuerza el concepto y ejercicio de la sororidad, la cual refiere a la experiencia de las mujeres que conduce a la búsqueda de relaciones positivas y a la alianza existencial y política con otras mujeres para eliminar todas las formas de opresión y para empoderarlas. La sororidad es un pacto político entre pares [@lagarde_feminismo_2012]. 
-
-<!-- ### 12.10 Identidad de género (2019), según sexo. Porcentaje que responde "De acuerdo" o "Totalmente de acuerdo". -->
-```{r idgenero-sexo, fig.align='center',fig.cap='Identidad de género (2019), según sexo. Porcentaje que responde "De acuerdo" o "Totalmente de acuerdo".'}
-g12.10 <- gr.bar.freq.rec.list(c('g02_01', 'g02_02'), var_z = 'm0_sexo',
-                     label_x = c('El hecho de ser hombre/mujer es una parte importante de mi identidad',
-                                  'Me siento más comprometido con las personas de mi mismo sexo que con personas del otro sexo'))
-g12.10
-```
-
->**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N=`r getN(g12.10, 'var_x')` 

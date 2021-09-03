@@ -8,14 +8,13 @@ editor_options:
 
 <!-- ###  1 Síntomas de Depresión, según Ola del Estudio -->
 ```{r depre-wave, echo=FALSE, fig.align='center'}
-#------------------GR.1---------------
 datos.grafico <- data.frame((svytable(~depr + ola, 
                                       elsoc_diseno, round = F))) %>% 
   group_by(ola) %>% 
   mutate(porcentaje=Freq/sum(Freq)) %>%
   drop_na()
 
-gr.1 <- datos.grafico %>% 
+gr.17.1 <- datos.grafico %>% 
   ggplot(aes(y = porcentaje, x = ola, fill = depr, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
@@ -32,19 +31,19 @@ gr.1 <- datos.grafico %>%
         legend.title = element_blank()) +
   ggtitle('Síntomas de Depresión, según Ola del Estudio')
 
-gr.1
+gr.17.1
 
 ```
 
 ```{r N1, include=FALSE}
 N<-round(sum(datos.grafico$Freq),0)
 ```
+
 ## Brecha de género en Salud Mental
 
 
 <!-- ###  2 Sintomatología Depresiva por año, según sexo. Porcentaje con síntomas de "Depresion Moderada" o "Depresion Moderada Severa a Severa".  -->
 ```{r depre-year-sexo, echo=FALSE, fig.align='center'}
-#------------------GR.6---------------
 elsoc_long$depr_rec <- car::recode(elsoc_long$suma_dep,
                                "c(0,1,2,3,4)='1';
 c(5,6,7,8,9)='2';
@@ -59,7 +58,7 @@ datos.grafico <- data.frame((svytable(~depr_rec + ola + m0_sexo,
 
 datos.subset <- droplevels(subset(datos.grafico, datos.grafico$depr_rec == '3'))
 
-gr.6 <- ggplot(datos.subset, 
+gr.17.2 <- ggplot(datos.subset, 
                aes(y = porcentaje, x = ola, 
                    color = m0_sexo, group = m0_sexo,
               label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
@@ -77,7 +76,7 @@ gr.6 <- ggplot(datos.subset,
         legend.title = element_blank()) +
   ggtitle('Sintomatología Depresiva por año, según sexo. Porcentaje con síntomas de “Depresion Moderada” o “Depresion Moderada Severa a Severa”.')
 
-gr.6
+gr.17.2
  
 ```
 ```{r N2, include=FALSE}
@@ -85,7 +84,7 @@ N<-round(sum(datos.grafico$Freq),0)
 ```
 <!-- ###  3 Cambios en Síntomas de depresión entre años 2018 y 2021, según sexo -->
 ```{r depre-sexo, echo=FALSE, fig.align='center'}
-#------------------GR.7---------------
+
 #1
 elsoc_long$depr <- na.replace(elsoc_long$depr, "NS/NR") #recode NA en categoría "NS/NR"
 
@@ -113,7 +112,7 @@ etiquetas.grafico <- data.frame((svytable(~depr + ola + m0_sexo,
 etiquetas.grafico <- droplevels(subset(etiquetas.grafico, 
                      etiquetas.grafico$ola == '2018' | etiquetas.grafico$ola == '2021'))
 
-gr.7 <- ggplot(subset.grafico, aes(x = ola, fill = depr, stratum = depr, 
+gr.17.3 <- ggplot(subset.grafico, aes(x = ola, fill = depr, stratum = depr, 
                               alluvium = idencuesta, y = porcentaje)) +
   theme_bw() +
   ggalluvial::geom_flow(alpha = .66) + 
@@ -133,7 +132,7 @@ gr.7 <- ggplot(subset.grafico, aes(x = ola, fill = depr, stratum = depr,
             color = rep('white'))+
   ggtitle('Cambios en Síntomas de depresión entre años 2016 y 2019, según sexo')
 
-gr.7
+gr.17.3
 
 ```
 
@@ -144,7 +143,6 @@ N<-round(sum(datos.grafico$Freq),0)
 
 <!-- ###  4 Síntomas de Depresión según tramos de edad y sexo (2021). Porcentaje con síntomas de "Depresion Moderada" o "Depresion Moderada Severa a Severa". -->
 ```{r depre-edad-sexo, echo=FALSE, fig.align='center'}
-#------------------GR.8---------------
 datos.grafico <- data.frame((svytable(~depr_rec + ola + m0_sexo + edad, 
                                       elsoc_diseno, round = F))) %>% 
   group_by(ola, m0_sexo, edad) %>% 
@@ -152,7 +150,7 @@ datos.grafico <- data.frame((svytable(~depr_rec + ola + m0_sexo + edad,
 
 datos.subset <- droplevels(subset(datos.grafico, datos.grafico$ola == '2021' & datos.grafico$depr_rec == '3'))
 
-gr.8 <- ggplot(datos.subset, 
+gr.17.4 <- ggplot(datos.subset, 
                aes(y = porcentaje, x = edad, 
                    color = m0_sexo, group = m0_sexo,
                    label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
@@ -170,7 +168,7 @@ gr.8 <- ggplot(datos.subset,
         legend.title = element_blank()) +
   ggtitle('Síntomas de Depresión según tramos de edad y sexo (2021). Porcentaje con síntomas de “Depresion Moderada” o “Depresion Moderada Severa a Severa')
 
-gr.8
+gr.17.4
 
 ```
 
@@ -183,7 +181,6 @@ N<-round(sum(datos.grafico$Freq),0)
 
 <!-- ### 5 Síntomas de Depresión según categoría ocupacional (año 2021). Porcentaje con síntomas de "Depresion Moderada" o "Depresion Moderada Severa a Severa". -->
 ```{r depre-labstat, echo=FALSE, fig.align='center'}
-#------------------GR.9---------------
 datos.grafico <- data.frame((svytable(~depr_rec + ola + m0_sexo + socup, 
                                       elsoc_diseno, round = F))) %>% 
   group_by(ola, m0_sexo, socup) %>% 
@@ -191,7 +188,7 @@ datos.grafico <- data.frame((svytable(~depr_rec + ola + m0_sexo + socup,
 
 datos.subset <- droplevels(subset(datos.grafico, datos.grafico$ola == '2021' & datos.grafico$depr_rec == '3'))
 
-gr.9 <- datos.subset %>% 
+gr.17.5 <- datos.subset %>% 
   ggplot(aes(y = porcentaje, x = socup, fill = m0_sexo, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
@@ -208,7 +205,7 @@ gr.9 <- datos.subset %>%
         legend.title = element_blank()) +
   ggtitle('Síntomas de Depresión según categoría ocupacional (año 2021). Porcentaje con síntomas de “Depresion Moderada” o “Depresion Moderada Severa a Severa”')
 
-gr.9
+gr.17.5
 
 
 ```
@@ -220,6 +217,96 @@ N<-round(sum(datos.grafico$Freq),0)
 ```
 
 
+## COVID - 19
+```{r}
+datos.grafico <- data.frame((svytable(~s31 + m0_sexo, 
+                                      elsoc_diseno, round = F))) %>% 
+  group_by(m0_sexo) %>% 
+  mutate(porcentaje=Freq/sum(Freq))
 
+datos.subset <- droplevels(subset(datos.grafico, s31=='1'))
+
+gr.17.6 <- datos.subset %>% 
+  ggplot(aes(y = porcentaje, x = s31, fill = m0_sexo, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+  theme_bw() + 
+  geom_col(position = 'dodge2') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 0.2)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75)  + 
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  ggtitle('Diagnosticado con COVID-19 según sexo')
+
+gr.17.6
+```
+
+## Salud Mental en COVID-19
+
+
+```{r depre-teletrabajo, echo=FALSE, fig.align='center'}
+datos.grafico <- data.frame((svytable(~depr + ola + m60, 
+                                      elsoc_diseno, round = F))) %>% 
+  group_by(ola, m60) %>% 
+  na.omit(m60) %>%
+  mutate(porcentaje=Freq/sum(Freq))
+
+datos.subset <- droplevels(subset(datos.grafico, datos.grafico$ola == '2021'))
+
+gr.17.7 <- datos.subset %>% 
+  ggplot(aes(y = porcentaje, x = m60, fill = depr, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+  theme_bw() + 
+  geom_col(position = 'dodge2') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75)  + 
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  ggtitle('Síntomas de Depresión, según Modalidad de Trabajo')
+
+gr.17.7
+```
+
+
+```{r depre-beneficios, echo=FALSE, fig.align='center'}
+datos.grafico <- data.frame((svytable(~depr + ola + m0_sexo + m63_01, 
+                                      elsoc_diseno, round = F))) %>% 
+  group_by(ola, m63_01, m0_sexo) %>% 
+  na.omit(m63_01) %>%
+  mutate(porcentaje=Freq/sum(Freq))
+
+datos.subset <- droplevels(subset(datos.grafico, datos.grafico$ola == '2021'))
+
+gr.17.8 <- datos.subset %>% 
+  ggplot(aes(y = porcentaje, x = m63_01, fill = depr, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  #Agrego facer_wrap para hacer un Gráfico para cada sexo
+  facet_wrap(datos.subset$m0_sexo) +
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75, color = rep.int(c('black', 'black', 'white', 'white'), 4)) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  ggtitle('Síntomas de Depresión (2021), según sexo y acceso a beneficios')
+
+gr.17.8
+```
 
 
