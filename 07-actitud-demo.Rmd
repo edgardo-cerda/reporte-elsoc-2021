@@ -26,6 +26,9 @@ g3.2
 
 
 <!-- ### 3.2 ¿Cuán satisfecho o insatisfecho está usted con el funcionamiento de la democracia en Chile? -->
+
+
+
 ```{r ola-c01, fig.align='center', fig.cap="¿Cuán satisfecho o insatisfecho está usted con el funcionamiento de la democracia en Chile?"}
 g2.12 <- gr.bar.freq(var_x = 'ola', var_y = 'c01', posicion = 'stack', reverse_y=T)
 g2.12 

@@ -30,69 +30,6 @@ knitr::include_graphics("inputs/images/modelo_cl_1.png")
 
 ### Perfiles ideológicos: Resultados principales
 
-<!-- ### 4.1 Perfiles ideológicos de los chilenos (2019) -->
-
-```{r perfiles-ideo, fig.height=7.5, fig.cap="Perfiles ideológicos de los chilenos (2019)"}
-lcmodel$clases2 <- factor(lcmodel$clases, levels=c("Progresistas","Liberales B",
-                                                "Conservadores E","Conservadores M"),
-                        labels = c("Progresistas (24%)", "Liberales Bisagra (18%)",
-                                   "Conservadores pro-Estado (21%)","Conservadores pro-Mercado (37%)"))
-
-
-ggplot(lcmodel,
-       aes(x = vars, y = value, fill = respuestas)) +
-       geom_bar(stat = "identity", position = "stack") +
-       facet_wrap(clases2 ~ .,strip.position = "top",ncol=4) +
-       labs(x= element_blank(), y = element_blank(), fill = element_blank())+
-  guides(fill = guide_legend(reverse=TRUE)) +
-  scale_fill_viridis_d(begin = 0.25,
-                       end = .9, 
-                       direction = -1,
-                       option = 'viridis') +
-  theme_bw(base_size = 10) +
-  theme(text = element_text(size=16),
-        legend.position = 'top') +
-  scale_x_discrete(limits=c("Educación Sexual","Pensiones",
-       "Gasto Social","Inmigración","Aborto","Adopción Homoparental","Medio Ambiente","Educación Pública"),
-                   labels= c("Educación Pública"="Prioridad \n Educ. Pública","Medio Ambiente"="Cerrar Empresas \n Contaminantes",
-                             "Adopción Homoparental"="Apoyo Adopción \n Homoparental", "Aborto"="Apoyo Aborto",
-                             "Inmigración"= "Impedir \n Inmigración", "Gasto Social"="Apoyo Gasto \n Social Focalizado",
-                             "Pensiones"="Respons. Individual \n en Pensiones", 
-                             "Educación Sexual"="Respons. Padres \n Educ. Sexual")) +
-  scale_y_continuous(labels = scales::percent) +
-  coord_flip()
-
-```
->  **Nota:**  Resultados sin ponderar. N = 2.085
-
-
-<!-- ### 4.2. Sexo, según Perfiles ideológicos de los chilenos (2019) -->
-```{r sexo-perfiles, fig.align='center', fig.cap="Sexo, según Perfiles ideológicos de los chilenos (2019)"}
-baseCL$CL <- factor(baseCL$CL,
-                    labels = c('Progresistas', 'Liberales Bisagra', 'Conservadores Pro-Estado', 'Conservadores Pro-Mercado'))
-
-n4.2 <- gr.bar.freq("m0_sexo", var_x = "CL", data= baseCL, posicion = 'stack')
-n4.2
-```
-
-
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(n4.2, NULL)`
-
-<!-- ### 4.3 Tramo etáreo, según Perfiles ideológicos de los chilenos (2019) -->
-```{r edad-perfiles, fig.align='center',fig.cap="Tramo etáreo, según Perfiles ideológicos de los chilenos (2019)"}
-n4.3<- gr.bar.freq("edadt", var_x = "CL", data= baseCL, posicion = 'stack', reverse_y =T, colores = c(0,.85,1))
-n4.3
-```
-
-
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(n4.3, NULL)`
-
-<!-- ### 4.4 Nivel educacional, según Perfiles ideológicos de los chilenos (2019) -->
-```{r educ-perfiles, fig.align='center',fig.cap="Nivel educacional, según Perfiles ideológicos de los chilenos (2019)"}
-n4.4<- gr.bar.freq("educ", var_x = "CL", data= baseCL, posicion = 'stack', reverse_y =T)
-n4.4
-```
-
 
 >  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(n4.4, NULL)`
 
