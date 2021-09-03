@@ -1,4 +1,13 @@
 # Estatus subjetivo y Percepción de Mérito
+```{r include=FALSE}
+rm(list = ls())
+library(survey)
+library(tidyverse)
+load("1_input/datos_elsoc.RData")
+
+elsoc_diseno_m1 <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
+                          nest = TRUE, data = elsoc_panel_m1)
+```
 
 Estatus subjetivo refiere a la ubicación subjetiva de las personas respecto a su clase social, en función de la posición relativa que ellas perciben que ocupan en relación al resto. 
 
@@ -12,33 +21,132 @@ ELSOC analizó el estatus subjetivo y constató que en general las personas tien
 
 <!-- ### 11.1 En nuestra sociedad, hay grupos que tienden a ubicarse en los niveles más altos y grupos que tienden a ubicarse en los niveles más bajos de la sociedad ¿Dónde se ubicaría usted?, según ola de estudio. -->
 ```{r essind-ola, fig.align='center',fig.cap='En nuestra sociedad, hay grupos que tienden a ubicarse en los niveles más altos y grupos que tienden a ubicarse en los niveles más bajos de la sociedad ¿Dónde se ubicaría usted?, según ola de estudio.'}
-g11.1 <- gr.bar.freq(var_y = "clase.sub", var_x = "ola", posicion = 'stack', reverse_y = T)
+
+datos.g11.1 <- 
+  data.frame((svytable(~clase.sub + ola, elsoc_diseno_m1, round = F))) %>%
+  group_by(ola) %>% 
+  mutate(porcentaje = Freq/sum(Freq))
+
+g11.1 <- 
+  datos.g11.1 %>% 
+  ggplot(aes(y = porcentaje, x = ola, fill = clase.sub, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .11, end = .99, direction = -1, option = 'viridis') +
+  #cambiar geom_text tal que: Stack y cambio colores
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75, color = rep.int(c('black', 'white', 'white'), 5)) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
 g11.1
+
 ```
 >**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N=`r getN(g11.1)` 
 
 <!-- ### 11.2 Cambios de Clase social subjetiva entre 2016 y 2019 -->
 ```{r ess-wave, fig.align='center',fig.cap='Cambios de Clase social subjetiva entre 2016 y 2019'}
-g11.2 <- gr.alluvial.freq("clase.sub", data = subset(elsoc_panel_m1, ola == 2016 | ola == 2019), reverse_y=T)
-g11.2 
+#Paso 1
+datos.g11.2 <- data.frame((svytable(~clase.sub + ola + idencuesta, elsoc_diseno_m1, round = F))) %>% 
+  dplyr::filter(Freq>0)  %>% group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>% na.omit()
+
+#Paso 1.1: crear un subset sólo para los años 2019 y 2021
+subset.g11.2 <- droplevels(subset(datos.g11.2, datos.g11.2$ola == '2019' | datos.g11.2$ola == '2021'))
+
+#Paso 2
+etiquetas.g11.2 <- data.frame((svytable(~clase.sub + ola, elsoc_diseno_m1, round = F))) %>% 
+  group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>% na.omit() %>% mutate(idencuesta = 1)
+
+#Paso 2.2: crear un subset sólo para los años 2017 y 2019
+etiquetas.g11.2 <- 
+  droplevels(subset(etiquetas.g11.2, etiquetas.g11.2$ola == '2019' | etiquetas.g11.2$ola == '2021'))
+
+g11.2 <- 
+  ggplot(subset.g11.2, aes(x = ola, fill = clase.sub, stratum = clase.sub, 
+                              alluvium = idencuesta, y = porcentaje)) +
+  ggalluvial::geom_flow(alpha = .66) + 
+  ggalluvial::geom_stratum(linetype = 0) +
+  scale_y_continuous(labels = scales::percent) + 
+  ylab(label = NULL) +
+  xlab(label = NULL) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  scale_fill_viridis_d(begin = .11, end = .95, direction = -1, option = 'viridis') +
+  geom_text(data = etiquetas.g11.2, 
+            aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")),
+            position = position_stack(vjust = .5),
+            show.legend = FALSE,
+            size = 2.75,
+            color = rep.int(c('black', 'white', 'white'),2))
+
+g11.2
+
 ```
 
 >**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g11.2)` 
 
 <!-- ### 11.3 Clase social subjetiva, según quintiles de ingreso (2019) -->
 ```{r ess-quintil, fig.align='center',fig.cap='Clase social subjetiva, según quintiles de ingreso (2019)'}
-g11.3 <- gr.bar.freq('clase.sub', var_x = 'quintil', data = subset(elsoc_panel, ola == 2019),
-            posicion = 'stack', reverse_y = T)
+datos.g11.3 <- 
+  data.frame((svytable(~clase.sub + quintil, elsoc_diseno_m1, round = F))) %>%
+  group_by(quintil) %>% 
+  mutate(porcentaje = Freq/sum(Freq)) %>% 
+  na.omit()
+
+g11.3 <- 
+  datos.g11.3 %>% 
+  ggplot(aes(y = porcentaje, x = quintil, fill = clase.sub, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .99, direction = -1, option = 'viridis') +
+  #cambiar geom_text tal que: Stack y cambio colores
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75, color = rep.int(c('black', 'white', 'white'), 5)) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
 g11.3
+
 ```
 
 >**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g11.3, NULL)`
 
 <!-- ### 11.4  Si usted tiene actualmente hijos o si los tuviera en el futuro, ¿dónde cree usted que se ubicarían ellos?, según Clase social subjetiva (2019) -->
 ```{r esshijos-ess, fig.align='center',fig.cap='Si usted tiene actualmente hijos o si los tuviera en el futuro, ¿dónde cree usted que se ubicarían ellos?, según Clase social subjetiva (2019)'}
-g11.4 <- gr.bar.freq('clase.sub.hijos', 'clase.sub', data = subset(elsoc_panel, ola == 2019),
-            posicion = 'stack', reverse_y = T, titulo_x = 'Clase social subjetiva propia')  
-g11.4 
+datos.g11.4 <- 
+  data.frame((svytable(~clase.sub.hijos + clase.sub, elsoc_diseno_m1, round = F))) %>%
+  group_by(clase.sub) %>% 
+  mutate(porcentaje = Freq/sum(Freq)) %>% 
+  na.omit()
+
+g11.4 <- 
+  datos.g11.4 %>% 
+  ggplot(aes(y = porcentaje, x = clase.sub, fill = clase.sub.hijos, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .99, direction = -1, option = 'viridis') +
+  #cambiar geom_text tal que: Stack y cambio colores
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75, color = rep.int(c('black', 'white', 'white'), 3)) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+g11.4
 ```
 
 >**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g11.4, NULL)` 
@@ -52,18 +160,78 @@ Los resultados en la Figura \@ref(fig:merit-wave) revelan un alto consenso al id
 
 <!-- ### 11.5  Percepción de importancia y recompensas del mérito, según ola de estudio. Porcentaje de Respuestas "De acuerdo" y ”Totalmente de acuerdo".  -->
 ```{r merit-wave, fig.align='center',fig.cap='Percepción de importancia y recompensas del mérito, según ola de estudio. Porcentaje de Respuestas "De acuerdo" y ”Totalmente de acuerdo".'}
-elsoc_panel_m1 <- elsoc_panel_m1 %>%
-  mutate(d05_02_rec = factor(d05_02, labels = c('1','2','3','4','5')),
-         d05_04_rec = factor(d05_04, labels = c('1','2','3','4','5')),
-         c18_09_rec = factor(c18_09, labels = c('1','2','3','4','5')),
-         c18_10_rec = factor(c18_10, labels = c('1','2','3','4','5')))
 
-g11.5 <- gr.line.freq.rec.list(c('c18_09_rec', 'c18_10_rec', 'd05_02_rec', 'd05_04_rec'), 'ola', data = elsoc_panel_m1, 
-                      label_color = c('Personas son recompensadas por su esfuerzo', 
+elsoc_panel_m1 <- elsoc_panel_m1 %>%
+  mutate(merit_esfu = factor(car::recode(c18_09, "c(1,2)=1;c(3)=2;c(4,5)=3"),
+                           labels = c('En desacuendo o totalmente en desacuerdo', 
+                                      'Ni de acuerdo ni en desacuerdo', 'De acuerdo o totalmente de acuerdo')),
+         merit_inte = factor(car::recode(c18_10, "c(1,2)=1;c(3)=2;c(4,5)=3"),
+                               labels = c('En desacuendo o totalmente en desacuerdo', 
+                                          'Ni de acuerdo ni en desacuerdo', 'De acuerdo o totalmente de acuerdo')),
+         merit_educ = factor(car::recode(d05_02, "c(1,2)=1;c(3)=2;c(4,5)=3"),
+                            labels = c('En desacuendo o totalmente en desacuerdo', 
+                                       'Ni de acuerdo ni en desacuerdo', 'De acuerdo o totalmente de acuerdo')),
+         merit_trab = factor(car::recode(d05_04, "c(1,2)=1;c(3)=2;c(4,5)=3"),
+                          labels = c('En desacuendo o totalmente en desacuerdo', 
+                                     'Ni de acuerdo ni en desacuerdo', 'De acuerdo o totalmente de acuerdo')))
+
+elsoc_diseno_m1 <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
+                             nest = TRUE, data = elsoc_panel_m1)
+
+#Paso 1: Mismo código que gráfico c.2.3
+datos.esfu <- data.frame((svytable(~merit_esfu + ola, elsoc_diseno_m1, round = F))) %>%
+  group_by(ola) %>% mutate(p_esfu=Freq/sum(Freq))
+datos.esfu$ola <- NULL
+
+datos.inte <- data.frame((svytable(~merit_inte + ola, elsoc_diseno_m1, round = F))) %>% 
+  group_by(ola) %>% mutate(p_inte=Freq/sum(Freq))
+datos.inte$ola <- NULL
+
+datos.educ <- data.frame((svytable(~merit_educ + ola, elsoc_diseno_m1, round = F))) %>% 
+  group_by(ola) %>% mutate(p_educ=Freq/sum(Freq))
+datos.educ$ola <- NULL
+
+datos.trab <- data.frame((svytable(~merit_trab + ola, elsoc_diseno_m1, round = F))) %>% 
+  group_by(ola) %>% mutate(p_trab=Freq/sum(Freq))
+
+datos.grafico.g11.5 <- cbind(datos.esfu, datos.inte, datos.educ, datos.trab)
+
+#trasponer según variable
+datos.grafico.g11.5.a <- datos.grafico.g11.5 %>% 
+  pivot_longer(cols = starts_with('merit_'))  %>%
+  mutate(variable = factor(name,
+                           labels = c('Personas son recompensadas por su esfuerzo', 
                                       'Personas son recompensadas por su inteligencia',
-                                      'Educación es importante para surgir en la vida',
-                                      'Trabajo duro es importante para surgir en la vida'),
-                      colores = c(0, .66, -1))  
+                                      'Educación es importane para surgir en la vida',
+                                      'Trabajo duro es importane para surgir en la vida'))) %>%
+  drop_na()
+
+datos.grafico.g11.5.a$porcentaje <- with(datos.grafico.g11.5.a, case_when(
+  variable == 'Personas son recompensadas por su esfuerzo' ~ p_esfu,
+  variable == 'Personas son recompensadas por su inteligencia' ~ p_inte,
+  variable == 'Educación es importane para surgir en la vida' ~ p_educ,
+  variable == 'Trabajo duro es importane para surgir en la vida' ~ p_trab))
+
+#Paso 1.2: filtrar el subset manteniendo "De acuerdo o totalmente de acuerdo"
+subset.g11.5 <- droplevels(subset(datos.grafico.g11.5.a, value == 'De acuerdo o totalmente de acuerdo'))
+
+g11.5 <- 
+  ggplot(subset.g11.5, aes(y = porcentaje, x = ola, color = variable, group = variable,
+                              label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+  theme_bw() +   
+  geom_line(size = 1) +
+  geom_point(size = 1.8) +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0,1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_color_viridis_d(begin = 0, end = .66, direction = 1, option = 'viridis') +
+  geom_text(vjust = -0.8,
+            posilinetion = position_dodge(width = .9),
+            size= 2.75) +
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
 g11.5
 
 ```
