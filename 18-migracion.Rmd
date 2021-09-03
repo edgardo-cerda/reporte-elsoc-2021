@@ -1,19 +1,15 @@
 # Migración
 ```{r include=FALSE}
+# Librerías y datos -------------------------------------------------------
 rm(list = ls())
 library(survey)
 library(tidyverse)
-getwd()
+library(ggrepel)
 load("1_input/datos_elsoc.RData")
 
+# Diseño complejo ---------------------------------------------------------
 elsoc_diseno <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
                           nest = TRUE, data = elsoc_panel)
-
-elsoc_diseno_m1 <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
-                          nest = TRUE, data = elsoc_panel_m1)
-
-elsoc_diseno_m2 <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
-                          nest = TRUE, data = elsoc_panel_m2)
 ```
  
 Chile ha experimentado cambios muy significativos en la esfera política, económica, social y cultural. Entre otros aspectos, estos cambios han fortalecido la imagen internacional del país y contribuido a atraer a inmigrantes de la región y de otras partes del mundo, lo cual ha redundado en que Chile es hoy un país más diverso culturalmente hablando. Cuando los miembros de la sociedad de acogida – los chilenos en este caso - entran en contacto con personas y prácticas culturales distintas a la propia, pueden adoptar una disposición favorable hacia la inmigración en la medida que perciben que la llegada de personas de distintos países enriquecerá su matriz cultural, haciéndola más diversa y atractiva [@verkuyten_Multicultural_2006] o bien pueden experimentar diversas formas de amenaza con el consiguiente desarrollo de actitudes negativas hacia la inmigración y conductas de evitación.
@@ -28,13 +24,30 @@ Tal como lo revela la Figura \@ref(fig:amen1-wave), se ha visto una caída siste
 <!-- ### 14.1 "Con la llegada de migrantes a Chile, está aumentando el desempleo", según ola y origen de migrantes. Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo". -->
 ```{r amen1-wave, fig.align='center',fig.cap='Con la llegada de migrantes a Chile, está aumentando el desempleo", según ola y origen de migrantes. Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
 
-datos.g14.1 <- 
-  data.frame((svytable(~amenaza_realista + ola + migrantes, elsoc_diseno_m1, round = F))) %>%
-  group_by(ola) %>% 
-  mutate(porcentaje = Freq/sum(Freq))
+elsoc_panel <- elsoc_panel %>%
+  mutate(amenaza_realista = factor(car::recode(amenaza_realista, "c(1,2)=1;c(3)=2;c(4,5)=3"),
+                                   labels = c('En desacuendo o totalmente en desacuerdo', 
+                                              'Ni de acuerdo ni en desacuerdo',
+                                              'De acuerdo o totalmente de acuerdo')),
+         amenaza_simbolica = factor(car::recode(amenaza_simbolica, "c(1,2)=1;c(3)=2;c(4,5)=3"),
+                                    labels = c('En desacuendo o totalmente en desacuerdo', 
+                                               'Ni de acuerdo ni en desacuerdo',
+                                               'De acuerdo o totalmente de acuerdo')))
 
-g14.1 <- ggplot(datos.g14.1, aes(y = porcentaje, x = ola, color = migrantes, group = amenaza_realista,
-                            label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+elsoc_diseno <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
+                          nest = TRUE, data = elsoc_panel)
+
+#Paso 1: crear dataset ponderado
+datos.am_real <- data.frame((svytable(~migrantes + ola + muestra + amenaza_realista, elsoc_diseno, round = F))) %>%
+  group_by(ola, muestra) %>% mutate(porcentaje=Freq/sum(Freq)) %>% na.omit()
+
+#Paso 1.2: filtrar el subset manteniendo "De acuerdo o totalmente de acuerdo"
+subset.g14.1 <- droplevels(subset(datos.am_real, amenaza_realista == 'De acuerdo o totalmente de acuerdo')) %>% 
+  dplyr::filter(porcentaje > 0.00000000)
+
+g14.1 <- 
+  ggplot(subset.g14.1, aes(y = porcentaje, x = ola, color = migrantes, group = migrantes,
+                           label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
   theme_bw() +   
   geom_line(size = 1) +
   geom_point(size = 1.8) +
@@ -42,22 +55,48 @@ g14.1 <- ggplot(datos.g14.1, aes(y = porcentaje, x = ola, color = migrantes, gro
                      limits = c(0,1)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_color_viridis_d(begin = 0, end = .85, direction = 1, option = 'viridis') +
-  geom_text_repel(posilinetion = position_dodge(width = .9),
-                  size= 2.25) + 
+  scale_color_viridis_d(begin = .33, end = .99, direction = 1, option = 'viridis') +
+  geom_text_repel(vjust = -0.8,
+            posilinetion = position_dodge(width = .9),
+            size= 2.75) +
   theme(legend.position = 'top',
         legend.title = element_blank())
 
 g14.1
+
 ```
 >**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g14.1)` 
 
 
 <!-- ### 14.2 "Con la llegada de migrantes, Chile está perdiendo su identidad", según ola y origen de migrantes. Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo". -->
 ```{r amen2-wave, fig.align='center',fig.cap='"Con la llegada de migrantes, Chile está perdiendo su identidad", según ola y origen de migrantes. Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
-g14.2 <- gr.line.freq.rec('amenaza_simbolica', var_x = 'ola', var_z = 'migrantes',
-                data = elsoc_panel, limits_y = c(0,.8), colores = c(0,.66,-1))
-g14.2    
+
+#Paso 1: crear dataset ponderado
+datos.am_sim <- data.frame((svytable(~migrantes + ola + muestra + amenaza_simbolica, elsoc_diseno, round = F))) %>%
+  group_by(ola, muestra) %>% mutate(porcentaje=Freq/sum(Freq)) %>% na.omit()
+
+#Paso 1.2: filtrar el subset manteniendo "De acuerdo o totalmente de acuerdo"
+subset.g14.2 <- droplevels(subset(datos.am_sim, amenaza_simbolica == 'De acuerdo o totalmente de acuerdo')) %>% 
+  dplyr::filter(porcentaje > 0.00000000)
+
+g14.2 <- 
+  ggplot(subset.g14.2, aes(y = porcentaje, x = ola, color = migrantes, group = migrantes,
+                           label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+  theme_bw() +   
+  geom_line(size = 1) +
+  geom_point(size = 1.8) +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0,1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_color_viridis_d(begin = .33, end = .99, direction = 1, option = 'viridis') +
+  geom_text_repel(vjust = -0.8,
+            posilinetion = position_dodge(width = .9),
+            size= 2.75) +
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+g14.2   
 ```
 >**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g14.2)`
 
