@@ -12,8 +12,8 @@ library(tidyverse)
 getwd()
 load("1_input/datos_elsoc.RData")
 
-#elsoc_diseno <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
-                          #nest = TRUE, data = elsoc_panel)
+elsoc_diseno <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
+                          nest = TRUE, data = elsoc_panel)
 
 elsoc_diseno_m1 <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
                           nest = TRUE, data = elsoc_panel_m1)
@@ -35,7 +35,7 @@ En la Figura \@ref(fig:confl-total) se observa que en términos temporales las m
 
 <!-- ### 8.1 ¿Con qué frecuencia usted/alguien de su hogar se ha molestado o incomodado por problemas con sus vecinos? según ola de estudio -->
 ```{r confl-total, fig.align='center', fig.cap='¿Con qué frecuencia usted/alguien de su hogar se ha molestado o incomodado por problemas con sus vecinos? según ola de estudio '}
-
+elsoc_panel %>% 
 datos.g8.1 <- 
   data.frame((svytable(~confli.barrial.rec + ola, elsoc_diseno_m1, round = F))) %>%
   group_by(ola) %>% 

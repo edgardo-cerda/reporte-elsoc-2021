@@ -438,6 +438,8 @@ elsoc_long$prosocial <-  c(as.numeric(elsoc_long$c07_01) + as.numeric(elsoc_long
                              as.numeric(elsoc_long$c07_04) + as.numeric(elsoc_long$c07_05) + as.numeric(elsoc_long$c07_06) +
                              as.numeric(elsoc_long$c07_07) + as.numeric(elsoc_long$c07_08)) / 8
 
+elsoc_long$apoyo.soci <- c(as.numeric(elsoc_long$c07_01)+ as.numeric(elsoc_long$c07_03)) /2
+
 
 ###TERRITORIO
 
@@ -445,7 +447,6 @@ elsoc_long$prosocial <-  c(as.numeric(elsoc_long$c07_01) + as.numeric(elsoc_long
 elsoc_long$confli.barrial <- c(as.numeric(elsoc_long$t11_01) + as.numeric(elsoc_long$t11_02) +
                                  as.numeric(elsoc_long$t11_03) + as.numeric(elsoc_long$t11_04)) / 4
 
-elsoc_long$apoyo.soci <- c(as.numeric(elsoc_long$c07_01)+ as.numeric(elsoc_long$c07_03)) /2
 
 elsoc_long$confli.barrial.rec <- factor(with(elsoc_long, case_when(confli.barrial == 1 ~ 3,
                                                                    confli.barrial < 3 ~ 2,
@@ -830,11 +831,11 @@ elsoc_long <- lapply(elsoc_long, sticky::sticky) %>% data.frame()
 as.ordered(elsoc_long$ponderador02)
 elsoc_long=elsoc_long %>% filter(!is.na(ponderador02))
 sjmisc::frq(elsoc_long$ponderador02)
-
+sjmisc::frq(elsoc_panel$muestra)
 #Separar las muestras
 elsoc_panel <- elsoc_long %>% filter(tipo_atricion == 1 | tipo_atricion == 17)
-elsoc_panel_m1 <- dplyr::filter(elsoc_long, muestra == 1 & tipo_atricion == 1)
-elsoc_panel_m2 <- dplyr::filter(elsoc_long, muestra == 2 & tipo_atricion == 17)
+elsoc_panel_m1 <- dplyr::filter(elsoc_long, muestra == "Muestra Original" & tipo_atricion == 1)
+elsoc_panel_m2 <- dplyr::filter(elsoc_long, muestra == "Muestra de Refresco" & tipo_atricion == 17)
 
 # Bases wide por submuestra
 elsoc_wide_m1 <- elsoc_wide %>% dplyr::filter(tipo_atricion == 1| tipo_atricion == 17)
