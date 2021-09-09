@@ -10,56 +10,6 @@ editor_options:
 
 ## Identificación con Partidos y Coaliciones
 
-
-<!-- ### 4.1 id partidos por ola -->
-
-```{r diseno, echo=FALSE}
-elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
-                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
-                          weights = ~ponderador02, #ponderador de corte transversal
-                          nest = TRUE,
-                          data = elsoc_panel_m1)
-```
-
-
-```{r echo=FALSE}
-datos.grafico2 <- data.frame((svytable(~idpart + ola, elsoc_diseno, round = F))) %>%
-  group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
-  na.omit()
-
-```
-
-```{r}
-graf.idpart <-datos.grafico2 %>% 
-    #indicar el contenido del gráfico: ejes y relleno (fill) por ola
-    ggplot(aes(y = porcentaje, x = idpart, fill = ola, 
-               label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
-    #fijar el fondo y el marco del gráfico uniforme
-    theme_bw() + 
-    #geom_col para usar variable y=porcentaje. 'dodge2' para formato side-to-side
-    geom_col(position= 'dodge2') +
-    #escala del eje y en porcentajes del 0 al 100%
-    scale_y_continuous(labels = scales::percent,
-                       limits = c(0, 1)) +
-    #Nombres de los ejes se eliminan
-    ylab(label = NULL) +
-    xlab(label = NULL) +
-    #colores oficiales por ola: degradé 'viridis'
-    scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
-    #etiquetas por sobre cada barra
-    geom_text(vjust = -0.8,
-              position = position_dodge(width = .9),
-              size= 2.75) +
-    #posicionamiento de leyenda arriba
-    theme(legend.position = 'top',
-          legend.title = element_blank())
-
-graf.idpart
-```
-
-
->  **Nota:**  Resultados sin ponderar. N = 2.085
-
 <!-- ### Figura 4.2: Identificación política por ola -->
 
 ```{r echo=FALSE}
@@ -68,7 +18,7 @@ datos.grafico3 <- data.frame((svytable(~pos_id + ola, elsoc_diseno, round = F)))
   na.omit()
 ```
 
-```{r}
+```{r include=FALSE}
 graf.posid <-datos.grafico3 %>% 
     #indicar el contenido del gráfico: ejes y relleno (fill) por ola
     ggplot(aes(y = porcentaje, x = pos_id, fill = ola, 
@@ -98,7 +48,7 @@ graf.posid
 
 <!-- ### 4.3. Alluvial de cambios de Identificación política (+o-) -->
 
-```{r}
+```{r include=FALSE}
 #Paso 1
 datos.d.1 <- data.frame((svytable(~pos_id + ola + idencuesta, elsoc_diseno, round = F))) %>% dplyr::filter(Freq>0)  %>% group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>% na.omit()
 
@@ -107,7 +57,7 @@ etiquetas.d.1 <- data.frame((svytable(~pos_id + ola, elsoc_diseno, round = F))) 
   mutate(idencuesta = 1)
 ```
 
-```{r}
+```{r include=FALSE}
 install.packages("gtools")
 library(gtools)
 elsoc_panel_m1$pos_id <- na.replace(elsoc_panel_m1$pos_id, "NS/NR") #recode NA en categoría "NS/NR"
@@ -133,14 +83,13 @@ graf.apos
 
 <!-- ### 4.4. Sexo, según Identificación política de los chilenos -->
 
-```{r}
+```{r include=FALSE}
 datos.grafico4 <- data.frame((svytable(~pos_id + m0_sexo + ola, elsoc_diseno, round = F))) %>%
   group_by(m0_sexo) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
   na.omit()
-view(datos.grafico4)
 ```
 
-```{r}
+```{r include=FALSE}
 graf.gen <-datos.grafico4 %>% 
     ggplot(aes(y = porcentaje, x = ola, fill = pos_id, 
                label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
@@ -164,14 +113,13 @@ graf.gen
 
 <!-- ### 4.5 Tramo etáreo, según Identificación política de los chilenos -->
 
-```{r}
+```{r include=FALSE}
 datos.grafico5 <- data.frame((svytable(~pos_id + edadt + ola, elsoc_diseno, round = F))) %>%
   group_by(edadt) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
   na.omit()
-view(datos.grafico5)
 ```
 
-```{r}
+```{r include=FALSE}
 graf.edad <-datos.grafico5 %>% 
     ggplot(aes(y = porcentaje, x = ola, fill = pos_id, 
                label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
@@ -195,14 +143,14 @@ graf.edad
 
 <!-- ### 4.6 Nivel educacional, según Identificación política de los chilenos -->
 
-```{r}
+```{r include=FALSE}
 datos.grafico6 <- data.frame((svytable(~pos_id + educ + ola, elsoc_diseno, round = F))) %>%
   group_by(educ) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
   na.omit()
 view(datos.grafico6)
 ```
 
-```{r}
+```{r include=FALSE}
 graf.edad <-datos.grafico6 %>% 
     ggplot(aes(y = porcentaje, x = ola, fill = pos_id, 
                label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
@@ -223,24 +171,16 @@ graf.edad
 
 
 <!-- ### 2.10 Cambios en identificación con algún partido o coalición política entre 2016 y 2019, según posición ideológica (en 2016) -->
-```{r id-sin-ideol, fig.align='center',fig.cap="Cambios en identificación con algún partido o coalición política entre 2016 y 2019, según posición ideológica (en 2016)"}
-g2.10 <- gr.bar.freq(var_y = 'id_sin', var_x = 'pos_id_w01', 
-            data = elsoc_wide_m1,
-            ponderador = 'ponderador02_w04',
-            posicion = 'stack')
-g2.10
+```{r include=FALSE}
+
 ```
 
 >  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g2.10, NULL)`
 
 
 <!-- ### 2.11 Cambios en identificación con algún partido o coalición política entre 2016 y 2019, según interés (en 2016) -->
-```{r id-sin-interes, fig.align='center',fig.cap="Cambios en identificación con algún partido o coalición política entre 2016 y 2019, según interés (en 2016)"}
-g2.11 <- gr.bar.freq(var_y = 'id_sin', var_x = 'interes_politica_w01', 
-            data = elsoc_wide_m1,
-            ponderador = 'ponderador02_w04',
-            posicion = 'stack')
-g2.11
+```{r include=FALSE}
+
 ```
 
 >  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g2.11, NULL)`

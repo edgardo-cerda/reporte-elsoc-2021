@@ -1,6 +1,6 @@
 --- 
 title: "Estudio Longitudinal Social de Chile"
-subtitle: Resultados longitudinales 2016-2021
+subtitle: "Resultados longitudinales 2016-2021"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
@@ -10,63 +10,22 @@ bibliography:
 - packages.bib
 biblio-style: apalike
 link-citations: yes
-geometry: left=4cm, right=3cm, top=2.5cm, bottom=2.5cm
+
+geometry: "left=4cm, right=3cm, top=2.5cm, bottom=2.5cm"
 fontsize: 12pt
 linestretch: 1.5
 toc-depth: 1
-lof: yes
-lot: yes
-editor_options:
-  markdown:
+lof: True
+lot: True
+editor_options: 
+  markdown: 
     wrap: 72
 ---
 
-```{r message=FALSE, warning=FALSE, include=FALSE, echo=FALSE,cache=FALSE} 
-pacman::p_load(knitr, kableExtra, dplyr,gridExtra,tidyverse,sjmisc,sjlabelled,sticky,ggrepel,ggalluvial,survey,spatstat,readxl,forcats)
-```
-
-```{r cargar objetos, include=FALSE, cache = FALSE}
-remove(list = ls())
-#base de datos
-load("1_input/datos_elsoc.RData")      
-```
-
-```{r diseno, echo=TRUE}
-elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
-                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
-                          weights = ~ponderador02, #ponderador de corte transversal
-                          nest = TRUE,
-                          data = elsoc_panel_m1)
-```
-
-```{r echo=FALSE }
-table_format = if(is_html_output()) {
-  "html"
-} else if(is_latex_output()) {
-  "latex" 
-}
-
-fullw = if(is_html_output()) {T} else if(is_latex_output()) {F}
-fsize = if(is_html_output()) {14} else if(is_latex_output()) {8}
-
-ggplot2::theme_set(new = theme_test(base_family = "serif"))
-```
-
 # Introducción al reporte
 
-```{r out.width = '70%', echo = FALSE, fig.align = 'center'}
-knitr::include_graphics("1_input/images/logos.png") 
-```
+Placeholder
 
-El Centro de Estudios de Conflicto y Cohesión Social (COES) desarrolla investigación colaborativa en temas relacionados al conflicto social y la cohesión (convivencia) en Chile, por medio de un equipo multidisciplinario proveniente de las ciencias sociales y humanidades. COES centra sus actividades académicas y de difusión en el análisis de las múltiples manifestaciones del conflicto y cohesión social en Chile, sus causas, así como también su contexto cultural e histórico.
-
-
-COES está patrocinado por la Universidad de Chile y la Pontificia Universidad Católica de Chile, y como instituciones asociadas se encuentran la Universidad Diego Portales y la Universidad Adolfo Ibáñez. COES cuenta con el apoyo del Fondo de Financiamiento de Centros de Investigación en Áreas Prioritarias (FONDAP, dependiente de la Agencia Nacional de Investigación y Desarrollo (ANID) del Ministerio de Ciencia, Tecnología, Conocimiento e Innovación. ELSOC además cuenta como socio al Instituto Milenio para la Investigación en Depresión y Personalidad (MIDAP).
-
-
-```{r out.width = '30%', echo = FALSE, fig.align = 'center'}
-knitr::include_graphics("1_input/images/anid_midap.png") 
-```
 
 
 <!--chapter:end:index.Rmd-->
@@ -118,14 +77,191 @@ A continuación, se presentan los principales resultados de la encuesta ELSOC el
 
 <!--chapter:end:04-cambio-long.Rmd-->
 
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
 
 # Movimientos Sociales y Acciones Colectivas
 
-Placeholder
 
 
 ## Ciclo de movilización política y estallido social
+
+
+<!-- ### 1.1 ¿Cuál es el movimiento social que usted más valora de esta lista? Según ola del estudio  -->
+
+```{r diseno, echo=FALSE}
+elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
+                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
+                          weights = ~ponderador02, #ponderador de corte transversal
+                          nest = TRUE,
+                          data = elsoc_panel_m1)
+```
+
+```{r echo=FALSE}
+datos.grafico1 <- data.frame((svytable(~mov + ola, elsoc_diseno, round = F))) %>%
+  group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
+  na.omit()
+
+datos.subset <- droplevels(subset(datos.grafico1, datos.grafico1$ola == '2019' | datos.grafico1$ola == '2021'))
+
+```
+
+
+```{r echo=FALSE}
+graf.mov <-datos.subset %>% 
+  ggplot(aes(y = porcentaje, x = mov, fill = ola, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'dodge2') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0,0.3)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  coord_flip() +
+  theme(axis.text.x = element_text(size=rel(.9))) +
+  scale_x_discrete(labels = waiver( ))
+
+graf.mov
+
+```
+
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.1, 'var_y')` 
+
+<!-- ### 1.2 Frecuencia de participación en movimientos sociales, según Ola de encuesta. Porcentaje que responde A veces, Frecuentemente o Muy frecuentemente  -->
+
+```{r}
+elsoc_panel_m1$freq_part <- car::recode(as.numeric(elsoc_panel_m1$c22), recodes = "c(1)=1; c(2,3,4,5)=2; else=NA", as.factor = TRUE)
+```
+
+```{r}
+library(survey)
+datos.grafico2 <- data.frame((svytable(~freq_part + ola, elsoc_diseno, round = F))) %>%
+  group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
+  na.omit()
+datos.subset2 <- droplevels(subset(datos.grafico2, datos.grafico2$freq_part == '2'))
+
+```
+
+
+```{r}
+g_frqmov <- datos.subset2 %>% 
+    ggplot(aes(y = porcentaje, x = ola, fill = freq_part, 
+               label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+  theme_bw() + 
+    geom_col() +
+    scale_y_continuous(labels = scales::percent,
+                       limits = c(0, 1)) +
+    ylab(label = NULL) +
+    xlab(label = NULL) +
+    scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+    geom_text(vjust = -0.8,
+              position = position_dodge(width = .9),
+              size= 2.75) +
+    theme(legend.position = 'none',   ## Eliminar leyenda al no ser necesaria
+          legend.title = element_blank())
+
+g_frqmov
+```
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N=`r getN(g1.2)` 
+
 ## Estallido social y aumento en la participación en movimientos sociales
+
+
+<!-- ### 1.3 Cambio en Frecuencia de participación en movimientos sociales, según ola de encuesta -->
+
+```{r}
+
+```
+
+
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.3)` 
+
+
+<!-- ### 1.4 Cambio en Frecuencia de participación en movimientos sociales entre 2018 y 2019, según edad del entrevistado -->
+
+```{r}
+
+```
+
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.4, NULL)` 
+
+<!-- ### 1.5 Cambio en Frecuencia de participación en movimientos sociales entre 2018 y 2019, según nivel educacional del entrevistado -->
+```{r cambio-freq-educ, fig.align='center',fig.cap="Cambio en Frecuencia de participación en movimientos sociales entre 2018 y 2019, según nivel educacional del entrevistado"}
+
+
+```
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.5, NULL)`
+
+<!-- ### 1.6 Cambio en Frecuencia de participación en movimientos sociales entre 2018 y 2019, según posición ideológica del entrevistado (de año previo) -->
+```{r cambio-freq-ideo, fig.align='center', fig.cap="Cambio en Frecuencia de participación en movimientos sociales entre 2018 y 2019, según posición ideológica del entrevistado (de año previo)"}
+
+```
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.6, NULL)`
+
+
+<!-- ### 1.7 Cambio en Frecuencia de participación en movimientos sociales entre 2018 y 2019, según participación de amigos en movimiento social -->
+```{r cambio-freq-amig, fig.align='center',fig.cap="Cambio en Frecuencia de participación en movimientos sociales entre 2018 y 2019, según participación de amigos en movimiento social"}
+
+```
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.7, NULL)`
+
+
+```{r echo = FALSE}
+
+
+```
+
+<!-- ### 1.8 Rabia y miedo hacia nivel de desigualdad, costo de la vida en Chile, actuar de carabineros y actuar de manifestantes violentos (2019) -->
+
+```{r rabia-miedo, fig.align='center',fig.cap="Rabia y miedo hacia nivel de desigualdad, costo de la vida en Chile, actuar de carabineros y actuar de manifestantes violentos (2019)"}
+
+
+
+```
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.8a, 'var_x')` 
+
+
+
+<!-- ### 1.9 Frecuencia de participación en movimiento social (2019), según rabia hacia nivel de desigualdad y costo de la vida en Chile -->
+
+```{r freq-rabia-ineq, fig.align='center',fig.cap="Frecuencia de participación en movimiento social (2019), según rabia hacia nivel de desigualdad y costo de la vida en Chile"}
+
+
+
+```
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.8, 'var_z')` 
+
+<!-- ### 1.10 Frecuencia de participación en movimiento social (2019), según rabia y miedo hacia el accionar de Carabineros en manifestaciones -->
+```{r freq-rabia-carab, fig.align='center',fig.cap="Frecuencia de participación en movimiento social (2019), según rabia y miedo hacia el accionar de Carabineros en manifestaciones"}
+
+
+
+
+```
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.9, 'var_z')` 
+
+<!-- ### 1.11 Frecuencia de participación en movimiento social (2019), según rabia y miedo hacia manifestantes violentos en protestas -->
+
+```{r freq-rabia-violent, fig.align='center',fig.cap="Frecuencia de participación en movimiento social (2019), según rabia y miedo hacia manifestantes violentos en protestas"}
+
+
+```
+
+>  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.10, 'var_z')` 
 
 <!--chapter:end:05-mov-sociales-acc-colec.Rmd-->
 
@@ -172,7 +308,6 @@ Placeholder
 ## Relaciones inter-clases
 ### Clases sociales y Trato Justo
 ## Deprivación Relativa
-## Percepción de elites
 
 <!--chapter:end:09-conflicto-clases.Rmd-->
 
@@ -184,19 +319,18 @@ Placeholder
 
 ## Justificación de la violencia para el control social – a manos de ciudadanos
 ## Justificación de la violencia para el control social – a manos de carabineros
-## Justificación de la violencia para el cambio social
 
 <!--chapter:end:10-just-viol.Rmd-->
 
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
 
 # Cambio Constitucional
 
-Placeholder
 
-
-## Caracterización de la opinión publica respecto al cambio constitucional
-## ¿Quiénes cambiaron de opinión sobre la constitución con el estallido social?
-## Desigualdad de participación en el proceso constituyente
 
 <!--chapter:end:11-camb-constiucional.Rmd-->
 
@@ -247,22 +381,17 @@ Placeholder
 
 
 ## Sexismo hostil y benevolente
-## Expectativas y roles de género
-## Derechos y roles de género
 ## Trabajo y género
-## Identidad de género y sororidad
 
 <!--chapter:end:16-genero.Rmd-->
 
-
-# Salud Mental y Bienestar 
-
-Placeholder
 
 
 ## Salud mental y bienestar
 ## Brecha de género en Salud Mental
 ## Sintomatología depresiva, sexo y ocupación
+## COVID - 19
+## Salud Mental en COVID-19
 
 <!--chapter:end:17-salud-bienestar.Rmd-->
 

@@ -12,7 +12,7 @@ editor_options:
 
 
 <!-- ### 3.1 ¿Con cuál de las siguientes frases está usted más de acuerdo? -->
-```{r c25, fig.align='center', fig.cap="¿Con cuál de las siguientes frases está usted más de acuerdo?"}
+```{r include=FALSE}
 
 g3.2 <- gr.alluvial.freq('c25', data = subset(elsoc_panel_m1, ola == 2016 | ola == 2019),
                           posicion_leyenda = 'top', reverse_y = T, invertir_label = T, colores = c(0,.85,1), 
@@ -28,7 +28,7 @@ g3.2
 
 <!-- ### 3.2 ¿Cuán satisfecho o insatisfecho está usted con el funcionamiento de la democracia en Chile? -->
 
-```{r}
+```{r include=FALSE}
 #agregar variable a bbdd original
 
 elsoc_panel_m1$sat_dem <- car::recode(as.numeric(elsoc_panel_m1$c01), 
@@ -49,7 +49,7 @@ datos.grafico1 <- data.frame((svytable(~sat_dem + ola, elsoc_diseno, round = F))
 ```
 
 
-```{r ola-c01, fig.align='center', fig.cap="¿Cuán satisfecho o insatisfecho está usted con el funcionamiento de la democracia en Chile?"}
+```{r include=FALSE}
 
 graf.sat_dem <-datos.grafico1 %>% 
   ggplot(aes(y = porcentaje, x = ola, fill = sat_dem, 
@@ -75,7 +75,7 @@ graf.sat_dem
 
 <!-- ### 3.3. ¿Con cuál de las siguientes frases está usted más de acuerdo? (2019), según posición ideológica -->
 
-```{r}
+```{r include=FALSE}
 elsoc_panel_m1$aut_dem <- car::recode(as.numeric(elsoc_panel_m1$c25), 
                                       recodes = "c(1)='Democracia es preferible a cualquier otra forma de gobierno'; 
                                       c(2)='En algunos casos, gobierno autoritario puede ser preferible'; c(3)='Da lo mismo régimen democrático o autoritario'; 
@@ -92,7 +92,7 @@ datos.grafico2 <- data.frame((svytable(~aut_dem + pos_id, elsoc_diseno, round = 
 ```
 
 
-```{r c25-pos-id, fig.aligN='center',fig.cap="¿Con cuál de las siguientes frases está usted más de acuerdo? (2019), según posición ideológica"}
+```{r include=FALSE}
 
 graf.aut_dem <-datos.grafico2 %>% 
   ggplot(aes(y = porcentaje, x = pos_id, fill = aut_dem, 
@@ -119,7 +119,7 @@ graf.aut_dem
 
 
 <!-- ### 3.4 Grado de acuerdo con las siguientes afirmaciones Porcentaje que responde De acuerdo o Totalmente de acuerdo  -->
-```{r c18-04-07, fig.aligN='center',fig.cap="Grado de acuerdo con las siguientes afirmaciones Porcentaje que responde De acuerdo o Totalmente de acuerdo"}
+```{r include=FALSE}
 
 elsoc_panel_m1$c18_04
 

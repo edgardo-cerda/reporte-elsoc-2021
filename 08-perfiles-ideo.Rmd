@@ -31,93 +31,73 @@ editor_options:
 >  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(n4.4, NULL)`
 
 <!-- ### 4.5 Religión, según Perfiles ideológicos de los chilenos (2019) -->
-```{r relig-perfiles, fig.align='center',fig.cap="Religión, según Perfiles ideológicos de los chilenos (2019)"}
-n4.5<- gr.bar.freq("relig", var_x = "CL", data= baseCL, posicion = 'stack', reverse_y =T, colores = c(0,.85,1))
-n4.5
+```{r include=FALSE}
+
 ```
 
 
 >  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(n4.5, NULL)`
 
 <!-- ### 4.6 Posición política, según Perfiles ideológicos de los chilenos (2019) -->
-```{r pospol-perfiles,echo=FALSE, fig.cap="Posición política, según Perfiles ideológicos de los chilenos (2019)"}
-n4.6<- gr.bar.freq("idpoli", var_x = "CL", data= baseCL, posicion = 'stack', reverse_y = T)
-n4.6
+```{r include=FALSE}
+
 ```
 
 
 >  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(n4.6, NULL)`
 
 <!-- ### 4.7 Interés en política, según Perfiles ideológicos de los chilenos (2019) -->
-```{r intpol-perfiles,fig.cap="Interés en política, según Perfiles ideológicos de los chilenos (2019)"}
-n4.7<- gr.bar.freq("c13", data = baseCL, var_x = "CL", posicion = 'stack')
-n4.7
+```{r include=FALSE}
+
 ```
 
 
 >  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(n4.7, NULL)`
 
 <!-- ### 4.8 Satisfacción con la Democracia, según Perfiles ideológicos de los chilenos (2019) -->
-```{r satisf-perfiles,fig.cap="Satisfacción con la Democracia, según Perfiles ideológicos de los chilenos (2019)"}
-n4.8<- gr.bar.freq("c01", data = baseCL, var_x = "CL", posicion = 'stack')
-n4.8
+```{r include=FALSE}
+
 ```
 
 
 >  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(n4.8, NULL)`
 
 <!-- ### 4.9 Preferencia por la Democracia, según Perfiles ideológicos de los chilenos (2019) -->
-```{r prefdem-perfiles,echo=FALSE,fig.cap="Preferencia por la Democracia, según Perfiles ideológicos de los chilenos (2019)"}
-n4.9<- gr.bar.freq("c25", data = baseCL, var_x = "CL", posicion = 'stack')
-n4.9
+```{r include=FALSE}
+
 ```
 
 
 >  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(n4.9, NULL)`
 
 <!-- ### 4.10 Consistencia durante las 4 olas en Posición política, según Perfiles ideológicos de los chilenos (2019) -->
-```{r conspol-perfiles,fig.cap="Consistencia durante las 4 olas en Posición política, según Perfiles ideológicos de los chilenos (2019)"}
-n4.10<- gr.bar.freq("identidad.pospoli.long", var_x = "CL", data= baseCL, posicion = 'stack', reverse_y = T)
-n4.10
+```{r include=FALSE}
+
 ```
 >  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(n4.10, NULL)`
 
 <!-- ### 4.11 Consistencia durante las 4 olas en Identificación partidaria, según Perfiles ideológicos -->
-```{r idpart-perfiles,fig.cap="Consistencia durante las 4 olas en Identificación partidaria, según Perfiles ideológicos"}
-n4.11<- gr.bar.freq("identidad.parti.long", var_x = "CL", data= baseCL, posicion = 'stack', reverse_y = T)
-n4.11
+```{r include=FALSE}
+
 ```
 
 
 >  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(n4.11, NULL)`
 
 <!-- ### 4.12 Consistencia durante las 4 olas en Identificación con coaliciones política, según Perfiles ideológicos (2019) -->
-```{r idcol-perfiles,fig.cap="Consistencia durante las 4 olas en Identificación con coaliciones política, según Perfiles ideológicos (2019)"}
-n4.12<- gr.bar.freq("identidad.coali.long", var_x = "CL", data= baseCL, posicion = 'stack')
-n4.12
+```{r include=FALSE}
+
 ```
 >  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(n4.12, NULL)`
 
 <!-- ### 4.13 Niveles de confianza social, según Perfiles ideológicos de los chilenos (2019) -->
-```{r socconf-perfiles, message=FALSE, warning=FALSE,fig.cap="Niveles de confianza social, según Perfiles ideológicos de los chilenos (2019)"}
-library(car)
-#Confianza Social 1 - Confianza Social Generalizada
-baseCL$confsoc1 <- recode(as.numeric(baseCL$c02), "1=3; 2=1; 3=2")
-#Confianza Social 2 - Altruismo Social Generalizado
-baseCL$confsoc2 <- recode(as.numeric(baseCL$c03), "1=3; 2=1; 3=2")
-#Confianza Social 3 - Mayoria de la gente trata de ser justa
-baseCL$confsoc3 <- recode(as.numeric(baseCL$c04), "1=1; 2=3; 3=2")
-#Indicadores
-baseCL$confsoc <- baseCL$confsoc1 + baseCL$confsoc2 + baseCL$confsoc3
-baseCL$confsoc <- recode(baseCL$confsoc, "3=1; 4:6=2; 7:9=3")
-baseCL$confsoc_rec <- recode(baseCL$confsoc, "3=1;else=0",as.factor = T)
-baseCL$confsoc <- factor(baseCL$confsoc,levels = c(1,2,3),labels = c("Baja", "Media", "Alta")) 
+```{r include=FALSE}
+
 ```
 
 
-```{r confsoc}
-n4.13<- gr.bar.freq("confsoc", var_x = "CL", data= baseCL, posicion= 'stack')
-n4.13
+```{r include=FALSE}
+
 ```
 
 
