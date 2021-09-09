@@ -18,35 +18,4 @@ A continuación se describe a este grupo de participantes según los mismos atri
 
 **Nota 2:** Se utiliza el ponderador muestral ajustado a población regional y sexo, estrato y conglomerado muestral.
 
-<!-- ## Distribución de Sub-Muestra de Participantes en las cuatro olas ELSOC según sexo -->
-```{r m0sexo-2019, fig.align='center',fig.cap="Distribución de Sub-Muestra de Participantes en las cuatro olas ELSOC según sexo"}
-gr.bar.freq("m0_sexo", data = subset(elsoc_panel_m1, ola == 2019))
-```
-
-
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo) 
-
-<!-- ## Distribución de Sub-Muestra de Participantes en las cuatro olas ELSOC según edad -->
-```{r edadt-2019, fig.align='center',fig.cap="Distribución de Sub-Muestra de Participantes en las cuatro olas ELSOC según edad"}
-gr.bar.freq("edadt", data = subset(elsoc_panel_m1, ola == 2019))
-```
-
-
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo) 
-
-<!-- ## Distribución de Sub-muestra de Participantes en las cuatro olas ELSOC según Nivel educacional -->
-```{r educ-2019, fig.align='center',fig.cap="Distribución de Sub-muestra de Participantes en las cuatro olas ELSOC según Nivel educacional"}
-gr.bar.freq("educ", data = subset(elsoc_panel_m1, ola == 2019))
-```
-
-
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo) 
-
-
-<!-- ## Distribución de Sub-Muestra de Participantes en las cuatro olas ELSOC según zona de residencia -->
-```{r estrato-2019, fig.align='center',fig.cap="Distribución de Sub-Muestra de Participantes en las cuatro olas ELSOC según zona de residencia"}
-gr.bar.freq("estrato", data = subset(elsoc_panel_m1, ola == 2019))
-```
-
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo) 
 

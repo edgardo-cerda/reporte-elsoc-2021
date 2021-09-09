@@ -35,7 +35,7 @@ gr.17.1
 
 ```
 
-```{r N1, include=FALSE}
+```{r N5, include=FALSE}
 N<-round(sum(datos.grafico$Freq),0)
 ```
 
@@ -79,7 +79,7 @@ gr.17.2 <- ggplot(datos.subset,
 gr.17.2
  
 ```
-```{r N2, include=FALSE}
+```{r N6, include=FALSE}
 N<-round(sum(datos.grafico$Freq),0)
 ```
 <!-- ###  3 Cambios en Síntomas de depresión entre años 2018 y 2021, según sexo -->
@@ -136,22 +136,22 @@ gr.17.3
 
 ```
 
-```{r N3, include=FALSE}
+```{r N7, include=FALSE}
 N<-round(sum(datos.grafico$Freq),0)
 ```
 
 
 <!-- ###  4 Síntomas de Depresión según tramos de edad y sexo (2021). Porcentaje con síntomas de "Depresion Moderada" o "Depresion Moderada Severa a Severa". -->
 ```{r depre-edad-sexo, echo=FALSE, fig.align='center'}
-datos.grafico <- data.frame((svytable(~depr_rec + ola + m0_sexo + edad, 
+datos.grafico <- data.frame((svytable(~depr_rec + ola + m0_sexo + edadt, 
                                       elsoc_diseno, round = F))) %>% 
-  group_by(ola, m0_sexo, edad) %>% 
+  group_by(ola, m0_sexo, edadt) %>% 
   mutate(porcentaje=Freq/sum(Freq))
 
 datos.subset <- droplevels(subset(datos.grafico, datos.grafico$ola == '2021' & datos.grafico$depr_rec == '3'))
 
 gr.17.4 <- ggplot(datos.subset, 
-               aes(y = porcentaje, x = edad, 
+               aes(y = porcentaje, x = edadt, 
                    color = m0_sexo, group = m0_sexo,
                    label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
   theme_bw() +   
@@ -172,7 +172,7 @@ gr.17.4
 
 ```
 
-```{r N4, include=FALSE}
+```{r N8, include=FALSE}
 N<-round(sum(datos.grafico$Freq),0)
 ``` 
 
@@ -181,15 +181,15 @@ N<-round(sum(datos.grafico$Freq),0)
 
 <!-- ### 5 Síntomas de Depresión según categoría ocupacional (año 2021). Porcentaje con síntomas de "Depresion Moderada" o "Depresion Moderada Severa a Severa". -->
 ```{r depre-labstat, echo=FALSE, fig.align='center'}
-datos.grafico <- data.frame((svytable(~depr_rec + ola + m0_sexo + socup, 
+datos.grafico <- data.frame((svytable(~depr_rec + ola + m0_sexo + empleo, 
                                       elsoc_diseno, round = F))) %>% 
-  group_by(ola, m0_sexo, socup) %>% 
+  group_by(ola, m0_sexo, empleo) %>% 
   mutate(porcentaje=Freq/sum(Freq))
 
 datos.subset <- droplevels(subset(datos.grafico, datos.grafico$ola == '2021' & datos.grafico$depr_rec == '3'))
 
 gr.17.5 <- datos.subset %>% 
-  ggplot(aes(y = porcentaje, x = socup, fill = m0_sexo, 
+  ggplot(aes(y = porcentaje, x = empleo, fill = m0_sexo, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = 'dodge2') +
@@ -212,7 +212,7 @@ gr.17.5
 
 En 2021 no hay hombres en la categoría Trabajo doméstico no remunerado $^{*}$
 
-```{r N5, include=FALSE}
+```{r N9, include=FALSE}
 N<-round(sum(datos.grafico$Freq),0)
 ```
 

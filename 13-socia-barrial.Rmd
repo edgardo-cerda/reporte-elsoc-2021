@@ -13,7 +13,7 @@ Tal como se puede apreciar en la Figura \@ref(fig:soc-barrio) se ha constatado u
 
 ```
 
-> **Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N=  `r getN(g9.1)` 
+ 
 
 
 Al nivel territorial se puede observar el mismo patrón de aumento de la sociabilidad barrial, según zona geográfica (Figura \@ref(fig:soc-alta-zona)), zonas de residencia (Figura  \@ref(fig:soc-barrio-resi)  y Figura \@ref(fig:soc-alta-resid) ) y quintiles de ingresos (Figura \@ref(fig:socalta-quintil)).
@@ -24,7 +24,7 @@ Al nivel territorial se puede observar el mismo patrón de aumento de la sociabi
 
 ```
 
-> **Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N=  `r getN(g9.2)` 
+
 
 <!-- ### 9.3 Porcentaje de Sociabilidad Barrial "Alta", según ola de estudio y zona geográfica -->
 ```{r soc-alta-zona, fig.align='center', fig.cap='Porcentaje de Sociabilidad Barrial "Alta", según ola de estudio y zona geográfica'}
@@ -32,7 +32,6 @@ Al nivel territorial se puede observar el mismo patrón de aumento de la sociabi
 ```
 
 
-> **Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g9.3, 'var_z')` 
 
 <!-- ### 9.4 Porcentaje de Sociabilidad Barrial "Alta", según ola de estudio y zona de residencia -->
 ```{r soc-barrio-resi, fig.align='center', fig.cap='Porcentaje de Sociabilidad Barrial "Alta", según ola de estudio y zona de residencia'}
@@ -41,8 +40,6 @@ Al nivel territorial se puede observar el mismo patrón de aumento de la sociabi
 ```
 
 
-> **Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N=  `r getN(g9.4, 'var_z')` 
-
 
 <!-- ### 9.5 Porcentaje de Sociabilidad Barrial "Alta", según ola de estudio y zona de residencia -->
 ```{r soc-alta-resid, fig.align='center', fig.cap='Porcentaje de Sociabilidad Barrial "Alta", según ola de estudio y zona de residencia"'}
@@ -50,7 +47,6 @@ Al nivel territorial se puede observar el mismo patrón de aumento de la sociabi
 ```
 
 
-> **Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g9.5, 'var_z')` 
 
 
 
@@ -59,5 +55,4 @@ Al nivel territorial se puede observar el mismo patrón de aumento de la sociabi
 
 ```
 
-> **Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g9.6, 'var_z')` 
 

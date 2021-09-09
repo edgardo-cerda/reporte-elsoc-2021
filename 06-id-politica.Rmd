@@ -58,8 +58,7 @@ etiquetas.d.1 <- data.frame((svytable(~pos_id + ola, elsoc_diseno, round = F))) 
 ```
 
 ```{r include=FALSE}
-install.packages("gtools")
-library(gtools)
+
 elsoc_panel_m1$pos_id <- na.replace(elsoc_panel_m1$pos_id, "NS/NR") #recode NA en categoría "NS/NR"
 graf.apos <- ggplot(datos.d.1, aes(x = ola, fill = pos_id, stratum = pos_id,
                              alluvium = idencuesta, y = porcentaje))+
@@ -109,7 +108,6 @@ graf.gen
 ```
 
 
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(n4.2, NULL)`
 
 <!-- ### 4.5 Tramo etáreo, según Identificación política de los chilenos -->
 
@@ -139,7 +137,6 @@ graf.edad
 ```
 
 
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(n4.3, NULL)`
 
 <!-- ### 4.6 Nivel educacional, según Identificación política de los chilenos -->
 
@@ -175,7 +172,7 @@ graf.edad
 
 ```
 
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g2.10, NULL)`
+
 
 
 <!-- ### 2.11 Cambios en identificación con algún partido o coalición política entre 2016 y 2019, según interés (en 2016) -->
@@ -183,4 +180,4 @@ graf.edad
 
 ```
 
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g2.11, NULL)`
+

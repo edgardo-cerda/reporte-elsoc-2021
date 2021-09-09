@@ -14,16 +14,9 @@ editor_options:
 <!-- ### 3.1 ¿Con cuál de las siguientes frases está usted más de acuerdo? -->
 ```{r include=FALSE}
 
-g3.2 <- gr.alluvial.freq('c25', data = subset(elsoc_panel_m1, ola == 2016 | ola == 2019),
-                          posicion_leyenda = 'top', reverse_y = T, invertir_label = T, colores = c(0,.85,1), 
-                         label_y = c('Ninguna',
-                                     'Da lo mismo régimen democrático o autoritario',
-                                     'En algunos casos, gobierno autoritario puede ser preferible',
-                                     'Democracia es preferible a cualquier otra forma de gobierno'))       
-g3.2    
+ 
 ``` 
 
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g3.2)`
 
 
 <!-- ### 3.2 ¿Cuán satisfecho o insatisfecho está usted con el funcionamiento de la democracia en Chile? -->
@@ -70,7 +63,7 @@ graf.sat_dem <-datos.grafico1 %>%
 graf.sat_dem
 ```
 
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g2.12)`
+
 
 
 <!-- ### 3.3. ¿Con cuál de las siguientes frases está usted más de acuerdo? (2019), según posición ideológica -->
@@ -114,23 +107,13 @@ graf.aut_dem
 
 
 ```
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g13.a, NULL)`
 
 
 
 <!-- ### 3.4 Grado de acuerdo con las siguientes afirmaciones Porcentaje que responde De acuerdo o Totalmente de acuerdo  -->
 ```{r include=FALSE}
 
-elsoc_panel_m1$c18_04
-
-g2.14 <- gr.bar.freq.rec.list(c('c18_04', 'c18_05', 'c18_06', 'c18_07'),
-                     label_x = c('En vez de derechos, lo que este país necesita es un gobierno firme',
-                                 'El país necesita un mandatario fuerte y con determinación',
-                                 'Lo más importante que aprendan los niños es obediencia y respeto por autoridad',
-                                 'Las claves para una buena vida son la obediencia y la disciplina'))
-g2.14 
 ```
 
 
-> **Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g2.14, 'var_x', 'var_z')`
 

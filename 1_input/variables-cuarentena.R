@@ -6,9 +6,9 @@ load("~/Documents/GitHub/covid-elsoc/1_input/elsoc_data.RData")
 #library(readxl)
 #datos_cit <- read_excel("~/Desktop/THESIS/DATOS_CIT_CENSO_2016_V2 (1).xlsx")
 
-#els_long <- merge(x = elsoc_panel_m1, y = datos_cit[ , c("idencuesta","manzana", "comuna", "ciudad")], 
+#els_long <- merge(x = elsoc_long, y = datos_cit[ , c("idencuesta","manzana", "comuna", "ciudad")], 
 #                  by = c("idencuesta", "comuna"), all.x=TRUE)
-#nota: no tengo la comuna para la segunda muestra
+
 
 ## DATA CUARENTENA ---------
 # Url para descarga directa de datos desde el Github del Ministerio de Ciencia

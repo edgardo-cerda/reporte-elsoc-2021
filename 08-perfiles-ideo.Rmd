@@ -28,7 +28,6 @@ editor_options:
 ### Perfiles ideológicos: Resultados principales
 
 
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(n4.4, NULL)`
 
 <!-- ### 4.5 Religión, según Perfiles ideológicos de los chilenos (2019) -->
 ```{r include=FALSE}
@@ -36,7 +35,6 @@ editor_options:
 ```
 
 
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(n4.5, NULL)`
 
 <!-- ### 4.6 Posición política, según Perfiles ideológicos de los chilenos (2019) -->
 ```{r include=FALSE}
@@ -44,7 +42,6 @@ editor_options:
 ```
 
 
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(n4.6, NULL)`
 
 <!-- ### 4.7 Interés en política, según Perfiles ideológicos de los chilenos (2019) -->
 ```{r include=FALSE}
@@ -52,7 +49,6 @@ editor_options:
 ```
 
 
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(n4.7, NULL)`
 
 <!-- ### 4.8 Satisfacción con la Democracia, según Perfiles ideológicos de los chilenos (2019) -->
 ```{r include=FALSE}
@@ -60,21 +56,16 @@ editor_options:
 ```
 
 
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(n4.8, NULL)`
-
 <!-- ### 4.9 Preferencia por la Democracia, según Perfiles ideológicos de los chilenos (2019) -->
 ```{r include=FALSE}
 
 ```
 
 
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(n4.9, NULL)`
-
 <!-- ### 4.10 Consistencia durante las 4 olas en Posición política, según Perfiles ideológicos de los chilenos (2019) -->
 ```{r include=FALSE}
 
 ```
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(n4.10, NULL)`
 
 <!-- ### 4.11 Consistencia durante las 4 olas en Identificación partidaria, según Perfiles ideológicos -->
 ```{r include=FALSE}
@@ -82,13 +73,11 @@ editor_options:
 ```
 
 
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(n4.11, NULL)`
 
 <!-- ### 4.12 Consistencia durante las 4 olas en Identificación con coaliciones política, según Perfiles ideológicos (2019) -->
 ```{r include=FALSE}
 
 ```
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(n4.12, NULL)`
 
 <!-- ### 4.13 Niveles de confianza social, según Perfiles ideológicos de los chilenos (2019) -->
 ```{r include=FALSE}
@@ -101,4 +90,3 @@ editor_options:
 ```
 
 
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(n4.13, NULL)`

@@ -51,12 +51,17 @@ graf.mov
 ```
 
 
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.1, 'var_y')` 
 
 <!-- ### 1.2 Frecuencia de participación en movimientos sociales, según Ola de encuesta. Porcentaje que responde A veces, Frecuentemente o Muy frecuentemente  -->
 
 ```{r include=FALSE}
 elsoc_panel_m1$freq_part <- car::recode(as.numeric(elsoc_panel_m1$c22), recodes = "c(1)=1; c(2,3,4,5)=2; else=NA", as.factor = TRUE)
+
+elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
+                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
+                          weights = ~ponderador02, #ponderador de corte transversal
+                          nest = TRUE,
+                          data = elsoc_panel_m1)
 ```
 
 ```{r include=FALSE}
@@ -88,7 +93,6 @@ g_frqmov <- datos.subset2 %>%
 g_frqmov
 ```
 
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N=`r getN(g1.2)` 
 
 ## Estallido social y aumento en la participación en movimientos sociales
 
@@ -101,8 +105,6 @@ g_frqmov
 
 
 
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.3)` 
-
 
 <!-- ### 1.4 Cambio en Frecuencia de participación en movimientos sociales entre 2018 y 2019, según edad del entrevistado -->
 
@@ -111,7 +113,6 @@ g_frqmov
 ```
 
 
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.4, NULL)` 
 
 <!-- ### 1.5 Cambio en Frecuencia de participación en movimientos sociales entre 2018 y 2019, según nivel educacional del entrevistado -->
 ```{r include=FALSE}
@@ -119,22 +120,19 @@ g_frqmov
 
 ```
 
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.5, NULL)`
+
 
 <!-- ### 1.6 Cambio en Frecuencia de participación en movimientos sociales entre 2018 y 2019, según posición ideológica del entrevistado (de año previo) -->
 ```{r include=FALSE}
 
 ```
 
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.6, NULL)`
 
 
 <!-- ### 1.7 Cambio en Frecuencia de participación en movimientos sociales entre 2018 y 2019, según participación de amigos en movimiento social -->
 ```{r include=FALSE}
 
 ```
-
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.7, NULL)`
 
 
 ```{r include=FALSE}
@@ -150,8 +148,6 @@ g_frqmov
 
 ```
 
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.8a, 'var_x')` 
-
 
 
 <!-- ### 1.9 Frecuencia de participación en movimiento social (2019), según rabia hacia nivel de desigualdad y costo de la vida en Chile -->
@@ -162,7 +158,6 @@ g_frqmov
 
 ```
 
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.8, 'var_z')` 
 
 <!-- ### 1.10 Frecuencia de participación en movimiento social (2019), según rabia y miedo hacia el accionar de Carabineros en manifestaciones -->
 ```{r include=FALSE}
@@ -172,7 +167,6 @@ g_frqmov
 
 ```
 
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.9, 'var_z')` 
 
 <!-- ### 1.11 Frecuencia de participación en movimiento social (2019), según rabia y miedo hacia manifestantes violentos en protestas -->
 
@@ -181,4 +175,3 @@ g_frqmov
 
 ```
 
->  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.10, 'var_z')` 

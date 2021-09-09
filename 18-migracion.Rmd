@@ -26,7 +26,7 @@ Tal como lo revela la Figura \@ref(fig:amen1-wave), se ha visto una caída siste
 
 
 ```
->**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g14.1)` 
+
 
 
 <!-- ### 14.2 "Con la llegada de migrantes, Chile está perdiendo su identidad", según ola y origen de migrantes. Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo". -->
@@ -34,15 +34,12 @@ Tal como lo revela la Figura \@ref(fig:amen1-wave), se ha visto una caída siste
 
 ```
 
->**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g14.3)`
-
 
 <!-- ### 14.4 Percepción de amenaza realista y simbólica, según grupo de migrantes (2019). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo". -->
 ```{r amen3-wave, fig.align='center',fig.cap='Percepción de amenaza realista y simbólica, según grupo de migrantes (2019). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
 
 ```
 
->**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g14.4)`
 
 
 ## Amenaza realista y simbólica respecto a inmigrantes según nivel educacional
@@ -57,7 +54,6 @@ La evidencia revela que existe una fuerte asociación entre niveles de escolarid
 ```{r amen-educ, fig.align='center',fig.cap='Percepción de amenaza realista y simbólica respecto a inmigrantes, según nivel educacional (2019). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
 
 ```
->**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N=`r getN(g14.5)` 
 
 ## Amenaza realista y simbólica respecto a inmigrantes según frecuencia de contacto
 
@@ -72,7 +68,6 @@ Tal como se observa en la Figura \@ref(fig:amen-contacto), se observa una asocia
 
 ```
 
->**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N=`r getN(g14.6)` 
 
 
 <!-- ### 14.7 Confianza en migrantes, según frecuencia de contacto (2019). Porcentaje de personas que responden "Bastante" o "Mucha confianza". -->
@@ -80,15 +75,12 @@ Tal como se observa en la Figura \@ref(fig:amen-contacto), se observa una asocia
 
 ```
 
->**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g14.7, NULL)`
 
 
 <!-- ### 14.8 Percepción de amenaza realista y simbólica, según tramo de edad (2019). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo". -->
 ```{r amen-edad, fig.align='center',fig.cap='Percepción de amenaza realista y simbólica, según tramo de edad (2019). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
 
 ```
-
->**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g14.8)` 
 
 
 ## Frecuencia de Contacto y Confianza hacia los Inmigrantes
@@ -100,7 +92,7 @@ Acorde a lo esperado, los resultados también revelan que a medida que aumenta l
 ```{r contact-conf, fig.align='center',fig.cap='Efecto de Frecuencia de Contacto con migrantes sobre niveles de confianza de chilenos hacia migrantes, según ola del estudio. Porcentaje de personas que responden "Bastante" o "Mucha confianza".'}
 
 ```
->**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g14.9N)` 
+
 
 Es importante destacar que los resultados expuestos no varían en función del grupo de inmigrantes evaluados (peruanos, haitianos y venezolanos). De manera global estos hallazgos confirman la importancia que reviste estimular experiencia de contacto positivo y de manera frecuente con los inmigrantes para promover actitudes favorables hacia ellos.
 
@@ -117,6 +109,6 @@ Los resultados revelaron de manera significativa y estable en el tiempo una asoc
 ```{r normas-contacto, fig.align='center',fig.cap='Efecto de normas pro-contacto de familia y amigos sobre Frecuencia de Contacto con migrantes, según ola del estudio. Porcentaje de personas que responden Frecuencia de contacto con migrantes "Siempre" o "Casi siempre".'}
 
 ```
->**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g14.10N)` 
+
 
 Estos hallazgos confirman la importancia que revisten los referentes normativos sociales significativos, como los familiares y amigos, en la predicción de cambio de la conducta social como las experiencias de contacto con inmigrantes. He ahí la importancia de abordar a través de políticas públicas adecuada la formación de normas pro-contacto que estimulen mayor cohesión social particularmente en aquellos barrios conde coexisten una importante presencia de inmigrantes y población chilena.

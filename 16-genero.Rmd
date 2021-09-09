@@ -161,6 +161,12 @@ gr.16.2
 
 <!-- ### 12.7 Porcentaje de trabajadores y trabajadoras por situación ocupacional (2019), según sexo del entrevistado -->
 ```{r ocup-sexo, fig.align='center',fig.cap='Porcentaje de trabajadores y trabajadoras por situación ocupacional (2021), según sexo del entrevistado'}
+elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
+                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
+                          weights = ~ponderador02, #ponderador de corte transversal
+                          nest = TRUE,
+                          data = elsoc_panel_m1)
+
 datos.grafico <- data.frame((svytable(~m0_sexo + ola + empleo, 
                                       elsoc_diseno, round = F))) %>% 
   group_by(ola, m0_sexo) %>% 

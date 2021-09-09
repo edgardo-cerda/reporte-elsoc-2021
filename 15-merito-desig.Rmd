@@ -47,7 +47,7 @@ g11.1 <-
 g11.1
 
 ```
->**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N=`r getN(g11.1)` 
+
 
 <!-- ### 11.2 Cambios de Clase social subjetiva entre 2016 y 2019 -->
 ```{r ess-wave, fig.align='center',fig.cap='Cambios de Clase social subjetiva entre 2016 y 2019'}
@@ -87,7 +87,6 @@ g11.2
 
 ```
 
->**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g11.2)` 
 
 <!-- ### 11.3 Clase social subjetiva, según quintiles de ingreso (2019) -->
 ```{r ess-quintil, fig.align='center',fig.cap='Clase social subjetiva, según quintiles de ingreso (2019)'}
@@ -120,7 +119,7 @@ g11.3
 
 ```
 
->**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g11.3, NULL)`
+
 
 <!-- ### 11.4  Si usted tiene actualmente hijos o si los tuviera en el futuro, ¿dónde cree usted que se ubicarían ellos?, según Clase social subjetiva (2019) -->
 ```{r esshijos-ess, fig.align='center',fig.cap='Si usted tiene actualmente hijos o si los tuviera en el futuro, ¿dónde cree usted que se ubicarían ellos?, según Clase social subjetiva (2019)'}
@@ -152,7 +151,7 @@ g11.4 <-
 g11.4
 ```
 
->**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g11.4, NULL)` 
+ 
 
 
 ## Percepción de meritocracia
@@ -239,4 +238,3 @@ g11.5 <-
 g11.5
 ```
 
->**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g11.5, 'var_x', 'var_z')` 

@@ -284,7 +284,5 @@ gr.09.5 <-datos.grafico %>%
 gr.09.5
 ```
 
-> **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g3.12)`
-
 
 

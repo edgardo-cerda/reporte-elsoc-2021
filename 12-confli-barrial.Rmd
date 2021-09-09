@@ -31,7 +31,7 @@ La conflictividad barrial puede analizarse empíricamente por medio de preguntas
 ## Conflictividad barrial
 
 En la Figura \@ref(fig:confl-total) se observa que en términos temporales las molestias por problemas con los vecinos se han mantenido estable a lo largo del tiempo, siendo baja la proporción de la población que declara tener dichas experiencias. Al revisar las trayectorias temporales en la Figura \@ref(fig:conf-cambios), se puede apreciar que un porcentaje importante de las personas que declaró haber tenido muchas o algunas tensiones con sus vecinos en 2016, ellas tienden a disiparse el 2019. Sin embargo, también se consta movilidad entre quienes nunca vivieron tensiones con sus vecinos el 2016, más de la mitad de ellos declara haberlas vivido en pocas o algunas ocasiones el 2019.
-```{r Recode, include=FALSE}
+```{r Recode1, include=FALSE}
 elsoc_panel_m1$confli_barrial <- ((as.numeric(elsoc_panel_m1$t11_01) + as.numeric(elsoc_panel_m1$t11_02) +
                                   as.numeric(elsoc_panel_m1$t11_03) + as.numeric(elsoc_panel_m1$t11_04))/4)
 
@@ -73,7 +73,6 @@ g8.1
 ```
 
 
-> **Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g8.1)` 
 
 <!-- ### 8.2 Cambios en frecuencia de conflictos barriables -->
 
@@ -109,7 +108,7 @@ g8.2 <-
 g8.2
 ```
 
-> **Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g8.2)`. 
+
 
 Al revisar la distribución de las personas que declaran tener “siempre o muchas veces” conflictos barriales, se puede observar una importante caída en el norte y en el sur del país, aumentando levemente en el centro y en la Región Metropolitana (Figura \@ref(fig:conf-wav-zon)). Al revisar estos patrones por los estratos que componen el estudio, se constata que es en el Gran Santiago dónde ha aumentado la conflictividad barrial (Figura \@ref(fig:conf-resid)). Al analizar la conflictividad barrial por quintiles de ingresos, se constata que en general esta aumenta a medida que disminuyen los ingresos. Esta tendencia es estable en el tiempo, excepto en los quintiles 4 y 5 (sectores mas acomodados), donde se observan caídas más pronunciadas de conflictividad barrial al comparar 2016 y 2019 (Figura \@ref(fig:conf-incomeq)).
 
@@ -140,7 +139,7 @@ g8.3 <-
 g8.3
 ```
 
-> **Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N=  `r getN(g8.3, 'var_z')`
+
 
 <!-- ### 8.4 Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona de residencia. Porcentaje con conflictos barriables "Siempre" o "Muchas veces".  -->
 ```{r conf-resid, fig.align='center', fig.cap='Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona de residencia. Porcentaje con conflictos barriables "Siempre" o "Muchas veces".'}
@@ -167,7 +166,7 @@ g8.4 <-
 g8.4
 ```
 
-> **Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g8.4, 'var_z')` 
+
 
 
 <!-- ### 8.5 Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y quintiles de ingreso. Porcentaje con conflictos barriables "Siempre" o "Muchas veces".  -->
@@ -195,4 +194,4 @@ g8.5 <-
 g8.5
 ```
 
-> **Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N=  `r getN(g8.4, 'var_z')` 
+ 
