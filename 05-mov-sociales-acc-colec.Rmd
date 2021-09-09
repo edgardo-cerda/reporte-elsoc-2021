@@ -48,37 +48,45 @@ graf.mov <-datos.subset %>%
 
 graf.mov
 
-
-
-
 ```
 
 
-
-```{r mov, eval=FALSE, fig.align='left', fig.cap="¿Cuál, include=FALSE}
-
-g1.1 <- gr.bar.freq(var_y = 'ola', var_x = 'mov', suma100 = 'y', no_label_texto = T,
-                    data = subset(elsoc_panel_m1, ola == 2018 | ola == 2019), expand=T, limits_y = c(0,.4),
-                    reverse_x=T, reverse_y = T, posicion_leyenda = 'right', invertir_labels = T,
-                    colores = c(.33,.66,1)) +
-  coord_flip() + theme(axis.text.x = element_text(size=rel(.9))) +
-  scale_x_discrete(labels = waiver())
-
-g1.1
-
-```
 >  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.1, 'var_y')` 
 
 <!-- ### 1.2 Frecuencia de participación en movimientos sociales, según Ola de encuesta. Porcentaje que responde A veces, Frecuentemente o Muy frecuentemente  -->
 
+```{r}
+elsoc_panel_m1$freq_part <- car::recode(as.numeric(elsoc_panel_m1$c22), recodes = "c(1)=1; c(2,3,4,5)=2; else=NA", as.factor = TRUE)
+
+```
+
+```{r}
+datos.grafico2 <- data.frame((svytable(~freq_part + ola, elsoc_diseno, round = F))) %>%
+  group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
+  na.omit()
+datos.subset2 <- droplevels(subset(datos.grafico2, datos.grafico2$freq_part == '2'))
+
+```
 
 
-```{r freq-mov, eval=FALSE, fig.align='center', fig.cap="Frecuencia de participación en movimientos sociales, include=FALSE}
-g1.2 <-  gr.bar.freq.rec.list(c('freq_mov_w04','freq_mov_w03', 'freq_mov_w02', 'freq_mov_w01'),  var_z=NULL,
-                              REC = c('A veces', 'Frecuentemente o muy frecuentemente'),
-                          data = elsoc_wide_m1, ponderador = 'ponderador02_w04', reverse_y=T,
-                          label_x = c('2016', '2017', '2018', '2019'), posicion = 'stack')
-g1.2
+```{r}
+g_frqmov <- datos.subset2 %>% 
+    ggplot(aes(y = porcentaje, x = ola, fill = freq_part, 
+               label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+  theme_bw() + 
+    geom_col() +
+    scale_y_continuous(labels = scales::percent,
+                       limits = c(0, 1)) +
+    ylab(label = NULL) +
+    xlab(label = NULL) +
+    scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+    geom_text(vjust = -0.8,
+              position = position_dodge(width = .9),
+              size= 2.75) +
+    theme(legend.position = 'none',   ## Eliminar leyenda al no ser necesaria
+          legend.title = element_blank())
+
+g_frqmov
 ```
 
 >  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N=`r getN(g1.2)` 
@@ -87,16 +95,119 @@ g1.2
 
 
 <!-- ### 1.3 Cambio en Frecuencia de participación en movimientos sociales, según ola de encuesta -->
-```{r cambio-freq, eval=FALSE, fig.align='center', fig.cap="Cambio en Frecuencia de participación en movimientos sociales, include=FALSE}
-g1.3 <- gr.bar.freq.list(c('cambio_freq_mov_w04','cambio_freq_mov_w03', 'cambio_freq_mov_w02'), 
-                         data = elsoc_wide_m1, ponderador = 'ponderador02_w04', reverse_y=T,
-                         label_x = c('2016-2017', '2017-2018', '2018-2019'),
-                         label_color = c('Disminuye participación','Se mantiene nivel de participación','Aumenta participación'),
-                         posicion = 'stack',
-                    colores = c(0,.85,1))
+```{r}
+# Frecuencia de participacion en movimientos sociales
 
-g1.3
+elsoc_long$freq_mov <- factor(with(elsoc_long, case_when(
+  c22 == 'Nunca' | c22 == 'Casi nunca' ~ 3,
+  c22 == 'A veces' ~ 2,
+  c22 == 'Frecuentemente' | c22 == 'Muy frecuentemente' ~ 1)),
+  labels = c('Frecuentemente o muy frecuentemente', 'A veces', 'Nunca o casi nunca'))
+
+elsoc_wide$freq_mov_w01 <- factor(with(elsoc_wide, case_when(
+  c22_w01 == 1 | c22_w01 == 2 ~ 3,
+  c22_w01 == 3 ~ 2,
+  c22_w01 == 4 | c22_w01 == 5 ~ 1)),
+  labels = c('Frecuentemente o muy frecuentemente', 'A veces', 'Nunca o casi nunca'))
+
+elsoc_wide$freq_mov_w02 <- factor(with(elsoc_wide, case_when(
+  c22_w02 == 1 | c22_w02 == 2 ~ 3,
+  c22_w02 == 3 ~ 2,
+  c22_w02 == 4 | c22_w02 == 5 ~ 1)),
+  labels = c('Frecuentemente o muy frecuentemente', 'A veces', 'Nunca o casi nunca'))
+
+elsoc_wide$freq_mov_w03 <- factor(with(elsoc_wide, case_when(
+  c22_w03 == 1 | c22_w03 == 2 ~ 3,
+  c22_w03 == 3 ~ 2,
+  c22_w03 == 4 | c22_w03 == 5 ~ 1)),
+  labels = c('Frecuentemente o muy frecuentemente', 'A veces', 'Nunca o casi nunca'))
+
+elsoc_wide$freq_mov_w04 <- factor(with(elsoc_wide, case_when(
+  c22_w04 == 1 | c22_w04 == 2 ~ 3,
+  c22_w04 == 3 ~ 2,
+  c22_w04 == 4 | c22_w04 == 5 ~ 1)),
+  labels = c('Frecuentemente o muy frecuentemente', 'A veces', 'Nunca o casi nunca'))
+
+elsoc_wide$freq_mov_w05 <- factor(with(elsoc_wide, case_when(
+  c22_w05 == 1 | c22_w05 == 2 ~ 3,
+  c22_w05 == 3 ~ 2,
+  c22_w05 == 4 | c22_w05 == 5 ~ 1)),
+  labels = c('Frecuentemente o muy frecuentemente', 'A veces', 'Nunca o casi nunca'))
+
+#Recolectar variables a utilizar
+datos.grafico4 <- data.frame(cbind(elsoc_panel_m1$idencuesta, elsoc_panel_m1$ola, elsoc_panel_m1$clase.sub, elsoc_panel_m1$ponderador02))
+colnames(datos.grafico4) <- c("idencuesta", "ola", "estatus", "ponderador02")
+view(datos.grafico4)
+
+
+#Pasar tabla de long a wide
+datos.grafico4 <- panel_data(datos.grafico4, id = idencuesta, wave = ola)
+datos.wide <- widen_panel(datos.grafico3, separator = "_")
+
+
+datos.wide$cambio_freq_mov_w05 <- factor(with(elsoc_wide, case_when(
+  c22_w05 == c22_w04 & !is.na(c22_w05) & !is.na(c22_w04) ~ 2,
+  c22_w05 > c22_w04 & !is.na(c22_w05) & !is.na(c22_w04) ~ 1,
+  c22_w05 < c22_w04  & !is.na(c22_w05) & !is.na(c22_w04) ~ 3),
+  labels = c('Aumenta', 'Se mantiene', 'Disminuye')))
+
+datos.wide$cambio_freq_mov_w04 <- factor(with(elsoc_wide, case_when(
+  c22_w04 == c22_w03 & !is.na(c22_w04) & !is.na(c22_w03) ~ 2,
+  c22_w04 > c22_w03  & !is.na(c22_w04) & !is.na(c22_w03) ~ 1,
+  c22_w04 < c22_w03  & !is.na(c22_w04) & !is.na(c22_w03) ~ 3)),
+  labels = c('Aumenta', 'Se mantiene', 'Disminuye'))
+
+datos.wide$cambio_freq_mov_w03 <- factor(with(elsoc_wide, case_when(
+  c22_w03 == c22_w02 & !is.na(c22_w03) & !is.na(c22_w02) ~ 2,
+  c22_w03 > c22_w02  & !is.na(c22_w03) & !is.na(c22_w02) ~ 1,
+  c22_w03 < c22_w02  & !is.na(c22_w03) & !is.na(c22_w02) ~ 3)),
+  labels = c('Aumenta', 'Se mantiene', 'Disminuye'))
+
+datos.wide$cambio_freq_mov_w02 <- factor(with(elsoc_wide, case_when(
+  c22_w02 == c22_w01 & !is.na(c22_w02) & !is.na(c22_w01) ~ 2,
+  c22_w02 > c22_w01  & !is.na(c22_w02) & !is.na(c22_w01) ~ 1,
+  c22_w02 < c22_w01  & !is.na(c22_w02) & !is.na(c22_w01) ~ 3)),
+  labels = c('Aumenta', 'Se mantiene', 'Disminuye'))
+
+
+#Debido a la complejidad de agregar los ponderadores a partir del diseño encuesta, se realiza un ajuste manual con el ponderador06 del año 2016.
+datos.grafico4 <- datos.wide %>% 
+  pivot_longer(cols = c(cambio_freq_mov_w02,cambio_freq_mov_w03,cambio_freq_mov_w04,cambio_freq_mov_w05), names_to = "cambio_freq_mov", 
+               values_to = "respuesta") %>% 
+               drop_na()%>%
+               group_by(cambio_freq_mov, respuesta) %>% 
+               summarise(n1=sum(ponderador02,na.rm=T)) %>% 
+               mutate(n2 = sum(n1, na.rm = TRUE), porcentaje = n1/n2)%>% 
+               ungroup()
+view(datos.grafico3)
+#Recodificamos los periodos de cambio
+datos.grafico3$cambio_freq_mov<- car::recode(datos.grafico3$cambio_freq_mov, 
+                           "'cambio_freq_mov_w02'='2016-2017';'cambio_freq_mov_w03'='2017-2018';
+                           'cambio_freq_mov_w04'='2018-2019';'cambio_freq_mov_w05'='2019-2021'")
 ```
+
+```{r}
+#Creamos el gráfico
+
+graf_freq_mov <-ggplot(datos.wide, aes(y=porcentaje, x=cambio_freq_mov,fill=respuesta ,label = 
+                                    as.character(scales::percent(porcentaje, accuracy = .1))))+
+    theme_bw()+
+  geom_col(position = "stack") +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75,
+            color = rep(c('black', 'white', 'white'), 3))+
+    ggtitle('Cambio en el tiempo de percepción del estatus social')
+
+graf_freq_mov
+```
+
 
 
 >  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g1.3)` 
@@ -190,6 +301,25 @@ elsoc_wide_m1 <- elsoc_wide_m1 %>%
 <!-- ### 1.8 Rabia y miedo hacia nivel de desigualdad, costo de la vida en Chile, actuar de carabineros y actuar de manifestantes violentos (2019) -->
 
 ```{r rabia-miedo, fig.align='center',fig.cap="Rabia y miedo hacia nivel de desigualdad, costo de la vida en Chile, actuar de carabineros y actuar de manifestantes violentos (2019)"}
+
+#agregar variables a bbdd original
+#partidos politicos
+elsoc_long$conf_part_rec<- car::recode(elsoc_long$conf_part, 
+                                           "c('Nada','Poco')=1;
+                                           c('Algo')=2;
+                                           c('Bastante','Mucho')=3")
+elsoc_long$conf_part_rec <- factor(elsoc_long$conf_part_rec,labels = c('Nada o Poco', 'Algo', 'Bastante o Mucho'))
+#carabineros
+elsoc_long$conf_carb_rec<- car::recode(elsoc_long$conf_carb, 
+                                           "c('Nada','Poco')=1;
+                                           c('Algo')=2;
+                                           c('Bastante','Mucho')=3")
+elsoc_long$conf_carb_rec <- factor(elsoc_long$conf_carb_rec,labels = c('Nada o Poco', 'Algo', 'Bastante o Mucho'))
+
+#volver a realizar el código de la encuesta debido a la presencia de una nueva variable
+elsoc_diseno <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02,nest = TRUE, data = elsoc_long)
+
+
 g1.8a <- gr.bar.freq.list(c('c41_01_w04_rec', 'c41_02_w04_rec', 'c41_03_w04_rec', 'c42_03_w04_rec', 'c41_04_w04_rec', 'c42_04_w04_rec'), posicion = 'stack', 
                          data = elsoc_wide_m1, ponderador = 'ponderador02_w04',
                  label_list = c('Rabia Nivel de desigualdad', 'Rabia Costo de la vida', 'Rabia Manifestantes violentos', 'Rabia Actuar Carabineros', 'Miedo Manifestantes violentos', 'Miedo Actuar Carabineros')) 
@@ -232,6 +362,7 @@ g1.9
 <!-- ### 1.11 Frecuencia de participación en movimiento social (2019), según rabia y miedo hacia manifestantes violentos en protestas -->
 
 ```{r freq-rabia-violent, fig.align='center',fig.cap="Frecuencia de participación en movimiento social (2019), según rabia y miedo hacia manifestantes violentos en protestas"}
+
 
 g1.10 <- gr.bar.freq.list('freq_mov_w04', c('c41_03_w04_rec', 'c42_03_w04_rec'), posicion = 'stack', reverse_y=T,
                           data = elsoc_wide_m1, ponderador = 'ponderador02_w04',

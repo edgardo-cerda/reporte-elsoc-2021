@@ -66,8 +66,6 @@ graf.idpart
 datos.grafico3 <- data.frame((svytable(~pos_id + ola, elsoc_diseno, round = F))) %>%
   group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
   na.omit()
-view(datos.grafico3)
-
 ```
 
 ```{r}

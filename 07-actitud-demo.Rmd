@@ -13,6 +13,7 @@ editor_options:
 
 <!-- ### 3.1 ¿Con cuál de las siguientes frases está usted más de acuerdo? -->
 ```{r c25, fig.align='center', fig.cap="¿Con cuál de las siguientes frases está usted más de acuerdo?"}
+
 g3.2 <- gr.alluvial.freq('c25', data = subset(elsoc_panel_m1, ola == 2016 | ola == 2019),
                           posicion_leyenda = 'top', reverse_y = T, invertir_label = T, colores = c(0,.85,1), 
                          label_y = c('Ninguna',
@@ -27,11 +28,46 @@ g3.2
 
 <!-- ### 3.2 ¿Cuán satisfecho o insatisfecho está usted con el funcionamiento de la democracia en Chile? -->
 
+```{r}
+#agregar variable a bbdd original
+
+elsoc_panel_m1$sat_dem <- car::recode(as.numeric(elsoc_panel_m1$c01), 
+                                      recodes = "c(1)='Nada satisfecho'; 
+                                      c(2)='Poco satisfecho'; c(3)='Algo satisfecho'; 
+                                      c(4)='Bastante satisfecho';c(5)='Muy satisfecho'; 
+                                      else=NA", as.factor = TRUE) 
+
+#volver a realizar el código de la encuesta debido a la presencia de una nueva variable
+elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
+                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
+                          weights = ~ponderador02, #ponderador de corte transversal
+                          nest = TRUE,
+                          data = elsoc_panel_m1)
+
+#crear tabla para el gráfico
+datos.grafico1 <- data.frame((svytable(~sat_dem + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq))
+```
 
 
 ```{r ola-c01, fig.align='center', fig.cap="¿Cuán satisfecho o insatisfecho está usted con el funcionamiento de la democracia en Chile?"}
-g2.12 <- gr.bar.freq(var_x = 'ola', var_y = 'c01', posicion = 'stack', reverse_y=T)
-g2.12 
+
+graf.sat_dem <-datos.grafico1 %>% 
+  ggplot(aes(y = porcentaje, x = ola, fill = sat_dem, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
+  #cambiar geom_text tal que: Stack y cambio colores
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75, color = rep.int(c('black', 'white', 'white', 'white', 'white'), 5)) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+graf.sat_dem
 ```
 
 >  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g2.12)`
@@ -39,14 +75,43 @@ g2.12
 
 <!-- ### 3.3. ¿Con cuál de las siguientes frases está usted más de acuerdo? (2019), según posición ideológica -->
 
+```{r}
+elsoc_panel_m1$aut_dem <- car::recode(as.numeric(elsoc_panel_m1$c25), 
+                                      recodes = "c(1)='Democracia es preferible a cualquier otra forma de gobierno'; 
+                                      c(2)='En algunos casos, gobierno autoritario puede ser preferible'; c(3)='Da lo mismo régimen democrático o autoritario'; 
+                                      c(4)='Ninguna'; 
+                                      else=NA", as.factor = TRUE) 
+elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
+                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
+                          weights = ~ponderador02, #ponderador de corte transversal
+                          nest = TRUE,
+                          data = elsoc_panel_m1)
+
+#crear tabla para el gráfico
+datos.grafico2 <- data.frame((svytable(~aut_dem + pos_id, elsoc_diseno, round = F))) %>% group_by(pos_id) %>% mutate(porcentaje=Freq/sum(Freq))
+```
+
+
 ```{r c25-pos-id, fig.aligN='center',fig.cap="¿Con cuál de las siguientes frases está usted más de acuerdo? (2019), según posición ideológica"}
-g13.a <- gr.bar.freq('c25', 'pos_id', data = subset(elsoc_panel_m1, ola == 2019), posicion = 'stack',
-            reverse_y = T, colores = c(0,.85,1), invertir_label = T,
-            label_color = c('Ninguna',
-                            'Da lo mismo régimen democrático o autoritario',
-                            'En algunos casos, gobierno autoritario puede ser preferible',
-                            'Democracia es preferible a cualquier otra forma de gobierno'))
-g13.a 
+
+graf.aut_dem <-datos.grafico2 %>% 
+  ggplot(aes(y = porcentaje, x = pos_id, fill = aut_dem, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
+  #cambiar geom_text tal que: Stack y cambio colores
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75, color = rep.int(c('black', 'white', 'white', 'white'), 4)) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+graf.aut_dem
+
 
 ```
 >  **Nota:**  Resultados Ponderados (con Diseño Muestral Complejo). N = `r getN(g13.a, NULL)`
@@ -55,6 +120,8 @@ g13.a
 
 <!-- ### 3.4 Grado de acuerdo con las siguientes afirmaciones Porcentaje que responde De acuerdo o Totalmente de acuerdo  -->
 ```{r c18-04-07, fig.aligN='center',fig.cap="Grado de acuerdo con las siguientes afirmaciones Porcentaje que responde De acuerdo o Totalmente de acuerdo"}
+
+elsoc_panel_m1$c18_04
 
 g2.14 <- gr.bar.freq.rec.list(c('c18_04', 'c18_05', 'c18_06', 'c18_07'),
                      label_x = c('En vez de derechos, lo que este país necesita es un gobierno firme',
