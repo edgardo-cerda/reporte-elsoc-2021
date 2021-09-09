@@ -62,15 +62,20 @@ elsoc_long$edadt <- sjlabelled::set_label(elsoc_long$edadt, label = c("Edad en T
 elsoc_long$edadt <- sjlabelled::set_labels(elsoc_long$edadt, labels = c("18 a 29", "30 a 49", "50 a 64", " 65 o mas"))
 
 #------F RECODiFiCACION ZONA GEOGRAFICA-------------------------
-elsoc_long$zona1  <- car::recode(elsoc_long$region,"c('Tarapaca','Antofagasta','Atacama','Coquimbo','Arica')= 1;c('Valparaiso','Lib. Gral. B. Ohiggins','B. Ohiggins', 'Maule','Bio Bio')= 2;c('Araucania','Los Lagos','Aysen','Magallanes','Los Rios')=3 ;'Metropolitana'= 4")
+sjmisc::frq(elsoc_long$ola) #14 = los rios; 15 = Arica; 16 = Ñuble
+elsoc_long$zona1  <- car::recode(elsoc_long$region_cod,"c(1,2,3,4,15)=1; c(5,6,7,8,16)=2; c(9,10,11,12,14)=3; 13=4")
 elsoc_long$zona1  <- factor(elsoc_long$zona1,levels=c("1","2","3","4"),
                             labels = c("Norte","Centro","Sur","Metropolitana"))
+
 #------F.1 ATRIBUTOS ZONA--------
 elsoc_long$zona1 <- sjlabelled::set_label(elsoc_long$zona1, label = c("Zona Geográfica"))
 elsoc_long$zona1 <- sjlabelled::set_labels(elsoc_long$zona1, labels = c("Norte", "Centro", "Sur", "Metropolitana"))
 
 #------F.2 ZONA GEOGRÁFICA SIN GRANDES URBES
-elsoc_long$zona2  <- car::recode(elsoc_long$region,"c('Tarapaca','Antofagasta','Atacama','Coquimbo','Arica')= 1;c('Lib. Gral. B. Ohiggins','B. Ohiggins', 'Maule')= 2;c('Araucania','Los Lagos','Aysen','Magallanes','Los Rios')=3 ;else=NA")
+elsoc_long$zona2  <- car::recode(elsoc_long$region,"c('Tarapaca','Antofagasta','Atacama','Coquimbo','Arica')= 1
+                                 ;c('Lib. Gral. B. Ohiggins','B. Ohiggins', 'Maule')= 2; 
+                                 c('Araucania','Los Lagos','Aysen','Magallanes','Los Rios')=3 ;
+                                 else=NA")
 elsoc_long$zona2  <- factor(elsoc_long$zona2,levels=c("1","2","3"),
                             labels = c("Norte","Centro","Sur"))
 
@@ -831,7 +836,7 @@ elsoc_long <- lapply(elsoc_long, sticky::sticky) %>% data.frame()
 as.ordered(elsoc_long$ponderador02)
 elsoc_long=elsoc_long %>% filter(!is.na(ponderador02))
 sjmisc::frq(elsoc_long$ponderador02)
-sjmisc::frq(elsoc_panel$muestra)
+sjmisc::frq(elsoc_long$muestra)
 #Separar las muestras
 elsoc_panel <- elsoc_long %>% filter(tipo_atricion == 1 | tipo_atricion == 17)
 elsoc_panel_m1 <- dplyr::filter(elsoc_long, muestra == "Muestra Original" & tipo_atricion == 1)
