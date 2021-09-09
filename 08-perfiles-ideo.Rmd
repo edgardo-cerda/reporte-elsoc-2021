@@ -20,9 +20,6 @@ editor_options:
 - El gasto social debe destinarse únicamente a los más pobres y vulnerables
 
 ## Modelo teórico de perfiles ideólogicos
-```{r out.width = '90%', echo = FALSE, fig.align = 'center'}
-knitr::include_graphics("inputs/images/modelo_cl_1.png")
-```
 
 
 ### Aproximación Empírica
