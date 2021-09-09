@@ -10,8 +10,7 @@ Tal como se puede apreciar en la Figura \@ref(fig:soc-barrio) se ha constatado u
 
 <!-- ### 9.1 Sociabilidad Barrial, según ola de estudio -->
 ```{r soc-barrio, fig.align='center', fig.cap='9.1 Sociabilidad Barrial, según ola de estudio'}
-g9.1 <- gr.bar.freq("sociabili.rec", var_x= "ola",limits_y = c(0,1), posicion = 'stack')
-g9.1 
+
 ```
 
 > **Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N=  `r getN(g9.1)` 
@@ -22,17 +21,14 @@ Al nivel territorial se puede observar el mismo patrón de aumento de la sociabi
 
 <!-- ### 9.2 Cambios en Sociabilidad Barrial, según ola de estudio. Porcentaje con sociabilidad barrial "Alta". -->
 ```{r soc-barrio-alta, fig.align='center', fig.cap='ambios en Sociabilidad Barrial, según ola de estudio. Porcentaje con sociabilidad barrial "Alta".'}
-g9.2 <- gr.alluvial.freq('sociabili.rec', data = subset(elsoc_panel_m1, ola == 2016 | ola == 2019))
-g9.2
+
 ```
 
 > **Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N=  `r getN(g9.2)` 
 
 <!-- ### 9.3 Porcentaje de Sociabilidad Barrial "Alta", según ola de estudio y zona geográfica -->
 ```{r soc-alta-zona, fig.align='center', fig.cap='Porcentaje de Sociabilidad Barrial "Alta", según ola de estudio y zona geográfica'}
-g9.3 <- gr.bar.freq.rec("sociabili.rec", var_x = "zona1", var_z = 'ola',
-                        data = subset(elsoc_panel_m1, ola == 2016 | ola == 2019), REC = 'Alta', limits_y = c(0,.8))
-g9.3
+
 ```
 
 
@@ -40,9 +36,7 @@ g9.3
 
 <!-- ### 9.4 Porcentaje de Sociabilidad Barrial "Alta", según ola de estudio y zona de residencia -->
 ```{r soc-barrio-resi, fig.align='center', fig.cap='Porcentaje de Sociabilidad Barrial "Alta", según ola de estudio y zona de residencia'}
-g9.4 <- gr.bar.freq.rec("sociabili.rec", var_x = "estrato", var_z = 'ola', REC = 'Alta', limits_y = c(0,.8),
-                data = subset(elsoc_panel_m1, (ola == 2016 | ola == 2019) & (estrato == 'Gran Santiago' | estrato == 'Gran Valparaíso' | estrato == 'Gran Concepción')))
-g9.4
+
 
 ```
 
@@ -52,9 +46,7 @@ g9.4
 
 <!-- ### 9.5 Porcentaje de Sociabilidad Barrial "Alta", según ola de estudio y zona de residencia -->
 ```{r soc-alta-resid, fig.align='center', fig.cap='Porcentaje de Sociabilidad Barrial "Alta", según ola de estudio y zona de residencia"'}
-g9.5 <- gr.bar.freq.rec("sociabili.rec", var_x = "estrato", var_z = 'ola', REC = 'Alta', limits_y = c(0,.8),
-                data = subset(elsoc_panel_m1, (ola == 2016 | ola == 2019) & !(estrato == 'Gran Santiago' | estrato == 'Gran Valparaíso' | estrato == 'Gran Concepción')))
-g9.5
+
 ```
 
 
@@ -64,9 +56,7 @@ g9.5
 
 <!-- ### 9.6 Porcentaje con Índice de Sociabilidad Barrial "Alta", según ola de estudio y quintil de ingresos del hogar -->
 ```{r socalta-quintil, fig.align='center', fig.cap='Porcentaje con Índice de Sociabilidad Barrial "Alta", según ola de estudio y quintil de ingresos del hogar'}
-g9.6 <- gr.bar.freq.rec("sociabili.rec", var_x = "quintil", var_z = 'ola', 
-                        data = subset(elsoc_panel_m1, ola == 2016 | ola == 2019), REC = 'Alta', limits_y = c(0,.8))
-g9.6
+
 ```
 
 > **Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g9.6, 'var_z')` 
