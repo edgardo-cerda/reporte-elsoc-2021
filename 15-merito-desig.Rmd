@@ -51,7 +51,6 @@ g11.1
 
 <!-- ### 11.2 Cambios de Clase social subjetiva entre 2016 y 2019 -->
 ```{r ess-wave, fig.align='center',fig.cap='Cambios de Clase social subjetiva entre 2016 y 2019'}
-#Paso 1
 datos.g11.2 <- data.frame((svytable(~clase.sub + ola + idencuesta, elsoc_diseno_m1, round = F))) %>% 
   dplyr::filter(Freq>0)  %>% group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>% na.omit()
 
@@ -98,6 +97,8 @@ datos.g11.3 <-
   mutate(porcentaje = Freq/sum(Freq)) %>% 
   na.omit()
 
+#subset.g11.3 <- droplevels(subset(datos.g11.3, datos.g11.3$ola == '2021'))
+
 g11.3 <- 
   datos.g11.3 %>% 
   ggplot(aes(y = porcentaje, x = quintil, fill = clase.sub, 
@@ -124,13 +125,13 @@ g11.3
 <!-- ### 11.4  Si usted tiene actualmente hijos o si los tuviera en el futuro, ¿dónde cree usted que se ubicarían ellos?, según Clase social subjetiva (2019) -->
 ```{r esshijos-ess, fig.align='center',fig.cap='Si usted tiene actualmente hijos o si los tuviera en el futuro, ¿dónde cree usted que se ubicarían ellos?, según Clase social subjetiva (2019)'}
 datos.g11.4 <- 
-  data.frame((svytable(~clase.sub.hijos + clase.sub, elsoc_diseno_m1, round = F))) %>%
-  group_by(clase.sub) %>% 
-  mutate(porcentaje = Freq/sum(Freq)) %>% 
-  na.omit()
+  data.frame((svytable(~clase.sub.hijos + clase.sub + ola, elsoc_diseno_m1, round = F))) %>%
+  group_by(clase.sub, ola) %>% mutate(porcentaje = Freq/sum(Freq)) %>% na.omit()
+
+subset.g11.4 <- droplevels(subset(datos.g11.4, ola == '2021'))
 
 g11.4 <- 
-  datos.g11.4 %>% 
+  subset.g11.4 %>% 
   ggplot(aes(y = porcentaje, x = clase.sub, fill = clase.sub.hijos, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
@@ -138,13 +139,15 @@ g11.4 <-
   scale_y_continuous(labels = scales::percent,
                      limits = c(0, 1)) +
   ylab(label = NULL) +
-  xlab(label = NULL) +
+  xlab(label = 'Clase social subjetiva propia') +
   scale_fill_viridis_d(begin = 0, end = .99, direction = -1, option = 'viridis') +
   #cambiar geom_text tal que: Stack y cambio colores
   geom_text(position = position_stack(vjust = .5),
             size= 2.75, color = rep.int(c('black', 'white', 'white'), 3)) + 
   theme(legend.position = 'top',
-        legend.title = element_blank())
+        legend.title = element_blank()) +
+  ggtitle('Si usted tiene actualmente hijos o si los tuviera en el futuro, 
+          ¿dónde cree usted que se ubicarían ellos?, según Clase social subjetiva (2021)')
 
 g11.4
 ```
@@ -178,7 +181,6 @@ elsoc_panel_m1 <- elsoc_panel_m1 %>%
 elsoc_diseno_m1 <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
                              nest = TRUE, data = elsoc_panel_m1)
 
-#Paso 1: Mismo código que gráfico c.2.3
 datos.esfu <- data.frame((svytable(~merit_esfu + ola, elsoc_diseno_m1, round = F))) %>%
   group_by(ola) %>% mutate(p_esfu=Freq/sum(Freq))
 datos.esfu$ola <- NULL
@@ -230,10 +232,11 @@ g11.5 <-
             posilinetion = position_dodge(width = .9),
             size= 2.75) +
   theme(legend.position = 'top',
-        legend.title = element_blank())
+        legend.title = element_blank()) + 
+  ggtitle('Percepción de importancia y recompensas del mérito, según ola de estudio. 
+          Porcentaje de Respuestas “De acuerdo” y ”Totalmente de acuerdo".')
 
 g11.5
-
 ```
 
 >**Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g11.5, 'var_x', 'var_z')` 

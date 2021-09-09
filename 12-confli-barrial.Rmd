@@ -31,19 +31,32 @@ La conflictividad barrial puede analizarse empíricamente por medio de preguntas
 ## Conflictividad barrial
 
 En la Figura \@ref(fig:confl-total) se observa que en términos temporales las molestias por problemas con los vecinos se han mantenido estable a lo largo del tiempo, siendo baja la proporción de la población que declara tener dichas experiencias. Al revisar las trayectorias temporales en la Figura \@ref(fig:conf-cambios), se puede apreciar que un porcentaje importante de las personas que declaró haber tenido muchas o algunas tensiones con sus vecinos en 2016, ellas tienden a disiparse el 2019. Sin embargo, también se consta movilidad entre quienes nunca vivieron tensiones con sus vecinos el 2016, más de la mitad de ellos declara haberlas vivido en pocas o algunas ocasiones el 2019.
+```{r Recode, include=FALSE}
+elsoc_panel_m1$confli_barrial <- ((as.numeric(elsoc_panel_m1$t11_01) + as.numeric(elsoc_panel_m1$t11_02) +
+                                  as.numeric(elsoc_panel_m1$t11_03) + as.numeric(elsoc_panel_m1$t11_04))/4)
 
+elsoc_panel_m1$confli_barrial_rec <- factor(with(elsoc_panel_m1, case_when(is.na(confli_barrial) ~ 0,
+                                                                     confli_barrial == 1 ~ 1,
+                                                                     confli_barrial < 3 ~ 2,
+                                                                     confli_barrial <= 5 ~ 3)),
+                                         labels = c("No sabe/No responde","Nunca",
+                                                    "Pocas o algunas veces",
+                                                    "Muchas veces o siempre"))
+sjmisc::frq(elsoc_panel_m1$confli_barrial_rec)
+
+elsoc_diseno_m1 <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
+                          nest = TRUE, data = elsoc_panel_m1)
+```
+ 
 
 <!-- ### 8.1 ¿Con qué frecuencia usted/alguien de su hogar se ha molestado o incomodado por problemas con sus vecinos? según ola de estudio -->
 ```{r confl-total, fig.align='center', fig.cap='¿Con qué frecuencia usted/alguien de su hogar se ha molestado o incomodado por problemas con sus vecinos? según ola de estudio '}
-elsoc_panel %>% 
-datos.g8.1 <- 
-  data.frame((svytable(~confli.barrial.rec + ola, elsoc_diseno_m1, round = F))) %>%
-  group_by(ola) %>% 
-  mutate(porcentaje = Freq/sum(Freq))
+datos.g8.1 <- data.frame(svytable(~confli_barrial_rec + ola, elsoc_diseno_m1, round = F)) %>% 
+  group_by(ola) %>% mutate(porcentaje = Freq/sum(Freq)) %>% na.omit()
 
 g8.1 <- 
   datos.g8.1 %>% 
-  ggplot(aes(y = porcentaje, x = ola, fill = confli.barrial.rec, 
+  ggplot(aes(y = porcentaje, x = ola, fill = confli_barrial_rec, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = 'Stack') +
@@ -51,15 +64,12 @@ g8.1 <-
                      limits = c(0, 1)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
-  #cambiar geom_text tal que: Stack y cambio colores
+  scale_fill_viridis_d(begin = .11, end = .99, direction = -1, option = 'viridis') +
   geom_text(position = position_stack(vjust = .5),
-            size= 2.75, color = rep.int(c('black', 'white', 'white'), 4)) + 
+            size= 2.75, color = rep.int(c('black', 'white', 'white','white'), 5)) + 
   theme(legend.position = 'top',
-        legend.title = element_blank()) +
-  ggtitle('Conflictividad barrial por año')
-
-g8.1 
+        legend.title = element_blank())
+g8.1
 ```
 
 
@@ -68,8 +78,35 @@ g8.1
 <!-- ### 8.2 Cambios en frecuencia de conflictos barriables -->
 
 ```{r conf-cambios, fig.align='center', fig.cap='Cambios en frecuencia de conflictos barriables'}
-g8.2 <- gr.alluvial.freq('confli.barrial.rec', data = subset(elsoc_panel_m1, ola == 2016 | ola == 2019), colores = c(0,.85,1))
-g8.2 
+datos.g8.2 <- data.frame((svytable(~confli_barrial_rec + ola + idencuesta, elsoc_diseno_m1, round = F))) %>% 
+  dplyr::filter(Freq>0)  %>% 
+  group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>%  
+  dplyr::filter(ola == '2018' | ola == '2021') %>% 
+  na.omit()
+
+etiquetas.g8.2 <- data.frame((svytable(~confli_barrial_rec + ola, elsoc_diseno_m1, round = F))) %>% 
+  group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>% mutate(idencuesta = 1) %>% 
+  dplyr::filter(ola == '2018' | ola == '2021') %>% 
+  na.omit()
+
+g8.2 <- 
+  ggplot(datos.g8.2, aes(x = ola, fill = confli_barrial_rec, stratum = confli_barrial_rec, 
+                           alluvium = idencuesta, y = porcentaje)) +
+  ggalluvial::geom_flow(alpha = .66) + 
+  ggalluvial::geom_stratum(linetype = 0) +
+  scale_y_continuous(labels = scales::percent) + 
+  ylab(label = NULL) +
+  xlab(label = NULL) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  scale_fill_viridis_d(begin = .11, end = .95, direction = -1, option = 'viridis') +
+  geom_text(data = etiquetas.g8.2, 
+            aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")),
+            position = position_stack(vjust = .5),
+            show.legend = FALSE,
+            size = 2.75,
+            color = rep.int(c('black', 'white', 'white','white'),2))
+g8.2
 ```
 
 > **Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g8.2)`. 
@@ -79,18 +116,55 @@ Al revisar la distribución de las personas que declaran tener “siempre o much
 
 <!-- ### 8.3 Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona geográfica. Porcentaje con conflictos barriables "Siempre" o "Muchas veces".  -->
 ```{r conf-wav-zon, fig.align='center', fig.cap='Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona geográfica. Porcentaje con conflictos barriables "Siempre" o "Muchas veces"'}
-g8.3 <- gr.bar.freq.rec("confli.barrial.rec", var_x = "zona1", var_z = 'ola', REC = 'Muchas veces o siempre',
-                data = subset(elsoc_panel_m1, ola == 2016 | ola == 2019), limits_y = c(0, .4)) 
-g8.3 
+datos.g8.3 <- data.frame(svytable(~confli_barrial_rec + ola + zona1, elsoc_diseno_m1, round = F)) %>% 
+  group_by(ola, zona1) %>% mutate(porcentaje = Freq/sum(Freq)) %>%
+  filter(confli_barrial_rec == 'Muchas veces o siempre', ola == '2016' | ola == '2021')
+
+g8.3 <-
+  datos.g8.3 %>% 
+  ggplot(aes(y = porcentaje, x = zona1, fill = ola, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Dodge') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, .3)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75)
+
+g8.3
 ```
 
 > **Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N=  `r getN(g8.3, 'var_z')`
 
 <!-- ### 8.4 Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona de residencia. Porcentaje con conflictos barriables "Siempre" o "Muchas veces".  -->
 ```{r conf-resid, fig.align='center', fig.cap='Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona de residencia. Porcentaje con conflictos barriables "Siempre" o "Muchas veces".'}
-g8.4 <- gr.bar.freq.rec("confli.barrial.rec", var_x = "estrato", var_z = 'ola', REC = 'Muchas veces o siempre',
-                data = subset(elsoc_panel_m1, ola == 2016 | ola == 2019), limits_y = c(0, .4)) 
-g8.4 
+datos.g8.4 <- data.frame(svytable(~confli_barrial_rec + ola + estrato, elsoc_diseno_m1, round = F)) %>% 
+  group_by(ola, estrato) %>% mutate(porcentaje = Freq/sum(Freq)) %>%
+  filter(confli_barrial_rec == 'Muchas veces o siempre', ola == '2019' | ola == '2021')
+
+g8.4 <-
+  datos.g8.4 %>% 
+  ggplot(aes(y = porcentaje, x = estrato, fill = ola, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Dodge') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, .2)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75)
+g8.4
 ```
 
 > **Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N= `r getN(g8.4, 'var_z')` 
@@ -98,10 +172,27 @@ g8.4
 
 <!-- ### 8.5 Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y quintiles de ingreso. Porcentaje con conflictos barriables "Siempre" o "Muchas veces".  -->
 ```{r conf-incomeq, fig.align='center', fig.cap='Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y quintiles de ingreso. Porcentaje con conflictos barriables "Siempre" o "Muchas veces".'}
-g8.5 <- gr.bar.freq.rec("confli.barrial.rec", var_x = "quintil", var_z = 'ola', REC = 'Muchas veces o siempre',
-                data = subset(elsoc_panel_m1, ola == 2016 | ola == 2019), limits_y = c(0, .4)) 
+datos.g8.5 <- data.frame(svytable(~confli_barrial_rec + ola + quintil, elsoc_diseno_m1, round = F)) %>% 
+  group_by(ola, quintil) %>% mutate(porcentaje = Freq/sum(Freq)) %>%
+  filter(confli_barrial_rec == 'Muchas veces o siempre', ola == '2019' | ola == '2021')
+
+g8.5 <-
+  datos.g8.5 %>% 
+  ggplot(aes(y = porcentaje, x = quintil, fill = ola, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Dodge') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, .2)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75)
 g8.5
- 
 ```
 
 > **Nota:** Resultados Ponderados (con Diseño Muestral Complejo). N=  `r getN(g8.4, 'var_z')` 
