@@ -14,7 +14,7 @@ elsoc_diseno <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~pondera
  
 ## Amenaza realista y amenaza simbólica respecto a inmigrantes
  
-```{r Recode, include=FALSE}
+```{r Recode4, include=FALSE}
 elsoc_panel <- elsoc_panel %>%
   mutate(amenaza_realista = factor(car::recode(amenaza_realista, "c(1,2)=1;c(3)=2;c(4,5)=3"),
                                    labels = c('En desacuendo o totalmente en desacuerdo', 

@@ -31,7 +31,7 @@ datos.subset <- droplevels(subset(datos.grafico1, datos.grafico1$ola == '2019' |
 ```
 
 
-```{r include=FALSE}
+```{r echo=FALSE}
 graf.mov <-datos.subset %>% 
   ggplot(aes(y = porcentaje, x = mov, fill = ola, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
@@ -73,7 +73,7 @@ datos.subset2 <- droplevels(subset(datos.grafico2, datos.grafico2$freq_part == '
 ```
 
 
-```{r include=FALSE}
+```{r echo=FALSE}
 g_frqmov <- datos.subset2 %>% 
     ggplot(aes(y = porcentaje, x = ola, fill = freq_part, 
                label = as.character(scales::percent(porcentaje, accuracy = .1)))) +

@@ -21,7 +21,7 @@ editor_options:
 
 <!-- ### 3.2 ¿Cuán satisfecho o insatisfecho está usted con el funcionamiento de la democracia en Chile? -->
 
-```{r include=FALSE}
+```{r echo=FALSE}
 #agregar variable a bbdd original
 
 elsoc_panel_m1$sat_dem <- car::recode(as.numeric(elsoc_panel_m1$c01), 
@@ -42,7 +42,7 @@ datos.grafico1 <- data.frame((svytable(~sat_dem + ola, elsoc_diseno, round = F))
 ```
 
 
-```{r include=FALSE}
+```{r echo=FALSE}
 
 graf.sat_dem <-datos.grafico1 %>% 
   ggplot(aes(y = porcentaje, x = ola, fill = sat_dem, 
@@ -85,7 +85,7 @@ datos.grafico2 <- data.frame((svytable(~aut_dem + pos_id, elsoc_diseno, round = 
 ```
 
 
-```{r include=FALSE}
+```{r echo=FALSE}
 
 graf.aut_dem <-datos.grafico2 %>% 
   ggplot(aes(y = porcentaje, x = pos_id, fill = aut_dem, 

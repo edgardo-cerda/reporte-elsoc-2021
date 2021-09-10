@@ -18,7 +18,7 @@ datos.grafico3 <- data.frame((svytable(~pos_id + ola, elsoc_diseno, round = F)))
   na.omit()
 ```
 
-```{r include=FALSE}
+```{r echo=FALSE}
 graf.posid <-datos.grafico3 %>% 
     #indicar el contenido del gráfico: ejes y relleno (fill) por ola
     ggplot(aes(y = porcentaje, x = pos_id, fill = ola, 
@@ -57,7 +57,7 @@ etiquetas.d.1 <- data.frame((svytable(~pos_id + ola, elsoc_diseno, round = F))) 
   mutate(idencuesta = 1)
 ```
 
-```{r include=FALSE}
+```{r echo=FALSE}
 
 elsoc_panel_m1$pos_id <- na.replace(elsoc_panel_m1$pos_id, "NS/NR") #recode NA en categoría "NS/NR"
 graf.apos <- ggplot(datos.d.1, aes(x = ola, fill = pos_id, stratum = pos_id,
@@ -88,7 +88,7 @@ datos.grafico4 <- data.frame((svytable(~pos_id + m0_sexo + ola, elsoc_diseno, ro
   na.omit()
 ```
 
-```{r include=FALSE}
+```{r echo=FALSE}
 graf.gen <-datos.grafico4 %>% 
     ggplot(aes(y = porcentaje, x = ola, fill = pos_id, 
                label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
@@ -117,7 +117,7 @@ datos.grafico5 <- data.frame((svytable(~pos_id + edadt + ola, elsoc_diseno, roun
   na.omit()
 ```
 
-```{r include=FALSE}
+```{r echo=FALSE}
 graf.edad <-datos.grafico5 %>% 
     ggplot(aes(y = porcentaje, x = ola, fill = pos_id, 
                label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
@@ -147,7 +147,7 @@ datos.grafico6 <- data.frame((svytable(~pos_id + educ + ola, elsoc_diseno, round
 view(datos.grafico6)
 ```
 
-```{r include=FALSE}
+```{r echo=FALSE}
 graf.edad <-datos.grafico6 %>% 
     ggplot(aes(y = porcentaje, x = ola, fill = pos_id, 
                label = as.character(scales::percent(porcentaje, accuracy = .1)))) +

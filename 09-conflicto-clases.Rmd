@@ -19,7 +19,7 @@ datos.baja <- data.frame((svytable(~d13_rec + clase.sub + ola, elsoc_diseno, rou
 datos.grafico1<- cbind(datos.alta, datos.baja)
 
 subset.grafico <- droplevels(subset(datos.grafico1, datos.grafico1$ola == '2021' & 
-                                      d07_rec == 'Alto Contacto' & d13_rec == 'Alto Contacto'))
+                                      d07_rec == 'Alto Contacto' | d13_rec == 'Alto Contacto'))
 
 #trasponer según variable
 datos.grafico <- subset.grafico %>% 
@@ -67,7 +67,7 @@ datos.baja <- data.frame((svytable(~d14_rec + clase.sub + ola, elsoc_diseno, rou
 datos.grafico1<- cbind(datos.alta, datos.baja)
 
 subset.grafico <- droplevels(subset(datos.grafico1, datos.grafico1$ola == '2021' & 
-                                      d08_rec == 'Alto Contacto Positivo' & d14_rec == 'Alto Contacto Positivo'))
+                                      d08_rec == 'Alto Contacto Positivo' | d14_rec == 'Alto Contacto Positivo'))
 
 #trasponer según variable
 datos.grafico <- subset.grafico %>% 
@@ -115,7 +115,7 @@ datos.baja <- data.frame((svytable(~d15_rec + clase.sub + ola, elsoc_diseno, rou
 datos.grafico1<- cbind(datos.alta, datos.baja)
 
 subset.grafico <- droplevels(subset(datos.grafico1, datos.grafico1$ola == '2021' & 
-                                      d09_rec == 'Alto Contacto Negativo' & d15_rec == 'Alto Contacto Negativo'))
+                                      d09_rec == 'Alto Contacto Negativo' | d15_rec == 'Alto Contacto Negativo'))
 
 #trasponer según variable
 datos.grafico <- subset.grafico %>% 
@@ -173,11 +173,11 @@ datos.06 <- data.frame((svytable(~d25_06_rec+ ola, elsoc_diseno, round = F))) %>
 datos.grafico1<- cbind(datos.01, datos.02, datos.03, datos.04, datos.05, datos.06)
 
 subset.grafico <- droplevels(subset(datos.grafico1, datos.grafico1$ola == '2021' & 
-                                      d25_01_rec == 'Trato Alto' & 
-                                      d25_02_rec == 'Trato Alto' &
-                                      d25_03_rec == 'Trato Alto' & 
-                                      d25_04_rec == 'Trato Alto' &
-                                      d25_05_rec == 'Trato Alto' & 
+                                      d25_01_rec == 'Trato Alto' |
+                                      d25_02_rec == 'Trato Alto' |
+                                      d25_03_rec == 'Trato Alto' |
+                                      d25_04_rec == 'Trato Alto' |
+                                      d25_05_rec == 'Trato Alto' |
                                       d25_06_rec == 'Trato Alto'))
 
 #trasponer según variable

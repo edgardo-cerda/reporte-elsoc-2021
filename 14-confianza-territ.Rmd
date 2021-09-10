@@ -1,5 +1,5 @@
 # Confianza y seguridad con perspectiva territorial
-```{r Diseno complejo, include=FALSE}
+```{r Diseno complejo2, include=FALSE}
 rm(list = ls())
 library(survey)
 library(tidyverse)
