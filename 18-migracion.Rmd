@@ -12,60 +12,260 @@ elsoc_diseno <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~pondera
                           nest = TRUE, data = elsoc_panel)
 ```
  
-Chile ha experimentado cambios muy significativos en la esfera política, económica, social y cultural. Entre otros aspectos, estos cambios han fortalecido la imagen internacional del país y contribuido a atraer a inmigrantes de la región y de otras partes del mundo, lo cual ha redundado en que Chile es hoy un país más diverso culturalmente hablando. Cuando los miembros de la sociedad de acogida – los chilenos en este caso - entran en contacto con personas y prácticas culturales distintas a la propia, pueden adoptar una disposición favorable hacia la inmigración en la medida que perciben que la llegada de personas de distintos países enriquecerá su matriz cultural, haciéndola más diversa y atractiva [@verkuyten_Multicultural_2006] o bien pueden experimentar diversas formas de amenaza con el consiguiente desarrollo de actitudes negativas hacia la inmigración y conductas de evitación.
-
-Al respecto, la evidencia muestra que la llegada de inmigrantes puede estimular el desarrollo de actitudes hostiles y xenofóbicas en sectores de la sociedad, especialmente en aquellos que perciben a los extranjeros como una amenaza  [@gonzalez_Prejudice_2010; @stephan_measurement_2000] en la medida que se piensa que ellos podrían demandar servicios y recursos públicos, reducir las oportunidades laborales para los nacionales (amenaza realista), o bien cambiar con sus prácticas culturales, los aspectos propios y distintivo de la cultura e identidad local (amenaza simbólica).
-
 ## Amenaza realista y amenaza simbólica respecto a inmigrantes
  
-Tal como lo revela la Figura \@ref(fig:amen1-wave), se ha visto una caída sistemática de los niveles de amenaza realista que experimentan los chilenos respecto de los inmigrantes peruanos, pasando de un 58% en 2016 a un 43% en 2019, que piensa que con la llegada de inmigrantes está aumentando el desempleo. Por su parte los inmigrantes haitianos despiertan niveles similares de amenaza, que son estables entre el 2018 y 2019. Los inmigrantes venezolanos en cambio despiertan niveles altos de amenaza en torno al 58%. Aun así, los niveles de amenaza realista son relativamente estables respecto de todos los grupos inmigrantes en general. Una tendencia relativamente similar se constata en el caso de los niveles de amenaza simbólica (con la llegada de inmigrantes Chile está perdiendo su identidad), donde se observa una caída sistemática de los niveles de amenaza simbólica a lo largo del tiempo en el caso de los inmigrantes peruanos y una leve caída en el caso de los inmigrantes haitianos. Los inmigrantes venezolanos despiertan niveles similares de amenaza simbólica la que generan los inmigrantes haitianos (Figura \@ref(fig:amen2-wave)).
+```{r include=FALSE}
+elsoc_panel <- elsoc_panel %>%
+  mutate(amenaza_realista = factor(car::recode(amenaza_realista, "c(1,2)=1;c(3)=2;c(4,5)=3"),
+                                   labels = c('En desacuendo o totalmente en desacuerdo', 
+                                              'Ni de acuerdo ni en desacuerdo',
+                                              'De acuerdo o totalmente de acuerdo')),
+         amenaza_simbolica = factor(car::recode(amenaza_simbolica, "c(1,2)=1;c(3)=2;c(4,5)=3"),
+                                    labels = c('En desacuendo o totalmente en desacuerdo', 
+                                               'Ni de acuerdo ni en desacuerdo',
+                                               'De acuerdo o totalmente de acuerdo')),
+         confianza_rec =  factor(car::recode(confianza, "c(1,2) = 1;c(3) = 2;c(4,5) = 3"),
+                                  labels = c('Nada o poca confianza',
+                                             'Algo de confianza',
+                                             'Bastante o mucha confianza')))
 
+elsoc_diseno <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
+                          nest = TRUE, data = elsoc_panel)
+```
 
 <!-- ### 14.1 "Con la llegada de migrantes a Chile, está aumentando el desempleo", según ola y origen de migrantes. Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo". -->
 ```{r amen1-wave, fig.align='center',fig.cap='Con la llegada de migrantes a Chile, está aumentando el desempleo", según ola y origen de migrantes. Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
+datos.g14.1 <- data.frame((svytable(~migrantes + ola + muestra + amenaza_realista, elsoc_diseno, round = F))) %>%
+  group_by(ola, muestra) %>% mutate(porcentaje=Freq/sum(Freq)) %>% 
+  filter(amenaza_realista == 'De acuerdo o totalmente de acuerdo', porcentaje > 0.00000000) %>% 
+  na.omit()
 
+g14.1 <- 
+  ggplot(datos.g14.1, aes(y = porcentaje, x = ola, color = migrantes, group = migrantes,
+                           label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+  theme_bw() +   
+  geom_line(size = 1) +
+  geom_point(size = 1.8) +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0,.8)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_color_viridis_d(begin = .22, end = .99, direction = 1, option = 'viridis') +
+  geom_text(vjust = -0.8,
+            posilinetion = position_dodge(width = .9),
+            size= 2.75) +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) + 
+  ggtitle('Con la llegada de migrantes a Chile, está aumentando el desempleo“, según ola y origen de migrantes. 
+          Porcentaje de personas que responden”De acuerdo" o Totalmente de acuerdo".')
+
+g14.1
 
 ```
-
-
 
 <!-- ### 14.2 "Con la llegada de migrantes, Chile está perdiendo su identidad", según ola y origen de migrantes. Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo". -->
 ```{r amen2-wave, fig.align='center',fig.cap='"Con la llegada de migrantes, Chile está perdiendo su identidad", según ola y origen de migrantes. Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
+datos.g14.2 <- data.frame((svytable(~migrantes + ola + muestra + amenaza_simbolica, elsoc_diseno, round = F))) %>%
+  group_by(ola, muestra) %>% mutate(porcentaje=Freq/sum(Freq)) %>% 
+  filter(amenaza_simbolica == 'De acuerdo o totalmente de acuerdo', porcentaje > 0.00000000) %>% 
+  na.omit()
 
+g14.2 <- 
+  ggplot(datos.g14.2, aes(y = porcentaje, x = ola, color = migrantes, group = migrantes,
+                           label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+  theme_bw() +   
+  geom_line(size = 1) +
+  geom_point(size = 1.8) +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0,.8)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_color_viridis_d(begin = .11, end = .77, direction = 1, option = 'viridis') +
+  geom_text(vjust = -0.8,
+            posilinetion = position_dodge(width = .9),
+            size= 2.75) +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  ggtitle('“Con la llegada de migrantes, Chile está perdiendo su identidad”, según ola y origen de migrantes. 
+          Porcentaje de personas que responden “De acuerdo” o Totalmente de acuerdo".')
+
+g14.2
 ```
 
+```{r include=FALSE}
+datos.g14.3 <- data.frame((svytable(~migrantes + ola + muestra + confianza_rec, elsoc_diseno, round = F))) %>%
+  group_by(ola, muestra) %>% mutate(porcentaje=Freq/sum(Freq)) %>% 
+  filter(porcentaje > 0.00000000, confianza_rec == 'Bastante o mucha confianza') %>% 
+  na.omit()
+
+g14.3 <- 
+  ggplot(datos.g14.3, aes(y = porcentaje, x = ola, color = migrantes, group = migrantes,
+                          label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+  theme_bw() +   
+  geom_line(size = 1) +
+  geom_point(size = 1.8) +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0,.8)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_color_viridis_d(begin = .11, end = .77, direction = 1, option = 'viridis') +
+  geom_text(vjust = -0.8,
+            posilinetion = position_dodge(width = .9),
+            size= 2.75) +
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+g14.3
+```
 
 <!-- ### 14.4 Percepción de amenaza realista y simbólica, según grupo de migrantes (2019). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo". -->
 ```{r amen3-wave, fig.align='center',fig.cap='Percepción de amenaza realista y simbólica, según grupo de migrantes (2019). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
+amreal.g14.4 <- data.frame((svytable(~amenaza_realista + migrantes + ola,
+                       elsoc_diseno, round = F))) %>%
+  group_by(ola, migrantes) %>% mutate(p_real=Freq/sum(Freq)) %>% na.omit()
+amreal.g14.4$ola <- NULL
+amreal.g14.4$migrantes <- NULL
+amreal.g14.4$Freq <- NULL
 
+amsim.g14.4 <- data.frame((svytable(~amenaza_simbolica + migrantes + ola,
+                       elsoc_diseno, round = F))) %>%
+  group_by(ola, migrantes) %>% mutate(p_sim=Freq/sum(Freq)) %>% na.omit()
+amsim.g14.4$Freq <- NULL
+
+datos.g14.4 <- cbind(amreal.g14.4, amsim.g14.4)
+
+datos.g14.4a <- datos.g14.4 %>% 
+  pivot_longer(cols = starts_with('amenaza_'))  %>%
+  mutate(amenaza = factor(name,labels = c('Aumenta desempleo',
+                                          'Chile pierde su identidad'))) %>%
+  drop_na()
+
+datos.g14.4a$porcentaje <- with(datos.g14.4a, case_when(
+  amenaza == 'Aumenta desempleo' ~ p_real,
+  amenaza == 'Chile pierde su identidad' ~ p_sim))
+
+
+subset.g14.4 <- droplevels(subset(datos.g14.4a, value == 'De acuerdo o totalmente de acuerdo')) %>% 
+  filter(p_real > 0.00000000, p_sim > 0.00000000, ola == '2021') 
+
+g14.4 <-
+  subset.g14.4 %>% 
+  ggplot(aes(y = porcentaje, x = amenaza, fill = migrantes, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'dodge2') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, .8)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75)
+g14.4
 ```
-
 
 
 ## Amenaza realista y simbólica respecto a inmigrantes según nivel educacional
 
-Adicionalmente, estas formas de amenaza demostraron estar fuertemente relacionadas con el nivel educacional máximo alcanzado por las personas (Figura \@ref(fig:amen-educ)). En efecto, al analizar los niveles de amenaza en función del nivel de escolaridad de los participantes del estudio, se constataron diferencias muy sustantivas entre los niveles más bajos de escolaridad y los más altos, llegando en torno a un 75% y 57% de amenaza realista y simbólica, respectivamente, en los grupos que sólo lograron completar la escolaridad básica en comparación a los niveles observados en las personas que lograron educación universitaria completa o más, con un 27% y 16% amenaza simbólica y realista, respectivamente. Estas diferencias extremas revelan el importante rol que juega la educación formal en aminorar la amenaza percibida y su fuerte asociación con capital cultural y económico. 
-
-
-La evidencia revela que existe una fuerte asociación entre niveles de escolaridad y nivel socioeconómico, por lo que es posible inferir que los niveles de amenaza predominan en mayor medida en los grupos menos acomodados de la sociedad chilena como es el caso de otros países [@mclaren_Identity_2006]. Los niveles de niveles de amenaza realista y simbólica también demostraron estar relacionadas con la edad de las personas, siendo los jóvenes quienes experimentan menores niveles de amenaza de ambos tipos (Figura \@ref(fig:amen-edad)).
-
 
 <!-- ### 14.5 Percepción de amenaza realista y simbólica respecto a inmigrantes, según nivel educacional (2019). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo". -->
 ```{r amen-educ, fig.align='center',fig.cap='Percepción de amenaza realista y simbólica respecto a inmigrantes, según nivel educacional (2019). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
+amreal.g14.5 <- data.frame((svytable(~amenaza_realista + educ + ola, elsoc_diseno, round = F))) %>%
+  group_by(ola, educ) %>% mutate(p_real=Freq/sum(Freq)) %>% na.omit()
+amreal.g14.5$ola <- NULL
+amreal.g14.5$educ <- NULL
+amreal.g14.5$Freq <- NULL
 
+amsim.g14.5 <- data.frame((svytable(~amenaza_simbolica + educ + ola, elsoc_diseno, round = F))) %>%
+  group_by(ola, educ) %>% mutate(p_sim=Freq/sum(Freq)) %>% na.omit()
+amsim.g14.5$Freq <- NULL
+
+datos.g14.5 <- cbind(amreal.g14.5, amsim.g14.5)
+
+datos.g14.5a <- datos.g14.5 %>% 
+  pivot_longer(cols = starts_with('amenaza_'))  %>%
+  mutate(amenaza = factor(name,labels = c('Aumenta desempleo',
+                                          'Chile pierde su identidad'))) %>%
+  drop_na()
+
+datos.g14.5a$porcentaje <- with(datos.g14.5a, case_when(
+  amenaza == 'Aumenta desempleo' ~ p_real,
+  amenaza == 'Chile pierde su identidad' ~ p_sim))
+
+subset.g14.5 <- droplevels(subset(datos.g14.5a, value == 'De acuerdo o totalmente de acuerdo')) %>% 
+  filter(p_real > 0.00000000, p_sim > 0.00000000, ola == '2021') 
+
+g14.5 <-
+  subset.g14.5 %>% 
+  ggplot(aes(y = porcentaje, x = amenaza, fill = educ, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'dodge2') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, .8)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75)
+g14.5
 ```
 
 ## Amenaza realista y simbólica respecto a inmigrantes según frecuencia de contacto
 
-Por último, no hay duda que uno de los efectos inmediatos que surgen de los procesos migratorios es que, tanto las personas que llegan a vivir a un nuevo país, como aquellas que los reciben tienen oportunidad de entrar en contacto. Al respecto existe bastante consenso en la literatura en reconocer el valor que representan las experiencias de contacto frecuentes y de buena calidad para promover el desarrollo de actitudes favorables hacia distintos grupos, es decir, como un vehículo de promoción de cohesión e integración social [@brown_Integrative_2005;@gonzalez_Prejudice_2010;@pettigrew_metaanalytic_2006]. 
-
-
-Tal como se observa en la Figura \@ref(fig:amen-contacto), se observa una asociación negativa entre frecuencia de contacto y niveles de amenaza realista y simbólica que experimentan los chilenos hacia los inmigrantes en general, de tal forma que, a medida que aumenta la frecuencia de contacto disminuyen las creencias de que la llegada de inmigrantes aumentará el desempleo o que Chile perderá su identidad. Al mismo tiempo, se constata que a medida que aumenta el contacto también aumenta la confianza hacia los inmigrantes en general (Figura \@ref(fig:amen-edad)).
-
 
 <!-- ### 14.6 Percepción de Amenaza Realista y Simbólica, según frecuencia de contacto (2019). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo". -->
 ```{r amen-contacto, fig.align='center',fig.cap='Percepción de Amenaza Realista y Simbólica, según frecuencia de contacto (2019). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
+amreal.g14.6 <- 
+  data.frame((svytable(~amenaza_realista + frecuencia_contacto + ola, elsoc_diseno, round = F))) %>%
+  group_by(ola, frecuencia_contacto) %>% mutate(p_real=Freq/sum(Freq)) %>% na.omit()
+amreal.g14.6$ola <- NULL
+amreal.g14.6$frecuencia_contacto <- NULL
+amreal.g14.6$Freq <- NULL
 
+amsim.g14.6 <- 
+  data.frame((svytable(~amenaza_simbolica + frecuencia_contacto + ola, elsoc_diseno, round = F))) %>%
+  group_by(ola, frecuencia_contacto) %>% mutate(p_sim=Freq/sum(Freq)) %>% na.omit()
+amsim.g14.6$Freq <- NULL
+
+datos.g14.6 <- cbind(amreal.g14.6, amsim.g14.6)
+
+#trasponer según variable
+datos.g14.6a <- datos.g14.6 %>% 
+  pivot_longer(cols = starts_with('amenaza_'))  %>%
+  mutate(amenaza = factor(name,labels = c('Aumenta desempleo',
+                                          'Chile pierde su identidad'))) %>%
+  drop_na()
+
+datos.g14.6a$porcentaje <- with(datos.g14.6a, case_when(
+  amenaza == 'Aumenta desempleo' ~ p_real,
+  amenaza == 'Chile pierde su identidad' ~ p_sim))
+
+subset.g14.6 <- droplevels(subset(datos.g14.6a, value == 'De acuerdo o totalmente de acuerdo')) %>% 
+  filter(p_real > 0.00000000, p_sim > 0.00000000, ola == '2019') 
+
+g14.6 <-
+  subset.g14.6 %>% 
+  ggplot(aes(y = porcentaje, x = amenaza, fill = frecuencia_contacto, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'dodge2') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, .8)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75)
+g14.6 #no funciona para 2021 (REVISAR) -> r06 (frecuencia contacto) no se pregunta el 2021
 ```
 
 
@@ -80,35 +280,127 @@ Tal como se observa en la Figura \@ref(fig:amen-contacto), se observa una asocia
 <!-- ### 14.8 Percepción de amenaza realista y simbólica, según tramo de edad (2019). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo". -->
 ```{r amen-edad, fig.align='center',fig.cap='Percepción de amenaza realista y simbólica, según tramo de edad (2019). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
 
+amreal.g14.8 <- 
+  data.frame((svytable(~amenaza_realista + edadt + ola, elsoc_diseno, round = F))) %>%
+  group_by(ola, edadt) %>% mutate(p_real=Freq/sum(Freq)) %>% na.omit()
+amreal.g14.8$ola <- NULL
+amreal.g14.8$edadt <- NULL
+amreal.g14.8$Freq <- NULL
+
+amsim.g14.8 <- 
+  data.frame((svytable(~amenaza_simbolica + edadt + ola, elsoc_diseno, round = F))) %>%
+  group_by(ola, edadt) %>% mutate(p_sim=Freq/sum(Freq)) %>% na.omit()
+amsim.g14.8$Freq <- NULL
+
+datos.g14.8 <- cbind(amreal.g14.8, amsim.g14.8)
+
+#trasponer según variable
+datos.g14.8a <- datos.g14.8 %>% 
+  pivot_longer(cols = starts_with('amenaza_'))  %>%
+  mutate(amenaza = factor(name,labels = c('Aumenta desempleo',
+                                          'Chile pierde su identidad'))) %>%
+  drop_na()
+
+datos.g14.8a$porcentaje <- with(datos.g14.8a, case_when(
+  amenaza == 'Aumenta desempleo' ~ p_real,
+  amenaza == 'Chile pierde su identidad' ~ p_sim))
+
+subset.g14.8 <- droplevels(subset(datos.g14.8a, value == 'De acuerdo o totalmente de acuerdo')) %>% 
+  filter(p_real > 0.00000000, p_sim > 0.00000000, ola == '2021') 
+
+g14.8 <-
+  subset.g14.8 %>% 
+  ggplot(aes(y = porcentaje, x = amenaza, fill = edadt, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'dodge2') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, .8)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75)
+g14.8
 ```
 
 
 ## Frecuencia de Contacto y Confianza hacia los Inmigrantes
 
-Acorde a lo esperado, los resultados también revelan que a medida que aumenta la frecuencia de contacto de los chilenos con los inmigrantes peruanos, haitianos, y venezolanos, aumentan significativamente los niveles de confianza (Figura \@ref(fig:contact-conf)) que exhiben hacia dichos grupos. Este patrón de resultados se manifiesta en todos los años del estudio. 
-
 <!-- ### 14.9 Efecto de Frecuencia de Contacto con migrantes sobre niveles de confianza de chilenos hacia migrantes, según ola del estudio. Porcentaje de personas que responden "Bastante" o "Mucha confianza". -->
 
 ```{r contact-conf, fig.align='center',fig.cap='Efecto de Frecuencia de Contacto con migrantes sobre niveles de confianza de chilenos hacia migrantes, según ola del estudio. Porcentaje de personas que responden "Bastante" o "Mucha confianza".'}
+elsoc_panel$ola_mig <- factor(with(elsoc_panel, case_when(
+  ola == '2016' & migrantes == 'Peruanos' ~ 1,
+  ola == '2017' & migrantes == 'Peruanos' ~ 2,
+  ola == '2018' & migrantes == 'Peruanos' ~ 3,
+  ola == '2019' & migrantes == 'Peruanos' ~ 4,
+  ola == '2021' & migrantes == 'Peruanos' ~ 5,
+  ola == '2018' & migrantes == 'Haitianos' ~ 6,
+  ola == '2019' & migrantes == 'Haitianos' ~ 7,
+  ola == '2021' & migrantes == 'Haitianos' ~ 8,
+  ola == '2019' & migrantes == 'Venezolanos' ~ 9)),
+  labels = c('2016\nPeruanos', '2017\nPeruanos', '2018\nPeruanos', '2019\nPeruanos', '2021\nPeruanos',
+             '2018\nHaitianos','2019\nHaitianos','2021\nHaitianos', '2019\nVenezolanos'))
+sjmisc::frq(elsoc_panel$ola_mig)
+elsoc_diseno <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
+                          nest = TRUE, data = elsoc_panel)
 
+datos.g14.9 <- data.frame((svytable(~confianza_rec + ola_mig + ola + frecuencia_contacto, 
+                                     elsoc_diseno, round = F))) %>%
+  group_by(ola, frecuencia_contacto) %>% mutate(porcentaje=Freq/sum(Freq)) %>% 
+  filter(porcentaje > 0.00000000, confianza_rec == 'Bastante o mucha confianza') %>% 
+  na.omit()
+
+g14.9 <-
+  datos.g14.9 %>% 
+  ggplot(aes(y = porcentaje, x = ola_mig, fill = frecuencia_contacto, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'dodge2') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, .8)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75)
+g14.9 #no aparece año 2021 (REVISAR) -> r06 (frecuencia contacto) no se pregunta el 2021
 ```
 
-
-Es importante destacar que los resultados expuestos no varían en función del grupo de inmigrantes evaluados (peruanos, haitianos y venezolanos). De manera global estos hallazgos confirman la importancia que reviste estimular experiencia de contacto positivo y de manera frecuente con los inmigrantes para promover actitudes favorables hacia ellos.
-
 ## Relevancia de las normas pro-contacto de cercanos
-
-Dada la importancia que reviste el contacto para promover relaciones intergrupales positivas (confianza) y reducir los sentimientos de amenaza (simbólica y realista) asociados a la llegada de inmigrantes al país ELSOC analizó que factores promueven el contacto entre chilenos e inmigrantes peruanos, haitianos y venezolanos. El comportamiento de las personas se ve influenciado por las actitudes, valoraciones y acciones de otros. Esta influencia de terceros en el comportamiento individual se conoce como “normas sociales” y dictaminan que es apropiado o inapropiado hacer, pensar e incluso sentir [@paluck_salience_2012; @tankard_Norm_2016; @gonzalez_Role_2020]
-
-En este contexto, el interés principal está en el rol que cumple la red social más relevante de los chilenos, la familia y los amigos, como promotores del contacto con los inmigrantes peruanos y haitianos. ¿Exhiben mayores niveles de contacto con inmigrantes los chilenos cuyos familiares y amigos valoran o estimulan que ellos tengan relaciones de amistad con dichos grupos?
-
-Los resultados revelaron de manera significativa y estable en el tiempo una asociación positiva entre las normas pro-contacto de la familia y amigos sobre las actitudes hacia los inmigrantes peruanos, haitianos y venezolanos. Los chilenos que declaran que sus familiares y amigos valoran que ellos tengan relaciones de amistad con inmigrantes peruanos y haitianos (la norma pro contacto), efectivamente se juntan más frecuentemente con ellos (Figura \@ref(fig:normas-contacto)) en comparación a aquellos chilenos cuyas normas pro-contacto son bajas o medias. Este patrón genérico es estable en el tiempo.
 
 <!-- ### 14.10 Efecto de normas pro-contacto de familia y amigos sobre Frecuencia de Contacto con migrantes, según ola del estudio. Porcentaje de personas que responden Frecuencia de contacto con migrantes "Siempre" o "Casi siempre".  -->
 
 ```{r normas-contacto, fig.align='center',fig.cap='Efecto de normas pro-contacto de familia y amigos sobre Frecuencia de Contacto con migrantes, según ola del estudio. Porcentaje de personas que responden Frecuencia de contacto con migrantes "Siempre" o "Casi siempre".'}
 
+datos.g14.10 <- data.frame((svytable(~frecuencia_contacto + ola_mig + norma, 
+                                     elsoc_diseno, round = F))) %>%
+  group_by(ola_mig, norma) %>% mutate(porcentaje=Freq/sum(Freq)) %>% 
+  filter(porcentaje > 0.00000000, frecuencia_contacto == 'Contacto Alto') %>% 
+  na.omit()
+
+g14.10 <-
+  datos.g14.10 %>% 
+  ggplot(aes(y = porcentaje, x = ola_mig, fill = norma, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'dodge2') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, .8)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75)
+g14.10 #no aparece año 2021 (REVISAR) -> r06 (frecuencia contacto) no se pregunta el 2021
 ```
-
-
-Estos hallazgos confirman la importancia que revisten los referentes normativos sociales significativos, como los familiares y amigos, en la predicción de cambio de la conducta social como las experiencias de contacto con inmigrantes. He ahí la importancia de abordar a través de políticas públicas adecuada la formación de normas pro-contacto que estimulen mayor cohesión social particularmente en aquellos barrios conde coexisten una importante presencia de inmigrantes y población chilena.
