@@ -10,6 +10,16 @@ bibliography:
 biblio-style: apalike
 link-citations: yes
 
+output:
+  bookdown::gitbook:
+    lib_dir: assets
+    config:
+      toolbar:
+        position: static
+  bookdown::pdf_book:
+    extra_dependencies: ["flafter"]
+    toc: no
+
 geometry: "left=4cm, right=3cm, top=2.5cm, bottom=2.5cm"
 fontsize: 12pt
 linestretch: 1.5
@@ -21,6 +31,15 @@ editor_options:
     wrap: 72
 ---
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache=FALSE, 
+                      warning = FALSE, 
+                      message = FALSE,
+                      echo=FALSE) 
+
+Sys.setlocale("LC_ALL","ES_ES.UTF-8")
+```
+
 ```{r message=FALSE, warning=FALSE, include=FALSE, echo=FALSE,cache=FALSE} 
 pacman::p_load(knitr, kableExtra, dplyr,gridExtra,tidyverse,sjmisc,sjlabelled,sticky,ggrepel,ggalluvial,survey,spatstat,readxl,forcats, gtools)
 ```
@@ -31,7 +50,7 @@ remove(list = ls())
 load("1_input/datos_elsoc.RData")      
 ```
 
-```{r disenno, echo=TRUE}
+```{r disenno, include=FALSE}
 elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
                           strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
                           weights = ~ponderador02, #ponderador de corte transversal
