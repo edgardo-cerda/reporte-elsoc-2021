@@ -1,58 +1,180 @@
-# Sociabilidad barrial
+# Reputación barrial
 
-El barrio es considerado un espacio de socialización que produce un sentido de hogar y pertenencia que se expresa en el surgimiento de lazos con el entorno [@scannell_Defining_2010]. La sociabilidad dentro del barrio propicia el mantenimiento del sentido de pertenencia en el tiempo y la disposición de construir capital social para mantener al barrio unido [@kearns_Social_2000].
+```{r Diseno complejo, include=FALSE}
+rm(list = ls())
+library(survey)
+library(tidyverse)
+load("1_input/datos_elsoc.RData")
 
-Para estudiar la sociabilidad barrial, ELSOC aborda cuatro aspectos centrales. Se le consulta a los encuestados acerca de la facilidad que tiene en su barrio para generar relaciones de amistad, y se evalúa en qué medida perciben que la gente de su barrio es sociable, cordial y colaboradora. A partir de estos indicadores, se calcula un índice de sociabilidad barrial el cual expresa el nivel de apoyo social que las personas obtienen de su barrio [@smith_Measuring_1975].
+elsoc_diseno_m1 <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
+                          nest = TRUE, data = elsoc_panel_m1)
+```
+```{r recode, include=FALSE}
+elsoc_panel_m1 <- elsoc_panel_m1 %>% 
+  mutate(rep_barrial = factor(car::recode(t08, "1:2=1;3=2;4:5=3"),
+                              labels= c("Muy negativamente o negativamente","Ni positiva ni negativamente",
+                                        "Muy positivamente o positivamente")))
+elsoc_panel_m1$rep_barrial <- na.tools::na.replace(elsoc_panel_m1$rep_barrial, "No sabe/No responde")
+attr(elsoc_panel_m1$rep_barrial, which = 'label') <- 'Reputación Barrial'
+sjmisc::frq(elsoc_panel_m1$rep_barrial)
 
-## Sociabilidad barrial
+elsoc_diseno_m1 <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
+                             nest = TRUE, data = elsoc_panel_m1)
+```
 
-Tal como se puede apreciar en la Figura \@ref(fig:soc-barrio) se ha constatado un progresivo aumento de la alta sociabilidad a lo largo del tiempo. Es más, al analizar las trayectorias, es posible ver que hay un importante flujo de quienes declaraban tener baja o media sociabilidad barrial el 2016, moverse de manera importante a altos niveles de sociabilidad.
-
-<!-- ### 9.1 Sociabilidad Barrial, según ola de estudio -->
 ```{r soc-barrio, fig.align='center', fig.cap='9.1 Sociabilidad Barrial, según ola de estudio'}
+datos.g9.1 <- data.frame(svytable(~rep_barrial + ola, elsoc_diseno_m1, round = F)) %>% 
+  group_by(ola) %>% mutate(porcentaje = Freq/sum(Freq)) %>% na.omit() %>% 
+  filter(rep_barrial != 'No sabe/No responde')
 
+g9.1 <- 
+  datos.g9.1 %>% 
+  ggplot(aes(y = porcentaje, x = ola, fill = rep_barrial, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .11, end = .99, direction = -1, option = 'viridis') +
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75, color = rep.int(c('black', 'white', 'white'), 5)) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+g9.1
 ```
 
- 
-
-
-Al nivel territorial se puede observar el mismo patrón de aumento de la sociabilidad barrial, según zona geográfica (Figura \@ref(fig:soc-alta-zona)), zonas de residencia (Figura  \@ref(fig:soc-barrio-resi)  y Figura \@ref(fig:soc-alta-resid) ) y quintiles de ingresos (Figura \@ref(fig:socalta-quintil)).
- 
-
-<!-- ### 9.2 Cambios en Sociabilidad Barrial, según ola de estudio. Porcentaje con sociabilidad barrial "Alta". -->
 ```{r soc-barrio-alta, fig.align='center', fig.cap='ambios en Sociabilidad Barrial, según ola de estudio. Porcentaje con sociabilidad barrial "Alta".'}
+datos.g9.2 <- data.frame((svytable(~rep_barrial + ola + idencuesta, elsoc_diseno_m1, round = F))) %>% 
+  dplyr::filter(Freq>0)  %>% 
+  group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>%  
+  dplyr::filter(ola == '2016' | ola == '2021') %>% 
+  na.omit()
 
+etiquetas.g9.2 <- data.frame((svytable(~rep_barrial + ola, elsoc_diseno_m1, round = F))) %>% 
+  group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>% mutate(idencuesta = 1) %>% 
+  dplyr::filter(ola == '2016' | ola == '2021') %>% 
+  na.omit()
+
+g9.2 <- 
+  ggplot(datos.g9.2, aes(x = ola, fill = rep_barrial, stratum = rep_barrial, 
+                         alluvium = idencuesta, y = porcentaje)) +
+  ggalluvial::geom_flow(alpha = .66) + 
+  ggalluvial::geom_stratum(linetype = 0) +
+  scale_y_continuous(labels = scales::percent) + 
+  ylab(label = NULL) +
+  xlab(label = NULL) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  scale_fill_viridis_d(begin = .11, end = .95, direction = -1, option = 'viridis') +
+  geom_text(data = etiquetas.g9.2, 
+            aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")),
+            position = position_stack(vjust = .5),
+            show.legend = FALSE,
+            size = 2.75,
+            color = rep.int(c('black', 'white', 'white','white'),2))
+g9.2
 ```
 
-
-
-<!-- ### 9.3 Porcentaje de Sociabilidad Barrial "Alta", según ola de estudio y zona geográfica -->
 ```{r soc-alta-zona, fig.align='center', fig.cap='Porcentaje de Sociabilidad Barrial "Alta", según ola de estudio y zona geográfica'}
+datos.g9.3 <- data.frame(svytable(~rep_barrial + ola + zona1, elsoc_diseno_m1, round = F)) %>% 
+  group_by(ola, zona1) %>% mutate(porcentaje = Freq/sum(Freq)) %>%
+  filter(rep_barrial == 'Muy negativamente o negativamente', ola == '2016' | ola == '2021')
 
+g9.3 <-
+  datos.g9.3 %>% 
+  ggplot(aes(y = porcentaje, x = zona1, fill = ola, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Dodge') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, .5)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75)
+
+g9.3
 ```
 
-
-
-<!-- ### 9.4 Porcentaje de Sociabilidad Barrial "Alta", según ola de estudio y zona de residencia -->
 ```{r soc-barrio-resi, fig.align='center', fig.cap='Porcentaje de Sociabilidad Barrial "Alta", según ola de estudio y zona de residencia'}
+datos.g9.4 <- data.frame(svytable(~rep_barrial + ola + estrato, elsoc_diseno_m1, round = F)) %>% 
+  group_by(ola, estrato) %>% mutate(porcentaje = Freq/sum(Freq)) %>%
+  filter(rep_barrial == 'Muy negativamente o negativamente', ola == '2016' | ola == '2021')
 
+g9.4 <-
+  datos.g9.4 %>% 
+  ggplot(aes(y = porcentaje, x = estrato, fill = ola, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Dodge') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, .5)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75)
 
+g9.4
 ```
 
-
-
-<!-- ### 9.5 Porcentaje de Sociabilidad Barrial "Alta", según ola de estudio y zona de residencia -->
 ```{r soc-alta-resid, fig.align='center', fig.cap='Porcentaje de Sociabilidad Barrial "Alta", según ola de estudio y zona de residencia"'}
+datos.g9.5 <- data.frame(svytable(~rep_barrial + ola + quintil, elsoc_diseno_m1, round = F)) %>% 
+  group_by(ola, quintil) %>% mutate(porcentaje = Freq/sum(Freq)) %>%
+  filter(rep_barrial == 'Muy negativamente o negativamente', ola == '2016' | ola == '2021')
 
+g9.5 <-
+  datos.g9.5 %>% 
+  ggplot(aes(y = porcentaje, x = quintil, fill = ola, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Dodge') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, .5)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75)
+
+g9.5
 ```
 
-
-
-
-
-<!-- ### 9.6 Porcentaje con Índice de Sociabilidad Barrial "Alta", según ola de estudio y quintil de ingresos del hogar -->
 ```{r socalta-quintil, fig.align='center', fig.cap='Porcentaje con Índice de Sociabilidad Barrial "Alta", según ola de estudio y quintil de ingresos del hogar'}
+datos.g9.6 <- data.frame((svytable(~quintil + ola + rep_barrial, elsoc_diseno_m1, round = F))) %>% 
+  group_by(ola, quintil) %>% mutate(porcentaje=Freq/sum(Freq)) %>% 
+  filter(rep_barrial == "Muy negativamente o negativamente", 
+         quintil == "Q1" | quintil == "Q5") 
 
+g9.6 <- 
+  ggplot(datos.g9.6, aes(y = porcentaje, x = ola, color = quintil, group = quintil,
+                         label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+  theme_bw() +   
+  geom_line(size = 1) +
+  geom_point(size = 1.8) +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0,.5)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_color_viridis_d(begin = .22, end = .55, direction = -1, option = 'viridis') +
+  geom_text(vjust = -0.8,
+            posilinetion = position_dodge(width = .9),
+            size= 2.75) +
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+g9.6
 ```
 
 

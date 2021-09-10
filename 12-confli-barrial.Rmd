@@ -1,5 +1,5 @@
 # Conflictividad y sociabilidad barrial
-```{r include=FALSE}
+```{r Disenno complejo, include=FALSE}
 knitr::opts_chunk$set(cache=FALSE, 
                       warning = FALSE, 
                       message = FALSE) 
@@ -22,15 +22,8 @@ elsoc_diseno_m1 <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~pond
                           #nest = TRUE, data = elsoc_panel_m2)
 ```
 
-Los conflictos urbanos se entienden como alteraciones del orden e inestabilidades del estado de equilibrio territorial Asimismo, como procesos que permiten desafiar los efectos negativos del neoliberalismo y globalización.
-
-Las ciudades chilenas se caracterizan por marcados niveles de segregación residencial. Esto, en conjunción a la falta de servicios públicos en zonas periféricas y la creciente disparidad de recursos entre municipios ricos y pobres, ha dado lugar a marcadas diferencias socioeconómicas entre distintas zonas de la ciudad.
-
-La conflictividad barrial puede analizarse empíricamente por medio de preguntas que analizan la frecuencia con que las personas se han molestado o incomodado por problemas con vecinos. 
-
 ## Conflictividad barrial
 
-En la Figura \@ref(fig:confl-total) se observa que en términos temporales las molestias por problemas con los vecinos se han mantenido estable a lo largo del tiempo, siendo baja la proporción de la población que declara tener dichas experiencias. Al revisar las trayectorias temporales en la Figura \@ref(fig:conf-cambios), se puede apreciar que un porcentaje importante de las personas que declaró haber tenido muchas o algunas tensiones con sus vecinos en 2016, ellas tienden a disiparse el 2019. Sin embargo, también se consta movilidad entre quienes nunca vivieron tensiones con sus vecinos el 2016, más de la mitad de ellos declara haberlas vivido en pocas o algunas ocasiones el 2019.
 ```{r Recode1, include=FALSE}
 elsoc_panel_m1$confli_barrial <- ((as.numeric(elsoc_panel_m1$t11_01) + as.numeric(elsoc_panel_m1$t11_02) +
                                   as.numeric(elsoc_panel_m1$t11_03) + as.numeric(elsoc_panel_m1$t11_04))/4)
@@ -72,8 +65,6 @@ g8.1 <-
 g8.1
 ```
 
-
-
 <!-- ### 8.2 Cambios en frecuencia de conflictos barriables -->
 
 ```{r conf-cambios, fig.align='center', fig.cap='Cambios en frecuencia de conflictos barriables'}
@@ -107,10 +98,6 @@ g8.2 <-
             color = rep.int(c('black', 'white', 'white','white'),2))
 g8.2
 ```
-
-
-
-Al revisar la distribución de las personas que declaran tener “siempre o muchas veces” conflictos barriales, se puede observar una importante caída en el norte y en el sur del país, aumentando levemente en el centro y en la Región Metropolitana (Figura \@ref(fig:conf-wav-zon)). Al revisar estos patrones por los estratos que componen el estudio, se constata que es en el Gran Santiago dónde ha aumentado la conflictividad barrial (Figura \@ref(fig:conf-resid)). Al analizar la conflictividad barrial por quintiles de ingresos, se constata que en general esta aumenta a medida que disminuyen los ingresos. Esta tendencia es estable en el tiempo, excepto en los quintiles 4 y 5 (sectores mas acomodados), donde se observan caídas más pronunciadas de conflictividad barrial al comparar 2016 y 2019 (Figura \@ref(fig:conf-incomeq)).
 
 
 <!-- ### 8.3 Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona geográfica. Porcentaje con conflictos barriables "Siempre" o "Muchas veces".  -->
@@ -165,8 +152,6 @@ g8.4 <-
             size= 2.75)
 g8.4
 ```
-
-
 
 
 <!-- ### 8.5 Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y quintiles de ingreso. Porcentaje con conflictos barriables "Siempre" o "Muchas veces".  -->

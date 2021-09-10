@@ -9,8 +9,6 @@ elsoc_diseno_m1 <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~pond
                           nest = TRUE, data = elsoc_panel_m1)
 ```
 
-La configuración urbana influye en la calidad de vida y determina, a su vez, la confianza entre los vecinos de un barrio. La confianza y la seguridad barrial tiene una importancia sustantiva en la medida de que nos permite comprender la evolución de la calidad de vida en los barrios y su sustentabilidad en el tiempo [@brown_Incivilities_2004].
-
 ```{r Recode, include=FALSE}
 
 elsoc_panel_m1 <- 
@@ -29,8 +27,6 @@ sjmisc::frq(elsoc_panel_m1$segur_barrio)
 elsoc_diseno_m1 <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
                              nest = TRUE, data = elsoc_panel_m1)
 ```
-
-A nivel territorial se puede observar que la confianza en los vecinos ha tendido a aumentar levemente a nivel territorial (Figura \@ref(fig:vecinos-zona)), constatándose un incremento mayor en el norte del país. La confianza en los vecinos sigue siendo más alta en los barrios de mayores ingresos, sin embargo, nuevamente no se observan variaciones a lo largo del tiempo (Figura \@ref(fig:vecinos-quinti)). 
 
 <!-- ### 10.1 En términos generales, ¿cuánto confía usted en sus vecinos? Según ola del estudio y zona geográfica. Suma de Respuestas “Bastante” y “Mucho”.  -->
 ```{r vecinos-zona, fig.align='center', fig.cap='En términos generales, ¿cuánto confía usted en sus vecinos? Según ola del estudio y zona geográfica. Suma de Respuestas “Bastante” y “Mucho”.'}
@@ -57,8 +53,6 @@ g10.1 <-
 g10.1
 ```
 
-
-
 <!-- ### 10.2 En términos generales, ¿cuánto confía usted en sus vecinos? Según ola del estudio y nivel educacional. Suma de Respuestas “Bastante” y “Mucho”. -->
 ```{r vecinos-quinti, fig.align='center', fig.cap='En términos generales, ¿cuánto confía usted en sus vecinos? Según ola del estudio y nivel educacional. Suma de Respuestas “Bastante” y “Mucho”.'}
 datos.g10.2 <- data.frame(svytable(~conf_vecinos + ola + quintil, elsoc_diseno_m1, round = F)) %>% 
@@ -83,9 +77,6 @@ g10.2 <-
             size= 2.75)
 g10.2
 ```
-
-
-En relación a la percepción de seguridad en los barrios, se puede constatar que en la zona sur del país ha tendido a crecer con el paso del tiempo (Figura \@ref(fig:seguri-zona)). La seguridad percibida en los barrios también tiende a aumentar con los niveles de escolaridad y de ingresos, siendo más alta en los tramos de mayor escolaridad e ingresos (Figura \@ref(fig:seguri-educ) y Figura \@ref(fig:seguri-quintil)). Son las personas mayores de 50 años en adelante quienes perciben mayor seguridad en sus barrios y quienes experimentan un aumento sustantivo desde el 2016 al 2019 (Figura \@ref(fig:seguri-edad)). No se constatan variaciones según posición ideológica, sin embargo, ésta tiende a aumentar entre el 2016 al 2019 especialmente en quienes se declaran de centro y de derecha (Figura \@ref(fig:seguri-ideolo)).
 
 <!-- ### 10.3 ¿Qué tan seguro o inseguro se siente en el barrio o vecindario donde usted vive? Según ola del estudio y zona geográfica. Suma de Respuestas "Seguro" o ”Muy Seguro".  -->
 
@@ -112,7 +103,6 @@ g10.3 <-
         legend.title = element_blank())
 g10.3
 ```
-
 
 <!-- ### 10.4 ¿Qué tan seguro o inseguro se siente en el barrio o vecindario donde usted vive? Según ola del estudio y nivel educacional. Suma de Respuestas "Seguro" o ”Muy Seguro". -->
 ```{r seguri-educ, fig.align='center',fig.cap='¿Qué tan seguro o inseguro se siente en el barrio o vecindario donde usted vive? Según ola del estudio y nivel educacional. Suma de Respuestas "Seguro" o ”Muy Seguro".'}
@@ -191,7 +181,6 @@ g10.6 <-
         legend.title = element_blank())
 g10.6
 ```
-
 
 
 <!-- ### 10.7 ¿Qué tan seguro o inseguro se siente en el barrio o vecindario donde usted vive? Según ola del estudio e ideología política. Suma de Respuestas "Seguro" o ”Muy Seguro". -->
