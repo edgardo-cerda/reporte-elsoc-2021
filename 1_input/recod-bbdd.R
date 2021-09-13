@@ -284,8 +284,8 @@ elsoc_wide$cambio_freq_mov_w02 <- factor(with(elsoc_wide, case_when(
 #------------- X. Relación con inmigrantes -------------------------
 
 elsoc_long$migrantes <- factor(with(elsoc_long, case_when(cuestion_mig == 'Haitianos' ~ 3,
-                                                          cuestion_mig == 'Venezolanos' & ola == 2019 ~ 2,
-                                                          cuestion_mig == 'Peruanos' | cuestion_mig == 'Venezolanos' ~ 1)),
+                                                          cuestion_mig == 'Venezolanos' ~ 2,
+                                                          cuestion_mig == 'Peruanos' ~ 1)),
                                labels = c('Peruanos', 'Venezolanos', 'Haitianos'))
 
 elsoc_long <- elsoc_long %>% 
