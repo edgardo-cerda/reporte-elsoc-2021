@@ -388,23 +388,27 @@ attributes(elsoc_wide$cambio_amenaza_realista_w04)
 #-----------------M.- Clase subjetiva en cinco categorias-------
 
 #--------------------N.- Clase subjetiva en tres categorias-------------------------
-elsoc_long$clase.sub <- car::recode(as.numeric(elsoc_long$d01_01), recodes = "c(0,1,2,3)=1; c(4, 5, 6)=2; c(7,8,9,10)=3;else=NA", as.factor = TRUE)
+elsoc_long$clase.sub <- car::recode(as.numeric(elsoc_long$d01_01), 
+                                    recodes = "c(0,1,2,3)=1; c(4, 5)=2; c(6,7,8,9,10)=3;else=NA", as.factor = TRUE)
 
 elsoc_long$clase.sub <- factor(elsoc_long$clase.sub,
                                levels = c(1,2,3),
-                               labels = c("Baja", "Media", "Alta"))
+                               labels = c("Baja y media baja", "Media", "Alta y media alta"))
 elsoc_long$clase.sub <- sjlabelled::set_label(elsoc_long$clase.sub, "Clase social subjetiva")
-elsoc_long$clase.sub <- sjlabelled::set_labels(elsoc_long$clase.sub, labels = c("Baja", "Media", "Alta"))
+elsoc_long$clase.sub <- sjlabelled::set_labels(elsoc_long$clase.sub, 
+                                               labels = c("Baja y media baja", "Media", "Alta y media alta"))
 
 #-------------------CLASE SUBJETIVA-------------------------------
-elsoc_long$clase.sub.hijos <- car::recode(as.numeric(elsoc_long$d01_03), recodes = "c(0,1,2,3)=1; c(4, 5, 6)=2; c(7, 8, 9,10)=3; else=NA", as.factor = TRUE)
+elsoc_long$clase.sub.hijos <- car::recode(as.numeric(elsoc_long$d01_03), 
+                                          recodes = "c(0,1,2,3)=1; c(4, 5, 6)=2; c(7, 8, 9,10)=3; else=NA", as.factor = TRUE)
 
 elsoc_long$clase.sub.hijos <- factor(elsoc_long$clase.sub.hijos,
                                      levels = c(1,2,3),
-                                     labels = c("Baja", "Media", "Alta"))
+                                     labels = c("Baja y media baja", "Media", "Alta y media alta"))
 
 elsoc_long$clase.sub.hijos <- sjlabelled::set_label(elsoc_long$clase.sub.hijos, "Clase social subjetiva de sus hijos")
-elsoc_long$clase.sub.hijos <- sjlabelled::set_labels(elsoc_long$clase.sub.hijos, labels = c("Baja", "Media", "Alta"))
+elsoc_long$clase.sub.hijos <- sjlabelled::set_labels(elsoc_long$clase.sub.hijos, 
+                                                     labels = c("Baja y media baja", "Media", "Alta y media alta"))
 
 #---Ubicacion numerica en la sociedad
 

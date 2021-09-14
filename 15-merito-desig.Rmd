@@ -41,25 +41,21 @@ g11.1
 ```
 
 
-<!-- ### 11.2 Cambios de Clase social subjetiva entre 2016 y 2019 -->
-```{r ess-wave, fig.align='center',fig.cap='Cambios de Clase social subjetiva entre 2016 y 2019'}
+<!-- ### 11.2 Cambios de Clase social subjetiva entre 2016, 2019 y 2021 -->
+```{r ess-wave, fig.align='center',fig.cap='Cambios de Clase social subjetiva entre 2016, 2019 y 2021'}
 datos.g11.2 <- data.frame((svytable(~clase.sub + ola + idencuesta, elsoc_diseno_m1, round = F))) %>% 
-  dplyr::filter(Freq>0)  %>% group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>% na.omit()
+  group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
+  filter(Freq>0, ola == '2016'| ola == '2019' | ola == '2021') %>%
+  na.omit()
 
-#Paso 1.1: crear un subset sólo para los años 2019 y 2021
-subset.g11.2 <- droplevels(subset(datos.g11.2, datos.g11.2$ola == '2019' | datos.g11.2$ola == '2021'))
-
-#Paso 2
 etiquetas.g11.2 <- data.frame((svytable(~clase.sub + ola, elsoc_diseno_m1, round = F))) %>% 
-  group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>% na.omit() %>% mutate(idencuesta = 1)
-
-#Paso 2.2: crear un subset sólo para los años 2017 y 2019
-etiquetas.g11.2 <- 
-  droplevels(subset(etiquetas.g11.2, etiquetas.g11.2$ola == '2019' | etiquetas.g11.2$ola == '2021'))
+  group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>% mutate(idencuesta = 1) %>% 
+  filter(Freq>0, ola == '2016'| ola == '2019' | ola == '2021') %>% 
+  na.omit()
 
 g11.2 <- 
-  ggplot(subset.g11.2, aes(x = ola, fill = clase.sub, stratum = clase.sub, 
-                              alluvium = idencuesta, y = porcentaje)) +
+  ggplot(datos.g11.2, aes(x = ola, fill = clase.sub, stratum = clase.sub, 
+                          alluvium = idencuesta, y = porcentaje)) +
   ggalluvial::geom_flow(alpha = .66) + 
   ggalluvial::geom_stratum(linetype = 0) +
   scale_y_continuous(labels = scales::percent) + 
@@ -73,22 +69,21 @@ g11.2 <-
             position = position_stack(vjust = .5),
             show.legend = FALSE,
             size = 2.75,
-            color = rep.int(c('black', 'white', 'white'),2))
+            color = rep.int(c('black', 'white', 'white'),3)) +
+  ggtitle('Cambios de Clase social subjetiva entre 2019 y 2021')
 
 g11.2
 
 ```
 
 
-<!-- ### 11.3 Clase social subjetiva, según quintiles de ingreso (2019) -->
-```{r ess-quintil, fig.align='center',fig.cap='Clase social subjetiva, según quintiles de ingreso (2019)'}
+<!-- ### 11.3 Clase social subjetiva, según quintiles de ingreso (2021) -->
+```{r ess-quintil, fig.align='center',fig.cap='Clase social subjetiva, según quintiles de ingreso (2021)'}
 datos.g11.3 <- 
-  data.frame((svytable(~clase.sub + quintil, elsoc_diseno_m1, round = F))) %>%
-  group_by(quintil) %>% 
-  mutate(porcentaje = Freq/sum(Freq)) %>% 
+  data.frame((svytable(~clase.sub + quintil + ola, elsoc_diseno_m1, round = F))) %>%
+  group_by(quintil, ola) %>% mutate(porcentaje = Freq/sum(Freq)) %>%
+  filter(ola == '2019') %>% 
   na.omit()
-
-#subset.g11.3 <- droplevels(subset(datos.g11.3, datos.g11.3$ola == '2021'))
 
 g11.3 <- 
   datos.g11.3 %>% 
@@ -101,26 +96,24 @@ g11.3 <-
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = 0, end = .99, direction = -1, option = 'viridis') +
-  #cambiar geom_text tal que: Stack y cambio colores
   geom_text(position = position_stack(vjust = .5),
             size= 2.75, color = rep.int(c('black', 'white', 'white'), 5)) + 
   theme(legend.position = 'top',
         legend.title = element_blank())
 
 g11.3
-
 ```
 
-<!-- ### 11.4  Si usted tiene actualmente hijos o si los tuviera en el futuro, ¿dónde cree usted que se ubicarían ellos?, según Clase social subjetiva (2019) -->
-```{r esshijos-ess, fig.align='center',fig.cap='Si usted tiene actualmente hijos o si los tuviera en el futuro, ¿dónde cree usted que se ubicarían ellos?, según Clase social subjetiva (2019)'}
+<!-- ### 11.4  Si usted tiene actualmente hijos o si los tuviera en el futuro, ¿dónde cree usted que se ubicarían ellos?, según Clase social subjetiva (2021) -->
+```{r esshijos-ess, fig.align='center',fig.cap='Si usted tiene actualmente hijos o si los tuviera en el futuro, ¿dónde cree usted que se ubicarían ellos?, según Clase social subjetiva (2021)'}
 datos.g11.4 <- 
   data.frame((svytable(~clase.sub.hijos + clase.sub + ola, elsoc_diseno_m1, round = F))) %>%
-  group_by(clase.sub, ola) %>% mutate(porcentaje = Freq/sum(Freq)) %>% na.omit()
-
-subset.g11.4 <- droplevels(subset(datos.g11.4, ola == '2021'))
+  group_by(clase.sub, ola) %>% mutate(porcentaje = Freq/sum(Freq)) %>% 
+  filter(ola == '2021') %>% 
+  na.omit()
 
 g11.4 <- 
-  subset.g11.4 %>% 
+  datos.g11.4 %>% 
   ggplot(aes(y = porcentaje, x = clase.sub, fill = clase.sub.hijos, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
@@ -134,9 +127,7 @@ g11.4 <-
   geom_text(position = position_stack(vjust = .5),
             size= 2.75, color = rep.int(c('black', 'white', 'white'), 3)) + 
   theme(legend.position = 'top',
-        legend.title = element_blank()) +
-  ggtitle('Si usted tiene actualmente hijos o si los tuviera en el futuro, 
-          ¿dónde cree usted que se ubicarían ellos?, según Clase social subjetiva (2021)')
+        legend.title = element_blank())
 
 g11.4
 ```

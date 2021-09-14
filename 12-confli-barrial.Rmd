@@ -26,19 +26,19 @@ elsoc_diseno_m1 <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~pond
 
 ```{r Recode1, include=FALSE}
 elsoc_panel_m1$confli_barrial <- ((as.numeric(elsoc_panel_m1$t11_01) + as.numeric(elsoc_panel_m1$t11_02) +
-                                  as.numeric(elsoc_panel_m1$t11_03) + as.numeric(elsoc_panel_m1$t11_04))/4)
+                                     as.numeric(elsoc_panel_m1$t11_03) + as.numeric(elsoc_panel_m1$t11_04))/4)
 
 elsoc_panel_m1$confli_barrial_rec <- factor(with(elsoc_panel_m1, case_when(is.na(confli_barrial) ~ 0,
-                                                                     confli_barrial == 1 ~ 1,
-                                                                     confli_barrial < 3 ~ 2,
-                                                                     confli_barrial <= 5 ~ 3)),
-                                         labels = c("No sabe/No responde","Nunca",
-                                                    "Pocas o algunas veces",
-                                                    "Muchas veces o siempre"))
-sjmisc::frq(elsoc_panel_m1$confli_barrial_rec)
+                                                                           confli_barrial == 1 ~ 1,
+                                                                           confli_barrial < 3 ~ 2,
+                                                                           confli_barrial <= 5 ~ 3)),
+                                            labels = c("No sabe/No responde","Nunca",
+                                                       "Pocas o algunas veces",
+                                                       "Muchas veces o siempre"))
 
 elsoc_diseno_m1 <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
-                          nest = TRUE, data = elsoc_panel_m1)
+                             nest = TRUE, data = elsoc_panel_m1)
+
 ```
  
 
@@ -81,7 +81,7 @@ etiquetas.g8.2 <- data.frame((svytable(~confli_barrial_rec + ola, elsoc_diseno_m
 
 g8.2 <- 
   ggplot(datos.g8.2, aes(x = ola, fill = confli_barrial_rec, stratum = confli_barrial_rec, 
-                           alluvium = idencuesta, y = porcentaje)) +
+                         alluvium = idencuesta, y = porcentaje)) +
   ggalluvial::geom_flow(alpha = .66) + 
   ggalluvial::geom_stratum(linetype = 0) +
   scale_y_continuous(labels = scales::percent) + 
@@ -97,6 +97,7 @@ g8.2 <-
             size = 2.75,
             color = rep.int(c('black', 'white', 'white','white'),2))
 g8.2
+
 ```
 
 
@@ -122,7 +123,6 @@ g8.3 <-
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
             size= 2.75)
-
 g8.3
 ```
 

@@ -55,12 +55,9 @@ g14.1 <-
             posilinetion = position_dodge(width = .9),
             size= 2.75) +
   theme(legend.position = 'top',
-        legend.title = element_blank()) + 
-  ggtitle('Con la llegada de migrantes a Chile, está aumentando el desempleo“, según ola y origen de migrantes. 
-          Porcentaje de personas que responden”De acuerdo" o Totalmente de acuerdo".')
+        legend.title = element_blank())
 
 g14.1
-
 ```
 
 <!-- ### 14.2 "Con la llegada de migrantes, Chile está perdiendo su identidad", según ola y origen de migrantes. Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo". -->
@@ -85,10 +82,7 @@ g14.2 <-
             posilinetion = position_dodge(width = .9),
             size= 2.75) +
   theme(legend.position = 'top',
-        legend.title = element_blank()) +
-  ggtitle('“Con la llegada de migrantes, Chile está perdiendo su identidad”, según ola y origen de migrantes. 
-          Porcentaje de personas que responden “De acuerdo” o Totalmente de acuerdo".')
-
+        legend.title = element_blank())
 g14.2
 ```
 
@@ -117,8 +111,8 @@ g14.3 <-
 g14.3
 ```
 
-<!-- ### 14.4 Percepción de amenaza realista y simbólica, según grupo de migrantes (2019). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo". -->
-```{r amen3-wave, fig.align='center',fig.cap='Percepción de amenaza realista y simbólica, según grupo de migrantes (2019). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
+<!-- ### 14.4 Percepción de amenaza realista y simbólica, según grupo de migrantes (2021). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo". -->
+```{r amen3-wave, fig.align='center',fig.cap='Percepción de amenaza realista y simbólica, según grupo de migrantes (2021). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
 amreal.g14.4 <- data.frame((svytable(~amenaza_realista + migrantes + ola,
                        elsoc_diseno, round = F))) %>%
   group_by(ola, migrantes) %>% mutate(p_real=Freq/sum(Freq)) %>% na.omit()
@@ -170,8 +164,8 @@ g14.4
 ## Amenaza realista y simbólica respecto a inmigrantes según nivel educacional
 
 
-<!-- ### 14.5 Percepción de amenaza realista y simbólica respecto a inmigrantes, según nivel educacional (2019). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo". -->
-```{r amen-educ, fig.align='center',fig.cap='Percepción de amenaza realista y simbólica respecto a inmigrantes, según nivel educacional (2019). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
+<!-- ### 14.5 Percepción de amenaza realista y simbólica respecto a inmigrantes, según nivel educacional (2021). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo". -->
+```{r amen-educ, fig.align='center',fig.cap='Percepción de amenaza realista y simbólica respecto a inmigrantes, según nivel educacional (2021). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
 amreal.g14.5 <- data.frame((svytable(~amenaza_realista + educ + ola, elsoc_diseno, round = F))) %>%
   group_by(ola, educ) %>% mutate(p_real=Freq/sum(Freq)) %>% na.omit()
 amreal.g14.5$ola <- NULL
@@ -216,69 +210,8 @@ g14.5 <-
 g14.5
 ```
 
-## Amenaza realista y simbólica respecto a inmigrantes según frecuencia de contacto
-
-
-<!-- ### 14.6 Percepción de Amenaza Realista y Simbólica, según frecuencia de contacto (2019). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo". -->
-```{r amen-contacto, fig.align='center',fig.cap='Percepción de Amenaza Realista y Simbólica, según frecuencia de contacto (2019). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
-amreal.g14.6 <- 
-  data.frame((svytable(~amenaza_realista + frecuencia_contacto + ola, elsoc_diseno, round = F))) %>%
-  group_by(ola, frecuencia_contacto) %>% mutate(p_real=Freq/sum(Freq)) %>% na.omit()
-amreal.g14.6$ola <- NULL
-amreal.g14.6$frecuencia_contacto <- NULL
-amreal.g14.6$Freq <- NULL
-
-amsim.g14.6 <- 
-  data.frame((svytable(~amenaza_simbolica + frecuencia_contacto + ola, elsoc_diseno, round = F))) %>%
-  group_by(ola, frecuencia_contacto) %>% mutate(p_sim=Freq/sum(Freq)) %>% na.omit()
-amsim.g14.6$Freq <- NULL
-
-datos.g14.6 <- cbind(amreal.g14.6, amsim.g14.6)
-
-#trasponer según variable
-datos.g14.6a <- datos.g14.6 %>% 
-  pivot_longer(cols = starts_with('amenaza_'))  %>%
-  mutate(amenaza = factor(name,labels = c('Aumenta desempleo',
-                                          'Chile pierde su identidad'))) %>%
-  drop_na()
-
-datos.g14.6a$porcentaje <- with(datos.g14.6a, case_when(
-  amenaza == 'Aumenta desempleo' ~ p_real,
-  amenaza == 'Chile pierde su identidad' ~ p_sim))
-
-subset.g14.6 <- droplevels(subset(datos.g14.6a, value == 'De acuerdo o totalmente de acuerdo')) %>% 
-  filter(p_real > 0.00000000, p_sim > 0.00000000, ola == '2019') 
-
-g14.6 <-
-  subset.g14.6 %>% 
-  ggplot(aes(y = porcentaje, x = amenaza, fill = frecuencia_contacto, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
-  theme_bw() + 
-  geom_col(position = 'dodge2') +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, .8)) +
-  ylab(label = NULL) +
-  xlab(label = NULL) +
-  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
-  theme(legend.position = 'top',
-        legend.title = element_blank()) +
-  geom_text(vjust = -0.8,
-            position = position_dodge(width = .9),
-            size= 2.75)
-g14.6 #no funciona para 2021 (REVISAR) -> r06 (frecuencia contacto) no se pregunta el 2021
-```
-
-
-
-<!-- ### 14.7 Confianza en migrantes, según frecuencia de contacto (2019). Porcentaje de personas que responden "Bastante" o "Mucha confianza". -->
-```{r conf-contacto, fig.align='center',fig.cap='Confianza en migrantes, según frecuencia de contacto (2019). Porcentaje de personas que responden "Bastante" o "Mucha confianza".'}
-
-```
-
-
-
-<!-- ### 14.8 Percepción de amenaza realista y simbólica, según tramo de edad (2019). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo". -->
-```{r amen-edad, fig.align='center',fig.cap='Percepción de amenaza realista y simbólica, según tramo de edad (2019). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
+<!-- ### 14.8 Percepción de amenaza realista y simbólica, según tramo de edad (2021). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo". -->
+```{r amen-edad, fig.align='center',fig.cap='Percepción de amenaza realista y simbólica, según tramo de edad (2021). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
 
 amreal.g14.8 <- 
   data.frame((svytable(~amenaza_realista + edadt + ola, elsoc_diseno, round = F))) %>%
@@ -325,82 +258,4 @@ g14.8 <-
             position = position_dodge(width = .9),
             size= 2.75)
 g14.8
-```
-
-
-## Frecuencia de Contacto y Confianza hacia los Inmigrantes
-
-<!-- ### 14.9 Efecto de Frecuencia de Contacto con migrantes sobre niveles de confianza de chilenos hacia migrantes, según ola del estudio. Porcentaje de personas que responden "Bastante" o "Mucha confianza". -->
-
-```{r contact-conf, fig.align='center',fig.cap='Efecto de Frecuencia de Contacto con migrantes sobre niveles de confianza de chilenos hacia migrantes, según ola del estudio. Porcentaje de personas que responden "Bastante" o "Mucha confianza".'}
-elsoc_panel$ola_mig <- factor(with(elsoc_panel, case_when(
-  ola == '2016' & migrantes == 'Peruanos' ~ 1,
-  ola == '2017' & migrantes == 'Peruanos' ~ 2,
-  ola == '2018' & migrantes == 'Peruanos' ~ 3,
-  ola == '2019' & migrantes == 'Peruanos' ~ 4,
-  ola == '2021' & migrantes == 'Peruanos' ~ 5,
-  ola == '2018' & migrantes == 'Haitianos' ~ 6,
-  ola == '2019' & migrantes == 'Haitianos' ~ 7,
-  ola == '2021' & migrantes == 'Haitianos' ~ 8,
-  ola == '2019' & migrantes == 'Venezolanos' ~ 9)),
-  labels = c('2016\nPeruanos', '2017\nPeruanos', '2018\nPeruanos', '2019\nPeruanos', '2021\nPeruanos',
-             '2018\nHaitianos','2019\nHaitianos','2021\nHaitianos', '2019\nVenezolanos'))
-sjmisc::frq(elsoc_panel$ola_mig)
-elsoc_diseno <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
-                          nest = TRUE, data = elsoc_panel)
-
-datos.g14.9 <- data.frame((svytable(~confianza_rec + ola_mig + ola + frecuencia_contacto, 
-                                     elsoc_diseno, round = F))) %>%
-  group_by(ola, frecuencia_contacto) %>% mutate(porcentaje=Freq/sum(Freq)) %>% 
-  filter(porcentaje > 0.00000000, confianza_rec == 'Bastante o mucha confianza') %>% 
-  na.omit()
-
-g14.9 <-
-  datos.g14.9 %>% 
-  ggplot(aes(y = porcentaje, x = ola_mig, fill = frecuencia_contacto, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
-  theme_bw() + 
-  geom_col(position = 'dodge2') +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, .8)) +
-  ylab(label = NULL) +
-  xlab(label = NULL) +
-  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
-  theme(legend.position = 'top',
-        legend.title = element_blank()) +
-  geom_text(vjust = -0.8,
-            position = position_dodge(width = .9),
-            size= 2.75)
-g14.9 #no aparece año 2021 (REVISAR) -> r06 (frecuencia contacto) no se pregunta el 2021
-```
-
-## Relevancia de las normas pro-contacto de cercanos
-
-<!-- ### 14.10 Efecto de normas pro-contacto de familia y amigos sobre Frecuencia de Contacto con migrantes, según ola del estudio. Porcentaje de personas que responden Frecuencia de contacto con migrantes "Siempre" o "Casi siempre".  -->
-
-```{r normas-contacto, fig.align='center',fig.cap='Efecto de normas pro-contacto de familia y amigos sobre Frecuencia de Contacto con migrantes, según ola del estudio. Porcentaje de personas que responden Frecuencia de contacto con migrantes "Siempre" o "Casi siempre".'}
-
-datos.g14.10 <- data.frame((svytable(~frecuencia_contacto + ola_mig + norma, 
-                                     elsoc_diseno, round = F))) %>%
-  group_by(ola_mig, norma) %>% mutate(porcentaje=Freq/sum(Freq)) %>% 
-  filter(porcentaje > 0.00000000, frecuencia_contacto == 'Contacto Alto') %>% 
-  na.omit()
-
-g14.10 <-
-  datos.g14.10 %>% 
-  ggplot(aes(y = porcentaje, x = ola_mig, fill = norma, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
-  theme_bw() + 
-  geom_col(position = 'dodge2') +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, .8)) +
-  ylab(label = NULL) +
-  xlab(label = NULL) +
-  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
-  theme(legend.position = 'top',
-        legend.title = element_blank()) +
-  geom_text(vjust = -0.8,
-            position = position_dodge(width = .9),
-            size= 2.75)
-g14.10 #no aparece año 2021 (REVISAR) -> r06 (frecuencia contacto) no se pregunta el 2021
 ```
