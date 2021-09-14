@@ -1,0 +1,62 @@
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+# Pandemia Covid-19
+
+```{r}
+load("1_input/elsoc_covid.RData")
+library(sf)
+library(chilemapas)
+
+```
+
+```{r}
+datos.grafico <- data.frame((svytable(~fecha_entr + comuna_cod + ola, 
+                                      elsoc_diseno_3, round = F))) %>% 
+  group_by(comuna_cod, ola) %>% 
+  mutate(porcentaje=Freq/sum(Freq)) %>% 
+  filter(ola==2021 & Freq>0)
+datos.grafico$fecha_entr<-as.Date(datos.grafico$fecha_entr)
+
+gr.19.1 <- datos.grafico %>% 
+  ggplot(mapping = aes(x = fecha_entr)) +
+  theme_bw() + 
+  geom_histogram(bins = 9,
+                 stat="count") +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_x_date(date_breaks = "1 month", date_labels = "%d %b %Y")
+
+gr.19.1
+```
+
+```{r}
+datos.grafico <- data.frame((svytable(~ccum + comuna_cod + ola + region_cod, 
+                                      elsoc_diseno_3, round = F))) %>% 
+  group_by(comuna_cod, ola, region_cod) %>% 
+  mutate(porcentaje=Freq/sum(Freq)) %>% 
+  filter(ola==2021 & Freq>0)
+
+datos.subset <- droplevels(subset(datos.grafico, region==13))
+#falta ajustar que sea un caso por comuna
+comunas_rm<-mapa_comunas[mapa_comunas$codigo_region==13,]
+
+comunas_rm<-merge(comunas_rm,datos.subset,by.x="codigo_comuna",by.y="comuna_cod",all.x=TRUE,sort=F)
+
+# Choropleth plot (continuos scale)
+
+library(RColorBrewer)
+paleta <- rev(brewer.pal(n = 5,name = "Reds"))
+
+p_cont<-ggplot(comunas_rm) + 
+  geom_sf(aes(fill = ccum, geometry = geometry)) +
+  scale_fill_gradientn(colours = rev(paleta), name = "Cuarentena Acomulada") +
+  labs(title = "Cuarentenas", subtitle = "Región Metropolitana") +
+  theme_minimal(base_size = 11)
+p_cont
+
+```
+

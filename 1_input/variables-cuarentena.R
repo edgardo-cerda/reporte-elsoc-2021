@@ -1,6 +1,18 @@
+#Análisis de Cuarentenas por comuna en base a datos del Ministerio de Ciencia (@MinCiencia)
 remove(list = ls()) #limpieza del entorno de trabajo
+library(readr)
+library(dplyr)
+library(scales)
+library(ggplot2)
+library(reshape2)
+library(leaflet)
+library(ggplot2)
+library(data.table)
+library(tidyr)
+library(stringr)
+library(lubridate)
 #abrir bases de datos necesarias
-load("~/Documents/GitHub/covid-elsoc/1_input/elsoc_data.RData")
+load("1_input/datos_elsoc.RData")
 
 #encontrar los id comuna
 #library(readxl)
@@ -32,6 +44,8 @@ df_pasos2 <- df_pasos %>%
   group_by(codigo_comuna, zona) %>% 
   mutate(csum = cumsum(cuarentena)) %>% 
   mutate(ola=2021)
+
+elsoc_long$fecha_entr <- as.Date(with(elsoc_long, paste(annio_entr, mes_entr, dia_entr ,sep="-")), "%Y-%m-%d")
 
 els_long <- merge(x = elsoc_long, y = df_pasos2[ , c("Fecha","codigo_comuna", "csum", "ola")], 
                    by.x=c("fecha_entr", "comuna_cod", "ola"), 
@@ -77,21 +91,13 @@ elsoc_covid <- merge(x = els_long2, y = df_pasos,
                    by.y=c("Fecha", "codigo_comuna"), all.x = T)
 
 elsoc_covid_panel <- elsoc_covid %>% filter(tipo_atricion == 1 | 
-                                            tipo_atricion == 3 |
-                                            tipo_atricion == 5 |
-                                            tipo_atricion == 7 | 
-                                            tipo_atricion == 9 |
-                                            tipo_atricion == 11 | 
-                                            tipo_atricion == 13 | 
-                                            tipo_atricion == 15 |
-                                            tipo_atricion == 17 | 
-                                            tipo_atricion == 19)
+                                            tipo_atricion == 17 )
 
 save(elsoc_covid, elsoc_covid_panel, file = '1_input/elsoc_covid.RData')
 
 ##Exportar a .dta
-library(haven)
-write_dta(elsoc_covid_panel, "3_output/elsoc_covid_panel.dta")
+#library(haven)
+#write_dta(elsoc_covid_panel, "3_output/elsoc_covid_panel.dta")
 
 #revisamos
 sjmisc::frq(elsoc_covid$cuarentena)     # 44,1% de los encuestados estaba en cuarentena

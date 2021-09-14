@@ -47,7 +47,8 @@ pacman::p_load(knitr, kableExtra, dplyr,gridExtra,tidyverse,sjmisc,sjlabelled,st
 ```{r cargar objetos, include=FALSE, cache = FALSE}
 remove(list = ls())
 #base de datos
-load("1_input/datos_elsoc.RData")      
+load("1_input/datos_elsoc.RData") 
+load("1_input/elsoc_covid.RData")
 ```
 
 ```{r disenno, include=FALSE}
@@ -63,6 +64,13 @@ elsoc_diseno_2 <- svydesign(ids = ~segmento,
                           weights = ~ponderador02,
                           nest = TRUE,
                           data = elsoc_panel)
+
+#cuando se utilizan datos de covid en panel
+elsoc_diseno_3 <- svydesign(ids = ~segmento,
+                          strata = ~estrato, 
+                          weights = ~ponderador02,
+                          nest = TRUE,
+                          data = elsoc_covid_panel)
 ```
 
 ```{r echo=FALSE }

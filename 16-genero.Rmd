@@ -15,10 +15,18 @@ elsoc_panel$sexismo <- c( as.numeric(elsoc_panel$g01_01) + as.numeric(elsoc_pane
                           as.numeric(elsoc_panel$g01_03) + as.numeric(elsoc_panel$g01_04)) /4
 
 elsoc_panel$sexismo_benevolo <- c( as.numeric(elsoc_panel$g01_01) + as.numeric(elsoc_panel$g01_02))/2
+elsoc_panel$sexismo_benevolo <- factor(car::recode(as.numeric(elsoc_panel$sexismo_benevolo), 'c(1,1.5,2)=1;c(2.5, 3, 3.5)=2;c(4,4.5, 5)= 3; else=NA', 
+                                             as.factor = TRUE), levels = c(1,2,3),
+                                labels = c('Debil', 'Medio', 'Fuerte'))
+elsoc_panel$sexismo_benevolo <- na.replace(elsoc_panel$sexismo_benevolo, "NS/NR") #recode NA en categoría "NS/NR"
 elsoc_panel$sexismo_hostil <- c(as.numeric(elsoc_panel$g01_03) + as.numeric(elsoc_panel$g01_04))/2
+elsoc_panel$sexismo_hostil <- factor(car::recode(as.numeric(elsoc_panel$sexismo_hostil), 'c(1,1.5,2)=1;c(2.5, 3, 3.5)=2;c(4,4.5, 5)= 3; else=NA', 
+                                             as.factor = TRUE), levels = c(1,2,3),
+                                labels = c('Debil', 'Medio', 'Fuerte'))
+elsoc_panel$sexismo_hostil <- na.replace(elsoc_panel$sexismo_hostil, "NS/NR") #recode NA en categoría "NS/NR"
 
-elsoc_panel$g01_01_rec <- factor(car::recode(as.numeric(elsoc_panel$g01_01), 'c(1,2)=1;c(3)=2;c(4,5)= 3; else=NA', as.factor = TRUE),
-                                levels = c(1,2,3),
+elsoc_panel$g01_01_rec <- factor(car::recode(as.numeric(elsoc_panel$g01_01), 'c(1,2)=1;c(3)=2;c(4,5)= 3; else=NA', 
+                                             as.factor = TRUE), levels = c(1,2,3),
                                 labels = c('Desacuerdo', 'Ni acuerdo ni desacuerdo', 'De Acuerdo'))
 elsoc_panel$g01_02_rec <- factor(car::recode(as.numeric(elsoc_panel$g01_02), 'c(1,2)=1;c(3)=2;c(4,5)= 3; else=NA', as.factor = TRUE),
                                 levels = c(1,2,3),
@@ -31,6 +39,27 @@ elsoc_panel$g01_03_rec <- factor(car::recode(as.numeric(elsoc_panel$g01_03), 'c(
 elsoc_panel$g01_04_rec <- factor(car::recode(as.numeric(elsoc_panel$g01_04), 'c(1,2)=1;c(3)=2;c(4,5)= 3; else=NA', as.factor = TRUE),
                                 levels = c(1,2,3),
                                 labels = c('Desacuerdo', 'Ni acuerdo ni desacuerdo', 'De Acuerdo'))
+
+
+
+elsoc_panel$c19_01_rec <- factor(car::recode(as.numeric(elsoc_panel$c19_01), 'c(1,2)=1;c(3)=2;c(4,5)= 3; else="NS/NR"', 
+                                             as.factor = TRUE), levels = c(1,2,3),
+                                labels = c('Desacuerdo', 'Ni acuerdo ni desacuerdo', 'De Acuerdo'))
+
+
+elsoc_panel$c19_02_rec <- factor(car::recode(as.numeric(elsoc_panel$c19_02), 'c(1,2)=1;c(3)=2;c(4,5)= 3; else="NS/NR"', as.factor = TRUE),
+                                levels = c(1,2,3),
+                                labels = c('Desacuerdo', 'Ni acuerdo ni desacuerdo', 'De Acuerdo'))
+
+elsoc_panel$c19_03_rec <- factor(car::recode(as.numeric(elsoc_panel$c19_03), 'c(1,2)=1;c(3)=2;c(4,5)= 3; else="NS/NR"', as.factor = TRUE),
+                                levels = c(1,2,3),
+                                labels = c('Desacuerdo', 'Ni acuerdo ni desacuerdo', 'De Acuerdo'))
+
+elsoc_panel$c19_04_rec <- factor(car::recode(as.numeric(elsoc_panel$c19_04), 'c(1,2)=1;c(3)=2;c(4,5)= 3; else="NS/NR"', as.factor = TRUE),
+                                levels = c(1,2,3),
+                                labels = c('Desacuerdo', 'Ni acuerdo ni desacuerdo', 'De Acuerdo'))
+
+
 elsoc_diseno_2 <- svydesign(ids = ~segmento,
                           strata = ~estrato, 
                           weights = ~ponderador02,
@@ -39,8 +68,98 @@ elsoc_diseno_2 <- svydesign(ids = ~segmento,
 
 ```
 
+```{r sexismo-ben, fig.align='center', fig.cap='Cambio en Sexismo benévolo, según ola y sexo .'}
+
+#1
+datos.grafico <- data.frame((svytable(~sexismo_benevolo + ola + idencuesta + 
+                                        m0_sexo, elsoc_diseno_2, round = F))) %>% 
+  dplyr::filter(Freq>0)  %>% 
+  group_by(ola,m0_sexo) %>% 
+  mutate(porcentaje=Freq/sum(Freq)) %>% na.omit()
+
+#1.1
+subset.grafico <- droplevels(subset(datos.grafico, datos.grafico$ola == '2019' | datos.grafico$ola == '2021'))
+
+#2
+etiquetas.grafico <- data.frame((svytable(~sexismo_benevolo + ola + m0_sexo, 
+                                          elsoc_diseno_2, round = F))) %>% 
+  group_by(ola, m0_sexo) %>% 
+  mutate(porcentaje=Freq/sum(Freq)) %>% 
+  na.omit() %>% 
+  mutate(idencuesta = 1)
+
+#Paso 2.2: crear un subset sólo para los años
+etiquetas.grafico <- droplevels(subset(etiquetas.grafico, 
+                     etiquetas.grafico$ola == '2019' | etiquetas.grafico$ola == '2021'))
+
+gr.16.1 <- ggplot(subset.grafico, aes(x = ola, fill = sexismo_benevolo, stratum = sexismo_benevolo, 
+                              alluvium = idencuesta, y = porcentaje)) +
+  theme_bw() +
+  ggalluvial::geom_flow(alpha = .66) + 
+  ggalluvial::geom_stratum(linetype = 0) +
+  scale_y_continuous(labels = scales::percent) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  scale_fill_viridis_d(begin = 0, end = .9, direction = -1, option = 'viridis') +
+  facet_wrap(.~m0_sexo)+
+  geom_text(data = etiquetas.grafico, 
+            aes(label = ifelse(porcentaje > 0.05 , scales::percent(porcentaje, accuracy = .1),"")),
+            position = position_stack(vjust = .5),
+            show.legend = FALSE,
+            size= 2.75, color = rep.int(c('black','white', 'white'), 4))
+
+gr.16.1
+```
+
+```{r sexismo-host, fig.align='center', fig.cap='Sexismo hostil, según ola y sexo .'}
+
+#1
+datos.grafico <- data.frame((svytable(~sexismo_hostil + ola + idencuesta + 
+                                        m0_sexo, elsoc_diseno_2, round = F))) %>% 
+  dplyr::filter(Freq>0)  %>% 
+  group_by(ola,m0_sexo) %>% 
+  mutate(porcentaje=Freq/sum(Freq)) %>% na.omit()
+
+#1.1
+subset.grafico <- droplevels(subset(datos.grafico, datos.grafico$ola == '2019' | datos.grafico$ola == '2021'))
+
+#2
+etiquetas.grafico <- data.frame((svytable(~sexismo_hostil + ola + m0_sexo, 
+                                          elsoc_diseno_2, round = F))) %>% 
+  group_by(ola, m0_sexo) %>% 
+  mutate(porcentaje=Freq/sum(Freq)) %>% 
+  na.omit() %>% 
+  mutate(idencuesta = 1)
+
+#Paso 2.2: crear un subset sólo para los años
+etiquetas.grafico <- droplevels(subset(etiquetas.grafico, 
+                     etiquetas.grafico$ola == '2019' | etiquetas.grafico$ola == '2021'))
+
+gr.16.2 <- ggplot(subset.grafico, aes(x = ola, fill = sexismo_hostil, stratum = sexismo_hostil, 
+                              alluvium = idencuesta, y = porcentaje)) +
+  theme_bw() +
+  ggalluvial::geom_flow(alpha = .66) + 
+  ggalluvial::geom_stratum(linetype = 0) +
+  scale_y_continuous(labels = scales::percent) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  scale_fill_viridis_d(begin = 0, end = .9, direction = -1, option = 'viridis') +
+  facet_wrap(.~m0_sexo)+
+  geom_text(data = etiquetas.grafico, 
+            aes(label = ifelse(porcentaje > 0.05 , scales::percent(porcentaje, accuracy = .1),"")),
+            position = position_stack(vjust = .5),
+            show.legend = FALSE,
+            size= 2.75, color = rep.int(c('black','white', 'white'), 4))
+
+gr.16.2
+```
+
 <!-- ### 12.1 Sexismo benévolo y hostil, según sexo (2019). Porcentaje que responde "De acuerdo" o "Totalmente de acuerdo". -->
-```{r sexismo-sexo, fig.align='center', fig.cap='Sexismo benévolo y hostil, según sexo (2019). Porcentaje que responde "De acuerdo" o "Totalmente de acuerdo".'}
+```{r sexismo-sexo, fig.align='center', fig.cap='Sexismo benévolo y hostil, según sexo (2021). Porcentaje que responde "De acuerdo" o "Totalmente de acuerdo".'}
 datos.01 <- data.frame((svytable(~g01_01_rec + m0_sexo + ola, elsoc_diseno_2, round = F))) %>% group_by(ola, m0_sexo) %>% mutate(p_01=Freq/sum(Freq))
 datos.01$ola <- NULL
 datos.01$m0_sexo <- NULL
@@ -100,7 +219,7 @@ gr.16.1
 
 <!-- ### 12.4 Sexismo benévolo y hostil, según nivel educacional (2019). Porcentaje que responde "De acuerdo" o "Totalmente de acuerdo". -->
 
-```{r sexismo-educ, fig.align='center',fig.cap='Sexismo benévolo y hostil, según nivel educacional (2019). Porcentaje que responde "De acuerdo" o "Totalmente de acuerdo".'}
+```{r sexismo-educ, fig.align='center',fig.cap='Sexismo benévolo y hostil, según nivel educacional (2021). Porcentaje que responde "De acuerdo" o "Totalmente de acuerdo".'}
 datos.01 <- data.frame((svytable(~g01_01_rec + educ + ola, elsoc_diseno_2, round = F))) %>% group_by(ola, educ) %>% mutate(p_01=Freq/sum(Freq))
 datos.01$ola <- NULL
 datos.01$educ <- NULL
@@ -156,6 +275,183 @@ gr.16.2 <-datos.grafico %>%
 gr.16.2
 ```
 
+## Roles de Género
+```{r c19_01, fig.align='center', fig.cap='Sexismo hostil, según ola y sexo .'}
+
+#1
+datos.grafico <- data.frame((svytable(~c19_01_rec + ola + idencuesta + 
+                                        m0_sexo, elsoc_diseno_2, round = F))) %>% 
+  dplyr::filter(Freq>0)  %>% 
+  group_by(ola, m0_sexo) %>% 
+  mutate(porcentaje=Freq/sum(Freq)) %>% na.omit()
+
+#1.1
+subset.grafico <- droplevels(subset(datos.grafico, datos.grafico$ola == '2016' |  datos.grafico$ola == '2018' | datos.grafico$ola == '2021'))
+
+#2
+etiquetas.grafico <- data.frame((svytable(~c19_01_rec + ola + m0_sexo, 
+                                          elsoc_diseno_2, round = F))) %>% 
+  group_by(ola, m0_sexo) %>% 
+  mutate(porcentaje=Freq/sum(Freq)) %>% 
+  na.omit() %>% 
+  mutate(idencuesta = 1)
+
+#Paso 2.2: crear un subset sólo para los años
+etiquetas.grafico <- droplevels(subset(etiquetas.grafico, etiquetas.grafico$ola == '2016' | etiquetas.grafico$ola == '2018' | etiquetas.grafico$ola == '2021'))
+
+gr.16.3 <- ggplot(subset.grafico, aes(x = ola, fill = c19_01_rec, stratum = c19_01_rec, 
+                              alluvium = idencuesta, y = porcentaje)) +
+  theme_bw() +
+  ggalluvial::geom_flow(alpha = .66) + 
+  ggalluvial::geom_stratum(linetype = 0) +
+  scale_y_continuous(labels = scales::percent) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  scale_fill_viridis_d(begin = 0, end = .9, direction = -1, option = 'viridis') +
+  facet_wrap(.~m0_sexo)+
+  geom_text(data = etiquetas.grafico, 
+            aes(label = ifelse(porcentaje > 0.05 , scales::percent(porcentaje, accuracy = .1),"")),
+            position = position_stack(vjust = .5),
+            show.legend = FALSE,
+            size= 2.75, color = rep.int(c('black', 'white', 'white'), 6))
+
+gr.16.3
+```
+
+
+```{r c19_02, fig.align='center', fig.cap='Sexismo hostil, según ola y sexo .'}
+
+#1
+datos.grafico <- data.frame((svytable(~c19_02_rec + ola + idencuesta + 
+                                        m0_sexo, elsoc_diseno_2, round = F))) %>% 
+  dplyr::filter(Freq>0)  %>% 
+  group_by(ola, m0_sexo) %>% 
+  mutate(porcentaje=Freq/sum(Freq)) %>% na.omit()
+
+#1.1
+subset.grafico <- droplevels(subset(datos.grafico, datos.grafico$ola == '2016' |  datos.grafico$ola == '2018' | datos.grafico$ola == '2021'))
+
+#2
+etiquetas.grafico <- data.frame((svytable(~c19_02_rec + ola + m0_sexo, 
+                                          elsoc_diseno_2, round = F))) %>% 
+  group_by(ola, m0_sexo) %>% 
+  mutate(porcentaje=Freq/sum(Freq)) %>% 
+  na.omit() %>% 
+  mutate(idencuesta = 1)
+
+#Paso 2.2: crear un subset sólo para los años
+etiquetas.grafico <- droplevels(subset(etiquetas.grafico, etiquetas.grafico$ola == '2016' | etiquetas.grafico$ola == '2018' | etiquetas.grafico$ola == '2021'))
+
+gr.16.4 <- ggplot(subset.grafico, aes(x = ola, fill = c19_02_rec, stratum = c19_02_rec, 
+                              alluvium = idencuesta, y = porcentaje)) +
+  theme_bw() +
+  ggalluvial::geom_flow(alpha = .66) + 
+  ggalluvial::geom_stratum(linetype = 0) +
+  scale_y_continuous(labels = scales::percent) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  scale_fill_viridis_d(begin = 0, end = .9, direction = -1, option = 'viridis') +
+  facet_wrap(.~m0_sexo)+
+  geom_text(data = etiquetas.grafico, 
+            aes(label = ifelse(porcentaje > 0.05 , scales::percent(porcentaje, accuracy = .1),"")),
+            position = position_stack(vjust = .5),
+            show.legend = FALSE,
+            size= 2.75, color = rep.int(c('black', 'white', 'white'), 6))
+
+gr.16.4
+```
+
+```{r c19_03, fig.align='center', fig.cap='Sexismo hostil, según ola y sexo .'}
+
+#1
+datos.grafico <- data.frame((svytable(~c19_03_rec + ola + idencuesta + 
+                                        m0_sexo, elsoc_diseno_2, round = F))) %>% 
+  dplyr::filter(Freq>0)  %>% 
+  group_by(ola, m0_sexo) %>% 
+  mutate(porcentaje=Freq/sum(Freq)) %>% na.omit()
+
+#1.1
+subset.grafico <- droplevels(subset(datos.grafico, datos.grafico$ola == '2016' |  datos.grafico$ola == '2018' | datos.grafico$ola == '2021'))
+
+#2
+etiquetas.grafico <- data.frame((svytable(~c19_03_rec + ola + m0_sexo, 
+                                          elsoc_diseno_2, round = F))) %>% 
+  group_by(ola, m0_sexo) %>% 
+  mutate(porcentaje=Freq/sum(Freq)) %>% 
+  na.omit() %>% 
+  mutate(idencuesta = 1)
+
+#Paso 2.2: crear un subset sólo para los años
+etiquetas.grafico <- droplevels(subset(etiquetas.grafico, etiquetas.grafico$ola == '2016' | etiquetas.grafico$ola == '2018' | etiquetas.grafico$ola == '2021'))
+
+gr.16.5 <- ggplot(subset.grafico, aes(x = ola, fill = c19_03_rec, stratum = c19_03_rec, 
+                              alluvium = idencuesta, y = porcentaje)) +
+  theme_bw() +
+  ggalluvial::geom_flow(alpha = .66) + 
+  ggalluvial::geom_stratum(linetype = 0) +
+  scale_y_continuous(labels = scales::percent) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  scale_fill_viridis_d(begin = 0, end = .9, direction = -1, option = 'viridis') +
+  facet_wrap(.~m0_sexo)+
+  geom_text(data = etiquetas.grafico, 
+            aes(label = ifelse(porcentaje > 0.05 , scales::percent(porcentaje, accuracy = .1),"")),
+            position = position_stack(vjust = .5),
+            show.legend = FALSE,
+            size= 2.75, color = rep.int(c('black', 'white', 'white'), 6))
+
+gr.16.5
+```
+
+```{r c19_04, fig.align='center', fig.cap='Sexismo hostil, según ola y sexo .'}
+
+#1
+datos.grafico <- data.frame((svytable(~c19_04_rec + ola + idencuesta + 
+                                        m0_sexo, elsoc_diseno_2, round = F))) %>% 
+  dplyr::filter(Freq>0)  %>% 
+  group_by(ola, m0_sexo) %>% 
+  mutate(porcentaje=Freq/sum(Freq)) %>% na.omit()
+
+#1.1
+subset.grafico <- droplevels(subset(datos.grafico, datos.grafico$ola == '2016' |  datos.grafico$ola == '2018' | datos.grafico$ola == '2021'))
+
+#2
+etiquetas.grafico <- data.frame((svytable(~c19_04_rec + ola + m0_sexo, 
+                                          elsoc_diseno_2, round = F))) %>% 
+  group_by(ola, m0_sexo) %>% 
+  mutate(porcentaje=Freq/sum(Freq)) %>% 
+  na.omit() %>% 
+  mutate(idencuesta = 1)
+
+#Paso 2.2: crear un subset sólo para los años
+etiquetas.grafico <- droplevels(subset(etiquetas.grafico, etiquetas.grafico$ola == '2016' | etiquetas.grafico$ola == '2018' | etiquetas.grafico$ola == '2021'))
+
+gr.16.6 <- ggplot(subset.grafico, aes(x = ola, fill = c19_04_rec, stratum = c19_04_rec, 
+                              alluvium = idencuesta, y = porcentaje)) +
+  theme_bw() +
+  ggalluvial::geom_flow(alpha = .66) + 
+  ggalluvial::geom_stratum(linetype = 0) +
+  scale_y_continuous(labels = scales::percent) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  scale_fill_viridis_d(begin = 0, end = .9, direction = -1, option = 'viridis') +
+  facet_wrap(.~m0_sexo)+
+  geom_text(data = etiquetas.grafico, 
+            aes(label = ifelse(porcentaje > 0.05 , scales::percent(porcentaje, accuracy = .1),"")),
+            position = position_stack(vjust = .5),
+            show.legend = FALSE,
+            size= 2.75, color = rep.int(c('black', 'white', 'white'), 6))
+
+gr.16.6
+```
 
 ## Trabajo y género
 
@@ -175,7 +471,7 @@ datos.grafico <- data.frame((svytable(~m0_sexo + ola + empleo,
 
 datos.subset <- droplevels(subset(datos.grafico, datos.grafico$ola == '2018' | datos.grafico$ola == '2021' ))
 
-gr.16.3 <- datos.subset %>% 
+gr.16.7 <- datos.subset %>% 
   ggplot(aes(y = porcentaje, x = m0_sexo, fill = empleo, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
@@ -194,7 +490,7 @@ gr.16.3 <- datos.subset %>%
   theme(legend.position = 'top',
         legend.title = element_blank())
 
-gr.16.3
+gr.16.7
 
 ```
 
@@ -228,7 +524,7 @@ etiquetas.grafico <- data.frame((svytable(~empleo + ola + m0_sexo,
 etiquetas.grafico <- droplevels(subset(etiquetas.grafico, 
                      etiquetas.grafico$ola == '2018' | etiquetas.grafico$ola == '2021'))
 
-gr.16.4 <- ggplot(subset.grafico, aes(x = ola, fill = empleo, stratum = empleo, 
+gr.16.8 <- ggplot(subset.grafico, aes(x = ola, fill = empleo, stratum = empleo, 
                               alluvium = idencuesta, y = porcentaje)) +
   theme_bw() +
   ggalluvial::geom_flow(alpha = .66) + 
@@ -247,6 +543,6 @@ gr.16.4 <- ggplot(subset.grafico, aes(x = ola, fill = empleo, stratum = empleo,
             size = 2.75,
             color = rep('white'))
 
-gr.16.4
+gr.16.8
 ```
 
