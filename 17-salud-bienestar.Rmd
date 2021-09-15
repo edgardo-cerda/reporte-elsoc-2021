@@ -49,10 +49,10 @@ elsoc_panel$depr_rec <- car::recode(elsoc_panel$suma_dep,
 c(5,6,7,8,9)='2';
 c(10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27)='3'")
 
-elsoc_diseno <- svydesign(ids = ~segmento, strata = ~estrato, 
+elsoc_diseno_2 <- svydesign(ids = ~segmento, strata = ~estrato, 
                           weights = ~ponderador02, nest = TRUE, data = elsoc_panel)
 datos.grafico <- data.frame((svytable(~depr_rec + ola + m0_sexo, 
-                                      elsoc_diseno, round = F))) %>% 
+                                      elsoc_diseno_2, round = F))) %>% 
   group_by(ola, m0_sexo) %>% 
   mutate(porcentaje=Freq/sum(Freq))
 
@@ -82,6 +82,7 @@ gr.17.2
 ```{r N6, include=FALSE}
 N<-round(sum(datos.grafico$Freq),0)
 ```
+
 <!-- ###  3 Cambios en Síntomas de depresión entre años 2018 y 2021, según sexo -->
 ```{r depre-sexo, echo=FALSE, fig.align='center'}
 
@@ -130,7 +131,7 @@ gr.17.3 <- ggplot(subset.grafico, aes(x = ola, fill = depr, stratum = depr,
             show.legend = FALSE,
             size = 2.75,
             color = rep('white'))+
-  ggtitle('Cambios en Síntomas de depresión entre años 2016 y 2019, según sexo')
+  ggtitle('Cambios en Síntomas de depresión entre años 2018 y 2021, según sexo')
 
 gr.17.3
 

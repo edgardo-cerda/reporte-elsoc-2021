@@ -85,15 +85,15 @@ elsoc_long$zona2 <- sjlabelled::set_labels(elsoc_long$zona2, labels = c("Norte",
 #-------G.- SINTOMATOLOGIA DEPRESION--------------
 
 # Variables de sintomatologia depresiva: 
-elsoc_long$s11_01_rec <- as.numeric(car::recode(elsoc_long$s11_01, " 'Nunca' = 0; 'Algunos dias' = 1; 'Mas de la mitad de los dias' = 2; c('Casi todos los dias', 'Todos los dias') = 3")) - 1
-elsoc_long$s11_02_rec <- as.numeric(car::recode(elsoc_long$s11_02, " 'Nunca' = 0; 'Algunos dias' = 1; 'Mas de la mitad de los dias' = 2; c('Casi todos los dias', 'Todos los dias') = 3")) - 1
-elsoc_long$s11_03_rec <- as.numeric(car::recode(elsoc_long$s11_03, " 'Nunca' = 0; 'Algunos dias' = 1; 'Mas de la mitad de los dias' = 2; c('Casi todos los dias', 'Todos los dias') = 3")) - 1
-elsoc_long$s11_04_rec <- as.numeric(car::recode(elsoc_long$s11_04, " 'Nunca' = 0; 'Algunos dias' = 1; 'Mas de la mitad de los dias' = 2; c('Casi todos los dias', 'Todos los dias') = 3")) - 1
-elsoc_long$s11_05_rec <- as.numeric(car::recode(elsoc_long$s11_05, " 'Nunca' = 0; 'Algunos dias' = 1; 'Mas de la mitad de los dias' = 2; c('Casi todos los dias', 'Todos los dias') = 3")) - 1
-elsoc_long$s11_06_rec <- as.numeric(car::recode(elsoc_long$s11_06, " 'Nunca' = 0; 'Algunos dias' = 1; 'Mas de la mitad de los dias' = 2; c('Casi todos los dias', 'Todos los dias') = 3")) - 1
-elsoc_long$s11_07_rec <- as.numeric(car::recode(elsoc_long$s11_07, " 'Nunca' = 0; 'Algunos dias' = 1; 'Mas de la mitad de los dias' = 2; c('Casi todos los dias', 'Todos los dias') = 3")) - 1
-elsoc_long$s11_08_rec <- as.numeric(car::recode(elsoc_long$s11_08, " 'Nunca' = 0; 'Algunos dias' = 1; 'Mas de la mitad de los dias' = 2; c('Casi todos los dias', 'Todos los dias') = 3")) - 1
-elsoc_long$s11_09_rec <- as.numeric(car::recode(elsoc_long$s11_09, " 'Nunca' = 0; 'Algunos dias' = 1; 'Mas de la mitad de los dias' = 2; c('Casi todos los dias', 'Todos los dias') = 3")) - 1
+elsoc_long$s11_01_rec <- as.numeric(car::recode(elsoc_long$s11_01, " '0' = 0; '1' = 1; '2' = 2; c('3', '4') = 3")) - 1
+elsoc_long$s11_02_rec <- as.numeric(car::recode(elsoc_long$s11_02, " '0' = 0; '1' = 1; '2' = 2; c('3', '4') = 3")) - 1
+elsoc_long$s11_03_rec <- as.numeric(car::recode(elsoc_long$s11_03, " '0' = 0; '1' = 1; '2' = 2; c('3', '4') = 3")) - 1
+elsoc_long$s11_04_rec <- as.numeric(car::recode(elsoc_long$s11_04, " '0' = 0; '1' = 1; '2' = 2; c('3', '4') = 3")) - 1
+elsoc_long$s11_05_rec <- as.numeric(car::recode(elsoc_long$s11_05, " '0' = 0; '1' = 1; '2' = 2; c('3', '4') = 3")) - 1
+elsoc_long$s11_06_rec <- as.numeric(car::recode(elsoc_long$s11_06, " '0' = 0; '1' = 1; '2' = 2; c('3', '4') = 3")) - 1
+elsoc_long$s11_07_rec <- as.numeric(car::recode(elsoc_long$s11_07, " '0' = 0; '1' = 1; '2' = 2; c('3', '4') = 3")) - 1
+elsoc_long$s11_08_rec <- as.numeric(car::recode(elsoc_long$s11_08, " '0' = 0; '1' = 1; '2' = 2; c('3', '4') = 3")) - 1
+elsoc_long$s11_09_rec <- as.numeric(car::recode(elsoc_long$s11_09, " '0' = 0; '1' = 1; '2' = 2; c('3', '4') = 3")) - 1
 
 #PHQ-9: Índice Aditivo de Puntajes de Sintomas Depresivos
 elsoc_long$suma_dep <- with(elsoc_long, s11_01_rec + s11_02_rec + s11_03_rec + s11_04_rec + s11_05_rec + s11_06_rec + s11_07_rec + s11_08_rec + s11_09_rec)
@@ -187,9 +187,9 @@ elsoc_long$id_sin <- factor(elsoc_long$idpart == 'Ninguno' & elsoc_long$idcoal =
                             labels = c('Se identifica con algun partido y/o coalicion politica', 'No se identifica con ningun partido ni coalicion politica'))
 
 elsoc_long$interes_politica <- factor(with(elsoc_long, 
-                                           case_when(c13 == 'Nada interesado' ~ 1,
-                                                     c13 == 'Poco interesado' | c13 == 'Algo interesado' ~ 2,
-                                                     c13 == 'Bastante interesado' | c13 == 'Muy interesado' ~ 3)),
+                                           case_when(c13 == '1' ~ 1,
+                                                     c13 == '2' | c13 == '3' ~ 2,
+                                                     c13 == '4' | c13 == '5' ~ 3)),
                                       labels = c('Nada interesado',
                                                  'Poco o algo interesado',
                                                  'Bastante o muy interesado'))
@@ -228,10 +228,10 @@ elsoc_long$mov <- factor(elsoc_long$c20,
 # Frecuencia de participacion en movimientos sociales
 
 elsoc_long$freq_mov <- factor(with(elsoc_long, case_when(
-  c22 == 'Nunca' | c22 == 'Casi nunca' ~ 3,
-  c22 == 'A veces' ~ 2,
-  c22 == 'Frecuentemente' | c22 == 'Muy frecuentemente' ~ 1)),
-  labels = c('Frecuentemente o muy frecuentemente', 'A veces', 'Nunca o casi nunca'))
+  c22 == '1' | c22 == '2' ~ 1,
+  c22 == '3' ~ 2,
+  c22 == '4' | c22 == '5' ~ 3)),
+  labels = c('Nunca o casi nunca', 'A veces','Frecuentemente o muy frecuentemente'))
 
 elsoc_wide$freq_mov_w01 <- factor(with(elsoc_wide, case_when(
   c22_w01 == 1 | c22_w01 == 2 ~ 3,
@@ -466,15 +466,15 @@ elsoc_long$confli.barrial.rec <- factor(with(elsoc_long, case_when(confli.barria
 
 # Recodificar variables de conformidad y acuerdo de cambio constitucion
 elsoc_long$conformidad_constitucion <- factor(with(elsoc_long, case_when(
-  c26 == 'Muy disconforme' | c26 == 'Disconforme' ~ 1,
-  c26 == 'Indiferente' ~ 2,
-  c26 == 'Conforme' | c26 == 'Muy conforme' ~ 3)),
+  c26 == '1' | c26 == '2' ~ 1,
+  c26 == '3' ~ 2,
+  c26 == '4' | c26 == '5' ~ 3)),
   labels = c('Disconforme o muy disconforme', 'Indiferente', 'Conforme o muy conforme'))
 
 elsoc_long$acuerdo_cambio_constitucion <- factor(with(elsoc_long, case_when(
-  c28 == 'Totalmente en desacuerdo' | c28 == 'En desacuerdo' ~ 1,
-  c28 == 'Ni de acuerdo ni en desacuerdo' ~ 2,
-  c28 == 'De acuerdo' | c28 == 'Totalmente de acuerdo' ~ 3)),
+  c28 == '1' | c28 == '2' ~ 1,
+  c28 == '3' ~ 2,
+  c28 == '4' | c28 == '5' ~ 3)),
   labels = c('En desacuerdo o totalmente en desacuerdo', 'Ni de acuerdo ni en desacuerdo', 'De acuerdo o totalmente de acuerdo'))
 
 # Participacion en procesos constituyentes:
@@ -785,10 +785,6 @@ elsoc_wide$idpart_w04 <- factor(with(elsoc_wide, case_when(
   c16_w04 == 15 ~ 0,
   is.na(c16_w04) ~ -999,
   TRUE ~ 1)), exclude = -999)
-elsoc_wide$idpart_w05 <- factor(with(elsoc_wide, case_when(
-  c16_w05 == 15 ~ 0,
-  is.na(c16_w05) ~ -999,
-  TRUE ~ 1)), exclude = -999)
 
 # Identificacion con alguna coalicion, por ola
 elsoc_wide$idcoal_w01 <- factor(with(elsoc_wide, case_when(
@@ -806,10 +802,6 @@ elsoc_wide$idcoal_w03 <- factor(with(elsoc_wide, case_when(
 elsoc_wide$idcoal_w04 <- factor(with(elsoc_wide, case_when(
   c17_w04 == 5 ~ 0,
   is.na(c17_w04) ~ -999,
-  TRUE ~ 1)), exclude = -999)
-elsoc_wide$idcoal_w05 <- factor(with(elsoc_wide, case_when(
-  c17_w05 == 5 ~ 0,
-  is.na(c17_w05) ~ -999,
   TRUE ~ 1)), exclude = -999)
 
 elsoc_wide$id_sin <- factor(with(elsoc_wide, case_when(
@@ -839,8 +831,7 @@ elsoc_long <- lapply(elsoc_long, sticky::sticky) %>% data.frame()
 #arreglo por falta de ponderador02
 as.ordered(elsoc_long$ponderador02)
 elsoc_long=elsoc_long %>% filter(!is.na(ponderador02))
-sjmisc::frq(elsoc_long$ponderador02)
-sjmisc::frq(elsoc_long$muestra)
+
 #Separar las muestras
 elsoc_panel <- elsoc_long %>% filter(tipo_atricion == 1 | tipo_atricion == 17)
 elsoc_panel_m1 <- dplyr::filter(elsoc_long, muestra == "Muestra Original" & tipo_atricion == 1)
