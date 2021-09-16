@@ -10,22 +10,21 @@ editor_options:
 
 ## Identificación política
 
-<!-- ### Figura 4.2: Identificación política por ola -->
+### 2.1 Identificación política por ola
+
+<!-- ### 2.1 Identificación política por ola -->
 
 ```{r echo=FALSE}
-datos.grafico3 <- data.frame((svytable(~pos_id + ola, elsoc_diseno, round = F))) %>%
+datos.2.1 <- data.frame((svytable(~pos_id + ola, elsoc_diseno, round = F))) %>%
   group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
   na.omit()
 ```
 
 ```{r echo=FALSE}
-graf.posid <-datos.grafico3 %>% 
-    #indicar el contenido del gráfico: ejes y relleno (fill) por ola
+g.2.1 <- datos.2.1 %>% 
     ggplot(aes(y = porcentaje, x = pos_id, fill = ola, 
                label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
-    #fijar el fondo y el marco del gráfico uniforme
     theme_bw() + 
-    #geom_col para usar variable y=porcentaje. 'dodge2' para formato side-to-side
     geom_col(position= 'dodge2') +
     #escala del eje y en porcentajes del 0 al 100%
     scale_y_continuous(labels = scales::percent,
@@ -43,24 +42,30 @@ graf.posid <-datos.grafico3 %>%
     theme(legend.position = 'top',
           legend.title = element_blank())
 
-graf.posid
+g.2.1
 ```
+### 2.2 Alluvial de cambios de Identificación política
 
-<!-- ### 4.3. Alluvial de cambios de Identificación política (+o-) -->
+<!-- ### 2.2 Alluvial de cambios de Identificación política (+o-) -->
 
 ```{r include=FALSE}
-#Paso 1
-datos.d.1 <- data.frame((svytable(~pos_id + ola + idencuesta, elsoc_diseno, round = F))) %>% dplyr::filter(Freq>0)  %>% group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>% na.omit()
+datos.2.2 <- data.frame((svytable(~pos_id + ola + idencuesta, elsoc_diseno, round = F))) %>% dplyr::filter(Freq>0)  %>% group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>% na.omit()
 
-#Paso 2
-etiquetas.d.1 <- data.frame((svytable(~pos_id + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>% na.omit() %>% 
+etiquetas.2.2 <- data.frame((svytable(~pos_id + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>% na.omit() %>% 
   mutate(idencuesta = 1)
+
+elsoc_panel_m1$pos_id <- na.replace(elsoc_panel_m1$pos_id, "NS/NR") #recode NA en categoría "NS/NR"
+
+elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
+                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
+                          weights = ~ponderador02, #ponderador de corte transversal
+                          nest = TRUE,
+                          data = elsoc_panel_m1)
 ```
 
 ```{r echo=FALSE}
 
-elsoc_panel_m1$pos_id <- na.replace(elsoc_panel_m1$pos_id, "NS/NR") #recode NA en categoría "NS/NR"
-graf.apos <- ggplot(datos.d.1, aes(x = ola, fill = pos_id, stratum = pos_id,
+g.2.2 <- ggplot(datos.2.2, aes(x = ola, fill = pos_id, stratum = pos_id,
                              alluvium = idencuesta, y = porcentaje))+
     ggalluvial::geom_flow(alpha = .66) + 
     ggalluvial::geom_stratum(linetype = 0) +
@@ -77,109 +82,134 @@ graf.apos <- ggplot(datos.d.1, aes(x = ola, fill = pos_id, stratum = pos_id,
               size = 2,
               color = rep('white'))
 
-graf.apos
+g.2.2
 ```
 
-<!-- ### 4.4. Sexo, según Identificación política de los chilenos -->
+### 2.3 Grado de acuerdo con la cuarentena según identificación política
+
+<!-- ### 2.3 Grado de acuerdo con la cuarentena según identificación política -->
 
 ```{r include=FALSE}
 elsoc_panel_m1$ac_cuar <- car::recode(as.numeric(elsoc_panel_m1$c37_10), 
-                                      recodes = "c(1)='Totalmente en desacuerdo'; 
-                                      c(2)='En desacuerdo'; c(3)='Ni de acuerdo ni en desacuerdo'; 
-                                      c(4)='De acuerdo';c(5)='Totalmente de acuerdo'; 
+                                      recodes = "c(1,2)='Totalmente en desacuerdo y En desacuerdo';
+                                      c(3)='Ni de acuerdo ni en desacuerdo'; 
+                                      c(4,5)='De acuerdo y Totalmente de acuerdo';
                                       else=NA", as.factor = TRUE) 
+
+elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
+                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
+                          weights = ~ponderador02, #ponderador de corte transversal
+                          nest = TRUE,
+                          data = elsoc_panel_m1)
 ```
+
+```{r}
+datos.2.3 <- data.frame((svytable(~pos_id + ac_cuar + ola, elsoc_diseno, round = F))) %>%
+  group_by(pos_id) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
+  filter(ola == '2021') %>%
+  na.omit()
+view(datos.2.3)
+```
+
 
 ```{r echo=FALSE}
-graf.gen <-datos.grafico4 %>% 
-    ggplot(aes(y = porcentaje, x = ola, fill = pos_id, 
-               label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+g.2.3 <-datos.2.3 %>% 
+  ggplot(aes(y = porcentaje, x = pos_id, fill = ac_cuar, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
-    geom_col(position = 'dodge2') +
-    scale_y_continuous(labels = scales::percent,
-                       limits = c(0, 0.1)) +
-    ylab(label = NULL) +
-    xlab(label = NULL) +
-    scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
-    #Agrego facer_wrap para hacer un Gráfico para cada tramo etario
-    facet_wrap(datos.grafico4$m0_sexo)+
-    theme(legend.position = 'top',
-          legend.title = element_blank()) 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 0.3)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
+  #cambiar geom_text tal que: Stack y cambio colores
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75, color = rep.int(c('white', 'white', 'white'), 4)) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  ggtitle('Grado de acuerdo con la cuarentena según identificación política')
 
-graf.gen
+g.2.3
+```
+
+### 2.4 Grado de acuerdo con actividad económica versus salud pública según identificación política
+
+<!-- ### 2.4 Grado de acuerdo con la frase "Es más importante darle prioridad a la actividad económica que a la salud de la población" según identificación política -->
+
+```{r include=FALSE}
+elsoc_panel_m1$salud_ac <- car::recode(as.numeric(elsoc_panel_m1$c37_09), 
+                                      recodes = "c(1,2)='Totalmente en desacuerdo y En desacuerdo';
+                                      c(3)='Ni de acuerdo ni en desacuerdo'; 
+                                      c(4,5)='De acuerdo y Totalmente de acuerdo';
+                                      else=NA", as.factor = TRUE)
+
+elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
+                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
+                          weights = ~ponderador02, #ponderador de corte transversal
+                          nest = TRUE,
+                          data = elsoc_panel_m1)
+```
+
+```{r}
+datos.2.4 <- data.frame((svytable(~pos_id + salud_ac + ola, elsoc_diseno, round = F))) %>%
+  group_by(pos_id) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
+  filter(ola == '2021') %>%
+  na.omit()
 ```
 
 
+```{r echo=FALSE}
+g.2.4 <-datos.2.4 %>% 
+  ggplot(aes(y = porcentaje, x = pos_id, fill = salud_ac, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 0.3)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
+  #cambiar geom_text tal que: Stack y cambio colores
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75, color = rep.int(c('white', 'white', 'white'), 4)) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  ggtitle('Grado de acuerdo con la frase "Es más importante darle prioridad a 
+          la actividad económica que a la salud de la población"')
 
-<!-- ### 4.5 Tramo etáreo, según Identificación política de los chilenos -->
+g.2.4
+```
+
+### 2.5 Intención de voto según identificación política
+
+<!-- ### 2.5 Intención de voto según identificación política -->
 
 ```{r include=FALSE}
-datos.grafico5 <- data.frame((svytable(~pos_id + edadt + ola, elsoc_diseno, round = F))) %>%
-  group_by(edadt) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
+datos.2.5 <- data.frame((svytable(~pos_id + intencion_voto + ola, elsoc_diseno, round = F))) %>%
+  group_by(pos_id) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
+  filter(ola == '2021') %>%
   na.omit()
 ```
 
 ```{r echo=FALSE}
-graf.edad <-datos.grafico5 %>% 
-    ggplot(aes(y = porcentaje, x = ola, fill = pos_id, 
-               label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+g.2.5 <-datos.2.5 %>% 
+  ggplot(aes(y = porcentaje, x = pos_id, fill = intencion_voto, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
-    geom_col(position = 'dodge2') +
-    scale_y_continuous(labels = scales::percent,
-                       limits = c(0, 0.1)) +
-    ylab(label = NULL) +
-    xlab(label = NULL) +
-    scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
-    #Agrego facer_wrap para hacer un Gráfico para cada tramo etario
-    facet_wrap(datos.grafico5$edadt)+
-    theme(legend.position = 'top',
-          legend.title = element_blank())
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 0.3)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
+  #cambiar geom_text tal que: Stack y cambio colores
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75, color = rep.int(c('white', 'white', 'white'), 4)) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  ggtitle('Intención de voto según identificación política')
 
-graf.edad
+g.2.5
 ```
-
-
-
-<!-- ### 4.6 Nivel educacional, según Identificación política de los chilenos -->
-
-```{r include=FALSE}
-datos.grafico6 <- data.frame((svytable(~pos_id + educ + ola, elsoc_diseno, round = F))) %>%
-  group_by(educ) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
-  na.omit()
-view(datos.grafico6)
-```
-
-```{r echo=FALSE}
-graf.edad <-datos.grafico6 %>% 
-    ggplot(aes(y = porcentaje, x = ola, fill = pos_id, 
-               label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
-  theme_bw() + 
-    geom_col(position = 'dodge2') +
-    scale_y_continuous(labels = scales::percent,
-                       limits = c(0, 0.1)) +
-    ylab(label = NULL) +
-    xlab(label = NULL) +
-    scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
-    #Agrego facer_wrap para hacer un Gráfico para cada tramo etario
-    facet_wrap(datos.grafico6$educ)+
-    theme(legend.position = 'top',
-          legend.title = element_blank())
-
-graf.edad
-```
-
-
-<!-- ### 2.10 Cambios en identificación con algún partido o coalición política entre 2016 y 2019, según posición ideológica (en 2016) -->
-```{r include=FALSE}
-
-```
-
-
-
-
-<!-- ### 2.11 Cambios en identificación con algún partido o coalición política entre 2016 y 2019, según interés (en 2016) -->
-```{r include=FALSE}
-
-```
-
 

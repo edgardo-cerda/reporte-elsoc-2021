@@ -10,16 +10,62 @@ editor_options:
 
 ## Apoyo a la Democracia
 
+### 3.1 ¿Con cuál de las siguientes frases está usted más de acuerdo?
 
 <!-- ### 3.1 ¿Con cuál de las siguientes frases está usted más de acuerdo? -->
+
 ```{r include=FALSE}
+elsoc_panel_m1$aut_dem <- car::recode(as.numeric(elsoc_panel_m1$c25), 
+                                      recodes = "c(1)='Democracia es preferible a cualquier otra forma de gobierno'; 
+                                      c(2)='En algunos casos, gobierno autoritario puede ser preferible'; c(3)='Da lo mismo régimen democrático o autoritario'; 
+                                      c(4)='Ninguna'; 
+                                      else=NA", as.factor = TRUE) 
+elsoc_panel_m1$aut_dem <- na.replace(elsoc_panel_m1$aut_dem, "NS/NR") #recode NA en categoría "NS/NR"
 
- 
-``` 
+elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
+                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
+                          weights = ~ponderador02, #ponderador de corte transversal
+                          nest = TRUE,
+                          data = elsoc_panel_m1)
 
+```
 
+```{r}
+datos.3.1 <- data.frame((svytable(~aut_dem + ola + idencuesta, elsoc_diseno, round = F))) %>% 
+  dplyr::filter(Freq>0)  %>% 
+  group_by(ola) %>% 
+  mutate(porcentaje=Freq/sum(Freq)) %>% 
+  filter(ola == '2021') %>% 
+  na.omit()
 
-<!-- ### 3.2 ¿Cuán satisfecho o insatisfecho está usted con el funcionamiento de la democracia en Chile? -->
+etiquetas.3.1 <- data.frame((svytable(~aut_dem + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>% na.omit() %>% 
+  mutate(idencuesta = 1)
+```
+
+```{r}
+g.3.1 <- ggplot(datos.3.1, aes(x = ola, fill = aut_dem, stratum = aut_dem,
+                             alluvium = idencuesta, y = porcentaje))+
+    ggalluvial::geom_flow(alpha = .66) + 
+    ggalluvial::geom_stratum(linetype = 0) +
+    scale_y_continuous(labels = scales::percent) + 
+    ylab(label = NULL) +
+    xlab(label = NULL) + 
+    theme(legend.position = 'top',
+          legend.title = element_blank()) +
+    scale_fill_viridis_d(begin = 0, end = .95, direction = -1, option = 'viridis') +
+    geom_text(data = etiquetas.d.1, 
+              aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")),
+              position = position_stack(vjust = .5),
+              show.legend = FALSE,
+              size = 2,
+              color = rep('white'))
+
+g.3.1
+```
+
+### 3.2 Frecuencia de respuesta "Nada satisfecho" con la democracia según ola
+
+<!-- ### 3.2 Frecuencia de respuesta "Nada satisfecho" con la democracia según ola -->
 
 ```{r echo=FALSE}
 #agregar variable a bbdd original
@@ -38,56 +84,54 @@ elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de
                           data = elsoc_panel_m1)
 
 #crear tabla para el gráfico
-datos.grafico1 <- data.frame((svytable(~sat_dem + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq))
+datos.3.2 <- data.frame((svytable(~sat_dem + ola, elsoc_diseno, round = F))) %>%
+  group_by(ola) %>% 
+  mutate(porcentaje=Freq/sum(Freq)) %>%
+  filter(sat_dem == 'Nada satisfecho') %>%
+  na.omit()
+
+view(datos.3.2)
 ```
 
 
 ```{r echo=FALSE}
-
-graf.sat_dem <-datos.grafico1 %>% 
-  ggplot(aes(y = porcentaje, x = ola, fill = sat_dem, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+g.3.2 <- datos.3.2 %>% 
+    ggplot(aes(y = porcentaje, x = ola, fill = sat_dem, 
+               label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
   theme_bw() + 
-  geom_col(position = 'Stack') +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
-  ylab(label = NULL) +
-  xlab(label = NULL) +
-  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
-  #cambiar geom_text tal que: Stack y cambio colores
-  geom_text(position = position_stack(vjust = .5),
-            size= 2.75, color = rep.int(c('black', 'white', 'white', 'white', 'white'), 5)) + 
-  theme(legend.position = 'top',
-        legend.title = element_blank())
-
-graf.sat_dem
+    geom_col() +
+    scale_y_continuous(labels = scales::percent,
+                       limits = c(0, 0.6)) +
+    ylab(label = NULL) +
+    xlab(label = NULL) +
+    scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+    geom_text(vjust = -0.8,
+              position = position_dodge(width = .9),
+              size= 2.75) +
+    theme(legend.position = 'none',   ## Eliminar leyenda al no ser necesaria
+          legend.title = element_blank()) +
+    ggtitle('Frecuencia de respuesta "Nada satisfecho" con la democracia según ola')
+g.3.2
 ```
 
-
-
+### 3.3 ¿Con cuál de las siguientes frases está usted más de acuerdo? (2019), según posición ideológica
 
 <!-- ### 3.3. ¿Con cuál de las siguientes frases está usted más de acuerdo? (2019), según posición ideológica -->
 
 ```{r include=FALSE}
-elsoc_panel_m1$aut_dem <- car::recode(as.numeric(elsoc_panel_m1$c25), 
-                                      recodes = "c(1)='Democracia es preferible a cualquier otra forma de gobierno'; 
-                                      c(2)='En algunos casos, gobierno autoritario puede ser preferible'; c(3)='Da lo mismo régimen democrático o autoritario'; 
-                                      c(4)='Ninguna'; 
-                                      else=NA", as.factor = TRUE) 
-elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
-                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
-                          weights = ~ponderador02, #ponderador de corte transversal
-                          nest = TRUE,
-                          data = elsoc_panel_m1)
 
-#crear tabla para el gráfico
-datos.grafico2 <- data.frame((svytable(~aut_dem + pos_id, elsoc_diseno, round = F))) %>% group_by(pos_id) %>% mutate(porcentaje=Freq/sum(Freq))
+datos.3.3 <- data.frame((svytable(~aut_dem + pos_id, elsoc_diseno, round = F))) %>%
+  group_by(pos_id) %>% 
+  mutate(porcentaje=Freq/sum(Freq))%>%
+  filter(aut_dem == 'Democracia es preferible a cualquier otra forma de gobierno' | aut_dem == 'En algunos casos, gobierno autoritario puede ser preferible'| aut_dem == 'Da lo mismo régimen democrático o autoritario') %>% 
+  na.omit()
+view(datos.3.3)
 ```
 
 
 ```{r echo=FALSE}
 
-graf.aut_dem <-datos.grafico2 %>% 
+g.3.3 <-datos.3.3 %>% 
   ggplot(aes(y = porcentaje, x = pos_id, fill = aut_dem, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
@@ -99,11 +143,11 @@ graf.aut_dem <-datos.grafico2 %>%
   scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
   #cambiar geom_text tal que: Stack y cambio colores
   geom_text(position = position_stack(vjust = .5),
-            size= 2.75, color = rep.int(c('black', 'white', 'white', 'white'), 4)) + 
+            size= 2.75, color = rep.int(c('black', 'white', 'white'), 4)) + 
   theme(legend.position = 'top',
         legend.title = element_blank())
 
-graf.aut_dem
+g.3.3
 
 
 ```
