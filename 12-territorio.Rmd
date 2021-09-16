@@ -1,4 +1,5 @@
-# Conflictividad y sociabilidad barrial
+# Conflicto barrial y aislamiento social
+
 ```{r Disenno complejo, include=FALSE}
 knitr::opts_chunk$set(cache=FALSE, 
                       warning = FALSE, 
@@ -17,30 +18,58 @@ elsoc_diseno <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~pondera
 
 elsoc_diseno_m1 <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
                           nest = TRUE, data = elsoc_panel_m1)
+```
 
-#elsoc_diseno_m2 <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
-                          #nest = TRUE, data = elsoc_panel_m2)
+```{r Recode territorio, include=FALSE}
+
+## t11 (confli_barrial) ----
+elsoc_panel_m1 <- elsoc_panel_m1 %>% 
+  mutate(confli_barrial = (t11_01 + t11_03 + t11_03 + t11_04)/4)
+
+elsoc_panel_m1$confli_barrial_rec <- factor(with(elsoc_panel_m1, case_when(confli_barrial == 1 ~ 1,
+                                                                     confli_barrial < 3 ~ 2,
+                                                                     confli_barrial <= 5 ~ 3)),
+                                         labels = c("Nunca", "Pocas o algunas veces",
+                                                    "Muchas veces o siempre"))
+elsoc_panel_m1 <- elsoc_panel_m1 %>% 
+  mutate(frec_crimen = (t09_01 + t09_02 + t09_03)/3)## c48 (aislamiento social) ----
+elsoc_panel_m1 <- elsoc_panel_m1 %>% 
+  mutate(aislamiento = factor(car::recode(c48, "1:2 = 1; 3 = 2; 4:5 = 3"),
+                              labels= c("Nunca o casi nunca","A veces",
+                                        "Frecuentemente o muy frecuentemente")))
+## t08 (reputación barrial) ----
+elsoc_panel_m1 <- elsoc_panel_m1 %>% 
+  mutate(rep_barrial = factor(car::recode(t08, "1:2=1;3=2;4:5=3"),
+                              labels= c("Muy negativamente o negativamente","Ni positiva ni negativamente",
+                                        "Muy positivamente o positivamente")))
+elsoc_panel_m1$rep_barrial <- na.tools::na.replace(elsoc_panel_m1$rep_barrial, "No sabe/No responde")
+attr(elsoc_panel_m1$rep_barrial, which = 'label') <- 'Reputación Barrial'
+
+## t01 y 10 (confianza y seguridad) ----
+elsoc_panel_m1 <- elsoc_panel_m1 %>%
+  mutate(conf_vecinos = factor(car::recode(t01, "c(1,2) = 1;c(3) = 2;c(4,5) = 3"),
+                               labels = c('Muy poco o poco', 'Algo', 'Bastante o mucho')),
+         segur_barrio = factor(car::recode(t10, "c(1,2) = 1;c(3) = 2;c(4,5) = 3"),
+                               labels = c('Muy inseguro o inseguro', 'Ni seguro ni inseguro',
+                                          'Seguro o Muy seguro')))
+
+## t09 (criminalidad) ----
+elsoc_panel_m1 <- elsoc_panel_m1 %>% 
+  mutate(frec_crimen = (t09_01 + t09_02 + t09_03)/3)
+
+elsoc_panel_m1$frec_crimen_rec <- factor(with(elsoc_panel_m1, 
+                                              case_when(is.na(frec_crimen) ~ 0,
+                                                        frec_crimen == 1 ~ 1,
+                                                        frec_crimen < 3 ~ 2,
+                                                        frec_crimen <= 5 ~ 3)),
+                                            labels = c("No sabe/No responde", "Nunca", 
+                                                       "Pocas o algunas veces", "Muchas veces o siempre"))
+## re-diseño complejo ----
+elsoc_diseno_m1 <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
+                             nest = TRUE, data = elsoc_panel_m1)
 ```
 
 ## Conflictividad barrial
-
-```{r Recode1, include=FALSE}
-elsoc_panel_m1$confli_barrial <- ((as.numeric(elsoc_panel_m1$t11_01) + as.numeric(elsoc_panel_m1$t11_02) +
-                                     as.numeric(elsoc_panel_m1$t11_03) + as.numeric(elsoc_panel_m1$t11_04))/4)
-
-elsoc_panel_m1$confli_barrial_rec <- factor(with(elsoc_panel_m1, case_when(is.na(confli_barrial) ~ 0,
-                                                                           confli_barrial == 1 ~ 1,
-                                                                           confli_barrial < 3 ~ 2,
-                                                                           confli_barrial <= 5 ~ 3)),
-                                            labels = c("No sabe/No responde","Nunca",
-                                                       "Pocas o algunas veces",
-                                                       "Muchas veces o siempre"))
-
-elsoc_diseno_m1 <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
-                             nest = TRUE, data = elsoc_panel_m1)
-
-```
- 
 
 <!-- ### 8.1 ¿Con qué frecuencia usted/alguien de su hogar se ha molestado o incomodado por problemas con sus vecinos? según ola de estudio -->
 ```{r confl-total, fig.align='center', fig.cap='¿Con qué frecuencia usted/alguien de su hogar se ha molestado o incomodado por problemas con sus vecinos? según ola de estudio '}
@@ -57,31 +86,30 @@ g8.1 <-
                      limits = c(0, 1)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = .11, end = .99, direction = -1, option = 'viridis') +
+  scale_fill_viridis_d(begin = .11, end = .77, direction = -1, option = 'viridis') +
   geom_text(position = position_stack(vjust = .5),
-            size= 2.75, color = rep.int(c('black', 'white', 'white','white'), 5)) + 
+            size= 2.75, color = rep.int(c('black', 'white', 'white'), 5)) + 
   theme(legend.position = 'top',
         legend.title = element_blank())
 g8.1
 ```
 
 <!-- ### 8.2 Cambios en frecuencia de conflictos barriables -->
-
 ```{r conf-cambios, fig.align='center', fig.cap='Cambios en frecuencia de conflictos barriables'}
 datos.g8.2 <- data.frame((svytable(~confli_barrial_rec + ola + idencuesta, elsoc_diseno_m1, round = F))) %>% 
   dplyr::filter(Freq>0)  %>% 
   group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>%  
-  dplyr::filter(ola == '2018' | ola == '2021') %>% 
+  dplyr::filter(ola == '2019' | ola == '2021') %>% 
   na.omit()
 
 etiquetas.g8.2 <- data.frame((svytable(~confli_barrial_rec + ola, elsoc_diseno_m1, round = F))) %>% 
   group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>% mutate(idencuesta = 1) %>% 
-  dplyr::filter(ola == '2018' | ola == '2021') %>% 
+  dplyr::filter(ola == '2019' | ola == '2021') %>% 
   na.omit()
 
 g8.2 <- 
   ggplot(datos.g8.2, aes(x = ola, fill = confli_barrial_rec, stratum = confli_barrial_rec, 
-                         alluvium = idencuesta, y = porcentaje)) +
+                           alluvium = idencuesta, y = porcentaje)) +
   ggalluvial::geom_flow(alpha = .66) + 
   ggalluvial::geom_stratum(linetype = 0) +
   scale_y_continuous(labels = scales::percent) + 
@@ -89,13 +117,13 @@ g8.2 <-
   xlab(label = NULL) + 
   theme(legend.position = 'top',
         legend.title = element_blank()) +
-  scale_fill_viridis_d(begin = .11, end = .95, direction = -1, option = 'viridis') +
+  scale_fill_viridis_d(begin = .11, end = .77, direction = -1, option = 'viridis') +
   geom_text(data = etiquetas.g8.2, 
             aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")),
             position = position_stack(vjust = .5),
             show.legend = FALSE,
             size = 2.75,
-            color = rep.int(c('black', 'white', 'white','white'),2))
+            color = rep.int(c('black', 'white', 'white'),2))
 g8.2
 
 ```
@@ -105,7 +133,7 @@ g8.2
 ```{r conf-wav-zon, fig.align='center', fig.cap='Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona geográfica. Porcentaje con conflictos barriables "Siempre" o "Muchas veces"'}
 datos.g8.3 <- data.frame(svytable(~confli_barrial_rec + ola + zona1, elsoc_diseno_m1, round = F)) %>% 
   group_by(ola, zona1) %>% mutate(porcentaje = Freq/sum(Freq)) %>%
-  filter(confli_barrial_rec == 'Muchas veces o siempre', ola == '2016' | ola == '2021')
+  filter(confli_barrial_rec == 'Muchas veces o siempre', ola == '2019' | ola == '2021')
 
 g8.3 <-
   datos.g8.3 %>% 
@@ -141,7 +169,7 @@ g8.4 <-
   theme_bw() + 
   geom_col(position = 'Dodge') +
   scale_y_continuous(labels = scales::percent,
-                     limits = c(0, .2)) +
+                     limits = c(0, .3)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
@@ -167,7 +195,7 @@ g8.5 <-
   theme_bw() + 
   geom_col(position = 'Dodge') +
   scale_y_continuous(labels = scales::percent,
-                     limits = c(0, .2)) +
+                     limits = c(0, .3)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
@@ -178,5 +206,56 @@ g8.5 <-
             size= 2.75)
 g8.5
 ```
+## Efecto aislamiento social
 
- 
+<!-- ### 8.6 ¿Con qué frecuencia usted/alguien de su hogar se ha molestado o incomodado por problemas con sus vecinos?, según grado de cumplimiento de aislamiento social (2021). -->
+```{r conf-incomeq, fig.align='center', fig.cap='¿Con qué frecuencia usted/alguien de su hogar se ha molestado o incomodado por problemas con sus vecinos? según grado de cumplimiento de aislamiento social (2021).'}
+datos.g8.6 <- 
+  data.frame((svytable(~confli_barrial_rec + aislamiento + ola, elsoc_diseno_m1, round = F))) %>%
+  group_by(aislamiento, ola) %>% mutate(porcentaje = Freq/sum(Freq)) %>% 
+  filter(ola == '2021') %>% 
+  na.omit()
+
+g8.6 <- 
+  datos.g8.6 %>% 
+  ggplot(aes(y = porcentaje, x = aislamiento, fill = confli_barrial_rec, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = 'Cumplimiento aislamiento social') +
+  scale_fill_viridis_d(begin = 0, end = .99, direction = -1, option = 'viridis') +
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75, color = rep.int(c( 'black','white', 'white'), 3)) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+g8.6
+```
+
+<!-- ### 8.7 En términos generales, ¿cuánto confía usted en sus vecinos?, según grado de cumplimiento de aislamiento social (2021). -->
+```{r conf-incomeq, fig.align='center', fig.cap='En términos generales, ¿cuánto confía usted en sus vecinos?, según grado de cumplimiento de aislamiento social (2021).'}
+datos.g8.7 <- 
+  data.frame((svytable(~conf_vecinos + aislamiento + ola, elsoc_diseno_m1, round = F))) %>%
+  group_by(aislamiento, ola) %>% mutate(porcentaje = Freq/sum(Freq)) %>% 
+  filter(ola == '2021') %>% 
+  na.omit()
+
+g8.7 <- 
+  datos.g8.7 %>% 
+  ggplot(aes(y = porcentaje, x = aislamiento, fill = conf_vecinos, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = 'Cumplimiento aislamiento social') +
+  scale_fill_viridis_d(begin = 0, end = .99, direction = 1, option = 'viridis') +
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75, color = rep.int(c('white', 'white', 'black'), 3)) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+g8.7
+```
