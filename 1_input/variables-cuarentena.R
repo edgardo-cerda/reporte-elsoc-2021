@@ -90,6 +90,13 @@ elsoc_covid <- merge(x = els_long2, y = df_pasos,
                    by.x=c("fecha_entr", "comuna_cod"), 
                    by.y=c("Fecha", "codigo_comuna"), all.x = T)
 
+
+elsoc_covid$ccum <- as.numeric(as.character(elsoc_covid$ccum))
+
+elsoc_covid$cuarentena <- factor(elsoc_covid$cuarentena,
+                            levels = c(0,1),
+                            labels = c("Sin Cuarentena", "Con Cuarentena"))
+
 elsoc_covid_panel <- elsoc_covid %>% filter(tipo_atricion == 1 | 
                                             tipo_atricion == 17 )
 

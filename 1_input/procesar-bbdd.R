@@ -6,7 +6,7 @@ options(scipen=999) #evita notación científica
 
 #-------BASE DE DATOS WIDE---------------
 getwd()
-load("1_input/ELSOC_Wide_2016_2021_v1.00_R.RData")
+load("1_input/ELSOC_Wide_2016_2021_v2.00_R.RData")
 
 elsoc_wide <- elsoc_wide_2016_2021 #acortar nombre bbdd wide
 

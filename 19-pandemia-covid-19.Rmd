@@ -6,10 +6,7 @@ editor_options:
 
 # Pandemia Covid-19
 
-```{r}
-load("1_input/elsoc_covid.RData")
-```
-
+# Cuarentenas 
 ```{r hist-fecha-2021}
 datos.grafico <- data.frame((svytable(~fecha_entr + comuna_cod + ola, 
                                       elsoc_diseno_3, round = F))) %>% 
@@ -32,10 +29,8 @@ gr.19.1
 ```
 
 ```{r hist-ccum-dens}
-elsoc_covid_panel$ccum_cont <- as.numeric(as.character(elsoc_covid_panel$ccum))
-
 gr.19.2 <- elsoc_covid_panel %>% 
-  ggplot(aes(x=ccum_cont)) + 
+  ggplot(aes(x=ccum)) + 
   geom_histogram(aes(y = ..density..), bins=30) + 
   geom_density(aes(color=factor(zona1))) +
   theme_bw() +
@@ -48,7 +43,7 @@ gr.19.2
 
 ```{r}
 gr.19.2 <- elsoc_covid_panel %>% 
-  ggplot(aes(x=ccum_cont)) + 
+  ggplot(aes(x=ccum)) + 
   geom_histogram(aes(y = ..density..), bins=30) + 
   geom_density(aes(color=factor(edadt))) +
   theme_bw() +
@@ -59,11 +54,11 @@ gr.19.2
 ```
 
 ```{r}
-elsoc_covid_panel$phq <- factor(car::recode(elsoc_covid_panel$suma_dep, "0:9=0 ; 10:27=1"), 
-                                labels = c("Sin Depresión", "Con Depresión"))
+elsoc_covid_panel$phq <- factor(car::recode(elsoc_covid_panel$suma_dep, "0:4=0 ; 5:27=1"), 
+                                labels = c("Sin Sintomas Depresivos", "Con Sintomas Depresivos"))
 
 gr.19.2 <- elsoc_covid_panel %>% 
-  ggplot(aes(x=ccum_cont)) + 
+  ggplot(aes(x=ccum)) + 
   geom_histogram(aes(y = ..density..), bins=30) + 
   geom_density(aes(color=factor(phq))) +
   theme_bw() +
@@ -73,4 +68,84 @@ gr.19.2 <- elsoc_covid_panel %>%
 gr.19.2
 ```
 
+```{r}
+datos.grafico <- data.frame((svytable(~cuarentena + edadt + ola, 
+                                      elsoc_diseno_3, round = F))) %>% 
+  group_by(edadt + ola) %>% 
+  mutate(porcentaje=Freq/sum(Freq)) %>% 
+  filter(ola==2021)
+
+gr.17.6 <- datos.grafico %>% 
+  ggplot(aes(y = porcentaje, x = cuarentena, fill = edadt, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75) +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  ggtitle('Encuestados en Cuarentena según Tramo Etario')
+
+gr.17.6
+```
+
+## Perdida de Ingresos
+
+```{r c19_01, fig.align='center', fig.cap='Sexismo hostil, según ola y sexo .'}
+elsoc_panel$m17_rec <- factor(car::recode(elsoc_panel$m17, "0:3=1;4:9=2;10:29=3;30:59=4;60:300=5"),
+                          labels = c('0-3 Horas','4-9 Horas','10-29 Horas', '30-59 Horas', '60 o más Horas'))
+elsoc_panel$m17_rec <- sjlabelled::set_label(elsoc_panel$m17_rec, label = c("Horas de Cuidado en Tramos")) 
+
+elsoc_panel$m17_rec <- na.replace(elsoc_panel$m17_rec, "NS/NR") #recode NA en categoría "NS/NR"
+
+elsoc_diseno_2 <- svydesign(ids = ~segmento,
+                          strata = ~estrato, 
+                          weights = ~ponderador02,
+                          nest = TRUE,
+                          data = elsoc_panel)
+#1
+datos.grafico <- data.frame((svytable(~m17_rec + ola + idencuesta, 
+                                      elsoc_diseno_2, round = F))) %>% 
+  dplyr::filter(Freq>0)  %>% 
+  group_by(ola) %>% 
+  mutate(porcentaje=Freq/sum(Freq))
+
+#1.1
+subset.grafico <- droplevels(subset(datos.grafico, datos.grafico$ola == '2018' | datos.grafico$ola == '2021'))
+
+#2
+etiquetas.grafico <- data.frame((svytable(~m17_rec + ola, 
+                                          elsoc_diseno_2, round = F))) %>% 
+  group_by(ola) %>% 
+  mutate(porcentaje=Freq/sum(Freq)) %>% 
+  na.omit() %>% 
+  mutate(idencuesta = 1)
+
+#Paso 2.2: crear un subset sólo para los años
+etiquetas.grafico <- droplevels(subset(etiquetas.grafico, etiquetas.grafico$ola == '2018' | etiquetas.grafico$ola == '2021'))
+
+gr.16.3 <- ggplot(subset.grafico, aes(x = ola, fill = m17_rec, stratum = m17_rec, 
+                              alluvium = idencuesta, y = porcentaje)) +
+  theme_bw() +
+  ggalluvial::geom_flow(alpha = .66) + 
+  ggalluvial::geom_stratum(linetype = 0) +
+  scale_y_continuous(labels = scales::percent) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  scale_fill_viridis_d(begin = 0, end = .9, direction = -1, option = 'viridis') +
+  geom_text(data = etiquetas.grafico, 
+            aes(label = ifelse(porcentaje > 0.05 , scales::percent(porcentaje, accuracy = .1),"")),
+            position = position_stack(vjust = .5),
+            show.legend = FALSE,
+            size= 2.75)
+
+gr.16.3
+```
 

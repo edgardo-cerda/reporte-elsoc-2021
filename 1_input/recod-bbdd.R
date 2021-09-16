@@ -85,25 +85,27 @@ elsoc_long$zona2 <- sjlabelled::set_labels(elsoc_long$zona2, labels = c("Norte",
 #-------G.- SINTOMATOLOGIA DEPRESION--------------
 
 # Variables de sintomatologia depresiva: 
-elsoc_long$s11_01_rec <- as.numeric(car::recode(elsoc_long$s11_01, " '0' = 0; '1' = 1; '2' = 2; c('3', '4') = 3")) - 1
-elsoc_long$s11_02_rec <- as.numeric(car::recode(elsoc_long$s11_02, " '0' = 0; '1' = 1; '2' = 2; c('3', '4') = 3")) - 1
-elsoc_long$s11_03_rec <- as.numeric(car::recode(elsoc_long$s11_03, " '0' = 0; '1' = 1; '2' = 2; c('3', '4') = 3")) - 1
-elsoc_long$s11_04_rec <- as.numeric(car::recode(elsoc_long$s11_04, " '0' = 0; '1' = 1; '2' = 2; c('3', '4') = 3")) - 1
-elsoc_long$s11_05_rec <- as.numeric(car::recode(elsoc_long$s11_05, " '0' = 0; '1' = 1; '2' = 2; c('3', '4') = 3")) - 1
-elsoc_long$s11_06_rec <- as.numeric(car::recode(elsoc_long$s11_06, " '0' = 0; '1' = 1; '2' = 2; c('3', '4') = 3")) - 1
-elsoc_long$s11_07_rec <- as.numeric(car::recode(elsoc_long$s11_07, " '0' = 0; '1' = 1; '2' = 2; c('3', '4') = 3")) - 1
-elsoc_long$s11_08_rec <- as.numeric(car::recode(elsoc_long$s11_08, " '0' = 0; '1' = 1; '2' = 2; c('3', '4') = 3")) - 1
-elsoc_long$s11_09_rec <- as.numeric(car::recode(elsoc_long$s11_09, " '0' = 0; '1' = 1; '2' = 2; c('3', '4') = 3")) - 1
+# Recodificar variables s_11
+elsoc_long$s11_01_rec <- as.numeric(car::recode(elsoc_long$s11_01, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) 
+elsoc_long$s11_02_rec <- as.numeric(car::recode(elsoc_long$s11_02, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) 
+elsoc_long$s11_03_rec <- as.numeric(car::recode(elsoc_long$s11_03, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) 
+elsoc_long$s11_04_rec <- as.numeric(car::recode(elsoc_long$s11_04, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) 
+elsoc_long$s11_05_rec <- as.numeric(car::recode(elsoc_long$s11_05, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) 
+elsoc_long$s11_06_rec <- as.numeric(car::recode(elsoc_long$s11_06, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) 
+elsoc_long$s11_07_rec <- as.numeric(car::recode(elsoc_long$s11_07, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) 
+elsoc_long$s11_08_rec <- as.numeric(car::recode(elsoc_long$s11_08, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) 
+elsoc_long$s11_09_rec <- as.numeric(car::recode(elsoc_long$s11_09, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) 
 
 #PHQ-9: Índice Aditivo de Puntajes de Sintomas Depresivos
-elsoc_long$suma_dep <- with(elsoc_long, s11_01_rec + s11_02_rec + s11_03_rec + s11_04_rec + s11_05_rec + s11_06_rec + s11_07_rec + s11_08_rec + s11_09_rec)
+elsoc_long$suma_dep <- with(elsoc_long, s11_01_rec + s11_02_rec + s11_03_rec + s11_04_rec + 
+                              s11_05_rec + s11_06_rec + s11_07_rec + s11_08_rec + s11_09_rec)
 
 elsoc_long$depr <- car::recode(elsoc_long$suma_dep,"c(0,1,2,3,4)='Sin sintomas o Minima';c(5,6,7,8,9)='Depresion Media';
                                        c(10,11,12,13,14)='Depresion Moderada';c(15,16,17,18,19)='Depresion Moderada Severa a Severa';
                                        c(20,21,22,23,24,25,26,27)='Depresion Moderada Severa a Severa'")
 
 elsoc_long$depr <- factor(elsoc_long$depr,c("Sin sintomas o Minima","Depresion Media","Depresion Moderada",
-                                            "Depresion Moderada Severa a Severa"))  
+                                            "Depresion Moderada Severa a Severa"))
 
 #------------------G.1 ATRIBUTOS DEPR---------------
 elsoc_long$depr <- sjlabelled::set_label(elsoc_long$depr, label = c("Sintomatologia Depresiva"))

@@ -500,11 +500,11 @@ gr.16.7
 #1
 elsoc_long$empleo <- na.replace(elsoc_long$empleo, "NS/NR") #recode NA en categoría "NS/NR"
 
-elsoc_diseno_3 <- svydesign(ids = ~segmento, strata = ~estrato, 
-                          weights = ~ponderador02, nest = TRUE, data = elsoc_long)
+elsoc_diseno_2 <- svydesign(ids = ~segmento, strata = ~estrato, 
+                          weights = ~ponderador02, nest = TRUE, data = elsoc_panel)
 
 datos.grafico <- data.frame((svytable(~empleo + ola + idencuesta + 
-                                        m0_sexo, elsoc_diseno_3, round = F))) %>% 
+                                        m0_sexo, elsoc_diseno_2, round = F))) %>% 
   dplyr::filter(Freq>0)  %>% 
   group_by(ola,m0_sexo) %>% 
   mutate(porcentaje=Freq/sum(Freq)) %>% na.omit()
