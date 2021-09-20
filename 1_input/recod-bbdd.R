@@ -213,7 +213,7 @@ elsoc_long$particip_electoral <- factor(with( elsoc_long,
                                         case_when(c11 == 1 & ola == 2016 ~ 1,
                                         (c11 == 2 | c11 == 3) & ola == 2016 ~ 2,
                                         c11 == 1 & ola == 2018 ~ 1,
-                                        c11 == 2 & ola == 2018 ~ 2,
+                                        (c11 == 2 | c11 == 3) & ola == 2018 ~ 2,
                                         c43 == 1 & ola == 2021 ~ 1,
                                         (c43 == 2 | c43 == 3) & ola == 2021 ~ 2)),
   labels = c("Si", "No"))
@@ -229,10 +229,10 @@ elsoc_long$c45 <- factor(elsoc_long$c45,
 
 
 elsoc_wide$cambio_participa_w05 <- factor(with(elsoc_wide, case_when(
-  (c11_w03 == 1) & (c43_w05 == 1) ~ 1 ,
-  (c11_w03 == 1) & (c43_w05 == 2) ~ 2 ,
-  (c11_w03 == 2) & (c43_w05 == 1) ~ 3 ,
-  (c11_w03 == 2) & (c43_w05 == 2) ~ 4)),
+  (c11_w03 == 2) & (c43_w05 == 2) ~ 1 ,
+  (c11_w03 == 2) & (c43_w05 == 1) ~ 2 ,
+  (c11_w03 == 1) & (c43_w05 == 2) ~ 3 ,
+  (c11_w03 == 1) & (c43_w05 == 1) ~ 4)),
   labels = c('Se mantiene no votando',
              'Cambia a votar',
              'Cambia a No Votar',

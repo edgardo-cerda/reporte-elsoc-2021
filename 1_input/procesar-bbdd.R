@@ -10,9 +10,6 @@ load("1_input/ELSOC_Wide_2016_2021_v2.00_R.RData")
 
 elsoc_wide <- elsoc_wide_2016_2021 #acortar nombre bbdd wide
 
-#arreglo temporal de ponderadores
-elsoc_wide$ponderador02_w05 <- elsoc_wide$ponderador02_w04   #replico el ponderador02 del 2019 al 2021
-
 #-------WIDE A LONG---------------
 elsoc_long <- long_panel(data = elsoc_wide, prefix = "_w0", begin = 1, end = 5, 
                          label_location = "end", id = "idencuesta", wave = "ola") 

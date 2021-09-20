@@ -244,7 +244,7 @@ g11.8
 ```
 
 ```{r}
-sjmisc::frq(elsoc_wide$cambio_participa)
+sjmisc::frq(elsoc_wide_m1$cambio_participa_w05)
 ```
 
 
