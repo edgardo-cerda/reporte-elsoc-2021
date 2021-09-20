@@ -6,8 +6,6 @@ editor_options:
 
 # Actitudes hacia la democracia
 
-
-
 ## Apoyo a la Democracia
 
 ### 3.1 ¿Con cuál de las siguientes frases está usted más de acuerdo?
@@ -53,7 +51,7 @@ g.3.1 <- ggplot(datos.3.1, aes(x = ola, fill = aut_dem, stratum = aut_dem,
     theme(legend.position = 'top',
           legend.title = element_blank()) +
     scale_fill_viridis_d(begin = 0, end = .95, direction = -1, option = 'viridis') +
-    geom_text(data = etiquetas.d.1, 
+    geom_text(data = etiquetas.3.1, 
               aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")),
               position = position_stack(vjust = .5),
               show.legend = FALSE,
@@ -114,18 +112,17 @@ g.3.2 <- datos.3.2 %>%
 g.3.2
 ```
 
-### 3.3 ¿Con cuál de las siguientes frases está usted más de acuerdo? (2019), según posición ideológica
+### 3.3 ¿Con cuál de las siguientes frases está usted más de acuerdo? (2021), según posición ideológica
 
 <!-- ### 3.3. ¿Con cuál de las siguientes frases está usted más de acuerdo? (2019), según posición ideológica -->
 
 ```{r include=FALSE}
 
-datos.3.3 <- data.frame((svytable(~aut_dem + pos_id, elsoc_diseno, round = F))) %>%
-  group_by(pos_id) %>% 
+datos.3.3 <- data.frame((svytable(~aut_dem + pos_id + ola, elsoc_diseno, round = F))) %>%
+  group_by(pos_id, ola) %>% 
   mutate(porcentaje=Freq/sum(Freq))%>%
-  filter(aut_dem == 'Democracia es preferible a cualquier otra forma de gobierno' | aut_dem == 'En algunos casos, gobierno autoritario puede ser preferible'| aut_dem == 'Da lo mismo régimen democrático o autoritario') %>% 
+  filter(ola=="2021" & aut_dem!= "NS/NR") %>% 
   na.omit()
-view(datos.3.3)
 ```
 
 
@@ -143,7 +140,7 @@ g.3.3 <-datos.3.3 %>%
   scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
   #cambiar geom_text tal que: Stack y cambio colores
   geom_text(position = position_stack(vjust = .5),
-            size= 2.75, color = rep.int(c('black', 'white', 'white'), 4)) + 
+            size= 2.75) + 
   theme(legend.position = 'top',
         legend.title = element_blank())
 

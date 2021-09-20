@@ -183,7 +183,7 @@ g8.4
 
 
 <!-- ### 8.5 Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y quintiles de ingreso. Porcentaje con conflictos barriables "Siempre" o "Muchas veces".  -->
-```{r conf-incomeq, fig.align='center', fig.cap='Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y quintiles de ingreso. Porcentaje con conflictos barriables "Siempre" o "Muchas veces".'}
+```{r conf-incomeq3, fig.align='center', fig.cap='Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y quintiles de ingreso. Porcentaje con conflictos barriables "Siempre" o "Muchas veces".'}
 datos.g8.5 <- data.frame(svytable(~confli_barrial_rec + ola + quintil, elsoc_diseno_m1, round = F)) %>% 
   group_by(ola, quintil) %>% mutate(porcentaje = Freq/sum(Freq)) %>%
   filter(confli_barrial_rec == 'Muchas veces o siempre', ola == '2019' | ola == '2021')
@@ -209,7 +209,7 @@ g8.5
 ## Efecto aislamiento social
 
 <!-- ### 8.6 ¿Con qué frecuencia usted/alguien de su hogar se ha molestado o incomodado por problemas con sus vecinos?, según grado de cumplimiento de aislamiento social (2021). -->
-```{r conf-incomeq, fig.align='center', fig.cap='¿Con qué frecuencia usted/alguien de su hogar se ha molestado o incomodado por problemas con sus vecinos? según grado de cumplimiento de aislamiento social (2021).'}
+```{r conf-incomeq4, fig.align='center', fig.cap='¿Con qué frecuencia usted/alguien de su hogar se ha molestado o incomodado por problemas con sus vecinos? según grado de cumplimiento de aislamiento social (2021).'}
 datos.g8.6 <- 
   data.frame((svytable(~confli_barrial_rec + aislamiento + ola, elsoc_diseno_m1, round = F))) %>%
   group_by(aislamiento, ola) %>% mutate(porcentaje = Freq/sum(Freq)) %>% 

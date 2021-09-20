@@ -546,3 +546,58 @@ gr.16.8 <- ggplot(subset.grafico, aes(x = ola, fill = empleo, stratum = empleo,
 gr.16.8
 ```
 
+
+```{r m17, fig.align='center', fig.cap='Horas de Cuidado'}
+elsoc_panel$m17_rec <- factor(car::recode(elsoc_panel$m17, "0:3=1;4:9=2;10:29=3;30:59=4;60:300=5"),
+                          labels = c('0-3 Horas','4-9 Horas','10-29 Horas', '30-59 Horas', '60 o más Horas'))
+elsoc_panel$m17_rec <- sjlabelled::set_label(elsoc_panel$m17_rec, label = c("Horas de Cuidado en Tramos")) 
+
+elsoc_panel$m17_rec <- na.replace(elsoc_panel$m17_rec, "NS/NR") #recode NA en categoría "NS/NR"
+
+elsoc_diseno_2 <- svydesign(ids = ~segmento,
+                          strata = ~estrato, 
+                          weights = ~ponderador02,
+                          nest = TRUE,
+                          data = elsoc_panel)
+#1
+datos.grafico <- data.frame((svytable(~m17_rec + ola + idencuesta, 
+                                      elsoc_diseno_2, round = F))) %>% 
+  dplyr::filter(Freq>0)  %>% 
+  group_by(ola) %>% 
+  mutate(porcentaje=Freq/sum(Freq))
+
+#1.1
+subset.grafico <- droplevels(subset(datos.grafico, datos.grafico$ola == '2018' | datos.grafico$ola == '2021'))
+
+#2
+etiquetas.grafico <- data.frame((svytable(~m17_rec + ola, 
+                                          elsoc_diseno_2, round = F))) %>% 
+  group_by(ola) %>% 
+  mutate(porcentaje=Freq/sum(Freq)) %>% 
+  na.omit() %>% 
+  mutate(idencuesta = 1)
+
+#Paso 2.2: crear un subset sólo para los años
+etiquetas.grafico <- droplevels(subset(etiquetas.grafico, etiquetas.grafico$ola == '2018' | etiquetas.grafico$ola == '2021'))
+
+gr.16.3 <- ggplot(subset.grafico, aes(x = ola, fill = m17_rec, stratum = m17_rec, 
+                              alluvium = idencuesta, y = porcentaje)) +
+  theme_bw() +
+  ggalluvial::geom_flow(alpha = .66) + 
+  ggalluvial::geom_stratum(linetype = 0) +
+  scale_y_continuous(labels = scales::percent) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  scale_fill_viridis_d(begin = 0, end = .9, direction = -1, option = 'viridis') +
+  geom_text(data = etiquetas.grafico, 
+            aes(label = ifelse(porcentaje > 0.05 , scales::percent(porcentaje, accuracy = .1),"")),
+            position = position_stack(vjust = .5),
+            show.legend = FALSE,
+            size= 2.75)
+
+gr.16.3
+```
+
+

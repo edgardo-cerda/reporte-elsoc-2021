@@ -161,7 +161,7 @@ attr(elsoc_long$ing_pc, which = 'label') <- 'Ingreso per capita del hogar'
 #-----------K.- Identificaciaon politica
 
 #Recodificar posicion ideologica
-elsoc_long$pos_id <- car::recode(elsoc_long$c15, recodes = "c(0,1,2,3, 4)=1; c(5)=2; c(6,7,8,9,10)=3; c(11,12)=4; else=NA", as.factor = TRUE)
+elsoc_long$pos_id <- car::recode(elsoc_long$c15, recodes = "c(0,1,2,3,4)=1; c(5)=2; c(6,7,8,9,10)=3; c(11,12)=4; else=NA", as.factor = TRUE)
 
 #Pasar a factor
 elsoc_long$pos_id <- factor(elsoc_long$pos_id,
@@ -197,15 +197,51 @@ elsoc_long$interes_politica <- factor(with(elsoc_long,
                                                  'Bastante o muy interesado'))
 
 # Participacion electoral retrospectiva
-elsoc_long <- elsoc_long %>% mutate(
-  particip_electoral = factor(case_when(c11 == 1 & ola == 2016 ~ "Si (en 2013)",
-                                        (c11 == 2 | c11 == 3) & ola == 2016 ~ "No (en 2013)",
-                                        c11 == 1 & ola == 2018 ~ "Si (en 2017)",
-                                        c11 == 2 & ola == 2018 ~ "No (en 2017)")))
+elsoc_long$c39_rec <- factor(car::recode(as.numeric(elsoc_long$c39), 'c(1)=1;c(2)=2;c(3)= 3;c(4)=4;c(5)=5;c(6)= 6;c(7)=7;c(8)=8;c(9,10)= 9; else=NA', as.factor = TRUE),
+                              levels = c(1,2,3,4,5,6,7,8,9),
+                              labels = c('Carolina Goic', 'José Antonio Kast', "Sebastián Piñera", "Alejandro Guillier", 
+                                         "Beatriz Sánchez", "Marco Enríquez-Ominami", "Eduardo Artés", "Alejandro Navarro", 'Nulo/Blanco'))
 
-#-------------L.- Participacion en movimientos sociales-----
+elsoc_long$c44_rec <- factor(car::recode(as.numeric(elsoc_long$c44), 'c(1)=1;c(2)=2;c(3,4)= 3; else=NA', as.factor = TRUE),
+                              levels = c(1,2,3),
+                              labels = c('Apruebo', 'Rechazo', 'Nulo/Blanco'))
+elsoc_long$c45_rec <- factor(car::recode(as.numeric(elsoc_long$c45), 'c(1)=1;c(2)=2;c(3,4)= 3; else=NA', as.factor = TRUE),
+                             levels = c(1,2,3),
+                             labels = c('Convención Mixta', 'Convención Constitucional', 'Nulo/Blanco'))
 
-elsoc_long$participa <- car::recode(as.numeric(elsoc_long$c22), recodes = "c(1)=1; c(2,3,4,5)=2; else=NA", as.factor = TRUE)
+elsoc_long$particip_electoral <- factor(with( elsoc_long,
+                                        case_when(c11 == 1 & ola == 2016 ~ 1,
+                                        (c11 == 2 | c11 == 3) & ola == 2016 ~ 2,
+                                        c11 == 1 & ola == 2018 ~ 1,
+                                        c11 == 2 & ola == 2018 ~ 2,
+                                        c43 == 1 & ola == 2021 ~ 1,
+                                        (c43 == 2 | c43 == 3) & ola == 2021 ~ 2)),
+  labels = c("Si", "No"))
+
+elsoc_long$c11 <- factor(elsoc_long$c11,
+                         labels = c('No', 'Sí', 'No tenía edad para hacerlo'))
+elsoc_long$c43 <- factor(elsoc_long$c43,
+                             labels = c('No', 'Sí', 'No tenía edad para hacerlo'))
+elsoc_long$c44 <- factor(elsoc_long$c44,
+                             labels = c('Apruebo', 'Rechazo', 'Nulo', 'Blanco'))
+elsoc_long$c45 <- factor(elsoc_long$c45,
+                             labels = c('Convención Mixta', 'Convención Constitucional', 'Nulo', 'Blanco'))
+
+
+elsoc_wide$cambio_participa_w05 <- factor(with(elsoc_wide, case_when(
+  (c11_w03 == 1) & (c43_w05 == 1) ~ 1 ,
+  (c11_w03 == 1) & (c43_w05 == 2) ~ 2 ,
+  (c11_w03 == 2) & (c43_w05 == 1) ~ 3 ,
+  (c11_w03 == 2) & (c43_w05 == 2) ~ 4)),
+  labels = c('Se mantiene no votando',
+             'Cambia a votar',
+             'Cambia a No Votar',
+             'Se mantiene votando'))
+
+#-------------L.- Participación en movimientos sociales-----
+
+elsoc_long$participa <- car::recode(as.numeric(elsoc_long$c22), 
+                                    recodes = "c(1)=1; c(2,3,4,5)=2; else=NA", as.factor = TRUE)
 
 elsoc_long$participa <- factor(elsoc_long$participa,
                                levels = c(1,2),
