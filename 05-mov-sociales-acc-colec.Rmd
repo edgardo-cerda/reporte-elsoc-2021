@@ -53,28 +53,28 @@ g1.1
 <!-- ### 1.2 Frecuencia de respuesta en "ninguno" ante la pregunta ¿Cuál es el movimiento social que usted más valora de esta lista? según posición política  -->
 
 ```{r}
-datos.1.2 <- data.frame((svytable(~mov + pos_id, elsoc_diseno, round = F))) %>%
-  group_by(pos_id) %>% mutate(porcentaje=Freq/sum(Freq)) %>% 
+datos.1.2 <- data.frame((svytable(~mov + pos_id + ola, elsoc_diseno, round = F))) %>%
+  group_by(pos_id, ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>% 
   filter(mov == 'Ninguno') %>%
+  filter(ola == '2019' | ola == '2021') %>%
   na.omit()
+view(datos.1.2)
 ```
 
 ```{r}
-g1.2 <- datos.1.2 %>% 
+g1.2 <-datos.1.2 %>% 
     ggplot(aes(y = porcentaje, x = pos_id, fill = mov, 
                label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
   theme_bw() + 
-    geom_col() +
+    geom_col(position = 'dodge2') +
     scale_y_continuous(labels = scales::percent,
-                       limits = c(0, 1)) +
+                       limits = c(0, 0.3)) +
     ylab(label = NULL) +
     xlab(label = NULL) +
     scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
-    geom_text(vjust = -0.8,
-              position = position_dodge(width = .9),
-              size= 2.75) +
-    theme(legend.position = 'none',   ## Eliminar leyenda al no ser necesaria
-          legend.title = element_blank())
+    facet_wrap(datos.1.2$ola)+
+    theme(legend.position = 'top',
+          legend.title = element_blank()) 
 
 g1.2
 ```
@@ -108,6 +108,44 @@ g1.3 <-datos.1.3 %>%
           legend.title = element_blank()) 
 g1.3
 ```
+
+### 1. Alluvial de movimiento social que más valora
+
+```{r}
+datos.1. <- data.frame((svytable(~mov + ola + idencuesta, elsoc_diseno, round = F))) %>% 
+                        dplyr::filter(Freq>0)  %>% group_by(ola) %>% 
+                        mutate(porcentaje=Freq/sum(Freq)) %>% 
+                        filter(ola == '2019' | ola == '2021') %>%  na.omit()
+
+etiquetas.1. <- data.frame((svytable(~mov + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>% 
+  filter(ola == '2019' | ola == '2021') %>%
+  na.omit() %>% 
+  mutate(idencuesta = 1)
+
+
+```
+
+```{r}
+g1. <- ggplot(datos.1., aes(x = ola, fill = mov, stratum = mov, 
+               alluvium = idencuesta, y = porcentaje)) +
+    ggalluvial::geom_flow(alpha = .66) + 
+    ggalluvial::geom_stratum(linetype = 0) +
+    scale_y_continuous(labels = scales::percent) + 
+    ylab(label = NULL) +
+    xlab(label = NULL) + 
+    theme(legend.position = 'top',
+          legend.title = element_blank()) +
+    scale_fill_viridis_d(begin = 0, end = .95, direction = -1, option = 'viridis') +
+    geom_text(data = etiquetas.1., 
+              aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")),
+              position = position_stack(vjust = .5),
+              show.legend = FALSE,
+              size = 2.75,
+              color = rep('white')) 
+
+g1.
+```
+
 
 ### 1.4 Frecuencia de participación en movimientos sociales, según Ola de encuesta. Porcentaje que responde A veces, Frecuentemente o Muy frecuentemente
 
@@ -154,17 +192,98 @@ g1.4
 
 ## Confianza en instituciones
 
-### 1.5 Confianza en el gobierno según ola 2018, 2019 y 2021
-
-<!-- ### 1.5 Confianza en el gobierno según ola 2018, 2019 y 2021 -->
+### 1.5 Confianza en distintas instituciones según año
 
 ```{r}
-elsoc_panel_m1$conf_gob
-elsoc_panel_m1$conf_gob <- car::recode(as.numeric(elsoc_panel_m1$c05_01), 
-                                      recode = "c(1)='Nada'; 
-                                      c(2)='Poca'; c(3)='Algo'; 
-                                      c(4,5)='Bastante y Mucha'; 
+
+elsoc_panel_m1$conf_part <- car::recode(as.numeric(elsoc_panel_m1$c05_02), 
+                                      recodes = "c(1)='Nada'; c(2)='Poca';
+                                      c(3)='Algo';c(4)='Bastante';
                                       else=NA", as.factor = TRUE)
+elsoc_panel_m1$conf_carab <- car::recode(as.numeric(elsoc_panel_m1$c05_03), 
+                                      recodes = "c(1)='Nada'; c(2)='Poca';
+                                      c(3)='Algo';c(4)='Bastante';
+                                      else=NA", as.factor = TRUE)
+elsoc_panel_m1$conf_pres <- car::recode(as.numeric(elsoc_panel_m1$c05_08), 
+                                      recode = "c(1)='Nada'; c(2)='Poca';
+                                      c(3)='Algo';c(4)='Bastante';
+                                      else=NA", as.factor = TRUE) 
+elsoc_panel_m1$conf_gob <- car::recode(as.numeric(elsoc_panel_m1$c05_01), 
+                                      recode = "c(1)='Nada'; c(2)='Poca';
+                                      c(3)='Algo';c(4)='Bastante';
+                                      else=NA", as.factor = TRUE)
+elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
+                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
+                          weights = ~ponderador02, #ponderador de corte transversal
+                          nest = TRUE,
+                          data = elsoc_panel_m1)
+```
+
+```{r}
+datos.pres <- data.frame((svytable(~conf_pres + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(p_pres=Freq/sum(Freq))
+datos.pres$ola <- NULL
+
+datos.part <- data.frame((svytable(~conf_part + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(p_part=Freq/sum(Freq))
+datos.part$ola <- NULL
+
+datos.carb <- data.frame((svytable(~conf_carab + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(p_carb=Freq/sum(Freq))
+datos.carb$ola <- NULL
+
+datos.gob <- data.frame((svytable(~conf_gob + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(p_gob=Freq/sum(Freq))
+
+elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
+                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
+                          weights = ~ponderador02, #ponderador de corte transversal
+                          nest = TRUE,
+                          data = elsoc_panel_m1)
+
+datos.grafico.1.5 <- cbind(datos.pres, datos.part, datos.carb, datos.gob)
+
+#trasponer según variable
+datos.1.5 <- datos.grafico.1.5 %>% 
+        pivot_longer(cols = starts_with('conf_'))  %>%
+        mutate(variable = factor(name,
+                             labels = c('Presidente/a de la Republica', 'Partidos Políticos', 
+                             'Carabineros de Chile', 'Gobierno de Chile'))) %>%
+                              filter(value == 'Nada') %>%
+                              drop_na() 
+
+datos.1.5$porcentaje <- with(datos.1.5, case_when(
+  variable == 'Carabineros de Chile' ~ p_carb,
+  variable == 'Presidente/a de la Republica' ~ p_pres,
+  variable == 'Partidos Políticos' ~ p_part, 
+  variable == 'Presidente/a de la Republica' ~ p_gob))
+
+
+```
+
+```{r}
+g1.5 <- ggplot(datos.1.5, aes(y = porcentaje, x = ola, color = variable, group = variable,
+               label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+    theme_bw() +   
+    geom_line(size = 1) +
+    geom_point(size = 1.8) +
+    scale_y_continuous(labels = scales::percent,
+                       limits = c(0,1)) +
+    ylab(label = NULL) +
+    xlab(label = NULL) +
+    scale_color_viridis_d(begin = 0, end = .95, direction = 1, option = 'viridis') +
+    geom_text_repel(posilinetion = position_dodge(width = .9),
+    size= 2.25) + 
+    theme(legend.position = 'top',
+          legend.title = element_blank())
+
+g1.5
+```
+
+
+
+### 1.6 Confianza en el gobierno según ola 2018, 2019 y 2021
+
+<!-- ### 1.6 Confianza en el gobierno según ola 2018, 2019 y 2021 -->
+
+```{r}
+
 elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
                           strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
                           weights = ~ponderador02, #ponderador de corte transversal
@@ -175,7 +294,7 @@ elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de
 
 
 ```{r include=FALSE}
-datos.1.5 <- data.frame((svytable(~conf_gob + ola, elsoc_diseno, round = F))) %>%
+datos.1.6 <- data.frame((svytable(~conf_gob + ola, elsoc_diseno, round = F))) %>%
   group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
   filter(ola == '2018' | ola == '2019' | ola == '2021') %>%
   na.omit()
@@ -184,7 +303,7 @@ datos.1.5 <- data.frame((svytable(~conf_gob + ola, elsoc_diseno, round = F))) %>
 
 
 ```{r}
-g1.5 <- datos.1.5 %>% 
+g1.6 <- datos.1.6 %>% 
   ggplot(aes(y = porcentaje, x = ola, fill = conf_gob, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
@@ -196,24 +315,18 @@ g1.5 <- datos.1.5 %>%
   scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
   #cambiar geom_text tal que: Stack y cambio colores
   geom_text(position = position_stack(vjust = .5),
-            size= 2.75, color = rep.int(c('black', 'white', 'white', 'white'), 3)) + 
+            size= 2.75, color = rep.int(c('white', 'white', 'white', 'white'), 3)) + 
   theme(legend.position = 'top',
-        legend.title = element_blank()) +
-  ggtitle('Confianza en el Presidente(a) de la República cada año')
+        legend.title = element_blank())
 
-g1.5 
+g1.6 
 ```
 
-### 1.6 Confianza en el gobierno según intención de voto
+### 1.7 Confianza en el gobierno según intención de voto
 
-<!-- ### 1.6 Confianza en el presidente según ola 2018, 2019 y 2021 -->
+<!-- ### 1.7 Confianza en el presidente según ola 2018, 2019 y 2021 -->
 
 ```{r}
-elsoc_panel_m1$conf_part <- car::recode(as.numeric(elsoc_panel_m1$c05_02), 
-                                      recodes = "c(1,2)='Poca y Nada';
-                                      c(3)='Algo';c(4,5)='Bastante y Mucha';
-                                      else=NA", as.factor = TRUE)
-
 elsoc_panel_m1$intencion_voto <- car::recode(as.numeric(elsoc_panel_m1$c47), 
                                       recodes = "c(1)='Con toda seguridad iré a votar'; 
                                       c(2)='Quizas iré a votar'; 
@@ -229,14 +342,14 @@ elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de
 ```
 
 ```{r}
-datos.1.6 <- data.frame((svytable(~conf_part + intencion_voto + ola, elsoc_diseno, round = F))) %>%
-  group_by(intencion_voto) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
+datos.1.7 <- data.frame((svytable(~intencion_voto + conf_part + ola, elsoc_diseno, round = F))) %>%
+  group_by(conf_part) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
   filter(ola == '2021') %>%
   na.omit()
 ```
 
 ```{r}
-g1.6 <- datos.1.6 %>% 
+g1.7 <- datos.1.7 %>% 
   ggplot(aes(y = porcentaje, x = intencion_voto, fill = conf_part, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
@@ -247,20 +360,19 @@ g1.6 <- datos.1.6 %>%
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
   #cambiar geom_text tal que: Stack y cambio colores
-  geom_text(position = position_stack(vjust = .5),
-            size= 2.75, color = rep.int(c('black', 'white', 'white'), 3)) + 
+  geom_text(position = position_stack(vjust = .5)) + 
   theme(legend.position = 'top',
-        legend.title = element_blank()) +
-  ggtitle('Confianza en el Presidente(a) de la República cada año')
+        legend.title = element_blank()) 
 
-g1.6 
+g1.7 
 ```
-### 1.7 Nada y Poca confianza en partidos políticos según identificación política el año 2021
 
-<!-- ### 1.7 Nada y Poca confianza en partidos políticos según identificación política el año 2021-->
+### 1.8 Nada y Poca confianza en partidos políticos según identificación política el año 2021
+
+<!-- ### 1.8 Nada y Poca confianza en partidos políticos según identificación política el año 2021-->
 
 ```{r}
-datos.1.7 <- data.frame((svytable(~conf_part + pos_id + ola, elsoc_diseno, round = F))) %>%
+datos.1.8 <- data.frame((svytable(~conf_part + pos_id + ola, elsoc_diseno, round = F))) %>%
   group_by(pos_id) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
   filter(ola == '2021') %>%
   filter(conf_part == 'Poca y Nada') %>%
@@ -268,7 +380,7 @@ datos.1.7 <- data.frame((svytable(~conf_part + pos_id + ola, elsoc_diseno, round
 ```
 
 ```{r}
-g1.7 <- datos.1.7 %>% 
+g1.8 <- datos.1.8 %>% 
     ggplot(aes(y = porcentaje, x = pos_id, fill = conf_part, 
                label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
   theme_bw() + 
@@ -282,22 +394,16 @@ g1.7 <- datos.1.7 %>%
               position = position_dodge(width = .9),
               size= 2.75) +
     theme(legend.position = 'none',   ## Eliminar leyenda al no ser necesaria
-          legend.title = element_blank()) +
-    ggtitle('Nada y Poca confianza en partidos políticos según identificación política el año 2021')
+          legend.title = element_blank())
 
-g1.7 
+g1.8
 ```
 
-### 1.8 Confianza en el presidente según ola 2018, 2019 y 2021
+### 1.9 Confianza en el presidente según ola 2018, 2019 y 2021
 
-<!-- ### 1.8 Confianza en el presidente según ola 2018, 2019 y 2021 -->
+<!-- ### 1.9 Confianza en el presidente según ola 2018, 2019 y 2021 -->
 
 ```{r}
-elsoc_panel_m1$conf_pres <- car::recode(as.numeric(elsoc_panel_m1$c05_08), 
-                                      recode = "c(1)='Nada'; 
-                                      c(2)='Poca'; c(3)='Algo'; 
-                                      c(4)='Bastante';c(5)='Mucha'; 
-                                      else=NA", as.factor = TRUE) 
 elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
                           strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
                           weights = ~ponderador02, #ponderador de corte transversal
@@ -307,7 +413,7 @@ elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de
 
 
 ```{r include=FALSE}
-datos.1.8 <- data.frame((svytable(~conf_pres + ola, elsoc_diseno, round = F))) %>%
+datos.1.9<- data.frame((svytable(~conf_pres + ola, elsoc_diseno, round = F))) %>%
   group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
   filter(ola == '2018' | ola == '2019' | ola == '2021') %>%
   na.omit()
@@ -317,7 +423,7 @@ datos.1.8 <- data.frame((svytable(~conf_pres + ola, elsoc_diseno, round = F))) %
 
 
 ```{r}
-g1.8 <- datos.1.8 %>% 
+g1.9 <- datos.1.9 %>% 
   ggplot(aes(y = porcentaje, x = ola, fill = conf_pres, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
@@ -334,7 +440,7 @@ g1.8 <- datos.1.8 %>%
         legend.title = element_blank()) +
 ggtitle('Confianza en el presidente según año')
 
-g1.8
+g1.9
 ```
 
 
