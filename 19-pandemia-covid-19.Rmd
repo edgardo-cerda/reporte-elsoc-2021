@@ -22,7 +22,7 @@ datos.grafico <- data.frame((svytable(~fecha_entr + comuna_cod + ola,
 
 datos.grafico$fecha_entr<-as.Date(datos.grafico$fecha_entr)
 
-gr.19.1 <- datos.grafico %>% 
+g19.1 <- datos.grafico %>% 
   ggplot(mapping = aes(x = fecha_entr)) +
   theme_bw() + 
   geom_histogram(bins = 9,
@@ -31,58 +31,149 @@ gr.19.1 <- datos.grafico %>%
   xlab(label = NULL) +
   scale_x_date(date_breaks = "1 month", date_labels = "%d %b %Y")
 
-gr.19.1
+g19.1
 ```
 
-```{r hist-ccum-dens}
-gr.19.2 <- elsoc_covid_panel %>% 
+```{r ccum-heter}
+g19.2 <- elsoc_covid_panel %>% 
   ggplot(aes(x=ccum)) + 
   geom_histogram(aes(y = ..density..), bins=30) + 
-  geom_density(aes(color=factor(zona1))) +
+  geom_density() +
   theme_bw() +
   ylab(label = NULL) +
   xlab(label = "Tiempo (Nº de Días)")
 
-gr.19.2
+g19.2
 ```
 
-```{r}
-gr.19.2 <- elsoc_covid_panel %>% 
-  ggplot(aes(x=ccum)) + 
-  geom_histogram(aes(y = ..density..), bins=30) + 
-  geom_density(aes(color=factor(edadt))) +
-  theme_bw() +
-  ylab(label = NULL) +
-  xlab(label = "Tiempo (Nº de Días)")
+```{r ccum-zona}
+datos.grafico <- data.frame((svytable(~ccum_t + zona1, 
+                                      elsoc_diseno_3, round = F))) %>% 
+  group_by(zona1) %>% 
+  mutate(porcentaje=Freq/sum(Freq))
 
-gr.19.2
+g19.3 <- datos.grafico %>% 
+  ggplot(aes(y = porcentaje, x = zona1, fill = ccum_t, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .33, end = .85, direction = -1, option = 'viridis') +
+  #cambiar geom_text tal que: Stack y cambio colores
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75, color = rep.int(c('black', 'black', 'white', 'white'), 4)) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  ggtitle('Días de Cuarentena Acumulada, según Zona')
+
+g19.3
 ```
 
-```{r}
-gr.19.2 <- elsoc_covid_panel %>% 
-  ggplot(aes(x=ccum)) + 
-  geom_histogram(aes(y = ..density..), bins=30) + 
-  geom_density(aes(color=factor(c48))) +
-  theme_bw() +
-  ylab(label = NULL) +
-  xlab(label = "Tiempo (Nº de Días)")
+```{r ccum-edad}
+datos.grafico <- data.frame((svytable(~ccum_t + edadt, 
+                                      elsoc_diseno_3, round = F))) %>% 
+  group_by(edadt) %>% 
+  mutate(porcentaje=Freq/sum(Freq))
 
-gr.19.2
+g19.4 <- datos.grafico %>% 
+  ggplot(aes(y = porcentaje, x = edadt, fill = ccum_t, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .33, end = .85, direction = -1, option = 'viridis') +
+  #cambiar geom_text tal que: Stack y cambio colores
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75, color = rep.int(c('black', 'black', 'white', 'white'), 4)) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  ggtitle('Días de Cuarentena Acumulada, según Tramo Etario')
+
+g19.4
 ```
 
-```{r}
-elsoc_covid_panel$phq <- factor(car::recode(elsoc_covid_panel$suma_dep, "0:4=0 ; 5:27=1"), 
-                                labels = c("Sin Sintomas Depresivos", "Con Sintomas Depresivos"))
+```{r ccum-aislamiento}
+datos.grafico <- data.frame((svytable(~c48 + ccum_t, 
+                                      elsoc_diseno_3, round = F))) %>% 
+  group_by(ccum_t) %>% 
+  mutate(porcentaje=Freq/sum(Freq))
 
-gr.19.2 <- elsoc_covid_panel %>% 
-  ggplot(aes(x=ccum)) + 
-  geom_histogram(aes(y = ..density..), bins=30) + 
-  geom_density(aes(color=factor(phq))) +
-  theme_bw() +
+g19.5 <- datos.grafico %>% 
+  ggplot(aes(y = porcentaje, x = ccum_t, fill = c48, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
   ylab(label = NULL) +
-  xlab(label = "Tiempo (Nº de Días)")
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .33, end = .85, direction = -1, option = 'viridis') +
+  #cambiar geom_text tal que: Stack y cambio colores
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75, color = rep.int(c('black', 'black', 'white', 'white', 'white'), 4)) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  ggtitle('Cumplimiento de Aislamiento Social, según Días de Cuarentena Acumulada')
 
-gr.19.2
+g19.5
+```
+
+```{r ccum-depr}
+datos.grafico <- data.frame((svytable(~depr + ccum_t, 
+                                      elsoc_diseno_3, round = F))) %>% 
+  group_by(ccum_t) %>% 
+  mutate(porcentaje=Freq/sum(Freq))
+
+g19.6 <- datos.grafico %>% 
+  ggplot(aes(y = porcentaje, x = ccum_t, fill = depr, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .33, end = .85, direction = -1, option = 'viridis') +
+  #cambiar geom_text tal que: Stack y cambio colores
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75, color = rep.int(c('black', 'black', 'white', 'white'), 4)) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  ggtitle('Sintomatología Depresiva, según Días de Cuarentena Acumulada')
+
+g19.6
+```
+
+```{r ccum-sit_ocup}
+datos.grafico <- data.frame((svytable(~ccum_t + empleo, 
+                                      elsoc_diseno_3, round = F))) %>% 
+  group_by(empleo) %>% 
+  mutate(porcentaje=Freq/sum(Freq))
+
+g19.6 <- datos.grafico %>% 
+  ggplot(aes(y = porcentaje, x = empleo, fill = ccum_t, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .33, end = .85, direction = -1, option = 'viridis') +
+  #cambiar geom_text tal que: Stack y cambio colores
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75, color = rep.int(c('black', 'black', 'white', 'white'), 5)) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  ggtitle('Días de Cuarentena Acumulada, según Situación Ocupacional')
+
+g19.6
 ```
 
 ```{r}
@@ -92,7 +183,7 @@ datos.grafico <- data.frame((svytable(~cuarentena + edadt + ola,
   mutate(porcentaje=Freq/sum(Freq)) %>% 
   filter(ola==2021)
 
-gr.17.6 <- datos.grafico %>% 
+g19.7 <- datos.grafico %>% 
   ggplot(aes(y = porcentaje, x = cuarentena, fill = edadt, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
   theme_bw() + 
@@ -108,20 +199,20 @@ gr.17.6 <- datos.grafico %>%
         legend.title = element_blank()) +
   ggtitle('Encuestados en Cuarentena según Tramo Etario')
 
-gr.17.6
+g19.7
 ```
 
 ## Perdida de Ingresos
 
 ```{r satisfaccion-wave, echo=FALSE, fig.align='center'}
-datos.grafico <- data.frame((svytable(~m16 + ola, 
-                                      elsoc_diseno_2, round = F))) %>% 
+datos.grafico <- data.frame((svytable(~m43 + ola, 
+                                      elsoc_diseno, round = F))) %>% 
   group_by(ola) %>% 
   mutate(porcentaje=Freq/sum(Freq)) %>%
   drop_na()
 
-gr.17.1 <- datos.grafico %>% 
-  ggplot(aes(y = porcentaje, x = ola, fill = m16, 
+g19.8 <- datos.grafico %>% 
+  ggplot(aes(y = porcentaje, x = ola, fill = m43, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = 'Stack') +
@@ -132,23 +223,22 @@ gr.17.1 <- datos.grafico %>%
   scale_fill_viridis_d(begin = .33, end = .85, direction = -1, option = 'viridis') +
   #cambiar geom_text tal que: Stack y cambio colores
   geom_text(position = position_stack(vjust = .5),
-            size= 2.75, color = rep.int(c('black', 'black', 'white', 'white', 'white'), 5)) + 
+            size= 2.75, color = rep.int(c('black', 'black','white', 'white','white' ), 3)) + 
   theme(legend.position = 'top',
         legend.title = element_blank()) +
   ggtitle('Satisfacción con el Ingreso por Ola')
 
-gr.17.1
+g19.8
 
 ```
 
 ```{r satisfaccion-retiro, echo=FALSE, fig.align='center'}
 datos.grafico <- data.frame((svytable(~m16 + m63_02, 
-                                      elsoc_diseno_2, round = F))) %>% 
+                                      elsoc_diseno, round = F))) %>% 
   group_by(m63_02) %>% 
-  mutate(porcentaje=Freq/sum(Freq)) %>%
-  drop_na()
+  mutate(porcentaje=Freq/sum(Freq))
 
-gr.17.1 <- datos.grafico %>% 
+g19.9 <- datos.grafico %>% 
   ggplot(aes(y = porcentaje, x = m63_02, fill = m16, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
@@ -165,7 +255,7 @@ gr.17.1 <- datos.grafico %>%
         legend.title = element_blank()) +
   ggtitle('Satisfacción con el Ingreso según Retiro AFP')
 
-gr.17.1
+g19.9
 ```
 
 ```{r clase.sub-benef.estatal, echo=FALSE, fig.align='center'}
@@ -202,7 +292,7 @@ datos.grafico <- data.frame((svytable(~clase.sub.hijos + m63_02,
   mutate(porcentaje=Freq/sum(Freq)) %>%
   drop_na()
 
-gr.17.1 <- datos.grafico %>% 
+g19.10 <- datos.grafico %>% 
   ggplot(aes(y = porcentaje, x = m63_02, fill = clase.sub.hijos, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
@@ -219,22 +309,8 @@ gr.17.1 <- datos.grafico %>%
         legend.title = element_blank()) +
   ggtitle('Clase Social Subjetiva de Hijo según Primer Retiro AFP')
 
-gr.17.1
+g19.10
 ```
-
-
-```{r}
-gr.19.2 <- elsoc_covid_panel %>% 
-  ggplot(aes(x=ccum)) + 
-  geom_histogram(aes(y = ..density..), bins=30) + 
-  geom_density(aes(color=factor(clase.sub))) +
-  theme_bw() +
-  ylab(label = NULL) +
-  xlab(label = "Tiempo (Nº de Días)")
-
-gr.19.2
-```
-
 
 ```{r endeud-1retiro, echo=FALSE, fig.align='center'}
 datos.grafico <- data.frame((svytable(~m43 + m63_02, 
@@ -243,7 +319,7 @@ datos.grafico <- data.frame((svytable(~m43 + m63_02,
   mutate(porcentaje=Freq/sum(Freq)) %>%
   drop_na()
 
-gr.17.1 <- datos.grafico %>% 
+g19.11 <- datos.grafico %>% 
   ggplot(aes(y = porcentaje, x = m63_02, fill = m43, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
@@ -260,7 +336,7 @@ gr.17.1 <- datos.grafico %>%
         legend.title = element_blank()) +
   ggtitle('Sobrecarga de Deuda según Primer Retiro AFP')
 
-gr.17.1
+g19.11
 ```
 
 ```{r endeud-2retiro, echo=FALSE, fig.align='center'}
@@ -270,7 +346,7 @@ datos.grafico <- data.frame((svytable(~m43 + m63_03,
   mutate(porcentaje=Freq/sum(Freq)) %>%
   drop_na()
 
-gr.17.1 <- datos.grafico %>% 
+g19.12 <- datos.grafico %>% 
   ggplot(aes(y = porcentaje, x = m63_03, fill = m43, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
@@ -287,6 +363,161 @@ gr.17.1 <- datos.grafico %>%
         legend.title = element_blank()) +
   ggtitle('Sobrecarga de Deuda según Primer Retiro AFP')
 
-gr.17.1
+g19.12
 ```
 
+```{r deuda-retiro1, fig.align='center',fig.cap="Primer retiro de AFP, según deuda"}
+datos.01 <- data.frame((svytable(~deuda_01  + retiro1, elsoc_diseno_2, round = F))) %>% group_by(retiro1) %>% mutate(p_01=Freq/sum(Freq))
+datos.01$retiro1 <- NULL
+datos.02 <- data.frame((svytable(~deuda_02  + retiro1, elsoc_diseno_2, round = F))) %>% group_by(retiro1) %>% mutate(p_02=Freq/sum(Freq))
+datos.02$retiro1 <- NULL
+datos.03 <- data.frame((svytable(~deuda_03 + retiro1, elsoc_diseno_2, round = F))) %>% group_by(retiro1) %>% mutate(p_03=Freq/sum(Freq))
+datos.03$retiro1 <- NULL
+datos.04 <- data.frame((svytable(~deuda_04 + retiro1, elsoc_diseno_2, round = F))) %>% group_by(retiro1) %>% mutate(p_04=Freq/sum(Freq))
+
+datos.grafico1<- cbind(datos.01, datos.02, datos.03, datos.04)
+
+subset.grafico <- droplevels(subset(datos.grafico1,
+                                      deuda_01 == 'Si' & 
+                                      deuda_02== 'Si' &
+                                      deuda_03 == 'Si' & 
+                                      deuda_04 == 'Si'))
+#trasponer según variable
+datos.grafico <- subset.grafico %>% 
+  pivot_longer(cols = starts_with('deuda_'))  %>%
+  mutate(variable = factor(name, labels = c('Deuda Casa Comercial',
+                     'Deuda Banco',
+                     'Deuda Pariente',
+                     'Otras Deudas'))) %>% 
+  drop_na()
+
+datos.grafico$porcentaje <- with(datos.grafico, case_when(
+  variable == 'Deuda Casa Comercial' ~ p_01,
+  variable == 'Deuda Banco' ~ p_02,
+  variable == 'Deuda Pariente' ~ p_03,
+  variable == 'Otras Deudas' ~ p_04))
+
+#graficamos
+
+g19.5 <-datos.grafico %>% 
+  ggplot(aes(y = porcentaje, x = variable, fill = retiro1, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+  theme_bw() + 
+  geom_col(position = "dodge2") +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') + 
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75)  +
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+g19.5
+```
+
+```{r deuda-retiro2, fig.align='center',fig.cap="Segundo retiro de AFP, según deuda"}
+datos.01 <- data.frame((svytable(~deuda_01  + retiro2, elsoc_diseno_2, round = F))) %>% group_by(retiro2) %>% mutate(p_01=Freq/sum(Freq))
+datos.01$retiro2 <- NULL
+datos.02 <- data.frame((svytable(~deuda_02  + retiro2, elsoc_diseno_2, round = F))) %>% group_by(retiro2) %>% mutate(p_02=Freq/sum(Freq))
+datos.02$retiro2 <- NULL
+datos.03 <- data.frame((svytable(~deuda_03 + retiro2, elsoc_diseno_2, round = F))) %>% group_by(retiro2) %>% mutate(p_03=Freq/sum(Freq))
+datos.03$retiro2 <- NULL
+datos.04 <- data.frame((svytable(~deuda_04 + retiro2, elsoc_diseno_2, round = F))) %>% group_by(retiro2) %>% mutate(p_04=Freq/sum(Freq))
+
+datos.grafico1<- cbind(datos.01, datos.02, datos.03, datos.04)
+
+subset.grafico <- droplevels(subset(datos.grafico1,
+                                      deuda_01 == 'Si' & 
+                                      deuda_02== 'Si' &
+                                      deuda_03 == 'Si' & 
+                                      deuda_04 == 'Si'))
+#trasponer según variable
+datos.grafico <- subset.grafico %>% 
+  pivot_longer(cols = starts_with('deuda_'))  %>%
+  mutate(variable = factor(name, labels = c('Deuda Casa Comercial',
+                     'Deuda Banco',
+                     'Deuda Pariente',
+                     'Otras Deudas'))) %>% 
+  drop_na()
+
+datos.grafico$porcentaje <- with(datos.grafico, case_when(
+  variable == 'Deuda Casa Comercial' ~ p_01,
+  variable == 'Deuda Banco' ~ p_02,
+  variable == 'Deuda Pariente' ~ p_03,
+  variable == 'Otras Deudas' ~ p_04))
+
+#graficamos
+
+g19.13 <-datos.grafico %>% 
+  ggplot(aes(y = porcentaje, x = variable, fill = retiro2, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+  theme_bw() + 
+  geom_col(position = "dodge2") +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') + 
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75)  +
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+g19.13
+```
+
+```{r deuda-benef, fig.align='center',fig.cap="Beneficios Estatales, según deuda"}
+datos.01 <- data.frame((svytable(~deuda_01  + benef_estado, elsoc_diseno_2, round = F))) %>% group_by(benef_estado) %>% mutate(p_01=Freq/sum(Freq))
+datos.01$benef_estado <- NULL
+datos.02 <- data.frame((svytable(~deuda_02  + benef_estado, elsoc_diseno_2, round = F))) %>% group_by(benef_estado) %>% mutate(p_02=Freq/sum(Freq))
+datos.02$benef_estado <- NULL
+datos.03 <- data.frame((svytable(~deuda_03 + benef_estado, elsoc_diseno_2, round = F))) %>% group_by(benef_estado) %>% mutate(p_03=Freq/sum(Freq))
+datos.03$benef_estado <- NULL
+datos.04 <- data.frame((svytable(~deuda_04 + benef_estado, elsoc_diseno_2, round = F))) %>% group_by(benef_estado) %>% mutate(p_04=Freq/sum(Freq))
+
+datos.grafico1<- cbind(datos.01, datos.02, datos.03, datos.04)
+
+subset.grafico <- droplevels(subset(datos.grafico1,
+                                      deuda_01 == 'Si' & 
+                                      deuda_02== 'Si' &
+                                      deuda_03 == 'Si' & 
+                                      deuda_04 == 'Si'))
+#trasponer según variable
+datos.grafico <- subset.grafico %>% 
+  pivot_longer(cols = starts_with('deuda_'))  %>%
+  mutate(variable = factor(name, labels = c('Deuda Casa Comercial',
+                     'Deuda Banco',
+                     'Deuda Pariente',
+                     'Otras Deudas'))) %>% 
+  drop_na()
+
+datos.grafico$porcentaje <- with(datos.grafico, case_when(
+  variable == 'Deuda Casa Comercial' ~ p_01,
+  variable == 'Deuda Banco' ~ p_02,
+  variable == 'Deuda Pariente' ~ p_03,
+  variable == 'Otras Deudas' ~ p_04))
+
+#graficamos
+
+g19.14 <-datos.grafico %>% 
+  ggplot(aes(y = porcentaje, x = variable, fill = benef_estado, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+  theme_bw() + 
+  geom_col(position = "dodge2") +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') + 
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75)  +
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+g19.14
+```

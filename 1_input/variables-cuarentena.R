@@ -97,6 +97,10 @@ elsoc_covid$cuarentena <- factor(elsoc_covid$cuarentena,
                             levels = c(0,1),
                             labels = c("Sin Cuarentena", "Con Cuarentena"))
 
+elsoc_covid$ccum_t <- factor(car::recode(elsoc_covid$ccum, "0='0 Dias';1:99='1-99 Dias';
+                                        100:149='100-149 Dias';150:500='150 o más Dias'"),
+                           labels = c('0 Dias', '1-99 Dias', '100-149', '150 o más Dias'))
+
 elsoc_covid_panel <- elsoc_covid %>% filter(tipo_atricion == 1 | 
                                             tipo_atricion == 17 )
 
@@ -104,7 +108,7 @@ save(elsoc_covid, elsoc_covid_panel, file = '1_input/elsoc_covid.RData')
 
 ##Exportar a .dta
 #library(haven)
-#write_dta(elsoc_covid_panel, "3_output/elsoc_covid_panel.dta")
+#write_dta(elsoc_covid_panel, "elsoc_covid_panel.dta")
 
 #revisamos
 sjmisc::frq(elsoc_covid$cuarentena)     # 44,1% de los encuestados estaba en cuarentena

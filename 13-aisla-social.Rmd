@@ -119,12 +119,30 @@ g13.4 <-
 g13.4
 ```
 
-```{r aisl-singreso}
+```{r aisl-telet}
+sjmisc::frq(elsoc_panel_m1$m60)
+datos.g13.5 <- 
+  data.frame((svytable(~aislamiento + m60 + ola, elsoc_diseno_m1, round = F))) %>%
+  group_by(m60, ola) %>% mutate(porcentaje = Freq/sum(Freq)) %>% 
+  filter(ola == '2021') %>% 
+  na.omit()
 
-```
-
-```{r aisl-benef}
-
+g13.5 <- 
+  datos.g13.5 %>% 
+  ggplot(aes(y = porcentaje, x = m60, fill = aislamiento, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .99, direction = -1, option = 'viridis') +
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75, color = rep.int(c( 'black','black','white'), 3)) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+g13.5
 ```
 
 ```{r aisl-prosocial}

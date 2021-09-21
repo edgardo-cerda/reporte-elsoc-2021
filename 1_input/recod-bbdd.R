@@ -107,6 +107,9 @@ elsoc_long$depr <- car::recode(elsoc_long$suma_dep,"c(0,1,2,3,4)='Sin sintomas o
 elsoc_long$depr <- factor(elsoc_long$depr,c("Sin sintomas o Minima","Depresion Media","Depresion Moderada",
                                             "Depresion Moderada Severa a Severa"))
 
+elsoc_long$phq <- factor(car::recode(elsoc_long$suma_dep, "0:9=0 ; 10:27=1"), 
+                                labels = c("Sin Sintomas Depresivos", "Con Sintomas Depresivos"))
+
 #------------------G.1 ATRIBUTOS DEPR---------------
 elsoc_long$depr <- sjlabelled::set_label(elsoc_long$depr, label = c("Sintomatologia Depresiva"))
 
@@ -157,6 +160,15 @@ elsoc_long$quintil <- factor(elsoc_long$quintil,
 attr(elsoc_long$quintil, which = 'label') <- 'Quintil de Ingreso per capita del hogar'
 attr(elsoc_long$ing_pc, which = 'label') <- 'Ingreso per capita del hogar' 
 
+#-----------K.- ENDEUDAMIENTO
+elsoc_long$deuda_01 <- factor(elsoc_long$m42_01, levels = c(1,2), labels = c("Si", "No")) #casa comercial
+elsoc_long$deuda_02 <- factor(elsoc_long$m42_02, levels = c(1,2), labels = c("Si", "No")) #Banco
+elsoc_long$deuda_03 <- factor(elsoc_long$m42_03, levels = c(1,2), labels = c("Si", "No")) # Pariente
+elsoc_long$deuda_04 <- factor(elsoc_long$m42_04, levels = c(1,2), labels = c("Si", "No")) #Otro
+
+elsoc_long$benef_estado <- factor(elsoc_long$m63_01, levels = c(1,2), labels = c("Si", "No")) #Otro
+elsoc_long$retiro1 <- factor(elsoc_long$m63_02, levels = c(1,2), labels = c("Si", "No")) #Otro
+elsoc_long$retiro2 <- factor(elsoc_long$m63_03, levels = c(1,2), labels = c("Si", "No")) #Otro
 
 #-----------K.- Identificaciaon politica
 
@@ -213,7 +225,6 @@ elsoc_long$particip_electoral <- factor(with( elsoc_long,
                                         case_when(c11 == 1 & ola == 2016 ~ 1,
                                         (c11 == 2 | c11 == 3) & ola == 2016 ~ 2,
                                         c11 == 1 & ola == 2018 ~ 1,
-                                        (c11 == 2 | c11 == 3) & ola == 2018 ~ 2,
                                         c43 == 1 & ola == 2021 ~ 1,
                                         (c43 == 2 | c43 == 3) & ola == 2021 ~ 2)),
   labels = c("Si", "No"))
