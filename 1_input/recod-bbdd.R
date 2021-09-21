@@ -908,7 +908,7 @@ elsoc_long <- lapply(elsoc_long, sticky::sticky) %>% data.frame()
 
 #arreglo por falta de ponderador02
 as.ordered(elsoc_long$ponderador02)
-elsoc_long=elsoc_long %>% filter(!is.na(ponderador02))
+elsoc_long <- elsoc_long %>% filter(!is.na(ponderador02))
 
 #Separar las muestras
 elsoc_panel <- elsoc_long %>% filter(tipo_atricion == 1 | tipo_atricion == 17)
