@@ -41,7 +41,7 @@ Sys.setlocale("LC_ALL","ES_ES.UTF-8")
 ```
 
 ```{r message=FALSE, warning=FALSE, include=FALSE, echo=FALSE,cache=FALSE} 
-pacman::p_load(knitr, kableExtra, dplyr,gridExtra,tidyverse,sjmisc,sjlabelled,sticky,ggrepel,ggalluvial,survey,spatstat,readxl,forcats, gtools)
+pacman::p_load(knitr, kableExtra, dplyr,gridExtra,tidyverse,sjmisc,sjlabelled,sticky,ggrepel,ggalluvial,survey,spatstat,readxl,forcats, gtools, lubridate)
 ```
 
 ```{r cargar objetos, include=FALSE, cache = FALSE}
@@ -87,7 +87,7 @@ fsize = if(is_html_output()) {14} else if(is_latex_output()) {8}
 ggplot2::theme_set(new = theme_test(base_family = "serif"))
 ```
 
-# Introducción al reporte
+# Introducción
 
 El Centro de Estudios de Conflicto y Cohesión Social (COES) tiene el agrado de publicar el informe “Radiografía del Cambio Social”, el cual consolida los principales hallazgos longitudinales de cuatro mediciones anuales del Estudio Longitudinal Social de Chile (ELSOC 2016-2021).
 
@@ -97,7 +97,7 @@ Desde 2019 y hasta la fecha, Chile se ha visto remecido por importantes eventos 
 
 Ambos fenómenos han significado un desafío para ELSOC, ya que afecta tanto la forma en que son levantados los datos, como las preguntas que el estudio debe abordar. Sin embargo, ELSOC presente una gran oportunidad única: la posibilidad de observar el efecto que éstos fenómenos tienen sobre la población chilena desde una perspectiva longitudinal.
 
-# Sobre COES
+## Sobre COES
 
 El Centro de Estudios de Conflicto y Cohesión Social (COES) desarrolla investigación colaborativa en temas relacionados al conflicto social y la cohesión (convivencia) en Chile, por medio de un equipo multidisciplinario proveniente de las ciencias sociales y humanidades. COES centra sus actividades académicas y de difusión en el análisis de las múltiples manifestaciones del conflicto y cohesión social en Chile, sus causas, así como también su contexto cultural e histórico.
 
