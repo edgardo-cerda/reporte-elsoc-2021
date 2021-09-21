@@ -121,7 +121,7 @@ elsoc_long$empleo <- factor(elsoc_long$empleo,
 attr(elsoc_long$empleo, which = 'label') <- 'Situacion ocupacional'
 
 #-----------I.- INMOBILIRARIO PUBLICO
-elsoc_long$inm.pub <- car::recode(elsoc_long$f05_09,"c('Nunca se justifica', 'Pocas veces se justifica') = 0;c('Algunas veces se justifica', 'Muchas veces se justifica', 'Siempre se justifica')=1")
+elsoc_long$inm.pub <- car::recode(elsoc_long$f05_09,"c('1', '2') = 0;c('3', '4', '5')=1")
 elsoc_long$inm.pub <- sjlabelled::set_label(elsoc_long$inm.pub, label = c(" Se justifica el daño al inmobiliario publico"))
 elsoc_long$inm.pub <- sjlabelled::set_labels(elsoc_long$inm.pub, labels = c("No se Justifica", "Se justifica"))
 
