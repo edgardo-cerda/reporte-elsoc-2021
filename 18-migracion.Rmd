@@ -33,16 +33,17 @@ elsoc_diseno <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~pondera
                           nest = TRUE, data = elsoc_panel)
 ```
 
+
 <!-- ### 14.1 "Con la llegada de migrantes a Chile, está aumentando el desempleo", según ola y origen de migrantes. Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo". -->
 ```{r amen1-wave, fig.align='center',fig.cap='Con la llegada de migrantes a Chile, está aumentando el desempleo", según ola y origen de migrantes. Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
-datos.g14.1 <- data.frame((svytable(~migrantes + ola + muestra + amenaza_realista, elsoc_diseno, round = F))) %>%
-  group_by(ola, muestra) %>% mutate(porcentaje=Freq/sum(Freq)) %>% 
+datos.g14.1 <- data.frame((svytable(~migrantes + ola + muestra + amenaza_realista, elsoc_diseno, round = F))) %>% 
+  group_by(ola, migrantes) %>% mutate(porcentaje=Freq/sum(Freq)) %>%  
   filter(amenaza_realista == 'De acuerdo o totalmente de acuerdo', porcentaje > 0.00000000) %>% 
   na.omit()
-
-g14.1 <- 
-  ggplot(datos.g14.1, aes(y = porcentaje, x = ola, color = migrantes, group = migrantes,
-                           label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+  
+g14.1 <- datos.g14.1 %>% 
+  ggplot(aes(y = porcentaje, x = ola, color = migrantes, group = migrantes,
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
   theme_bw() +   
   geom_line(size = 1) +
   geom_point(size = 1.8) +
@@ -50,10 +51,8 @@ g14.1 <-
                      limits = c(0,.8)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_color_viridis_d(begin = .22, end = .99, direction = 1, option = 'viridis') +
-  geom_text(vjust = -0.8,
-            posilinetion = position_dodge(width = .9),
-            size= 2.75) +
+  scale_color_viridis_d(begin = 0, end = .66, direction = -1, option = 'viridis') +
+  ggrepel::geom_text_repel(size= 2.75) +
   theme(legend.position = 'top',
         legend.title = element_blank())
 
@@ -63,12 +62,12 @@ g14.1
 <!-- ### 14.2 "Con la llegada de migrantes, Chile está perdiendo su identidad", según ola y origen de migrantes. Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo". -->
 ```{r amen2-wave, fig.align='center',fig.cap='"Con la llegada de migrantes, Chile está perdiendo su identidad", según ola y origen de migrantes. Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
 datos.g14.2 <- data.frame((svytable(~migrantes + ola + muestra + amenaza_simbolica, elsoc_diseno, round = F))) %>%
-  group_by(ola, muestra) %>% mutate(porcentaje=Freq/sum(Freq)) %>% 
+  group_by(ola, migrantes) %>% mutate(porcentaje=Freq/sum(Freq)) %>% 
   filter(amenaza_simbolica == 'De acuerdo o totalmente de acuerdo', porcentaje > 0.00000000) %>% 
   na.omit()
 
-g14.2 <- 
-  ggplot(datos.g14.2, aes(y = porcentaje, x = ola, color = migrantes, group = migrantes,
+g14.2 <- datos.g14.2 %>% 
+  ggplot(aes(y = porcentaje, x = ola, color = migrantes, group = migrantes,
                            label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
   theme_bw() +   
   geom_line(size = 1) +
@@ -77,10 +76,8 @@ g14.2 <-
                      limits = c(0,.8)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_color_viridis_d(begin = .11, end = .77, direction = 1, option = 'viridis') +
-  geom_text(vjust = -0.8,
-            posilinetion = position_dodge(width = .9),
-            size= 2.75) +
+  scale_color_viridis_d(begin = 0, end = .66, direction = -1, option = 'viridis') +
+  ggrepel::geom_text_repel(size= 2.75) +
   theme(legend.position = 'top',
         legend.title = element_blank())
 g14.2
@@ -88,12 +85,12 @@ g14.2
 
 ```{r include=FALSE}
 datos.g14.3 <- data.frame((svytable(~migrantes + ola + muestra + confianza_rec, elsoc_diseno, round = F))) %>%
-  group_by(ola, muestra) %>% mutate(porcentaje=Freq/sum(Freq)) %>% 
+  group_by(ola, migrantes) %>% mutate(porcentaje=Freq/sum(Freq)) %>% 
   filter(porcentaje > 0.00000000, confianza_rec == 'Bastante o mucha confianza') %>% 
   na.omit()
 
-g14.3 <- 
-  ggplot(datos.g14.3, aes(y = porcentaje, x = ola, color = migrantes, group = migrantes,
+g14.3 <- datos.g14.3 %>% 
+  ggplot(aes(y = porcentaje, x = ola, color = migrantes, group = migrantes,
                           label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
   theme_bw() +   
   geom_line(size = 1) +
@@ -102,49 +99,34 @@ g14.3 <-
                      limits = c(0,.8)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_color_viridis_d(begin = .11, end = .77, direction = 1, option = 'viridis') +
-  geom_text(vjust = -0.8,
-            posilinetion = position_dodge(width = .9),
-            size= 2.75) +
+  scale_color_viridis_d(begin = 0, end = .66, direction = -1, option = 'viridis') +
+  ggrepel::geom_text_repel(size= 2.75) +
   theme(legend.position = 'top',
         legend.title = element_blank())
+
 g14.3
+
 ```
 
 <!-- ### 14.4 Percepción de amenaza realista y simbólica, según grupo de migrantes (2021). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo". -->
 ```{r amen3-wave, fig.align='center',fig.cap='Percepción de amenaza realista y simbólica, según grupo de migrantes (2021). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
 amreal.g14.4 <- data.frame((svytable(~amenaza_realista + migrantes + ola,
                        elsoc_diseno, round = F))) %>%
-  group_by(ola, migrantes) %>% mutate(p_real=Freq/sum(Freq)) %>% na.omit()
-amreal.g14.4$ola <- NULL
-amreal.g14.4$migrantes <- NULL
-amreal.g14.4$Freq <- NULL
+  group_by(ola, migrantes) %>% mutate(porcentaje = Freq/sum(Freq)) %>% na.omit() %>% 
+  filter(amenaza_realista == 'De acuerdo o totalmente de acuerdo' & ola == 2021) %>% 
+  mutate(amenaza = 'Aumenta desempleo')
 
 amsim.g14.4 <- data.frame((svytable(~amenaza_simbolica + migrantes + ola,
                        elsoc_diseno, round = F))) %>%
-  group_by(ola, migrantes) %>% mutate(p_sim=Freq/sum(Freq)) %>% na.omit()
-amsim.g14.4$Freq <- NULL
+  group_by(ola, migrantes) %>% mutate(porcentaje = Freq/sum(Freq)) %>% na.omit() %>% 
+  filter(amenaza_simbolica == 'De acuerdo o totalmente de acuerdo' & ola == 2021) %>% 
+  mutate(amenaza = 'Chile pierde su identidad')
 
-datos.g14.4 <- cbind(amreal.g14.4, amsim.g14.4)
+datos.g14.4 <- rbind(amreal.g14.4, amsim.g14.4)
 
-datos.g14.4a <- datos.g14.4 %>% 
-  pivot_longer(cols = starts_with('amenaza_'))  %>%
-  mutate(amenaza = factor(name,labels = c('Aumenta desempleo',
-                                          'Chile pierde su identidad'))) %>%
-  drop_na()
-
-datos.g14.4a$porcentaje <- with(datos.g14.4a, case_when(
-  amenaza == 'Aumenta desempleo' ~ p_real,
-  amenaza == 'Chile pierde su identidad' ~ p_sim))
-
-
-subset.g14.4 <- droplevels(subset(datos.g14.4a, value == 'De acuerdo o totalmente de acuerdo')) %>% 
-  filter(p_real > 0.00000000, p_sim > 0.00000000, ola == '2021') 
-
-g14.4 <-
-  subset.g14.4 %>% 
+g14.4 <- datos.g14.4 %>% 
   ggplot(aes(y = porcentaje, x = amenaza, fill = migrantes, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+             label = scales::percent(porcentaje, accuracy = .1))) + 
   theme_bw() + 
   geom_col(position = 'dodge2') +
   scale_y_continuous(labels = scales::percent,
@@ -157,7 +139,9 @@ g14.4 <-
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
             size= 2.75)
-g14.4
+
+  g14.4
+
 ```
 
 
@@ -166,33 +150,20 @@ g14.4
 
 <!-- ### 14.5 Percepción de amenaza realista y simbólica respecto a inmigrantes, según nivel educacional (2021). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo". -->
 ```{r amen-educ, fig.align='center',fig.cap='Percepción de amenaza realista y simbólica respecto a inmigrantes, según nivel educacional (2021). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
+
 amreal.g14.5 <- data.frame((svytable(~amenaza_realista + educ + ola, elsoc_diseno, round = F))) %>%
-  group_by(ola, educ) %>% mutate(p_real=Freq/sum(Freq)) %>% na.omit()
-amreal.g14.5$ola <- NULL
-amreal.g14.5$educ <- NULL
-amreal.g14.5$Freq <- NULL
+  group_by(ola, educ) %>% mutate(porcentaje = Freq/sum(Freq)) %>% na.omit() %>% 
+  filter(ola == 2021 & amenaza_realista == 'De acuerdo o totalmente de acuerdo') %>% 
+  mutate(amenaza = 'Aumenta desempleo')
 
 amsim.g14.5 <- data.frame((svytable(~amenaza_simbolica + educ + ola, elsoc_diseno, round = F))) %>%
-  group_by(ola, educ) %>% mutate(p_sim=Freq/sum(Freq)) %>% na.omit()
-amsim.g14.5$Freq <- NULL
+  group_by(ola, educ) %>% mutate(porcentaje = Freq/sum(Freq)) %>% na.omit() %>% 
+  filter(ola == 2021 & amenaza_simbolica == 'De acuerdo o totalmente de acuerdo') %>% 
+  mutate(amenaza = 'Chile pierde su identidad')
 
-datos.g14.5 <- cbind(amreal.g14.5, amsim.g14.5)
+datos.g14.5 <- rbind(amreal.g14.5, amsim.g14.5)
 
-datos.g14.5a <- datos.g14.5 %>% 
-  pivot_longer(cols = starts_with('amenaza_'))  %>%
-  mutate(amenaza = factor(name,labels = c('Aumenta desempleo',
-                                          'Chile pierde su identidad'))) %>%
-  drop_na()
-
-datos.g14.5a$porcentaje <- with(datos.g14.5a, case_when(
-  amenaza == 'Aumenta desempleo' ~ p_real,
-  amenaza == 'Chile pierde su identidad' ~ p_sim))
-
-subset.g14.5 <- droplevels(subset(datos.g14.5a, value == 'De acuerdo o totalmente de acuerdo')) %>% 
-  filter(p_real > 0.00000000, p_sim > 0.00000000, ola == '2021') 
-
-g14.5 <-
-  subset.g14.5 %>% 
+g14.5 <- datos.g14.5 %>% 
   ggplot(aes(y = porcentaje, x = amenaza, fill = educ, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
@@ -213,36 +184,20 @@ g14.5
 <!-- ### 14.8 Percepción de amenaza realista y simbólica, según tramo de edad (2021). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo". -->
 ```{r amen-edad, fig.align='center',fig.cap='Percepción de amenaza realista y simbólica, según tramo de edad (2021). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
 
-amreal.g14.8 <- 
-  data.frame((svytable(~amenaza_realista + edadt + ola, elsoc_diseno, round = F))) %>%
-  group_by(ola, edadt) %>% mutate(p_real=Freq/sum(Freq)) %>% na.omit()
-amreal.g14.8$ola <- NULL
-amreal.g14.8$edadt <- NULL
-amreal.g14.8$Freq <- NULL
-
+amreal.g14.8 <- data.frame((svytable(~amenaza_realista + edadt + ola, elsoc_diseno, round = F))) %>%
+  group_by(ola, edadt) %>% mutate(porcentaje = Freq/sum(Freq)) %>% na.omit() %>% 
+  filter(ola == 2021 & amenaza_realista == 'De acuerdo o totalmente de acuerdo') %>% 
+  mutate(amenaza = 'Aumenta desempleo')
+  
 amsim.g14.8 <- 
   data.frame((svytable(~amenaza_simbolica + edadt + ola, elsoc_diseno, round = F))) %>%
-  group_by(ola, edadt) %>% mutate(p_sim=Freq/sum(Freq)) %>% na.omit()
-amsim.g14.8$Freq <- NULL
+  group_by(ola, edadt) %>% mutate(porcentaje = Freq/sum(Freq)) %>% na.omit() %>% 
+  filter(ola == 2021 & amenaza_simbolica == 'De acuerdo o totalmente de acuerdo') %>% 
+  mutate(amenaza = 'Chile pierde su identidad')
 
-datos.g14.8 <- cbind(amreal.g14.8, amsim.g14.8)
+datos.g14.8 <- rbind(amreal.g14.8, amsim.g14.8)
 
-#trasponer según variable
-datos.g14.8a <- datos.g14.8 %>% 
-  pivot_longer(cols = starts_with('amenaza_'))  %>%
-  mutate(amenaza = factor(name,labels = c('Aumenta desempleo',
-                                          'Chile pierde su identidad'))) %>%
-  drop_na()
-
-datos.g14.8a$porcentaje <- with(datos.g14.8a, case_when(
-  amenaza == 'Aumenta desempleo' ~ p_real,
-  amenaza == 'Chile pierde su identidad' ~ p_sim))
-
-subset.g14.8 <- droplevels(subset(datos.g14.8a, value == 'De acuerdo o totalmente de acuerdo')) %>% 
-  filter(p_real > 0.00000000, p_sim > 0.00000000, ola == '2021') 
-
-g14.8 <-
-  subset.g14.8 %>% 
+g14.8 <- datos.g14.8 %>% 
   ggplot(aes(y = porcentaje, x = amenaza, fill = edadt, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
