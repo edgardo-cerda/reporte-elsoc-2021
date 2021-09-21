@@ -3,6 +3,7 @@
 rm(list = ls())
 library(survey)
 library(tidyverse)
+library(ggrepel)
 load("1_input/datos_elsoc.RData")
 
 elsoc_diseno_m1 <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
@@ -28,15 +29,40 @@ elsoc_diseno_m1 <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~pond
                              nest = TRUE, data = elsoc_panel_m1)
 ```
 
+## Confianza en vecinos
+
+<!-- ### 10.0 En términos generales, ¿cuánto confía usted en sus vecinos? según ola de estudio -->
+```{r vecinos-total, fig.align='center', fig.cap='En términos generales, ¿cuánto confía usted en sus vecinos? según ola de estudio.'}
+datos.g10.0 <- data.frame(svytable(~conf_vecinos + ola, elsoc_diseno_m1, round = F)) %>% 
+  group_by(ola) %>% mutate(porcentaje = Freq/sum(Freq)) %>% na.omit()
+
+g10.0 <- 
+  datos.g10.0 %>% 
+  ggplot(aes(y = porcentaje, x = ola, fill = conf_vecinos, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .11, end = .88, direction = -1, option = 'viridis') +
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75, color = rep.int(c('black', 'white', 'white'), 5)) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+g10.0
+```
+
 <!-- ### 10.1 En términos generales, ¿cuánto confía usted en sus vecinos? Según ola del estudio y zona geográfica. Suma de Respuestas “Bastante” y “Mucho”.  -->
 ```{r vecinos-zona, fig.align='center', fig.cap='En términos generales, ¿cuánto confía usted en sus vecinos? Según ola del estudio y zona geográfica. Suma de Respuestas “Bastante” y “Mucho”.'}
-datos.g10.1 <- data.frame(svytable(~conf_vecinos + ola + estrato, elsoc_diseno_m1, round = F)) %>% 
-  group_by(ola, estrato) %>% mutate(porcentaje = Freq/sum(Freq)) %>%
+datos.g10.1 <- data.frame(svytable(~conf_vecinos + ola + zona1, elsoc_diseno_m1, round = F)) %>% 
+  group_by(ola, zona1) %>% mutate(porcentaje = Freq/sum(Freq)) %>%
   filter(conf_vecinos == 'Bastante o mucho', ola == '2019' | ola == '2021')
 
 g10.1 <-
   datos.g10.1 %>% 
-  ggplot(aes(y = porcentaje, x = estrato, fill = ola, 
+  ggplot(aes(y = porcentaje, x = zona1, fill = ola, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = 'Dodge') +
@@ -77,7 +103,33 @@ g10.2 <-
             size= 2.75)
 g10.2
 ```
+<!-- ### 8.6 ¿Con qué frecuencia usted/alguien de su hogar se ha molestado o incomodado por problemas con sus vecinos?, según grado de cumplimiento de aislamiento social (2021). -->
+```{r vecinos-aisl, fig.align='center', fig.cap='En términos generales, ¿cuánto confía usted en sus vecinos? según grado de cumplimiento de aislamiento social (2021).'}
+datos.g10.X <- 
+  data.frame((svytable(~conf_vecinos + aislamiento + ola, elsoc_diseno_m1, round = F))) %>%
+  group_by(aislamiento, ola) %>% mutate(porcentaje = Freq/sum(Freq)) %>% 
+  filter(ola == '2021') %>% 
+  na.omit()
 
+g10.X <- 
+  datos.g10.X %>% 
+  ggplot(aes(y = porcentaje, x = aislamiento, fill = conf_vecinos, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = 'Cumplimiento aislamiento social') +
+  scale_fill_viridis_d(begin = 0, end = .99, direction = 1, option = 'viridis') +
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75, color = rep.int(c('white', 'white','black'), 3)) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+g10.X
+```
+
+## Seguridad barrial
 <!-- ### 10.3 ¿Qué tan seguro o inseguro se siente en el barrio o vecindario donde usted vive? Según ola del estudio y zona geográfica. Suma de Respuestas "Seguro" o ”Muy Seguro".  -->
 
 ```{r seguri-zona, fig.align='center',fig.cap='¿Qué tan seguro o inseguro se siente en el barrio o vecindario donde usted vive? Según ola del estudio y zona geográfica. Suma de Respuestas "Seguro" o ”Muy Seguro".'}
@@ -173,7 +225,7 @@ g10.6 <-
                      limits = c(0,1)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_color_viridis_d(begin = .22, end = .88, direction = -1, option = 'viridis') +
+  scale_color_viridis_d(begin = .22, end = .77, direction = -1, option = 'viridis') +
   geom_text(vjust = -0.8,
             posilinetion = position_dodge(width = .9),
             size= 2.75) +

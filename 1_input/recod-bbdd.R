@@ -490,15 +490,44 @@ elsoc_long$apoyo.soci <- c(as.numeric(elsoc_long$c07_01)+ as.numeric(elsoc_long$
 
 ###TERRITORIO
 
-#I.- CONFLICTOS BARRIALES 
-elsoc_long$confli.barrial <- c(as.numeric(elsoc_long$t11_01) + as.numeric(elsoc_long$t11_02) +
-                                 as.numeric(elsoc_long$t11_03) + as.numeric(elsoc_long$t11_04)) / 4
+## t11 (confli_barrial) ----
+elsoc_long <- elsoc_long %>% 
+  mutate(confli_barrial = (t11_01 + t11_03 + t11_03 + t11_04)/4)
+elsoc_long$confli_barrial_rec <- factor(with(elsoc_long, case_when(confli_barrial == 1 ~ 1,
+                                                                           confli_barrial < 3 ~ 2,
+                                                                           confli_barrial <= 5 ~ 3)),
+                                            labels = c("Nunca", "Pocas o algunas veces",
+                                                       "Muchas veces o siempre"))
+## c48 (aislamiento social) ----
+elsoc_long <- elsoc_long %>% 
+  mutate(aislamiento = factor(car::recode(c48, "1:2 = 1; 3 = 2; 4:5 = 3"),
+                              labels= c("Nunca o casi nunca","A veces",
+                                        "Frecuentemente o muy frecuentemente")))
+## t08 (reputación barrial) ----
+elsoc_long <- elsoc_long %>% 
+  mutate(rep_barrial = factor(car::recode(t08, "1:2=1;3=2;4:5=3"),
+                              labels= c("Muy negativamente o negativamente","Ni positiva ni negativamente",
+                                        "Muy positivamente o positivamente")))
+elsoc_long$rep_barrial <- na.tools::na.replace(elsoc_long$rep_barrial, "No sabe/No responde")
+attr(elsoc_long$rep_barrial, which = 'label') <- 'Reputación Barrial'
 
+## t01 y 10 (confianza y seguridad) ----
+elsoc_long <- elsoc_long %>%
+  mutate(conf_vecinos = factor(car::recode(t01, "c(1,2) = 1;c(3) = 2;c(4,5) = 3"),
+                               labels = c('Muy poco o poco', 'Algo', 'Bastante o mucho')),
+         segur_barrio = factor(car::recode(t10, "c(1,2) = 1;c(3) = 2;c(4,5) = 3"),
+                               labels = c('Muy inseguro o inseguro', 'Ni seguro ni inseguro',
+                                          'Seguro o Muy seguro')))
 
-elsoc_long$confli.barrial.rec <- factor(with(elsoc_long, case_when(confli.barrial == 1 ~ 3,
-                                                                   confli.barrial < 3 ~ 2,
-                                                                   confli.barrial <= 5 ~ 1)),
-                                        labels = c('Muchas veces o siempre', 'Pocas o algunas veces','Nunca' ))
+## t09 (criminalidad) ----
+elsoc_long <- elsoc_long %>% 
+  mutate(frec_crimen = (t09_01 + t09_02 + t09_03)/3)
+elsoc_long$frec_crimen_rec <- factor(with(elsoc_long, case_when(is.na(frec_crimen) ~ 0,
+                                                                        frec_crimen == 1 ~ 1,
+                                                                        frec_crimen < 3 ~ 2,
+                                                                        frec_crimen <= 5 ~ 3)),
+                                         labels = c("No sabe/No responde", "Nunca o casi nunca", 
+                                                    "Pocas o algunas veces", "Muchas veces o siempre"))
 
 ### CAMBIO CONSTITUCIONAL ####
 

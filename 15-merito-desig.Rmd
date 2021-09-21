@@ -26,22 +26,26 @@ elsoc_movilidad <- elsoc_panel_m1 %>%
   group_by(ola) %>% 
   summarise(m_interg = weighted.mean(mov_interg, ponderador02 ,na.rm = T),
             m_relativa = weighted.mean(mov_relativa, ponderador02 ,na.rm = T),
+            m_estatus = weighted.mean(d01_01, ponderador02 ,na.rm = T),
             conteo = n()) %>% 
   mutate(var_interg = 'Perspectiva de movilidad social',
-         var_relativa = 'Movilidad social relativa') 
+         var_relativa = 'Movilidad social relativa',
+         var_estatus = 'Estatus social actual') 
 
 elsoc_movilidad$m_interg <- round(elsoc_movilidad$m_interg, digits = 2) 
 elsoc_movilidad$m_relativa <- round(elsoc_movilidad$m_relativa, digits = 2) 
+elsoc_movilidad$m_estatus <- round(elsoc_movilidad$m_estatus, digits = 2) 
 
 datos.g11.0 <- elsoc_movilidad %>% 
   pivot_longer(cols = starts_with('var_'))  %>%
   mutate(mov_social = factor(name, labels = c('Perspectiva de movilidad social',
-                                      'Movilidad social relativa'))) %>% 
+                                      'Movilidad social relativa','Estatus social actual'))) %>% 
   drop_na()
 
 datos.g11.0$m_mov_social <- with(datos.g11.0, case_when(
   mov_social == 'Perspectiva de movilidad social' ~ m_interg,
-  mov_social == 'Movilidad social relativa' ~ m_relativa))
+  mov_social == 'Movilidad social relativa' ~ m_relativa,
+  mov_social == 'Estatus social actual' ~ m_estatus))
 
 g11.0 <- 
   ggplot(datos.g11.0, aes(y = m_mov_social, x = ola, group = mov_social, color = mov_social,
