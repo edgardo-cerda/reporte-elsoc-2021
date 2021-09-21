@@ -4,23 +4,44 @@ editor_options:
     wrap: 72
 ---
 
+# Sobre ELSOC
+
+## Descripción del estudio
+
+El Estudio Longitudinal Social de Chile (ELSOC) es una encuesta panel, representativa de la población nacional urbana, que analiza la estabilidad y cambio de las creencias, actitudes y percepciones que tenemos los chilenos y chilenas respecto de la convivencia y del conflicto, la cohesión y una amplia gama de aspectos políticos y sociales a lo largo del tiempo. 
+
+Este estudio sigue la evolución de cerca de 4.500 chilenos y chilenas a lo largo de una década. Actualmente se encuentran disponibles 5 olas del estudio, abarcando el período entre 2016 y 2021. Sus temas de estudio y su aspecto longitudinal convierten a ELSOC en un recurso único en Chile y América Latina para analizar la evolución de la sociedad chilena y para el desarrollo de las ciencias sociales en Chile.
+
+Durante los últimos años, ELSOC se ha consolidado como un importante insumo para el desarrollo de investigación científica y aplicada en ciencias sociales. En el sitio web http://elsoc.cl se puede acceder a más información sobre el estudio. 
+
+## Acceso a Bases de Datos ELSOC
+
+Las bases de datos y documentación correspondientes se encuentran disponibles, de manera libre y gratuita, en un repositorio de datos, al cual se podrá acceder en el link:
+
+https://dataverse.harvard.edu/dataverse/elsoc
+
+En este link se obtendrá acceso a los datos de las 5 mediciones transversales de ELSOC, así como bases longitudinales que integran las distintas mediciones en formato wide y long. En colaboración con el Centro de Inteligencia Territorial (CIT), se pone también a disposición las bases ELSOC-CIT. Estas bases de datos permiten combinar la información de ELSOC, y estimaciones e indicadores territoriales y geoespaciales de distinta índole, proveniente de diversas fuentes de información nacional para los períodos 2016 a 2019. 
+
+ELSOC tiene un compromiso con los más altos estándares científicos en términos de producción y análisis de datos. Dentro de esta visión global, ELSOC se guía por las principales pautas de Transparencia y Apertura en la investigación científica. Por esta misma razón, los códigos utilizados para el desarrollo de las figuras y análisis de Radiografía del Cambio Social se encontrarán disponibles en https://github.com/centro-coes.
+
 
 # Ficha Técnica
 
 - Diseño: Estudio cuantitativo por medio de un cuestionario estructurado.
 
+- Formato de aplicación: Formato CAPI (Encuesta presencial con asistencia de computador). Excepcionalmente se cambió a formato CATI (Encuesta telefónica con asistencia de computador) durante 2021.
+  
 - Periodicidad: Anual. 
 
 - Diseño Longitudinal: panel repetido (misma encuesta se aplica a dos muestras independientes). Segunda muestra se implementó a partir del tercer año de medición (2018).
 
-- Período de Aplicación: entre Julio y Noviembre de cada año. Cuarta medición se aplico entre el 21 de noviembre de 2019 y el 9 de marzo de 2020
+- Período de Aplicación: entre Julio y Noviembre de cada año. Debido al estallido social, la cuarta medición se aplicó entre el 21 de noviembre de 2019 y el 9 de marzo de 2020. Debido a la pandemia, la quinta medición se aplicó entre el 29 de enero de 2021 y 12 de julio de 2021
 
 - Instrumento: Cuestionario compuesto por preguntas cerradas de carácter simple y múltiple junto a algunas preguntas abiertas. Combina módulos de preguntas permanentes (medidas en todas las olas) y otras intercaladas entre olas.
 
 - Cobertura Temática: Contiene siete módulos temáticos: Territorio, Redes y actitudes sociales, Ciudadanía y democracia, Desigualdad y legitimidad, Conflicto social, Salud y bienestar y Caracterización sociodemográfica.
 
 ## Dimension longitudinal del Diseño
-
 
 - Unidad de Análisis: Individuos.
 
@@ -45,18 +66,18 @@ editor_options:
 **Operaciones de Control y Supervisión**: Entrega de incentivos monetarios para el encuestado ($ 6.000 CLP) y de material sobre el estudio (ELSOC y COES). Acciones de seguimiento basadas en la información de contacto (correo electrónico para cumpleaños y días festivos). Los coordinadores de campo supervisan el trabajo de los entrevistadores, verificando el número de visitas, el contacto, la identidad del participante y algunas preguntas claves. El Centro Micro Datos realiza una supervisión interna de al menos el 10% de la muestra (entrevistando nuevamente a algunos encuestados), verificando la duración y la respuesta de los participantes.
 
 
-# Descripción de atrición
+## Descripción de atrición
 
 ELSOC al ser un estudio panel longitudinal nos permite observar cambios en los individuos a lo largo del tiempo. Sin embargo, esta misma naturaleza del diseño del estudio pone en juego el desafío de retener a los participantes. En este sentido es que cobra importancia observar el proceso de abandono de un estudio panel, denominado atrición. Uno de los aspectos más importante para medir la calidad de los datos en las encuestas de panel es el nivel de atrición, ya que incluso si un panel comienza con una buena representación de la población de interés, las pequeñas tasas de deserción pueden acumularse rápidamente y hacer que la muestra ya no sea representativa, sobretodo cuando la deserción es sesgada. En teoría, deberíamos ser capaces de aprender bastante de las primeras olas de un panel sobre qué políticas de campo funcionan para reducir el desgaste y cuáles no.
 
 
-## Tamaño muestral
+### Tamaño muestral
 
 El diseño de ELSOC contempló entrevistar a 3.000 personas en su primera medición, reconociendo que año tras año, se reduciría el número de participantes, dado que algunos optarían voluntariamente por dejar de participar en el estudio y otras personas no podrían ser recontactadas o incluso algunas fallecerían. Este fenómeno es conocido como atrición, y pueden tener efectos nocivos sobre la utilidad de los datos longitudinales. Para cada año se planifica obtener un número de entrevistados (Muestra Objetivo) considerando una proyección de la atrición definida al momento de diseñar el estudio. ELSOC tiene buenos números en este aspecto. Incluso, en 2018 se logró recontactar a un número de participantes mayor al proyectado.
 
 
 
 
-## Atrición de la Muestra Original y Muestra Refresco
+### Atrición de la Muestra Original y Muestra Refresco
 
 
