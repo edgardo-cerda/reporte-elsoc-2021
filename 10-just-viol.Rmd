@@ -55,7 +55,7 @@ gr.10.1
 
 
 <!-- ### 6.2 Justificación de la violencia en relación al actuar de Carabineros, según ola -->
-```{r just-carab-ola, fig.aligN='center',fig.cap="Justificación de la violencia en relación al actuar de Carabineros, según ola"}
+```{r just-carab-ola, fig.align='center',fig.cap="Justificación de la violencia en relación al actuar de Carabineros, según ola"}
 datos.alta <- data.frame((svytable(~f05_03_rec + ola, elsoc_diseno, round = F))) %>% group_by( ola) %>% mutate(p_alta=Freq/sum(Freq))
 datos.alta$ola <- NULL
 datos.baja <- data.frame((svytable(~f05_04_rec + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(p_baja=Freq/sum(Freq))

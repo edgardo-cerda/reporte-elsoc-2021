@@ -39,20 +39,53 @@ gr.17.1
 N<-round(sum(datos.grafico$Freq),0)
 ```
 
-## Brecha de género en Salud Mental
+```{r depre-deuda-wave, echo=FALSE, fig.align='center', fig.cap="Síntomas de Depresión, según Ola del Estudio y Sobrecarga de Deuda"}
+datos.grafico <- data.frame((svytable(~depr + ola + m43_rec, 
+                                      elsoc_diseno, round = F))) %>% 
+  group_by(ola, m43_rec) %>% 
+  mutate(porcentaje=Freq/sum(Freq)) %>%
+  filter((ola==2016 | ola==2018 | ola==2021)) 
+datos.grafico$porcentaje[is.na(datos.grafico$porcentaje)] <- 0
 
+g17.2 <- datos.grafico %>% 
+  ggplot(aes(y = porcentaje, x = ola, fill = depr, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .33, end = .85, direction = -1, option = 'viridis') +
+  #cambiar geom_text tal que: Stack y cambio colores
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75, color = rep.int(c('black', 'black', 'white', 'white'), 9)) + 
+  facet_grid(~factor(m43_rec, levels=c('Nada o Poco Sobrecargado','Algo Sobrecargado','Bastante o Muy Sobrecargado'))) +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) 
+
+g17.2
+
+```
+
+## Brecha de género en Salud Mental
 
 <!-- ###  2 Sintomatología Depresiva por año, según sexo. Porcentaje con síntomas de "Depresion Moderada" o "Depresion Moderada Severa a Severa".  -->
 ```{r depre-year-sexo, echo=FALSE, fig.align='center'}
-elsoc_panel$depr_rec <- car::recode(elsoc_panel$suma_dep,
+elsoc_panel_m1$depr_rec <- car::recode(elsoc_panel_m1$suma_dep,
                                "c(0,1,2,3,4)='1';
 c(5,6,7,8,9)='2';
 c(10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27)='3'")
 
-elsoc_diseno_2 <- svydesign(ids = ~segmento, strata = ~estrato, 
-                          weights = ~ponderador02, nest = TRUE, data = elsoc_panel)
+elsoc_panel_m1$m43_rec <- car::recode(elsoc_panel_m1$m43,
+                               "c(1,2)='Nada o Poco Sobrecargado';
+c(3)='Algo Sobrecargado';
+c(4,5)='Bastante o Muy Sobrecargado'")
+
+elsoc_diseno <- svydesign(ids = ~segmento, strata = ~estrato, 
+                          weights = ~ponderador02, nest = TRUE, data = elsoc_panel_m1)
 datos.grafico <- data.frame((svytable(~depr_rec + ola + m0_sexo, 
-                                      elsoc_diseno_2, round = F))) %>% 
+                                      elsoc_diseno, round = F))) %>% 
   group_by(ola, m0_sexo) %>% 
   mutate(porcentaje=Freq/sum(Freq))
 
