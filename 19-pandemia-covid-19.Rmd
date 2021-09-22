@@ -47,7 +47,7 @@ g19.2 <- elsoc_covid_panel %>%
 g19.2
 ```
 
-```{r ccum-zona, fig.align='center', fig.cap='Días de Cuarentena Acumulada, según Zona'}
+```{r ccum-zona, fig.align='center', fig.cap='Días de Cuarentena Acumulada al momento de la entrevista, según Zona'}
 datos.grafico <- data.frame((svytable(~ccum_t + zona1, 
                                       elsoc_diseno_3, round = F))) %>% 
   group_by(zona1) %>% 
@@ -72,7 +72,7 @@ g19.3 <- datos.grafico %>%
 g19.3
 ```
 
-```{r ccum-edad, fig.align='center', fig.cap='Días de Cuarentena Acumulada, según Tramo Etario'}
+```{r ccum-edad, fig.align='center', fig.cap='Días de Cuarentena Acumulada al momento de la entrevista, según Tramo Etario'}
 datos.grafico <- data.frame((svytable(~ccum_t + edadt, 
                                       elsoc_diseno_3, round = F))) %>% 
   group_by(edadt) %>% 
@@ -97,7 +97,7 @@ g19.4 <- datos.grafico %>%
 g19.4
 ```
 
-```{r ccum-aislamiento, fig.align='center', fig.cap='Cumplimiento de Aislamiento Social, según Días de Cuarentena Acumulada'}
+```{r ccum-aislamiento, fig.align='center', fig.cap='Cumplimiento de Aislamiento Social, según Días de Cuarentena Acumulada al momento de la entrevista'}
 datos.grafico <- data.frame((svytable(~c48 + ccum_t, 
                                       elsoc_diseno_3, round = F))) %>% 
   group_by(ccum_t) %>% 
@@ -122,7 +122,7 @@ g19.5 <- datos.grafico %>%
 g19.5
 ```
 
-```{r ccum-depr, fig.align='center', fig.cap= 'Sintomatología Depresiva, según Días de Cuarentena Acumulada'}
+```{r ccum-depr, fig.align='center', fig.cap= 'Sintomatología Depresiva, según Días de Cuarentena Acumulada al momento de la entrevista'}
 datos.grafico <- data.frame((svytable(~depr + ccum_t + ola, 
                                       elsoc_diseno_3, round = F))) %>% 
   group_by(ccum_t, ola) %>% 
@@ -147,14 +147,14 @@ g19.6 <- datos.grafico %>%
 g19.6
 ```
 
-```{r ccum-sit_ocup, fig.align='center', fig.cap= 'Días de Cuarentena Acumulada, según Situación Ocupacional'}
-datos.grafico <- data.frame((svytable(~ccum_t + empleo, 
+```{r ccum-sit_ocup, fig.align='center', fig.cap= 'Situación Ocupacional, según Días de Cuarentena Acumulada al momento de la entrevista'}
+datos.grafico <- data.frame((svytable(~empleo + ccum_t, 
                                       elsoc_diseno_3, round = F))) %>% 
-  group_by(empleo) %>% 
+  group_by(ccum_t) %>% 
   mutate(porcentaje=Freq/sum(Freq))
 
 g19.7 <- datos.grafico %>% 
-  ggplot(aes(y = porcentaje, x = empleo, fill = ccum_t, 
+  ggplot(aes(y = porcentaje, x = ccum_t, fill = empleo, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = 'Stack') +
@@ -172,7 +172,7 @@ g19.7 <- datos.grafico %>%
 g19.7
 ```
 
-```{r ccum-ahorro, fig.align='center', fig.cap= 'Días de Cuarentena Acumulada, según Situación Ocupacional'}
+```{r ccum-ahorro, fig.align='center', fig.cap= 'Nivel de Ahorro, según Días de Cuarentena Acumulada al momento de la entrevista'}
 elsoc_covid_panel$m44_rec <- car::recode(elsoc_covid_panel$m44,
                                "c(1,2)='Nada o Pocos Ahorros';
 c(3)='Algo de Ahorros';
@@ -181,13 +181,13 @@ c(4,5)='Bastante o Muchos Ahorros'")
 elsoc_diseno_3 <- svydesign(ids = ~segmento, strata = ~estrato, 
                           weights = ~ponderador02, nest = TRUE, data = elsoc_covid_panel)
 
-datos.grafico <- data.frame((svytable(~ccum_t + m44_rec, 
+datos.grafico <- data.frame((svytable(~m44_rec + ccum_t, 
                                       elsoc_diseno_3, round = F))) %>% 
-  group_by(m44_rec) %>% 
+  group_by(ccum_t) %>% 
   mutate(porcentaje=Freq/sum(Freq))
 
 g19.8 <- datos.grafico %>% 
-  ggplot(aes(y = porcentaje, x = m44_rec, fill = ccum_t, 
+  ggplot(aes(y = porcentaje, x = ccum_t, fill = m44_rec, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = 'Stack') +
