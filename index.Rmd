@@ -41,7 +41,7 @@ Sys.setlocale("LC_ALL","ES_ES.UTF-8")
 ```
 
 ```{r message=FALSE, warning=FALSE, include=FALSE, echo=FALSE,cache=FALSE} 
-pacman::p_load(knitr, kableExtra, dplyr,gridExtra,tidyverse,sjmisc,sjlabelled,sticky,ggrepel,ggalluvial,survey,spatstat,readxl,forcats, gtools, lubridate)
+pacman::p_load(knitr, kableExtra, dplyr,gridExtra,tidyverse,sjmisc,sjlabelled,sticky,ggrepel,ggalluvial,survey,spatstat,readxl,forcats, gtools, kableExtra)
 ```
 
 ```{r cargar objetos, include=FALSE, cache = FALSE}
