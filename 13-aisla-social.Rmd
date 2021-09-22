@@ -1,4 +1,4 @@
-## Efecto aislamiento social 
+## Aislamiento social (caracterízación)
 
 ```{r Disenno complejo, include=FALSE}
 knitr::opts_chunk$set(cache=FALSE, 
@@ -15,16 +15,30 @@ getwd()
 load("1_input/datos_elsoc.RData")
 
 elsoc_diseno <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
-                          nest = TRUE, data = elsoc_panel)
-
-elsoc_diseno_m1 <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
                           nest = TRUE, data = elsoc_panel_m1)
 ```
 
-```{r aisl-total}
-datos.g13.1 <- data.frame(svytable(~aislamiento, elsoc_diseno_m1, round = F)) %>% 
+```{r recode-aisl-soc, include=FALSE}
+
+elsoc_panel_m1 <- elsoc_panel_m1 %>%
+  mutate(frec_veci = factor(car::recode(c07_01, "1=1;2=2;3=3"),
+                           labels = c('Nunca lo hizo', 'Lo hizo una o dos veces', 'Lo hizo mas de dos veces')),
+         frec_visi = factor(car::recode(c07_03, "1=1;2=2;3=3"),
+                               labels = c('Nunca lo hizo', 'Lo hizo una o dos veces', 'Lo hizo mas de dos veces')),
+         frec_reun = factor(car::recode(c07_02, "1=1;2=2;3=3"),
+                            labels = c('Nunca lo hizo', 'Lo hizo una o dos veces', 'Lo hizo mas de dos veces')),
+         frec_conv = factor(car::recode(c07_07, "1=1;2=2;3=3"),
+                          labels = c('Nunca lo hizo', 'Lo hizo una o dos veces', 'Lo hizo mas de dos veces')))
+
+elsoc_diseno <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
+                             nest = TRUE, data = elsoc_panel_m1)
+```
+
+
+```{r aisl-total, fig.align='center', fig.cap='¿En qué medida usted ha seguido la recomendación de quedarse en su hogar, manteniendo el aislamiento social? (2021).'}
+datos.g13.1 <- data.frame(svytable(~aislamiento, elsoc_diseno, round = F)) %>% 
   mutate(porcentaje = Freq/sum(Freq)) %>% 
-  na.omit
+  drop_na()
 
 g13.1 <- datos.g13.1 %>% 
   ggplot(aes(y = porcentaje, x = aislamiento, fill = aislamiento, 
@@ -44,12 +58,12 @@ g13.1 <- datos.g13.1 %>%
 g13.1
 ```
 
-```{r aisl-quintil}
+```{r aisl-quintil, fig.align='center', fig.cap='¿En qué medida usted ha seguido la recomendación de quedarse en su hogar, manteniendo el aislamiento social? según quintil de ingreso (2021).'}
 datos.g13.2 <- 
-  data.frame((svytable(~aislamiento + quintil + ola, elsoc_diseno_m1, round = F))) %>%
+  data.frame((svytable(~aislamiento + quintil + ola, elsoc_diseno, round = F))) %>%
   group_by(quintil, ola) %>% mutate(porcentaje = Freq/sum(Freq)) %>% 
   filter(ola == '2021') %>% 
-  na.omit()
+  drop_na()
 
 g13.2 <- 
   datos.g13.2 %>% 
@@ -69,16 +83,16 @@ g13.2 <-
 g13.2
 ```
 
-```{r aisl-zona}
+```{r aisl-edad, fig.align='center', fig.cap='¿En qué medida usted ha seguido la recomendación de quedarse en su hogar, manteniendo el aislamiento social? según edad (2021).'}
 datos.g13.3 <- 
-  data.frame((svytable(~aislamiento + zona1 + ola, elsoc_diseno_m1, round = F))) %>%
-  group_by(zona1, ola) %>% mutate(porcentaje = Freq/sum(Freq)) %>% 
+  data.frame((svytable(~aislamiento + edadt + ola, elsoc_diseno, round = F))) %>%
+  group_by(edadt, ola) %>% mutate(porcentaje = Freq/sum(Freq)) %>% 
   filter(ola == '2021') %>% 
-  na.omit()
+  drop_na()
 
 g13.3 <- 
   datos.g13.3 %>% 
-  ggplot(aes(y = porcentaje, x = zona1, fill = aislamiento, 
+  ggplot(aes(y = porcentaje, x = edadt, fill = aislamiento, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = 'Stack') +
@@ -94,12 +108,12 @@ g13.3 <-
 g13.3
 ```
 
-```{r aisl-estrato}
+```{r aisl-estrato, fig.align='center', fig.cap='¿En qué medida usted ha seguido la recomendación de quedarse en su hogar, manteniendo el aislamiento social? según estrato muestral (2021).'}
 datos.g13.4 <- 
-  data.frame((svytable(~aislamiento + estrato + ola, elsoc_diseno_m1, round = F))) %>%
+  data.frame((svytable(~aislamiento + estrato + ola, elsoc_diseno, round = F))) %>%
   group_by(estrato, ola) %>% mutate(porcentaje = Freq/sum(Freq)) %>% 
   filter(ola == '2021') %>% 
-  na.omit()
+  drop_na()
 
 g13.4 <- 
   datos.g13.4 %>% 
@@ -119,17 +133,25 @@ g13.4 <-
 g13.4
 ```
 
-```{r aisl-telet}
-sjmisc::frq(elsoc_panel_m1$m60)
+```{r aisl-telet, fig.align='center', fig.cap='¿En qué medida usted ha seguido la recomendación de quedarse en su hogar, manteniendo el aislamiento social? según tipo de trabajo en pandemia (2021).'}
+sjmisc::frq(elsoc_panel_m1$trab_pandemia)
+
+elsoc_panel_m1 <- elsoc_panel_m1 %>%
+  mutate(trab_pandemia = factor(m60, labels = c('Trabajo de manera completa desde el hogar',
+                                                'Trabajo de manera parcial desde el hogar',
+                                                'Trabajo fuera del hogar')))
+
+elsoc_diseno <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
+                          nest = TRUE, data = elsoc_panel_m1)
 datos.g13.5 <- 
-  data.frame((svytable(~aislamiento + m60 + ola, elsoc_diseno_m1, round = F))) %>%
-  group_by(m60, ola) %>% mutate(porcentaje = Freq/sum(Freq)) %>% 
+  data.frame((svytable(~aislamiento + trab_pandemia + ola, elsoc_diseno, round = F))) %>%
+  group_by(trab_pandemia, ola) %>% mutate(porcentaje = Freq/sum(Freq)) %>% 
   filter(ola == '2021') %>% 
-  na.omit()
+  drop_na()
 
 g13.5 <- 
   datos.g13.5 %>% 
-  ggplot(aes(y = porcentaje, x = m60, fill = aislamiento, 
+  ggplot(aes(y = porcentaje, x = trab_pandemia, fill = aislamiento, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = 'Stack') +
@@ -144,36 +166,23 @@ g13.5 <-
         legend.title = element_blank())
 g13.5
 ```
+## Efecto de aislamiento social
 
-```{r aisl-prosocial}
-sjmisc::frq(elsoc_panel_m1$conf_vecinos)
+```{r aisl-prosocial, fig.align='center', fig.cap='Frecuencia de comportamientos pro-sociales, según ola de estudio. Porcentaje de respuestas de "Lo hizo mas de dos veces".'}
 
-elsoc_panel_m1 <- elsoc_panel_m1 %>%
-  mutate(frec_veci = factor(car::recode(c07_01, "1=1;2=2;3=3"),
-                           labels = c('Nunca lo hizo', 'Lo hizo una o dos veces', 'Lo hizo mas de dos veces')),
-         frec_visi = factor(car::recode(c07_03, "1=1;2=2;3=3"),
-                               labels = c('Nunca lo hizo', 'Lo hizo una o dos veces', 'Lo hizo mas de dos veces')),
-         frec_reun = factor(car::recode(c07_02, "1=1;2=2;3=3"),
-                            labels = c('Nunca lo hizo', 'Lo hizo una o dos veces', 'Lo hizo mas de dos veces')),
-         frec_conv = factor(car::recode(c07_07, "1=1;2=2;3=3"),
-                          labels = c('Nunca lo hizo', 'Lo hizo una o dos veces', 'Lo hizo mas de dos veces')))
-
-elsoc_diseno_m1 <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
-                             nest = TRUE, data = elsoc_panel_m1)
-
-datos.fveci <- data.frame((svytable(~frec_veci + ola, elsoc_diseno_m1, round = F))) %>%
+datos.fveci <- data.frame((svytable(~frec_veci + ola, elsoc_diseno, round = F))) %>%
   group_by(ola) %>% mutate(p_veci=Freq/sum(Freq))
 datos.fveci$ola <- NULL
 
-datos.fvisit <- data.frame((svytable(~frec_visi + ola, elsoc_diseno_m1, round = F))) %>% 
+datos.fvisit <- data.frame((svytable(~frec_visi + ola, elsoc_diseno, round = F))) %>% 
   group_by(ola) %>% mutate(p_visi=Freq/sum(Freq))
 datos.fvisit$ola <- NULL
 
-datos.freu <- data.frame((svytable(~frec_reun + ola, elsoc_diseno_m1, round = F))) %>% 
+datos.freu <- data.frame((svytable(~frec_reun + ola, elsoc_diseno, round = F))) %>% 
   group_by(ola) %>% mutate(p_reun=Freq/sum(Freq))
 datos.freu$ola <- NULL
 
-datos.fconv <- data.frame((svytable(~frec_conv + ola, elsoc_diseno_m1, round = F))) %>% 
+datos.fconv <- data.frame((svytable(~frec_conv + ola, elsoc_diseno, round = F))) %>% 
   group_by(ola) %>% mutate(p_conv=Freq/sum(Freq))
 
 datos.g0.6 <- cbind(datos.fveci, datos.fvisit, datos.freu, datos.fconv)
@@ -216,3 +225,45 @@ g0.6 <-
 g0.6
 
 ```
+ 
+```{r aisl-barrio, fig.align='center', fig.cap='Percepción de conflictividad, empeligrosamiento e inseguridad en el barrio, según cumplimiento de aislamiento social (2021). Porcentaje de personas que responden "Muchas veces o siempre" o "Muy inseguro o inseguro".'}
+
+confli.g0.7 <- data.frame((svytable(~confli_barrial_rec + aislamiento + ola,
+                       elsoc_diseno, round = F))) %>%
+  group_by(ola, aislamiento) %>% mutate(porcentaje = Freq/sum(Freq)) %>% drop_na() %>% 
+  filter(confli_barrial_rec == 'Muchas veces o siempre' & ola == 2021) %>% 
+  mutate(variable = 'Conflictividad barrial')
+
+crim.g0.7 <- data.frame((svytable(~frec_crimen_rec + aislamiento + ola,
+                       elsoc_diseno, round = F))) %>%
+  group_by(ola, aislamiento) %>% mutate(porcentaje = Freq/sum(Freq)) %>% drop_na() %>% 
+  filter(frec_crimen_rec == 'Muchas veces o siempre' & ola == 2021) %>% 
+  mutate(variable = 'Empeligrosamiento barrial')
+
+segur.g0.7 <- data.frame((svytable(~segur_barrio + aislamiento + ola,
+                       elsoc_diseno, round = F))) %>%
+  group_by(ola, aislamiento) %>% mutate(porcentaje = Freq/sum(Freq)) %>% drop_na() %>% 
+  filter(segur_barrio == 'Muy inseguro o inseguro' & ola == 2021) %>% 
+  mutate(variable = 'Inseguridad barrial')
+
+datos.g0.7 <- rbind(confli.g0.7, crim.g0.7, segur.g0.7)
+
+g0.7 <- datos.g0.7 %>% 
+  ggplot(aes(y = porcentaje, x = variable, fill = aislamiento, 
+             label = scales::percent(porcentaje, accuracy = .1))) + 
+  theme_bw() + 
+  geom_col(position = 'dodge2') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, .8)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75)
+
+g0.7
+```
+

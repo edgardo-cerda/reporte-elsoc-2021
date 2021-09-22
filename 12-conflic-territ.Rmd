@@ -14,16 +14,13 @@ getwd()
 load("1_input/datos_elsoc.RData")
 
 elsoc_diseno <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
-                          nest = TRUE, data = elsoc_panel)
-
-elsoc_diseno_m1 <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
                           nest = TRUE, data = elsoc_panel_m1)
 ```
 
 <!-- ### 8.1 ¿Con qué frecuencia usted/alguien de su hogar se ha molestado o incomodado por problemas con sus vecinos? según ola de estudio -->
 ```{r confli-total, fig.align='center', fig.cap='¿Con qué frecuencia usted/alguien de su hogar se ha molestado o incomodado por problemas con sus vecinos? según ola de estudio '}
-datos.g8.1 <- data.frame(svytable(~confli_barrial_rec + ola, elsoc_diseno_m1, round = F)) %>% 
-  group_by(ola) %>% mutate(porcentaje = Freq/sum(Freq)) %>% na.omit()
+datos.g8.1 <- data.frame(svytable(~confli_barrial_rec + ola, elsoc_diseno, round = F)) %>% 
+  group_by(ola) %>% mutate(porcentaje = Freq/sum(Freq)) %>% drop_na()
 
 g8.1 <- 
   datos.g8.1 %>% 
@@ -45,16 +42,16 @@ g8.1
 
 <!-- ### 8.2 Cambios en frecuencia de conflictos barriales -->
 ```{r confli-cambios, fig.align='center', fig.cap='Cambios en frecuencia de conflictos barriales'}
-datos.g8.2 <- data.frame((svytable(~confli_barrial_rec + ola + idencuesta, elsoc_diseno_m1, round = F))) %>% 
+datos.g8.2 <- data.frame((svytable(~confli_barrial_rec + ola + idencuesta, elsoc_diseno, round = F))) %>% 
   dplyr::filter(Freq>0)  %>% 
   group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>%  
   dplyr::filter(ola == '2019' | ola == '2021') %>% 
-  na.omit()
+  drop_na()
 
-etiquetas.g8.2 <- data.frame((svytable(~confli_barrial_rec + ola, elsoc_diseno_m1, round = F))) %>% 
+etiquetas.g8.2 <- data.frame((svytable(~confli_barrial_rec + ola, elsoc_diseno, round = F))) %>% 
   group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>% mutate(idencuesta = 1) %>% 
   dplyr::filter(ola == '2019' | ola == '2021') %>% 
-  na.omit()
+  drop_na()
 
 g8.2 <- 
   ggplot(datos.g8.2, aes(x = ola, fill = confli_barrial_rec, stratum = confli_barrial_rec, 
@@ -77,9 +74,9 @@ g8.2
 ```
 
 
-<!-- ### 8.3 Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona geográfica. Porcentaje con conflictos barriables "Siempre" o "Muchas veces".  -->
-```{r confli-zona, fig.align='center', fig.cap='Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona geográfica. Porcentaje con conflictos barriables "Siempre" o "Muchas veces"'}
-datos.g8.3 <- data.frame(svytable(~confli_barrial_rec + ola + zona1, elsoc_diseno_m1, round = F)) %>% 
+<!-- ### 8.3 Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona geográfica. Porcentaje con conflictos barriales "Siempre" o "Muchas veces".  -->
+```{r confli-zona, fig.align='center', fig.cap='Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona geográfica. Porcentaje con conflictos barriales "Siempre" o "Muchas veces"'}
+datos.g8.3 <- data.frame(svytable(~confli_barrial_rec + ola + zona1, elsoc_diseno, round = F)) %>% 
   group_by(ola, zona1) %>% mutate(porcentaje = Freq/sum(Freq)) %>%
   filter(confli_barrial_rec == 'Muchas veces o siempre', ola == '2019' | ola == '2021')
 
@@ -102,9 +99,9 @@ g8.3 <-
 g8.3
 ```
 
-<!-- ### 8.4 Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona de residencia. Porcentaje con conflictos barriables "Siempre" o "Muchas veces".  -->
-```{r confli-estrato, fig.align='center', fig.cap='Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona de residencia. Porcentaje con conflictos barriables "Siempre" o "Muchas veces".'}
-datos.g8.4 <- data.frame(svytable(~confli_barrial_rec + ola + estrato, elsoc_diseno_m1, round = F)) %>% 
+<!-- ### 8.4 Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona de residencia. Porcentaje con conflictos barriales "Siempre" o "Muchas veces".  -->
+```{r confli-estrato, fig.align='center', fig.cap='Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona de residencia. Porcentaje con conflictos barriales "Siempre" o "Muchas veces".'}
+datos.g8.4 <- data.frame(svytable(~confli_barrial_rec + ola + estrato, elsoc_diseno, round = F)) %>% 
   group_by(ola, estrato) %>% mutate(porcentaje = Freq/sum(Freq)) %>%
   filter(confli_barrial_rec == 'Muchas veces o siempre', ola == '2019' | ola == '2021')
 
@@ -128,9 +125,9 @@ g8.4
 ```
 
 
-<!-- ### 8.5 Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y quintiles de ingreso. Porcentaje con conflictos barriables "Siempre" o "Muchas veces".  -->
-```{r confli-quintil, fig.align='center', fig.cap='Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y quintiles de ingreso. Porcentaje con conflictos barriables "Siempre" o "Muchas veces".'}
-datos.g8.5 <- data.frame(svytable(~confli_barrial_rec + ola + quintil, elsoc_diseno_m1, round = F)) %>% 
+<!-- ### 8.5 Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y quintiles de ingreso. Porcentaje con conflictos barriales "Siempre" o "Muchas veces".  -->
+```{r confli-quintil, fig.align='center', fig.cap='Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y quintiles de ingreso. Porcentaje con conflictos barriales "Siempre" o "Muchas veces".'}
+datos.g8.5 <- data.frame(svytable(~confli_barrial_rec + ola + quintil, elsoc_diseno, round = F)) %>% 
   group_by(ola, quintil) %>% mutate(porcentaje = Freq/sum(Freq)) %>%
   filter(confli_barrial_rec == 'Muchas veces o siempre', ola == '2019' | ola == '2021')
 
@@ -155,10 +152,10 @@ g8.5
 <!-- ### 8.6 ¿Con qué frecuencia usted/alguien de su hogar se ha molestado o incomodado por problemas con sus vecinos?, según grado de cumplimiento de aislamiento social (2021). -->
 ```{r confli-aisl, fig.align='center', fig.cap='¿Con qué frecuencia usted/alguien de su hogar se ha molestado o incomodado por problemas con sus vecinos? según grado de cumplimiento de aislamiento social (2021).'}
 datos.g8.6 <- 
-  data.frame((svytable(~confli_barrial_rec + aislamiento + ola, elsoc_diseno_m1, round = F))) %>%
+  data.frame((svytable(~confli_barrial_rec + aislamiento + ola, elsoc_diseno, round = F))) %>%
   group_by(aislamiento, ola) %>% mutate(porcentaje = Freq/sum(Freq)) %>% 
   filter(ola == '2021') %>% 
-  na.omit()
+  drop_na()
 
 g8.6 <- 
   datos.g8.6 %>% 
@@ -176,5 +173,82 @@ g8.6 <-
   theme(legend.position = 'top',
         legend.title = element_blank())
 g8.6
+```
+
+## Conflicto barrial agregrado
+
+```{r recode-mapas ,include=FALSE}
+## library ----------------------------------------------------------------
+library(sf)
+library(chilemapas)
+library(rgdal)
+        
+## mapa comunas ----------------------------------------------------------------
+
+elsoc_comuna <- elsoc_panel_m1 %>% 
+  filter(region_cod == 13, ola == '2021') %>% 
+  group_by(comuna, comuna_cod) %>% 
+  summarise(m_confli = weighted.mean(confli_barrial, ponderador02, na.rm = T),
+            sd_confli = sd(confli_barrial, na.rm = T),
+            m_crimen = weighted.mean(frec_crimen, ponderador02, na.rm = T),
+            sd_crimen = sd(frec_crimen, na.rm = T),
+            n = n())
+
+comunas_rm <- mapa_comunas[mapa_comunas$codigo_region==13,]
+comunas_rm <- merge(comunas_rm,elsoc_comuna, by.x="codigo_comuna",by.y="comuna_cod",all.x=TRUE,sort=F)
+
+#comunas_rm <- comunas_rm %>% drop_na()
+
+## mapa_region --------------------------------------------------------------
+
+elsoc_region <- elsoc_panel_m1 %>% 
+  filter(ola == '2021') %>% 
+  group_by(region, region_cod) %>% 
+  summarise(m_confli = weighted.mean(confli_barrial, ponderador02, na.rm = T),
+            sd_confli = sd(confli_barrial, na.rm = T),
+            m_crimen = weighted.mean(frec_crimen, ponderador02, na.rm = T),
+            sd_crimen = sd(frec_crimen, na.rm = T),
+            n = n())
+
+elsoc_region$region_cod <- factor(elsoc_region$region_cod,
+                                  labels = c('01','02','03','04','05','06','07','08',
+                                            '09','10','11','13','14','15','16'))
+
+regiones <- generar_regiones()
+regiones <- merge(regiones,elsoc_region, by.x="codigo_region",by.y="region_cod",all.x=TRUE,sort=F)
+
+regiones$mitad <- c('1','1','1','1','1','1','1',
+                    '2','2','2','2','1','2','1','2','2')
+
+#recode datos magallanes
+regiones$region[is.na(regiones$region)] <- 'Magallanes'
+
+#renombrando regiones con nombre muy largo
+regiones$region[regiones$region == 'Metropolitana de santiago'] <- 'Metropolitana'
+regiones$region[regiones$region == 'Libertador general bernardo ohiggins'] <- 'Ohiggins'
+regiones$region[regiones$region == 'Aysen del general carlos ibannez del campo'] <- 'Aysen'
+regiones$region[regiones$region == 'Arica y parinacota'] <- 'Arica'
+```
+
+```{r confli-comuna, fig.align='center', fig.cap='Frecuencia promedio de problemas con vecinos, según comuna de residencia en la región metropolitana (2021).'}
+g.confli.rm <- 
+  ggplot(comunas_rm) + 
+  geom_sf(aes(fill = m_confli, geometry = geometry)) +
+  labs(y = NULL, x = NULL, fill = "Conflictividad barrial\npromedio por comuna") +
+  scale_fill_viridis_c(begin = .11, end = .88, direction = -1, option = 'viridis') +
+  theme_minimal(base_size = 11)
+g.confli.rm
+```
+
+```{r confli-region, fig.align='center', fig.cap='Frecuencia promedio de problemas con vecinos, según región de residencia en Chile (2021).'}
+g.confli.region <- regiones %>% 
+  ggplot(aes(fill = m_confli, geometry = geometry, label = region)) + 
+  geom_sf() +
+  coord_sf(xlim = c(-90, -65)) +
+  labs(y = NULL, x = NULL, fill = "Conflictividad barrial\npromedio por región") +
+  scale_fill_viridis_c(begin = .11, end = .88, direction = -1, option = 'viridis', na.value = 'white') +
+  geom_sf_text(size= 3, axis.x=element_blank()) +
+  theme_bw()
+g.confli.region
 ```
 

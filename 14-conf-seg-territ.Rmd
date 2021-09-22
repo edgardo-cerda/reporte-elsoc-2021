@@ -6,34 +6,15 @@ library(tidyverse)
 library(ggrepel)
 load("1_input/datos_elsoc.RData")
 
-elsoc_diseno_m1 <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
+elsoc_diseno <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
                           nest = TRUE, data = elsoc_panel_m1)
-```
-
-```{r Recode, include=FALSE}
-
-elsoc_panel_m1 <- 
-  elsoc_panel_m1 %>%
-  mutate(conf_vecinos = factor(car::recode(t01, "c(1,2) = 1;c(3) = 2;c(4,5) = 3"),
-                               labels = c('Muy poco o poco', 
-                                              'Algo',
-                                              'Bastante o mucho')),
-         segur_barrio = factor(car::recode(t10, "c(1,2) = 1;c(3) = 2;c(4,5) = 3"),
-                               labels = c('Muy inseguro o inseguro', 
-                                          'Ni seguro ni inseguro',
-                                          'Seguro o Muy seguro')))
-sjmisc::frq(elsoc_panel_m1$conf_vecinos)
-sjmisc::frq(elsoc_panel_m1$segur_barrio)
-
-elsoc_diseno_m1 <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
-                             nest = TRUE, data = elsoc_panel_m1)
 ```
 
 ## Confianza en vecinos
 
 <!-- ### 10.0 En términos generales, ¿cuánto confía usted en sus vecinos? según ola de estudio -->
 ```{r vecinos-total, fig.align='center', fig.cap='En términos generales, ¿cuánto confía usted en sus vecinos? según ola de estudio.'}
-datos.g10.0 <- data.frame(svytable(~conf_vecinos + ola, elsoc_diseno_m1, round = F)) %>% 
+datos.g10.0 <- data.frame(svytable(~conf_vecinos + ola, elsoc_diseno, round = F)) %>% 
   group_by(ola) %>% mutate(porcentaje = Freq/sum(Freq)) %>% na.omit()
 
 g10.0 <- 
@@ -56,7 +37,7 @@ g10.0
 
 <!-- ### 10.1 En términos generales, ¿cuánto confía usted en sus vecinos? Según ola del estudio y zona geográfica. Suma de Respuestas “Bastante” y “Mucho”.  -->
 ```{r vecinos-zona, fig.align='center', fig.cap='En términos generales, ¿cuánto confía usted en sus vecinos? Según ola del estudio y zona geográfica. Suma de Respuestas “Bastante” y “Mucho”.'}
-datos.g10.1 <- data.frame(svytable(~conf_vecinos + ola + zona1, elsoc_diseno_m1, round = F)) %>% 
+datos.g10.1 <- data.frame(svytable(~conf_vecinos + ola + zona1, elsoc_diseno, round = F)) %>% 
   group_by(ola, zona1) %>% mutate(porcentaje = Freq/sum(Freq)) %>%
   filter(conf_vecinos == 'Bastante o mucho', ola == '2019' | ola == '2021')
 
@@ -81,7 +62,7 @@ g10.1
 
 <!-- ### 10.2 En términos generales, ¿cuánto confía usted en sus vecinos? Según ola del estudio y nivel educacional. Suma de Respuestas “Bastante” y “Mucho”. -->
 ```{r vecinos-quinti, fig.align='center', fig.cap='En términos generales, ¿cuánto confía usted en sus vecinos? Según ola del estudio y nivel educacional. Suma de Respuestas “Bastante” y “Mucho”.'}
-datos.g10.2 <- data.frame(svytable(~conf_vecinos + ola + quintil, elsoc_diseno_m1, round = F)) %>% 
+datos.g10.2 <- data.frame(svytable(~conf_vecinos + ola + quintil, elsoc_diseno, round = F)) %>% 
   group_by(ola, quintil) %>% mutate(porcentaje = Freq/sum(Freq)) %>%
   filter(conf_vecinos == 'Bastante o mucho', ola == '2019' | ola == '2021')
 
@@ -103,10 +84,11 @@ g10.2 <-
             size= 2.75)
 g10.2
 ```
-<!-- ### 8.6 ¿Con qué frecuencia usted/alguien de su hogar se ha molestado o incomodado por problemas con sus vecinos?, según grado de cumplimiento de aislamiento social (2021). -->
+<!-- ### 10.X En términos generales, ¿cuánto confía usted en sus vecinos?, según grado de cumplimiento de aislamiento social (2021). -->
 ```{r vecinos-aisl, fig.align='center', fig.cap='En términos generales, ¿cuánto confía usted en sus vecinos? según grado de cumplimiento de aislamiento social (2021).'}
+
 datos.g10.X <- 
-  data.frame((svytable(~conf_vecinos + aislamiento + ola, elsoc_diseno_m1, round = F))) %>%
+  data.frame((svytable(~conf_vecinos + aislamiento + ola, elsoc_diseno, round = F))) %>%
   group_by(aislamiento, ola) %>% mutate(porcentaje = Freq/sum(Freq)) %>% 
   filter(ola == '2021') %>% 
   na.omit()
@@ -133,7 +115,8 @@ g10.X
 <!-- ### 10.3 ¿Qué tan seguro o inseguro se siente en el barrio o vecindario donde usted vive? Según ola del estudio y zona geográfica. Suma de Respuestas "Seguro" o ”Muy Seguro".  -->
 
 ```{r seguri-zona, fig.align='center',fig.cap='¿Qué tan seguro o inseguro se siente en el barrio o vecindario donde usted vive? Según ola del estudio y zona geográfica. Suma de Respuestas "Seguro" o ”Muy Seguro".'}
-datos.g10.3 <- data.frame((svytable(~zona1 + ola + segur_barrio, elsoc_diseno_m1, round = F))) %>% 
+
+datos.g10.3 <- data.frame((svytable(~zona1 + ola + segur_barrio, elsoc_diseno, round = F))) %>% 
   group_by(ola, zona1) %>% mutate(porcentaje=Freq/sum(Freq)) %>% 
   filter(segur_barrio == "Seguro o Muy seguro") 
 
@@ -158,7 +141,8 @@ g10.3
 
 <!-- ### 10.4 ¿Qué tan seguro o inseguro se siente en el barrio o vecindario donde usted vive? Según ola del estudio y nivel educacional. Suma de Respuestas "Seguro" o ”Muy Seguro". -->
 ```{r seguri-educ, fig.align='center',fig.cap='¿Qué tan seguro o inseguro se siente en el barrio o vecindario donde usted vive? Según ola del estudio y nivel educacional. Suma de Respuestas "Seguro" o ”Muy Seguro".'}
-datos.g10.4 <- data.frame((svytable(~educ + ola + segur_barrio, elsoc_diseno_m1, round = F))) %>% 
+
+datos.g10.4 <- data.frame((svytable(~educ + ola + segur_barrio, elsoc_diseno, round = F))) %>% 
   group_by(ola, educ) %>% mutate(porcentaje=Freq/sum(Freq)) %>% 
   filter(segur_barrio == "Seguro o Muy seguro") 
 
@@ -184,7 +168,7 @@ g10.4
 
 <!-- ### 10.5 ¿Qué tan seguro o inseguro se siente en el barrio o vecindario donde usted vive? Según ola del estudio y tramos de edad. Suma de Respuestas "Seguro" o ”Muy Seguro". -->
 ```{r seguri-edad, fig.align='center',fig.cap='¿Qué tan seguro o inseguro se siente en el barrio o vecindario donde usted vive? Según ola del estudio y tramos de edad. Suma de Respuestas "Seguro" o ”Muy Seguro".'}
-datos.g10.5 <- data.frame((svytable(~edadt + ola + segur_barrio, elsoc_diseno_m1, round = F))) %>% 
+datos.g10.5 <- data.frame((svytable(~edadt + ola + segur_barrio, elsoc_diseno, round = F))) %>% 
   group_by(ola, edadt) %>% mutate(porcentaje=Freq/sum(Freq)) %>% 
   filter(segur_barrio == "Seguro o Muy seguro") 
 
@@ -211,7 +195,7 @@ g10.5
 <!-- ### 10.6 ¿Qué tan seguro o inseguro se siente en el barrio o vecindario donde usted vive? Según ola del estudio y quintiles de ingreso per capita. Suma de Respuestas "Seguro" o ”Muy Seguro". -->
 ```{r seguri-quintil, fig.align='center',fig.cap='¿Qué tan seguro o inseguro se siente en el barrio o vecindario donde usted vive? Según ola del estudio y quintiles de ingreso per capita. Suma de Respuestas "Seguro" o ”Muy Seguro".'}
 
-datos.g10.6 <- data.frame((svytable(~quintil + ola + segur_barrio, elsoc_diseno_m1, round = F))) %>% 
+datos.g10.6 <- data.frame((svytable(~quintil + ola + segur_barrio, elsoc_diseno, round = F))) %>% 
   group_by(ola, quintil) %>% mutate(porcentaje=Freq/sum(Freq)) %>% 
   filter(segur_barrio == "Seguro o Muy seguro", quintil == "Q1" | quintil == "Q5") 
 
@@ -237,7 +221,7 @@ g10.6
 
 <!-- ### 10.7 ¿Qué tan seguro o inseguro se siente en el barrio o vecindario donde usted vive? Según ola del estudio e ideología política. Suma de Respuestas "Seguro" o ”Muy Seguro". -->
 ```{r seguri-ideolo, fig.align='center',fig.cap='¿Qué tan seguro o inseguro se siente en el barrio o vecindario donde usted vive? Según ola del estudio e ideología política. Suma de Respuestas "Seguro" o ”Muy Seguro".'}
-datos.g10.7 <- data.frame((svytable(~pos_id + ola + segur_barrio, elsoc_diseno_m1, round = F))) %>% 
+datos.g10.7 <- data.frame((svytable(~pos_id + ola + segur_barrio, elsoc_diseno, round = F))) %>% 
   group_by(ola, pos_id) %>% mutate(porcentaje=Freq/sum(Freq)) %>% 
   filter(segur_barrio == "Seguro o Muy seguro") 
 
@@ -258,6 +242,32 @@ g10.7 <-
   theme(legend.position = 'top',
         legend.title = element_blank())
 g10.7  
+```
+<!-- ### 10.Y ¿Qué tan seguro o inseguro se siente en el barrio o vecindario donde usted vive?, según grado de cumplimiento de aislamiento social (2021). -->
+```{r seguri-aisl, fig.align='center', fig.cap='¿Qué tan seguro o inseguro se siente en el barrio o vecindario donde usted vive? según grado de cumplimiento de aislamiento social (2021).'}
+
+datos.g10.Y <- 
+  data.frame((svytable(~segur_barrio + aislamiento + ola, elsoc_diseno, round = F))) %>%
+  group_by(aislamiento, ola) %>% mutate(porcentaje = Freq/sum(Freq)) %>% 
+  filter(ola == '2021') %>% 
+  na.omit()
+
+g10.Y <- 
+  datos.g10.Y %>% 
+  ggplot(aes(y = porcentaje, x = aislamiento, fill = segur_barrio, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = 'Cumplimiento aislamiento social') +
+  scale_fill_viridis_d(begin = 0, end = .99, direction = 1, option = 'viridis') +
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75, color = rep.int(c('white', 'white','black'), 3)) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+g10.Y
 ```
 
  
