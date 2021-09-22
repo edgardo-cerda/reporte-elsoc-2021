@@ -85,7 +85,7 @@ g14.2 <- datos.g14.2 %>%
 g14.2
 ```
 <!-- ### 14.3 Confianza en migrantes, según ola y origen de migrantes. Porcentaje de personas que responden “Bastante” o “Mucha confianza”. -->
-```{r conf-wave, fig.align='center',fig.cap='Confianza en migrantes, según ola y origen de migrantes. Porcentaje de personas que responden “Bastante” o “Mucha confianza”".}
+```{r conf-wave, fig.align='center',fig.cap='Confianza en migrantes, según ola y origen de migrantes. Porcentaje de personas que responden “Bastante” o “Mucha confianza”'}
 
 datos.g14.3 <- data.frame((svytable(~migrantes + ola + muestra + confianza_rec, elsoc_diseno_2, round = F))) %>%
   group_by(ola, migrantes) %>% mutate(porcentaje=Freq/sum(Freq)) %>% 
