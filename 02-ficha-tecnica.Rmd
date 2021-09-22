@@ -40,11 +40,16 @@ knitr::include_graphics(file.path('1_input', 'imagenes', 'olas_elsoc.png'))
 ```
 
 
-- Marco Muestral: Marco de muestreo de manzanas del pre-censo 2011, trabajo elaborado por el Centro de Inteligencia Territorial (CIT) de la Universidad Adolfo Ibáñez
+- Marco Muestral: Marco de muestreo de manzanas del pre-censo 2011
 
-- Diseño Muestral: Probabilístico, estratificado (por tamaño de ciudades), por conglomerados y multietápico.
+- Diseño Muestral: Probabilístico, estratificado (por tamaño de ciudades), por conglomerados y multietápico
 
-- Unidades de Muestreo: Primero se eligen ciudades (UPM), luego manzanas (USM), y sub-bloques y viviendas (UTM). La unidad final de selección es la persona.
+- Unidades de Muestreo: Primero se eligen ciudades (UPM), luego manzanas (USM), y sub-bloques y viviendas (UTM). La unidad final de selección es la persona
+
+```{r, echo=FALSE}
+knitr::include_graphics(file.path('1_input', 'imagenes', '1_input/imagenes/etapas_seleccion.jpg'))
+```
+
 
 **Organismo Ejecutor**: Consultora Stephanie Eckman y Centro de Inteligencia Territorial (CIT) de la Universidad Adolfo Ibáñez
 

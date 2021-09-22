@@ -8,8 +8,7 @@ editor_options:
 
 Radiografía del Cambio Social tiene como objetivo fundamental caracterizar la estabilidad y el cambio en opiniones, actitudes y conductas de los participantes a lo largo del tiempo, enfocándose en distintas dimensiones de la cohesión y conflicto en Chile. 
 
-
-Para el logro de dicho objetivo, el presente reporte se centrará en un subconjunto de participantes del estudio: los 2096 entrevistados que participaron en las cuatro primeras olas de ELSOC (como parte de la muestra original). Dicha submuestra será la base empírica de los hallazgos expuestos en las siguientes secciones. 
+Para el logro de dicho objetivo, el presente reporte se centrará en un subconjunto de participantes del estudio: los 1.513 entrevistados y entrevistadas que participaron en las cinco olas de ELSOC (por lo tanto, todos son parte de la muestra original). Dicha submuestra será la base empírica de los hallazgos expuestos en las siguientes secciones. 
 
 A continuación se describe a este grupo de participantes según los mismos atributos sociodemográficos (sexo, edad, educación, zona de residencia y religión), considerando la primera medición. Todos los resultados presentados incorporan el diseño muestral complejo de la encuesta.
 
@@ -24,7 +23,7 @@ A continuación, se presentan los principales resultados de la encuesta ELSOC el
 
 - Foco en la evolución y cambio en las actitudes de la población, aún cuando en ocasiones se analizan preguntas incluidas en una o dos olas del estudio. 
 - Uso de pruebas estadísticas específicas para el análisis longitudinal. 
-- Utilización de submuestra de XXXX participantes del estudio presentes en las cinco mediciones (2016, 2017, 2018, 2019 y 2021). 
+- Utilización de submuestra de 1.513 participantes del estudio presentes en las cinco mediciones (2016, 2017, 2018, 2019 y 2021). 
 - Tamaños muestrales reportados menores se explican exclusivamente por no respuesta a ítemes específicos.
 - Utilización del diseño muestral complejo (ponderador muestral ajustado a población regional y sexo, estrato y conglomerado muestral) en el desarrollo de figuras descriptivas y pruebas inferenciales. 
 
