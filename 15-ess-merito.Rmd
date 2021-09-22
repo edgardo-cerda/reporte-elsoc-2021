@@ -163,7 +163,7 @@ g11.4
 ## Movilidad social
 
 <!-- ### 11.X  Perpectiva de movilidad social, según ola.  -->
-```{r mov-soc-rec, fig.align='center',fig.cap='Perpectiva de movilidad social, según ola'.}
+```{r mov-soc-rec, fig.align='center',fig.cap='Perpectiva de movilidad social, según ola'}
 datos.g11.X <- 
   data.frame((svytable(~mov_interg_rec + ola, elsoc_diseno, round = F))) %>%
   group_by(ola) %>% 
@@ -189,7 +189,7 @@ g11.X <-
 g11.X
 ```
 <!-- ### 11.Y  Estatus subjetivo y tipo de movilidad social, nivel promedio según ola.  -->
-```{r mov-soc, fig.align='center',fig.cap='Estatus subjetivo y tipo de movilidad social, nivel promedio según ola'.}
+```{r mov-soc, fig.align='center',fig.cap='Estatus subjetivo y tipo de movilidad social, nivel promedio según ola'}
 
 elsoc_movilidad <- elsoc_panel_m1 %>%
   group_by(ola) %>% 

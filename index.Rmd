@@ -89,7 +89,7 @@ ggplot2::theme_set(new = theme_test(base_family = "serif"))
 
 # Introducción
 
-El Centro de Estudios de Conflicto y Cohesión Social (COES) tiene el agrado de publicar el informe “Radiografía del Cambio Social”, el cual consolida los principales hallazgos longitudinales de cuatro mediciones anuales del Estudio Longitudinal Social de Chile (ELSOC 2016-2021).
+El Centro de Estudios de Conflicto y Cohesión Social (COES) tiene el agrado de publicar el informe “Radiografía del Cambio Social”, el cual consolida los principales hallazgos longitudinales de cinco mediciones anuales del Estudio Longitudinal Social de Chile (ELSOC 2016-2021).
 
 ELSOC es una encuesta desarrollada para analizar longitudinalmente, en un estudio panel, la evolución del conflicto y cohesión social en la sociedad chilena, basándose en modelos conceptuales descritos en la literatura nacional e internacional de las disciplinas del ámbito de la Economía, Sociología, Psicología, Ciencia Política y Estudios Urbanos. De este modo, se orienta a examinar los principales antecedentes, factores moderadores y mediadores, así como las principales consecuencias asociadas al desarrollo de distintas formas de sociabilidad en Chile.
 

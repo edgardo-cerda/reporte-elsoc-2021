@@ -6,11 +6,13 @@ editor_options:
 
 # Atrición de la muestra
 
-El diseño de ELSOC contempló entrevistar a 3.000 personas en su muestra original y 1.500 en la muestra refresco. Sin embargo, es habitual que en encuestas panel se reduce el número de participantes, dado que algunos optarían voluntariamente por dejar de participar en el estudio y otras personas no podrían ser recontactadas. Este fenómeno es conocido como atrición, y pueden tener efectos nocivos sobre la utilidad de los datos longitudinales. En el caso de ELSOC, la tasa de atrición es comparativamente baja en comparación a otros estudios similares, por lo que no se considera al momento un problema significativo. A pesar de esto, el año 2018 se introduce una muestra refresco para contraarrestar el efecto de la atrición. 
+El diseño de ELSOC contempló entrevistar a 3.000 personas en su muestra original y 1.500 en la muestra refresco. Sin embargo, es habitual que en encuestas panel se reduce el número de participantes, dado que algunos optan voluntariamente por dejar de participar y otras personas no pueden ser recontactadas. Este fenómeno es conocido como atrición, y pueden tener efectos nocivos sobre la utilidad de los datos longitudinales. En el caso de ELSOC, la tasa de atrición es comparativamente baja en comparación a otros estudios similares, por lo que no se considera al momento un problema significativo. A pesar de esto, el año 2018 se introduce una muestra refresco para contraarrestar el efecto de la atrición. 
 
-El año 2021, la atrición presenta un alza importante debido a la mayor dificultad que implica el levantamiento durante la pandemia de COVID-19 y al cambio de modalidad. 
+El año 2021, la atrición presenta un alza importante debido a la mayor dificultad que implica el levantamiento durante la pandemia de COVID-19 y al cambio de modalidad.
 
 ```{r, echo=FALSE, warning=FALSE}
+library(tidyverse)
+library(kableExtra)
 tabla_atricion <- data.frame(Medicon = c(2016, 2017, 2018, 2019, 2021),
                              Muestra_lograda_original = scales::number(c(2927, 2473, 2229, 2153, 1739)),
                              atricion_original = scales::percent(c(NA, .155, .099, .034, .192)),
@@ -20,7 +22,7 @@ tabla_atricion <- data.frame(Medicon = c(2016, 2017, 2018, 2019, 2021),
 options(knitr.kable.NA = '')
 
 tabla_atricion %>% 
-    kbl(align = c('l', 'c', 'c', 'c', 'c'),
+    kbl(align = c('c', 'c', 'c', 'c', 'c'),
         col.name = c('Medición', rep(c('Muestra lograda', 'Atrición'), 2))) %>% 
     kable_styling(full_width = F) %>% 
     kable_classic_2() %>% 
