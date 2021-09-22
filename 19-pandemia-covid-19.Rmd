@@ -232,6 +232,9 @@ g19.9
 
 ## Estrés Financiero
 ```{r satisfaccion-wave, echo=FALSE, fig.align='center', fig.cap= 'Satisfacción con el Ingreso por Ola'}
+elsoc_diseno <- svydesign(ids = ~segmento, strata = ~estrato, 
+                          weights = ~ponderador02, nest = TRUE, data = elsoc_panel_m1)
+
 datos.grafico <- data.frame((svytable(~m43 + ola, 
                                       elsoc_diseno, round = F))) %>% 
   group_by(ola) %>% 

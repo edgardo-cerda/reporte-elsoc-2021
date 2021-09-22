@@ -58,10 +58,8 @@ elsoc_panel_m1$c19_04_rec <- factor(car::recode(as.numeric(elsoc_panel_m1$c19_04
                                 labels = c('Desacuerdo', 'Ni acuerdo ni desacuerdo', 'De Acuerdo'))
 
 #Horas de Cuidado
-elsoc_panel_m1$m17_rec <- factor(car::recode(elsoc_panel_m1$m17, '0:3=1;4:9=2;10:29=3;30:59=4;60:300=5; else="NS/NR"', as.factor = TRUE), levels = c(1,2,3,4,5),
+elsoc_panel_m1$m17_rec <- factor(car::recode(elsoc_panel_m1$m17, '0:3=1;4:9=2;10:29=3;30:59=4;60:300=5', as.factor = TRUE), levels = c(1,2,3,4,5),
                           labels = c('0-3 Horas','4-9 Horas','10-29 Horas', '30-59 Horas', '60 o más Horas'))
-elsoc_panel_m1$m17_rec <- sjlabelled::set_label(elsoc_panel_m1$m17_rec, label = c("Horas de Cuidado en Tramos")) 
-
 elsoc_diseno <- svydesign(ids = ~segmento,
                           strata = ~estrato, 
                           weights = ~ponderador02,
@@ -485,10 +483,10 @@ g16.9
 
 ```{r ocup-sexo-ola, fig.align='center',fig.cap='Porcentaje de trabajadores y trabajadoras no remunerados, según ola y sexo del entrevistado'}
 #1
-elsoc_long$empleo <- na.replace(elsoc_long$empleo, "NS/NR") #recode NA en categoría "NS/NR"
+elsoc_panel_m1$empleo <- na.replace(elsoc_panel_m1$empleo, "NS/NR") #recode NA en categoría "NS/NR"
 
 elsoc_diseno <- svydesign(ids = ~segmento, strata = ~estrato, 
-                          weights = ~ponderador02, nest = TRUE, data = elsoc_panel)
+                          weights = ~ponderador02, nest = TRUE, data = elsoc_panel_m1)
 
 datos.grafico <- data.frame((svytable(~empleo + ola + idencuesta + 
                                         m0_sexo, elsoc_diseno, round = F))) %>% 
@@ -534,8 +532,8 @@ g16.10
 ```
 
 
-```{r m17, fig.align='center', fig.cap='Horas de Cuidado'}
-
+```{r m17, eval=FALSE, fig.align='center', fig.cap='Horas de Cuidado'}
+#PENDIENTE
 #1
 datos.grafico <- data.frame((svytable(~m17_rec + ola + idencuesta, 
                                       elsoc_diseno, round = F))) %>% 
