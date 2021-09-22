@@ -29,11 +29,11 @@ elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de
 ```
 
 ```{r}
+
 datos.3.1 <- data.frame((svytable(~aut_dem + ola + idencuesta, elsoc_diseno, round = F))) %>% 
   dplyr::filter(Freq>0)  %>% 
   group_by(ola) %>% 
   mutate(porcentaje=Freq/sum(Freq)) %>% 
-  filter(ola == '2021') %>% 
   na.omit()
 
 etiquetas.3.1 <- data.frame((svytable(~aut_dem + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>% na.omit() %>% 
@@ -88,7 +88,6 @@ datos.3.2 <- data.frame((svytable(~sat_dem + ola, elsoc_diseno, round = F))) %>%
   filter(sat_dem == 'Nada satisfecho') %>%
   na.omit()
 
-view(datos.3.2)
 ```
 
 
@@ -148,13 +147,3 @@ g.3.3
 
 
 ```
-
-
-
-<!-- ### 3.4 Grado de acuerdo con las siguientes afirmaciones Porcentaje que responde De acuerdo o Totalmente de acuerdo  -->
-```{r include=FALSE}
-
-```
-
-
-
