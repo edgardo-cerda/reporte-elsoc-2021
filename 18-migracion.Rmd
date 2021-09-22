@@ -1,13 +1,12 @@
 # Migración
-```{r include=FALSE}
-# Librerías y datos -------------------------------------------------------
+```{r disenno-18, include=FALSE}
+
 rm(list = ls())
 library(survey)
 library(tidyverse)
 library(ggrepel)
 load("1_input/datos_elsoc.RData")
 
-# Diseño complejo ---------------------------------------------------------
 elsoc_diseno_2 <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
                           nest = TRUE, data = elsoc_panel)
 ```

@@ -1,5 +1,5 @@
 # Estatus subjetivo y Percepción de Mérito
-```{r Disenno complejo2, include=FALSE}
+```{r disenno-15, include=FALSE}
 rm(list = ls())
 library(survey)
 library(tidyverse)

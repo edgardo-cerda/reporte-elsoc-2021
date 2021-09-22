@@ -1,6 +1,6 @@
-# Conflicto barrial
+## Conflicto barrial
 
-```{r Disenno-complejo, include=FALSE}
+```{r disenno-12, include=FALSE}
 knitr::opts_chunk$set(cache=FALSE, 
                       warning = FALSE, 
                       message = FALSE) 
@@ -178,12 +178,13 @@ g8.6
 ## Conflicto barrial agregrado
 
 ```{r recode-mapas ,include=FALSE}
-## library ----------------------------------------------------------------
+
+## library 
 library(sf)
 library(chilemapas)
 library(rgdal)
         
-## mapa comunas ----------------------------------------------------------------
+## mapa comunas 
 
 elsoc_comuna <- elsoc_panel_m1 %>% 
   filter(region_cod == 13, ola == '2021') %>% 
@@ -199,7 +200,7 @@ comunas_rm <- merge(comunas_rm,elsoc_comuna, by.x="codigo_comuna",by.y="comuna_c
 
 #comunas_rm <- comunas_rm %>% drop_na()
 
-## mapa_region --------------------------------------------------------------
+## mapa_region 
 
 elsoc_region <- elsoc_panel_m1 %>% 
   filter(ola == '2021') %>% 

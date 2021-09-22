@@ -1,6 +1,6 @@
 ## Aislamiento social (caracterízación)
 
-```{r Disenno complejo, include=FALSE}
+```{r disenno-13, include=FALSE}
 knitr::opts_chunk$set(cache=FALSE, 
                       warning = FALSE, 
                       message = FALSE) 
