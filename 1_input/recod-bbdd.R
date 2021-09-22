@@ -173,7 +173,7 @@ elsoc_long$retiro2 <- factor(elsoc_long$m63_03, levels = c(1,2), labels = c("Si"
 #-----------K.- Identificaciaon politica
 
 #Recodificar posicion ideologica
-elsoc_long$pos_id <- car::recode(elsoc_long$c15, recodes = "c(0,1,2,3,4)=1; c(5)=2; c(6,7,8,9,10)=3; c(11,12)=4; else=NA", as.factor = TRUE)
+elsoc_long$pos_id <- car::recode(elsoc_long$c15, recodes = "c(0,1,2,3,4)=1; c(5)=2; c(6,7,8,9,10)=3; c(11,12, -999, -888)=4", as.factor = TRUE)
 
 #Pasar a factor
 elsoc_long$pos_id <- factor(elsoc_long$pos_id,

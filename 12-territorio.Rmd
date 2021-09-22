@@ -1,6 +1,6 @@
 # Conflicto barrial
 
-```{r Disenno complejo, include=FALSE}
+```{r Disenno-complejo, include=FALSE}
 knitr::opts_chunk$set(cache=FALSE, 
                       warning = FALSE, 
                       message = FALSE) 
