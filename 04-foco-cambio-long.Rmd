@@ -1,0 +1,34 @@
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+# Foco en el cambio individual
+
+Radiografía del Cambio Social tiene como objetivo fundamental caracterizar la estabilidad y el cambio en opiniones, actitudes y conductas de los participantes a lo largo del tiempo, enfocándose en distintas dimensiones de la cohesión y conflicto en Chile. 
+
+
+Para el logro de dicho objetivo, el presente reporte se centrará en un subconjunto de participantes del estudio: los 2096 entrevistados que participaron en las cuatro primeras olas de ELSOC (como parte de la muestra original). Dicha submuestra será la base empírica de los hallazgos expuestos en las siguientes secciones. 
+
+A continuación se describe a este grupo de participantes según los mismos atributos sociodemográficos (sexo, edad, educación, zona de residencia y religión), considerando la primera medición. Todos los resultados presentados incorporan el diseño muestral complejo de la encuesta.
+
+**Nota 1:** El promedio de edad de los participantes se ha incrementado entre estos años. También hay evidencia de un descenso en la identificación religiosa al comparar distintos años del estudio. Las otras variables no presentan variaciones relevantes a lo largo del tiempo.
+
+**Nota 2:** Se utiliza el ponderador muestral ajustado a población regional y sexo, estrato y conglomerado muestral.
+
+
+## Nota Explicativa 
+
+A continuación, se presentan los principales resultados de la encuesta ELSOC elaborados por investigadores del Centro de Conflicto y Cohesión Social (COES). Dada la diversidad de temas que son abordados en la encuesta, los investigadores colaboradores utilizaron diversos enfoques teóricos y herramientas empíricas en su análisis. Sin embargo, en Radiografía del Cambio Social se han definido una serie de criterios comunes para el desarrollo de resultados empíricos:
+
+- Foco en la evolución y cambio en las actitudes de la población, aún cuando en ocasiones se analizan preguntas incluidas en una o dos olas del estudio. 
+- Uso de pruebas estadísticas específicas para el análisis longitudinal. 
+- Utilización de submuestra de XXXX participantes del estudio presentes en las cinco mediciones (2016, 2017, 2018, 2019 y 2021). 
+- Tamaños muestrales reportados menores se explican exclusivamente por no respuesta a ítemes específicos.
+- Utilización del diseño muestral complejo (ponderador muestral ajustado a población regional y sexo, estrato y conglomerado muestral) en el desarrollo de figuras descriptivas y pruebas inferenciales. 
+
+
+**Levantamiento durante COVID-19**
+
+
