@@ -17,14 +17,13 @@ g11.1 <- datos.grafico %>%
   ggplot(aes(y = porcentaje, x = edadt, fill = c43, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
   theme_bw() + 
-  geom_col(position = 'dodge2') +
+  geom_col(position = 'stack') +
   scale_y_continuous(labels = scales::percent,
                      limits = c(0, 1)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
-  geom_text(vjust = -0.8,
-            position = position_dodge(width = .9),
+  geom_text(position = position_stack(vjust = 0.5),
             size= 2.75)  + 
   theme(legend.position = 'top',
         legend.title = element_blank()) 
@@ -48,14 +47,13 @@ g11.2 <- datos.subset %>%
   ggplot(aes(y = porcentaje, x = ola, fill = c44, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
   theme_bw() + 
-  geom_col(position = 'dodge2') +
+  geom_col(position = 'stack') +
   scale_y_continuous(labels = scales::percent,
                      limits = c(0, 1)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
-  geom_text(vjust = -0.8,
-            position = position_dodge(width = .9),
+  scale_fill_viridis_d(begin = .33, end = .85, direction = -1, option = 'viridis') +
+  geom_text(position = position_stack(vjust = 0.5),
             size= 2.75)  + 
   theme(legend.position = 'top',
         legend.title = element_blank())
@@ -98,7 +96,7 @@ g11.3
 datos.grafico <- data.frame((svytable(~particip_electoral + pos_id + ola, 
                                       elsoc_diseno, round = F))) %>% 
   group_by(pos_id, ola) %>% 
-  mutate(porcentaje=Freq/sum(Freq)) 
+  mutate(porcentaje=Freq/sum(Freq))
 
 datos.subset <- droplevels(subset(datos.grafico, datos.grafico$particip_electoral == "Si" & 
                                   (datos.grafico$ola == '2016' | 
