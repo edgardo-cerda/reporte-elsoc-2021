@@ -7,7 +7,8 @@ editor_options:
 # Pandemia Covid-19
 
 ## Cuarentenas 
-```{r hist-fecha-2021}
+```{r hist-fecha-2021, fig.align='center', fig.cap="Histograma Fechas de Entrevistas"}
+load("1_input/elsoc_covid.RData")
 elsoc_diseno_3 <- svydesign(ids = ~segmento,
                           strata = ~estrato, 
                           weights = ~ponderador02,
@@ -34,7 +35,7 @@ g19.1 <- datos.grafico %>%
 g19.1
 ```
 
-```{r ccum-heter}
+```{r ccum-heter, fig.align='center', fig.cap="Heterogeneidad de Cuarentena Acumulada en el Panel"}
 g19.2 <- elsoc_covid_panel %>% 
   ggplot(aes(x=ccum)) + 
   geom_histogram(aes(y = ..density..), bins=30) + 
@@ -46,7 +47,7 @@ g19.2 <- elsoc_covid_panel %>%
 g19.2
 ```
 
-```{r ccum-zona}
+```{r ccum-zona, fig.align='center', fig.cap='Días de Cuarentena Acumulada, según Zona'}
 datos.grafico <- data.frame((svytable(~ccum_t + zona1, 
                                       elsoc_diseno_3, round = F))) %>% 
   group_by(zona1) %>% 
@@ -66,13 +67,12 @@ g19.3 <- datos.grafico %>%
   geom_text(position = position_stack(vjust = .5),
             size= 2.75, color = rep.int(c('black', 'black', 'white', 'white'), 4)) + 
   theme(legend.position = 'top',
-        legend.title = element_blank()) +
-  ggtitle('Días de Cuarentena Acumulada, según Zona')
+        legend.title = element_blank()) 
 
 g19.3
 ```
 
-```{r ccum-edad}
+```{r ccum-edad, fig.align='center', fig.cap='Días de Cuarentena Acumulada, según Tramo Etario'}
 datos.grafico <- data.frame((svytable(~ccum_t + edadt, 
                                       elsoc_diseno_3, round = F))) %>% 
   group_by(edadt) %>% 
@@ -92,13 +92,12 @@ g19.4 <- datos.grafico %>%
   geom_text(position = position_stack(vjust = .5),
             size= 2.75, color = rep.int(c('black', 'black', 'white', 'white'), 4)) + 
   theme(legend.position = 'top',
-        legend.title = element_blank()) +
-  ggtitle('Días de Cuarentena Acumulada, según Tramo Etario')
+        legend.title = element_blank())
 
 g19.4
 ```
 
-```{r ccum-aislamiento}
+```{r ccum-aislamiento, fig.align='center', fig.cap='Cumplimiento de Aislamiento Social, según Días de Cuarentena Acumulada'}
 datos.grafico <- data.frame((svytable(~c48 + ccum_t, 
                                       elsoc_diseno_3, round = F))) %>% 
   group_by(ccum_t) %>% 
@@ -118,17 +117,17 @@ g19.5 <- datos.grafico %>%
   geom_text(position = position_stack(vjust = .5),
             size= 2.75, color = rep.int(c('black', 'black', 'white', 'white', 'white'), 4)) + 
   theme(legend.position = 'top',
-        legend.title = element_blank()) +
-  ggtitle('Cumplimiento de Aislamiento Social, según Días de Cuarentena Acumulada')
+        legend.title = element_blank())
 
 g19.5
 ```
 
-```{r ccum-depr}
-datos.grafico <- data.frame((svytable(~depr + ccum_t, 
+```{r ccum-depr, fig.align='center', fig.cap= 'Sintomatología Depresiva, según Días de Cuarentena Acumulada'}
+datos.grafico <- data.frame((svytable(~depr + ccum_t + ola, 
                                       elsoc_diseno_3, round = F))) %>% 
-  group_by(ccum_t) %>% 
-  mutate(porcentaje=Freq/sum(Freq))
+  group_by(ccum_t, ola) %>% 
+  mutate(porcentaje=Freq/sum(Freq))%>%
+  filter(ola==2021)
 
 g19.6 <- datos.grafico %>% 
   ggplot(aes(y = porcentaje, x = ccum_t, fill = depr, 
@@ -144,19 +143,17 @@ g19.6 <- datos.grafico %>%
   geom_text(position = position_stack(vjust = .5),
             size= 2.75, color = rep.int(c('black', 'black', 'white', 'white'), 4)) + 
   theme(legend.position = 'top',
-        legend.title = element_blank()) +
-  ggtitle('Sintomatología Depresiva, según Días de Cuarentena Acumulada')
-
+        legend.title = element_blank())
 g19.6
 ```
 
-```{r ccum-sit_ocup}
+```{r ccum-sit_ocup, fig.align='center', fig.cap= 'Días de Cuarentena Acumulada, según Situación Ocupacional'}
 datos.grafico <- data.frame((svytable(~ccum_t + empleo, 
                                       elsoc_diseno_3, round = F))) %>% 
   group_by(empleo) %>% 
   mutate(porcentaje=Freq/sum(Freq))
 
-g19.6 <- datos.grafico %>% 
+g19.7 <- datos.grafico %>% 
   ggplot(aes(y = porcentaje, x = empleo, fill = ccum_t, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
@@ -170,20 +167,52 @@ g19.6 <- datos.grafico %>%
   geom_text(position = position_stack(vjust = .5),
             size= 2.75, color = rep.int(c('black', 'black', 'white', 'white'), 5)) + 
   theme(legend.position = 'top',
-        legend.title = element_blank()) +
-  ggtitle('Días de Cuarentena Acumulada, según Situación Ocupacional')
+        legend.title = element_blank())
 
-g19.6
+g19.7
 ```
 
-```{r}
+```{r ccum-ahorro, fig.align='center', fig.cap= 'Días de Cuarentena Acumulada, según Situación Ocupacional'}
+elsoc_covid_panel$m44_rec <- car::recode(elsoc_covid_panel$m44,
+                               "c(1,2)='Nada o Pocos Ahorros';
+c(3)='Algo de Ahorros';
+c(4,5)='Bastante o Muchos Ahorros'")
+
+elsoc_diseno_3 <- svydesign(ids = ~segmento, strata = ~estrato, 
+                          weights = ~ponderador02, nest = TRUE, data = elsoc_covid_panel)
+
+datos.grafico <- data.frame((svytable(~ccum_t + m44_rec, 
+                                      elsoc_diseno_3, round = F))) %>% 
+  group_by(m44_rec) %>% 
+  mutate(porcentaje=Freq/sum(Freq))
+
+g19.8 <- datos.grafico %>% 
+  ggplot(aes(y = porcentaje, x = m44_rec, fill = ccum_t, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .33, end = .85, direction = -1, option = 'viridis') +
+  #cambiar geom_text tal que: Stack y cambio colores
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75, color = rep.int(c('black', 'black', 'white', 'white'), 3)) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank()) 
+
+g19.8
+```
+
+```{r cuarentena-etario, fig.align='center', fig.cap= 'Encuestados en Cuarentena según Tramo Etario'}
 datos.grafico <- data.frame((svytable(~cuarentena + edadt + ola, 
                                       elsoc_diseno_3, round = F))) %>% 
   group_by(edadt + ola) %>% 
   mutate(porcentaje=Freq/sum(Freq)) %>% 
   filter(ola==2021)
 
-g19.7 <- datos.grafico %>% 
+g19.9 <- datos.grafico %>% 
   ggplot(aes(y = porcentaje, x = cuarentena, fill = edadt, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
   theme_bw() + 
@@ -196,22 +225,20 @@ g19.7 <- datos.grafico %>%
   geom_text(position = position_stack(vjust = .5),
             size= 2.75) +
   theme(legend.position = 'top',
-        legend.title = element_blank()) +
-  ggtitle('Encuestados en Cuarentena según Tramo Etario')
+        legend.title = element_blank())
 
-g19.7
+g19.9
 ```
 
-## Perdida de Ingresos
-
-```{r satisfaccion-wave, echo=FALSE, fig.align='center'}
+## Estrés Financiero
+```{r satisfaccion-wave, echo=FALSE, fig.align='center', fig.cap= 'Satisfacción con el Ingreso por Ola'}
 datos.grafico <- data.frame((svytable(~m43 + ola, 
                                       elsoc_diseno, round = F))) %>% 
   group_by(ola) %>% 
   mutate(porcentaje=Freq/sum(Freq)) %>%
   drop_na()
 
-g19.8 <- datos.grafico %>% 
+g19.10 <- datos.grafico %>% 
   ggplot(aes(y = porcentaje, x = ola, fill = m43, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
@@ -225,20 +252,17 @@ g19.8 <- datos.grafico %>%
   geom_text(position = position_stack(vjust = .5),
             size= 2.75, color = rep.int(c('black', 'black','white', 'white','white' ), 3)) + 
   theme(legend.position = 'top',
-        legend.title = element_blank()) +
-  ggtitle('Satisfacción con el Ingreso por Ola')
-
-g19.8
-
+        legend.title = element_blank()) 
+g19.10
 ```
 
-```{r satisfaccion-retiro, echo=FALSE, fig.align='center'}
+```{r satisfaccion-retiro, echo=FALSE, fig.align='center', fig.cap= 'Satisfacción con el Ingreso según Retiro AFP'}
 datos.grafico <- data.frame((svytable(~m16 + m63_02, 
                                       elsoc_diseno, round = F))) %>% 
   group_by(m63_02) %>% 
   mutate(porcentaje=Freq/sum(Freq))
 
-g19.9 <- datos.grafico %>% 
+g19.11 <- datos.grafico %>% 
   ggplot(aes(y = porcentaje, x = m63_02, fill = m16, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
@@ -252,20 +276,25 @@ g19.9 <- datos.grafico %>%
   geom_text(position = position_stack(vjust = .5),
             size= 2.75) + 
   theme(legend.position = 'top',
-        legend.title = element_blank()) +
-  ggtitle('Satisfacción con el Ingreso según Retiro AFP')
+        legend.title = element_blank()) 
 
-g19.9
+g19.11
 ```
 
-```{r clase.sub-benef.estatal, echo=FALSE, fig.align='center'}
+```{r clase.sub-benef.estatal, echo=FALSE, fig.align='center', fig.cap='Satisfacción con el Ingreso según Acceso a Beneficios'}
+elsoc_diseno_2 <- svydesign(ids = ~segmento,
+                          strata = ~estrato, 
+                          weights = ~ponderador02,
+                          nest = TRUE,
+                          data = elsoc_panel)
+
 datos.grafico <- data.frame((svytable(~clase.sub + m63_01, 
                                       elsoc_diseno_2, round = F))) %>% 
   group_by(m63_01) %>% 
   mutate(porcentaje=Freq/sum(Freq)) %>%
   drop_na()
 
-gr.17.1 <- datos.grafico %>% 
+g19.12 <- datos.grafico %>% 
   ggplot(aes(y = porcentaje, x = m63_01, fill = clase.sub, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
@@ -279,20 +308,19 @@ gr.17.1 <- datos.grafico %>%
   geom_text(position = position_stack(vjust = .5),
             size= 2.75) + 
   theme(legend.position = 'top',
-        legend.title = element_blank()) +
-  ggtitle('Satisfacción con el Ingreso según Acceso a Beneficios')
+        legend.title = element_blank()) 
 
-gr.17.1
+g19.12
 ```
 
-```{r clase.sub.hij-1erretiro, echo=FALSE, fig.align='center'}
+```{r clase.sub.hij-1erretiro, echo=FALSE, fig.align='center', fig.cap='Clase Social Subjetiva de Hijo según Primer Retiro AFP'}
 datos.grafico <- data.frame((svytable(~clase.sub.hijos + m63_02, 
                                       elsoc_diseno_2, round = F))) %>% 
   group_by(m63_02) %>% 
   mutate(porcentaje=Freq/sum(Freq)) %>%
   drop_na()
 
-g19.10 <- datos.grafico %>% 
+g19.13 <- datos.grafico %>% 
   ggplot(aes(y = porcentaje, x = m63_02, fill = clase.sub.hijos, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
@@ -306,20 +334,19 @@ g19.10 <- datos.grafico %>%
   geom_text(position = position_stack(vjust = .5),
             size= 2.75) + 
   theme(legend.position = 'top',
-        legend.title = element_blank()) +
-  ggtitle('Clase Social Subjetiva de Hijo según Primer Retiro AFP')
+        legend.title = element_blank())
 
-g19.10
+g19.13
 ```
 
-```{r endeud-1retiro, echo=FALSE, fig.align='center'}
+```{r endeud-1retiro, echo=FALSE, fig.align='center', fig.cap='Sobrecarga de Deuda según Primer Retiro AFP'}
 datos.grafico <- data.frame((svytable(~m43 + m63_02, 
                                       elsoc_diseno_2, round = F))) %>% 
   group_by(m63_02) %>% 
   mutate(porcentaje=Freq/sum(Freq)) %>%
   drop_na()
 
-g19.11 <- datos.grafico %>% 
+g19.14 <- datos.grafico %>% 
   ggplot(aes(y = porcentaje, x = m63_02, fill = m43, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
@@ -333,20 +360,19 @@ g19.11 <- datos.grafico %>%
   geom_text(position = position_stack(vjust = .5),
             size= 2.75) + 
   theme(legend.position = 'top',
-        legend.title = element_blank()) +
-  ggtitle('Sobrecarga de Deuda según Primer Retiro AFP')
+        legend.title = element_blank())
 
-g19.11
+g19.14
 ```
 
-```{r endeud-2retiro, echo=FALSE, fig.align='center'}
+```{r endeud-2retiro, echo=FALSE, fig.align='center', fig.cap='Sobrecarga de Deuda según Primer Retiro AFP'}
 datos.grafico <- data.frame((svytable(~m43 + m63_03, 
                                       elsoc_diseno_2, round = F))) %>% 
   group_by(m63_03) %>% 
   mutate(porcentaje=Freq/sum(Freq)) %>%
   drop_na()
 
-g19.12 <- datos.grafico %>% 
+g19.15 <- datos.grafico %>% 
   ggplot(aes(y = porcentaje, x = m63_03, fill = m43, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
@@ -360,10 +386,8 @@ g19.12 <- datos.grafico %>%
   geom_text(position = position_stack(vjust = .5),
             size= 2.75) + 
   theme(legend.position = 'top',
-        legend.title = element_blank()) +
-  ggtitle('Sobrecarga de Deuda según Primer Retiro AFP')
-
-g19.12
+        legend.title = element_blank()) 
+g19.15
 ```
 
 ```{r deuda-retiro1, fig.align='center',fig.cap="Primer retiro de AFP, según deuda"}
@@ -399,7 +423,7 @@ datos.grafico$porcentaje <- with(datos.grafico, case_when(
 
 #graficamos
 
-g19.5 <-datos.grafico %>% 
+g19.16 <-datos.grafico %>% 
   ggplot(aes(y = porcentaje, x = variable, fill = retiro1, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
   theme_bw() + 
@@ -415,7 +439,7 @@ g19.5 <-datos.grafico %>%
   theme(legend.position = 'top',
         legend.title = element_blank())
 
-g19.5
+g19.16
 ```
 
 ```{r deuda-retiro2, fig.align='center',fig.cap="Segundo retiro de AFP, según deuda"}
@@ -451,7 +475,7 @@ datos.grafico$porcentaje <- with(datos.grafico, case_when(
 
 #graficamos
 
-g19.13 <-datos.grafico %>% 
+g19.17 <-datos.grafico %>% 
   ggplot(aes(y = porcentaje, x = variable, fill = retiro2, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
   theme_bw() + 
@@ -467,7 +491,7 @@ g19.13 <-datos.grafico %>%
   theme(legend.position = 'top',
         legend.title = element_blank())
 
-g19.13
+g19.17
 ```
 
 ```{r deuda-benef, fig.align='center',fig.cap="Beneficios Estatales, según deuda"}
@@ -503,7 +527,7 @@ datos.grafico$porcentaje <- with(datos.grafico, case_when(
 
 #graficamos
 
-g19.14 <-datos.grafico %>% 
+g19.17 <-datos.grafico %>% 
   ggplot(aes(y = porcentaje, x = variable, fill = benef_estado, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
   theme_bw() + 
@@ -519,5 +543,6 @@ g19.14 <-datos.grafico %>%
   theme(legend.position = 'top',
         legend.title = element_blank())
 
-g19.14
+g19.17
 ```
+

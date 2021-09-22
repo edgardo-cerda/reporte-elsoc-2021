@@ -151,7 +151,7 @@ g1.4 <- ggplot(datos.1.4 , aes(x = ola, fill = movsoc, stratum = movsoc,
   theme(legend.position = 'top',
         legend.title = element_blank()) +
   scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
-  geom_text(data = etiquetas.1., 
+  geom_text(data = etiquetas.1.4, 
             aes(label = scales::percent(porcentaje, accuracy = .1)),
             position = position_stack(vjust = .5),
             show.legend = FALSE,

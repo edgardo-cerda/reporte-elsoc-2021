@@ -9,8 +9,6 @@ editor_options:
 
 ## Justificación de la violencia para el control social – a manos de ciudadanos
 
-<!-- ### 6.1 Justificación de la violencia en relación a delincuencia, según ola de encuesta -->
-
 ```{r just-vio-ola, fig.aligN='center', fig.cap='Justificación de la violencia en relación a delincuencia, según ola de encuesta'}
 datos.alta <- data.frame((svytable(~f05_01_rec + ola, elsoc_diseno, round = F))) %>% group_by( ola) %>% mutate(p_alta=Freq/sum(Freq))
 datos.alta$ola <- NULL
@@ -30,7 +28,7 @@ datos.grafico$porcentaje <- with(datos.grafico, case_when(
 
 #graficamos
 
-gr.10.1 <-datos.grafico %>% 
+g10.1 <-datos.grafico %>% 
   ggplot(aes(y = porcentaje, x = ola, fill = value, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
   theme_bw() + 
@@ -46,15 +44,12 @@ gr.10.1 <-datos.grafico %>%
   theme(legend.position = 'top',
         legend.title = element_blank())
 
-gr.10.1
+g10.1
 ```
-
 
 
 ## Justificación de la violencia para el control social – a manos de carabineros
 
-
-<!-- ### 6.2 Justificación de la violencia en relación al actuar de Carabineros, según ola -->
 ```{r just-carab-ola, fig.align='center',fig.cap="Justificación de la violencia en relación al actuar de Carabineros, según ola"}
 datos.alta <- data.frame((svytable(~f05_03_rec + ola, elsoc_diseno, round = F))) %>% group_by( ola) %>% mutate(p_alta=Freq/sum(Freq))
 datos.alta$ola <- NULL
@@ -78,7 +73,7 @@ datos.grafico$porcentaje <- with(datos.grafico, case_when(
 
 #graficamos
 
-gr.10.2 <-datos.grafico %>% 
+g10.2 <-datos.grafico %>% 
   ggplot(aes(y = porcentaje, x = ola, fill = value, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
   theme_bw() + 
@@ -94,7 +89,7 @@ gr.10.2 <-datos.grafico %>%
   theme(legend.position = 'top',
         legend.title = element_blank())
 
-gr.10.2
+g10.2
 ```
 
 
