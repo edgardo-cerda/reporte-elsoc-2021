@@ -275,7 +275,6 @@ datos.1.7 <- elsoc_panel_m1 %>%
   group_by(ola, educ) %>% 
   mutate(n2 = sum(n1, na.rm = TRUE), porcentaje = n1/n2) %>% 
   ungroup() 
-View(datos.1.7)
 ```
 
 ```{r}
