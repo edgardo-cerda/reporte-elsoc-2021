@@ -87,7 +87,6 @@ g.2.2
 
 ### 2.3 Grado de acuerdo con la cuarentena según identificación política
 
-<!-- ### 2.3 Grado de acuerdo con la cuarentena según identificación política -->
 
 ```{r include=FALSE}
 elsoc_panel_m1$ac_cuar <- car::recode(as.numeric(elsoc_panel_m1$c37_10), 
@@ -104,25 +103,24 @@ elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de
 ```
 
 ```{r}
-datos.2.3 <- data.frame((svytable(~pos_id + ac_cuar + ola, elsoc_diseno, round = F))) %>%
-  group_by(pos_id) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
+datos.2.3 <- data.frame((svytable(~ac_cuar + pos_id + ola, elsoc_diseno, round = F))) %>%
+  group_by(pos_id, ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
   filter(ola == '2021') %>%
   na.omit()
-view(datos.2.3)
 ```
 
 
 ```{r echo=FALSE}
 g.2.3 <-datos.2.3 %>% 
-  ggplot(aes(y = porcentaje, x = pos_id, fill = ac_cuar, 
+  ggplot(aes(y = porcentaje, x = pos_id , fill = ac_cuar, 
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = 'Stack') +
   scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 0.3)) +
+                     limits = c(0, 1)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
+  scale_fill_viridis_d(begin = 0, end = .95, direction = 1, option = 'viridis') +
   #cambiar geom_text tal que: Stack y cambio colores
   geom_text(position = position_stack(vjust = .5),
             size= 2.75, color = rep.int(c('white', 'white', 'white'), 4)) + 
@@ -152,8 +150,8 @@ elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de
 ```
 
 ```{r}
-datos.2.4 <- data.frame((svytable(~pos_id + salud_ac + ola, elsoc_diseno, round = F))) %>%
-  group_by(pos_id) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
+datos.2.4 <- data.frame((svytable(~salud_ac + pos_id + ola, elsoc_diseno, round = F))) %>%
+  group_by(pos_id, ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
   filter(ola == '2021') %>%
   na.omit()
 ```
@@ -166,7 +164,7 @@ g.2.4 <-datos.2.4 %>%
   theme_bw() + 
   geom_col(position = 'Stack') +
   scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 0.3)) +
+                     limits = c(0, 1)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
@@ -186,6 +184,17 @@ g.2.4
 <!-- ### 2.5 Intención de voto según identificación política -->
 
 ```{r include=FALSE}
+elsoc_panel_m1$intencion_voto <- car::recode(as.numeric(elsoc_panel_m1$c47), 
+                                      recodes = "c(1)='Con toda seguridad iré a votar'; 
+                                      c(2)='Quizas iré a votar'; 
+                                      c(3)='Con toda seguridad no iré a votar';
+                                      else=NA", as.factor = TRUE)
+elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
+                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
+                          weights = ~ponderador02, #ponderador de corte transversal
+                          nest = TRUE,
+                          data = elsoc_panel_m1)
+
 datos.2.5 <- data.frame((svytable(~intencion_voto + pos_id + ola, elsoc_diseno, round = F))) %>%
   group_by(pos_id , ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
   filter(ola == '2021') %>%
@@ -202,14 +211,146 @@ g.2.5 <-datos.2.5 %>%
                      limits = c(0, 1)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
+  scale_fill_viridis_d(begin = 0, end = .95, direction = 1, option = 'viridis') +
   #cambiar geom_text tal que: Stack y cambio colores
   geom_text(position = position_stack(vjust = .5),
-            size= 2.75, color = rep.int(c('black', 'white', 'white'), 4)) + 
+            size= 2.75, color = rep.int(c('white', 'white', 'black'), 4)) + 
   theme(legend.position = 'top',
         legend.title = element_blank()) +
   ggtitle('Intención de voto según identificación política')
 
 g.2.5
+```
+
+### 2.6 Grado de acuerdo con el aborto según identificación política
+
+```{r include=FALSE}
+elsoc_panel_m1$aborto <- car::recode(as.numeric(elsoc_panel_m1$c37_02), 
+                                      recodes = "c(1,2)='Totalmente en desacuerdo y en desacuerdo'; 
+                                      c(3)='Ni de acuerdo ni en desacuerdo'; 
+                                      c(4,5)='Totalmente de acuerdo y de acuerdo'; 
+                                      else=NA", as.factor = TRUE)
+
+
+elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
+                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
+                          weights = ~ponderador02, #ponderador de corte transversal
+                          nest = TRUE,
+                          data = elsoc_panel_m1)
+
+datos.2.6 <- data.frame((svytable(~aborto + pos_id + ola, elsoc_diseno, round = F))) %>%
+  group_by(pos_id, ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
+  filter(ola == '2021') %>%
+  na.omit()
+```
+
+```{r}
+g2.6 <-datos.2.6 %>% 
+  ggplot(aes(y = porcentaje, x = pos_id , fill = aborto, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .95, direction = 1, option = 'viridis') +
+  #cambiar geom_text tal que: Stack y cambio colores
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  ggtitle('Grado de acuerdo con el aborto según identificación política')
+
+g2.6
+```
+
+### 2.7 Grado de acuerdo con la capitalizacion individual pensiones según identificación política
+
+```{r}
+elsoc_panel_m1$cap_pension <- car::recode(as.numeric(elsoc_panel_m1$c37_04), 
+                                      recodes = "c(1,2)='Totalmente en desacuerdo y en desacuerdo'; 
+                                      c(3)='Ni de acuerdo ni en desacuerdo'; 
+                                      c(4,5)='Totalmente de acuerdo y de acuerdo'; 
+                                      else=NA", as.factor = TRUE)
+
+```
+
+```{r}
+elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
+                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
+                          weights = ~ponderador02, #ponderador de corte transversal
+                          nest = TRUE,
+                          data = elsoc_panel_m1)
+
+datos.2.7 <- data.frame((svytable(~cap_pension + pos_id + ola, elsoc_diseno, round = F))) %>%
+  group_by(pos_id, ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
+  filter(ola == '2021') %>%
+  na.omit()
+```
+
+```{r}
+g2.7 <-datos.2.7 %>% 
+  ggplot(aes(y = porcentaje, x = pos_id , fill = cap_pension, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .95, direction = 1, option = 'viridis') +
+  #cambiar geom_text tal que: Stack y cambio colores
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  ggtitle('Grado de acuerdo con la capitalizacion individual pensiones según\n identificación política')
+
+g2.7
+```
+
+### 2.8 Grado de acuerdo con las restricciones de ingreso de migrantes según identificación política
+
+```{r}
+elsoc_panel_m1$rest_migrantes <- car::recode(as.numeric(elsoc_panel_m1$c37_05), 
+                                      recodes = "c(1,2)='Totalmente en desacuerdo y en desacuerdo'; 
+                                      c(3)='Ni de acuerdo ni en desacuerdo'; 
+                                      c(4,5)='Totalmente de acuerdo y de acuerdo'; 
+                                      else=NA", as.factor = TRUE)
+```
+
+```{r}
+elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
+                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
+                          weights = ~ponderador02, #ponderador de corte transversal
+                          nest = TRUE,
+                          data = elsoc_panel_m1)
+
+datos.2.8 <- data.frame((svytable(~rest_migrantes + pos_id + ola, elsoc_diseno, round = F))) %>%
+  group_by(pos_id, ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
+  filter(ola == '2021') %>%
+  na.omit()
+```
+
+```{r}
+g2.8 <-datos.2.8 %>% 
+  ggplot(aes(y = porcentaje, x = pos_id , fill = rest_migrantes, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .95, direction = 1, option = 'viridis') +
+  #cambiar geom_text tal que: Stack y cambio colores
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  ggtitle('Grado de acuerdo con las restricciones de ingreso de migrantes según\n identificación política')
+
+g2.8
 ```
 
