@@ -47,7 +47,7 @@ knitr::include_graphics(file.path('1_input', 'imagenes', 'olas_elsoc.png'))
 - Unidades de Muestreo: Primero se eligen ciudades (UPM), luego manzanas (USM), y sub-bloques y viviendas (UTM). La unidad final de selección es la persona
 
 ```{r, echo=FALSE}
-knitr::include_graphics(file.path('1_input', 'imagenes', '1_input/imagenes/etapas_seleccion.jpg'))
+knitr::include_graphics(file.path('1_input/imagenes/etapas_seleccion.jpg'))
 ```
 
 

@@ -464,7 +464,7 @@ datos.1.10$porcentaje <- with(datos.1.10, case_when(
   variable == 'Partidos Políticos' ~ p_part,
   variable == 'Poder Judicial' ~ p_jud,
   variable == 'Congreso Nacional' ~ p_cong,
-  variable == 'Presidente/a de la Republica' ~ p_gob))
+  variable == 'Gobierno de Chile' ~ p_gob))
 
 
 ```
@@ -479,7 +479,7 @@ g1.10 <- ggplot(datos.1.10, aes(y = porcentaje, x = ola, color = variable, group
                        limits = c(0,1)) +
     ylab(label = NULL) +
     xlab(label = NULL) +
-    scale_color_viridis_d(begin = 0, end = .95, direction = 1, option = 'viridis') +
+    scale_color_viridis_d(begin = 0, end = .85, direction = 1, option = 'viridis') +
     geom_text_repel(posilinetion = position_dodge(width = .9),
     size= 2.25) + 
     theme(legend.position = 'top',
@@ -570,4 +570,29 @@ g1.12 <- datos.1.12 %>%
 g1.12
 ```
 
+
+```{r}
+datos.1.13 <- data.frame((svytable(~conf_carab + fecha_entr + ola, elsoc_diseno, round = F))) %>%
+  group_by(fecha_entr) %>% 
+  mutate(porcentaje=Freq/sum(Freq)) %>% 
+  filter(ola==2021 & Freq>0 & conf_carab=="Nada y Poca")
+
+datos.1.13$fecha_entr<-as.Date(datos.1.13$fecha_entr)
+
+g1.13 <- datos.1.13 %>% 
+  ggplot(aes(y = porcentaje, x = fecha_entr, 
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
+  scale_x_date(date_breaks = "1 month", date_labels = "%d %b %Y") +
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+g1.13
+```
 

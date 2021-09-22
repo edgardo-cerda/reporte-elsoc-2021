@@ -49,7 +49,9 @@ g.3.1 <- ggplot(datos.3.1, aes(x = ola, fill = aut_dem, stratum = aut_dem,
     ylab(label = NULL) +
     xlab(label = NULL) + 
     theme(legend.position = 'top',
-          legend.title = element_blank()) +
+          legend.text = element_text(size=5),
+          legend.title = element_blank(),
+          legend.key.size = unit(.3, "cm")) +
     scale_fill_viridis_d(begin = 0, end = .95, direction = -1, option = 'viridis') +
     geom_text(data = etiquetas.3.1, 
               aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")),
@@ -144,6 +146,6 @@ g.3.3 <-datos.3.3 %>%
         legend.title = element_blank())
 
 g.3.3
-
-
 ```
+
+

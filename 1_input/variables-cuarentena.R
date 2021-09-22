@@ -45,8 +45,6 @@ df_pasos2 <- df_pasos %>%
   mutate(csum = cumsum(cuarentena)) %>% 
   mutate(ola=2021)
 
-elsoc_long$fecha_entr <- as.Date(with(elsoc_long, paste(annio_entr, mes_entr, dia_entr ,sep="-")), "%Y-%m-%d")
-
 els_long <- merge(x = elsoc_long, y = df_pasos2[ , c("Fecha","codigo_comuna", "csum", "ola")], 
                    by.x=c("fecha_entr", "comuna_cod", "ola"), 
                    by.y=c("Fecha", "codigo_comuna", "ola"), all.x = T)

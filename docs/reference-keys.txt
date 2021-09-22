@@ -1,5 +1,5 @@
-fig:unnamed-chunk-69
-fig:unnamed-chunk-70
+fig:unnamed-chunk-72
+fig:unnamed-chunk-73
 fig:d09-d15
 fig:freq-respeto
 fig:depriv-rel

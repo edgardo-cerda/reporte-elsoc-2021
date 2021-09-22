@@ -1,0 +1,1827 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2021) (preloaded format=pdflatex 2021.5.19)  22 SEP 2021 10:30
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**reporte-elsoc.tex
+(./reporte-elsoc.tex
+LaTeX2e <2020-10-01> patch level 4
+L3 programming layer <2021-02-18> (/usr/local/texlive/2021/texmf-dist/tex/latex
+/base/book.cls
+Document Class: book 2020/04/10 v1.4m Standard LaTeX document class
+(/usr/local/texlive/2021/texmf-dist/tex/latex/base/bk12.clo
+File: bk12.clo 2020/04/10 v1.4m Standard LaTeX file (size option)
+)
+\c@part=\count179
+\c@chapter=\count180
+\c@section=\count181
+\c@subsection=\count182
+\c@subsubsection=\count183
+\c@paragraph=\count184
+\c@subparagraph=\count185
+\c@figure=\count186
+\c@table=\count187
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen138
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/amsmath/amsmath.sty
+Package: amsmath 2020/09/23 v2.17i AMS math features
+\@mathmargin=\skip49
+For additional information on amsmath, use the `?' option.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/amsmath/amstext.sty
+Package: amstext 2000/06/29 v2.01 AMS text
+(/usr/local/texlive/2021/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks15
+\ex@=\dimen139
+)) (/usr/local/texlive/2021/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen140
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2016/03/08 v2.02 operator names
+)
+\inf@bad=\count188
+LaTeX Info: Redefining \frac on input line 234.
+\uproot@=\count189
+\leftroot@=\count190
+LaTeX Info: Redefining \overline on input line 399.
+\classnum@=\count191
+\DOTSCASE@=\count192
+LaTeX Info: Redefining \ldots on input line 496.
+LaTeX Info: Redefining \dots on input line 499.
+LaTeX Info: Redefining \cdots on input line 620.
+\Mathstrutbox@=\box47
+\strutbox@=\box48
+\big@size=\dimen141
+LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
+\macc@depth=\count193
+\c@MaxMatrixCols=\count194
+\dotsspace@=\muskip16
+\c@parentequation=\count195
+\dspbrk@lvl=\count196
+\tag@help=\toks16
+\row@=\count197
+\column@=\count198
+\maxfields@=\count199
+\andhelp@=\toks17
+\eqnshift@=\dimen142
+\alignsep@=\dimen143
+\tagshift@=\dimen144
+\tagwidth@=\dimen145
+\totwidth@=\dimen146
+\lineht@=\dimen147
+\@envbody=\toks18
+\multlinegap=\skip50
+\multlinetaggap=\skip51
+\mathdisplay@stack=\toks19
+LaTeX Info: Redefining \[ on input line 2923.
+LaTeX Info: Redefining \] on input line 2924.
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+(/usr/local/texlive/2021/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+)) (/usr/local/texlive/2021/texmf-dist/tex/latex/lm/lmodern.sty
+Package: lmodern 2015/05/01 v1.6.1 Latin Modern Fonts
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> OT1/lmr/m/n on input line 22.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> OML/lmm/m/it on input line 23.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> OMS/lmsy/m/n on input line 24.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/lmex/m/n on input line 25.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 26.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> OML/lmm/b/it on input line 27.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> OMS/lmsy/b/n on input line 28.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/lmex/m/n on input line 29.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 31.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
+(Font)                  OT1/cmss/m/n --> OT1/lmss/m/n on input line 32.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> OT1/lmr/m/it on input line 33.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
+(Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 34.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 35.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
+(Font)                  OT1/cmss/bx/n --> OT1/lmss/bx/n on input line 36.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> OT1/lmr/bx/it on input line 37.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
+(Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 38.
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/setspace/setspace.sty
+Package: setspace 2011/12/19 v6.7a set line spacing
+) (/usr/local/texlive/2021/texmf-dist/tex/generic/iftex/ifxetex.sty
+Package: ifxetex 2019/10/25 v0.7 ifxetex legacy package. Use iftex instead.
+(/usr/local/texlive/2021/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2020/03/06 v1.0d TeX engine tests
+)) (/usr/local/texlive/2021/texmf-dist/tex/generic/iftex/ifluatex.sty
+Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/base/fontenc.sty
+Package: fontenc 2020/08/10 v2.0s Standard LaTeX package
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 11
+2.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/lm/t1lmr.fd
+File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)) (/usr/local/texlive/2021/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2020/08/01 v1.3d Input encoding file
+\inpenc@prehook=\toks20
+\inpenc@posthook=\toks21
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/base/textcomp.sty
+Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/upquote/upquote.sty
+Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verba
+tim
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/microtype/microtype.sty
+Package: microtype 2021/03/14 v2.8c Micro-typographical refinements (RS)
+(/usr/local/texlive/2021/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks22
+)
+\MT@toks=\toks23
+\MT@count=\count266
+LaTeX Info: Redefining \textls on input line 790.
+\MT@outer@kern=\dimen148
+LaTeX Info: Redefining \textmicrotypecontext on input line 1374.
+\MT@listname@count=\count267
+(/usr/local/texlive/2021/texmf-dist/tex/latex/microtype/microtype-pdftex.def
+File: microtype-pdftex.def 2021/03/14 v2.8c Definitions specific to pdftex (RS)
+
+LaTeX Info: Redefining \lsstyle on input line 915.
+LaTeX Info: Redefining \lslig on input line 915.
+\MT@outer@space=\skip52
+)
+Package microtype Info: Loading configuration file microtype.cfg.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/microtype/microtype.cfg
+File: microtype.cfg 2021/03/14 v2.8c microtype main configuration file (RS)
+)) (/usr/local/texlive/2021/texmf-dist/tex/latex/parskip/parskip.sty
+Package: parskip 2021-03-14 v2.0h non-zero parskip adjustments
+(/usr/local/texlive/2021/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
+(/usr/local/texlive/2021/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
+) (/usr/local/texlive/2021/texmf-dist/tex/generic/kvsetkeys/kvsetkeys.sty
+Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
+)) (/usr/local/texlive/2021/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count268
+)) (/usr/local/texlive/2021/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
+(/usr/local/texlive/2021/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 225.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/graphics-def/pdftex.def
+File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
+)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1352.
+Package xcolor Info: Model `RGB' extended on input line 1364.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1366.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1367.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1368.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1369.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1370.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1371.
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/xurl/xurl.sty
+Package: xurl 2020/12/30 v 0.09a modify URL breaks
+(/usr/local/texlive/2021/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip17
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)) (/usr/local/texlive/2021/texmf-dist/tex/latex/bookmark/bookmark.sty
+Package: bookmark 2020-11-06 v1.29 PDF bookmarks (HO)
+(/usr/local/texlive/2021/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2021-02-27 v7.00k Hypertext links for LaTeX
+(/usr/local/texlive/2021/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+(/usr/local/texlive/2021/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+) (/usr/local/texlive/2021/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+) (/usr/local/texlive/2021/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/hycolor/hycolor.sty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/letltxmacro/letltxmacro.sty
+Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/auxhook/auxhook.sty
+Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
+)
+\@linkdim=\dimen149
+\Hy@linkcounter=\count269
+\Hy@pagecounter=\count270
+(/usr/local/texlive/2021/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2021-02-27 v7.00k Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
+)
+(/usr/local/texlive/2021/texmf-dist/tex/latex/hyperref/hyperref-langpatches.def
+File: hyperref-langpatches.def 2021-02-27 v7.00k Hyperref: patches for babel la
+nguages
+) (/usr/local/texlive/2021/texmf-dist/tex/generic/intcalc/intcalc.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+) (/usr/local/texlive/2021/texmf-dist/tex/generic/etexcmds/etexcmds.sty
+Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
+)
+\Hy@SavedSpaceFactor=\count271
+(/usr/local/texlive/2021/texmf-dist/tex/latex/hyperref/puenc.def
+File: puenc.def 2021-02-27 v7.00k Hyperref: PDF Unicode definition (HO)
+Now handling font encoding PU ...
+... no UTF-8 mapping file for font encoding PU
+)
+Package hyperref Info: Option `unicode' set `true' on input line 4073.
+Package hyperref Info: Hyper figures OFF on input line 4192.
+Package hyperref Info: Link nesting OFF on input line 4197.
+Package hyperref Info: Hyper index ON on input line 4200.
+Package hyperref Info: Plain pages OFF on input line 4207.
+Package hyperref Info: Backreferencing OFF on input line 4212.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4445.
+\c@Hy@tempcnt=\count272
+LaTeX Info: Redefining \url on input line 4804.
+\XeTeXLinkMargin=\dimen150
+(/usr/local/texlive/2021/texmf-dist/tex/generic/bitset/bitset.sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+(/usr/local/texlive/2021/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
+)
+))
+\Fld@menulength=\count273
+\Field@Width=\dimen151
+\Fld@charsize=\dimen152
+Package hyperref Info: Hyper figures OFF on input line 6075.
+Package hyperref Info: Link nesting OFF on input line 6080.
+Package hyperref Info: Hyper index ON on input line 6083.
+Package hyperref Info: backreferencing OFF on input line 6090.
+Package hyperref Info: Link coloring OFF on input line 6095.
+Package hyperref Info: Link coloring with OCG OFF on input line 6100.
+Package hyperref Info: PDF/A mode OFF on input line 6105.
+LaTeX Info: Redefining \ref on input line 6145.
+LaTeX Info: Redefining \pageref on input line 6149.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/base/atbegshi-ltx.sty
+Package: atbegshi-ltx 2020/08/17 v1.0a Emulation of the original atbegshi packa
+ge
+with kernel methods
+)
+\Hy@abspage=\count274
+\c@Item=\count275
+\c@Hfootnote=\count276
+)
+Package hyperref Info: Driver (autodetected): hpdftex.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/hyperref/hpdftex.def
+File: hpdftex.def 2021-02-27 v7.00k Hyperref driver for pdfTeX
+(/usr/local/texlive/2021/texmf-dist/tex/latex/base/atveryend-ltx.sty
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atvery packag
+e
+with kernel methods
+)
+\Fld@listcount=\count277
+\c@bookmark@seq@number=\count278
+
+(/usr/local/texlive/2021/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
+Package: rerunfilecheck 2019/12/05 v1.9 Rerun checks for auxiliary files (HO)
+
+(/usr/local/texlive/2021/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+86.
+)
+\Hy@SectionHShift=\skip53
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/bookmark/bkm-pdftex.def
+File: bkm-pdftex.def 2020-11-06 v1.29 bookmark driver for pdfTeX (HO)
+\BKM@id=\count279
+)) (/usr/local/texlive/2021/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+(/usr/local/texlive/2021/texmf-dist/tex/generic/iftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+)
+\Gm@cnth=\count280
+\Gm@cntv=\count281
+\c@Gm@tempcnt=\count282
+\Gm@bindingoffset=\dimen153
+\Gm@wd@mp=\dimen154
+\Gm@odd@mp=\dimen155
+\Gm@even@mp=\dimen156
+\Gm@layoutwidth=\dimen157
+\Gm@layoutheight=\dimen158
+\Gm@layouthoffset=\dimen159
+\Gm@layoutvoffset=\dimen160
+\Gm@dimlist=\toks24
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
+Package: fancyvrb 2021/01/20 v3.7 verbatim text (tvz,hv)
+\FV@CodeLineNo=\count283
+\FV@InFile=\read2
+\FV@TabBox=\box49
+\c@FancyVerbLine=\count284
+\FV@StepNumber=\count285
+\FV@OutFile=\write3
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/framed/framed.sty
+Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
+\OuterFrameSep=\skip54
+\fb@frw=\dimen161
+\fb@frh=\dimen162
+\FrameRule=\dimen163
+\FrameSep=\dimen164
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/tools/longtable.sty
+Package: longtable 2020/01/07 v4.13 Multi-page Table package (DPC)
+\LTleft=\skip55
+\LTright=\skip56
+\LTpre=\skip57
+\LTpost=\skip58
+\LTchunksize=\count286
+\LTcapwidth=\dimen165
+\LT@head=\box50
+\LT@firsthead=\box51
+\LT@foot=\box52
+\LT@lastfoot=\box53
+\LT@cols=\count287
+\LT@rows=\count288
+\c@LT@tables=\count289
+\c@LT@chunks=\count290
+\LT@p@ftn=\toks25
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/booktabs/booktabs.sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen166
+\lightrulewidth=\dimen167
+\cmidrulewidth=\dimen168
+\belowrulesep=\dimen169
+\belowbottomsep=\dimen170
+\aboverulesep=\dimen171
+\abovetopsep=\dimen172
+\cmidrulesep=\dimen173
+\cmidrulekern=\dimen174
+\defaultaddspace=\dimen175
+\@cmidla=\count291
+\@cmidlb=\count292
+\@aboverulesep=\dimen176
+\@belowrulesep=\dimen177
+\@thisruleclass=\count293
+\@lastruleclass=\count294
+\@thisrulewidth=\dimen178
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/tools/array.sty
+Package: array 2020/10/01 v2.5c Tabular extension package (FMi)
+\col@sep=\dimen179
+\ar@mcellbox=\box54
+\extrarowheight=\dimen180
+\NC@list=\toks26
+\extratabsurround=\skip59
+\backup@length=\skip60
+\ar@cellbox=\box55
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count295
+\calc@Bcount=\count296
+\calc@Adimen=\dimen181
+\calc@Bdimen=\dimen182
+\calc@Askip=\skip61
+\calc@Bskip=\skip62
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count297
+\calc@Cskip=\skip63
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/footnotehyper/footnotehyper.sty
+Package: footnotehyper 2021/02/04 v1.1d hyperref aware footnote.sty (JFB)
+\FNH@notes=\box56
+\FNH@width=\dimen183
+\FNH@toks=\toks27
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2020/09/09 v1.2b Enhanced LaTeX Graphics (DPC,SPQR)
+(/usr/local/texlive/2021/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2020/08/30 v1.4c Standard LaTeX Graphics (DPC,SPQR)
+(/usr/local/texlive/2021/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2016/01/03 v1.10 sin cos tan (DPC)
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 105.
+)
+\Gin@req@height=\dimen184
+\Gin@req@width=\dimen185
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/base/flafter.sty
+Package: flafter 2018/11/28 v1.4d Standard LaTeX floats after reference (FMi)
+Applying: [2015/01/01] float order in 2-column on input line 49.
+Already applied: [0000/00/00] float order in 2-column on input line 151.
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/multirow/multirow.sty
+Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
+\multirow@colwidth=\skip64
+\multirow@cntb=\count298
+\multirow@dima=\skip65
+\bigstrutjot=\dimen186
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/wrapfig/wrapfig.sty
+\wrapoverhang=\dimen187
+\WF@size=\dimen188
+\c@WF@wrappedlines=\count299
+\WF@box=\box57
+\WF@everypar=\toks28
+Package: wrapfig 2003/01/31  v 3.6
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count300
+\float@exts=\toks29
+\float@box=\box58
+\@float@everytoks=\toks30
+\@floatcapt=\box59
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/colortbl/colortbl.sty
+Package: colortbl 2020/01/04 v1.0e Color table columns (DPC)
+\everycr=\toks31
+\minrowclearance=\skip66
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/pdflscape/pdflscape.sty
+Package: pdflscape 2019/12/05 v0.12 Display of landscape pages in PDF (HO)
+(/usr/local/texlive/2021/texmf-dist/tex/latex/graphics/lscape.sty
+Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
+)
+Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/tabu/tabu.sty
+Package: tabu 2019/01/11 v2.9 - flexible LaTeX tabulars (FC+tabu-fixed)
+(/usr/local/texlive/2021/texmf-dist/tex/latex/varwidth/varwidth.sty
+Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
+\@vwid@box=\box60
+\sift@deathcycles=\count301
+\@vwid@loff=\dimen189
+\@vwid@roff=\dimen190
+)
+\c@taburow=\count302
+\tabu@nbcols=\count303
+\tabu@cnt=\count304
+\tabu@Xcol=\count305
+\tabu@alloc=\count306
+\tabu@nested=\count307
+\tabu@target=\dimen191
+\tabu@spreadtarget=\dimen192
+\tabu@naturalX=\dimen193
+\tabucolX=\dimen194
+\tabu@Xsum=\dimen195
+\extrarowdepth=\dimen196
+\abovetabulinesep=\dimen197
+\belowtabulinesep=\dimen198
+\tabustrutrule=\dimen199
+\tabu@thebody=\toks32
+\tabu@footnotes=\toks33
+\tabu@box=\box61
+\tabu@arstrutbox=\box62
+\tabu@hleads=\box63
+\tabu@vleads=\box64
+\tabu@cellskip=\skip67
+)
+(/usr/local/texlive/2021/texmf-dist/tex/latex/threeparttable/threeparttable.sty
+Package: threeparttable 2003/06/13  v 3.0
+\@tempboxb=\box65
+)
+(/usr/local/texlive/2021/texmf-dist/tex/latex/threeparttablex/threeparttablex.s
+ty
+Package: threeparttablex 2013/07/23 v0.3 by daleif
+(/usr/local/texlive/2021/texmf-dist/tex/latex/environ/environ.sty
+Package: environ 2014/05/04 v0.3 A new way to define environments
+(/usr/local/texlive/2021/texmf-dist/tex/latex/trimspaces/trimspaces.sty
+Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
+))
+\TPTL@width=\skip68
+) (/usr/local/texlive/2021/texmf-dist/tex/generic/ulem/ulem.sty
+\UL@box=\box66
+\UL@hyphenbox=\box67
+\UL@skip=\skip69
+\UL@hook=\toks34
+\UL@height=\dimen256
+\UL@pe=\count308
+\UL@pixel=\dimen257
+\ULC@box=\box68
+Package: ulem 2019/11/18
+\ULdepth=\dimen258
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/makecell/makecell.sty
+Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
+\rotheadsize=\dimen259
+\c@nlinenum=\count309
+\TeXr@lab=\toks35
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/l3backend/l3backend-pdftex.def
+File: l3backend-pdftex.def 2021-03-18 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count310
+\l__pdf_internal_box=\box69
+)
+No file reporte-elsoc.aux.
+\openout1 = `reporte-elsoc.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 143.
+LaTeX Font Info:    ... okay on input line 143.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 143.
+LaTeX Font Info:    ... okay on input line 143.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 143.
+LaTeX Font Info:    ... okay on input line 143.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 143.
+LaTeX Font Info:    ... okay on input line 143.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 143.
+LaTeX Font Info:    ... okay on input line 143.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 143.
+LaTeX Font Info:    ... okay on input line 143.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 143.
+LaTeX Font Info:    ... okay on input line 143.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 143.
+LaTeX Font Info:    ... okay on input line 143.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 143.
+LaTeX Font Info:    ... okay on input line 143.
+LaTeX Info: Redefining \microtypecontext on input line 143.
+Package microtype Info: Generating PDF output.
+Package microtype Info: Character protrusion enabled (level 2).
+Package microtype Info: Using protrusion set `basicmath'.
+Package microtype Info: Automatic font expansion enabled (level 2),
+(microtype)             stretch: 20, shrink: 20, step: 1, non-selected.
+Package microtype Info: Using default expansion set `alltext-nott'.
+LaTeX Info: Redefining \showhyphens on input line 143.
+Package microtype Info: No adjustment of tracking.
+Package microtype Info: No adjustment of interword spacing.
+Package microtype Info: No adjustment of character kerning.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/microtype/mt-cmr.cfg
+File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
+(RS)
+) (/usr/local/texlive/2021/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count311
+\scratchdimen=\dimen260
+\scratchbox=\box70
+\nofMPsegments=\count312
+\nofMParguments=\count313
+\everyMPshowfont=\toks36
+\MPscratchCnt=\count314
+\MPscratchDim=\dimen261
+\MPnumerator=\count315
+\makeMPintoPDFobject=\count316
+\everyMPtoPDFconversion=\toks37
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+Package hyperref Info: Link coloring OFF on input line 143.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/hyperref/nameref.sty
+Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
+(/usr/local/texlive/2021/texmf-dist/tex/latex/refcount/refcount.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+)
+(/usr/local/texlive/2021/texmf-dist/tex/generic/gettitlestring/gettitlestring.s
+ty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+)
+\c@section@level=\count317
+)
+LaTeX Info: Redefining \ref on input line 143.
+LaTeX Info: Redefining \pageref on input line 143.
+LaTeX Info: Redefining \nameref on input line 143.
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: <default>
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: twoside 
+* h-part:(L,W,R)=(113.81102pt, 415.12572pt, 85.35826pt)
+* v-part:(T,H,B)=(71.13188pt, 652.70622pt, 71.13188pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=415.12572pt
+* \textheight=652.70622pt
+* \oddsidemargin=41.54103pt
+* \evensidemargin=13.08827pt
+* \topmargin=-33.0119pt
+* \headheight=12.0pt
+* \headsep=19.8738pt
+* \topskip=12.0pt
+* \footskip=30.0pt
+* \marginparwidth=98.0pt
+* \marginparsep=7.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidetrue
+* \@mparswitchtrue
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 1
+45.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/lm/ot1lmr.fd
+File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
+45.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/lm/omllmm.fd
+File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
+145.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/lm/omslmsy.fd
+File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
+145.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/lm/omxlmex.fd
+File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <14.4> on input line 145.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 145.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 145.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 145
+.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/microtype/mt-msa.cfg
+File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 145
+.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+) (/usr/local/texlive/2021/texmf-dist/tex/latex/microtype/mt-msb.cfg
+File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
+) [1
+
+
+{/usr/local/texlive/2021/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+\tf@lot=\write4
+\openout4 = `reporte-elsoc.lot'.
+
+[2
+
+]
+\tf@lof=\write5
+\openout5 = `reporte-elsoc.lof'.
+
+[3
+
+]
+Chapter 1.
+[4
+
+] [5]
+Chapter 2.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <12> on input line 177.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <8> on input line 177.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <6> on input line 177.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[6
+
+]
+LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 1
+95.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/lm/ts1lmr.fd
+File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+<1_input/imagenes/olas_elsoc.png, id=47, 766.5438pt x 264.99pt>
+File: 1_input/imagenes/olas_elsoc.png Graphic file (type png)
+<use 1_input/imagenes/olas_elsoc.png>
+Package pdftex.def Info: 1_input/imagenes/olas_elsoc.png  used on input line 20
+4.
+(pdftex.def)             Requested size: 766.60039pt x 265.00955pt.
+
+Overfull \hbox (351.47467pt too wide) in paragraph at lines 204--205
+[][] 
+ []
+
+[7]
+<1_input/imagenes/etapas_seleccion.jpg, id=57, 875.4306pt x 375.804pt>
+File: 1_input/imagenes/etapas_seleccion.jpg Graphic file (type jpg)
+<use 1_input/imagenes/etapas_seleccion.jpg>
+Package pdftex.def Info: 1_input/imagenes/etapas_seleccion.jpg  used on input l
+ine 215.
+(pdftex.def)             Requested size: 875.46854pt x 375.82028pt.
+
+Overfull \hbox (460.34282pt too wide) in paragraph at lines 215--216
+[][] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[8 <./1_input/imagenes/olas_elsoc.png>] [9 <./1_input/imagenes/etapas_seleccion
+.jpg>] [10]
+Chapter 3.
+[11
+
+]
+Chapter 4.
+
+Underfull \vbox (badness 1194) has occurred while \output is active []
+
+[12
+
+] [13]
+Chapter 5.
+<reporte-elsoc_files/figure-latex/unnamed-chunk-7-1.pdf, id=93, 452.69125pt x 3
+13.17pt>
+File: reporte-elsoc_files/figure-latex/unnamed-chunk-7-1.pdf Graphic file (type
+ pdf)
+<use reporte-elsoc_files/figure-latex/unnamed-chunk-7-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/unnamed-chunk-7-1.pdf
+  used on input line 312.
+(pdftex.def)             Requested size: 415.12714pt x 287.18327pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[14
+
+]
+<reporte-elsoc_files/figure-latex/unnamed-chunk-9-1.pdf, id=103, 459.7175pt x 3
+10.15875pt>
+File: reporte-elsoc_files/figure-latex/unnamed-chunk-9-1.pdf Graphic file (type
+ pdf)
+<use reporte-elsoc_files/figure-latex/unnamed-chunk-9-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/unnamed-chunk-9-1.pdf
+  used on input line 317.
+(pdftex.def)             Requested size: 415.14487pt x 280.08682pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[15 <./reporte-elsoc_files/figure-latex/unnamed-chunk-7-1.pdf>]
+<reporte-elsoc_files/figure-latex/unnamed-chunk-11-1.pdf, id=116, 459.7175pt x 
+307.1475pt>
+File: reporte-elsoc_files/figure-latex/unnamed-chunk-11-1.pdf Graphic file (typ
+e pdf)
+<use reporte-elsoc_files/figure-latex/unnamed-chunk-11-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/unnamed-chunk-11-1.pd
+f  used on input line 322.
+(pdftex.def)             Requested size: 415.14487pt x 277.36752pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[16 <./reporte-elsoc_files/figure-latex/unnamed-chunk-9-1.pdf>]
+<reporte-elsoc_files/figure-latex/unnamed-chunk-13-1.pdf, id=130, 458.71375pt x
+ 307.1475pt>
+File: reporte-elsoc_files/figure-latex/unnamed-chunk-13-1.pdf Graphic file (typ
+e pdf)
+<use reporte-elsoc_files/figure-latex/unnamed-chunk-13-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/unnamed-chunk-13-1.pd
+f  used on input line 327.
+(pdftex.def)             Requested size: 415.14836pt x 277.97679pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[17 <./reporte-elsoc_files/figure-latex/unnamed-chunk-11-1.pdf>]
+<reporte-elsoc_files/figure-latex/unnamed-chunk-15-1.pdf, id=145, 459.7175pt x 
+307.1475pt>
+File: reporte-elsoc_files/figure-latex/unnamed-chunk-15-1.pdf Graphic file (typ
+e pdf)
+<use reporte-elsoc_files/figure-latex/unnamed-chunk-15-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/unnamed-chunk-15-1.pd
+f  used on input line 332.
+(pdftex.def)             Requested size: 415.14487pt x 277.36752pt.
+<reporte-elsoc_files/figure-latex/unnamed-chunk-17-1.pdf, id=146, 463.7325pt x 
+316.18124pt>
+File: reporte-elsoc_files/figure-latex/unnamed-chunk-17-1.pdf Graphic file (typ
+e pdf)
+<use reporte-elsoc_files/figure-latex/unnamed-chunk-17-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/unnamed-chunk-17-1.pd
+f  used on input line 337.
+(pdftex.def)             Requested size: 415.13353pt x 283.04558pt.
+
+Underfull \vbox (badness 1661) has occurred while \output is active []
+
+[18 <./reporte-elsoc_files/figure-latex/unnamed-chunk-13-1.pdf> <./reporte-elso
+c_files/figure-latex/unnamed-chunk-15-1.pdf>]
+<reporte-elsoc_files/figure-latex/unnamed-chunk-19-1.pdf, id=172, 463.7325pt x 
+313.17pt>
+File: reporte-elsoc_files/figure-latex/unnamed-chunk-19-1.pdf Graphic file (typ
+e pdf)
+<use reporte-elsoc_files/figure-latex/unnamed-chunk-19-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/unnamed-chunk-19-1.pd
+f  used on input line 342.
+(pdftex.def)             Requested size: 415.13353pt x 280.3499pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[19 <./reporte-elsoc_files/figure-latex/unnamed-chunk-17-1.pdf>]
+<reporte-elsoc_files/figure-latex/unnamed-chunk-21-1.pdf, id=187, 463.7325pt x 
+316.18124pt>
+File: reporte-elsoc_files/figure-latex/unnamed-chunk-21-1.pdf Graphic file (typ
+e pdf)
+<use reporte-elsoc_files/figure-latex/unnamed-chunk-21-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/unnamed-chunk-21-1.pd
+f  used on input line 347.
+(pdftex.def)             Requested size: 415.13353pt x 283.04558pt.
+<reporte-elsoc_files/figure-latex/unnamed-chunk-24-1.pdf, id=188, 458.71375pt x
+ 313.17pt>
+File: reporte-elsoc_files/figure-latex/unnamed-chunk-24-1.pdf Graphic file (typ
+e pdf)
+<use reporte-elsoc_files/figure-latex/unnamed-chunk-24-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/unnamed-chunk-24-1.pd
+f  used on input line 352.
+(pdftex.def)             Requested size: 415.14836pt x 283.4273pt.
+[20 <./reporte-elsoc_files/figure-latex/unnamed-chunk-19-1.pdf> <./reporte-elso
+c_files/figure-latex/unnamed-chunk-21-1.pdf>]
+<reporte-elsoc_files/figure-latex/unnamed-chunk-27-1.pdf, id=211, 458.71375pt x
+ 302.12875pt>
+File: reporte-elsoc_files/figure-latex/unnamed-chunk-27-1.pdf Graphic file (typ
+e pdf)
+<use reporte-elsoc_files/figure-latex/unnamed-chunk-27-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/unnamed-chunk-27-1.pd
+f  used on input line 360.
+(pdftex.def)             Requested size: 415.14836pt x 273.4347pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[21 <./reporte-elsoc_files/figure-latex/unnamed-chunk-24-1.pdf>]
+<reporte-elsoc_files/figure-latex/unnamed-chunk-30-1.pdf, id=228, 458.71375pt x
+ 307.1475pt>
+File: reporte-elsoc_files/figure-latex/unnamed-chunk-30-1.pdf Graphic file (typ
+e pdf)
+<use reporte-elsoc_files/figure-latex/unnamed-chunk-30-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/unnamed-chunk-30-1.pd
+f  used on input line 365.
+(pdftex.def)             Requested size: 415.14836pt x 277.97679pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[22 <./reporte-elsoc_files/figure-latex/unnamed-chunk-27-1.pdf>]
+<reporte-elsoc_files/figure-latex/unnamed-chunk-33-1.pdf, id=241, 458.71375pt x
+ 307.1475pt>
+File: reporte-elsoc_files/figure-latex/unnamed-chunk-33-1.pdf Graphic file (typ
+e pdf)
+<use reporte-elsoc_files/figure-latex/unnamed-chunk-33-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/unnamed-chunk-33-1.pd
+f  used on input line 370.
+(pdftex.def)             Requested size: 415.14836pt x 277.97679pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[23 <./reporte-elsoc_files/figure-latex/unnamed-chunk-30-1.pdf>]
+<reporte-elsoc_files/figure-latex/unnamed-chunk-34-1.pdf, id=255, 458.71375pt x
+ 316.18124pt>
+File: reporte-elsoc_files/figure-latex/unnamed-chunk-34-1.pdf Graphic file (typ
+e pdf)
+<use reporte-elsoc_files/figure-latex/unnamed-chunk-34-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/unnamed-chunk-34-1.pd
+f  used on input line 372.
+(pdftex.def)             Requested size: 415.14836pt x 286.15257pt.
+[24 <./reporte-elsoc_files/figure-latex/unnamed-chunk-33-1.pdf> <./reporte-elso
+c_files/figure-latex/unnamed-chunk-34-1.pdf>]
+Chapter 6.
+<reporte-elsoc_files/figure-latex/unnamed-chunk-36-1.pdf, id=276, 458.71375pt x
+ 310.15875pt>
+File: reporte-elsoc_files/figure-latex/unnamed-chunk-36-1.pdf Graphic file (typ
+e pdf)
+<use reporte-elsoc_files/figure-latex/unnamed-chunk-36-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/unnamed-chunk-36-1.pd
+f  used on input line 383.
+(pdftex.def)             Requested size: 415.14836pt x 280.70206pt.
+<reporte-elsoc_files/figure-latex/unnamed-chunk-38-1.pdf, id=277, 458.71375pt x
+ 312.16624pt>
+File: reporte-elsoc_files/figure-latex/unnamed-chunk-38-1.pdf Graphic file (typ
+e pdf)
+<use reporte-elsoc_files/figure-latex/unnamed-chunk-38-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/unnamed-chunk-38-1.pd
+f  used on input line 386.
+(pdftex.def)             Requested size: 415.14836pt x 282.5189pt.
+
+Underfull \vbox (badness 6876) has occurred while \output is active []
+
+[25
+
+ <./reporte-elsoc_files/figure-latex/unnamed-chunk-36-1.pdf>]
+<reporte-elsoc_files/figure-latex/unnamed-chunk-41-1.pdf, id=296, 467.7475pt x 
+316.18124pt>
+File: reporte-elsoc_files/figure-latex/unnamed-chunk-41-1.pdf Graphic file (typ
+e pdf)
+<use reporte-elsoc_files/figure-latex/unnamed-chunk-41-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/unnamed-chunk-41-1.pd
+f  used on input line 391.
+(pdftex.def)             Requested size: 415.14485pt x 280.62366pt.
+<reporte-elsoc_files/figure-latex/unnamed-chunk-44-1.pdf, id=297, 467.7475pt x 
+316.18124pt>
+File: reporte-elsoc_files/figure-latex/unnamed-chunk-44-1.pdf Graphic file (typ
+e pdf)
+<use reporte-elsoc_files/figure-latex/unnamed-chunk-44-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/unnamed-chunk-44-1.pd
+f  used on input line 396.
+(pdftex.def)             Requested size: 415.14485pt x 280.62366pt.
+[26 <./reporte-elsoc_files/figure-latex/unnamed-chunk-38-1.pdf> <./reporte-elso
+c_files/figure-latex/unnamed-chunk-41-1.pdf>]
+<reporte-elsoc_files/figure-latex/unnamed-chunk-46-1.pdf, id=323, 458.71375pt x
+ 316.18124pt>
+File: reporte-elsoc_files/figure-latex/unnamed-chunk-46-1.pdf Graphic file (typ
+e pdf)
+<use reporte-elsoc_files/figure-latex/unnamed-chunk-46-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/unnamed-chunk-46-1.pd
+f  used on input line 401.
+(pdftex.def)             Requested size: 415.14836pt x 286.15257pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[27 <./reporte-elsoc_files/figure-latex/unnamed-chunk-44-1.pdf>]
+<reporte-elsoc_files/figure-latex/unnamed-chunk-48-1.pdf, id=337, 469.755pt x 3
+16.18124pt>
+File: reporte-elsoc_files/figure-latex/unnamed-chunk-48-1.pdf Graphic file (typ
+e pdf)
+<use reporte-elsoc_files/figure-latex/unnamed-chunk-48-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/unnamed-chunk-48-1.pd
+f  used on input line 406.
+(pdftex.def)             Requested size: 415.12747pt x 279.4127pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[28 <./reporte-elsoc_files/figure-latex/unnamed-chunk-46-1.pdf>]
+<reporte-elsoc_files/figure-latex/unnamed-chunk-51-1.pdf, id=351, 469.755pt x 3
+16.18124pt>
+File: reporte-elsoc_files/figure-latex/unnamed-chunk-51-1.pdf Graphic file (typ
+e pdf)
+<use reporte-elsoc_files/figure-latex/unnamed-chunk-51-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/unnamed-chunk-51-1.pd
+f  used on input line 411.
+(pdftex.def)             Requested size: 415.12747pt x 279.4127pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[29 <./reporte-elsoc_files/figure-latex/unnamed-chunk-48-1.pdf>]
+<reporte-elsoc_files/figure-latex/unnamed-chunk-54-1.pdf, id=365, 469.755pt x 3
+16.18124pt>
+File: reporte-elsoc_files/figure-latex/unnamed-chunk-54-1.pdf Graphic file (typ
+e pdf)
+<use reporte-elsoc_files/figure-latex/unnamed-chunk-54-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/unnamed-chunk-54-1.pd
+f  used on input line 416.
+(pdftex.def)             Requested size: 415.12747pt x 279.4127pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[30 <./reporte-elsoc_files/figure-latex/unnamed-chunk-51-1.pdf>] [31 <./reporte
+-elsoc_files/figure-latex/unnamed-chunk-54-1.pdf>]
+Chapter 7.
+<reporte-elsoc_files/figure-latex/unnamed-chunk-57-1.pdf, id=393, 458.71375pt x
+ 312.16624pt>
+File: reporte-elsoc_files/figure-latex/unnamed-chunk-57-1.pdf Graphic file (typ
+e pdf)
+<use reporte-elsoc_files/figure-latex/unnamed-chunk-57-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/unnamed-chunk-57-1.pd
+f  used on input line 427.
+(pdftex.def)             Requested size: 415.14836pt x 282.5189pt.
+<reporte-elsoc_files/figure-latex/unnamed-chunk-59-1.pdf, id=394, 459.7175pt x 
+313.17pt>
+File: reporte-elsoc_files/figure-latex/unnamed-chunk-59-1.pdf Graphic file (typ
+e pdf)
+<use reporte-elsoc_files/figure-latex/unnamed-chunk-59-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/unnamed-chunk-59-1.pd
+f  used on input line 432.
+(pdftex.def)             Requested size: 415.14487pt x 282.80609pt.
+
+Underfull \vbox (badness 4543) has occurred while \output is active []
+
+[32
+
+ <./reporte-elsoc_files/figure-latex/unnamed-chunk-57-1.pdf>]
+<reporte-elsoc_files/figure-latex/unnamed-chunk-61-1.pdf, id=416, 467.7475pt x 
+310.15875pt>
+File: reporte-elsoc_files/figure-latex/unnamed-chunk-61-1.pdf Graphic file (typ
+e pdf)
+<use reporte-elsoc_files/figure-latex/unnamed-chunk-61-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/unnamed-chunk-61-1.pd
+f  used on input line 437.
+(pdftex.def)             Requested size: 415.14485pt x 275.27846pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[33 <./reporte-elsoc_files/figure-latex/unnamed-chunk-59-1.pdf>] [34 <./reporte
+-elsoc_files/figure-latex/unnamed-chunk-61-1.pdf>]
+Chapter 8.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[35
+
+] [36]
+Chapter 9.
+<reporte-elsoc_files/figure-latex/unnamed-chunk-72-1.pdf, id=464, 458.71375pt x
+ 310.15875pt>
+File: reporte-elsoc_files/figure-latex/unnamed-chunk-72-1.pdf Graphic file (typ
+e pdf)
+<use reporte-elsoc_files/figure-latex/unnamed-chunk-72-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/unnamed-chunk-72-1.pd
+f  used on input line 485.
+(pdftex.def)             Requested size: 415.14836pt x 280.70206pt.
+<reporte-elsoc_files/figure-latex/unnamed-chunk-73-1.pdf, id=465, 458.71375pt x
+ 310.15875pt>
+File: reporte-elsoc_files/figure-latex/unnamed-chunk-73-1.pdf Graphic file (typ
+e pdf)
+<use reporte-elsoc_files/figure-latex/unnamed-chunk-73-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/unnamed-chunk-73-1.pd
+f  used on input line 494.
+(pdftex.def)             Requested size: 415.14836pt x 280.70206pt.
+<reporte-elsoc_files/figure-latex/d09-d15-1.pdf, id=466, 458.71375pt x 310.1587
+5pt>
+File: reporte-elsoc_files/figure-latex/d09-d15-1.pdf Graphic file (type pdf)
+<use reporte-elsoc_files/figure-latex/d09-d15-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/d09-d15-1.pdf  used o
+n input line 503.
+(pdftex.def)             Requested size: 415.14836pt x 280.70206pt.
+<reporte-elsoc_files/figure-latex/freq-respeto-1.pdf, id=467, 458.71375pt x 316
+.18124pt>
+File: reporte-elsoc_files/figure-latex/freq-respeto-1.pdf Graphic file (type pd
+f)
+<use reporte-elsoc_files/figure-latex/freq-respeto-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/freq-respeto-1.pdf  u
+sed on input line 515.
+(pdftex.def)             Requested size: 415.14836pt x 286.15257pt.
+
+Underfull \vbox (badness 4036) has occurred while \output is active []
+
+[37
+
+pdfTeX warning (ext4): destination with the same identifier (name{figure.9.1}) 
+has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.520 \end{figure}
+                   <./reporte-elsoc_files/figure-latex/unnamed-chunk-72-1.pdf>]
+<reporte-elsoc_files/figure-latex/depriv-rel-1.pdf, id=485, 464.73625pt x 316.1
+8124pt>
+File: reporte-elsoc_files/figure-latex/depriv-rel-1.pdf Graphic file (type pdf)
+
+<use reporte-elsoc_files/figure-latex/depriv-rel-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/depriv-rel-1.pdf  use
+d on input line 527.
+(pdftex.def)             Requested size: 415.13858pt x 282.43768pt.
+[38pdfTeX warning (ext4): destination with the same identifier (name{figure.9.2
+}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.535 ...\label{justificaciuxf3n-de-la-violencia}}
+                                                   <./reporte-elsoc_files/figur
+e-latex/unnamed-chunk-73-1.pdf>] [39pdfTeX warning (ext4): destination with the
+ same identifier (name{figure.9.3}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.535 ...\label{justificaciuxf3n-de-la-violencia}}
+                                                   <./reporte-elsoc_files/figur
+e-latex/d09-d15-1.pdf>] [40pdfTeX warning (ext4): destination with the same ide
+ntifier (name{figure.9.4}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.535 ...\label{justificaciuxf3n-de-la-violencia}}
+                                                   <./reporte-elsoc_files/figur
+e-latex/freq-respeto-1.pdf>] [41pdfTeX warning (ext4): destination with the sam
+e identifier (name{figure.9.5}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.535 ...\label{justificaciuxf3n-de-la-violencia}}
+                                                   <./reporte-elsoc_files/figur
+e-latex/depriv-rel-1.pdf>]
+Chapter 10.
+<reporte-elsoc_files/figure-latex/just-vio-ola-1.pdf, id=538, 461.725pt x 307.1
+475pt>
+File: reporte-elsoc_files/figure-latex/just-vio-ola-1.pdf Graphic file (type pd
+f)
+<use reporte-elsoc_files/figure-latex/just-vio-ola-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/just-vio-ola-1.pdf  u
+sed on input line 542.
+(pdftex.def)             Requested size: 415.12595pt x 276.14899pt.
+<reporte-elsoc_files/figure-latex/just-carab-ola-1.pdf, id=539, 461.725pt x 307
+.1475pt>
+File: reporte-elsoc_files/figure-latex/just-carab-ola-1.pdf Graphic file (type 
+pdf)
+<use reporte-elsoc_files/figure-latex/just-carab-ola-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/just-carab-ola-1.pdf 
+ used on input line 551.
+(pdftex.def)             Requested size: 415.12595pt x 276.14899pt.
+[42
+
+pdfTeX warning (ext4): destination with the same identifier (name{figure.10.1})
+ has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.556 \end{figure}
+                   <./reporte-elsoc_files/figure-latex/just-vio-ola-1.pdf>]
+Overfull \hbox (170.79465pt too wide) has occurred while \output is active
+\T1/lmr/m/sl/12 10.2.  JUSTIFICACI�N DE LA VIOLENCIA PARA EL CONTROL SOCIAL -- 
+A MANOS DE CARABINEROS \T1/lmr/m/n/12 43
+ []
+
+[43pdfTeX warning (ext4): destination with the same identifier (name{figure.10.
+2}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.559 ...titucional}\label{cambio-constitucional}}
+                                                   <./reporte-elsoc_files/figur
+e-latex/just-carab-ola-1.pdf>]
+Chapter 11.
+<reporte-elsoc_files/figure-latex/particip-edad-1.pdf, id=572, 458.71375pt x 31
+0.15875pt>
+File: reporte-elsoc_files/figure-latex/particip-edad-1.pdf Graphic file (type p
+df)
+<use reporte-elsoc_files/figure-latex/particip-edad-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/particip-edad-1.pdf  
+used on input line 563.
+(pdftex.def)             Requested size: 415.14836pt x 280.70206pt.
+<reporte-elsoc_files/figure-latex/servel-apruebo-1.pdf, id=573, 458.71375pt x 3
+10.15875pt>
+File: reporte-elsoc_files/figure-latex/servel-apruebo-1.pdf Graphic file (type 
+pdf)
+<use reporte-elsoc_files/figure-latex/servel-apruebo-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/servel-apruebo-1.pdf 
+ used on input line 572.
+(pdftex.def)             Requested size: 415.14836pt x 280.70206pt.
+<reporte-elsoc_files/figure-latex/servel-cc-1.pdf, id=574, 458.71375pt x 310.15
+875pt>
+File: reporte-elsoc_files/figure-latex/servel-cc-1.pdf Graphic file (type pdf)
+<use reporte-elsoc_files/figure-latex/servel-cc-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/servel-cc-1.pdf  used
+ on input line 581.
+(pdftex.def)             Requested size: 415.14836pt x 280.70206pt.
+<reporte-elsoc_files/figure-latex/particip-elect-id-1.pdf, id=575, 458.71375pt 
+x 302.12875pt>
+File: reporte-elsoc_files/figure-latex/particip-elect-id-1.pdf Graphic file (ty
+pe pdf)
+<use reporte-elsoc_files/figure-latex/particip-elect-id-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/particip-elect-id-1.p
+df  used on input line 590.
+(pdftex.def)             Requested size: 415.14836pt x 273.4347pt.
+<reporte-elsoc_files/figure-latex/id-pol-voto-1.pdf, id=576, 458.71375pt x 310.
+15875pt>
+File: reporte-elsoc_files/figure-latex/id-pol-voto-1.pdf Graphic file (type pdf
+)
+<use reporte-elsoc_files/figure-latex/id-pol-voto-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/id-pol-voto-1.pdf  us
+ed on input line 599.
+(pdftex.def)             Requested size: 415.14836pt x 280.70206pt.
+<reporte-elsoc_files/figure-latex/presi-voto-c44-1.pdf, id=577, 458.71375pt x 3
+07.1475pt>
+File: reporte-elsoc_files/figure-latex/presi-voto-c44-1.pdf Graphic file (type 
+pdf)
+<use reporte-elsoc_files/figure-latex/presi-voto-c44-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/presi-voto-c44-1.pdf 
+ used on input line 611.
+(pdftex.def)             Requested size: 415.14836pt x 277.97679pt.
+<reporte-elsoc_files/figure-latex/presi-voto-c45-1.pdf, id=578, 458.71375pt x 3
+07.1475pt>
+File: reporte-elsoc_files/figure-latex/presi-voto-c45-1.pdf Graphic file (type 
+pdf)
+<use reporte-elsoc_files/figure-latex/presi-voto-c45-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/presi-voto-c45-1.pdf 
+ used on input line 620.
+(pdftex.def)             Requested size: 415.14836pt x 277.97679pt.
+<reporte-elsoc_files/figure-latex/2020-vs-2021-1.pdf, id=579, 458.71375pt x 310
+.15875pt>
+File: reporte-elsoc_files/figure-latex/2020-vs-2021-1.pdf Graphic file (type pd
+f)
+<use reporte-elsoc_files/figure-latex/2020-vs-2021-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/2020-vs-2021-1.pdf  u
+sed on input line 629.
+(pdftex.def)             Requested size: 415.14836pt x 280.70206pt.
+LaTeX Font Info:    Trying to load font information for T1+lmtt on input line 6
+36.
+(/usr/local/texlive/2021/texmf-dist/tex/latex/lm/t1lmtt.fd
+File: t1lmtt.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+) [44
+
+pdfTeX warning (ext4): destination with the same identifier (name{figure.11.1})
+ has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.648 \end{verbatim}
+                     <./reporte-elsoc_files/figure-latex/particip-edad-1.pdf>] 
+[45pdfTeX warning (ext4): destination with the same identifier (name{figure.11.
+2}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.648 \end{verbatim}
+                    pdfTeX warning (ext4): destination with the same identifier
+ (name{figure.11.3}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.648 \end{verbatim}
+                     <./reporte-elsoc_files/figure-latex/servel-apruebo-1.pdf> 
+<./reporte-elsoc_files/figure-latex/servel-cc-1.pdf>] [46pdfTeX warning (ext4):
+ destination with the same identifier (name{figure.11.4}) has been already used
+, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.648 \end{verbatim}
+                    pdfTeX warning (ext4): destination with the same identifier
+ (name{figure.11.5}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.648 \end{verbatim}
+                     <./reporte-elsoc_files/figure-latex/particip-elect-id-1.pd
+f> <./reporte-elsoc_files/figure-latex/id-pol-voto-1.pdf>] [47pdfTeX warning (e
+xt4): destination with the same identifier (name{figure.11.6}) has been already
+ used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.648 \end{verbatim}
+                    pdfTeX warning (ext4): destination with the same identifier
+ (name{figure.11.7}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.648 \end{verbatim}
+                     <./reporte-elsoc_files/figure-latex/presi-voto-c44-1.pdf> 
+<./reporte-elsoc_files/figure-latex/presi-voto-c45-1.pdf>]
+<reporte-elsoc_files/figure-latex/confli-total-1.pdf, id=656, 458.71375pt x 307
+.1475pt>
+File: reporte-elsoc_files/figure-latex/confli-total-1.pdf Graphic file (type pd
+f)
+<use reporte-elsoc_files/figure-latex/confli-total-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/confli-total-1.pdf  u
+sed on input line 655.
+(pdftex.def)             Requested size: 415.14836pt x 277.97679pt.
+<reporte-elsoc_files/figure-latex/confli-cambios-1.pdf, id=657, 458.71375pt x 3
+12.16624pt>
+File: reporte-elsoc_files/figure-latex/confli-cambios-1.pdf Graphic file (type 
+pdf)
+<use reporte-elsoc_files/figure-latex/confli-cambios-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/confli-cambios-1.pdf 
+ used on input line 664.
+(pdftex.def)             Requested size: 415.14836pt x 282.5189pt.
+<reporte-elsoc_files/figure-latex/confli-zona-1.pdf, id=658, 459.7175pt x 309.1
+55pt>
+File: reporte-elsoc_files/figure-latex/confli-zona-1.pdf Graphic file (type pdf
+)
+<use reporte-elsoc_files/figure-latex/confli-zona-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/confli-zona-1.pdf  us
+ed on input line 673.
+(pdftex.def)             Requested size: 415.14487pt x 279.18037pt.
+<reporte-elsoc_files/figure-latex/confli-estrato-1.pdf, id=659, 459.7175pt x 31
+0.15875pt>
+File: reporte-elsoc_files/figure-latex/confli-estrato-1.pdf Graphic file (type 
+pdf)
+<use reporte-elsoc_files/figure-latex/confli-estrato-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/confli-estrato-1.pdf 
+ used on input line 682.
+(pdftex.def)             Requested size: 415.14487pt x 280.08682pt.
+<reporte-elsoc_files/figure-latex/confli-quintil-1.pdf, id=660, 459.7175pt x 30
+8.15125pt>
+File: reporte-elsoc_files/figure-latex/confli-quintil-1.pdf Graphic file (type 
+pdf)
+<use reporte-elsoc_files/figure-latex/confli-quintil-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/confli-quintil-1.pdf 
+ used on input line 691.
+(pdftex.def)             Requested size: 415.14487pt x 278.27394pt.
+<reporte-elsoc_files/figure-latex/confli-aisl-1.pdf, id=661, 458.71375pt x 310.
+15875pt>
+File: reporte-elsoc_files/figure-latex/confli-aisl-1.pdf Graphic file (type pdf
+)
+<use reporte-elsoc_files/figure-latex/confli-aisl-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/confli-aisl-1.pdf  us
+ed on input line 700.
+(pdftex.def)             Requested size: 415.14836pt x 280.70206pt.
+<reporte-elsoc_files/figure-latex/confli-comuna-1.pdf, id=662, 453.695pt x 224.
+84pt>
+File: reporte-elsoc_files/figure-latex/confli-comuna-1.pdf Graphic file (type p
+df)
+<use reporte-elsoc_files/figure-latex/confli-comuna-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/confli-comuna-1.pdf  
+used on input line 712.
+(pdftex.def)             Requested size: 415.12686pt x 205.72658pt.
+<reporte-elsoc_files/figure-latex/confli-region-1.pdf, id=663, 295.1025pt x 313
+.17pt>
+File: reporte-elsoc_files/figure-latex/confli-region-1.pdf Graphic file (type p
+df)
+<use reporte-elsoc_files/figure-latex/confli-region-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/confli-region-1.pdf  
+used on input line 721.
+(pdftex.def)             Requested size: 295.10626pt x 313.174pt.
+<reporte-elsoc_files/figure-latex/aisl-total-1.pdf, id=664, 458.71375pt x 316.1
+8124pt>
+File: reporte-elsoc_files/figure-latex/aisl-total-1.pdf Graphic file (type pdf)
+
+<use reporte-elsoc_files/figure-latex/aisl-total-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/aisl-total-1.pdf  use
+d on input line 733.
+(pdftex.def)             Requested size: 415.14836pt x 286.15257pt.
+[48pdfTeX warning (ext4): destination with the same identifier (name{figure.11.
+8}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.738 \end{figure}
+                   <./reporte-elsoc_files/figure-latex/2020-vs-2021-1.pdf>] [49
+pdfTeX warning (ext4): destination with the same identifier (name{figure.11.9})
+ has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.738 \end{figure}
+                  pdfTeX warning (ext4): destination with the same identifier (
+name{figure.11.10}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.738 \end{figure}
+                   <./reporte-elsoc_files/figure-latex/confli-total-1.pdf> <./r
+eporte-elsoc_files/figure-latex/confli-cambios-1.pdf>] [50pdfTeX warning (ext4)
+: destination with the same identifier (name{figure.11.11}) has been already us
+ed, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.738 \end{figure}
+                   <./reporte-elsoc_files/figure-latex/confli-zona-1.pdf>] [51p
+dfTeX warning (ext4): destination with the same identifier (name{figure.11.12})
+ has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.738 \end{figure}
+                   <./reporte-elsoc_files/figure-latex/confli-estrato-1.pdf>] [
+52pdfTeX warning (ext4): destination with the same identifier (name{figure.11.1
+3}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.738 \end{figure}
+                   <./reporte-elsoc_files/figure-latex/confli-quintil-1.pdf>] [
+53pdfTeX warning (ext4): destination with the same identifier (name{figure.11.1
+4}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.738 \end{figure}
+                  pdfTeX warning (ext4): destination with the same identifier (
+name{figure.11.15}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.738 \end{figure}
+                   <./reporte-elsoc_files/figure-latex/confli-aisl-1.pdf> <./re
+porte-elsoc_files/figure-latex/confli-comuna-1.pdf>] [54pdfTeX warning (ext4): 
+destination with the same identifier (name{figure.11.16}) has been already used
+, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.738 \end{figure}
+                   <./reporte-elsoc_files/figure-latex/confli-region-1.pdf>]
+<reporte-elsoc_files/figure-latex/aisl-quintil-1.pdf, id=780, 458.71375pt x 308
+.15125pt>
+File: reporte-elsoc_files/figure-latex/aisl-quintil-1.pdf Graphic file (type pd
+f)
+<use reporte-elsoc_files/figure-latex/aisl-quintil-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/aisl-quintil-1.pdf  u
+sed on input line 742.
+(pdftex.def)             Requested size: 415.14836pt x 278.88521pt.
+<reporte-elsoc_files/figure-latex/aisl-edad-1.pdf, id=781, 458.71375pt x 310.15
+875pt>
+File: reporte-elsoc_files/figure-latex/aisl-edad-1.pdf Graphic file (type pdf)
+<use reporte-elsoc_files/figure-latex/aisl-edad-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/aisl-edad-1.pdf  used
+ on input line 751.
+(pdftex.def)             Requested size: 415.14836pt x 280.70206pt.
+<reporte-elsoc_files/figure-latex/aisl-estrato-1.pdf, id=782, 458.71375pt x 310
+.15875pt>
+File: reporte-elsoc_files/figure-latex/aisl-estrato-1.pdf Graphic file (type pd
+f)
+<use reporte-elsoc_files/figure-latex/aisl-estrato-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/aisl-estrato-1.pdf  u
+sed on input line 760.
+(pdftex.def)             Requested size: 415.14836pt x 280.70206pt.
+<reporte-elsoc_files/figure-latex/aisl-telet-1.pdf, id=783, 458.71375pt x 310.1
+5875pt>
+File: reporte-elsoc_files/figure-latex/aisl-telet-1.pdf Graphic file (type pdf)
+
+<use reporte-elsoc_files/figure-latex/aisl-telet-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/aisl-telet-1.pdf  use
+d on input line 773.
+(pdftex.def)             Requested size: 415.14836pt x 280.70206pt.
+<reporte-elsoc_files/figure-latex/aisl-prosocial-1.pdf, id=784, 469.755pt x 302
+.12875pt>
+File: reporte-elsoc_files/figure-latex/aisl-prosocial-1.pdf Graphic file (type 
+pdf)
+<use reporte-elsoc_files/figure-latex/aisl-prosocial-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/aisl-prosocial-1.pdf 
+ used on input line 785.
+(pdftex.def)             Requested size: 415.12747pt x 266.99437pt.
+<reporte-elsoc_files/figure-latex/aisl-barrio-1.pdf, id=785, 459.7175pt x 310.1
+5875pt>
+File: reporte-elsoc_files/figure-latex/aisl-barrio-1.pdf Graphic file (type pdf
+)
+<use reporte-elsoc_files/figure-latex/aisl-barrio-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/aisl-barrio-1.pdf  us
+ed on input line 794.
+(pdftex.def)             Requested size: 415.14487pt x 280.08682pt.
+[55pdfTeX warning (ext4): destination with the same identifier (name{figure.11.
+17}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.802 ...y-seguridad-con-perspectiva-territorial}}
+                                                   <./reporte-elsoc_files/figur
+e-latex/aisl-total-1.pdf>] [56pdfTeX warning (ext4): destination with the same 
+identifier (name{figure.11.18}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.802 ...y-seguridad-con-perspectiva-territorial}}
+                                                   <./reporte-elsoc_files/figur
+e-latex/aisl-quintil-1.pdf>] [57pdfTeX warning (ext4): destination with the sam
+e identifier (name{figure.11.19}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.802 ...y-seguridad-con-perspectiva-territorial}}
+                                                   <./reporte-elsoc_files/figur
+e-latex/aisl-edad-1.pdf>] [58pdfTeX warning (ext4): destination with the same i
+dentifier (name{figure.11.20}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.802 ...y-seguridad-con-perspectiva-territorial}}
+                                                   <./reporte-elsoc_files/figur
+e-latex/aisl-estrato-1.pdf>] [59pdfTeX warning (ext4): destination with the sam
+e identifier (name{figure.11.21}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.802 ...y-seguridad-con-perspectiva-territorial}}
+                                                   <./reporte-elsoc_files/figur
+e-latex/aisl-telet-1.pdf>] [60pdfTeX warning (ext4): destination with the same 
+identifier (name{figure.11.22}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.802 ...y-seguridad-con-perspectiva-territorial}}
+                                                   <./reporte-elsoc_files/figur
+e-latex/aisl-prosocial-1.pdf>] [61pdfTeX warning (ext4): destination with the s
+ame identifier (name{figure.11.23}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.802 ...y-seguridad-con-perspectiva-territorial}}
+                                                   <./reporte-elsoc_files/figur
+e-latex/aisl-barrio-1.pdf>]
+Chapter 12.
+<reporte-elsoc_files/figure-latex/vecinos-total-1.pdf, id=876, 458.71375pt x 30
+7.1475pt>
+File: reporte-elsoc_files/figure-latex/vecinos-total-1.pdf Graphic file (type p
+df)
+<use reporte-elsoc_files/figure-latex/vecinos-total-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/vecinos-total-1.pdf  
+used on input line 809.
+(pdftex.def)             Requested size: 415.14836pt x 277.97679pt.
+<reporte-elsoc_files/figure-latex/vecinos-zona-1.pdf, id=877, 458.71375pt x 309
+.155pt>
+File: reporte-elsoc_files/figure-latex/vecinos-zona-1.pdf Graphic file (type pd
+f)
+<use reporte-elsoc_files/figure-latex/vecinos-zona-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/vecinos-zona-1.pdf  u
+sed on input line 818.
+(pdftex.def)             Requested size: 415.14836pt x 279.79364pt.
+<reporte-elsoc_files/figure-latex/vecinos-quinti-1.pdf, id=878, 458.71375pt x 3
+08.15125pt>
+File: reporte-elsoc_files/figure-latex/vecinos-quinti-1.pdf Graphic file (type 
+pdf)
+<use reporte-elsoc_files/figure-latex/vecinos-quinti-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/vecinos-quinti-1.pdf 
+ used on input line 827.
+(pdftex.def)             Requested size: 415.14836pt x 278.88521pt.
+<reporte-elsoc_files/figure-latex/vecinos-aisl-1.pdf, id=879, 458.71375pt x 310
+.15875pt>
+File: reporte-elsoc_files/figure-latex/vecinos-aisl-1.pdf Graphic file (type pd
+f)
+<use reporte-elsoc_files/figure-latex/vecinos-aisl-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/vecinos-aisl-1.pdf  u
+sed on input line 836.
+(pdftex.def)             Requested size: 415.14836pt x 280.70206pt.
+<reporte-elsoc_files/figure-latex/seguri-zona-1.pdf, id=880, 458.71375pt x 302.
+12875pt>
+File: reporte-elsoc_files/figure-latex/seguri-zona-1.pdf Graphic file (type pdf
+)
+<use reporte-elsoc_files/figure-latex/seguri-zona-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/seguri-zona-1.pdf  us
+ed on input line 848.
+(pdftex.def)             Requested size: 415.14836pt x 273.4347pt.
+[62
+
+pdfTeX warning (ext4): destination with the same identifier (name{figure.12.1})
+ has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.853 \end{figure}
+                   <./reporte-elsoc_files/figure-latex/vecinos-total-1.pdf>] [6
+3pdfTeX warning (ext4): destination with the same identifier (name{figure.12.2}
+) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.853 \end{figure}
+                  pdfTeX warning (ext4): destination with the same identifier (
+name{figure.12.3}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.853 \end{figure}
+                   <./reporte-elsoc_files/figure-latex/vecinos-zona-1.pdf> <./r
+eporte-elsoc_files/figure-latex/vecinos-quinti-1.pdf>]
+<reporte-elsoc_files/figure-latex/seguri-educ-1.pdf, id=917, 458.71375pt x 302.
+12875pt>
+File: reporte-elsoc_files/figure-latex/seguri-educ-1.pdf Graphic file (type pdf
+)
+<use reporte-elsoc_files/figure-latex/seguri-educ-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/seguri-educ-1.pdf  us
+ed on input line 857.
+(pdftex.def)             Requested size: 415.14836pt x 273.4347pt.
+<reporte-elsoc_files/figure-latex/seguri-edad-1.pdf, id=918, 458.71375pt x 302.
+12875pt>
+File: reporte-elsoc_files/figure-latex/seguri-edad-1.pdf Graphic file (type pdf
+)
+<use reporte-elsoc_files/figure-latex/seguri-edad-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/seguri-edad-1.pdf  us
+ed on input line 866.
+(pdftex.def)             Requested size: 415.14836pt x 273.4347pt.
+<reporte-elsoc_files/figure-latex/seguri-quintil-1.pdf, id=919, 458.71375pt x 3
+02.12875pt>
+File: reporte-elsoc_files/figure-latex/seguri-quintil-1.pdf Graphic file (type 
+pdf)
+<use reporte-elsoc_files/figure-latex/seguri-quintil-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/seguri-quintil-1.pdf 
+ used on input line 875.
+(pdftex.def)             Requested size: 415.14836pt x 273.4347pt.
+<reporte-elsoc_files/figure-latex/seguri-ideolo-1.pdf, id=920, 458.71375pt x 30
+2.12875pt>
+File: reporte-elsoc_files/figure-latex/seguri-ideolo-1.pdf Graphic file (type p
+df)
+<use reporte-elsoc_files/figure-latex/seguri-ideolo-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/seguri-ideolo-1.pdf  
+used on input line 884.
+(pdftex.def)             Requested size: 415.14836pt x 273.4347pt.
+<reporte-elsoc_files/figure-latex/seguri-aisl-1.pdf, id=921, 458.71375pt x 310.
+15875pt>
+File: reporte-elsoc_files/figure-latex/seguri-aisl-1.pdf Graphic file (type pdf
+)
+<use reporte-elsoc_files/figure-latex/seguri-aisl-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/seguri-aisl-1.pdf  us
+ed on input line 893.
+(pdftex.def)             Requested size: 415.14836pt x 280.70206pt.
+
+Overfull \hbox (42.31894pt too wide) has occurred while \output is active
+\T1/lmr/m/n/12 64 \T1/lmr/m/sl/12 CHAPTER 12.  CONFIANZA Y SEGURIDAD CON PERSPE
+CTIVA TERRITORIAL
+ []
+
+[64pdfTeX warning (ext4): destination with the same identifier (name{figure.12.
+4}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.901 ...-subjetivo-y-percepciuxf3n-de-muxe9rito}}
+                                                   <./reporte-elsoc_files/figur
+e-latex/vecinos-aisl-1.pdf>] [65pdfTeX warning (ext4): destination with the sam
+e identifier (name{figure.12.5}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.901 ...-subjetivo-y-percepciuxf3n-de-muxe9rito}}
+                                                   <./reporte-elsoc_files/figur
+e-latex/seguri-zona-1.pdf>]
+Overfull \hbox (42.31894pt too wide) has occurred while \output is active
+\T1/lmr/m/n/12 66 \T1/lmr/m/sl/12 CHAPTER 12.  CONFIANZA Y SEGURIDAD CON PERSPE
+CTIVA TERRITORIAL
+ []
+
+[66pdfTeX warning (ext4): destination with the same identifier (name{figure.12.
+6}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.901 ...-subjetivo-y-percepciuxf3n-de-muxe9rito}}
+                                                   <./reporte-elsoc_files/figur
+e-latex/seguri-educ-1.pdf>] [67pdfTeX warning (ext4): destination with the same
+ identifier (name{figure.12.7}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.901 ...-subjetivo-y-percepciuxf3n-de-muxe9rito}}
+                                                   <./reporte-elsoc_files/figur
+e-latex/seguri-edad-1.pdf>]
+Overfull \hbox (42.31894pt too wide) has occurred while \output is active
+\T1/lmr/m/n/12 68 \T1/lmr/m/sl/12 CHAPTER 12.  CONFIANZA Y SEGURIDAD CON PERSPE
+CTIVA TERRITORIAL
+ []
+
+[68pdfTeX warning (ext4): destination with the same identifier (name{figure.12.
+8}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.901 ...-subjetivo-y-percepciuxf3n-de-muxe9rito}}
+                                                   <./reporte-elsoc_files/figur
+e-latex/seguri-quintil-1.pdf>] [69pdfTeX warning (ext4): destination with the s
+ame identifier (name{figure.12.9}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.901 ...-subjetivo-y-percepciuxf3n-de-muxe9rito}}
+                                                   <./reporte-elsoc_files/figur
+e-latex/seguri-ideolo-1.pdf>]
+Overfull \hbox (42.31894pt too wide) has occurred while \output is active
+\T1/lmr/m/n/12 70 \T1/lmr/m/sl/12 CHAPTER 12.  CONFIANZA Y SEGURIDAD CON PERSPE
+CTIVA TERRITORIAL
+ []
+
+[70pdfTeX warning (ext4): destination with the same identifier (name{figure.12.
+10}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.901 ...-subjetivo-y-percepciuxf3n-de-muxe9rito}}
+                                                   <./reporte-elsoc_files/figur
+e-latex/seguri-aisl-1.pdf>]
+Chapter 13.
+<reporte-elsoc_files/figure-latex/essind-ola-1.pdf, id=1010, 458.71375pt x 307.
+1475pt>
+File: reporte-elsoc_files/figure-latex/essind-ola-1.pdf Graphic file (type pdf)
+
+<use reporte-elsoc_files/figure-latex/essind-ola-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/essind-ola-1.pdf  use
+d on input line 908.
+(pdftex.def)             Requested size: 415.14836pt x 277.97679pt.
+<reporte-elsoc_files/figure-latex/ess-wave-1.pdf, id=1011, 458.71375pt x 312.16
+624pt>
+File: reporte-elsoc_files/figure-latex/ess-wave-1.pdf Graphic file (type pdf)
+<use reporte-elsoc_files/figure-latex/ess-wave-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/ess-wave-1.pdf  used 
+on input line 917.
+(pdftex.def)             Requested size: 415.14836pt x 282.5189pt.
+<reporte-elsoc_files/figure-latex/ess-quintil-1.pdf, id=1012, 458.71375pt x 308
+.15125pt>
+File: reporte-elsoc_files/figure-latex/ess-quintil-1.pdf Graphic file (type pdf
+)
+<use reporte-elsoc_files/figure-latex/ess-quintil-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/ess-quintil-1.pdf  us
+ed on input line 926.
+(pdftex.def)             Requested size: 415.14836pt x 278.88521pt.
+<reporte-elsoc_files/figure-latex/esshijos-ess-1.pdf, id=1013, 458.71375pt x 31
+0.15875pt>
+File: reporte-elsoc_files/figure-latex/esshijos-ess-1.pdf Graphic file (type pd
+f)
+<use reporte-elsoc_files/figure-latex/esshijos-ess-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/esshijos-ess-1.pdf  u
+sed on input line 935.
+(pdftex.def)             Requested size: 415.14836pt x 280.70206pt.
+<reporte-elsoc_files/figure-latex/mov-soc-rec-1.pdf, id=1014, 458.71375pt x 307
+.1475pt>
+File: reporte-elsoc_files/figure-latex/mov-soc-rec-1.pdf Graphic file (type pdf
+)
+<use reporte-elsoc_files/figure-latex/mov-soc-rec-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/mov-soc-rec-1.pdf  us
+ed on input line 947.
+(pdftex.def)             Requested size: 415.14836pt x 277.97679pt.
+<reporte-elsoc_files/figure-latex/mov-soc-1.pdf, id=1015, 459.7175pt x 302.1287
+5pt>
+File: reporte-elsoc_files/figure-latex/mov-soc-1.pdf Graphic file (type pdf)
+<use reporte-elsoc_files/figure-latex/mov-soc-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/mov-soc-1.pdf  used o
+n input line 956.
+(pdftex.def)             Requested size: 415.14487pt x 272.83537pt.
+<reporte-elsoc_files/figure-latex/merit-wave-1.pdf, id=1016, 464.73625pt x 302.
+12875pt>
+File: reporte-elsoc_files/figure-latex/merit-wave-1.pdf Graphic file (type pdf)
+
+<use reporte-elsoc_files/figure-latex/merit-wave-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/merit-wave-1.pdf  use
+d on input line 968.
+(pdftex.def)             Requested size: 415.13858pt x 269.8849pt.
+[71
+
+] [72pdfTeX warning (ext4): destination with the same identifier (name{figure.1
+3.1}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.976 \chapter{Género}\label{guxe9nero}}
+                                          <./reporte-elsoc_files/figure-latex/e
+ssind-ola-1.pdf>] [73pdfTeX warning (ext4): destination with the same identifie
+r (name{figure.13.2}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.976 \chapter{Género}\label{guxe9nero}}
+                                         pdfTeX warning (ext4): destination wit
+h the same identifier (name{figure.13.3}) has been already used, duplicate igno
+red
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.976 \chapter{Género}\label{guxe9nero}}
+                                          <./reporte-elsoc_files/figure-latex/e
+ss-wave-1.pdf> <./reporte-elsoc_files/figure-latex/ess-quintil-1.pdf>] [74pdfTe
+X warning (ext4): destination with the same identifier (name{figure.13.4}) has 
+been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.976 \chapter{Género}\label{guxe9nero}}
+                                         pdfTeX warning (ext4): destination wit
+h the same identifier (name{figure.13.5}) has been already used, duplicate igno
+red
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.976 \chapter{Género}\label{guxe9nero}}
+                                          <./reporte-elsoc_files/figure-latex/e
+sshijos-ess-1.pdf> <./reporte-elsoc_files/figure-latex/mov-soc-rec-1.pdf>] [75p
+dfTeX warning (ext4): destination with the same identifier (name{figure.13.6}) 
+has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.976 \chapter{Género}\label{guxe9nero}}
+                                         pdfTeX warning (ext4): destination wit
+h the same identifier (name{figure.13.7}) has been already used, duplicate igno
+red
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.976 \chapter{Género}\label{guxe9nero}}
+                                          <./reporte-elsoc_files/figure-latex/m
+ov-soc-1.pdf> <./reporte-elsoc_files/figure-latex/merit-wave-1.pdf>]
+Chapter 14.
+<reporte-elsoc_files/figure-latex/sexismo-ben-1.pdf, id=1106, 458.71375pt x 307
+.1475pt>
+File: reporte-elsoc_files/figure-latex/sexismo-ben-1.pdf Graphic file (type pdf
+)
+<use reporte-elsoc_files/figure-latex/sexismo-ben-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/sexismo-ben-1.pdf  us
+ed on input line 983.
+(pdftex.def)             Requested size: 415.14836pt x 277.97679pt.
+<reporte-elsoc_files/figure-latex/sexismo-host-1.pdf, id=1107, 458.71375pt x 30
+7.1475pt>
+File: reporte-elsoc_files/figure-latex/sexismo-host-1.pdf Graphic file (type pd
+f)
+<use reporte-elsoc_files/figure-latex/sexismo-host-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/sexismo-host-1.pdf  u
+sed on input line 992.
+(pdftex.def)             Requested size: 415.14836pt x 277.97679pt.
+<reporte-elsoc_files/figure-latex/sexismo-sexo-1.pdf, id=1108, 469.755pt x 310.
+15875pt>
+File: reporte-elsoc_files/figure-latex/sexismo-sexo-1.pdf Graphic file (type pd
+f)
+<use reporte-elsoc_files/figure-latex/sexismo-sexo-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/sexismo-sexo-1.pdf  u
+sed on input line 1001.
+(pdftex.def)             Requested size: 415.12747pt x 274.09056pt.
+<reporte-elsoc_files/figure-latex/sexismo-educ-1.pdf, id=1109, 469.755pt x 310.
+15875pt>
+File: reporte-elsoc_files/figure-latex/sexismo-educ-1.pdf Graphic file (type pd
+f)
+<use reporte-elsoc_files/figure-latex/sexismo-educ-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/sexismo-educ-1.pdf  u
+sed on input line 1010.
+(pdftex.def)             Requested size: 415.12747pt x 274.09056pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[76
+
+pdfTeX warning (ext4): destination with the same identifier (name{figure.14.1})
+ has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.1022 \{
+         \centering \includegraphics{reporte-elsoc_files/figure-latex/c19_01-1}
+ <./reporte-elsoc_files/figure-latex/sexismo-ben-1.pdf>] [77pdfTeX warning (ext
+4): destination with the same identifier (name{figure.14.2}) has been already u
+sed, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.1022 \{
+         \centering \includegraphics{reporte-elsoc_files/figure-latex/c19_01-1}
+pdfTeX warning (ext4): destination with the same identifier (name{figure.14.3})
+ has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.1022 \{
+         \centering \includegraphics{reporte-elsoc_files/figure-latex/c19_01-1}
+ <./reporte-elsoc_files/figure-latex/sexismo-host-1.pdf> <./reporte-elsoc_files
+/figure-latex/sexismo-sexo-1.pdf>]
+<reporte-elsoc_files/figure-latex/c19_01-1.pdf, id=1153, 458.71375pt x 307.1475
+pt>
+File: reporte-elsoc_files/figure-latex/c19_01-1.pdf Graphic file (type pdf)
+<use reporte-elsoc_files/figure-latex/c19_01-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/c19_01-1.pdf  used on
+ input line 1022.
+(pdftex.def)             Requested size: 415.14836pt x 277.97679pt.
+
+Overfull \hbox (3.50568pt too wide) in paragraph at lines 1022--1023
+ []\T1/lmr/m/n/12 (-20) {[] 
+ []
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+[78pdfTeX warning (ext4): destination with the same identifier (name{figure.14.
+4}) has been already used, duplicate ignored
+<argument> ...shipout:D \box_use:N \l_shipout_box 
+                                                  
+l.1024 \}
+          <./reporte-elsoc_files/figure-latex/sexismo-educ-1.pdf>]
+
+! LaTeX Error: \caption outside float.
+
+See the LaTeX manual or LaTeX Companion for explanation.
+Type  H <return>  for immediate help.
+ ...                                              
+                                                  
+l.1026 \caption
+               {Sexismo hostil, según ola y sexo .} 
+Here is how much of TeX's memory you used:
+ 15641 strings out of 478994
+ 252713 string characters out of 5858184
+ 569578 words of memory out of 5000000
+ 32328 multiletter control sequences out of 15000+600000
+ 465915 words of font info for 148 fonts, out of 8000000 for 9000
+ 1141 hyphenation exceptions out of 8191
+ 85i,9n,88p,746b,482s stack positions out of 5000i,500n,10000p,200000b,80000s
+
+!  ==> Fatal error occurred, no output PDF file produced!

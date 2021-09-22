@@ -22,7 +22,11 @@ pasar_a_factor <- function(var) {
 elsoc_long <- lapply(elsoc_long, pasar_a_factor) %>% data.frame()
 elsoc_long <- sjlabelled::set_label(elsoc_long, var_labels) 
 
+
 #---------RECODIFICACION OLAS--------------------
+#Fecha entrevista
+elsoc_long$fecha_entr <- as.Date(with(elsoc_long, paste(annio_entr, mes_entr, dia_entr ,sep="-")), "%Y-%m-%d")
+
 elsoc_long$ola <- factor(elsoc_long$ola,labels = c('2016', '2017', '2018', '2019', '2021'))
 elsoc_long$ola <- sjlabelled::set_label(elsoc_long$ola, label = c("Ola de Medición"))
 
@@ -225,6 +229,7 @@ elsoc_long$particip_electoral <- factor(with( elsoc_long,
                                         case_when(c11 == 1 & ola == 2016 ~ 1,
                                         (c11 == 2 | c11 == 3) & ola == 2016 ~ 2,
                                         c11 == 1 & ola == 2018 ~ 1,
+                                        (c11 == 2 | c11 == 3) & ola == 2018 ~ 2,
                                         c43 == 1 & ola == 2021 ~ 1,
                                         (c43 == 2 | c43 == 3) & ola == 2021 ~ 2)),
   labels = c("Si", "No"))
