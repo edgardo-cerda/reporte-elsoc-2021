@@ -62,7 +62,7 @@ datos.1.2 <- data.frame((svytable(~mov + pos_id + ola, elsoc_diseno, round = F))
 
 ```{r}
 g1.2 <-datos.1.2 %>% 
-    ggplot(aes(y = porcentaje, x = pos_id, fill = mov, 
+    ggplot(aes(y = porcentaje, x = pos_id, fill = , 
                label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
   theme_bw() + 
     geom_col(position = 'dodge2') +
@@ -71,9 +71,7 @@ g1.2 <-datos.1.2 %>%
     ylab(label = NULL) +
     xlab(label = NULL) +
     scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
-    facet_wrap(datos.1.2$ola)+
-    theme(legend.position = 'top',
-          legend.title = element_blank()) 
+    facet_wrap(datos.1.2$ola) 
 
 g1.2
 ```
@@ -92,7 +90,7 @@ datos.1.3 <- data.frame((svytable(~mov + pos_id + ola, elsoc_diseno, round = F))
 
 ```{r}
 g1.3 <-datos.1.3 %>% 
-    ggplot(aes(y = porcentaje, x = ola, fill = mov, 
+    ggplot(aes(y = porcentaje, x = ola, fill = , 
                label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
   theme_bw() + 
     geom_col(position = 'dodge2') +
@@ -107,6 +105,7 @@ g1.3 <-datos.1.3 %>%
           legend.title = element_blank()) 
 g1.3
 ```
+
 
 ### 1.4 Alluvial de movimiento social que más valora
 
@@ -163,6 +162,14 @@ g1.4 <- ggplot(datos.1.4 , aes(x = ola, fill = movsoc, stratum = movsoc,
 g1.4
 ```
 
+La determinación entre las categorías "Progresista" y "Conservador" se hizo en base a la siguiente agrupación de movimientos sociales:
+
+Progresista: Movimiento social de apoyo a la causa estudiantil, Movimiento social de apoyo a demandas laborales, Movimiento social de grupos ambientalistas, Movimiento social de apoyo a las demandas indígena, Movimiento social de apoyo a la diversidad sexual, Movimiento feminista o de apoyo a la igualdad de género, Movimiento por el cambio al sistema de pensiones, Estallido social del 18 de Octubre de 2019
+
+Conservador: Movimiento social provida o antiaborto, Movimiento social antidelincuencia
+
+
+
 ### 1.5 Descriptivos generales
 
 ```{r}
@@ -178,48 +185,54 @@ datos.1.5 <- elsoc_panel_m1 %>%
   mutate(n2 = sum(n1, na.rm = TRUE), 
          porcentaje = n1/n2) %>% 
   ungroup()
+
 ```
 
 ```{r}
-g1.5 <- datos.1.5 %>% 
-  ggplot(aes(y = porcentaje, x = forcats::fct_rev(movsoc), fill = forcats::fct_rev(ola), 
-             label = as.character(scales::percent(ifelse(porcentaje == 0, NA, porcentaje), accuracy = .1)))) +
-  theme_bw() + 
-  geom_col(position = 'dodge2') +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, .8)) +
-  ylab(label = NULL) +
-  xlab(label = NULL) +
-  scale_fill_viridis_d(begin = .33, end = .66, direction = 1, option = 'viridis') +
-  geom_text(hjust = -.1,
+
+g1.5 <-datos.1.5 %>% 
+    #indicar el contenido del gráfico: ejes y relleno (fill) por ola
+    ggplot(aes(y = porcentaje, x = movsoc, fill = ola, 
+               label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+    #fijar el fondo y el marco del gráfico uniforme
+    theme_bw() + 
+    #geom_col para usar variable y=porcentaje. 'dodge2' para formato side-to-side
+    geom_col(position= 'dodge2') +
+    #escala del eje y en porcentajes del 0 al 100%
+    scale_y_continuous(labels = scales::percent,
+                       limits = c(0, 1)) +
+    #Nombres de los ejes se eliminan
+    ylab(label = NULL) +
+    xlab(label = NULL) +
+    #colores oficiales por ola: degradé 'viridis'
+    scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+    geom_text(hjust = -.1,
             position = position_dodge(width = 1),
             size= 2.75) +
-  theme(legend.position = 'top',
-        legend.title = element_blank()) + 
-  guides(fill = guide_legend(reverse = TRUE))+
+    #posicionamiento de leyenda arriba
+    theme(legend.position = 'top',
+          legend.title = element_blank()) +
   coord_flip()
+
 g1.5
 ```
 
 ### 1.6 cambios de valoración de movimientos sociales segun posición política
 
 ```{r}
-datos.1.6 <- elsoc_panel_m1 %>% 
-  dplyr::filter(tipo_atricion == 1) %>%
-  mutate(movsoc = factor(movsoc, 
-                         levels = c('Progresista', 'Conservador', 'Ninguno'),
-                         labels = c('Progresista', 'Conservador', 'Ninguno')),
-         pos_id = factor(pos_id, 
-                         levels = c('Izquierda', 'Centro', 'Derecha', 'No se identifica'),
-                         labels = c('Izquierda', 'Centro', 'Derecha', 'No se\n identifica'))) %>% 
-  group_by(ola, movsoc, pos_id) %>% 
-  summarise(n1 = sum(ponderador02, na.rm = TRUE)) %>%
-  dplyr::filter(!is.na(pos_id) & !is.na(movsoc)) %>%
-  group_by(ola, pos_id) %>% 
-  mutate(n2 = sum(n1, na.rm = TRUE), porcentaje = n1/n2) %>% 
-  ungroup() 
+elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
+                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
+                          weights = ~ponderador02, #ponderador de corte transversal
+                          nest = TRUE,
+                          data = elsoc_panel_m1)
+
+datos.1.6 <- data.frame((svytable(~movsoc + pos_id + ola, elsoc_diseno, round = F))) %>%
+  group_by(ola, pos_id) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
+  filter(ola == '2018' |ola == '2019' | ola == '2021') %>%
+  na.omit()
 
 ```
+
 
 ```{r}
 g1.6 <- datos.1.6 %>% 
@@ -235,15 +248,15 @@ g1.6 <- datos.1.6 %>%
   scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
   geom_text(position = position_stack(vjust = .5),
             size= 2.75,
-            color = rep(c(rep('black', 4),
+            color = rep(c(rep('white', 4),
                           rep('white', 4),
-                          rep('white', 4)),5)) + 
+                          rep('white', 4)),3)) + 
   theme(legend.position = 'top',
         legend.title = element_blank()) +
   ggtitle('Porcentaje de valoración de movimientos por posición política, por ola')
-
 g1.6
 ```
+
 
 ### 1.7 segun nivel educativo
 
@@ -262,6 +275,7 @@ datos.1.7 <- elsoc_panel_m1 %>%
   group_by(ola, educ) %>% 
   mutate(n2 = sum(n1, na.rm = TRUE), porcentaje = n1/n2) %>% 
   ungroup() 
+View(datos.1.7)
 ```
 
 ```{r}
@@ -464,7 +478,7 @@ datos.1.10$porcentaje <- with(datos.1.10, case_when(
   variable == 'Partidos Políticos' ~ p_part,
   variable == 'Poder Judicial' ~ p_jud,
   variable == 'Congreso Nacional' ~ p_cong,
-  variable == 'Gobierno de Chile' ~ p_gob))
+  variable == 'Presidente/a de la Republica' ~ p_gob))
 
 
 ```
@@ -479,7 +493,7 @@ g1.10 <- ggplot(datos.1.10, aes(y = porcentaje, x = ola, color = variable, group
                        limits = c(0,1)) +
     ylab(label = NULL) +
     xlab(label = NULL) +
-    scale_color_viridis_d(begin = 0, end = .85, direction = 1, option = 'viridis') +
+    scale_color_viridis_d(begin = 0, end = .95, direction = 1, option = 'viridis') +
     geom_text_repel(posilinetion = position_dodge(width = .9),
     size= 2.25) + 
     theme(legend.position = 'top',
@@ -570,29 +584,4 @@ g1.12 <- datos.1.12 %>%
 g1.12
 ```
 
-
-```{r}
-datos.1.13 <- data.frame((svytable(~conf_carab + fecha_entr + ola, elsoc_diseno, round = F))) %>%
-  group_by(fecha_entr) %>% 
-  mutate(porcentaje=Freq/sum(Freq)) %>% 
-  filter(ola==2021 & Freq>0 & conf_carab=="Nada y Poca")
-
-datos.1.13$fecha_entr<-as.Date(datos.1.13$fecha_entr)
-
-g1.13 <- datos.1.13 %>% 
-  ggplot(aes(y = porcentaje, x = fecha_entr, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
-  theme_bw() + 
-  geom_col(position = 'Stack') +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
-  ylab(label = NULL) +
-  xlab(label = NULL) +
-  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
-  scale_x_date(date_breaks = "1 month", date_labels = "%d %b %Y") +
-  theme(legend.position = 'top',
-        legend.title = element_blank())
-
-g1.13
-```
 
