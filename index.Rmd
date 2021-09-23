@@ -50,8 +50,8 @@ remove(list = ls())
 #base de datos
 load("1_input/datos_elsoc.RData") 
 load("1_input/elsoc_covid.RData")
-load(file.path('1_input', 'ELSOC_Long_2016_2021_v1.00_R.RData')
-load(file.path('1_input', 'ELSOC_Wide_2016_2021_v1.00_R.RData')
+load(file.path('1_input', 'ELSOC_Long_2016_2021_v1.00_R.RData'))
+load(file.path('1_input', 'ELSOC_Wide_2016_2021_v1.00_R.RData'))
 ```
 
 ```{r disenno, include=FALSE}
