@@ -117,7 +117,7 @@ g11.4 <- ggplot(datos.subset,
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_color_viridis_d(begin = 0.22, end = .66, direction = 1, option = 'viridis') +
-  geom_text_repel(posilinetion = position_dodge(width = .9),
+  geom_text_repel(position = position_dodge(width = .9),
                   size= 2.25) + 
   theme(legend.position = 'top',
         legend.title = element_blank())
@@ -209,29 +209,29 @@ g11.7
 ```
 
 ```{r 2020-vs-2021, fig.align='center', fig.cap= "Participación Electoral 2021, según la Participación en 2017"}
-datos.grafico <- data.frame((svytable(~c43 + c11, 
-                                      elsoc_diseno_2, round = F))) %>% 
-  group_by(c11) %>% 
-  mutate(porcentaje=Freq/sum(Freq))
 
-g11.7 <- datos.grafico %>% 
-  ggplot(aes(y = porcentaje, x = c11, fill = c43, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+datos.11.7 <- elsoc_wide_2016_2021 %>% 
+  filter(tipo_atricion == 1 & !c43_w05 %in% c(3, -888, -999) & 
+           !c11_w03 %in% c(3, -888, -999)) %>% 
+  survey_design_elsoc(weights = 'ponderador02_w05') %>% 
+  prop(c43_w05, by = c11_w03) %>% 
+  sjlabelled::as_label(c43_w05, c11_w03)
+
+datos.11.7 %>% 
+  ggplot(aes(y = prop, x = c11_w03, fill = c43_w05, 
+             label = scales::percent(prop, accuracy = .1))) + 
   theme_bw() + 
   geom_col(position = "Stack") +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
+  scale_y_continuous(labels = scales::percent) + 
   ylab(label = NULL) +
   xlab(label = "Participación Electoral en 2017") +
-  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
-  geom_text(aes(label = ifelse(porcentaje > 0.06 , scales::percent(porcentaje, accuracy = .1),"")),
-            position = position_stack(vjust = .5),
+  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') + 
+  geom_text(position = position_stack(vjust = .5),
             show.legend = FALSE,
             size = 2.75,
-            color = rep.int(c('black', 'white', 'white'), 3)) + 
+            color = rep(c('black', 'white'), 2)) + 
   theme(legend.position = 'top',
         legend.title = element_blank()) 
-g11.7
 ```
 
 ```{r cambio_participa}
