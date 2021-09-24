@@ -30,16 +30,21 @@ datos.1.1 <- data.frame((svytable(~mov + ola, elsoc_diseno, round = F))) %>%
 
 
 ```{r echo=FALSE}
-g1.1 <-datos.1.1 %>% 
-  ggplot(aes(y = porcentaje, x = mov, fill = ola, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+datos.1.1 <- elsoc_long_2016_2021 %>%
+  filter(tipo_atricion == 1 & ola %in% c(4,5) & !c20 %in% c(-888, -999)) %>%
+  prop(x = c20, by = ola, na.rm = TRUE) %>% 
+  sjlabelled::as_label(c20, ola)
+
+g1.1 <- datos.1.1 %>% 
+  ggplot(aes(y = prop, x = c20, fill = ola, 
+             label = scales::percent(prop, accuracy = .1))) +
   theme_bw() + 
   geom_col(position = 'dodge2') +
   scale_y_continuous(labels = scales::percent,
                      limits = c(0,0.3)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  scale_fill_viridis_d(begin = .66, end = .33, direction = -1, option = 'viridis') +
   coord_flip() +
   theme(axis.text.x = element_text(size=rel(.9))) +
   scale_x_discrete(labels = waiver( ))
