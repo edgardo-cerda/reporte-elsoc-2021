@@ -1,10 +1,20 @@
 # Estatus subjetivo y Percepción de Mérito
 ```{r disenno-15, include=FALSE}
-rm(list = ls())
-library(survey)
-library(tidyverse)
-load("1_input/datos_elsoc.RData")
+knitr::opts_chunk$set(cache=FALSE, 
+                      warning = FALSE, 
+                      message = FALSE) 
+Sys.setlocale("LC_ALL","ES_ES.UTF-8")
 
+#devtools::install_github('edgardo-cerda/elsoc', force = TRUE)
+library(elsoc)
+library(tidyverse)
+library(sjlabelled)
+library(ggrepel)
+
+load(file.path('1_input', 'ELSOC_Long_2016_2021_v1.00_R.RData'))
+
+library(survey)
+load("1_input/datos_elsoc.RData")
 elsoc_diseno <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
                           nest = TRUE, data = elsoc_panel_m1)
 ```
@@ -20,7 +30,11 @@ sjmisc::frq(elsoc_panel_m1$mov_interg)
 elsoc_panel_m1 <- elsoc_panel_m1 %>% 
   mutate(mov_interg_rec = factor(car::recode(mov_interg, "-8:-1=1;0=2;1:10=3"),
                            labels = c("Movilidad social descendente", "Inmovilidad social",
-                                      "Movilidad social ascendente")))
+                                      "Movilidad social ascendente")),
+         mov_interg_rec2 = factor(cut(mov_interg, breaks = c(-8,-1,1,10))))
+
+sjmisc::frq(elsoc_panel_m1$mov_interg_rec)
+sjmisc::frq(elsoc_panel_m1$mov_interg_rec2)
 
 elsoc_panel_m1 <- elsoc_panel_m1 %>%
   mutate(merit_esfu = factor(car::recode(c18_09, "c(1,2)=1;c(3)=2;c(4,5)=3"),
@@ -43,31 +57,26 @@ elsoc_diseno <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~pondera
 
 <!-- ### 11.1 En nuestra sociedad, hay grupos que tienden a ubicarse en los niveles más altos y grupos que tienden a ubicarse en los niveles más bajos de la sociedad ¿Dónde se ubicaría usted?, según ola de estudio. -->
 ```{r essind-ola, fig.align='center',fig.cap='En nuestra sociedad, hay grupos que tienden a ubicarse en los niveles más altos y grupos que tienden a ubicarse en los niveles más bajos de la sociedad ¿Dónde se ubicaría usted?, según ola de estudio.'}
+datos11.1 <- elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & muestra == 1 & ola %in% c(1,2,3,4,5) & !d01_01 %in% c(-888, -999)) %>% 
+  mutate(clase_sub = factor(car::recode(d01_01, "c(0,1,2,3)=1; c(4, 5)=2; c(6,7,8,9,10)=3;else=NA"), 
+                            levels = c(1,2,3), labels = c("Baja y media baja", "Media", "Alta y media alta"))) %>% 
+  sjlabelled::as_label(ola) %>% 
+  prop(x = clase_sub, by = ola, na.rm = T)
 
-datos.g11.1 <- 
-  data.frame((svytable(~clase.sub + ola, elsoc_diseno, round = F))) %>%
-  group_by(ola) %>% 
-  mutate(porcentaje = Freq/sum(Freq))
-
-g11.1 <- 
-  datos.g11.1 %>% 
-  ggplot(aes(y = porcentaje, x = ola, fill = clase.sub, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+g11.1 <- datos11.1 %>% 
+  ggplot(aes(y = prop, x = ola, fill = clase_sub, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = 'Stack') +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = .11, end = .99, direction = -1, option = 'viridis') +
-  #cambiar geom_text tal que: Stack y cambio colores
+  scale_fill_viridis_d(begin = .11, end = .88, direction = 1, option = 'viridis') +
   geom_text(position = position_stack(vjust = .5),
-            size= 2.75, color = rep.int(c('black', 'white', 'white'), 5)) + 
+            size= 2.75, color = rep.int(c('white', 'black', 'black'), 5)) + 
   theme(legend.position = 'top',
         legend.title = element_blank())
-
 g11.1
-
 ```
 
 
@@ -94,13 +103,13 @@ g11.2 <-
   xlab(label = NULL) + 
   theme(legend.position = 'top',
         legend.title = element_blank()) +
-  scale_fill_viridis_d(begin = .11, end = .95, direction = -1, option = 'viridis') +
+  scale_fill_viridis_d(begin = .11, end = .88, direction = 1, option = 'viridis') +
   geom_text(data = etiquetas.g11.2, 
             aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")),
             position = position_stack(vjust = .5),
             show.legend = FALSE,
             size = 2.75,
-            color = rep.int(c('black', 'white', 'white'),3))
+            color = rep.int(c('white', 'white', 'black'),3))
 
 g11.2
 ```
@@ -123,9 +132,9 @@ g11.3 <-
                      limits = c(0, 1)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = 0, end = .99, direction = -1, option = 'viridis') +
+  scale_fill_viridis_d(begin = 0, end = .99, direction = 1, option = 'viridis') +
   geom_text(position = position_stack(vjust = .5),
-            size= 2.75, color = rep.int(c('black', 'white', 'white'), 5)) + 
+            size= 2.75, color = rep.int(c('white', 'white', 'black'), 5)) + 
   theme(legend.position = 'top',
         legend.title = element_blank())
 
@@ -134,59 +143,98 @@ g11.3
 
 <!-- ### 11.4  Si usted tiene actualmente hijos o si los tuviera en el futuro, ¿dónde cree usted que se ubicarían ellos?, según Clase social subjetiva (2021) -->
 ```{r esshijos-ess, fig.align='center',fig.cap='Si usted tiene actualmente hijos o si los tuviera en el futuro, ¿dónde cree usted que se ubicarían ellos?, según Clase social subjetiva (2021)'}
-datos.g11.4 <- 
-  data.frame((svytable(~clase.sub.hijos + clase.sub + ola, elsoc_diseno, round = F))) %>%
-  group_by(clase.sub, ola) %>% mutate(porcentaje = Freq/sum(Freq)) %>% 
-  filter(ola == '2021') %>% 
-  drop_na()
+datos11.4 <- elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & muestra == 1 & ola == 5 & 
+         !d01_01 %in% c(-888, -999) & !d01_03 %in% c(-888, -999)) %>% 
+  mutate(clase_sub = factor(car::recode(d01_01, "c(0,1,2,3)=1; c(4,5)=2; c(6,7,8,9,10)=3;else=NA"), 
+                            levels = c(1,2,3), 
+                            labels = c("Baja y media baja", "Media", "Alta y media alta")),
+         clase_sub_hijo = factor(car::recode(d01_03, "c(0,1,2,3)=1; c(4,5)=2; c(6,7,8,9,10)=3;else=NA"),
+                                 levels = c(1,2,3), 
+                                 labels = c("Baja y media baja", "Media", "Alta y media alta"))) %>% 
+  sjlabelled::as_label(ola) %>% 
+  prop(x = clase_sub_hijo, by = c(ola, clase_sub), na.rm = T)
 
-g11.4 <- 
-  datos.g11.4 %>% 
-  ggplot(aes(y = porcentaje, x = clase.sub, fill = clase.sub.hijos, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+g11.4 <- datos11.4 %>% 
+  ggplot(aes(y = prop, x = clase_sub, fill = clase_sub_hijo, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = 'Stack') +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
   ylab(label = NULL) +
   xlab(label = 'Clase social subjetiva propia') +
-  scale_fill_viridis_d(begin = 0, end = .99, direction = -1, option = 'viridis') +
-  #cambiar geom_text tal que: Stack y cambio colores
+  scale_fill_viridis_d(begin = .11, end = .88, direction = 1, option = 'viridis') +
   geom_text(position = position_stack(vjust = .5),
-            size= 2.75, color = rep.int(c('black', 'white', 'white'), 3)) + 
+            size= 2.75, color = rep.int(c('white', 'white', 'black'), 3)) + 
   theme(legend.position = 'top',
         legend.title = element_blank())
-
 g11.4
 ```
-
 ## Movilidad social
 
-<!-- ### 11.X  Perpectiva de movilidad social, según ola.  -->
-```{r mov-soc-rec, fig.align='center',fig.cap='Perpectiva de movilidad social, según ola'}
-datos.g11.X <- 
-  data.frame((svytable(~mov_interg_rec + ola, elsoc_diseno, round = F))) %>%
-  group_by(ola) %>% 
-  mutate(porcentaje = Freq/sum(Freq))
+elsoc_panel_m1 <- elsoc_panel_m1 %>% 
+  mutate(mov_interg = d01_03 - d01_01, #estatus futuro hijos menos estatus propio
+         mov_relativa = d01_01 - d01_02) #estatus propio vs estatus padres
 
-g11.X <- 
-  datos.g11.X %>% 
-  ggplot(aes(y = porcentaje, x = ola, fill = mov_interg_rec, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+mov_interg_rec = factor(car::recode(mov_interg, "-8:-1=1;0=2;1:10=3"),
+                           labels = c("Movilidad social descendente", "Inmovilidad social",
+                                      "Movilidad social ascendente")
+```{r}
+datos.11.5 <- elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & muestra == 1 & ola == c(1,2,3,4,5) & 
+         !d01_01 %in% c(-888, -999) & !d01_03 %in% c(-888, -999)) %>% 
+  mutate(mov_interg = d01_03 - d01_01) %>% 
+  mutate(mov_interg_rec = factor(car::recode(mov_interg, "-8:-1=1;0=2;1:10=3;else=NA"), 
+                            levels = c(1,2,3), 
+                            labels = c("Perpectiva de\nmovilidad descendente", "Perspectiva de\ninmovilidad social",
+                                       "Perspectiva de\nmovilidad ascendente"))) %>% 
+  sjlabelled::as_label(ola) %>% 
+  prop(x = mov_interg_rec, by = ola, na.rm = T)
+
+g11.5 <- 
+  datos.11.5 %>% 
+  ggplot(aes(y = prop, x = ola, fill = mov_interg_rec, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = 'Stack') +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = .11, end = .99, direction = -1, option = 'viridis') +
-  #cambiar geom_text tal que: Stack y cambio colores
   geom_text(position = position_stack(vjust = .5),
             size= 2.75, color = rep.int(c('black', 'white', 'white'), 5)) + 
   theme(legend.position = 'top',
         legend.title = element_blank())
 
-g11.X
+g11.5
+```
+
+<!-- ### 11.X  Perspectiva de movilidad social, según ola.  -->
+```{r mov-soc-rec, fig.align='center',fig.cap='Perspectiva de movilidad social, según ola. '}
+datos.11.5 <- elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & muestra == 1 & ola == c(1,2,3,4,5) & 
+         !d01_01 %in% c(-888, -999) & !d01_03 %in% c(-888, -999)) %>% 
+  mutate(mov_interg = d01_03 - d01_01) %>% 
+  mutate(mov_interg_rec = factor(car::recode(mov_interg, "-8:-1=1;0=2;1:10=3;else=NA"), 
+                            levels = c(1,2,3), 
+                            labels = c("Perpectiva de\nmovilidad descendente", "Perspectiva de\ninmovilidad social",
+                                       "Perspectiva de\nmovilidad ascendente"))) %>% 
+  sjlabelled::as_label(ola) %>% 
+  prop(x = mov_interg_rec, by = ola, na.rm = T)
+
+g11.5 <- 
+  datos.11.5 %>% 
+  ggplot(aes(y = prop, x = ola, fill = mov_interg_rec, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .11, end = .99, direction = -1, option = 'viridis') +
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75, color = rep.int(c('black', 'white', 'white'), 5)) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+g11.5
 ```
 <!-- ### 11.Y  Estatus subjetivo y tipo de movilidad social, nivel promedio según ola.  -->
 ```{r mov-soc, fig.align='center',fig.cap='Estatus subjetivo y tipo de movilidad social, nivel promedio según ola'}
@@ -259,17 +307,17 @@ datos.grafico.g11.5 <- cbind(datos.esfu, datos.inte, datos.educ, datos.trab)
 datos.grafico.g11.5.a <- datos.grafico.g11.5 %>% 
   pivot_longer(cols = starts_with('merit_'))  %>%
   mutate(variable = factor(name,
-                           labels = c('Personas son recompensadas por su esfuerzo', 
-                                      'Personas son recompensadas por su inteligencia',
-                                      'Educación es importane para surgir en la vida',
-                                      'Trabajo duro es importane para surgir en la vida'))) %>%
+                           labels = c('Personas son\nrecompensadas\npor su esfuerzo', 
+                                      'Personas son\nrecompensadas\npor su inteligencia',
+                                      'Educación es\nimportante para\nsurgir en la vida',
+                                      'Trabajo duro\nes importante para\nsurgir en la vida'))) %>%
   drop_na()
 
 datos.grafico.g11.5.a$porcentaje <- with(datos.grafico.g11.5.a, case_when(
-  variable == 'Personas son recompensadas por su esfuerzo' ~ p_esfu,
-  variable == 'Personas son recompensadas por su inteligencia' ~ p_inte,
-  variable == 'Educación es importane para surgir en la vida' ~ p_educ,
-  variable == 'Trabajo duro es importane para surgir en la vida' ~ p_trab))
+  variable == 'Personas son\nrecompensadas\npor su esfuerzo' ~ p_esfu,
+  variable == 'Personas son\nrecompensadas\npor su inteligencia' ~ p_inte,
+  variable == 'Educación es\nimportante para\nsurgir en la vida' ~ p_educ,
+  variable == 'Trabajo duro\nes importante para\nsurgir en la vida' ~ p_trab))
 
 #Paso 1.2: filtrar el subset manteniendo "De acuerdo o totalmente de acuerdo"
 subset.g11.5 <- droplevels(subset(datos.grafico.g11.5.a, value == 'De acuerdo o totalmente de acuerdo'))
@@ -290,7 +338,6 @@ g11.5 <-
             size= 2.75) +
   theme(legend.position = 'top',
         legend.title = element_blank())
-
 g11.5
 ```
 
