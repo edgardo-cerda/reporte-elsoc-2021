@@ -240,9 +240,7 @@ g11.6 <-
   scale_color_viridis_d(begin = .11, end = .55, direction = 1, option = 'viridis') +
   theme(legend.position = 'top',
         legend.title = element_blank()) +
-  geom_text(posilinetion = position_dodge(width = .9),
-                  vjust = -0.8,
-                  size= 3.5)
+  geom_text(vjust = -0.8,  size= 3.5)
 g11.6
 ```
 ## Percepción de meritocracia
@@ -265,10 +263,10 @@ datos.educ$ola <- NULL
 datos.trab <- data.frame((svytable(~merit_trab + ola, elsoc_diseno, round = F))) %>% 
   group_by(ola) %>% mutate(p_trab=Freq/sum(Freq))
 
-datos.grafico.g11.7 <- cbind(datos.esfu, datos.inte, datos.educ, datos.trab)
+datos.11.7 <- cbind(datos.esfu, datos.inte, datos.educ, datos.trab)
 
 #trasponer según variable
-datos.grafico.g11.7.a <- datos.grafico.g11.5 %>% 
+datos.11.7a <- datos.11.7 %>% 
   pivot_longer(cols = starts_with('merit_'))  %>%
   mutate(variable = factor(name,
                            labels = c('Personas son\nrecompensadas\npor su esfuerzo', 
@@ -277,14 +275,14 @@ datos.grafico.g11.7.a <- datos.grafico.g11.5 %>%
                                       'Trabajo duro\nes importante para\nsurgir en la vida'))) %>%
   drop_na()
 
-datos.grafico.g11.7.a$porcentaje <- with(datos.grafico.g11.5.a, case_when(
+datos.11.7a$porcentaje <- with(datos.11.7a, case_when(
   variable == 'Personas son\nrecompensadas\npor su esfuerzo' ~ p_esfu,
   variable == 'Personas son\nrecompensadas\npor su inteligencia' ~ p_inte,
   variable == 'Educación es\nimportante para\nsurgir en la vida' ~ p_educ,
   variable == 'Trabajo duro\nes importante para\nsurgir en la vida' ~ p_trab))
 
 #Paso 1.2: filtrar el subset manteniendo "De acuerdo o totalmente de acuerdo"
-subset.g11.7 <- droplevels(subset(datos.grafico.g11.5.a, value == 'De acuerdo o totalmente de acuerdo'))
+subset.g11.7 <- droplevels(subset(datos.11.7a, value == 'De acuerdo o totalmente de acuerdo'))
 
 g11.7 <- 
   ggplot(subset.g11.7, aes(y = porcentaje, x = ola, color = variable, group = variable,
@@ -298,7 +296,6 @@ g11.7 <-
   xlab(label = NULL) +
   scale_color_viridis_d(begin = 0, end = .66, direction = 1, option = 'viridis') +
   geom_text(vjust = -0.8,
-            posilinetion = position_dodge(width = .9),
             size= 2.75) +
   theme(legend.position = 'top',
         legend.title = element_blank())
