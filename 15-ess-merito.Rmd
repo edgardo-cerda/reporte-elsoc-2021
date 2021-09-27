@@ -113,31 +113,45 @@ g11.2 <-
 
 g11.2
 ```
+```{r}
+
+```
 
 <!-- ### 11.3 Clase social subjetiva, según quintiles de ingreso (2021) -->
 ```{r ess-quintil, fig.align='center',fig.cap='Clase social subjetiva, según quintiles de ingreso (2021)'}
-datos.g11.3 <- 
-  data.frame((svytable(~clase.sub + quintil + ola, elsoc_diseno, round = F))) %>%
-  group_by(quintil, ola) %>% mutate(porcentaje = Freq/sum(Freq)) %>%
-  filter(ola == '2019') %>% 
-  drop_na()
+
+datos.11.3 <- elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & muestra == 1 & ola %in% c(5) & !t01 %in% c(-888, -999)) %>% 
+  mutate(clase_sub = factor(car::recode(d01_01, "c(0,1,2,3)=1; c(4,5)=2; c(6,7,8,9,10)=3;else=NA"), 
+                            levels = c(1,2,3), 
+                            labels = c("Baja y media baja", "Media", "Alta y media alta")),
+         m30 = as.numeric(car::recode(m30,"1=110000;2=251000;3=305000;4=355000;5=400000;
+                                           6=445000;7=490000;8=535000;9=585000;10=640000;11=700000;12=765000;
+                                           13=845000;14=935000;15=1040000;16=1180000;17=1375000;18=1670000;
+                                           19=2275000;20=2700000;NA=NA")),
+         m29_imp = ifelse(!is.na(m29),m29, m30),
+         n_hogar = case_when(ola == 1 ~ nhogar1, ola == 2 ~ m46_nhogar,
+                             ola == 3 ~ m54, ola == 4 ~ m54, ola == 5 ~ m54)) %>%
+  mutate(ing_pc = (m29_imp/n_hogar)) %>%
+  sjlabelled::as_label(ola) %>% 
+  group_by(ola) %>% 
+  mutate(quintil = factor(ntile(-desc(ing_pc), 5), levels = c(1,2,3,4,5),
+         labels = c('Q1', 'Q2', 'Q3', 'Q4', 'Q5'))) %>% 
+  prop(x = clase_sub, by = c(ola, quintil), na.rm = TRUE)
 
 g11.3 <- 
-  datos.g11.3 %>% 
-  ggplot(aes(y = porcentaje, x = quintil, fill = clase.sub, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  datos.11.3 %>% 
+  ggplot(aes(y = prop, x = quintil, fill = clase_sub, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = 'Stack') +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = 0, end = .99, direction = 1, option = 'viridis') +
+  scale_fill_viridis_d(begin = 0, end = .99, direction = -1, option = 'viridis') +
   geom_text(position = position_stack(vjust = .5),
-            size= 2.75, color = rep.int(c('white', 'white', 'black'), 5)) + 
+            size= 2.75, color = rep.int(c( 'black','black','white'), 5)) + 
   theme(legend.position = 'top',
         legend.title = element_blank())
-
 g11.3
 ```
 
@@ -204,7 +218,8 @@ g11.5
 ```{r}
 datos.11.6 <- elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & ola == c(1,2,3,4,5) & !ola %in% c(-888, -999) &
-         !d01_01 %in% c(-888, -999) & !d01_02 %in% c(-888,-999) & !d01_03 %in% c(-888, -999)) %>% 
+         !d01_01 %in% c(-888, -999) & !d01_02 %in% c(-888,-999) & !d01_03 %in% c(-888, -999)) %>%
+  sjlabelled::as_label(ola) %>% 
   mutate(mov_interg = d01_03 - d01_01,
          mov_relativa = d01_01 - d01_02) %>% 
   group_by(ola) %>% 
@@ -219,8 +234,7 @@ datos.11.6 <- elsoc_long_2016_2021 %>%
   mutate(m_mov_social = case_when(
     value == 'Perspectiva de\nmovilidad social' ~ m_interg,
     value == 'Movilidad social\nrelativa' ~ m_relativa,
-    value == 'Estatus social\nactual' ~ m_estatus)) %>% 
-    sjlabelled::as_label(ola)
+    value == 'Estatus social\nactual' ~ m_estatus)) 
 
 datos.11.6$m_mov_social <- round(datos.11.6$m_mov_social, digits = 2) 
 

@@ -20,7 +20,7 @@ elsoc_diseno <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~pondera
                           nest = TRUE, data = elsoc_panel_m1)
 ```
 
-## Conflicto barrial
+## Conflictividad barrial
 <!-- ### 8.1 ¿Con qué frecuencia usted/alguien de su hogar se ha molestado o incomodado por problemas con sus vecinos? según ola de estudio -->
 ```{r confli-olas, fig.align='center', fig.cap='¿Con qué frecuencia usted/alguien de su hogar se ha molestado o incomodado por problemas con sus vecinos? según ola de estudio '}
 datos.8.1 <- elsoc_long_2016_2021 %>% 
@@ -146,13 +146,30 @@ g8.4
 
 <!-- ### 8.5 Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y quintil de ingreso. Porcentaje con conflictos barriales "Siempre" o "Muchas veces".  -->
 ```{r confli-quintil, fig.align='center', fig.cap='Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y quintil de ingreso. Porcentaje con conflictos barriales "Siempre" o "Muchas veces".'}
-datos.g8.5 <- data.frame(svytable(~confli_barrial_rec + ola + quintil, elsoc_diseno, round = F)) %>% 
-  group_by(ola, quintil) %>% mutate(porcentaje = Freq/sum(Freq)) %>%
-  filter(confli_barrial_rec == 'Muchas veces o siempre', ola == '2019' | ola == '2021')
+datos.8.5 <- elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & muestra == 1 & ola %in% c(4,5) & !t11_01 %in% c(-888, -999) &
+           !t11_02 %in% c(-888, -999) & !t11_03 %in% c(-888, -999) & !t11_04 %in% c(-888, -999)) %>% 
+  mutate(barrio_confli = (t11_01 + t11_03 + t11_03 + t11_04)/4,
+         m30 = as.numeric(car::recode(m30,"1=110000;2=251000;3=305000;4=355000;5=400000;
+                                           6=445000;7=490000;8=535000;9=585000;10=640000;11=700000;12=765000;
+                                           13=845000;14=935000;15=1040000;16=1180000;17=1375000;18=1670000;
+                                           19=2275000;20=2700000;NA=NA")),
+         m29_imp = ifelse(!is.na(m29),m29, m30),
+         n_hogar = case_when(ola == 1 ~ nhogar1, ola == 2 ~ m46_nhogar,
+                             ola == 3 ~ m54, ola == 4 ~ m54, ola == 5 ~ m54)) %>%
+  mutate(barrio_confli_rec = factor(cut(barrio_confli, breaks = c(0,1,2.75,5)),
+         labels = c("Nunca","Pocas o algunas veces","Muchas veces o siempre")),
+         ing_pc = (m29_imp/n_hogar)) %>%
+  sjlabelled::as_label(ola) %>% 
+  group_by(ola) %>% 
+  mutate(quintil = factor(ntile(-desc(ing_pc), 5), levels = c(1,2,3,4,5),
+         labels = c('Q1', 'Q2', 'Q3', 'Q4', 'Q5'))) %>% 
+  prop(x = barrio_confli_rec, by = c(ola, quintil), na.rm = TRUE) %>% 
+  filter(barrio_confli_rec == 'Muchas veces o siempre')
 
-g8.5 <- datos.g8.5 %>% 
-  ggplot(aes(y = porcentaje, x = quintil, fill = ola, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+g8.5 <- datos.8.5 %>% 
+  ggplot(aes(y = prop, x = quintil, fill = ola, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = 'Dodge') +
   scale_y_continuous(labels = scales::percent,
@@ -168,7 +185,7 @@ g8.5 <- datos.g8.5 %>%
 g8.5
 ```
 
-## Conflicto barrial mapeado
+## Cartografía regional del conflicto barrial
 
 ```{r recode-mapas ,include=FALSE}
 ## library 
@@ -306,14 +323,29 @@ g8.7
 ```
 
 <!-- ### 8.8 En términos generales, ¿cuánto confía usted en sus vecinos? Según ola del estudio y quintil de ingreso. Suma de Respuestas “Bastante” y “Mucho”. -->
-```{r vecinos-quinti, fig.align='center', fig.cap='En términos generales, ¿cuánto confía usted en sus vecinos? Según ola del estudio y quintil de ingreso. Suma de Respuestas “Bastante” y “Mucho”.'}
-datos.g8.8 <- data.frame(svytable(~conf_vecinos + ola + quintil, elsoc_diseno, round = F)) %>% 
-  group_by(ola, quintil) %>% mutate(porcentaje = Freq/sum(Freq)) %>%
-  filter(conf_vecinos == 'Bastante o mucho', ola == '2019' | ola == '2021')
+```{r vecinos-quintil, fig.align='center', fig.cap='En términos generales, ¿cuánto confía usted en sus vecinos? Según ola del estudio y quintil de ingreso. Suma de Respuestas “Bastante” y “Mucho”.'}
+datos.8.8 <- elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & muestra == 1 & ola %in% c(4,5) & !t01 %in% c(-888, -999)) %>% 
+  mutate(barrio_conf = factor(car::recode(t01, "c(1,2) = 1; c(3) = 2; c(4,5) = 3"),
+                               levels = c(1,2,3), labels = c('Muy poco o poco','Algo','Bastante o mucho')),
+         m30 = as.numeric(car::recode(m30,"1=110000;2=251000;3=305000;4=355000;5=400000;
+                                           6=445000;7=490000;8=535000;9=585000;10=640000;11=700000;12=765000;
+                                           13=845000;14=935000;15=1040000;16=1180000;17=1375000;18=1670000;
+                                           19=2275000;20=2700000;NA=NA")),
+         m29_imp = ifelse(!is.na(m29),m29, m30),
+         n_hogar = case_when(ola == 1 ~ nhogar1, ola == 2 ~ m46_nhogar,
+                             ola == 3 ~ m54, ola == 4 ~ m54, ola == 5 ~ m54)) %>%
+  mutate(ing_pc = (m29_imp/n_hogar)) %>%
+  sjlabelled::as_label(ola) %>% 
+  group_by(ola) %>% 
+  mutate(quintil = factor(ntile(-desc(ing_pc), 5), levels = c(1,2,3,4,5),
+         labels = c('Q1', 'Q2', 'Q3', 'Q4', 'Q5'))) %>% 
+  prop(x = barrio_conf, by = c(ola, quintil), na.rm = TRUE) %>% 
+  filter(barrio_conf == 'Bastante o mucho')
 
-g8.8 <- datos.g8.8 %>% 
-  ggplot(aes(y = porcentaje, x = quintil, fill = ola, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+g8.8 <- datos.8.8 %>% 
+  ggplot(aes(y = prop, x = quintil, fill = ola, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = 'Dodge') +
   scale_y_continuous(labels = scales::percent,
@@ -456,23 +488,39 @@ g8.12
 <!-- ### 8.13 ¿Qué tan seguro o inseguro se siente en el barrio o vecindario donde usted vive? Según ola del estudio y quintil de ingreso per capita. Suma de Respuestas "Seguro" o ”Muy Seguro". -->
 ```{r seguri-quintil, fig.align='center',fig.cap='¿Qué tan seguro o inseguro se siente en el barrio o vecindario donde usted vive? Según ola del estudio y quintil de ingreso per capita. Suma de Respuestas "Seguro" o ”Muy Seguro".'}
 
-datos.g8.13 <- data.frame((svytable(~quintil + ola + segur_barrio, elsoc_diseno, round = F))) %>% 
-  group_by(ola, quintil) %>% mutate(porcentaje=Freq/sum(Freq)) %>% 
-  filter(segur_barrio == "Seguro o Muy seguro", quintil == "Q1" | quintil == "Q5") 
+datos.8.13 <- elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & muestra == 1 & ola %in% c(1,2,3,4,5) & !t10 %in% c(-888, -999)) %>% 
+  mutate(barrio_segur = factor(car::recode(t10, "c(1,2)=1; c(3)=2; c(4,5)=3"), levels = c(1,2,3),
+                               labels = c('Muy inseguro o inseguro', 'Ni seguro ni inseguro',
+                                          'Seguro o Muy seguro')),
+         m30 = as.numeric(car::recode(m30,"1=110000;2=251000;3=305000;4=355000;5=400000;
+                                           6=445000;7=490000;8=535000;9=585000;10=640000;11=700000;12=765000;
+                                           13=845000;14=935000;15=1040000;16=1180000;17=1375000;18=1670000;
+                                           19=2275000;20=2700000;NA=NA")),
+         m29_imp = ifelse(!is.na(m29),m29, m30),
+         n_hogar = case_when(ola == 1 ~ nhogar1, ola == 2 ~ m46_nhogar,
+                             ola == 3 ~ m54, ola == 4 ~ m54, ola == 5 ~ m54)) %>%
+  mutate(ing_pc = (m29_imp/n_hogar)) %>%
+  sjlabelled::as_label(ola) %>% 
+  group_by(ola) %>% 
+  mutate(quintil = factor(ntile(-desc(ing_pc), 5), levels = c(1,2,3,4,5),
+         labels = c('Q1', 'Q2', 'Q3', 'Q4', 'Q5'))) %>% 
+  prop(x = barrio_segur, by = c(ola, quintil), na.rm = TRUE) %>% 
+  filter(barrio_segur == 'Muy inseguro o inseguro', quintil == "Q1" | quintil == "Q5") %>% 
+  drop_na()
 
-g8.13 <- 
-  ggplot(datos.g8.13, aes(y = porcentaje, x = ola, color = quintil, group = quintil,
-                          label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+g8.13 <- datos.8.13 %>% 
+  ggplot(aes(y = prop, x = ola, color = quintil, group = quintil,
+             label = as.character(scales::percent(prop, accuracy = .1)))) +
   theme_bw() +   
   geom_line(size = 1) +
   geom_point(size = 1.8) +
   scale_y_continuous(labels = scales::percent,
-                     limits = c(0,1)) +
+                     limits = c(0,.5)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_color_viridis_d(begin = .22, end = .77, direction = -1, option = 'viridis') +
+  scale_color_viridis_d(begin = .0, end = .55, direction = -1, option = 'viridis') +
   geom_text(vjust = -0.8,
-            position = position_dodge(width = .9),
             size= 2.75) +
   theme(legend.position = 'top',
         legend.title = element_blank())
@@ -571,29 +619,45 @@ g8.16 <- datos.8.16 %>%
 g8.16
 ```
 
-
 <!-- ### 8.17 ¿Con qué frecuencia se han producido crímenes (riñas, robos y tráfico de drogas) en su barrio?, según ola del estudio y quintil de ingreso. Porcentaje de experiencias de criminalidad "Siempre" o "Muchas veces".  -->
 ```{r crim-quintil, fig.align='center', fig.cap='¿Con qué frecuencia se han producido crímenes (riñas, robos y tráfico de drogas) en su barrio?, según ola del estudio y quintil de ingreso. Porcentaje de experiencias de criminalidad "Siempre" o "Muchas veces".'}
 
-datos.g8.17 <- data.frame(svytable(~frec_crimen_rec + ola + quintil, elsoc_diseno, round = F)) %>% 
-  group_by(ola, quintil) %>% mutate(porcentaje = Freq/sum(Freq)) %>%
-  filter(frec_crimen_rec == 'Muchas veces o siempre', ola == '2019' | ola == '2021')
+datos.8.17 <- elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & muestra == 1 & ola %in% c(1,2,3,4,5) &
+           !t09_01 %in% c(-888, -999) & !t09_02 %in% c(-888, -999) & !t09_03 %in% c(-888, -999)) %>% 
+  mutate(barrio_crim = (t09_01 + t09_02 + t09_03)/3) %>% 
+  mutate(barrio_crim_rec = factor(cut(barrio_crim, breaks = c(0,1,2.67,5)),
+                                  labels = c("Nunca","Pocas o algunas veces","Muchas veces o siempre")),
+         m30 = as.numeric(car::recode(m30,"1=110000;2=251000;3=305000;4=355000;5=400000;
+                                           6=445000;7=490000;8=535000;9=585000;10=640000;11=700000;12=765000;
+                                           13=845000;14=935000;15=1040000;16=1180000;17=1375000;18=1670000;
+                                           19=2275000;20=2700000;NA=NA")),
+         m29_imp = ifelse(!is.na(m29),m29, m30),
+         n_hogar = case_when(ola == 1 ~ nhogar1, ola == 2 ~ m46_nhogar,
+                             ola == 3 ~ m54, ola == 4 ~ m54, ola == 5 ~ m54)) %>%
+  mutate(ing_pc = (m29_imp/n_hogar)) %>%
+  sjlabelled::as_label(ola) %>% 
+  group_by(ola) %>% 
+  mutate(quintil = factor(ntile(-desc(ing_pc), 5), levels = c(1,2,3,4,5),
+         labels = c('Q1', 'Q2', 'Q3', 'Q4', 'Q5'))) %>% 
+  prop(x = barrio_crim_rec, by = c(ola, quintil), na.rm = TRUE) %>% 
+  filter(barrio_crim_rec == 'Muchas veces o siempre', quintil == "Q1" | quintil == "Q5") 
 
-g8.17 <- datos.g8.17 %>% 
-  ggplot(aes(y = porcentaje, x = quintil, fill = ola, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
-  theme_bw() + 
-  geom_col(position = 'Dodge') +
+g8.17 <- datos.8.17 %>% 
+  ggplot(aes(y = prop, x = ola, color = quintil, group = quintil,
+             label = as.character(scales::percent(prop, accuracy = .1)))) +
+  theme_bw() +   
+  geom_line(size = 1) +
+  geom_point(size = 1.8) +
   scale_y_continuous(labels = scales::percent,
-                     limits = c(0, .5)) +
+                     limits = c(0,.6)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
-  theme(legend.position = 'top',
-        legend.title = element_blank()) +
+  scale_color_viridis_d(begin = .0, end = .55, direction = -1, option = 'viridis') +
   geom_text(vjust = -0.8,
-            position = position_dodge(width = .9),
-            size= 2.75)
+            size= 2.75) +
+  theme(legend.position = 'top',
+        legend.title = element_blank())
 g8.17
 ```
 
@@ -629,26 +693,37 @@ g8.18
 ```
 
 ```{r dist-quintil, fig.align='center', fig.cap='¿En qué medida usted ha seguido la recomendación de quedarse en su hogar, manteniendo el aislamiento social? según quintil de ingreso (2021).'}
-datos.g8.19 <- 
-  data.frame((svytable(~aislamiento + quintil + ola, elsoc_diseno, round = F))) %>%
-  group_by(quintil, ola) %>% mutate(porcentaje = Freq/sum(Freq)) %>% 
-  filter(ola == '2021', aislamiento == 'Frecuentemente o muy frecuentemente') %>% 
-  drop_na()
+datos.8.19 <- elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & muestra == 1 & ola %in% c(5) & !t01 %in% c(-888, -999)) %>% 
+  mutate(dis_soc = factor(car::recode(c48, "c(1,2) = 1; c(3) = 2; c(4,5) = 3"),
+                               levels = c(1,2,3), labels= c("Nunca o casi nunca", "A veces",
+                                         "Frecuentemente o\nmuy frecuentemente")),
+         m30 = as.numeric(car::recode(m30,"1=110000;2=251000;3=305000;4=355000;5=400000;
+                                           6=445000;7=490000;8=535000;9=585000;10=640000;11=700000;12=765000;
+                                           13=845000;14=935000;15=1040000;16=1180000;17=1375000;18=1670000;
+                                           19=2275000;20=2700000;NA=NA")),
+         m29_imp = ifelse(!is.na(m29),m29, m30),
+         n_hogar = case_when(ola == 1 ~ nhogar1, ola == 2 ~ m46_nhogar,
+                             ola == 3 ~ m54, ola == 4 ~ m54, ola == 5 ~ m54)) %>%
+  mutate(ing_pc = (m29_imp/n_hogar)) %>%
+  sjlabelled::as_label(ola) %>% 
+  group_by(ola) %>% 
+  mutate(quintil = factor(ntile(-desc(ing_pc), 5), levels = c(1,2,3,4,5),
+         labels = c('Q1', 'Q2', 'Q3', 'Q4', 'Q5'))) %>% 
+  prop(x = dis_soc, by = c(ola, quintil), na.rm = TRUE)
 
 g8.19 <- 
-  datos.g8.19 %>% 
-  ggplot(aes(y = porcentaje, x = quintil, fill = aislamiento, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  datos.8.19 %>% 
+  ggplot(aes(y = prop, x = quintil, fill = dis_soc, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
-  geom_col() +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
+  geom_col(position = 'Stack') +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = .22, direction = 1, option = 'viridis') +
+  scale_fill_viridis_d(begin = 0, end = .99, direction = -1, option = 'viridis') +
   geom_text(position = position_stack(vjust = .5),
-            size= 2.75, color = 'white') + 
-  theme(legend.position = 'none',
+            size= 2.75, color = rep.int(c( 'black','black','white'), 5)) + 
+  theme(legend.position = 'top',
         legend.title = element_blank())
 g8.19
 ```
