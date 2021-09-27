@@ -216,7 +216,7 @@ g11.5
 ```
 
 ```{r}
-datos.11.6 <- elsoc_long_2016_2021 %>% 
+datos.11.6e <- elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & ola == c(1,2,3,4,5) & !ola %in% c(-888, -999) &
          !d01_01 %in% c(-888, -999) & !d01_02 %in% c(-888,-999) & !d01_03 %in% c(-888, -999)) %>%
   sjlabelled::as_label(ola) %>% 
@@ -236,9 +236,9 @@ datos.11.6 <- elsoc_long_2016_2021 %>%
     value == 'Movilidad social\nrelativa' ~ m_relativa,
     value == 'Estatus social\nactual' ~ m_estatus)) 
 
-datos.11.6$m_mov_social <- round(datos.11.6$m_mov_social, digits = 2) 
+datos.11.6e$m_mov_social <- round(datos.11.6e$m_mov_social, digits = 2) 
 
-g11.6e <- datos.11.6 %>% 
+g11.6e <- datos.11.6e %>% 
   ggplot(aes(y = m_mov_social, x = ola, group = value, color = value,
              label = m_mov_social)) +
   theme_bw() +
@@ -257,7 +257,7 @@ g11.6e
 <!-- ### 11.6  Estatus subjetivo y tipo de movilidad social, nivel promedio según ola.  -->
 ```{r mov-soc, fig.align='center',fig.cap='Estatus subjetivo y tipo de movilidad social, nivel promedio según ola'}
 
-elsoc_movilidad <- elsoc_panel_m1 %>%
+datos11.6 <- elsoc_panel_m1 %>%
   group_by(ola) %>% 
   summarise(m_interg = weighted.mean(mov_interg, ponderador02 ,na.rm = T),
             m_relativa = weighted.mean(mov_relativa, ponderador02 ,na.rm = T),
@@ -272,15 +272,15 @@ elsoc_movilidad <- elsoc_panel_m1 %>%
     value == 'Movilidad social\nrelativa' ~ m_relativa,
     value == 'Estatus social\nactual' ~ m_estatus))
 
-elsoc_movilidad$m_mov_social <- round(elsoc_movilidad$m_mov_social, digits = 2) 
+datos11.6$m_mov_social <- round(datos11.6$m_mov_social, digits = 2) 
 
 g11.6 <- 
-  ggplot(elsoc_movilidad, aes(y = m_mov_social, x = ola, group = value, color = value,
+  ggplot(datos11.6, aes(y = m_mov_social, x = ola, group = value, color = value,
                               label = m_mov_social)) +
   theme_bw() +
   geom_line(size = 1) +
   geom_point(size = 1.8) +
-  scale_y_continuous(limits = c(0,5)) +
+  scale_y_continuous(limits = c(0,6)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_color_viridis_d(begin = .11, end = .55, direction = 1, option = 'viridis') +
@@ -312,7 +312,7 @@ datos.trab <- data.frame((svytable(~merit_trab + ola, elsoc_diseno, round = F)))
 datos.11.7 <- cbind(datos.esfu, datos.inte, datos.educ, datos.trab)
 
 #trasponer según variable
-datos.11.7b <- datos.11.7 %>%
+datos.11.7 <- datos.11.7 %>%
   pivot_longer(cols = starts_with('merit_')) %>%
   mutate(porcentaje = case_when(
     name == 'merit_esfu' ~ p_esfu,
@@ -326,7 +326,7 @@ datos.11.7b <- datos.11.7 %>%
                                'Educación es\nimportante para\nsurgir en la vida',
                                'Trabajo duro\nes importante para\nsurgir en la vida')))
 
-g11.7b <- datos.11.7b %>% 
+g11.7 <- datos.11.7 %>% 
   ggplot(aes(y = porcentaje, x = ola, color = variable, group = variable,
              label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
   theme_bw() +   
@@ -341,6 +341,6 @@ g11.7b <- datos.11.7b %>%
             size= 2.75) +
   theme(legend.position = 'top',
         legend.title = element_blank())
-g11.7b
+g11.7
 ```
 
