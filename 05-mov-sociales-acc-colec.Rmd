@@ -13,30 +13,29 @@ editor_options:
 
 <!-- ### 1.1 ¿Cuál es el movimiento social que usted más valora de esta lista? Según ola del estudio  -->
 
-```{r diseno, include=FALSE}
-elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
-                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
-                          weights = ~ponderador02, #ponderador de corte transversal
-                          nest = TRUE,
-                          data = elsoc_panel_m1)
-```
-
 ```{r include=FALSE}
-datos.1.1 <- data.frame((svytable(~mov + ola, elsoc_diseno, round = F))) %>%
-  group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
-  filter(ola == '2019' | ola == '2021') %>%
-  na.omit()
-```
-
-
-```{r echo=FALSE}
 datos.1.1 <- elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1 & ola %in% c(4,5) & !c20 %in% c(-888, -999)) %>%
-  prop(x = c20, by = ola, na.rm = TRUE) %>% 
-  sjlabelled::as_label(c20, ola)
+  mutate(ola = factor(ola, levels = c(4,5),
+                         labels = c('2019', '2021'))) %>%
+  mutate(mov = factor(c20, levels = c(1,2,3,4,5,6,7,8,9,10,11,12),
+                         labels = c('Estudiantil',
+                                    'Laboral',
+                                    'Ambiental',
+                                    'Indigena',
+                                    'Diversidad sexual',
+                                    'Provida o Antiaborto',
+                                    'Antidelincuencia',
+                                    'Feminista',
+                                    'Pensiones',
+                                    'Mov Social de Octubre (18/O)',
+                                    'Otro',
+                                    'Ninguno'))) %>%
+  prop(x = mov, by = ola, na.rm = TRUE) %>% 
+  sjlabelled::as_label(mov, ola)
 
 g1.1 <- datos.1.1 %>% 
-  ggplot(aes(y = prop, x = c20, fill = ola, 
+  ggplot(aes(y = prop, x = mov, fill = ola, 
              label = scales::percent(prop, accuracy = .1))) +
   theme_bw() + 
   geom_col(position = 'dodge2') +
@@ -50,7 +49,6 @@ g1.1 <- datos.1.1 %>%
   scale_x_discrete(labels = waiver( ))
 
 g1.1
-
 ```
 
 ### 1.2 Frecuencia de respuesta en "ninguno" ante la pregunta ¿Cuál es el movimiento social que usted más valora de esta lista? según posición política
@@ -58,70 +56,79 @@ g1.1
 <!-- ### 1.2 Frecuencia de respuesta en "ninguno" ante la pregunta ¿Cuál es el movimiento social que usted más valora de esta lista? según posición política  -->
 
 ```{r}
-datos.1.2 <- data.frame((svytable(~mov + pos_id + ola, elsoc_diseno, round = F))) %>%
-  group_by(pos_id, ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>% 
-  filter(mov == 'Ninguno') %>%
-  filter(ola == '2019' | ola == '2021') %>%
-  na.omit()
-```
+datos.1.2 <- elsoc_long_2016_2021 %>%
+    filter(tipo_atricion == 1 & ola %in% c(5) & c20 %in% c(12)) %>%
+  mutate(pos_id = car::recode(c15, recodes = "c(0,1,2,3,4)=1; c(5)=2; c(6,7,8,9,10)=3; c(11,12, -999, -888)=4")) %>%
+  mutate(pos_id = factor(pos_id, levels = c(1, 2, 3, 4),
+                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
+  prop(pos_id, by  = c(c20, ola), na.rm = TRUE)
 
-```{r}
 g1.2 <-datos.1.2 %>% 
-    ggplot(aes(y = porcentaje, x = pos_id, fill = , 
-               label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+    ggplot(aes(y = prop, x = pos_id, 
+               label = as.character(scales::percent(prop, accuracy = .1)))) +
   theme_bw() + 
-    geom_col(position = 'dodge2') +
+    geom_col() +
     scale_y_continuous(labels = scales::percent,
-                       limits = c(0, 0.3)) +
+                       limits = c(0, 1)) +
     ylab(label = NULL) +
     xlab(label = NULL) +
     scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
-    facet_wrap(datos.1.2$ola) 
+    geom_text(vjust = -0.8,
+              position = position_dodge(width = .9),
+              size= 2.75) +
+    theme(legend.position = 'none',   ## Eliminar leyenda al no ser necesaria
+          legend.title = element_blank())
 
 g1.2
 ```
+
 
 ### 1.3 Frecuencia de respuesta en "ninguno" ante la pregunta ¿Cuál es el movimiento social que usted más valora de esta lista? según posición política "No se identifica"
 
 <!-- ### 1.3 Frecuencia de respuesta en "ninguno" ante la pregunta ¿Cuál es el movimiento social que usted más valora de esta lista? según posición política "No se identifica"  -->
 
 ```{r}
-datos.1.3 <- data.frame((svytable(~mov + pos_id + ola, elsoc_diseno, round = F))) %>%
-  group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
-  filter(mov == 'Ninguno') %>%
-  na.omit()
+datos.1.3 <- elsoc_long_2016_2021 %>%
+    filter(tipo_atricion == 1 & c20 %in% c(12)) %>%
+  mutate(pos_id = car::recode(c15, recodes = "c(0,1,2,3,4)=1; c(5)=2; c(6,7,8,9,10)=3; c(11,12, -999, -888)=4")) %>%
+  mutate(pos_id = factor(pos_id, levels = c(1, 2, 3, 4),
+                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
+    mutate(ola = factor(ola, levels = c(1,2,3,4,5),
+                         labels = c('2016', '2017', '2018', '2019', '2021')))  %>%
+  prop(ola, by  = c(pos_id, c20), na.rm = TRUE)
 
-```
-
-```{r}
 g1.3 <-datos.1.3 %>% 
-    ggplot(aes(y = porcentaje, x = ola, fill = , 
-               label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+    ggplot(aes(y = prop, x = ola, 
+               label = as.character(scales::percent(prop, accuracy = .1)))) +
   theme_bw() + 
     geom_col(position = 'dodge2') +
     scale_y_continuous(labels = scales::percent,
-                       limits = c(0, 0.22)) +
+                       limits = c(0, 0.5)) +
     ylab(label = NULL) +
     xlab(label = NULL) +
     scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
-    #Agrego facer_wrap para hacer un Gráfico para cada tramo etario
     facet_wrap(datos.1.3$pos_id)+
     theme(legend.position = 'top',
           legend.title = element_blank()) 
 g1.3
+
 ```
 
 
 ### 1.4 Alluvial de movimiento social que más valora
 
 ```{r}
-elsoc_panel_m1$movsoc<- car::recode(elsoc_panel_m1$c20, 
+elsoc_long_2016_2021$movsoc<- car::recode(elsoc_long_2016_2021$c20, 
                                           "1='Progresista';2='Progresista';3='Progresista';
                                           4='Progresista';5='Progresista';6='Conservador';7='Conservador';
                                           8='Progresista';9='Progresista';10='Progresista';11=NA;12='Ninguno';
                                           c(-999,-888)=NA",as.factor=T)
 
-datos.1.4 <- elsoc_panel_m1 %>% 
+datos.1.4 <- elsoc_long_2016_2021 %>% 
+  mutate(movsoc = car::recode(c20, recodes = "1='Progresista';2='Progresista';3='Progresista';
+                                          4='Progresista';5='Progresista';6='Conservador';7='Conservador';
+                                          8='Progresista';9='Progresista';10='Progresista';11=NA;12='Ninguno';
+                                          c(-999,-888)=NA",as.factor=T)) %>% 
   dplyr::filter(tipo_atricion == 1) %>% 
   dplyr::filter(!is.na(movsoc)) %>%
   group_by(idencuesta) %>%
@@ -140,10 +147,6 @@ etiquetas.1.4 <- datos.1.4 %>%
   summarise(porcentaje = sum(porcentaje, na.rm = TRUE)) %>% 
   mutate(idencuesta = 1)
 
-
-```
-
-```{r}
 g1.4 <- ggplot(datos.1.4 , aes(x = ola, fill = movsoc, stratum = movsoc, 
                   alluvium = idencuesta, y = porcentaje )) +
   theme_bw() +
@@ -167,6 +170,7 @@ g1.4 <- ggplot(datos.1.4 , aes(x = ola, fill = movsoc, stratum = movsoc,
 g1.4
 ```
 
+
 La determinación entre las categorías "Progresista" y "Conservador" se hizo en base a la siguiente agrupación de movimientos sociales:
 
 Progresista: Movimiento social de apoyo a la causa estudiantil, Movimiento social de apoyo a demandas laborales, Movimiento social de grupos ambientalistas, Movimiento social de apoyo a las demandas indígena, Movimiento social de apoyo a la diversidad sexual, Movimiento feminista o de apoyo a la igualdad de género, Movimiento por el cambio al sistema de pensiones, Estallido social del 18 de Octubre de 2019
@@ -178,27 +182,21 @@ Conservador: Movimiento social provida o antiaborto, Movimiento social antidelin
 ### 1.5 Descriptivos generales
 
 ```{r}
-datos.1.5 <- elsoc_panel_m1 %>% 
-  dplyr::filter(tipo_atricion == 1) %>% 
-  dplyr::filter(!is.na(movsoc)) %>%
-  mutate(movsoc = factor(movsoc, 
-                         levels = c('Progresista', 'Conservador', 'Ninguno'),
-                         labels = c('Progresista', 'Conservador', 'Ninguno'))) %>% 
-  group_by(movsoc, ola) %>% 
-  summarise(n1 = sum(ponderador02, na.rm = TRUE)) %>% 
-  group_by(ola) %>% 
-  mutate(n2 = sum(n1, na.rm = TRUE), 
-         porcentaje = n1/n2) %>% 
-  ungroup()
-
-```
-
-```{r}
+datos.1.5 <- elsoc_long_2016_2021 %>%
+  mutate(movsoc = car::recode(c20, recodes = "1='Progresista';2='Progresista';3='Progresista';
+                                          4='Progresista';5='Progresista';6='Conservador';7='Conservador';
+                                          8='Progresista';9='Progresista';10='Progresista';11=NA;12='Ninguno';
+                                          c(-999,-888)=NA",as.factor=T)) %>%
+    filter(tipo_atricion == 1) %>%
+    dplyr::filter(!is.na(movsoc)) %>%
+  mutate(ola = factor(ola, levels = c(1,2,3,4,5),
+                         labels = c('2016', '2017', '2018', '2019', '2021')))  %>%
+  prop(movsoc, by  = c(ola), na.rm = TRUE) 
 
 g1.5 <-datos.1.5 %>% 
     #indicar el contenido del gráfico: ejes y relleno (fill) por ola
-    ggplot(aes(y = porcentaje, x = movsoc, fill = ola, 
-               label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+    ggplot(aes(y = prop, x = movsoc, fill = ola, 
+               label = as.character(scales::percent(prop, accuracy = .1)))) +
     #fijar el fondo y el marco del gráfico uniforme
     theme_bw() + 
     #geom_col para usar variable y=porcentaje. 'dodge2' para formato side-to-side
@@ -222,27 +220,31 @@ g1.5 <-datos.1.5 %>%
 g1.5
 ```
 
+
 ### 1.6 cambios de valoración de movimientos sociales segun posición política
 
 ```{r}
-elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
-                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
-                          weights = ~ponderador02, #ponderador de corte transversal
-                          nest = TRUE,
-                          data = elsoc_panel_m1)
+datos.1.6 <-elsoc_long_2016_2021 %>%
+  filter(tipo_atricion == 1 & ola %in% c(3,4,5)) %>%
+  mutate(movsoc = car::recode(c20, recodes = 
+                "1='Progresista';2='Progresista';3='Progresista';
+                 4='Progresista';5='Progresista';6='Conservador';7='Conservador';
+                 8='Progresista';9='Progresista';10='Progresista';11=NA;12='Ninguno';
+                 c(-999,-888)=NA",as.factor=T)) %>%
+  mutate(pos_id = car::recode(c15, recodes = 
+                  "c(0,1,2,3,4)=1; c(5)=2; c(6,7,8,9,10)=3; 
+                   c(11,12, -999, -888)=4")) %>%
+  mutate(pos_id = factor(pos_id, levels = c(1, 2, 3, 4),
+                         labels = c('Izquierda', "Centro", "Derecha", 
+                                    "No se identifica"))) %>%
+  mutate(ola = factor(ola, levels = c(3,4,5),
+                         labels = c('2018', '2019', '2021')))  %>%
+  dplyr::filter(!is.na(pos_id) & !is.na(movsoc)) %>%
+  prop(movsoc, by  = c(ola, pos_id), na.rm = TRUE)
 
-datos.1.6 <- data.frame((svytable(~movsoc + pos_id + ola, elsoc_diseno, round = F))) %>%
-  group_by(ola, pos_id) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
-  filter(ola == '2018' |ola == '2019' | ola == '2021') %>%
-  na.omit()
-
-```
-
-
-```{r}
 g1.6 <- datos.1.6 %>% 
-  ggplot(aes(y = porcentaje, x = pos_id, fill =movsoc, 
-             label = as.character(scales::percent(ifelse(porcentaje>.01, porcentaje, NA), accuracy = .1)))) +
+  ggplot(aes(y = prop, x = pos_id, fill =movsoc, 
+             label = as.character(scales::percent(ifelse(prop>.01, prop, NA), accuracy = .1)))) +
   theme_bw() +
   geom_col(position = 'stack') +
   facet_grid(.~ola) +
@@ -266,26 +268,25 @@ g1.6
 ### 1.7 segun nivel educativo
 
 ```{r}
-datos.1.7 <- elsoc_panel_m1 %>% 
-  dplyr::filter(tipo_atricion == 1) %>%
-  mutate(movsoc = factor(movsoc, 
-                         levels = c('Progresista', 'Conservador', 'Ninguno'),
-                         labels = c('Progresista', 'Conservador', 'Ninguno')),
-         educ = factor(educ, 
-                       levels = c('Basica','Media','Tecnica','Universitaria'),
-                       labels = c('Basica','Media','Tecnica','Universitaria'))) %>% 
-  group_by(ola, movsoc, educ) %>% 
-  summarise(n1 = sum(ponderador02, na.rm = TRUE)) %>%
-  dplyr::filter(!is.na(educ) & !is.na(movsoc)) %>%
-  group_by(ola, educ) %>% 
-  mutate(n2 = sum(n1, na.rm = TRUE), porcentaje = n1/n2) %>% 
-  ungroup() 
-```
-
-```{r}
+datos.1.7 <- elsoc_long_2016_2021 %>%
+  filter(tipo_atricion == 1) %>%
+  mutate(movsoc = car::recode(c20, recodes = 
+                  "1='Progresista';2='Progresista';3='Progresista';
+                   4='Progresista';5='Progresista';6='Conservador';7='Conservador';
+                   8='Progresista';9='Progresista';10='Progresista';11=NA;12='Ninguno';
+                   c(-999,-888)=NA",as.factor=T)) %>%
+  mutate(educ = car::recode(m01, recodes = "c(1,2,3)=1;c(4,5)=2;c(6,7)=3;c(8,9,10)=4")) %>%
+  mutate(educ = factor(educ, levels = c(1,2,3,4),
+                         labels = c("Basica","Media","Tecnica","Universitaria"))) %>%
+    mutate(ola = factor(ola, levels = c(1,2,3,4,5),
+                         labels = c('2016', '2017', '2018', '2019', '2021')))  %>%
+    dplyr::filter(!is.na(educ) & !is.na(movsoc)) %>%
+  prop(movsoc, by  = c(ola, educ), na.rm = TRUE)
+  
+  
 g1.7 <- datos.1.7 %>% 
-  ggplot(aes(y = porcentaje, x = educ, fill =movsoc, 
-             label = as.character(scales::percent(ifelse(porcentaje>.01, porcentaje, NA), accuracy = .1)))) +
+  ggplot(aes(y = prop, x = educ, fill =movsoc, 
+             label = as.character(scales::percent(ifelse(prop>.01, prop, NA), accuracy = .1)))) +
   theme_bw() +
   geom_col(position = 'stack') +
   facet_grid(.~ola) +
@@ -304,39 +305,31 @@ g1.7 <- datos.1.7 %>%
   ggtitle('Porcentaje de valoración de movimientos según nivel educativo, por ola')
 
 g1.7
-
-#REVISAR ESTE GRAFICO NO PLOTEA PROGRESISTAS CON MEDIA PARA 2019
+  
 ```
+
 
 ### 1.8 Valoración de mov segun segun participacion
 
 ```{r}
-elsoc_panel_m1$participacion<- factor(car::recode(elsoc_panel_m1$c22, "c(1,2)='Nunca o casi nunca'; 3='A veces';
-                                                        c(4,5)='Frecuente o muy frecuentemente';
-                                                        c(-999,-888)=NA"),
-                                            levels=c('Nunca o casi nunca', 'A veces', 'Frecuente o muy frecuentemente'))
+datos.1.8 <- elsoc_long_2016_2021 %>%
+  mutate(movsoc = car::recode(c20, recodes = "1='Progresista';2='Progresista';3='Progresista';
+                                          4='Progresista';5='Progresista';6='Conservador';7='Conservador';
+                                          8='Progresista';9='Progresista';10='Progresista';11=NA;12='Ninguno';
+                                          c(-999,-888)=NA",as.factor=T)) %>%
+  mutate(participacion = car::recode(c22, recodes = 
+                         "c(1,2)='Nunca o casi nunca'; 3='A veces';
+                          c(4,5)='Frecuente o muy frecuentemente';
+                          c(-999,-888)=NA",as.factor=T)) %>%
+    filter(tipo_atricion == 1) %>%
+    dplyr::filter(!is.na(participacion) & !is.na(movsoc)) %>%
+  mutate(ola = factor(ola, levels = c(1,2,3,4,5),
+                         labels = c('2016', '2017', '2018', '2019', '2021')))  %>%
+  prop(movsoc, by  = c(ola, participacion), na.rm = TRUE)
 
-
-datos.1.8 <- elsoc_panel_m1 %>% 
-  dplyr::filter(tipo_atricion == 1) %>%
-  mutate(movsoc = factor(movsoc, 
-                         levels = c('Progresista', 'Conservador', 'Ninguno'),
-                         labels = c('Progresista', 'Conservador', 'Ninguno')),
-         participacion = factor(participacion, 
-                                levels = c('Nunca o casi nunca', 'A veces', 'Frecuente o muy frecuentemente'),
-                                labels = c('Nunca o \ncasi nunca', 'A veces', 'Frecuente o muy\n frecuentemente'))) %>% 
-  group_by(ola, movsoc, participacion) %>% 
-  summarise(n1 = sum(ponderador02, na.rm = TRUE)) %>%
-  dplyr::filter(!is.na(participacion) & !is.na(movsoc)) %>%
-  group_by(ola, participacion) %>% 
-  mutate(n2 = sum(n1, na.rm = TRUE), porcentaje = n1/n2) %>% 
-  ungroup() 
-```
-
-```{r}
 g1.8 <- datos.1.8 %>% 
-  ggplot(aes(y = porcentaje, x = participacion, fill =movsoc, 
-             label = as.character(scales::percent(ifelse(porcentaje>.01, porcentaje, NA), accuracy = .1)))) +
+  ggplot(aes(y = prop, x = participacion, fill =movsoc, 
+             label = as.character(scales::percent(ifelse(prop>.01, prop, NA), accuracy = .1)))) +
   theme_bw() +
   geom_col(position = 'stack') +
   facet_grid(.~ola) +
@@ -362,27 +355,16 @@ g1.8
 <!-- ### 1.4 Frecuencia de participación en movimientos sociales, según Ola de encuesta. Porcentaje que responde A veces, Frecuentemente o Muy frecuentemente  -->
 
 ```{r include=FALSE}
-elsoc_panel_m1$freq_part <- car::recode(as.numeric(elsoc_panel_m1$c22), recodes = "c(1,2)=1; c(3,4,5)=2; else=NA", as.factor = TRUE)
+datos.1.9 <- elsoc_long_2016_2021 %>%
+  mutate(freq_part = car::recode(c22, recodes = "c(1,2,3)=1; c(4,5)=2; else=NA", as.factor = TRUE)) %>%
+  filter(tipo_atricion == 1 & freq_part == 2) %>%
+  mutate(ola = factor(ola, levels = c(1,2,3,4,5),
+                         labels = c('2016', '2017', '2018', '2019', '2021')))  %>%
+  prop(freq_part, by = ola, na.rm = TRUE)
 
-elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
-                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
-                          weights = ~ponderador02, #ponderador de corte transversal
-                          nest = TRUE,
-                          data = elsoc_panel_m1)
-```
-
-```{r include=FALSE}
-datos.1.9 <- data.frame((svytable(~freq_part + ola, elsoc_diseno, round = F))) %>%
-  group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
-  filter(freq_part == '2') %>%
-  na.omit()
-```
-
-
-```{r echo=FALSE}
 g1.9 <- datos.1.9 %>% 
-    ggplot(aes(y = porcentaje, x = ola, fill = freq_part, 
-               label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+    ggplot(aes(y = prop, x = ola, fill = freq_part, 
+               label = as.character(scales::percent(prop, accuracy = .1)))) +
   theme_bw() + 
     geom_col() +
     scale_y_continuous(labels = scales::percent,
@@ -511,87 +493,3 @@ g1.10 <- ggplot(datos.1.10, aes(y = porcentaje, x = ola, color = variable, group
 
 g1.10
 ```
-
-
-
-### 1.11 Confianza en el gobierno según ola 2018, 2019 y 2021
-
-```{r}
-
-elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
-                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
-                          weights = ~ponderador02, #ponderador de corte transversal
-                          nest = TRUE,
-                          data = elsoc_panel_m1)
-
-```
-
-
-```{r include=FALSE}
-datos.1.11 <- data.frame((svytable(~conf_gob + ola, elsoc_diseno, round = F))) %>%
-  group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
-  filter(ola == '2018' | ola == '2019' | ola == '2021') %>%
-  na.omit()
-
-```
-
-
-```{r}
-g1.11 <- datos.1.11 %>% 
-  ggplot(aes(y = porcentaje, x = ola, fill = conf_gob, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
-  theme_bw() + 
-  geom_col(position = 'Stack') +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
-  ylab(label = NULL) +
-  xlab(label = NULL) +
-  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
-  #cambiar geom_text tal que: Stack y cambio colores
-  geom_text(position = position_stack(vjust = .5)) + 
-  theme(legend.position = 'top',
-        legend.title = element_blank())
-
-g1.11 
-```
-
-### 1.12 Confianza en el presidente según ola 2018, 2019 y 2021
-
-```{r}
-elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
-                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
-                          weights = ~ponderador02, #ponderador de corte transversal
-                          nest = TRUE,
-                          data = elsoc_panel_m1)
-```
-
-
-```{r include=FALSE}
-datos.1.12 <- data.frame((svytable(~conf_pres + ola, elsoc_diseno, round = F))) %>%
-  group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
-  filter(ola == '2018' | ola == '2019' | ola == '2021') %>%
-  na.omit()
-
-```
-
-
-
-```{r}
-g1.12 <- datos.1.12 %>% 
-  ggplot(aes(y = porcentaje, x = ola, fill = conf_pres, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
-  theme_bw() + 
-  geom_col(position = 'Stack') +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
-  ylab(label = NULL) +
-  xlab(label = NULL) +
-  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
-  geom_text(position = position_stack(vjust = .5)) + 
-  theme(legend.position = 'top',
-        legend.title = element_blank())
-
-g1.12
-```
-
-
