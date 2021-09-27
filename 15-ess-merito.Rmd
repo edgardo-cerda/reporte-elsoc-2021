@@ -200,6 +200,46 @@ g11.5 <-
 
 g11.5
 ```
+
+```{r}
+datos.11.6 <- elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & muestra == 1 & ola == c(1,2,3,4,5) & !ola %in% c(-888, -999) &
+         !d01_01 %in% c(-888, -999) & !d01_02 %in% c(-888,-999) & !d01_03 %in% c(-888, -999)) %>% 
+  mutate(mov_interg = d01_03 - d01_01,
+         mov_relativa = d01_01 - d01_02) %>% 
+  group_by(ola) %>% 
+  summarise(m_interg = weighted.mean(mov_interg, ponderador02 ,na.rm = T),
+            m_relativa = weighted.mean(mov_relativa, ponderador02 ,na.rm = T),
+            m_estatus = weighted.mean(d01_01, ponderador02 ,na.rm = T),
+            conteo = n()) %>% 
+  mutate(var_interg = 'Perspectiva de\nmovilidad social',
+         var_relativa = 'Movilidad social\nrelativa',
+         var_estatus = 'Estatus social\nactual') %>% 
+  pivot_longer(cols = starts_with('var_'))  %>%
+  mutate(m_mov_social = case_when(
+    value == 'Perspectiva de\nmovilidad social' ~ m_interg,
+    value == 'Movilidad social\nrelativa' ~ m_relativa,
+    value == 'Estatus social\nactual' ~ m_estatus)) %>% 
+    sjlabelled::as_label(ola)
+
+datos.11.6$m_mov_social <- round(datos.11.6$m_mov_social, digits = 2) 
+
+g11.6e <- datos.11.6 %>% 
+  ggplot(aes(y = m_mov_social, x = ola, group = value, color = value,
+             label = m_mov_social)) +
+  theme_bw() +
+  geom_line(size = 1) +
+  geom_point(size = 1.8) +
+  scale_y_continuous(limits = c(0,6)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_color_viridis_d(begin = .11, end = .55, direction = 1, option = 'viridis') +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  geom_text(vjust = -0.8,  size= 3.5)
+g11.6e
+```
+
 <!-- ### 11.6  Estatus subjetivo y tipo de movilidad social, nivel promedio según ola.  -->
 ```{r mov-soc, fig.align='center',fig.cap='Estatus subjetivo y tipo de movilidad social, nivel promedio según ola'}
 
@@ -209,27 +249,19 @@ elsoc_movilidad <- elsoc_panel_m1 %>%
             m_relativa = weighted.mean(mov_relativa, ponderador02 ,na.rm = T),
             m_estatus = weighted.mean(d01_01, ponderador02 ,na.rm = T),
             conteo = n()) %>% 
-  mutate(var_interg = 'Perspectiva de movilidad social',
-         var_relativa = 'Movilidad social relativa',
-         var_estatus = 'Estatus social actual') 
-
-elsoc_movilidad$m_interg <- round(elsoc_movilidad$m_interg, digits = 2) 
-elsoc_movilidad$m_relativa <- round(elsoc_movilidad$m_relativa, digits = 2) 
-elsoc_movilidad$m_estatus <- round(elsoc_movilidad$m_estatus, digits = 2) 
-
-datos.g11.6 <- elsoc_movilidad %>% 
+  mutate(var_interg = 'Perspectiva de\nmovilidad social',
+         var_relativa = 'Movilidad social\nrelativa',
+         var_estatus = 'Estatus social\nactual') %>% 
   pivot_longer(cols = starts_with('var_'))  %>%
-  mutate(mov_social = factor(name, labels = c('Perspectiva de movilidad social',
-                                      'Movilidad social relativa','Estatus social actual'))) %>% 
-  drop_na()
+  mutate(m_mov_social = case_when(
+    value == 'Perspectiva de\nmovilidad social' ~ m_interg,
+    value == 'Movilidad social\nrelativa' ~ m_relativa,
+    value == 'Estatus social\nactual' ~ m_estatus))
 
-datos.g11.6$m_mov_social <- with(datos.g11.6, case_when(
-  mov_social == 'Perspectiva de movilidad social' ~ m_interg,
-  mov_social == 'Movilidad social relativa' ~ m_relativa,
-  mov_social == 'Estatus social actual' ~ m_estatus))
+elsoc_movilidad$m_mov_social <- round(elsoc_movilidad$m_mov_social, digits = 2) 
 
 g11.6 <- 
-  ggplot(datos.g11.6, aes(y = m_mov_social, x = ola, group = mov_social, color = mov_social,
+  ggplot(elsoc_movilidad, aes(y = m_mov_social, x = ola, group = value, color = value,
                               label = m_mov_social)) +
   theme_bw() +
   geom_line(size = 1) +
@@ -266,27 +298,23 @@ datos.trab <- data.frame((svytable(~merit_trab + ola, elsoc_diseno, round = F)))
 datos.11.7 <- cbind(datos.esfu, datos.inte, datos.educ, datos.trab)
 
 #trasponer según variable
-datos.11.7a <- datos.11.7 %>% 
-  pivot_longer(cols = starts_with('merit_'))  %>%
-  mutate(variable = factor(name,
-                           labels = c('Personas son\nrecompensadas\npor su esfuerzo', 
-                                      'Personas son\nrecompensadas\npor su inteligencia',
-                                      'Educación es\nimportante para\nsurgir en la vida',
-                                      'Trabajo duro\nes importante para\nsurgir en la vida'))) %>%
-  drop_na()
+datos.11.7b <- datos.11.7 %>%
+  pivot_longer(cols = starts_with('merit_')) %>%
+  mutate(porcentaje = case_when(
+    name == 'merit_esfu' ~ p_esfu,
+    name == 'merit_inte' ~ p_inte,
+    name == 'merit_educ' ~ p_educ,
+    name == 'merit_trab' ~ p_trab)) %>% 
+  filter(value == 'De acuerdo o totalmente de acuerdo') %>% 
+  mutate(variable = factor(name, labels = 
+                             c('Personas son\nrecompensadas\npor su esfuerzo',
+                               'Personas son\nrecompensadas\npor su inteligencia',
+                               'Educación es\nimportante para\nsurgir en la vida',
+                               'Trabajo duro\nes importante para\nsurgir en la vida')))
 
-datos.11.7a$porcentaje <- with(datos.11.7a, case_when(
-  variable == 'Personas son\nrecompensadas\npor su esfuerzo' ~ p_esfu,
-  variable == 'Personas son\nrecompensadas\npor su inteligencia' ~ p_inte,
-  variable == 'Educación es\nimportante para\nsurgir en la vida' ~ p_educ,
-  variable == 'Trabajo duro\nes importante para\nsurgir en la vida' ~ p_trab))
-
-#Paso 1.2: filtrar el subset manteniendo "De acuerdo o totalmente de acuerdo"
-subset.g11.7 <- droplevels(subset(datos.11.7a, value == 'De acuerdo o totalmente de acuerdo'))
-
-g11.7 <- 
-  ggplot(subset.g11.7, aes(y = porcentaje, x = ola, color = variable, group = variable,
-                              label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+g11.7b <- datos.11.7b %>% 
+  ggplot(aes(y = porcentaje, x = ola, color = variable, group = variable,
+             label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
   theme_bw() +   
   geom_line(size = 1) +
   geom_point(size = 1.8) +
@@ -299,6 +327,6 @@ g11.7 <-
             size= 2.75) +
   theme(legend.position = 'top',
         legend.title = element_blank())
-g11.7
+g11.7b
 ```
 

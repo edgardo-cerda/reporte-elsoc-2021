@@ -168,17 +168,15 @@ g8.5 <- datos.g8.5 %>%
 g8.5
 ```
 
-## Conflicto barrial agregrado
+## Conflicto barrial mapeado
 
 ```{r recode-mapas ,include=FALSE}
-
 ## library 
 library(sf)
 library(chilemapas)
 library(rgdal)
         
 ## mapa comunas 
-
 elsoc_comuna <- elsoc_panel_m1 %>% 
   filter(region_cod == 13, ola == '2021') %>% 
   group_by(comuna, comuna_cod) %>% 
@@ -194,7 +192,6 @@ comunas_rm <- merge(comunas_rm,elsoc_comuna, by.x="codigo_comuna",by.y="comuna_c
 #comunas_rm <- comunas_rm %>% drop_na()
 
 ## mapa_region 
-
 elsoc_region <- elsoc_panel_m1 %>% 
   filter(ola == '2021') %>% 
   group_by(region, region_cod) %>% 
@@ -211,10 +208,11 @@ elsoc_region$region_cod <- factor(elsoc_region$region_cod,
 regiones <- generar_regiones()
 regiones <- merge(regiones,elsoc_region, by.x="codigo_region",by.y="region_cod",all.x=TRUE,sort=F)
 
-regiones$mitad <- c('1','1','1','1','1','1','1','2','2','2','2','1','2','1','2','2')
+#para intentar hacer facet_wrap
+#regiones$mitad <- c('1','1','1','1','1','1','1','2','2','2','2','1','2','1','2','2')
 
 #recode datos magallanes
-regiones$region[is.na(regiones$region)] <- 'Magallanes'
+regiones$region[is.na(regiones$region)] <- 'Magallanes\n(Sin datos)'
 
 #renombrando regiones con nombre muy largo
 regiones$region[regiones$region == 'Metropolitana de santiago'] <- 'Metropolitana'
@@ -229,7 +227,7 @@ g.confli.rm <-
   geom_sf(aes(fill = m_confli, geometry = geometry)) +
   labs(y = NULL, x = NULL, fill = "Conflictividad barrial\npromedio por comuna") +
   scale_fill_viridis_c(begin = .11, end = .88, direction = -1, option = 'viridis') +
-  theme_minimal(base_size = 11)
+  theme_bw()
 g.confli.rm
 ```
 
@@ -237,10 +235,14 @@ g.confli.rm
 g.confli.region <- regiones %>% 
   ggplot(aes(fill = m_confli, geometry = geometry, label = region)) + 
   geom_sf() +
-  coord_sf(xlim = c(-90, -65)) +
+  coord_sf(xlim = c(-100, -65)) +
   labs(y = NULL, x = NULL, fill = "Conflictividad barrial\npromedio por región") +
   scale_fill_viridis_c(begin = .11, end = .88, direction = -1, option = 'viridis', na.value = 'white') +
-  geom_sf_text(size= 3, axis.x=element_blank()) +
+  ggrepel::geom_text_repel(stat = "sf_coordinates", min.segment.length = 0,
+                           colour = "black", segment.colour = "black",
+                           direction = "y", hjust = 2.5, size = 3) +
+  ggspatial::annotation_north_arrow(aes(which_north = "true", location = "bl"), pad_y = unit(0.8, "cm")) +
+  annotation_scale(aes(location = "bl", style = "bar")) +
   theme_bw()
 g.confli.region
 ```
