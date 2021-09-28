@@ -1,5 +1,5 @@
 # Estatus subjetivo y Percepción de Mérito
-```{r disenno-15, include=FALSE}
+```{r library-15, include=FALSE}
 knitr::opts_chunk$set(cache=FALSE, 
                       warning = FALSE, 
                       message = FALSE) 
@@ -10,61 +10,23 @@ library(elsoc)
 library(tidyverse)
 library(sjlabelled)
 library(ggrepel)
-
-load(file.path('1_input', 'ELSOC_Long_2016_2021_v1.00_R.RData'))
-
 library(survey)
-load("1_input/datos_elsoc.RData")
-elsoc_diseno <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
-                          nest = TRUE, data = elsoc_panel_m1)
+
+#load(file.path('1_input', 'ELSOC_Long_2016_2021_v1.00_R.RData'))
+elsoc::load_elsoc(format = 'long')
 ```
 
 ## Estatus subjetivo
-
-```{r recode-ess-merit, include=FALSE}
-elsoc_panel_m1 <- elsoc_panel_m1 %>% 
-  mutate(mov_interg = d01_03 - d01_01, #estatus futuro hijos menos estatus propio
-         mov_relativa = d01_01 - d01_02) #estatus propio vs estatus padres
-
-sjmisc::frq(elsoc_panel_m1$mov_interg)
-elsoc_panel_m1 <- elsoc_panel_m1 %>% 
-  mutate(mov_interg_rec = factor(car::recode(mov_interg, "-8:-1=1;0=2;1:10=3"),
-                           labels = c("Movilidad social descendente", "Inmovilidad social",
-                                      "Movilidad social ascendente")),
-         mov_interg_rec2 = factor(cut(mov_interg, breaks = c(-8,-1,1,10))))
-
-sjmisc::frq(elsoc_panel_m1$mov_interg_rec)
-sjmisc::frq(elsoc_panel_m1$mov_interg_rec2)
-
-elsoc_panel_m1 <- elsoc_panel_m1 %>%
-  mutate(merit_esfu = factor(car::recode(c18_09, "c(1,2)=1;c(3)=2;c(4,5)=3"),
-                           labels = c('En desacuendo o totalmente en desacuerdo', 
-                                      'Ni de acuerdo ni en desacuerdo', 'De acuerdo o totalmente de acuerdo')),
-         merit_inte = factor(car::recode(c18_10, "c(1,2)=1;c(3)=2;c(4,5)=3"),
-                               labels = c('En desacuendo o totalmente en desacuerdo', 
-                                          'Ni de acuerdo ni en desacuerdo', 'De acuerdo o totalmente de acuerdo')),
-         merit_educ = factor(car::recode(d05_02, "c(1,2)=1;c(3)=2;c(4,5)=3"),
-                            labels = c('En desacuendo o totalmente en desacuerdo', 
-                                       'Ni de acuerdo ni en desacuerdo', 'De acuerdo o totalmente de acuerdo')),
-         merit_trab = factor(car::recode(d05_04, "c(1,2)=1;c(3)=2;c(4,5)=3"),
-                          labels = c('En desacuendo o totalmente en desacuerdo', 
-                                     'Ni de acuerdo ni en desacuerdo', 'De acuerdo o totalmente de acuerdo')))
-
-elsoc_diseno <- svydesign(ids = ~segmento, strata = ~estrato, weights = ~ponderador02, 
-                             nest = TRUE, data = elsoc_panel_m1)
-
-```
-
 <!-- ### 11.1 En nuestra sociedad, hay grupos que tienden a ubicarse en los niveles más altos y grupos que tienden a ubicarse en los niveles más bajos de la sociedad ¿Dónde se ubicaría usted?, según ola de estudio. -->
-```{r essind-ola, fig.align='center',fig.cap='En nuestra sociedad, hay grupos que tienden a ubicarse en los niveles más altos y grupos que tienden a ubicarse en los niveles más bajos de la sociedad ¿Dónde se ubicaría usted?, según ola de estudio.'}
-datos11.1 <- elsoc_long_2016_2021 %>% 
+```{r ess-ola, fig.align='center',fig.cap='En nuestra sociedad, hay grupos que tienden a ubicarse en los niveles más altos y grupos que tienden a ubicarse en los niveles más bajos de la sociedad ¿Dónde se ubicaría usted?, según ola de estudio.'}
+datos.11.1 <- elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & ola %in% c(1,2,3,4,5) & !d01_01 %in% c(-888, -999)) %>% 
   mutate(clase_sub = factor(car::recode(d01_01, "c(0,1,2,3)=1; c(4, 5)=2; c(6,7,8,9,10)=3;else=NA"), 
                             levels = c(1,2,3), labels = c("Baja y media baja", "Media", "Alta y media alta"))) %>% 
   sjlabelled::as_label(ola) %>% 
   prop(x = clase_sub, by = ola, na.rm = T)
 
-g11.1 <- datos11.1 %>% 
+g11.1 <- datos.11.1 %>% 
   ggplot(aes(y = prop, x = ola, fill = clase_sub, 
              label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
@@ -79,23 +41,30 @@ g11.1 <- datos11.1 %>%
 g11.1
 ```
 
-
 <!-- ### 11.2 Cambios de Clase social subjetiva entre 2016, 2019 y 2021 -->
-```{r ess-wave, fig.align='center',fig.cap='Cambios de Clase social subjetiva entre 2016, 2019 y 2021'}
+```{r ess-cambio, fig.align='center',fig.cap='Cambios de Clase social subjetiva entre 2016, 2019 y 2021'}
+elsoc_panel_m1 <- elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & muestra == 1 & ola %in% c(1,4,5) & !d01_01 %in% c(-888, -999)) %>% 
+  mutate(clase_sub = factor(car::recode(d01_01, "c(0,1,2,3)=1; c(4, 5)=2; c(6,7,8,9,10)=3;else=NA"), 
+                            levels = c(1,2,3), labels = c("Baja y media baja", "Media", "Alta y media alta"))) %>%
+  sjlabelled::as_label(ola)
 
-datos.g11.2 <- data.frame((svytable(~clase.sub + ola + idencuesta, elsoc_diseno, round = F))) %>% 
-  group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
+elsoc_diseno <- survey::svydesign(ids = ~segmento, strata = ~estrato, 
+                                  weights = ~ponderador02, nest = TRUE, data = elsoc_panel_m1)
+
+datos.11.2 <- data.frame((svytable(~clase_sub + ola + idencuesta, elsoc_diseno, round = F))) %>% 
+  group_by(ola) %>% mutate(prop=Freq/sum(Freq)) %>%
   filter(Freq>0, ola == '2016'| ola == '2019' | ola == '2021') %>%
   drop_na()
 
-etiquetas.g11.2 <- data.frame((svytable(~clase.sub + ola, elsoc_diseno, round = F))) %>% 
-  group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>% mutate(idencuesta = 1) %>% 
+etiquetas.11.2 <- data.frame((svytable(~clase_sub + ola, elsoc_diseno, round = F))) %>% 
+  group_by(ola) %>% mutate(prop=Freq/sum(Freq)) %>% mutate(idencuesta = 1) %>% 
   filter(Freq>0, ola == '2016'| ola == '2019' | ola == '2021') %>% 
   drop_na()
 
 g11.2 <- 
-  ggplot(datos.g11.2, aes(x = ola, fill = clase.sub, stratum = clase.sub, 
-                          alluvium = idencuesta, y = porcentaje)) +
+  ggplot(datos.11.2, aes(x = ola, fill = clase_sub, stratum = clase_sub, 
+                          alluvium = idencuesta, y = prop)) +
   ggalluvial::geom_flow(alpha = .66) + 
   ggalluvial::geom_stratum(linetype = 0) +
   scale_y_continuous(labels = scales::percent) + 
@@ -104,17 +73,13 @@ g11.2 <-
   theme(legend.position = 'top',
         legend.title = element_blank()) +
   scale_fill_viridis_d(begin = .11, end = .88, direction = 1, option = 'viridis') +
-  geom_text(data = etiquetas.g11.2, 
-            aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")),
+  geom_text(data = etiquetas.11.2, 
+            aes(label = ifelse(prop > 0.03 , scales::percent(prop, accuracy = .1),"")),
             position = position_stack(vjust = .5),
             show.legend = FALSE,
             size = 2.75,
             color = rep.int(c('white', 'white', 'black'),3))
-
 g11.2
-```
-```{r}
-
 ```
 
 <!-- ### 11.3 Clase social subjetiva, según quintiles de ingreso (2021) -->
@@ -183,6 +148,7 @@ g11.4 <- datos11.4 %>%
         legend.title = element_blank())
 g11.4
 ```
+
 ## Movilidad social
 
 <!-- ### 11.5  Perspectiva de movilidad social, según ola.  -->
@@ -211,7 +177,6 @@ g11.5 <-
             size= 2.75, color = rep.int(c('black', 'white', 'white'), 5)) + 
   theme(legend.position = 'top',
         legend.title = element_blank())
-
 g11.5
 ```
 
@@ -256,7 +221,6 @@ g11.6e
 
 <!-- ### 11.6  Estatus subjetivo y tipo de movilidad social, nivel promedio según ola.  -->
 ```{r mov-soc, fig.align='center',fig.cap='Estatus subjetivo y tipo de movilidad social, nivel promedio según ola'}
-
 datos11.6 <- elsoc_panel_m1 %>%
   group_by(ola) %>% 
   summarise(m_interg = weighted.mean(mov_interg, ponderador02 ,na.rm = T),
@@ -293,25 +257,40 @@ g11.6
 
 <!-- ### 11.7  Percepción de importancia y recompensas del mérito, según ola de estudio. Porcentaje de Respuestas "De acuerdo" y ”Totalmente de acuerdo".  -->
 ```{r merit-wave, fig.align='center',fig.cap='Percepción de importancia y recompensas del mérito, según ola de estudio. Porcentaje de Respuestas "De acuerdo" y ”Totalmente de acuerdo".'}
+elsoc_panel_m1 <- elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & muestra == 1 & ola %in% c(1,2,3,4,5) & 
+           !c18_09 %in% c(-888, -999) & !c18_10 %in% c(-888, -999) & !d05_02 %in% c(-888, -999) & !d05_04 %in% c(-888, -999)) %>%
+  mutate(merit_esfu = factor(car::recode(c18_09, "c(1,2)=1;c(3)=2;c(4,5)=3"),
+                           labels = c('En desacuendo o totalmente en desacuerdo', 
+                                      'Ni de acuerdo ni en desacuerdo', 'De acuerdo o totalmente de acuerdo')),
+         merit_inte = factor(car::recode(c18_10, "c(1,2)=1;c(3)=2;c(4,5)=3"),
+                               labels = c('En desacuendo o totalmente en desacuerdo', 
+                                          'Ni de acuerdo ni en desacuerdo', 'De acuerdo o totalmente de acuerdo')),
+         merit_educ = factor(car::recode(d05_02, "c(1,2)=1;c(3)=2;c(4,5)=3"),
+                            labels = c('En desacuendo o totalmente en desacuerdo', 
+                                       'Ni de acuerdo ni en desacuerdo', 'De acuerdo o totalmente de acuerdo')),
+         merit_trab = factor(car::recode(d05_04, "c(1,2)=1;c(3)=2;c(4,5)=3"),
+                          labels = c('En desacuendo o totalmente en desacuerdo', 
+                                     'Ni de acuerdo ni en desacuerdo', 'De acuerdo o totalmente de acuerdo'))) %>% 
+  sjlabelled::as_label(ola)
+
+elsoc_diseno <- survey::svydesign(ids = ~segmento, strata = ~estrato, 
+                                  weights = ~ponderador02, nest = TRUE, data = elsoc_panel_m1)
 
 datos.esfu <- data.frame((svytable(~merit_esfu + ola, elsoc_diseno, round = F))) %>%
   group_by(ola) %>% mutate(p_esfu=Freq/sum(Freq))
 datos.esfu$ola <- NULL
-
 datos.inte <- data.frame((svytable(~merit_inte + ola, elsoc_diseno, round = F))) %>% 
   group_by(ola) %>% mutate(p_inte=Freq/sum(Freq))
 datos.inte$ola <- NULL
-
 datos.educ <- data.frame((svytable(~merit_educ + ola, elsoc_diseno, round = F))) %>% 
   group_by(ola) %>% mutate(p_educ=Freq/sum(Freq))
 datos.educ$ola <- NULL
-
 datos.trab <- data.frame((svytable(~merit_trab + ola, elsoc_diseno, round = F))) %>% 
   group_by(ola) %>% mutate(p_trab=Freq/sum(Freq))
 
 datos.11.7 <- cbind(datos.esfu, datos.inte, datos.educ, datos.trab)
 
-#trasponer según variable
 datos.11.7 <- datos.11.7 %>%
   pivot_longer(cols = starts_with('merit_')) %>%
   mutate(porcentaje = case_when(
