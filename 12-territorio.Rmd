@@ -195,8 +195,7 @@ g8.5 <- datos.8.5 %>%
 g8.5
 ```
 
-## Cartografía regional del conflicto barrial
-
+### Cartografía del conflicto barrial
 
 ```{r confli-comuna, fig.align='center', fig.cap='Frecuencia promedio de problemas con vecinos, según comuna de residencia en la región metropolitana (2021).'}
 elsoc_comuna_rm <- elsoc_long_2016_2021 %>% 
@@ -528,7 +527,7 @@ g8.13 <- datos.8.13 %>%
 g8.13
 ```
 
-## Empeligrosamiento barrial
+## Criminalidad barrial
 
 <!-- ### 8.14 ¿Con qué frecuencia se han producido crímenes (riñas, robos y tráfico de drogas) en su barrio?, según ola de estudio. -->
 ```{r crim-olas, fig.align='center', fig.cap='¿Con qué frecuencia se han producido crímenes (riñas, robos y tráfico de drogas) en su barrio?, según ola de estudio.'}
