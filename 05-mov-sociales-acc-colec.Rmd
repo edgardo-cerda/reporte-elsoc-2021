@@ -51,38 +51,6 @@ g1.1 <- datos.1.1 %>%
 g1.1
 ```
 
-### 1.2 Frecuencia de respuesta en "ninguno" ante la pregunta ¿Cuál es el movimiento social que usted más valora de esta lista? según posición política
-
-<!-- ### 1.2 Frecuencia de respuesta en "ninguno" ante la pregunta ¿Cuál es el movimiento social que usted más valora de esta lista? según posición política  -->
-
-```{r}
-datos.1.2 <- elsoc_long_2016_2021 %>%
-    filter(tipo_atricion == 1 & ola %in% c(5) & c20 %in% c(12)) %>%
-  mutate(pos_id = car::recode(c15, recodes = "c(0,1,2,3,4)=1; c(5)=2; c(6,7,8,9,10)=3; c(11,12, -999, -888)=4")) %>%
-  mutate(pos_id = factor(pos_id, levels = c(1, 2, 3, 4),
-                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
-  prop(pos_id, by  = c(c20, ola), na.rm = TRUE)
-
-g1.2 <-datos.1.2 %>% 
-    ggplot(aes(y = prop, x = pos_id, 
-               label = as.character(scales::percent(prop, accuracy = .1)))) +
-  theme_bw() + 
-    geom_col() +
-    scale_y_continuous(labels = scales::percent,
-                       limits = c(0, 1)) +
-    ylab(label = NULL) +
-    xlab(label = NULL) +
-    scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
-    geom_text(vjust = -0.8,
-              position = position_dodge(width = .9),
-              size= 2.75) +
-    theme(legend.position = 'none',   ## Eliminar leyenda al no ser necesaria
-          legend.title = element_blank())
-
-g1.2
-```
-
-
 ### 1.3 Frecuencia de respuesta en "ninguno" ante la pregunta ¿Cuál es el movimiento social que usted más valora de esta lista? según posición política "No se identifica"
 
 <!-- ### 1.3 Frecuencia de respuesta en "ninguno" ante la pregunta ¿Cuál es el movimiento social que usted más valora de esta lista? según posición política "No se identifica"  -->
@@ -248,8 +216,7 @@ g1.6 <- datos.1.6 %>%
   theme_bw() +
   geom_col(position = 'stack') +
   facet_grid(.~ola) +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
+  scale_y_continuous(labels = scales::percent) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
@@ -290,8 +257,7 @@ g1.7 <- datos.1.7 %>%
   theme_bw() +
   geom_col(position = 'stack') +
   facet_grid(.~ola) +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
+  scale_y_continuous(labels = scales::percent) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
@@ -318,9 +284,11 @@ datos.1.8 <- elsoc_long_2016_2021 %>%
                                           8='Progresista';9='Progresista';10='Progresista';11=NA;12='Ninguno';
                                           c(-999,-888)=NA",as.factor=T)) %>%
   mutate(participacion = car::recode(c22, recodes = 
-                         "c(1,2)='Nunca o casi nunca'; 3='A veces';
-                          c(4,5)='Frecuente o muy frecuentemente';
+                         "c(1,2)='1'; 3='2';
+                          c(4,5)='3';
                           c(-999,-888)=NA",as.factor=T)) %>%
+    mutate(participacion = factor(participacion, levels = c(1,2,3),
+                         labels = c('Nunca o\ncasi nunca', 'A veces', 'Frecuente o\nmuy frecuentemente'))) %>%
     filter(tipo_atricion == 1) %>%
     dplyr::filter(!is.na(participacion) & !is.na(movsoc)) %>%
   mutate(ola = factor(ola, levels = c(1,2,3,4,5),
@@ -333,8 +301,7 @@ g1.8 <- datos.1.8 %>%
   theme_bw() +
   geom_col(position = 'stack') +
   facet_grid(.~ola) +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
+  scale_y_continuous(labels = scales::percent) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
@@ -350,9 +317,9 @@ g1.8
 ```
 
 
-### 1.9 Frecuencia de participación en movimientos sociales, según Ola de encuesta. Porcentaje que responde A veces, Frecuentemente o Muy frecuentemente
+### 1.9 Frecuencia de participación en movimientos sociales, según Ola de encuesta. Porcentaje que responde Frecuentemente o Muy frecuentemente
 
-<!-- ### 1.4 Frecuencia de participación en movimientos sociales, según Ola de encuesta. Porcentaje que responde A veces, Frecuentemente o Muy frecuentemente  -->
+<!-- ### 1.4 Frecuencia de participación en movimientos sociales, según Ola de encuesta. Porcentaje que responde Frecuentemente o Muy frecuentemente  -->
 
 ```{r include=FALSE}
 datos.1.9 <- elsoc_long_2016_2021 %>%
@@ -360,7 +327,7 @@ datos.1.9 <- elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1 & freq_part == 2) %>%
   mutate(ola = factor(ola, levels = c(1,2,3,4,5),
                          labels = c('2016', '2017', '2018', '2019', '2021')))  %>%
-  prop(freq_part, by = ola, na.rm = TRUE)
+  prop(ola, by = freq_part, na.rm = TRUE)
 
 g1.9 <- datos.1.9 %>% 
     ggplot(aes(y = prop, x = ola, fill = freq_part, 
@@ -384,36 +351,20 @@ g1.9
 
 ## Confianza en instituciones
 
-### 1.10 Bastante o Mucha confianza en distintas instituciones según año
+### 1.10 Bastante o Mucha confianza en el/la Presidente(a) de la República, el Gobierno y el Congreso Nacional según año
 
 ```{r}
-
-elsoc_panel_m1$conf_part <- car::recode(as.numeric(elsoc_panel_m1$c05_02), 
+elsoc_long_2016_2021$conf_cong <- car::recode(as.numeric(elsoc_long_2016_2021$c05_07), 
                                       recodes = "c(1,2)='Nada o Poca';
                                       c(3)='Algo';
                                       c(4,5)='Bastante o Mucha';
                                       else=NA", as.factor = TRUE)
-elsoc_panel_m1$conf_carab <- car::recode(as.numeric(elsoc_panel_m1$c05_03), 
-                                      recodes = "c(1,2)='Nada o Poca';
-                                      c(3)='Algo';
-                                      c(4,5)='Bastante o Mucha';
-                                      else=NA", as.factor = TRUE)
-elsoc_panel_m1$conf_jud <- car::recode(as.numeric(elsoc_panel_m1$c05_05), 
-                                      recodes = "c(1,2)='Nada o Poca';
-                                      c(3)='Algo';
-                                      c(4,5)='Bastante o Mucha';
-                                      else=NA", as.factor = TRUE)
-elsoc_panel_m1$conf_cong <- car::recode(as.numeric(elsoc_panel_m1$c05_07), 
-                                      recodes = "c(1,2)='Nada o Poca';
-                                      c(3)='Algo';
-                                      c(4,5)='Bastante o Mucha';
-                                      else=NA", as.factor = TRUE)
-elsoc_panel_m1$conf_pres <- car::recode(as.numeric(elsoc_panel_m1$c05_08), 
+elsoc_long_2016_2021$conf_pres <- car::recode(as.numeric(elsoc_long_2016_2021$c05_08), 
                                       recode = "c(1,2)='Nada o Poca';
                                       c(3)='Algo';
                                       c(4,5)='Bastante o Mucha';
                                       else=NA", as.factor = TRUE) 
-elsoc_panel_m1$conf_gob <- car::recode(as.numeric(elsoc_panel_m1$c05_01), 
+elsoc_long_2016_2021$conf_gob <- car::recode(as.numeric(elsoc_long_2016_2021$c05_01), 
                                       recode = "c(1,2)='Nada o Poca';
                                       c(3)='Algo';
                                       c(4,5)='Bastante o Mucha';
@@ -423,21 +374,9 @@ elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de
                           strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
                           weights = ~ponderador02, #ponderador de corte transversal
                           nest = TRUE,
-                          data = elsoc_panel_m1)
-```
-
-```{r}
+                          data = elsoc_long_2016_2021)
 datos.pres <- data.frame((svytable(~conf_pres + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(p_pres=Freq/sum(Freq))
 datos.pres$ola <- NULL
-
-datos.part <- data.frame((svytable(~conf_part + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(p_part=Freq/sum(Freq))
-datos.part$ola <- NULL
-
-datos.carb <- data.frame((svytable(~conf_carab + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(p_carb=Freq/sum(Freq))
-datos.carb$ola <- NULL
-
-datos.jud <- data.frame((svytable(~conf_jud + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(p_jud=Freq/sum(Freq))
-datos.jud$ola <- NULL
 
 datos.cong <- data.frame((svytable(~conf_cong + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(p_cong=Freq/sum(Freq))
 datos.cong$ola <- NULL
@@ -448,48 +387,121 @@ elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de
                           strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
                           weights = ~ponderador02, #ponderador de corte transversal
                           nest = TRUE,
-                          data = elsoc_panel_m1)
+                          data = elsoc_long_2016_2021)
 
-datos.grafico.1.10 <- cbind(datos.pres, datos.part, datos.carb, datos.jud, datos.cong, datos.gob)
+datos.grafico.1.10 <- cbind(datos.pres, datos.cong, datos.gob)
 
-#trasponer según variable
+
 datos.1.10 <- datos.grafico.1.10 %>% 
         pivot_longer(cols = starts_with('conf_'))  %>%
         mutate(variable = factor(name,
                              labels = c('Presidente/a de la Republica', 
-                                        'Partidos Políticos', 
-                                        'Carabineros de Chile', 'Poder Judicial', 
                                         'Congreso Nacional', 
                                         'Gobierno de Chile'))) %>%
                               filter(value == 'Bastante o Mucha') %>%
                               drop_na() 
 
 datos.1.10$porcentaje <- with(datos.1.10, case_when(
-  variable == 'Carabineros de Chile' ~ p_carb,
   variable == 'Presidente/a de la Republica' ~ p_pres,
-  variable == 'Partidos Políticos' ~ p_part,
-  variable == 'Poder Judicial' ~ p_jud,
   variable == 'Congreso Nacional' ~ p_cong,
   variable == 'Gobierno de Chile' ~ p_gob))
 
 
-```
-
-```{r}
-g1.10 <- ggplot(datos.1.10, aes(y = porcentaje, x = ola, color = variable, group = variable,
+g1.10 <- ggplot(datos.1.10,aes(y = porcentaje, x = ola, color = variable, group = variable,
                label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
-    theme_bw() +   
+    theme_bw() +  
     geom_line(size = 1) +
     geom_point(size = 1.8) +
     scale_y_continuous(labels = scales::percent,
-                       limits = c(0, 0.45)) +
+                       limits = c(0,1)) +
     ylab(label = NULL) +
     xlab(label = NULL) +
-    scale_color_viridis_d(begin = 0, end = .95, direction = 1, option = 'viridis') +
-    geom_text_repel(posilinetion = position_dodge(width = .9),
-    size= 2.25) + 
+    scale_color_viridis_d(begin = .33, end = .66, direction = 1, option = 'viridis') +
+    facet_wrap(.~variable)+
+    geom_text(vjust = -0.8,
+    posilinetion = position_dodge(width = .9),
+    size= 1.75) +
     theme(legend.position = 'top',
           legend.title = element_blank())
 
 g1.10
 ```
+
+### 1.10 Bastante o Mucha confianza en Carabineros, el Poder Judicial y en Partidos Políticos según año
+
+```{r}
+
+elsoc_long_2016_2021$conf_part <- car::recode(as.numeric(elsoc_long_2016_2021$c05_02), 
+                                      recodes = "c(1,2)='Nada o Poca';
+                                      c(3)='Algo';
+                                      c(4,5)='Bastante o Mucha';
+                                      else=NA", as.factor = TRUE)
+elsoc_long_2016_2021$conf_carab <- car::recode(as.numeric(elsoc_long_2016_2021$c05_03), 
+                                      recodes = "c(1,2)='Nada o Poca';
+                                      c(3)='Algo';
+                                      c(4,5)='Bastante o Mucha';
+                                      else=NA", as.factor = TRUE)
+elsoc_long_2016_2021$conf_jud <- car::recode(as.numeric(elsoc_long_2016_2021$c05_05), 
+                                      recodes = "c(1,2)='Nada o Poca';
+                                      c(3)='Algo';
+                                      c(4,5)='Bastante o Mucha';
+                                      else=NA", as.factor = TRUE)
+
+elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
+                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
+                          weights = ~ponderador02, #ponderador de corte transversal
+                          nest = TRUE,
+                          data = elsoc_long_2016_2021)
+
+datos.part <- data.frame((svytable(~conf_part + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(p_part=Freq/sum(Freq))
+datos.part$ola <- NULL
+
+datos.carb <- data.frame((svytable(~conf_carab + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(p_carb=Freq/sum(Freq))
+datos.carb$ola <- NULL
+
+datos.jud <- data.frame((svytable(~conf_jud + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(p_jud=Freq/sum(Freq))
+
+elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
+                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
+                          weights = ~ponderador02, #ponderador de corte transversal
+                          nest = TRUE,
+                          data = elsoc_long_2016_2021)
+
+datos.grafico.1.10 <- cbind(datos.part, datos.carb, datos.jud)
+
+#trasponer según variable
+datos.1.10 <- datos.grafico.1.10 %>% 
+        pivot_longer(cols = starts_with('conf_'))  %>%
+        mutate(variable = factor(name,
+                             labels = c('Partidos Políticos', 
+                                        'Carabineros de Chile', 
+                                        'Poder Judicial'))) %>%
+                              filter(value == 'Bastante o Mucha') %>%
+                              drop_na() 
+
+datos.1.10$porcentaje <- with(datos.1.10, case_when(
+  variable == 'Carabineros de Chile' ~ p_carb,
+  variable == 'Partidos Políticos' ~ p_part,
+  variable == 'Poder Judicial' ~ p_jud))
+
+g1.10 <- ggplot(datos.1.10,aes(y = porcentaje, x = ola, color = variable, group = variable,
+               label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+    theme_bw() +  
+    geom_line(size = 1) +
+    geom_point(size = 1.8) +
+    scale_y_continuous(labels = scales::percent,
+                       limits = c(0,1)) +
+    ylab(label = NULL) +
+    xlab(label = NULL) +
+    scale_color_viridis_d(begin = .33, end = .66, direction = 1, option = 'viridis') +
+    facet_wrap(.~variable)+
+    geom_text(vjust = -0.8,
+    posilinetion = position_dodge(width = .9),
+    size= 1.75) +
+    theme(legend.position = 'top',
+          legend.title = element_blank()) 
+g1.10
+
+```
+
+
