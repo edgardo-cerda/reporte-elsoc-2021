@@ -292,16 +292,26 @@ N<-round(sum(datos.grafico$Freq),0)
 ## Sintomatología depresiva, sexo y ocupación
 
 ```{r depre-labstat, echo=FALSE, fig.align='center', fig.cap='Síntomas de Depresión según sexo y situación ocupacional (2021). Porcentaje con síntomas PHQ-9>10'}
-datos.grafico <- data.frame((svytable(~depr_rec + ola + m0_sexo + empleo, 
+####me da muy distinto
+datos.g17.7 <- elsoc_long_2016_2021 %>% 
+  mutate(s11_01_rec = as.numeric(car::recode(elsoc_long$s11_01, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_02_rec = as.numeric(car::recode(elsoc_long$s11_02, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_03_rec = as.numeric(car::recode(elsoc_long$s11_03, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_04_rec = as.numeric(car::recode(elsoc_long$s11_04, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_05_rec = as.numeric(car::recode(elsoc_long$s11_05, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_06_rec = as.numeric(car::recode(elsoc_long$s11_06, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_07_rec = as.numeric(car::recode(elsoc_long$s11_07, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_08_rec = as.numeric(car::recode(elsoc_long$s11_08, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_09_rec = as.numeric(car::recode(elsoc_long$s11_09, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")), suma_dep = (s11_01_rec + s11_02_rec + s11_03_rec + s11_04_rec + 
+                              s11_05_rec + s11_06_rec + s11_07_rec + s11_08_rec + s11_09_rec),
+         phq = factor(car::recode(suma_dep,"c(0,1,2,3,4,5,6,7,8,9)='Sin Sintomas Depresivos';c(10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27)='Con Sintomas Depresivos'"), levels = c('Sin Sintomas Depresivos','Con Sintomas Depresivos')),
+         empleo = factor(car::recode(m02, "c(1,2,3) = 'Trabajo remunerado'; 7 = 'Trabajo doméstico no remunerado'; 6 = 'Desempleado/a'; 5 = 'Jubilado/a o pensionado/a'; c(4, 8, 9) = 'Otras categorías'"), levels = c("Trabajo remunerado", "Trabajo doméstico no remunerado", "Desempleado/a", "Jubilado/a o pensionado/a", "Otras categorías"))) %>%
+  dplyr::filter(ola==5 & tipo_atricion == 1 & !phq %in% c(-888, -999, NA)) %>% 
+  prop(phq=='Con Sintomas Depresivos', by = c(empleo,m0_sexo)) %>% 
+  sjlabelled::as_label(phq,empleo,m0_sexo)
+
+
+datos.grafico <- data.frame((svytable(~phq + ola + m0_sexo + empleo, 
                                       elsoc_diseno, round = F))) %>% 
   group_by(ola, m0_sexo, empleo) %>% 
-  mutate(porcentaje=Freq/sum(Freq))
+  mutate(porcentaje=Freq/sum(Freq)) %>% 
+  filter(ola==2021)
 
-datos.subset <- droplevels(subset(datos.grafico, datos.grafico$ola == '2021' & datos.grafico$depr_rec == '3'))
-
-g17.7 <- datos.subset %>% 
-  ggplot(aes(y = porcentaje, x = empleo, fill = m0_sexo, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+g17.7 <- datos.g17.7 %>% 
+  ggplot(aes(y = prop, x = empleo, fill = m0_sexo, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = 'dodge2') +
   scale_y_continuous(labels = scales::percent,
@@ -325,17 +335,16 @@ N<-round(sum(datos.grafico$Freq),0)
 ```
 
 ## COVID - 19
-```{r covid-sexo, fig.align='center', fig.cap= 'Diagnosticado con COVID-19 según sexo'}
-datos.grafico <- data.frame((svytable(~s31 + m0_sexo, 
-                                      elsoc_diseno, round = F))) %>% 
-  group_by(m0_sexo) %>% 
-  mutate(porcentaje=Freq/sum(Freq))
+```{r covid-sexo, fig.align='center', fig.cap= 'Sí fue diagnosticado con COVID-19, según sexo'}
+datos.g17.8 <- elsoc_long_2016_2021 %>% 
+  dplyr::filter(ola == 5 & tipo_atricion == 1 & !s31 %in% c(-888, -999, NA)) %>% 
+  prop(s31==1, by=m0_sexo, na.rm = TRUE, vartype = NULL) %>% 
+  sjlabelled::as_label(s31,m0_sexo)
 
-datos.subset <- droplevels(subset(datos.grafico, s31=='1'))
 
-g17.8 <- datos.subset %>% 
-  ggplot(aes(y = porcentaje, x = s31, fill = m0_sexo, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+g17.8 <- datos.g17.8 %>% 
+  ggplot(aes(y = prop, x = m0_sexo, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) +
   theme_bw() + 
   geom_col(position = 'dodge2') +
   scale_y_continuous(labels = scales::percent,
@@ -353,16 +362,20 @@ g17.8
 ```
 
 ```{r depre-s03, echo=FALSE, fig.align='center', fig.cap='Síntomas de Depresión según Estado de Salud y ola de estudio. Porcentaje con síntomas PHQ-9>10'}
-datos.grafico <- data.frame((svytable(~s03_rec + ola + depr_rec, 
-                                      elsoc_diseno, round = F))) %>% 
-  group_by(ola, depr_rec) %>% 
-  mutate(porcentaje=Freq/sum(Freq))
+datos.g17.9 <- elsoc_long_2016_2021 %>% 
+  mutate(s11_01_rec = as.numeric(car::recode(elsoc_long$s11_01, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_02_rec = as.numeric(car::recode(elsoc_long$s11_02, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_03_rec = as.numeric(car::recode(elsoc_long$s11_03, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_04_rec = as.numeric(car::recode(elsoc_long$s11_04, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_05_rec = as.numeric(car::recode(elsoc_long$s11_05, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_06_rec = as.numeric(car::recode(elsoc_long$s11_06, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_07_rec = as.numeric(car::recode(elsoc_long$s11_07, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_08_rec = as.numeric(car::recode(elsoc_long$s11_08, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_09_rec = as.numeric(car::recode(elsoc_long$s11_09, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")), suma_dep = (s11_01_rec + s11_02_rec + s11_03_rec + s11_04_rec + 
+                              s11_05_rec + s11_06_rec + s11_07_rec + s11_08_rec + s11_09_rec),
+         phq = factor(car::recode(suma_dep,"c(0,1,2,3,4,5,6,7,8,9)='Sin Sintomas Depresivos';c(10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27)='Con Sintomas Depresivos'"), levels = c('Sin Sintomas Depresivos','Con Sintomas Depresivos')),
+         s03_rec = factor(car::recode(s03, "c(1) = 'Mala'; c(2,3) = 'Regular o Buena'; c(3,4) = 'Muy Buena o Excelente'"),
+                           levels = c('Mala', 'Regular o Buena', 'Muy Buena o Excelente'))) %>%
+  dplyr::filter(tipo_atricion == 1 & !phq %in% c(-888, -999, NA) & !is.na(s03_rec)) %>% 
+  prop(phq=='Con Sintomas Depresivos', by = c(s03_rec, ola), na.rm = TRUE) %>% 
+  sjlabelled::as_label(phq, s03_rec, ola)
 
-datos.subset <- droplevels(subset(datos.grafico,datos.grafico$depr_rec == '3'))
 
-g17.9 <- datos.subset %>% 
-  ggplot(aes(y = porcentaje, x = ola, fill = s03_rec, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+g17.9 <- datos.g17.9  %>% 
+  ggplot(aes(y =prop, x = ola, fill = s03_rec, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = 'dodge2') +
   scale_y_continuous(labels = scales::percent,
@@ -382,26 +395,25 @@ g17.9
 ## Salud Mental en COVID-19
 
 ```{r depre-teletrabajo, echo=FALSE, fig.align='center', fig.cap='Síntomas de Depresión, según Modalidad de Trabajo'}
-datos.grafico <- data.frame((svytable(~depr + ola + m60, 
-                                      elsoc_diseno, round = F))) %>% 
-  group_by(ola, m60) %>% 
-  na.omit(m60) %>%
-  mutate(porcentaje=Freq/sum(Freq))
+datos.g17.10 <- elsoc_long_2016_2021 %>% 
+  mutate(s11_01_rec = as.numeric(car::recode(elsoc_long$s11_01, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_02_rec = as.numeric(car::recode(elsoc_long$s11_02, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_03_rec = as.numeric(car::recode(elsoc_long$s11_03, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_04_rec = as.numeric(car::recode(elsoc_long$s11_04, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_05_rec = as.numeric(car::recode(elsoc_long$s11_05, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_06_rec = as.numeric(car::recode(elsoc_long$s11_06, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_07_rec = as.numeric(car::recode(elsoc_long$s11_07, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_08_rec = as.numeric(car::recode(elsoc_long$s11_08, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_09_rec = as.numeric(car::recode(elsoc_long$s11_09, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")), suma_dep = (s11_01_rec + s11_02_rec + s11_03_rec + s11_04_rec + 
+                              s11_05_rec + s11_06_rec + s11_07_rec + s11_08_rec + s11_09_rec),
+         depr = factor(car::recode(suma_dep,"c(0,1,2,3,4)='Sin sintomas o Minima';c(5,6,7,8,9)='Depresion Media'; c(10,11,12,13,14)='Depresion Moderada';c(15,16,17,18,19,20,21,22,23,24,25,26,27)='Depresion Moderada Severa a Severa'"), levels = c('Sin sintomas o Minima','Depresion Media','Depresion Moderada', 'Depresion Moderada Severa a Severa'))) %>%
+  dplyr::filter(tipo_atricion == 1 & !depr %in% c(-888, -999, NA) & !m60 %in% c(-888, -999, NA)) %>% 
+  prop(depr, by = c(ola, m60), na.rm = TRUE, vartype = NULL) %>% 
+  sjlabelled::as_label(depr, m60) 
 
-datos.subset <- droplevels(subset(datos.grafico, datos.grafico$ola == '2021'))
 
-g17.10 <- datos.subset %>% 
-  ggplot(aes(y = porcentaje, x = m60, fill = depr, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+g17.10 <- datos.g17.10 %>% 
+  ggplot(aes(y = prop, x = m60, fill = depr, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) +
   theme_bw() + 
-  geom_col(position = 'dodge2') +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
-  geom_text(vjust = -0.8,
-            position = position_dodge(width = .9),
+  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
+  geom_text(position = position_stack(vjust = .5),
             size= 2.75)  + 
   theme(legend.position = 'top',
         legend.title = element_blank())
@@ -410,21 +422,20 @@ g17.10
 ```
 
 ```{r depre-beneficios, echo=FALSE, fig.align='center', fig.cap='Síntomas de Depresión (2021), según sexo y acceso a beneficios'}
-datos.grafico <- data.frame((svytable(~depr + ola + m0_sexo + m63_01, 
-                                      elsoc_diseno, round = F))) %>% 
-  group_by(ola, m63_01, m0_sexo) %>% 
-  na.omit(m63_01) %>%
-  mutate(porcentaje=Freq/sum(Freq))
+datos.g17.11 <- elsoc_long_2016_2021 %>% 
+  mutate(s11_01_rec = as.numeric(car::recode(elsoc_long$s11_01, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_02_rec = as.numeric(car::recode(elsoc_long$s11_02, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_03_rec = as.numeric(car::recode(elsoc_long$s11_03, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_04_rec = as.numeric(car::recode(elsoc_long$s11_04, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_05_rec = as.numeric(car::recode(elsoc_long$s11_05, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_06_rec = as.numeric(car::recode(elsoc_long$s11_06, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_07_rec = as.numeric(car::recode(elsoc_long$s11_07, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_08_rec = as.numeric(car::recode(elsoc_long$s11_08, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_09_rec = as.numeric(car::recode(elsoc_long$s11_09, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")), suma_dep = (s11_01_rec + s11_02_rec + s11_03_rec + s11_04_rec + 
+                              s11_05_rec + s11_06_rec + s11_07_rec + s11_08_rec + s11_09_rec),
+         depr = factor(car::recode(suma_dep,"c(0,1,2,3,4)='Sin sintomas o Minima';c(5,6,7,8,9)='Depresion Media'; c(10,11,12,13,14)='Depresion Moderada';c(15,16,17,18,19,20,21,22,23,24,25,26,27)='Depresion Moderada Severa a Severa'"), levels = c('Sin sintomas o Minima','Depresion Media','Depresion Moderada', 'Depresion Moderada Severa a Severa'))) %>%
+  dplyr::filter(tipo_atricion == 1 & !depr %in% c(-888, -999, NA) & !m63_01 %in% c(-888, -999, NA)) %>% 
+  prop(depr, by = c(m63_01, m0_sexo), na.rm = TRUE, vartype = NULL) %>% 
+  sjlabelled::as_label(depr, m63_01, m0_sexo) 
 
-datos.subset <- droplevels(subset(datos.grafico, datos.grafico$ola == '2021'))
-
-g17.11 <- datos.subset %>% 
-  ggplot(aes(y = porcentaje, x = m63_01, fill = depr, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+g17.11 <- datos.g17.11 %>% 
+  ggplot(aes(y = prop, x = m63_01, fill = depr, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) +
   theme_bw() + 
   geom_col(position = 'Stack') +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
+  scale_y_continuous(labels = scales::percent) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
@@ -438,25 +449,32 @@ g17.11 <- datos.subset %>%
 g17.11
 ```
 
-```{r depre clase.sub, echo=FALSE, fig.align='center', fig.cap='Síntomas de Depresión, según Clase Subjetiva'}
-datos.grafico <- data.frame((svytable(~depr_rec + clase.sub, 
-                                      elsoc_diseno, round = F))) %>% 
-  group_by(clase.sub) %>% 
-  mutate(porcentaje=Freq/sum(Freq)) 
+```{r depre clase.sub, echo=FALSE, fig.align='center', fig.cap='Síntomas de Depresión, según Clase Subjetiva y ola. Porcentaje con síntomas PHQ-9>10'}
+datos.g17.12 <- elsoc_long_2016_2021 %>% 
+  mutate(s11_01_rec = as.numeric(car::recode(elsoc_long$s11_01, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_02_rec = as.numeric(car::recode(elsoc_long$s11_02, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_03_rec = as.numeric(car::recode(elsoc_long$s11_03, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_04_rec = as.numeric(car::recode(elsoc_long$s11_04, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_05_rec = as.numeric(car::recode(elsoc_long$s11_05, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_06_rec = as.numeric(car::recode(elsoc_long$s11_06, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_07_rec = as.numeric(car::recode(elsoc_long$s11_07, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_08_rec = as.numeric(car::recode(elsoc_long$s11_08, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_09_rec = as.numeric(car::recode(elsoc_long$s11_09, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")), suma_dep = (s11_01_rec + s11_02_rec + s11_03_rec + s11_04_rec + 
+                              s11_05_rec + s11_06_rec + s11_07_rec + s11_08_rec + s11_09_rec),
+         phq = factor(car::recode(suma_dep,"c(0,1,2,3,4,5,6,7,8,9)='Sin Sintomas Depresivos';c(10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27)='Con Sintomas Depresivos'"), levels = c('Sin Sintomas Depresivos','Con Sintomas Depresivos')),
+         clase.sub = factor(car::recode(d01_01, "c(0,1,2,3)='Baja y media baja'; c(4, 5)='Media'; c(6,7,8,9,10)='Alta y media alta'"),
+                           levels = c("Baja y media baja", "Media", "Alta y media alta"))) %>%
+  dplyr::filter(tipo_atricion == 1 & !phq %in% c(-888, -999, NA) & !is.na(clase.sub)) %>% 
+  prop(phq=='Con Sintomas Depresivos', by = c(clase.sub, ola), na.rm = TRUE) %>% 
+  sjlabelled::as_label(phq, clase.sub, ola)
 
-g17.12 <- datos.grafico %>% 
-  ggplot(aes(y = porcentaje, x = clase.sub, fill = depr_rec, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+
+g17.12 <- datos.g17.12 %>% 
+  ggplot(aes(y = prop, x = ola, fill = clase.sub, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
-  geom_col(position = 'Stack') +
+  geom_col(position = 'dodge2') +
   scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
+                     limits = c(0, .5)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = .33, end = .85, direction = -1, option = 'viridis') +
+  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
   #cambiar geom_text tal que: Stack y cambio colores
-  geom_text(position = position_stack(vjust = .5),
-            size= 2.75, color = rep.int(c('black', 'black', 'white'), 3)) +
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75) +
   theme(legend.position = 'top',
         legend.title = element_blank())
 
