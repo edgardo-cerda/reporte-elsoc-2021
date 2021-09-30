@@ -3,27 +3,120 @@ editor_options:
   markdown: 
     wrap: 72
 ---
+```{r variables-covid, include=FALSE}
+#Análisis de Cuarentenas por comuna en base a datos del Ministerio de Ciencia (@MinCiencia)
+library(readr)
+library(dplyr)
+library(scales)
+library(ggplot2)
+library(reshape2)
+library(leaflet)
+library(ggplot2)
+library(data.table)
+library(tidyr)
+library(stringr)
+library(lubridate)
+
+#abrir bases de datos necesarias
+load(file.path('1_input', 'ELSOC_Long_2016_2021_v1.00_R.RData'))
+
+## DATA CUARENTENA ---------
+# Url para descarga directa de datos desde el Github del Ministerio de Ciencia
+url <- "https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/output"
+
+## Cuarentenas desde 2020/07/28 al día actualizado.
+df_pasos <- read_csv(paste(url,"producto74","paso_a_paso_std.csv", sep="/"))
+df_pasos$Fecha<-as.Date(df_pasos$Fecha)
+df_pasos$dia <- weekdays(as.Date(df_pasos$Fecha))
+
+#new variable dias_cuarentena
+df_pasos$cuarentena <- case_when(df_pasos$Paso==1 ~ 1,
+                                 df_pasos$Paso==2 & df_pasos$dia=="Saturday" ~ 1,
+                                 df_pasos$Paso==2 & df_pasos$dia=="Sunday" ~ 1,
+                                 TRUE ~ 0)
+df_pasos <- df_pasos %>% 
+  filter(zona=="Urbana" | zona=="Total")
+
+#cuarentena acomulada del 2020/07/27 a la fecha de entrevista
+df_pasos2 <- df_pasos %>% 
+  group_by(codigo_comuna, zona) %>% 
+  mutate(csum = cumsum(cuarentena)) %>% 
+  mutate(ola=5)
+
+#crear variable fecha entrevista
+elsoc_long_2016_2021$fecha_entr <- as.Date(with(elsoc_long_2016_2021, paste(annio_entr, mes_entr, dia_entr ,sep="-")), "%Y-%m-%d")
+
+#unir bbdd
+els_long <- merge(x = elsoc_long_2016_2021, 
+                  y = df_pasos2[ , c("Fecha","codigo_comuna", "csum", "ola")], 
+                   by.x=c("fecha_entr", "comuna_cod", "ola"), 
+                   by.y=c("Fecha", "codigo_comuna", "ola"), all.x = T)
+
+## Cuarentenas desde 2021/03 hasta 2020/07/28 
+pre_27jul <- read_csv(paste(url,"producto29","Cuarentenas-Totales.csv", sep="/"))
+names(pre_27jul) <- names(pre_27jul) %>% str_to_lower() %>% str_replace_all(" ","_")
+pre_27jul$fecha_de_inicio <- as.Date(pre_27jul$fecha_de_inicio)
+pre_27jul$fecha_de_término <- as.Date(pre_27jul$fecha_de_término)
+
+# cortar en fecha 2020/07/27 
+pre_27jul$fecha_de_termino2 <- ifelse(pre_27jul$fecha_de_término>"2020-07-27",
+                                      date("2020-07-27"),
+                                      pre_27jul$fecha_de_término)
+
+pre_27jul$fecha_termino <- as.Date(pre_27jul$fecha_de_termino2, 
+                                   origin = "1970-01-01")
+#filtrar fecha_inicio > 2020/07/27 
+pre_27jul <- pre_27jul %>% filter(fecha_de_inicio<"2020/07/27")
+#calcular dias en cuarentena
+pre_27jul$dias <- as.Date(pre_27jul$fecha_termino) - 
+  as.Date(pre_27jul$fecha_de_inicio)
+
+pre_27jul$dias <- as.numeric(pre_27jul$dias, units="days")
+
+## Unir fechas
+pre_27jul <- pre_27jul %>% 
+  group_by(código_cut_comuna) %>% 
+  summarise(cuarentena_pre_27jul = sum(dias))  %>% 
+  mutate(ola=5)
+
+els_long2 <- merge(x = els_long, y = pre_27jul, 
+                   by.x=c("ola", "comuna_cod"), 
+                   by.y=c("ola", "código_cut_comuna"), all.x = T)
+els_long2$cuarentena_pre_27jul[is.na(els_long2$cuarentena_pre_27jul)] <- 0
+#VARIABLE 1: cuarentena en els_long3 acomulada
+els_long2$ccum <- els_long2$cuarentena_pre_27jul + els_long2$csum
+
+#VARIABLE 2: dummy de cuarentena en els_long3
+elsoc_covid <- merge(x = els_long2, y = df_pasos, 
+                   by.x=c("fecha_entr", "comuna_cod"), 
+                   by.y=c("Fecha", "codigo_comuna"), all.x = T)
+
+
+elsoc_covid$ccum <- as.numeric(as.character(elsoc_covid$ccum))
+
+elsoc_covid$cuarentena <- factor(elsoc_covid$cuarentena,
+                            levels = c(0,1),
+                            labels = c("Sin Cuarentena", "Con Cuarentena"))
+
+elsoc_covid$ccum_t <- factor(car::recode(elsoc_covid$ccum, "0='0 Dias';1:99='1-99 Dias';
+                                        100:149='100-149 Dias';150:500='150 o más Dias'"),
+                           levels = c('0 Dias', '1-99 Dias', '100-149', '150 o más Dias'))
+
+elsoc_covid_panel <- elsoc_covid %>% filter(tipo_atricion == 1 | 
+                                            tipo_atricion == 17 )
+
+```
 
 # Pandemia Covid-19
 
 ## Cuarentenas 
 ```{r hist-fecha-2021, fig.align='center', fig.cap="Histograma Fechas de Entrevistas"}
-load("1_input/elsoc_covid.RData")
-elsoc_diseno_3 <- svydesign(ids = ~segmento,
-                          strata = ~estrato, 
-                          weights = ~ponderador02,
-                          nest = TRUE,
-                          data = elsoc_covid_panel)
+datos.g19.1 <- elsoc_covid_panel %>% 
+  dplyr::filter(ola==5) %>% 
+  prop(fecha_entr, by = c(comuna_cod), na.rm = TRUE, vartype = NULL) %>% 
+  sjlabelled::as_label(comuna_cod) 
 
-datos.grafico <- data.frame((svytable(~fecha_entr + comuna_cod + ola, 
-                                      elsoc_diseno_3, round = F))) %>% 
-  group_by(comuna_cod, ola) %>% 
-  mutate(porcentaje=Freq/sum(Freq)) %>% 
-  filter(ola==2021 & Freq>0)
-
-datos.grafico$fecha_entr<-as.Date(datos.grafico$fecha_entr)
-
-g19.1 <- datos.grafico %>% 
+g19.1 <- datos.g19.1 %>% 
   ggplot(mapping = aes(x = fecha_entr)) +
   theme_bw() + 
   geom_histogram(bins = 9,
@@ -48,24 +141,25 @@ g19.2
 ```
 
 ```{r ccum-zona, fig.align='center', fig.cap='Días de Cuarentena Acumulada al momento de la entrevista, según Zona'}
-datos.grafico <- data.frame((svytable(~ccum_t + zona1, 
-                                      elsoc_diseno_3, round = F))) %>% 
-  group_by(zona1) %>% 
-  mutate(porcentaje=Freq/sum(Freq))
+datos.g19.3 <- elsoc_covid_panel %>% 
+  mutate(zona1 = factor(car::recode(region_cod, "c(1,2,3,4,15)='Norte'; c(5,6,7,8,16)='Centro'; c(9,10,11,12,14)='Sur'; 13='Metropolitana'", levels = c("Norte","Centro","Sur","Metropolitana"))))  %>% 
+  dplyr::filter(ola==5 & !is.na(ccum_t))   %>% 
+  prop(ccum_t, by = c(zona1), na.rm = TRUE, vartype = NULL) %>% 
+  sjlabelled::as_label(zona1) 
+  
 
-g19.3 <- datos.grafico %>% 
-  ggplot(aes(y = porcentaje, x = zona1, fill = ccum_t, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+g19.3 <- datos.g19.3 %>% 
+  ggplot(aes(y = prop, x = zona1, fill = ccum_t, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = 'Stack') +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
+  scale_y_continuous(labels = scales::percent) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = .33, end = .85, direction = -1, option = 'viridis') +
   #cambiar geom_text tal que: Stack y cambio colores
   geom_text(position = position_stack(vjust = .5),
-            size= 2.75, color = rep.int(c('black', 'black', 'white', 'white'), 4)) + 
+            size= 2.75) + 
   theme(legend.position = 'top',
         legend.title = element_blank()) 
 
