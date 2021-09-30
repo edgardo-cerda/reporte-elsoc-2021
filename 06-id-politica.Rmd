@@ -15,15 +15,17 @@ editor_options:
 <!-- ### 2.1 Identificación política por ola -->
 
 ```{r echo=FALSE}
-datos.2.1 <- data.frame((svytable(~pos_id + ola, elsoc_diseno, round = F))) %>%
-  group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>%
-  na.omit()
-```
+datos.2.1 <- elsoc_long_2016_2021 %>%
+  filter(tipo_atricion == 1) %>%
+  mutate(pos_id = car::recode(c15, recodes = "c(0,1,2,3,4)=1; c(5)=2; c(6,7,8,9,10)=3; c(11,12, -999, -888)=4")) %>%
+  mutate(pos_id = factor(pos_id, levels = c(1, 2, 3, 4),
+                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
+  prop(x = pos_id, by = ola, na.rm = TRUE) %>% 
+  sjlabelled::as_label(pos_id, ola)
 
-```{r echo=FALSE}
 g.2.1 <- datos.2.1 %>% 
-    ggplot(aes(y = porcentaje, x = pos_id, fill = ola, 
-               label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+    ggplot(aes(y = prop, x = pos_id, fill = ola, 
+               label = as.character(scales::percent(prop, accuracy = .1)))) +
     theme_bw() + 
     geom_col(position= 'dodge2') +
     #escala del eje y en porcentajes del 0 al 100%
@@ -42,8 +44,10 @@ g.2.1 <- datos.2.1 %>%
     theme(legend.position = 'top',
           legend.title = element_blank())
 
+
 g.2.1
 ```
+
 ### 2.2 Alluvial de cambios de Identificación política
 
 <!-- ### 2.2 Alluvial de cambios de Identificación política (+o-) -->
@@ -85,10 +89,25 @@ g.2.2 <- ggplot(datos.2.2, aes(x = ola, fill = pos_id, stratum = pos_id,
 g.2.2
 ```
 
-### 2.3 Grado de acuerdo con la cuarentena según identificación política
+### 2.3 De acuerdo o Totalmente de acuerdo con la cuarentena según identificación política el año 2021
 
 
 ```{r include=FALSE}
+datos.2.3 <- elsoc_long_2016_2021 %>%
+mutate(ac_cuar = car::recode(c37_10, recodes = "c(1,2)= 1;
+                                      c(3)= 2; 
+                                      c(4,5)= 3;
+                                      else=NA", as.factor = TRUE)) %>%
+  filter(tipo_atricion == 1 & ola %in% c(5) & ac_cuar %in% c(3)) %>%
+  mutate(pos_id = car::recode(c15, recodes = "c(0,1,2,3,4)=1; c(5)=2; c(6,7,8,9,10)=3; c(11,12, -999, -888)=4")) %>%
+  mutate(pos_id = factor(pos_id, levels = c(1, 2, 3, 4),
+                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
+    prop(pos_id, by  = c(ac_cuar), na.rm = TRUE)
+
+view(datos.2.3)
+
+
+
 elsoc_panel_m1$ac_cuar <- car::recode(as.numeric(elsoc_panel_m1$c37_10), 
                                       recodes = "c(1,2)='Totalmente en desacuerdo y En desacuerdo';
                                       c(3)='Ni de acuerdo ni en desacuerdo'; 
@@ -112,21 +131,20 @@ datos.2.3 <- data.frame((svytable(~ac_cuar + pos_id + ola, elsoc_diseno, round =
 
 ```{r echo=FALSE}
 g.2.3 <-datos.2.3 %>% 
-  ggplot(aes(y = porcentaje, x = pos_id , fill = ac_cuar, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  ggplot(aes(y = prop, x = pos_id, fill = ac_cuar, 
+               label = as.character(scales::percent(prop, accuracy = .1)))) +
   theme_bw() + 
-  geom_col(position = 'Stack') +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
-  ylab(label = NULL) +
-  xlab(label = NULL) +
-  scale_fill_viridis_d(begin = 0, end = .95, direction = 1, option = 'viridis') +
-  #cambiar geom_text tal que: Stack y cambio colores
-  geom_text(position = position_stack(vjust = .5),
-            size= 2.75, color = rep.int(c('white', 'white', 'white'), 4)) + 
-  theme(legend.position = 'top',
-        legend.title = element_blank()) +
-  ggtitle('Grado de acuerdo con la cuarentena según identificación política')
+    geom_col() +
+    scale_y_continuous(labels = scales::percent,
+                       limits = c(0, 1)) +
+    ylab(label = NULL) +
+    xlab(label = NULL) +
+    scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+    geom_text(vjust = -0.8,
+              position = position_dodge(width = .9),
+              size= 2.75) +
+    theme(legend.position = 'none',   
+          legend.title = element_blank())
 
 g.2.3
 ```

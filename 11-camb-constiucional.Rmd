@@ -36,7 +36,7 @@ g11.1
 ```{r servel-apruebo, fig.align='center', fig.cap='Voto retrospectivo Plebiscito Nueva Constitucion'}
 
 datos.g11.2 <- elsoc_long_2016_2021 %>% 
-  dplyr::filter(ola == 5 & tipo_atricion == 1 & !c44 %in% c(3, 4, -888, -999)) %>% 
+  dplyr::filter(ola == 5 & tipo_atricion == 1 & !c44 %in% c(3, 4, -888, -999)& !is.na(c44)) %>% 
   prop(c44, na.rm = TRUE, vartype = NULL) %>% 
   sjlabelled::as_label(c44) %>% 
   mutate(datos = 'Datos ELSOC') %>%
@@ -62,20 +62,16 @@ g11.2
 ```
 
 ```{r servel-cc, fig.align='center', fig.cap= 'Voto Retrospectivo Plebiscito Nueva Constitucion'}
-datos.grafico <- data.frame((svytable(~c45 + ola, 
-                                      elsoc_diseno, round = F))) %>% 
-  group_by(ola) %>% 
-  mutate(porcentaje=Freq/sum(Freq)) %>% 
-  filter(ola==2021)
+datos.g11.3 <- elsoc_long_2016_2021 %>% 
+  dplyr::filter(ola == 5 & tipo_atricion == 1 & !c45 %in% c(3, 4, -888, -999) & !is.na(c45)) %>% 
+  prop(c45, na.rm = TRUE, vartype = NULL) %>% 
+  sjlabelled::as_label(c45) %>% 
+  mutate(datos = 'Datos ELSOC') %>%
+  add_row(c45 = c('Convención Mixta', 'Convención Constitucional'), prop = c(.2101, .7899), datos = c('Datos servel', 'Datos servel'))
 
-cm <- tibble(c45="Convención Mixta", ola="Datos Servel", Freq=0 , porcentaje=0.2101)
-cc <- tibble(c45="Convención Constitucional", ola="Datos Servel", Fre1=0 , porcentaje=0.7899)
-
-datos.subset <- rbind(datos.grafico, cm, cc)
-
-g11.3 <- datos.subset %>% 
-  ggplot(aes(y = porcentaje, x = ola, fill = c45, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+g11.3 <- datos.g11.3 %>% 
+  ggplot(aes(y = prop, x = datos, fill = c45, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) +
   theme_bw() + 
   geom_col(position = 'dodge2') +
   scale_y_continuous(labels = scales::percent,
@@ -124,25 +120,25 @@ g11.4
 ```
 
 ```{r id-pol-voto, fig.align='center', fig.cap= "Voto Retrospectivo Plebicito, según Posición Ideológica"}
-#como voto cada id_pol en el plebicito
-datos.grafico <- data.frame((svytable(~c44_rec + pos_id, 
-                                      elsoc_diseno_2, round = F))) %>% 
-  group_by(pos_id) %>% 
-  mutate(porcentaje=Freq/sum(Freq)) %>%
-  drop_na()
+datos.g11.5 <- elsoc_long_2016_2021 %>% 
+  mutate(pos_id = factor(car::recode(c15, "c(11,12) = 'No se identifica'; c(0,1,2,3,4) = 'Izquierda'; c(5) = 'Centro'; c(6,7,8,9,10) = 'Derecha'"), levels = c('Izquierda', 'Centro', 'Derecha', 'No se identifica'))) %>%
+  dplyr::filter(ola == 5 & tipo_atricion == 1 
+                & !c44 %in% c(3,4, -888, -999) & !is.na(c44) & !is.na(pos_id)) %>% 
+  prop(c44, by = c(pos_id), na.rm = TRUE, vartype = NULL) %>% 
+  sjlabelled::as_label(c44, pos_id) 
 
-g11.5 <- datos.grafico %>% 
-  ggplot(aes(y = porcentaje, x = pos_id, fill = c44_rec, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  
+g11.5 <- datos.g11.5 %>% 
+  ggplot(aes(y = prop, x = pos_id, fill = c44, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = "Stack") +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
+  scale_y_continuous(labels = scales::percent) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
   geom_text(position = position_stack(vjust = .5),
-            size= 2.75, color = rep.int(c('black', 'black', 'white'), 4)) + 
+            size= 2.75, color = rep.int(c('black', 'black'), 4)) + 
   theme(legend.position = 'top',
         legend.title = element_blank())
 
@@ -152,27 +148,27 @@ g11.5
 ## Patrones de Votación
 
 ```{r presi-voto-c44, fig.align='center', fig.cap= "Voto Retrospectivo Plebicito, según Posición Ideológica"}
-datos.grafico <- data.frame((svytable(~c44_rec + c39_rec, 
-                                      elsoc_diseno_2, round = F))) %>% 
-  group_by(c39_rec) %>% 
-  mutate(porcentaje=Freq/sum(Freq)) %>%
-  drop_na()
+datos.g11.6 <- elsoc_wide_2016_2021 %>% 
+  dplyr::filter(tipo_atricion == 1 
+                & !c44_w05 %in% c(3,4, -888, -999)
+                & !c39_w03 %in% c(-888, -999) & !is.na(c44_w05) & !is.na(c39_w03)) %>% 
+  survey_design_elsoc(weights = 'ponderador02_w05') %>% 
+  prop(c44_w05, by = c39_w03, na.rm = TRUE, vartype = NULL) %>% 
+  sjlabelled::as_label(c44_w05, c39_w03) 
 
-g11.6 <- datos.grafico %>% 
-  ggplot(aes(x = porcentaje, y = c39_rec, fill = c44_rec, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+g11.6 <- datos.g11.6 %>% 
+  ggplot(aes(x = prop, y = c39_w03, fill = c44_w05, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = "Stack") +
-  scale_x_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
+  scale_x_continuous(labels = scales::percent) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
-  geom_text(aes(label = ifelse(porcentaje > 0.06 , scales::percent(porcentaje, accuracy = .1),"")),
+  geom_text(aes(label = ifelse(prop > 0.04 , scales::percent(prop, accuracy = .1),"")),
             position = position_stack(vjust = .5),
             show.legend = FALSE,
-            size = 2.75,
-            color = rep.int(c('black', 'white', 'white'), 9)) + 
+            size = 2.75) + 
   theme(legend.position = 'top',
         legend.title = element_blank()) 
 
@@ -180,26 +176,28 @@ g11.6
 ```
 
 ```{r presi-voto-c45, fig.align='center', fig.cap="Voto Retrospectivo Plebicito, según Posición Ideológica"}
-datos.grafico <- data.frame((svytable(~c45_rec + c39_rec, 
-                                      elsoc_diseno_2, round = F))) %>% 
-  group_by(c39_rec) %>% 
-  mutate(porcentaje=Freq/sum(Freq))
+datos.g11.7 <- elsoc_wide_2016_2021 %>% 
+  dplyr::filter(tipo_atricion == 1 
+                & !c45_w05 %in% c(3,4, -888, -999)
+                & !c39_w03 %in% c(-888, -999) & !is.na(c45_w05) & !is.na(c39_w03)) %>% 
+  survey_design_elsoc(weights = 'ponderador02_w05') %>% 
+  prop(c45_w05, by = c39_w03, na.rm = TRUE, vartype = NULL) %>% 
+  sjlabelled::as_label(c45_w05, c39_w03) 
 
-g11.7 <- datos.grafico %>% 
-  ggplot(aes(x = porcentaje, y = c39_rec, fill = c45_rec, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+g11.7 <- datos.g11.7 %>% 
+  ggplot(aes(x = prop, y = c39_w03, fill = c45_w05, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = "Stack") +
-  scale_x_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
+  scale_x_continuous(labels = scales::percent) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
-  geom_text(aes(label = ifelse(porcentaje > 0.06 , scales::percent(porcentaje, accuracy = .1),"")),
+  geom_text(aes(label = ifelse(prop > 0.04 , scales::percent(prop, accuracy = .1),"")),
             position = position_stack(vjust = .5),
             show.legend = FALSE,
             size = 2.75,
-            color = rep.int(c('black', 'white', 'white'), 9)) + 
+            color = rep.int(c('black', 'white'), 10)) + 
   theme(legend.position = 'top',
         legend.title = element_blank()) 
 
@@ -207,8 +205,7 @@ g11.7
 ```
 
 ```{r 2020-vs-2021, fig.align='center', fig.cap= "Participación Electoral 2021, según la Participación en 2017"}
-
-datos.11.7 <- elsoc_wide_2016_2021 %>% 
+datos.g11.7 <- elsoc_wide_2016_2021 %>% 
   filter(tipo_atricion == 1 & !c43_w05 %in% c(3, -888, -999) & 
            !c11_w03 %in% c(3, -888, -999)) %>% 
   survey_design_elsoc(weights = 'ponderador02_w05') %>% 
