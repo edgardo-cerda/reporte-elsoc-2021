@@ -58,12 +58,12 @@ elsoc_panel_m1 <- elsoc_long_2016_2021 %>%
   sjlabelled::as_label(ola) %>% 
   survey_design_elsoc()
 
-datos.11.2 <- data.frame((svytable(~clase_sub + ola + idencuesta, elsoc_diseno, round = F))) %>% 
+datos.11.2 <- data.frame((svytable(~clase_sub + ola + idencuesta, elsoc_panel_m1, round = F))) %>% 
   group_by(ola) %>% mutate(prop=Freq/sum(Freq)) %>%
   filter(Freq>0 & (ola == '2016'| ola == '2019' | ola == '2021')) %>%
   drop_na()
 
-etiquetas.11.2 <- data.frame((svytable(~clase_sub + ola, elsoc_diseno, round = F))) %>% 
+etiquetas.11.2 <- data.frame((svytable(~clase_sub + ola, elsoc_panel_m1, round = F))) %>% 
   group_by(ola) %>% mutate(prop=Freq/sum(Freq)) %>% mutate(idencuesta = 1) %>% 
   filter(Freq>0 & (ola == '2016'| ola == '2019' | ola == '2021')) %>% 
   drop_na()
