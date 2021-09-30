@@ -68,7 +68,6 @@ elsoc_diseno <- svydesign(ids = ~segmento,
 ```
 
 ```{r sexismo-ben, fig.align='center', fig.cap='Cambio en Sexismo benévolo, según ola y sexo .'}
-
 #1
 datos.grafico <- data.frame((svytable(~sexismo_benevolo + ola + idencuesta + 
                                         m0_sexo, elsoc_diseno, round = F))) %>% 
@@ -113,7 +112,6 @@ g16.1
 ```
 
 ```{r sexismo-host, fig.align='center', fig.cap='Sexismo hostil, según ola y sexo .'}
-
 #1
 datos.grafico <- data.frame((svytable(~sexismo_hostil + ola + idencuesta + 
                                         m0_sexo, elsoc_diseno, round = F))) %>% 
@@ -271,7 +269,7 @@ g16.4
 ```
 
 ## Roles de Género
-```{r c19_01, fig.align='center', fig.cap='Sexismo hostil, según ola y sexo .'}
+```{r c19_01, fig.align='center', fig.cap='Sexismo hostil c19_01, según ola y sexo.'}
 #1
 datos.grafico <- data.frame((svytable(~c19_01_rec + ola + idencuesta + 
                                         m0_sexo, elsoc_diseno, round = F))) %>% 
@@ -314,7 +312,7 @@ g16.5 <- ggplot(subset.grafico, aes(x = ola, fill = c19_01_rec, stratum = c19_01
 g16.5
 ```
 
-```{r c19_02, fig.align='center', fig.cap='Sexismo hostil, según ola y sexo .'}
+```{r c19_02, fig.align='center', fig.cap='Sexismo hostilc19_02, según ola y sexo.'}
 
 #1
 datos.grafico <- data.frame((svytable(~c19_02_rec + ola + idencuesta + 
@@ -358,7 +356,7 @@ g16.6 <- ggplot(subset.grafico, aes(x = ola, fill = c19_02_rec, stratum = c19_02
 g16.6
 ```
 
-```{r c19_03, fig.align='center', fig.cap='Sexismo hostil, según ola y sexo .'}
+```{r c19_03, fig.align='center', fig.cap='Sexismo hostil c19_03, según ola y sexo.'}
 
 #1
 datos.grafico <- data.frame((svytable(~c19_03_rec + ola + idencuesta + 
@@ -402,7 +400,7 @@ g16.7 <- ggplot(subset.grafico, aes(x = ola, fill = c19_03_rec, stratum = c19_03
 g16.7
 ```
 
-```{r c19_04, fig.align='center', fig.cap='Sexismo hostil, según ola y sexo .'}
+```{r c19_04, fig.align='center', fig.cap='Sexismo hostil c19_04, según ola y sexo.'}
 
 #1
 datos.grafico <- data.frame((svytable(~c19_04_rec + ola + idencuesta + 
@@ -449,35 +447,32 @@ g16.8
 ## Trabajo y género
 
 ```{r ocup-sexo, fig.align='center',fig.cap='Porcentaje de trabajadores y trabajadoras por situación ocupacional (2021), según sexo del entrevistado'}
-datos.grafico <- data.frame((svytable(~m0_sexo + ola + empleo, 
-                                      elsoc_diseno, round = F))) %>% 
-  group_by(ola, m0_sexo) %>% 
-  mutate(porcentaje=Freq/sum(Freq)) %>%
-  drop_na()
+datos.g16.9 <- elsoc_long_2016_2021 %>% 
+  mutate(empleo = factor(car::recode(m02, "c(1,2,3) = 'Trabajo remunerado'; 7 = 'Trabajo doméstico no remunerado'; 6 = 'Desempleado/a'; 5 = 'Jubilado/a o pensionado/a'; c(4, 8, 9) = 'Otras categorías'"), levels = c("Trabajo remunerado", "Trabajo doméstico no remunerado", "Desempleado/a", "Jubilado/a o pensionado/a", "Otras categorías"))) %>%
+  dplyr::filter(tipo_atricion == 1 
+                & !ola %in% c(1,2,4) & !is.na(empleo)) %>% 
+  prop(empleo, by = c(ola,m0_sexo), na.rm = TRUE, vartype = NULL) %>% 
+  sjlabelled::as_label(m0_sexo, ola, empleo) 
 
-datos.subset <- droplevels(subset(datos.grafico, datos.grafico$ola == '2018' | datos.grafico$ola == '2021' ))
-
-g16.9 <- datos.subset %>% 
-  ggplot(aes(y = porcentaje, x = m0_sexo, fill = empleo, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+g16.9 <- datos.g16.9 %>% 
+  ggplot(aes(y = prop, x = m0_sexo, fill = empleo, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = 'Stack') +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
+  scale_y_continuous(labels = scales::percent) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   facet_wrap(.~ola)+
   scale_fill_viridis_d(begin = .13, end = .85, direction = -1, option = 'viridis') +
   #cambiar geom_text tal que: Stack y cambio colores
-  geom_text(aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")), position = position_stack(vjust = .5),
+  geom_text(aes(label = ifelse(prop> 0.03 , scales::percent(prop, accuracy = .1),"")), position = position_stack(vjust = .5),
             show.legend = FALSE,
             size = 2.75,
-            color = rep('black')) + 
+            color = rep.int(c('black', 'black', 'black','white', 'white'), 4)) + 
   theme(legend.position = 'top',
         legend.title = element_blank())
 
 g16.9
-
 ```
 
 
