@@ -189,8 +189,9 @@ g11.5 <-
 g11.5
 ```
 
-```{r}
-datos.11.6e <- elsoc_long_2016_2021 %>% 
+<!-- ### 11.6  Estatus subjetivo y tipo de movilidad social, nivel promedio según ola.  -->
+```{r mov-soc, fig.align='center',fig.cap='Estatus subjetivo y tipo de movilidad social, nivel promedio según ola'}
+datos.11.6 <- elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & 
          !d01_01 %in% c(-888, -999) & !d01_02 %in% c(-888,-999) & !d01_03 %in% c(-888, -999)) %>%
   sjlabelled::as_label(ola) %>% 
@@ -200,7 +201,7 @@ datos.11.6e <- elsoc_long_2016_2021 %>%
   summarise(m_interg = weighted.mean(mov_interg, ponderador02 ,na.rm = T),
             m_relativa = weighted.mean(mov_relativa, ponderador02 ,na.rm = T),
             m_estatus = weighted.mean(d01_01, ponderador02 ,na.rm = T),
-            conteo = n()) %>% 
+            n = n()) %>% 
   mutate(var_interg = 'Perspectiva de\nmovilidad social',
          var_relativa = 'Movilidad social\nrelativa',
          var_estatus = 'Estatus social\nactual') %>% 
@@ -210,52 +211,11 @@ datos.11.6e <- elsoc_long_2016_2021 %>%
     value == 'Movilidad social\nrelativa' ~ m_relativa,
     value == 'Estatus social\nactual' ~ m_estatus)) 
 
-datos.11.6e$m_mov_social <- round(datos.11.6e$m_mov_social, digits = 2) 
+datos.11.6$m_mov_social <- round(datos.11.6$m_mov_social, digits = 2) 
 
-g11.6e <- datos.11.6e %>% 
+g11.6 <- datos.11.6 %>% 
   ggplot(aes(y = m_mov_social, x = ola, group = value, color = value,
              label = m_mov_social)) +
-  theme_bw() +
-  geom_line(size = 1) +
-  geom_point(size = 1.8) +
-  scale_y_continuous(limits = c(0,6)) +
-  ylab(label = NULL) +
-  xlab(label = NULL) +
-  scale_color_viridis_d(begin = .11, end = .55, direction = 1, option = 'viridis') +
-  theme(legend.position = 'top',
-        legend.title = element_blank()) +
-  geom_text(vjust = -0.8,  size= 3.5)
-g11.6e
-```
-
-<!-- ### 11.6  Estatus subjetivo y tipo de movilidad social, nivel promedio según ola.  -->
-```{r mov-soc, fig.align='center',fig.cap='Estatus subjetivo y tipo de movilidad social, nivel promedio según ola'}
-
-datos11.6 <- elsoc_long_2016_2021 %>% 
-  filter(tipo_atricion == 1 & muestra == 1 & 
-         !d01_01 %in% c(-888, -999) & !d01_02 %in% c(-888,-999) & !d01_03 %in% c(-888, -999)) %>%
-  sjlabelled::as_label(ola) %>% 
-  mutate(mov_interg = d01_03 - d01_01,
-         mov_relativa = d01_01 - d01_02) %>% 
-  group_by(ola) %>% 
-  summarise(m_interg = weighted.mean(mov_interg, ponderador02 ,na.rm = T),
-            m_relativa = weighted.mean(mov_relativa, ponderador02 ,na.rm = T),
-            m_estatus = weighted.mean(d01_01, ponderador02 ,na.rm = T),
-            conteo = n()) %>% 
-  mutate(var_interg = 'Perspectiva de\nmovilidad social',
-         var_relativa = 'Movilidad social\nrelativa',
-         var_estatus = 'Estatus social\nactual') %>% 
-  pivot_longer(cols = starts_with('var_'))  %>%
-  mutate(m_mov_social = case_when(
-    value == 'Perspectiva de\nmovilidad social' ~ m_interg,
-    value == 'Movilidad social\nrelativa' ~ m_relativa,
-    value == 'Estatus social\nactual' ~ m_estatus))
-
-datos11.6$m_mov_social <- round(datos11.6$m_mov_social, digits = 2) 
-
-g11.6 <- 
-  ggplot(datos11.6, aes(y = m_mov_social, x = ola, group = value, color = value,
-                              label = m_mov_social)) +
   theme_bw() +
   geom_line(size = 1) +
   geom_point(size = 1.8) +
