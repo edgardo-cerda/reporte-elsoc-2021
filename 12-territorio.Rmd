@@ -665,7 +665,12 @@ elsoc_comuna_rm <- elsoc_long_2016_2021 %>%
             sd_crim = sd(barrio_crim, na.rm = T),
             n = n())
 
-comunas_rm <- mapa_comunas[mapa_comunas$codigo_region==13,]
+comunas_rm <- chilemapas::mapa_zonas %>% 
+  filter(codigo_region==13 & codigo_provincia == '131') %>% 
+  st_as_sf(.) %>% 
+  group_by(codigo_comuna) %>% 
+  summarise()
+
 comunas_rm <- merge(comunas_rm, 
                     elsoc_comuna_rm, 
                     by.x = "codigo_comuna", by.y = "comuna_cod",
