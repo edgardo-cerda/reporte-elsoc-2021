@@ -229,11 +229,6 @@ datos.g19.6 <- elsoc_covid_panel %>%
   prop(phq=='Con Sintomas Depresivos', by = c(ola, ccum_t), na.rm = TRUE, vartype = NULL) %>% 
   sjlabelled::as_label(phq, ola, ccum_t) 
 
-datos.grafico <- data.frame((svytable(~depr + ccum_t + ola, 
-                                      elsoc_diseno_3, round = F))) %>% 
-  group_by(ccum_t, ola) %>% 
-  mutate(porcentaje=Freq/sum(Freq))%>%
-  filter(ola==2021)
 
 g19.6 <- datos.g19.6  %>% 
   ggplot(aes(y = prop, x = ccum_t,
@@ -241,7 +236,7 @@ g19.6 <- datos.g19.6  %>%
   theme_bw() + 
   geom_col(position = 'Stack') +
   scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
+                     limits = c(0, .5)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = .33, end = .85, direction = -1, option = 'viridis') +
@@ -254,57 +249,51 @@ g19.6
 ```
 
 ```{r ccum-sit_ocup, fig.align='center', fig.cap= 'Situación Ocupacional, según Días de Cuarentena Acumulada al momento de la entrevista'}
-datos.grafico <- data.frame((svytable(~empleo + ccum_t, 
-                                      elsoc_diseno_3, round = F))) %>% 
-  group_by(ccum_t) %>% 
-  mutate(porcentaje=Freq/sum(Freq))
+datos.g19.7 <- elsoc_covid_panel %>% 
+  mutate(empleo = factor(car::recode(m02, "c(1,2,3) = 'Trabajo remunerado'; 7 = 'Trabajo doméstico no remunerado'; 6 = 'Desempleado/a'; 5 = 'Jubilado/a o pensionado/a'; c(4, 8, 9) = 'Otras categorías'"), levels = c("Trabajo remunerado", "Trabajo doméstico no remunerado", "Desempleado/a", "Jubilado/a o pensionado/a", "Otras categorías"))) %>%
+  dplyr::filter(tipo_atricion == 1 & !is.na(ccum_t) & !empleo %in% c(-888, -999, NA)) %>% 
+  prop(empleo, by = c(ola, ccum_t), na.rm = TRUE, vartype = NULL) %>% 
+  sjlabelled::as_label(empleo, ola, ccum_t) 
 
-g19.7 <- datos.grafico %>% 
-  ggplot(aes(y = porcentaje, x = ccum_t, fill = empleo, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+
+g19.7 <- datos.g19.7 %>% 
+  ggplot(aes(y = prop, x = ccum_t, fill = empleo, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = 'Stack') +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
+  scale_y_continuous(labels = scales::percent) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = .33, end = .85, direction = -1, option = 'viridis') +
   #cambiar geom_text tal que: Stack y cambio colores
   geom_text(position = position_stack(vjust = .5),
-            size= 2.75, color = rep.int(c('black', 'black', 'white', 'white'), 5)) + 
+            size= 2.75, color = rep.int(c('black', 'black','black', 'white', 'white'), 3)) + 
   theme(legend.position = 'top',
         legend.title = element_blank())
 
 g19.7
 ```
 
-```{r ccum-ahorro, fig.align='center', fig.cap= 'Nivel de Ahorro, según Días de Cuarentena Acumulada al momento de la entrevista'}
-elsoc_covid_panel$m44_rec <- car::recode(elsoc_covid_panel$m44,
-                               "c(1,2)='Nada o Pocos Ahorros';
-c(3)='Algo de Ahorros';
-c(4,5)='Bastante o Muchos Ahorros'")
+```{r ccum-ahorro, fig.align='center', fig.cap= 'Nivel de Ahorro "Nada o Poco", según Días de Cuarentena Acumulada al momento de la entrevista (2021)'}
+datos.g19.8 <- elsoc_covid_panel %>% 
+  mutate(m44_rec = factor(car::recode(m44, "c(1,2)='Nada o Pocos Ahorros'; c(3)='Algo de Ahorros';c(4,5)='Bastante o Muchos Ahorros'"), levels = c("Nada o Pocos Ahorros", "Algo de Ahorros", "Bastante o Muchos Ahorros"))) %>%
+  dplyr::filter(ola == 5 & tipo_atricion == 1 & !is.na(ccum_t) & !m44_rec %in% c(-888, -999, NA)) %>% 
+  prop(m44_rec=='Nada o Pocos Ahorros', by = c(ccum_t), na.rm = TRUE, vartype = NULL) %>% 
+  sjlabelled::as_label(m44_rec, ccum_t) 
 
-elsoc_diseno_3 <- svydesign(ids = ~segmento, strata = ~estrato, 
-                          weights = ~ponderador02, nest = TRUE, data = elsoc_covid_panel)
 
-datos.grafico <- data.frame((svytable(~m44_rec + ccum_t, 
-                                      elsoc_diseno_3, round = F))) %>% 
-  group_by(ccum_t) %>% 
-  mutate(porcentaje=Freq/sum(Freq))
-
-g19.8 <- datos.grafico %>% 
-  ggplot(aes(y = porcentaje, x = ccum_t, fill = m44_rec, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+g19.8 <- datos.g19.8 %>% 
+  ggplot(aes(y = prop, x = ccum_t, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = 'Stack') +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
+  scale_y_continuous(labels = scales::percent) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = .33, end = .85, direction = -1, option = 'viridis') +
   #cambiar geom_text tal que: Stack y cambio colores
   geom_text(position = position_stack(vjust = .5),
-            size= 2.75, color = rep.int(c('black', 'black', 'white', 'white'), 3)) + 
+            size= 2.75, color="white") + 
   theme(legend.position = 'top',
         legend.title = element_blank()) 
 
@@ -312,19 +301,19 @@ g19.8
 ```
 
 ```{r cuarentena-etario, fig.align='center', fig.cap= 'Encuestados en Cuarentena según Tramo Etario'}
-datos.grafico <- data.frame((svytable(~cuarentena + edadt + ola, 
-                                      elsoc_diseno_3, round = F))) %>% 
-  group_by(edadt + ola) %>% 
-  mutate(porcentaje=Freq/sum(Freq)) %>% 
-  filter(ola==2021)
+datos.g19.9 <- elsoc_covid_panel %>% 
+  mutate(edadt = factor(car::recode(m0_edad, "18:29 = 1; 30:49 = 2; 50:64 = 3; 65:150 = 4"),
+                           labels = c('18-29', '30-49', '50-64', '65 o más'))) %>%
+  dplyr::filter(ola == 5 & tipo_atricion == 1 & !is.na(ccum_t) & !edadt %in% c(-888, -999, NA)) %>% 
+  prop(cuarentena, by = c(edadt), na.rm = TRUE, vartype = NULL) %>% 
+  sjlabelled::as_label(edadt, cuarentena) 
 
-g19.9 <- datos.grafico %>% 
-  ggplot(aes(y = porcentaje, x = cuarentena, fill = edadt, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+g19.9 <- datos.g19.9 %>% 
+  ggplot(aes(y = prop, x = edadt, fill = cuarentena, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) +
   theme_bw() + 
   geom_col(position = 'Stack') +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
+  scale_y_continuous(labels = scales::percent) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
