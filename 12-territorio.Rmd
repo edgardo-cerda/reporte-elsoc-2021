@@ -119,6 +119,7 @@ g8.3 <- datos.8.3 %>%
             size= 2.75)
 g8.3
 ```
+
 <!-- ### 8.4 Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona de residencia. Porcentaje con conflictos barriales "Siempre" o "Muchas veces".  -->
 ```{r confli-estrato, fig.align='center', fig.cap='Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona de residencia. Porcentaje con conflictos barriales "Siempre" o "Muchas veces".'}
 datos.8.4 <- elsoc_long_2016_2021 %>% 
@@ -211,7 +212,8 @@ comunas_rm <- merge(comunas_rm,
                     by.x = "codigo_comuna", by.y = "comuna_cod",
                     all.x = TRUE,
                     sort=F)
-#comunas_rm <- comunas_rm %>% drop_na()
+
+#comunas_rm <- comunas_rm %>% drop_na() #en caso de quitar comunas con NA
 
 g.confli.rm <- 
   ggplot(comunas_rm) + 
@@ -222,7 +224,7 @@ g.confli.rm <-
 g.confli.rm
 ```
 
-```{r confli-region, fig.align='center', fig.cap='Frecuencia promedio de problemas con vecinos, message=FALSE, warning=FALSE}
+```{r confli-region, fig.align='center', fig.cap='Frecuencia promedio de problemas con vecinos, según región de Chile (2021)' message=FALSE, warning=FALSE}
 
 elsoc_region <- elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & ola == 5 & !t11_01 %in% c(-888, -999) &
@@ -649,4 +651,77 @@ g8.17 <- datos.8.17 %>%
         legend.title = element_blank())
 g8.17
 ```
+### Cartografía de la criminalidad barrial
 
+```{r crimi-comuna, fig.align='center', fig.cap='Frecuencia promedio de percepción de crímenes (riñas, robos y tráfico de drogas) en el barrio, según comuna de residencia en la región metropolitana (2021).'}
+
+elsoc_comuna_rm <- elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & muestra == 1 & ola == 5 & region_cod == 13 & !t09_01 %in% c(-888, -999) &
+           !t09_02 %in% c(-888, -999) & !t09_03 %in% c(-888, -999)) %>% 
+  mutate(barrio_crim = (t09_01 + t09_02 + t09_03)/3) %>%
+  sjlabelled::as_label(ola) %>% 
+  group_by(comuna, comuna_cod) %>% 
+  summarise(m_crim = weighted.mean(barrio_crim, ponderador02, na.rm = T),
+            sd_crim = sd(barrio_crim, na.rm = T),
+            n = n())
+
+comunas_rm <- mapa_comunas[mapa_comunas$codigo_region==13,]
+comunas_rm <- merge(comunas_rm, 
+                    elsoc_comuna_rm, 
+                    by.x = "codigo_comuna", by.y = "comuna_cod",
+                    all.x = TRUE,
+                    sort=F)
+
+#comunas_rm <- comunas_rm %>% drop_na() #en caso de quitar comunas con NA
+
+g.crimi.rm <- 
+  ggplot(comunas_rm) + 
+  geom_sf(aes(fill = m_crim, geometry = geometry)) +
+  labs(y = NULL, x = NULL, fill = "Criminalidad barrial\npromedio por comuna") +
+  scale_fill_viridis_c(begin = .11, end = .88, direction = -1, option = 'viridis') +
+  theme_bw() 
+g.crimi.rm
+```
+
+```{r confli-region, fig.align='center', fig.cap='Frecuencia promedio de percepción de crímenes (riñas, robos y tráfico de drogas) en el barrio, según región de Chile (2021)' message=FALSE, warning=FALSE}
+
+elsoc_region <- elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & muestra == 1 & ola == 5 & !t09_01 %in% c(-888, -999) &
+           !t09_02 %in% c(-888, -999) & !t09_03 %in% c(-888, -999)) %>% 
+  mutate(barrio_crim = (t09_01 + t09_02 + t09_03)/3) %>%
+  sjlabelled::as_label(ola) %>% 
+  group_by(region, region_cod) %>% 
+  summarise(m_crim = weighted.mean(barrio_crim, ponderador02, na.rm = T),
+            sd_crim = sd(barrio_crim, na.rm = T),
+            n = n())
+
+elsoc_region$region_cod <- factor(elsoc_region$region_cod,
+                                  labels = c('01','02','03','04','05','06','07','08',
+                                            '09','10','11','13','14','15','16'))
+
+regiones <- generar_regiones()
+regiones <- merge(regiones,elsoc_region, by.x="codigo_region",by.y="region_cod",all.x=TRUE,sort=F)
+
+#para intentar hacer facet_wrap
+#regiones$mitad <- c('1','1','1','1','1','1','1','2','2','2','2','1','2','1','2','2')
+
+regiones$region[is.na(regiones$region)] <- 'Magallanes\n(Sin datos)'
+regiones$region[regiones$region == 'Metropolitana de santiago'] <- 'Metropolitana'
+regiones$region[regiones$region == 'Libertador general bernardo ohiggins'] <- 'Ohiggins'
+regiones$region[regiones$region == 'Aysen del general carlos ibannez del campo'] <- 'Aysen'
+regiones$region[regiones$region == 'Arica y parinacota'] <- 'Arica'
+
+g.crim.region <- regiones %>% 
+  ggplot(aes(fill = m_crim, geometry = geometry, label = region)) + 
+  geom_sf() +
+  coord_sf(xlim = c(-100, -65)) +
+  labs(y = NULL, x = NULL, fill = "Criminalidad barrial\npromedio por región") +
+  scale_fill_viridis_c(begin = .11, end = .88, direction = -1, option = 'viridis', na.value = 'white') +
+  ggrepel::geom_text_repel(stat = "sf_coordinates", min.segment.length = 0,
+                           colour = "black", segment.colour = "black",
+                           direction = "y", hjust = 2.5, size = 3) +
+  ggspatial::annotation_north_arrow(aes(which_north = "true", location = "bl"), pad_y = unit(0.8, "cm")) +
+  ggspatial::annotation_scale(aes(location = "bl", style = "bar")) +
+  theme_bw()
+g.crim.region
+```

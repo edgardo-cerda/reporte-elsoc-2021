@@ -159,8 +159,8 @@ g11.4
 
 ## Movilidad social
 
-<!-- ### 11.5  Perspectiva de movilidad social, según ola.  -->
-```{r mov-soc-rec, fig.align='center',fig.cap='Perspectiva de movilidad social, según ola. '}
+<!-- ### 11.5  Perspectiva de movilidad social, según ola.\nNota: la perspectiva de movilidad social corresponde a la resta entre el estatus social esperado del hijo y el estatus social actual del encuestado. -->
+```{r mov-soc-rec, fig.align='center',fig.cap='Perspectiva de movilidad social, según ola.\nNota: la perspectiva de movilidad social corresponde a la resta entre el estatus social esperado del hijo y el estatus social actual del encuestado.'}
 datos.11.5 <- elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & 
          !d01_01 %in% c(-888, -999) & !d01_03 %in% c(-888, -999)) %>% 
@@ -189,8 +189,8 @@ g11.5 <-
 g11.5
 ```
 
-<!-- ### 11.6  Estatus subjetivo y tipo de movilidad social, nivel promedio según ola.  -->
-```{r mov-soc, fig.align='center',fig.cap='Estatus subjetivo y tipo de movilidad social, nivel promedio según ola'}
+<!-- ### 11.6  Estatus subjetivo y tipo de movilidad social, nivel promedio según ola.\nNota: perspectiva de movilidad social corresponde a la resta entre el estatus social esperado del hijo y el estatus social actual del encuestado. En cambio movilidad social relativa corresponde a la resta entre el estatus social actual y el estatus social de la familia donde creció.-->
+```{r mov-soc, fig.align='center',fig.cap='Estatus subjetivo y tipo de movilidad social, nivel promedio según ola.\nNota: perspectiva de movilidad social corresponde a la resta entre el estatus social esperado del hijo y el estatus social actual del encuestado. En cambio movilidad social relativa corresponde a la resta entre el estatus social actual y el estatus social de la familia donde creció.'}
 datos.11.6 <- elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & 
          !d01_01 %in% c(-888, -999) & !d01_02 %in% c(-888,-999) & !d01_03 %in% c(-888, -999)) %>%
