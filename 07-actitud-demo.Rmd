@@ -70,46 +70,25 @@ g.3.1
 ```{r echo=FALSE}
 #agregar variable a bbdd original
 
-elsoc_panel_m1$sat_dem <- car::recode(as.numeric(elsoc_panel_m1$c01), 
-                                      recodes = "c(1)='Nada satisfecho'; 
-                                      c(2)='Poco satisfecho'; c(3)='Algo satisfecho'; 
-                                      c(4)='Bastante satisfecho';c(5)='Muy satisfecho'; 
-                                      else=NA", as.factor = TRUE) 
-
-#volver a realizar el código de la encuesta debido a la presencia de una nueva variable
-elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
-                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
-                          weights = ~ponderador02, #ponderador de corte transversal
-                          nest = TRUE,
-                          data = elsoc_panel_m1)
-
-#crear tabla para el gráfico
-datos.3.2 <- data.frame((svytable(~sat_dem + ola, elsoc_diseno, round = F))) %>%
-  group_by(ola) %>% 
-  mutate(porcentaje=Freq/sum(Freq)) %>%
-  filter(sat_dem == 'Nada satisfecho') %>%
-  na.omit()
-
-```
-
-
-```{r echo=FALSE}
+datos.3.2 <- elsoc_long_2016_2021 %>%
+  filter(tipo_atricion == 1 & muestra == 1 & c01 %in% c(1)) %>%
+  prop(x = ola, by = c01, na.rm = TRUE) %>% 
+  sjlabelled::as_label(ola, c01)
 g.3.2 <- datos.3.2 %>% 
-    ggplot(aes(y = porcentaje, x = ola, fill = sat_dem, 
-               label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+  ggplot(aes(y = prop, x = ola, fill = c01, 
+               label = as.character(scales::percent(prop, accuracy = .1)))) +
   theme_bw() + 
     geom_col() +
     scale_y_continuous(labels = scales::percent,
-                       limits = c(0, 0.6)) +
+                       limits = c(0, 1)) +
     ylab(label = NULL) +
     xlab(label = NULL) +
     scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
     geom_text(vjust = -0.8,
               position = position_dodge(width = .9),
               size= 2.75) +
-    theme(legend.position = 'none',   ## Eliminar leyenda al no ser necesaria
-          legend.title = element_blank()) +
-    ggtitle('Frecuencia de respuesta "Nada satisfecho" con la democracia según ola')
+    theme(legend.position = 'none',   
+          legend.title = element_blank())
 g.3.2
 ```
 
@@ -118,27 +97,25 @@ g.3.2
 <!-- ### 3.3. ¿Con cuál de las siguientes frases está usted más de acuerdo? (2019), según posición ideológica -->
 
 ```{r include=FALSE}
-
-datos.3.3 <- data.frame((svytable(~aut_dem + pos_id + ola, elsoc_diseno, round = F))) %>%
-  group_by(pos_id, ola) %>% 
-  mutate(porcentaje=Freq/sum(Freq))%>%
-  filter(ola=="2021" & aut_dem!= "NS/NR") %>% 
-  na.omit()
-```
-
-
-```{r echo=FALSE}
+datos.3.3 <- elsoc_long_2016_2021 %>%
+  filter(tipo_atricion == 1 & ola %in% c(5) & !c25 %in% c(-888,-999)) %>%
+  mutate(aut_dem = factor(c25, levels = c(1, 2, 3, 4),
+                         labels = c('Democracia es preferible a\ncualquier otra forma\nde gobierno', 'En algunos casos,\n gobierno autoritario puede\n ser preferible', 'Da lo mismo régimen\ndemocrático o autoritario', 'Ninguna'))) %>%
+  mutate(pos_id = car::recode(c15, recodes = "c(0,1,2,3,4)=1; c(5)=2; c(6,7,8,9,10)=3; c(11,12, -999, -888)=4")) %>%
+  mutate(pos_id = factor(pos_id, levels = c(1, 2, 3, 4),
+                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
+  prop(x = aut_dem, by = c(pos_id, ola), na.rm = TRUE) %>% 
+  sjlabelled::as_label(pos_id, ola)
 
 g.3.3 <-datos.3.3 %>% 
-  ggplot(aes(y = porcentaje, x = pos_id, fill = aut_dem, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+  ggplot(aes(y = prop, x = pos_id, fill = aut_dem, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = 'Stack') +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
+  scale_y_continuous(labels = scales::percent) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
+  scale_fill_viridis_d(begin = 0, end = .95, direction = -1, option = 'viridis') +
   #cambiar geom_text tal que: Stack y cambio colores
   geom_text(position = position_stack(vjust = .5),
             size= 2.75) + 
@@ -147,5 +124,8 @@ g.3.3 <-datos.3.3 %>%
 
 g.3.3
 ```
+
+
+
 
 
