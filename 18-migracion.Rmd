@@ -27,7 +27,7 @@ datos.g14.1 %>%
 
 ```
 
-```{r}
+```{r amen1-zona, fig.align='center',fig.cap='Con la llegada de migrantes a Chile, está aumentando el desempleo", según ola, zona y origen de migrantes. Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
 
 elsoc_long_2016_2021 %>% 
   mutate(macrozona = factor(case_when(region_cod %in% c(15, 1, 2, 3) ~ 1,
@@ -80,7 +80,7 @@ datos.g14.2 %>%
 ```
 
 
-```{r}
+```{r amen2-zona, fig.align='center',fig.cap='"Con la llegada de migrantes, Chile está perdiendo su identidad", según ola, zona y origen de migrantes. Porcentaje de personas que responden "De acuerdo" o "Totalmente de acuerdo".'}
 
 elsoc_long_2016_2021 %>% 
   mutate(macrozona = factor(case_when(region_cod %in% c(15, 1, 2, 3) ~ 1,
@@ -107,8 +107,6 @@ elsoc_long_2016_2021 %>%
         legend.title = element_blank())
 
 ```
-
-
 
 <!-- ### 14.3 Confianza en migrantes, según ola y origen de migrantes. Porcentaje de personas que responden “Bastante” o “Mucha confianza”. -->
 ```{r conf-wave, fig.align='center',fig.cap='Confianza en migrantes, según ola y origen de migrantes. Porcentaje de personas que responden “Bastante” o “Mucha confianza”'}
@@ -137,8 +135,7 @@ datos.g14.3 %>%
 ```
 
 
-```{r}
-
+```{r conf-zona, fig.align='center',fig.cap='Confianza en migrantes, según ola, zona y origen de migrantes. Porcentaje de personas que responden “Bastante” o “Mucha confianza”'}
 elsoc_long_2016_2021 %>% 
   mutate(macrozona = factor(case_when(region_cod %in% c(15, 1, 2, 3) ~ 1,
                                region_cod %in% c(4, 5, 13) ~ 2,
@@ -167,7 +164,7 @@ elsoc_long_2016_2021 %>%
 ```
 
 <!-- ### 14.4 Percepción de amenaza realista y simbólica, según grupo de migrantes (2021). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo". -->
-```{r amen3-wave, fig.align='center',fig.cap='Percepción de amenaza realista y simbólica, según grupo de migrantes (2021). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
+```{r amen-wave, fig.align='center',fig.cap='Percepción de amenaza realista y simbólica, según grupo de migrantes (2021). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
 
 datos.g14.4 <- elsoc_long_2016_2021 %>%
   filter(tipo_atricion %in% c(1, 17) & ola == 5) %>% 

@@ -21,7 +21,7 @@ datos.2.1 <- elsoc_long_2016_2021 %>%
   mutate(pos_id = factor(pos_id, levels = c(1, 2, 3, 4),
                          labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
   prop(x = pos_id, by = ola, na.rm = TRUE) %>% 
-  sjlabelled::as_label(pos_id, ola)
+  sjlabelled::as_label(ola)
 
 g.2.1 <- datos.2.1 %>% 
     ggplot(aes(y = prop, x = pos_id, fill = ola, 
@@ -59,8 +59,6 @@ elsoc_panel_m1 <- elsoc_long_2016_2021 %>%
   mutate(pos_id = car::recode(c15, recodes = "c(0,1,2,3,4)=1; c(5)=2; c(6,7,8,9,10)=3; c(11,12, -999, -888)=4")) %>%
   mutate(pos_id = factor(pos_id, levels = c(1, 2, 3, 4),
                          labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
-  mutate(missing = any(pos_id %in% c("NS/NR"))) %>% 
-  filter(!missing) %>% 
   ungroup() %>%
   sjlabelled::as_label(ola) %>% 
   survey_design_elsoc()
@@ -94,21 +92,8 @@ g.2.2
 
 
 ```{r include=FALSE}
-datos.2.3 <- elsoc_wide_2016_2021 %>%
-mutate(ac_cuar = car::recode(c37_10_w05, recodes = "c(1,2)= 1;
-                                      c(3)= 2; 
-                                      c(4,5)= 3;
-                                      else=NA", as.factor = TRUE)) %>%
-  filter(tipo_atricion == 1 & muestra == 1 & ac_cuar %in% c(3)) %>% 
-  survey_design_elsoc(weights = 'ponderador02_w05') %>%
-  mutate(pos_id = car::recode(c15_w05, recodes = "c(0,1,2,3,4)=1; c(5)=2; c(6,7,8,9,10)=3; c(11,12, -999, -888)=4")) %>%
-  mutate(pos_id = factor(pos_id, levels = c(1, 2, 3, 4),
-                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
-    prop(pos_id, by = c(ac_cuar), na.rm = TRUE) %>% 
-  sjlabelled::as_label(pos_id, ac_cuar)
-
 g.2.3 <-datos.2.3 %>% 
-  ggplot(aes(y = prop, x = pos_id, fill = ac_cuar, 
+  ggplot(aes(y = prop, x = pos_id, fill = c37_10, 
                label = as.character(scales::percent(prop, accuracy = .1)))) +
   theme_bw() + 
     geom_col() +
@@ -123,7 +108,7 @@ g.2.3 <-datos.2.3 %>%
     theme(legend.position = 'none',   
           legend.title = element_blank())
 
-g.2.3
+  g.2.3
 
 ```
 
@@ -133,18 +118,6 @@ g.2.3
 <!-- ### 2.4 Grado de acuerdo con la frase "Es más importante darle prioridad a la actividad económica que a la salud de la población" según identificación política -->
 
 ```{r include=FALSE}
-datos.2.4 <- elsoc_wide_2016_2021 %>%
-  filter(tipo_atricion == 1 & muestra == 1 & !c37_09_w05 %in% c(-888, -999)) %>%
-mutate(salud_ac = car::recode(c37_09_w05, recodes = "c(1,2)= 1;
-                                      c(3)= 2; 
-                                      c(4,5)= 3;
-                                      else=NA", as.factor = TRUE)) %>%
-  filter(salud_ac %in% c(3)) %>% 
-  survey_design_elsoc(weights = 'ponderador02_w05') %>%
-  mutate(pos_id = car::recode(c15_w05, recodes = "c(0,1,2,3,4)=1; c(5)=2; c(6,7,8,9,10)=3; c(11,12, -999, -888)=4")) %>%
-  mutate(pos_id = factor(pos_id, levels = c(1, 2, 3, 4),
-                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
-    prop(pos_id, by = c(salud_ac), na.rm = TRUE)
 
 g.2.4 <- datos.2.4 %>% 
   ggplot(aes(y = prop, x = pos_id, fill = salud_ac, 
@@ -170,20 +143,17 @@ g.2.4
 
 ```{r include=FALSE}
 datos.2.6 <- elsoc_long_2016_2021 %>%
-  filter(tipo_atricion == 1) %>%
-  mutate(aborto = car::recode(c37_02, recodes = "c(1,2)= 1;
-                                      c(3)= 2; 
-                                      c(4,5)= 3;
+  filter(tipo_atricion == 1 & c37_02 %in% c(4,5)) %>%
+  mutate(aborto = car::recode(c37_02, recodes = "c(4,5)= 1;
                                       else=NA", as.factor = TRUE)) %>%
   mutate(pos_id = car::recode(c15, recodes = "c(0,1,2,3,4)=1; c(5)=2; c(6,7,8,9,10)=3; c(11,12, -999, -888)=4")) %>%
-  filter(aborto %in% c(3)) %>% 
   mutate(pos_id = factor(pos_id, levels = c(1, 2, 3, 4),
                          labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
-  prop(x = pos_id, by = c(aborto, ola), na.rm = TRUE) %>% 
-  sjlabelled::as_label(pos_id, aborto)
+   prop(x = pos_id, by = c(ola, aborto), na.rm = TRUE) %>%
+  sjlabelled::as_label(ola)
 
 g2.6 <-datos.2.6 %>% 
-  ggplot(aes(y = prop, x = ola, fill = aborto, 
+  ggplot(aes(y = prop, x = pos_id,  
                label = as.character(scales::percent(prop, accuracy = .1)))) +
     theme_bw() + 
     geom_col(position= 'dodge2') +
@@ -195,7 +165,7 @@ g2.6 <-datos.2.6 %>%
     xlab(label = NULL) +
     #colores oficiales por ola: degradé 'viridis'
     scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
-  facet_grid(.~pos_id) +
+  facet_grid(.~ola) +
     #etiquetas por sobre cada barra
     geom_text(vjust = -0.8,
               position = position_dodge(width = .9),
@@ -221,7 +191,7 @@ datos.2.7 <- elsoc_long_2016_2021 %>%
   mutate(pos_id = factor(pos_id, levels = c(1, 2, 3, 4),
                          labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
   prop(x = pos_id, by = c(cap_pension, ola), na.rm = TRUE) %>% 
-  sjlabelled::as_label(pos_id, cap_pension)
+  sjlabelled::as_label(ola)
 ```
 
 ```{r}
@@ -253,20 +223,6 @@ g2.7
 ### 2.8 Grado de acuerdo con las restricciones de ingreso de migrantes según identificación política
 
 ```{r}
-elsoc_panel_m1$rest_migrantes <- car::recode(as.numeric(elsoc_panel_m1$c37_05), 
-                                      recodes = "c(1,2)='Totalmente en desacuerdo y en desacuerdo'; 
-                                      c(3)='Ni de acuerdo ni en desacuerdo'; 
-                                      c(4,5)='Totalmente de acuerdo y de acuerdo'; 
-                                      else=NA", as.factor = TRUE)
-```
-
-```{r}
-elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
-                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
-                          weights = ~ponderador02, #ponderador de corte transversal
-                          nest = TRUE,
-                          data = elsoc_panel_m1)
-
 datos.2.8 <- elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1) %>%
   mutate(rest_migrantes = car::recode(c37_05, recodes = "c(1,2)= 1;
@@ -278,11 +234,8 @@ datos.2.8 <- elsoc_long_2016_2021 %>%
   mutate(pos_id = factor(pos_id, levels = c(1, 2, 3, 4),
                          labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
   prop(x = pos_id, by = c(rest_migrantes, ola), na.rm = TRUE) %>% 
-  sjlabelled::as_label(pos_id, rest_migrantes) %>%
+  sjlabelled::as_label(ola) %>%
   na.omit()
-```
-
-```{r}
 g2.8 <-datos.2.8 %>% 
   ggplot(aes(y = prop, x = ola, fill = rest_migrantes, 
                label = as.character(scales::percent(prop, accuracy = .1)))) +
