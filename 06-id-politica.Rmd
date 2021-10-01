@@ -108,7 +108,7 @@ g.2.3 <-datos.2.3 %>%
     theme(legend.position = 'none',   
           legend.title = element_blank())
 
-  g.2.3
+  #g.2.3
 
 ```
 
@@ -135,7 +135,7 @@ g.2.4 <- datos.2.4 %>%
     theme(legend.position = 'none',   
           legend.title = element_blank())
 
-g.2.4
+#g.2.4
 
 ```
 
@@ -174,7 +174,7 @@ g2.6 <-datos.2.6 %>%
     theme(legend.position = 'top',
           legend.title = element_blank())
 
-g2.6
+#g2.6
 ```
 
 ### 2.7 Grado de acuerdo con la capitalizacion individual pensiones según identificación política
@@ -217,7 +217,7 @@ g2.7 <-datos.2.7 %>%
     theme(legend.position = 'top',
           legend.title = element_blank())
 
-g2.7
+#g2.7
 ```
 
 ### 2.8 Grado de acuerdo con las restricciones de ingreso de migrantes según identificación política
@@ -258,6 +258,6 @@ g2.8 <-datos.2.8 %>%
     theme(legend.position = 'top',
           legend.title = element_blank())
 
-g2.8
+#g2.8
 ```
 
