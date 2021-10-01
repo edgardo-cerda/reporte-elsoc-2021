@@ -327,46 +327,43 @@ g19.9
 
 ## Estrés Financiero
 ```{r satisfaccion-wave, echo=FALSE, fig.align='center', fig.cap= 'Satisfacción con el Ingreso por Ola'}
-elsoc_diseno <- svydesign(ids = ~segmento, strata = ~estrato, 
-                          weights = ~ponderador02, nest = TRUE, data = elsoc_panel_m1)
+datos.g19.10 <- elsoc_long_2016_2021 %>% 
+  dplyr::filter(muestra == 1 & tipo_atricion == 1 & !m43 %in% c(-888, -999, NA)) %>% 
+  prop(m43, by = c(ola), na.rm = TRUE, vartype = NULL) %>% 
+  sjlabelled::as_label(m43, ola) 
 
-datos.grafico <- data.frame((svytable(~m43 + ola, 
-                                      elsoc_diseno, round = F))) %>% 
-  group_by(ola) %>% 
-  mutate(porcentaje=Freq/sum(Freq)) %>%
-  drop_na()
 
-g19.10 <- datos.grafico %>% 
-  ggplot(aes(y = porcentaje, x = ola, fill = m43, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+g19.10 <- datos.g19.10 %>% 
+  ggplot(aes(y = prop, x = ola, fill = m43, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = 'Stack') +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
+  scale_y_continuous(labels = scales::percent) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = .33, end = .85, direction = -1, option = 'viridis') +
   #cambiar geom_text tal que: Stack y cambio colores
   geom_text(position = position_stack(vjust = .5),
-            size= 2.75, color = rep.int(c('black', 'black','white', 'white','white' ), 3)) + 
+            size= 2.75) + 
   theme(legend.position = 'top',
         legend.title = element_blank()) 
 g19.10
 ```
 
 ```{r satisfaccion-retiro, echo=FALSE, fig.align='center', fig.cap= 'Satisfacción con el Ingreso según Retiro AFP'}
-datos.grafico <- data.frame((svytable(~m16 + m63_02, 
-                                      elsoc_diseno, round = F))) %>% 
-  group_by(m63_02) %>% 
-  mutate(porcentaje=Freq/sum(Freq))
+datos.g19.11 <- elsoc_long_2016_2021 %>% 
+  dplyr::filter(muestra == 1 & tipo_atricion == 1
+                & !m16 %in% c(-888, -999, NA) & !m63_02 %in% c(-888, -999, NA)) %>% 
+  prop(m16, by = c(m63_02), na.rm = TRUE, vartype = NULL) %>% 
+  sjlabelled::as_label(m16, m63_02) 
 
-g19.11 <- datos.grafico %>% 
-  ggplot(aes(y = porcentaje, x = m63_02, fill = m16, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+
+g19.11 <- datos.g19.11 %>% 
+  ggplot(aes(y = prop, x = m63_02, fill = m16, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = 'Stack') +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
+  scale_y_continuous(labels = scales::percent) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = .33, end = .85, direction = -1, option = 'viridis') +
@@ -380,25 +377,21 @@ g19.11
 ```
 
 ```{r clase.sub-benef.estatal, echo=FALSE, fig.align='center', fig.cap='Satisfacción con el Ingreso según Acceso a Beneficios'}
-elsoc_diseno_2 <- svydesign(ids = ~segmento,
-                          strata = ~estrato, 
-                          weights = ~ponderador02,
-                          nest = TRUE,
-                          data = elsoc_panel)
 
-datos.grafico <- data.frame((svytable(~clase.sub + m63_01, 
-                                      elsoc_diseno_2, round = F))) %>% 
-  group_by(m63_01) %>% 
-  mutate(porcentaje=Freq/sum(Freq)) %>%
-  drop_na()
+datos.g19.12 <- elsoc_long_2016_2021 %>% 
+  mutate(clase.sub = factor(car::recode(d01_01, "c(0,1,2,3)='Baja y media baja'; c(4, 5)='Media'; c(6,7,8,9,10)='Alta y media alta'"),
+                           levels = c("Baja y media baja", "Media", "Alta y media alta"))) %>%
+  dplyr::filter(muestra == 1 & tipo_atricion == 1
+                & !clase.sub %in% c(-888, -999, NA) & !m63_01 %in% c(-888, -999, NA)) %>% 
+  prop(clase.sub, by = c(m63_01), na.rm = TRUE, vartype = NULL) %>% 
+  sjlabelled::as_label(clase.sub, m63_01) 
 
-g19.12 <- datos.grafico %>% 
-  ggplot(aes(y = porcentaje, x = m63_01, fill = clase.sub, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+g19.12 <- datos.g19.12 %>% 
+  ggplot(aes(y = prop, x = m63_01, fill = clase.sub, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = 'Stack') +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
+  scale_y_continuous(labels = scales::percent) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = .33, end = .85, direction = -1, option = 'viridis') +
@@ -412,19 +405,20 @@ g19.12
 ```
 
 ```{r clase.sub.hij-1erretiro, echo=FALSE, fig.align='center', fig.cap='Clase Social Subjetiva de Hijo según Primer Retiro AFP'}
-datos.grafico <- data.frame((svytable(~clase.sub.hijos + m63_02, 
-                                      elsoc_diseno_2, round = F))) %>% 
-  group_by(m63_02) %>% 
-  mutate(porcentaje=Freq/sum(Freq)) %>%
-  drop_na()
+datos.g19.13 <- elsoc_long_2016_2021 %>% 
+  mutate(clase.sub.hijos = factor(car::recode(d01_03, "c(0,1,2,3)='Baja y media baja'; c(4, 5,6)='Media'; c(7,8,9,10)='Alta y media alta'"),
+                           levels = c("Baja y media baja", "Media", "Alta y media alta"))) %>%
+  dplyr::filter(muestra == 1 & tipo_atricion == 1
+                & !clase.sub.hijos %in% c(-888, -999, NA) & !m63_01 %in% c(-888, -999, NA)) %>% 
+  prop(clase.sub.hijos, by = c(m63_02), na.rm = TRUE, vartype = NULL) %>% 
+  sjlabelled::as_label(clase.sub.hijos, m63_02) 
 
-g19.13 <- datos.grafico %>% 
-  ggplot(aes(y = porcentaje, x = m63_02, fill = clase.sub.hijos, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+g19.13 <- datos.g19.13 %>% 
+  ggplot(aes(y = prop, x = m63_02, fill = clase.sub.hijos, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = 'Stack') +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
+  scale_y_continuous(labels = scales::percent) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = .33, end = .85, direction = -1, option = 'viridis') +
@@ -438,19 +432,18 @@ g19.13
 ```
 
 ```{r endeud-1retiro, echo=FALSE, fig.align='center', fig.cap='Sobrecarga de Deuda según Primer Retiro AFP'}
-datos.grafico <- data.frame((svytable(~m43 + m63_02, 
-                                      elsoc_diseno_2, round = F))) %>% 
-  group_by(m63_02) %>% 
-  mutate(porcentaje=Freq/sum(Freq)) %>%
-  drop_na()
+datos.g19.14 <- elsoc_long_2016_2021 %>% 
+  dplyr::filter(muestra == 1 & tipo_atricion == 1
+                & !m43 %in% c(-888, -999, NA) & !is.na(m43) & !m63_02 %in% c(-888, -999, NA)) %>% 
+  prop(m43, by = c(m63_02), na.rm = TRUE, vartype = NULL) %>% 
+  sjlabelled::as_label(m43, m63_02) 
 
-g19.14 <- datos.grafico %>% 
-  ggplot(aes(y = porcentaje, x = m63_02, fill = m43, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+g19.14 <- datos.g19.14  %>% 
+  ggplot(aes(y = prop, x = m63_02, fill = m43, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = 'Stack') +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
+  scale_y_continuous(labels = scales::percent) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = .33, end = .85, direction = -1, option = 'viridis') +
@@ -464,19 +457,18 @@ g19.14
 ```
 
 ```{r endeud-2retiro, echo=FALSE, fig.align='center', fig.cap='Sobrecarga de Deuda según Primer Retiro AFP'}
-datos.grafico <- data.frame((svytable(~m43 + m63_03, 
-                                      elsoc_diseno_2, round = F))) %>% 
-  group_by(m63_03) %>% 
-  mutate(porcentaje=Freq/sum(Freq)) %>%
-  drop_na()
+datos.g19.15 <- elsoc_long_2016_2021 %>% 
+  dplyr::filter(muestra == 1 & tipo_atricion == 1
+                & !m43 %in% c(-888, -999, NA) & !is.na(m43) & !m63_03 %in% c(-888, -999, NA)) %>% 
+  prop(m43, by = c(m63_03), na.rm = TRUE, vartype = NULL) %>% 
+  sjlabelled::as_label(m43, m63_03) 
 
-g19.15 <- datos.grafico %>% 
-  ggplot(aes(y = porcentaje, x = m63_03, fill = m43, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) + 
+g19.15 <- datos.g19.15  %>% 
+  ggplot(aes(y = prop, x = m63_03, fill = m43, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = 'Stack') +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
+  scale_y_continuous(labels = scales::percent) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = .33, end = .85, direction = -1, option = 'viridis') +
