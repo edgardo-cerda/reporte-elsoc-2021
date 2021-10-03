@@ -231,6 +231,16 @@ datos.11.7 %>%
 
 ```{r cambio_participa}
 #grafico y caracterización pendiente
-sjmisc::frq(elsoc_wide_m1$cambio_participa_w05)
+elsoc_wide_2016_2021$cambio_participa_w05 <- factor(with(elsoc_wide_2016_2021, case_when(
+  (c11_w03 == 2) & (c43_w05 == 2) ~ 1 ,
+  (c11_w03 == 2) & (c43_w05 == 1) ~ 2 ,
+  (c11_w03 == 1) & (c43_w05 == 2) ~ 3 ,
+  (c11_w03 == 1) & (c43_w05 == 1) ~ 4)),
+  labels = c('Se mantiene no votando',
+             'Cambia a votar',
+             'Cambia a No Votar',
+             'Se mantiene votando'))
+
+sjmisc::frq(elsoc_wide_2016_2021$cambio_participa_w05)
 ```
 

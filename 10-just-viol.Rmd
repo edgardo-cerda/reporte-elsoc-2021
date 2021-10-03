@@ -10,34 +10,29 @@ editor_options:
 ## Justificación de la violencia para el control social – a manos de ciudadanos
 
 ```{r just-vio-ola, fig.aligN='center', fig.cap='Justificación de la violencia en relación a delincuencia, según ola de encuesta'}
-datos.alta <- data.frame((svytable(~f05_01_rec + ola, elsoc_diseno, round = F))) %>% group_by( ola) %>% mutate(p_alta=Freq/sum(Freq))
-datos.alta$ola <- NULL
-datos.baja <- data.frame((svytable(~f05_02_rec + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(p_baja=Freq/sum(Freq))
-
-datos.grafico1<- cbind(datos.alta, datos.baja)
-
-#trasponer según variable
-datos.grafico <- datos.grafico1 %>% 
-  pivot_longer(cols = starts_with('f05_'))  %>%
-  mutate(variable = factor(name, labels = c('Personas persigan y golpeen a un delincuente\n que acaba de cometer un asalto', 'Personas amarren a un poste y desnuden a un\n delincuente que acaba de cometer un asalto'))) %>% 
-  drop_na()
-
-datos.grafico$porcentaje <- with(datos.grafico, case_when(
-  variable == 'Personas persigan y golpeen a un delincuente\n que acaba de cometer un asalto' ~ p_alta,
-  variable == 'Personas amarren a un poste y desnuden a un\n delincuente que acaba de cometer un asalto' ~ p_baja))
+datos.g10.1 <- elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & muestra == 1) %>%  
+  select(f05_01, f05_02, ola, ponderador02, segmento_disenno, estrato_disenno) %>% 
+  pivot_longer(cols = c(f05_01, f05_02)) %>% 
+  filter(!value %in% c(-888, -999)) %>% 
+  prop(value %in% c(4,5), by = c(ola, name), na.rm = TRUE) %>% 
+  mutate(name = factor(name,
+                       levels = c('f05_01', 'f05_02'),
+                       labels = c('Personas persigan y golpeen a un delincuente\n que acaba de cometer un asalto','Personas amarren a un poste y desnuden a un\n delincuente que acaba de cometer un asalto'))) %>% 
+sjlabelled::as_label(ola,f05_01, f05_02)
 
 #graficamos
 
-g10.1 <-datos.grafico %>% 
-  ggplot(aes(y = porcentaje, x = ola, fill = value, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+g10.1 <-datos.g10.1 %>% 
+  ggplot(aes(y = prop, x = ola,
+             label = as.character(scales::percent(prop, accuracy = .1)))) +
   theme_bw() + 
   geom_col(position = "Stack") +
   scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
+                     limits = c(0, .5)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  facet_wrap(datos.grafico$variable) +
+  facet_wrap(datos.g10.1$name) +
   scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') + 
   geom_text(position = position_stack(vjust = .5),
             size= 2.75) +
@@ -51,38 +46,29 @@ g10.1
 ## Justificación de la violencia para el control social – a manos de carabineros
 
 ```{r just-carab-ola, fig.align='center',fig.cap="Justificación de la violencia en relación al actuar de Carabineros, según ola"}
-datos.alta <- data.frame((svytable(~f05_03_rec + ola, elsoc_diseno, round = F))) %>% group_by( ola) %>% mutate(p_alta=Freq/sum(Freq))
-datos.alta$ola <- NULL
-datos.baja <- data.frame((svytable(~f05_04_rec + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(p_baja=Freq/sum(Freq))
-datos.alta$ola <- NULL
-datos.media <- data.frame((svytable(~f05_07_rec + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(p_media=Freq/sum(Freq))
-datos.grafico1<- cbind(datos.alta, datos.baja, datos.media)
-
-#trasponer según variable
-datos.grafico <- datos.grafico1 %>% 
-  pivot_longer(cols = starts_with('f05_'))  %>%
-  mutate(variable = factor(name, labels = c('Carabineros use la fuerza para\n reprimir manifestación pacífica',
-                                 'Carabineros desaloje a la fuerza\na estudiantes de liceo en toma',
-                                 'Estudiantes tiren piedras a Carabi-\nneros en marcha por la educación'))) %>% 
-  drop_na()
-
-datos.grafico$porcentaje <- with(datos.grafico, case_when(
-  variable == 'Carabineros use la fuerza para\n reprimir manifestación pacífica' ~ p_alta,
-  variable == 'Carabineros desaloje a la fuerza\na estudiantes de liceo en toma' ~ p_baja,
-  variable == 'Estudiantes tiren piedras a Carabi-\nneros en marcha por la educación' ~ p_media))
+datos.g10.2 <- elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & muestra == 1) %>%  
+  select(f05_03, f05_04, f05_07, ola, ponderador02, segmento_disenno, estrato_disenno) %>% 
+  pivot_longer(cols = c(f05_03, f05_04, f05_07)) %>% 
+  filter(!value %in% c(-888, -999)) %>% 
+  prop(value %in% c(4,5), by = c(ola, name), na.rm = TRUE) %>% 
+  mutate(name = factor(name,
+                       levels = c('f05_03', 'f05_04', 'f05_07'),
+                       labels = c('Carabineros use la fuerza para\n reprimir manifestación pacífica','Carabineros desaloje a la fuerza\na estudiantes de liceo en toma','Estudiantes tiren piedras a Carabi-\nneros en marcha por la educación'))) %>% 
+sjlabelled::as_label(ola,f05_03, f05_04, f05_07)
 
 #graficamos
 
-g10.2 <-datos.grafico %>% 
-  ggplot(aes(y = porcentaje, x = ola, fill = value, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+g10.2 <-datos.g10.2 %>% 
+  ggplot(aes(y = prop, x = ola,
+             label = as.character(scales::percent(prop, accuracy = .1)))) +
   theme_bw() + 
   geom_col(position = "Stack") +
   scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
+                     limits = c(0, .3)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  facet_wrap(datos.grafico$variable) +
+  facet_wrap(datos.g10.2$name) +
   scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') + 
   geom_text(position = position_stack(vjust = .5),
             size= 2.75) +
