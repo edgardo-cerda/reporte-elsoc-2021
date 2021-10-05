@@ -6,42 +6,8 @@ editor_options:
 
 # Salud mental y bienestar
 
-```{r recode-var}
-#Puede eliminarse - ya no aplica
-elsoc_panel_m1$depr_rec <- car::recode(elsoc_panel_m1$suma_dep,
-                               "c(0,1,2,3,4)='1';
-c(5,6,7,8,9)='2';
-c(10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27)='3'")
-
-elsoc_panel_m1$m43_rec <- car::recode(elsoc_panel_m1$m43,
-                               "c(1,2)='Nada o Poco Sobrecargado';
-c(3)='Algo Sobrecargado';
-c(4,5)='Bastante o Muy Sobrecargado'")
-
-elsoc_panel_m1$s03_rec <- car::recode(elsoc_panel_m1$s03,
-                               "c(1,2)='Mala o Regular';
-c(3)='Buena';
-c(4,5)='Muy buena o Excelente'")
-
-elsoc_diseno <- svydesign(ids = ~segmento, strata = ~estrato, 
-                          weights = ~ponderador02, nest = TRUE, data = elsoc_panel_m1)
-
-elsoc_panel$depr_rec <- car::recode(elsoc_panel$suma_dep,
-                               "c(0,1,2,3,4)='1';
-c(5,6,7,8,9)='2';
-c(10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27)='3'")
-
-elsoc_panel$m43_rec <- car::recode(elsoc_panel$m43,
-                               "c(1,2)='Nada o Poco Sobrecargado';
-c(3)='Algo Sobrecargado';
-c(4,5)='Bastante o Muy Sobrecargado'")
-
-elsoc_diseno_2 <- svydesign(ids = ~segmento, strata = ~estrato, 
-                          weights = ~ponderador02, nest = TRUE, data = elsoc_panel)
-```
-
 ```{r depre-wave, echo=FALSE, fig.align='center', fig.cap= 'Síntomas de Depresión, según Ola del Estudio'}
-datos.g17.1 <- elsoc_long_2016_2021 %>% 
+elsoc_long_2016_2021 %>% 
   purrr::map_at(.at = vars(starts_with('s11_0')), 
                 .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
   as.data.frame() %>%  
@@ -51,9 +17,7 @@ datos.g17.1 <- elsoc_long_2016_2021 %>%
                        labels = c('Sin sintomas o Minima', 'Depresion Media', 'Depresion Moderada', 'Depresion Moderada-Severa\na Severa'))) %>%
   dplyr::filter(tipo_atricion == 1) %>% 
   prop(depr, by = c(ola), na.rm = TRUE) %>% 
-  sjlabelled::as_label(depr, ola)
-
-g17.1 <- datos.g17.1 %>% 
+  sjlabelled::as_label(depr, ola) %>% 
   ggplot(aes(y = prop, x = ola, fill = depr, 
              label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
@@ -67,13 +31,13 @@ g17.1 <- datos.g17.1 %>%
             size= 2.75, color = rep.int(c('black', 'black', 'white', 'white'), 5)) + 
   theme(legend.position = 'top',
         legend.title = element_blank())
-g17.1
+
 ```
 
 
 ```{r depre-deuda-wave, echo=FALSE, fig.align='center', fig.cap="Síntomas de Depresión, según Ola del Estudio y Sobrecarga de Deuda"}
 
-datos.g17.2 <- elsoc_long_2016_2021 %>% 
+elsoc_long_2016_2021 %>% 
   purrr::map_at(.at = vars(starts_with('s11_0')), 
                 .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
   as.data.frame() %>%  
@@ -86,9 +50,7 @@ datos.g17.2 <- elsoc_long_2016_2021 %>%
          levels = c('Nada o Poco Sobrecargado','Algo Sobrecargado', 'Bastante o Muy Sobrecargado')))) %>%
   dplyr::filter(tipo_atricion == 1 & !m43_rec %in% c(-888, -999) & !is.na(m43_rec)) %>% 
   prop(depr, by = c(ola, m43_rec), na.rm = TRUE, vartype = NULL) %>% 
-  sjlabelled::as_label(depr, ola, m43_rec) 
-
-g17.2 <- datos.g17.2 %>% 
+  sjlabelled::as_label(depr, ola, m43_rec) %>% 
   ggplot(aes(y = prop, x = ola, fill = depr, 
              label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
@@ -104,83 +66,24 @@ g17.2 <- datos.g17.2 %>%
   theme(legend.position = 'top',
         legend.title = element_blank()) 
 
-g17.2
-
 ```
 
-```{r deuda-phq, fig.align='center',fig.cap="Deuda según ola y Sintomas Depresivos", eval=FALSE, include=FALSE}
-#este grafico no logra explicar mucho... quizás eliminarlo
-datos.01 <- data.frame((svytable(~deuda_01 + ola + phq, elsoc_diseno, round = F))) %>% group_by(phq,ola) %>% mutate(p_01=Freq/sum(Freq))
-datos.01$phq <- NULL
-datos.01$ola <- NULL
-datos.02 <- data.frame((svytable(~deuda_02 + ola + phq, elsoc_diseno, round = F))) %>% group_by(phq,ola) %>% mutate(p_02=Freq/sum(Freq))
-datos.02$phq <- NULL
-datos.02$ola <- NULL
-datos.03 <- data.frame((svytable(~deuda_03 + ola + phq, elsoc_diseno, round = F))) %>% group_by(phq,ola) %>% mutate(p_03=Freq/sum(Freq))
-datos.03$phq <- NULL
-datos.03$ola <- NULL
-datos.04 <- data.frame((svytable(~deuda_04  + ola + phq, elsoc_diseno, round = F))) %>% group_by(phq,ola) %>% mutate(p_04=Freq/sum(Freq))
-
-datos.grafico1<- cbind(datos.01, datos.02, datos.03, datos.04)
-
-subset.grafico <- droplevels(subset(datos.grafico1,
-                                      deuda_01 == 'Si' & 
-                                      deuda_02== 'Si' &
-                                      deuda_03 == 'Si' & 
-                                      deuda_04 == 'Si'))
-#trasponer según variable
-datos.grafico <- subset.grafico %>% 
-  pivot_longer(cols = starts_with('deuda_'))  %>%
-  mutate(variable = factor(name, labels = c('Deuda Casa Comercial',
-                     'Deuda Banco',
-                     'Deuda Pariente',
-                     'Otras Deudas'))) %>% 
-  drop_na()
-
-datos.grafico$porcentaje <- with(datos.grafico, case_when(
-  variable == 'Deuda Casa Comercial' ~ p_01,
-  variable == 'Deuda Banco' ~ p_02,
-  variable == 'Deuda Pariente' ~ p_03,
-  variable == 'Otras Deudas' ~ p_04))
-
-#graficamos
-
-g17.3 <-datos.grafico %>% 
-  ggplot(aes(y = porcentaje, x = variable, fill = ola, 
-             label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
-  theme_bw() + 
-  geom_col(position = "dodge2") +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
-  ylab(label = NULL) +
-  xlab(label = NULL) +
-  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') + 
-  facet_wrap(.~phq)+
-  geom_text(vjust = -0.8,
-            position = position_dodge(width = .9),
-            size= 2.75)  +
-  theme(legend.position = 'top',
-        legend.title = element_blank())
-
-g17.3
-```
 
 ## Brecha de género en Salud Mental
 
 ```{r depre-year-sexo, echo=FALSE, fig.align='center', fig.cap= 'Sintomatología Depresiva por año, según sexo. Porcentaje con síntomas de “Depresion Moderada” o “Depresion Moderada Severa a Severa”.'}
-datos.g17.4 <- elsoc_long_2016_2021 %>% 
+
+elsoc_long_2016_2021 %>% 
   purrr::map_at(.at = vars(starts_with('s11_0')), 
                 .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
   as.data.frame() %>%  
   mutate(suma_dep = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09)) %>% 
   dplyr::filter(tipo_atricion == 1 & muestra == 1) %>% 
   prop(suma_dep>=10, by = c(ola, m0_sexo), na.rm = TRUE) %>% 
-  sjlabelled::as_label(phq, ola, m0_sexo) 
-
-g17.4 <- ggplot(datos.g17.4, 
-               aes(y = prop, x = ola, 
+  sjlabelled::as_label(ola, m0_sexo) %>% 
+  ggplot(aes(y = prop, x = ola, 
                    color = m0_sexo, group = m0_sexo,
-              label = as.character(scales::percent(prop, accuracy = .1)))) +
+              label = scales::percent(prop, accuracy = .1))) +
   theme_bw() +   
   geom_line(size = 1) +
   geom_point(size = 1.8) +
@@ -193,11 +96,7 @@ g17.4 <- ggplot(datos.g17.4,
   theme(legend.position = 'top',
         legend.title = element_blank()) 
 
-g17.4
  
-```
-```{r N6, include=FALSE}
-N<-round(sum(datos.grafico$Freq),0)
 ```
 
 ```{r depre-sexo, echo=FALSE, fig.align='center', fig.cap= 'Cambios en Síntomas de depresión entre años 2018 y 2021, según sexo'}
@@ -249,10 +148,6 @@ g17.5 <-
 g17.5
 ```
 
-```{r N7, include=FALSE}
-N<-round(sum(datos.grafico$Freq),0)
-```
-
 ```{r depre-edad-sexo, echo=FALSE, fig.align='center', fig.cap='Síntomas de Depresión según tramos de edad y sexo (2021). Porcentaje con síntomas de “Depresion Moderada” o “Depresion Moderada Severa a Severa'}
 datos.g17.6 <- elsoc_long_2016_2021 %>% 
   purrr::map_at(.at = vars(starts_with('s11_0')), 
@@ -285,10 +180,6 @@ g17.6 <- ggplot(datos.g17.6,
 g17.6
 
 ```
-
-```{r N8, include=FALSE}
-N<-round(sum(datos.grafico$Freq),0)
-``` 
 
 ## Sintomatología depresiva, sexo y ocupación
 
@@ -326,10 +217,6 @@ g17.7
 ```
 
 En 2021 no hay hombres en la categoría Trabajo doméstico no remunerado $^{*}$
-
-```{r N9, include=FALSE}
-N<-round(sum(datos.grafico$Freq),0)
-```
 
 ## COVID - 19
 ```{r covid-sexo, fig.align='center', fig.cap= 'Sí fue diagnosticado con COVID-19, según sexo'}
@@ -419,6 +306,7 @@ g17.10
 ```
 
 ```{r depre-beneficios, echo=FALSE, fig.align='center', fig.cap='Síntomas de Depresión (2021), según sexo y acceso a beneficios'}
+
 datos.g17.11 <- elsoc_long_2016_2021 %>% 
   mutate(s11_01_rec = as.numeric(car::recode(s11_01, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_02_rec = as.numeric(car::recode(s11_02, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_03_rec = as.numeric(car::recode(s11_03, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_04_rec = as.numeric(car::recode(s11_04, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_05_rec = as.numeric(car::recode(s11_05, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_06_rec = as.numeric(car::recode(s11_06, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_07_rec = as.numeric(car::recode(s11_07, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_08_rec = as.numeric(car::recode(s11_08, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")) , s11_09_rec = as.numeric(car::recode(s11_09, " '1' = 0; '2' = 1; '3' = 2; c('5', '4') = 3")), suma_dep = (s11_01_rec + s11_02_rec + s11_03_rec + s11_04_rec + 
                               s11_05_rec + s11_06_rec + s11_07_rec + s11_08_rec + s11_09_rec),
@@ -429,7 +317,7 @@ datos.g17.11 <- elsoc_long_2016_2021 %>%
 
 g17.11 <- datos.g17.11 %>% 
   ggplot(aes(y = prop, x = m63_01, fill = depr, 
-             label = as.character(scales::percent(prop, accuracy = .1)))) +
+             label = scales::percent(prop, accuracy = .1))) +
   theme_bw() + 
   geom_col(position = 'Stack') +
   scale_y_continuous(labels = scales::percent) +
@@ -437,7 +325,7 @@ g17.11 <- datos.g17.11 %>%
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
   #Agrego facer_wrap para hacer un Gráfico para cada sexo
-  facet_wrap(datos.subset$m0_sexo) +
+  facet_wrap(.~m0_sexo) +
   geom_text(position = position_stack(vjust = .5),
             size= 2.75, color = rep.int(c('black', 'black', 'white', 'white'), 4)) + 
   theme(legend.position = 'top',

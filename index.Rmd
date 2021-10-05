@@ -41,7 +41,7 @@ Sys.setlocale("LC_ALL","ES_ES.UTF-8")
 ```
 
 ```{r message=FALSE, warning=FALSE, include=FALSE, echo=FALSE,cache=FALSE} 
-pacman::p_load(knitr, kableExtra, dplyr,gridExtra,tidyverse,sjmisc,sjlabelled,sticky,ggrepel,ggalluvial,survey,spatstat,readxl,forcats, gtools, elsoc, panelr, ggplot2, tidyr)
+pacman::p_load(knitr, kableExtra, dplyr, gridExtra, tidyverse, sjmisc, sjlabelled, sticky, ggrepel, ggalluvial, survey, spatstat, readxl, forcats,gtools, elsoc, panelr, ggplot2, tidyr, sf, chilemapas)
 library(elsoc)
 ```
 
@@ -50,11 +50,9 @@ remove(list = ls())
 #base de datos
 load("1_input/datos_elsoc.RData") 
 load("1_input/elsoc_covid.RData")
-#elsoc::load_elsoc(format = 'long')
-#elsoc::load_elsoc(format = 'wide')
+elsoc::load_elsoc(format = 'long')
+elsoc::load_elsoc(format = 'wide')
 
-load(file.path('1_input', 'ELSOC_Long_2016_2021_v1.00_R.RData'))
-load(file.path('1_input', 'ELSOC_Wide_2016_2021_v1.00_R.RData'))
 ```
 
 ```{r disenno, include=FALSE}

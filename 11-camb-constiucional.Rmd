@@ -205,7 +205,7 @@ g11.7
 ```
 
 ```{r 2020-vs-2021, fig.align='center', fig.cap= "Participación Electoral 2021, según la Participación en 2017"}
-datos.g11.7 <- elsoc_wide_2016_2021 %>% 
+datos.11.7 <- elsoc_wide_2016_2021 %>% 
   filter(tipo_atricion == 1 & !c43_w05 %in% c(3, -888, -999) & 
            !c11_w03 %in% c(3, -888, -999)) %>% 
   survey_design_elsoc(weights = 'ponderador02_w05') %>% 

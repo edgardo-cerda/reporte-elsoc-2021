@@ -92,13 +92,21 @@ g.2.2
 
 
 ```{r include=FALSE}
-g.2.3 <-datos.2.3 %>% 
+datos.2.3 <- elsoc_long_2016_2021 %>% 
+  filter(ola == 5 & tipo_atricion == 1 & 
+           !c37_10 %in% c(-888, -999) & !c15 %in% c(-888, -999)) %>% 
+    mutate(pos_id = car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
+           pos_id = factor(pos_id, levels = c(1, 2, 3, 4),
+                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
+  prop(c37_10, pos_id, na.rm = TRUE) %>% 
+  sjlabelled::as_label(c37_10, pos_id)
+
+g.2.3 <- datos.2.3 %>% 
   ggplot(aes(y = prop, x = pos_id, fill = c37_10, 
-               label = as.character(scales::percent(prop, accuracy = .1)))) +
+               label = scales::percent(prop, accuracy = .1))) +
   theme_bw() + 
     geom_col() +
-    scale_y_continuous(labels = scales::percent,
-                       limits = c(0, 1)) +
+    scale_y_continuous(labels = scales::percent) +
     ylab(label = NULL) +
     xlab(label = NULL) +
     scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
@@ -108,7 +116,7 @@ g.2.3 <-datos.2.3 %>%
     theme(legend.position = 'none',   
           legend.title = element_blank())
 
-  #g.2.3
+g.2.3
 
 ```
 
@@ -119,13 +127,21 @@ g.2.3 <-datos.2.3 %>%
 
 ```{r include=FALSE}
 
+datos.2.4 <- elsoc_long_2016_2021 %>% 
+  filter(ola == 5 & tipo_atricion == 1 & 
+           !c37_09 %in% c(-888, -999) & !c15 %in% c(-888, -999)) %>% 
+    mutate(pos_id = car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
+           pos_id = factor(pos_id, levels = c(1, 2, 3, 4),
+                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
+  prop(c37_09, pos_id, na.rm = TRUE) %>% 
+  sjlabelled::as_label(c37_09, pos_id)
+
 g.2.4 <- datos.2.4 %>% 
-  ggplot(aes(y = prop, x = pos_id, fill = salud_ac, 
-               label = as.character(scales::percent(prop, accuracy = .1)))) +
+  ggplot(aes(y = prop, x = pos_id, fill = c37_09, 
+               label = scales::percent(prop, accuracy = .1))) +
   theme_bw() + 
     geom_col() +
-    scale_y_continuous(labels = scales::percent,
-                       limits = c(0, 1)) +
+    scale_y_continuous(labels = scales::percent) + 
     ylab(label = NULL) +
     xlab(label = NULL) +
     scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
@@ -135,7 +151,7 @@ g.2.4 <- datos.2.4 %>%
     theme(legend.position = 'none',   
           legend.title = element_blank())
 
-#g.2.4
+g.2.4
 
 ```
 

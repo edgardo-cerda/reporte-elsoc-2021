@@ -1,6 +1,6 @@
 # Conflicto y cohesión territorial en pandemia
 
-```{r library-12, include=FALSE}
+```{r library-12, eval=FALSE}
 knitr::opts_chunk$set(cache=FALSE, 
                       warning = FALSE, 
                       message = FALSE) 
@@ -202,21 +202,20 @@ elsoc_comuna_rm <- elsoc_long_2016_2021 %>%
   mutate(barrio_confli = (t11_01 + t11_02 + t11_03 + t11_04)/4) %>%
   sjlabelled::as_label(ola) %>% 
   group_by(comuna, comuna_cod) %>% 
-  summarise(m_confli = weighted.mean(barrio_confli, ponderador02, na.rm = T),
-            sd_confli = sd(barrio_confli, na.rm = T),
-            n = n())
+  summarise(m_confli = weighted.mean(barrio_confli, ponderador02, na.rm = T)) %>% 
+  ungroup() 
 
-comunas_rm <- mapa_comunas[mapa_comunas$codigo_region==13,]
-comunas_rm <- merge(comunas_rm, 
-                    elsoc_comuna_rm, 
-                    by.x = "codigo_comuna", by.y = "comuna_cod",
-                    all.x = TRUE,
-                    sort=F)
+comunas_rm <- chilemapas::mapa_zonas %>%   
+  dplyr::filter(codigo_region == '13' & codigo_provincia == '131') %>% 
+  st_as_sf(.) %>% 
+  group_by(codigo_comuna) %>% 
+  summarise() %>% 
+  ungroup() %>% 
+  mutate(comuna_cod = as.numeric(codigo_comuna)) %>% 
+  left_join(elsoc_comuna_rm, by = 'comuna_cod')
 
-#comunas_rm <- comunas_rm %>% drop_na() #en caso de quitar comunas con NA
-
-g.confli.rm <- 
-  ggplot(comunas_rm) + 
+g.confli.rm <- comunas_rm %>%
+  ggplot() + 
   geom_sf(aes(fill = m_confli, geometry = geometry)) +
   labs(y = NULL, x = NULL, fill = "Conflictividad barrial\npromedio por comuna") +
   scale_fill_viridis_c(begin = .11, end = .88, direction = -1, option = 'viridis') +
@@ -224,7 +223,7 @@ g.confli.rm <-
 g.confli.rm
 ```
 
-```{r confli-region, fig.align='center', fig.cap='Frecuencia promedio de problemas con vecinos, según región de Chile (2021)' message=FALSE, warning=FALSE}
+```{r confli-region2, fig.align='center', fig.cap='Frecuencia promedio de problemas con vecinos, según región de Chile (2021)', message=FALSE, warning=FALSE}
 
 elsoc_region <- elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & ola == 5 & !t11_01 %in% c(-888, -999) &
@@ -688,7 +687,7 @@ g.crimi.rm <-
 g.crimi.rm
 ```
 
-```{r confli-region, fig.align='center', fig.cap='Frecuencia promedio de percepción de crímenes (riñas, robos y tráfico de drogas) en el barrio, según región de Chile (2021)' message=FALSE, warning=FALSE}
+```{r confli-region, fig.align='center', fig.cap='Frecuencia promedio de percepción de crímenes (riñas, robos y tráfico de drogas) en el barrio, según región de Chile (2021)', message=FALSE, warning=FALSE}
 
 elsoc_region <- elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & ola == 5 & !t09_01 %in% c(-888, -999) &
