@@ -21,8 +21,21 @@ editor_options:
 
 ```{r message=FALSE, warning=FALSE, include=FALSE}
 
-pacman::p_load(knitr, kableExtra, dplyr, gridExtra, tidyverse, sjmisc, sjlabelled, sticky, ggrepel, ggalluvial, survey, spatstat, readxl, forcats,gtools, elsoc, panelr, ggplot2, tidyr, sf, chilemapas, lubridate)
+library(knitr)
+library(kableExtra)
+library(gridExtra)
+library(tidyverse)
+library(sjmisc)
+library(sjlabelled)
+library(ggrepel)
+library(ggalluvial)
+library(survey)
+library(spatstat)
+library(gtools)
+library(sf)
+library(chilemapas)
 library(elsoc)
+library(lubridate)
 
 ```
 

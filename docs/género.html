@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Capítulo 14 Género | Estudio Longitudinal Social de Chile</title>
   <meta name="description" content="Capítulo 14 Género | Estudio Longitudinal Social de Chile" />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Capítulo 14 Género | Estudio Longitudinal Social de Chile" />
   <meta property="og:type" content="book" />
@@ -33,7 +33,8 @@
 <link rel="prev" href="estatus-subjetivo-y-percepción-de-mérito.html"/>
 <link rel="next" href="salud-mental-y-bienestar.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,7 +50,8 @@
 
 
 
-
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
@@ -119,6 +121,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
 </head>
 
 <body>
@@ -131,9 +134,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>1</b> Introducción</a>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introducción</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="introducción.html"><a href="introducción.html#sobre-coes"><i class="fa fa-check"></i><b>1.1</b> Sobre COES</a></li>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#sobre-coes"><i class="fa fa-check"></i><b>1.1</b> Sobre COES</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="sobre-elsoc.html"><a href="sobre-elsoc.html"><i class="fa fa-check"></i><b>2</b> Sobre ELSOC</a>
 <ul>
@@ -281,68 +284,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Capítulo 14</span> Género</h1>
 <div id="sexismo-hostil-y-benevolente" class="section level2" number="14.1">
 <h2><span class="header-section-number">14.1</span> Sexismo hostil y benevolente</h2>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb71-1"><a href="género.html#cb71-1" aria-hidden="true" tabindex="-1"></a>elsoc_long_2016_2021 <span class="sc">%&gt;%</span> </span>
-<span id="cb71-2"><a href="género.html#cb71-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(tipo_atricion <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> ola <span class="sc">==</span> <span class="dv">5</span> <span class="sc">&amp;</span> <span class="sc">!</span>g01_01 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>) <span class="sc">&amp;</span> <span class="sc">!</span>g01_02 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>) <span class="sc">&amp;</span> <span class="sc">!</span>g01_03 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>) <span class="sc">&amp;</span> <span class="sc">!</span>g01_04 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb71-3"><a href="género.html#cb71-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(g01_01, g01_02, g01_03, g01_04, segmento_disenno, estrato_disenno, ponderador02, m0_sexo) <span class="sc">%&gt;%</span> </span>
-<span id="cb71-4"><a href="género.html#cb71-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(g01_01, g01_02, g01_03, g01_04)) <span class="sc">%&gt;%</span> </span>
-<span id="cb71-5"><a href="género.html#cb71-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prop</span>(value <span class="sc">%in%</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">by =</span> <span class="fu">c</span>(name, m0_sexo), <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb71-6"><a href="género.html#cb71-6" aria-hidden="true" tabindex="-1"></a>  sjlabelled<span class="sc">::</span><span class="fu">as_label</span>(m0_sexo) <span class="sc">%&gt;%</span> </span>
-<span id="cb71-7"><a href="género.html#cb71-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">name =</span> <span class="fu">factor</span>(name,</span>
-<span id="cb71-8"><a href="género.html#cb71-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&#39;g01_01&#39;</span>, <span class="st">&#39;g01_02&#39;</span>, <span class="st">&#39;g01_03&#39;</span>, <span class="st">&#39;g01_04&#39;</span>),</span>
-<span id="cb71-9"><a href="género.html#cb71-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;Mujeres son</span><span class="sc">\n</span><span class="st">más refinadas</span><span class="sc">\n</span><span class="st">que hombres&#39;</span>,</span>
-<span id="cb71-10"><a href="género.html#cb71-10" aria-hidden="true" tabindex="-1"></a>                     <span class="st">&#39;Mujeres debieran ser</span><span class="sc">\n</span><span class="st">queridas y protegidas</span><span class="sc">\n</span><span class="st">por los hombres&#39;</span>,</span>
-<span id="cb71-11"><a href="género.html#cb71-11" aria-hidden="true" tabindex="-1"></a>                     <span class="st">&#39;Mujeres consiguen</span><span class="sc">\n</span><span class="st">privilegios en</span><span class="sc">\n</span><span class="st">nombre de igualdad&#39;</span>,</span>
-<span id="cb71-12"><a href="género.html#cb71-12" aria-hidden="true" tabindex="-1"></a>                     <span class="st">&#39;Cuando mujeres son</span><span class="sc">\n</span><span class="st">derrotadas limpiamente,</span><span class="sc">\n</span><span class="st">se quejan de discriminación&#39;</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb71-13"><a href="género.html#cb71-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> prop, <span class="at">x =</span> name, <span class="at">fill =</span> m0_sexo, </span>
-<span id="cb71-14"><a href="género.html#cb71-14" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> scales<span class="sc">::</span><span class="fu">percent</span>(prop, <span class="at">accuracy =</span> .<span class="dv">1</span>))) <span class="sc">+</span></span>
-<span id="cb71-15"><a href="género.html#cb71-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb71-16"><a href="género.html#cb71-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">&quot;dodge2&quot;</span>) <span class="sc">+</span></span>
-<span id="cb71-17"><a href="género.html#cb71-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent,</span>
-<span id="cb71-18"><a href="género.html#cb71-18" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb71-19"><a href="género.html#cb71-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb71-20"><a href="género.html#cb71-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb71-21"><a href="género.html#cb71-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">begin =</span> .<span class="dv">33</span>, <span class="at">end =</span> .<span class="dv">66</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">option =</span> <span class="st">&#39;viridis&#39;</span>) <span class="sc">+</span> </span>
-<span id="cb71-22"><a href="género.html#cb71-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.8</span>,</span>
-<span id="cb71-23"><a href="género.html#cb71-23" aria-hidden="true" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> .<span class="dv">9</span>),</span>
-<span id="cb71-24"><a href="género.html#cb71-24" aria-hidden="true" tabindex="-1"></a>            <span class="at">size=</span> <span class="fl">2.75</span>)  <span class="sc">+</span></span>
-<span id="cb71-25"><a href="género.html#cb71-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;top&#39;</span>,</span>
-<span id="cb71-26"><a href="género.html#cb71-26" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_blank</span>())  </span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:sexismo-sexo"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:sexismo-sexo"></span>
 <img src="reporte-elsoc_files/figure-html/sexismo-sexo-1.png" alt="Sexismo benévolo y hostil, según sexo (2021). Porcentaje que responde &quot;De acuerdo&quot; o &quot;Totalmente de acuerdo&quot;." width="672" />
 <p class="caption">
 Figura 14.1: Sexismo benévolo y hostil, según sexo (2021). Porcentaje que responde “De acuerdo” o “Totalmente de acuerdo.”
 </p>
 </div>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb72-1"><a href="género.html#cb72-1" aria-hidden="true" tabindex="-1"></a>elsoc_long_2016_2021 <span class="sc">%&gt;%</span> </span>
-<span id="cb72-2"><a href="género.html#cb72-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(tipo_atricion <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> ola <span class="sc">==</span> <span class="dv">5</span> <span class="sc">&amp;</span> <span class="sc">!</span>g01_01 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>) <span class="sc">&amp;</span> <span class="sc">!</span>g01_02 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>) <span class="sc">&amp;</span> <span class="sc">!</span>g01_03 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>) <span class="sc">&amp;</span> <span class="sc">!</span>g01_04 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>) <span class="sc">&amp;</span> <span class="sc">!</span>m01 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb72-3"><a href="género.html#cb72-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(g01_01, g01_02, g01_03, g01_04, segmento_disenno, estrato_disenno, ponderador02, m01) <span class="sc">%&gt;%</span> </span>
-<span id="cb72-4"><a href="género.html#cb72-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(g01_01, g01_02, g01_03, g01_04)) <span class="sc">%&gt;%</span></span>
-<span id="cb72-5"><a href="género.html#cb72-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">educ =</span> <span class="fu">factor</span>(car<span class="sc">::</span><span class="fu">recode</span>(m01, <span class="st">&quot;1:3 = 1; 4:5 = 2; 6:7 = 3; 8:10 = 4&quot;</span>),</span>
-<span id="cb72-6"><a href="género.html#cb72-6" aria-hidden="true" tabindex="-1"></a>                        <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>), </span>
-<span id="cb72-7"><a href="género.html#cb72-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Básica&quot;</span>, <span class="st">&quot;Media&quot;</span>, <span class="st">&quot;Técnica&quot;</span>, <span class="st">&quot;Universitaria&quot;</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb72-8"><a href="género.html#cb72-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prop</span>(value <span class="sc">%in%</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">by =</span> <span class="fu">c</span>(name, educ), <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb72-9"><a href="género.html#cb72-9" aria-hidden="true" tabindex="-1"></a>  sjlabelled<span class="sc">::</span><span class="fu">as_label</span>(educ) <span class="sc">%&gt;%</span> </span>
-<span id="cb72-10"><a href="género.html#cb72-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">name =</span> <span class="fu">factor</span>(name,</span>
-<span id="cb72-11"><a href="género.html#cb72-11" aria-hidden="true" tabindex="-1"></a>                       <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&#39;g01_01&#39;</span>, <span class="st">&#39;g01_02&#39;</span>, <span class="st">&#39;g01_03&#39;</span>, <span class="st">&#39;g01_04&#39;</span>),</span>
-<span id="cb72-12"><a href="género.html#cb72-12" aria-hidden="true" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;Mujeres son</span><span class="sc">\n</span><span class="st">más refinadas</span><span class="sc">\n</span><span class="st">que hombres&#39;</span>,</span>
-<span id="cb72-13"><a href="género.html#cb72-13" aria-hidden="true" tabindex="-1"></a>                     <span class="st">&#39;Mujeres debieran ser</span><span class="sc">\n</span><span class="st">queridas y protegidas</span><span class="sc">\n</span><span class="st">por los hombres&#39;</span>,</span>
-<span id="cb72-14"><a href="género.html#cb72-14" aria-hidden="true" tabindex="-1"></a>                     <span class="st">&#39;Mujeres consiguen</span><span class="sc">\n</span><span class="st">privilegios en</span><span class="sc">\n</span><span class="st">nombre de igualdad&#39;</span>,</span>
-<span id="cb72-15"><a href="género.html#cb72-15" aria-hidden="true" tabindex="-1"></a>                     <span class="st">&#39;Cuando mujeres son</span><span class="sc">\n</span><span class="st">derrotadas limpiamente,</span><span class="sc">\n</span><span class="st">se quejan de discriminación&#39;</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb72-16"><a href="género.html#cb72-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> prop, <span class="at">x =</span> name, <span class="at">fill =</span> educ, </span>
-<span id="cb72-17"><a href="género.html#cb72-17" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> scales<span class="sc">::</span><span class="fu">percent</span>(prop, <span class="at">accuracy =</span> .<span class="dv">1</span>))) <span class="sc">+</span></span>
-<span id="cb72-18"><a href="género.html#cb72-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb72-19"><a href="género.html#cb72-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">&quot;dodge2&quot;</span>) <span class="sc">+</span></span>
-<span id="cb72-20"><a href="género.html#cb72-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent,</span>
-<span id="cb72-21"><a href="género.html#cb72-21" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb72-22"><a href="género.html#cb72-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb72-23"><a href="género.html#cb72-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb72-24"><a href="género.html#cb72-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">begin =</span> .<span class="dv">33</span>, <span class="at">end =</span> .<span class="dv">66</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">option =</span> <span class="st">&#39;viridis&#39;</span>) <span class="sc">+</span> </span>
-<span id="cb72-25"><a href="género.html#cb72-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.8</span>,</span>
-<span id="cb72-26"><a href="género.html#cb72-26" aria-hidden="true" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> .<span class="dv">9</span>),</span>
-<span id="cb72-27"><a href="género.html#cb72-27" aria-hidden="true" tabindex="-1"></a>            <span class="at">size=</span> <span class="fl">2.75</span>)  <span class="sc">+</span></span>
-<span id="cb72-28"><a href="género.html#cb72-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;top&#39;</span>,</span>
-<span id="cb72-29"><a href="género.html#cb72-29" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_blank</span>())  </span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:sexismo-educ"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:sexismo-educ"></span>
 <img src="reporte-elsoc_files/figure-html/sexismo-educ-1.png" alt="Sexismo benévolo y hostil, según nivel educacional (2021). Porcentaje que responde &quot;De acuerdo&quot; o &quot;Totalmente de acuerdo&quot;." width="672" />
 <p class="caption">
 Figura 14.2: Sexismo benévolo y hostil, según nivel educacional (2021). Porcentaje que responde “De acuerdo” o “Totalmente de acuerdo.”
@@ -351,76 +299,12 @@ Figura 14.2: Sexismo benévolo y hostil, según nivel educacional (2021). Porcen
 </div>
 <div id="trabajo-y-género" class="section level2" number="14.2">
 <h2><span class="header-section-number">14.2</span> Trabajo y género</h2>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb73-1"><a href="género.html#cb73-1" aria-hidden="true" tabindex="-1"></a>elsoc_long_2016_2021 <span class="sc">%&gt;%</span> </span>
-<span id="cb73-2"><a href="género.html#cb73-2" aria-hidden="true" tabindex="-1"></a>    dplyr<span class="sc">::</span><span class="fu">filter</span>(tipo_atricion <span class="sc">==</span> <span class="dv">1</span> </span>
-<span id="cb73-3"><a href="género.html#cb73-3" aria-hidden="true" tabindex="-1"></a>                <span class="sc">&amp;</span> ola <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">5</span>) <span class="sc">&amp;</span> <span class="sc">!</span>m01 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb73-4"><a href="género.html#cb73-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">sit_ocup =</span> <span class="fu">factor</span>(car<span class="sc">::</span><span class="fu">recode</span>(m02, <span class="st">&quot;1:3 = 1; 7 = 2; 6 = 3; 5 = 4; c(4, 8, 9) = 5&quot;</span>), </span>
-<span id="cb73-5"><a href="género.html#cb73-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>),</span>
-<span id="cb73-6"><a href="género.html#cb73-6" aria-hidden="true" tabindex="-1"></a>                           <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&quot;Trabajo</span><span class="sc">\n</span><span class="st">remunerado&quot;</span>, <span class="st">&quot;Trabajo doméstico</span><span class="sc">\n</span><span class="st">no remunerado&quot;</span>, <span class="st">&quot;Desempleado/a&quot;</span>, <span class="st">&quot;Jubilado/a o</span><span class="sc">\n</span><span class="st">pensionado/a&quot;</span>, <span class="st">&quot;Otras</span><span class="sc">\n</span><span class="st">categorías&quot;</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb73-7"><a href="género.html#cb73-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prop</span>(sit_ocup, <span class="at">by =</span> <span class="fu">c</span>(ola, m0_sexo), <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb73-8"><a href="género.html#cb73-8" aria-hidden="true" tabindex="-1"></a>  sjlabelled<span class="sc">::</span><span class="fu">as_label</span>(m0_sexo, ola, sit_ocup) <span class="sc">%&gt;%</span> </span>
-<span id="cb73-9"><a href="género.html#cb73-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> prop, <span class="at">x =</span> m0_sexo, <span class="at">fill =</span> sit_ocup, </span>
-<span id="cb73-10"><a href="género.html#cb73-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> scales<span class="sc">::</span><span class="fu">percent</span>(prop, <span class="at">accuracy =</span> .<span class="dv">1</span>))) <span class="sc">+</span> </span>
-<span id="cb73-11"><a href="género.html#cb73-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb73-12"><a href="género.html#cb73-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">&#39;Stack&#39;</span>) <span class="sc">+</span></span>
-<span id="cb73-13"><a href="género.html#cb73-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
-<span id="cb73-14"><a href="género.html#cb73-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb73-15"><a href="género.html#cb73-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb73-16"><a href="género.html#cb73-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(.<span class="sc">~</span>ola)<span class="sc">+</span></span>
-<span id="cb73-17"><a href="género.html#cb73-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">begin =</span> .<span class="dv">13</span>, <span class="at">end =</span> .<span class="dv">85</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">option =</span> <span class="st">&#39;viridis&#39;</span>) <span class="sc">+</span></span>
-<span id="cb73-18"><a href="género.html#cb73-18" aria-hidden="true" tabindex="-1"></a>  <span class="co">#cambiar geom_text tal que: Stack y cambio colores</span></span>
-<span id="cb73-19"><a href="género.html#cb73-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">ifelse</span>(prop<span class="sc">&gt;</span> <span class="fl">0.03</span> , scales<span class="sc">::</span><span class="fu">percent</span>(prop, <span class="at">accuracy =</span> .<span class="dv">1</span>),<span class="st">&quot;&quot;</span>)), <span class="at">position =</span> <span class="fu">position_stack</span>(<span class="at">vjust =</span> .<span class="dv">5</span>),</span>
-<span id="cb73-20"><a href="género.html#cb73-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">show.legend =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb73-21"><a href="género.html#cb73-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> <span class="fl">2.75</span>,</span>
-<span id="cb73-22"><a href="género.html#cb73-22" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="fu">rep.int</span>(<span class="fu">c</span>(<span class="st">&#39;black&#39;</span>, <span class="st">&#39;black&#39;</span>, <span class="st">&#39;black&#39;</span>,<span class="st">&#39;white&#39;</span>, <span class="st">&#39;white&#39;</span>), <span class="dv">4</span>)) <span class="sc">+</span> </span>
-<span id="cb73-23"><a href="género.html#cb73-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;top&#39;</span>,</span>
-<span id="cb73-24"><a href="género.html#cb73-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:ocup-sexo"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:ocup-sexo"></span>
 <img src="reporte-elsoc_files/figure-html/ocup-sexo-1.png" alt="Porcentaje de trabajadores y trabajadoras por situación ocupacional (2021), según sexo del entrevistado" width="672" />
 <p class="caption">
 Figura 14.3: Porcentaje de trabajadores y trabajadoras por situación ocupacional (2021), según sexo del entrevistado
 </p>
 </div>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb74-1"><a href="género.html#cb74-1" aria-hidden="true" tabindex="-1"></a><span class="co">#PENDIENTE</span></span>
-<span id="cb74-2"><a href="género.html#cb74-2" aria-hidden="true" tabindex="-1"></a><span class="co">#1</span></span>
-<span id="cb74-3"><a href="género.html#cb74-3" aria-hidden="true" tabindex="-1"></a>datos.grafico <span class="ot">&lt;-</span> <span class="fu">data.frame</span>((<span class="fu">svytable</span>(<span class="sc">~</span>m17_rec <span class="sc">+</span> ola <span class="sc">+</span> idencuesta, </span>
-<span id="cb74-4"><a href="género.html#cb74-4" aria-hidden="true" tabindex="-1"></a>                                      elsoc_diseno, <span class="at">round =</span> F))) <span class="sc">%&gt;%</span> </span>
-<span id="cb74-5"><a href="género.html#cb74-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(Freq<span class="sc">&gt;</span><span class="dv">0</span>)  <span class="sc">%&gt;%</span> </span>
-<span id="cb74-6"><a href="género.html#cb74-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ola) <span class="sc">%&gt;%</span> </span>
-<span id="cb74-7"><a href="género.html#cb74-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">porcentaje=</span>Freq<span class="sc">/</span><span class="fu">sum</span>(Freq))</span>
-<span id="cb74-8"><a href="género.html#cb74-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb74-9"><a href="género.html#cb74-9" aria-hidden="true" tabindex="-1"></a><span class="co">#1.1</span></span>
-<span id="cb74-10"><a href="género.html#cb74-10" aria-hidden="true" tabindex="-1"></a>subset.grafico <span class="ot">&lt;-</span> <span class="fu">droplevels</span>(<span class="fu">subset</span>(datos.grafico, datos.grafico<span class="sc">$</span>ola <span class="sc">==</span> <span class="st">&#39;2018&#39;</span> <span class="sc">|</span> datos.grafico<span class="sc">$</span>ola <span class="sc">==</span> <span class="st">&#39;2021&#39;</span>))</span>
-<span id="cb74-11"><a href="género.html#cb74-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb74-12"><a href="género.html#cb74-12" aria-hidden="true" tabindex="-1"></a><span class="co">#2</span></span>
-<span id="cb74-13"><a href="género.html#cb74-13" aria-hidden="true" tabindex="-1"></a>etiquetas.grafico <span class="ot">&lt;-</span> <span class="fu">data.frame</span>((<span class="fu">svytable</span>(<span class="sc">~</span>m17_rec <span class="sc">+</span> ola, </span>
-<span id="cb74-14"><a href="género.html#cb74-14" aria-hidden="true" tabindex="-1"></a>                                          elsoc_diseno, <span class="at">round =</span> F))) <span class="sc">%&gt;%</span> </span>
-<span id="cb74-15"><a href="género.html#cb74-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(ola) <span class="sc">%&gt;%</span> </span>
-<span id="cb74-16"><a href="género.html#cb74-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">porcentaje=</span>Freq<span class="sc">/</span><span class="fu">sum</span>(Freq)) <span class="sc">%&gt;%</span> </span>
-<span id="cb74-17"><a href="género.html#cb74-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb74-18"><a href="género.html#cb74-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">idencuesta =</span> <span class="dv">1</span>)</span>
-<span id="cb74-19"><a href="género.html#cb74-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb74-20"><a href="género.html#cb74-20" aria-hidden="true" tabindex="-1"></a><span class="co">#Paso 2.2: crear un subset sólo para los años</span></span>
-<span id="cb74-21"><a href="género.html#cb74-21" aria-hidden="true" tabindex="-1"></a>etiquetas.grafico <span class="ot">&lt;-</span> <span class="fu">droplevels</span>(<span class="fu">subset</span>(etiquetas.grafico, etiquetas.grafico<span class="sc">$</span>ola <span class="sc">==</span> <span class="st">&#39;2018&#39;</span> <span class="sc">|</span> etiquetas.grafico<span class="sc">$</span>ola <span class="sc">==</span> <span class="st">&#39;2021&#39;</span>))</span>
-<span id="cb74-22"><a href="género.html#cb74-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb74-23"><a href="género.html#cb74-23" aria-hidden="true" tabindex="-1"></a>g16<span class="fl">.11</span> <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(subset.grafico, <span class="fu">aes</span>(<span class="at">x =</span> ola, <span class="at">fill =</span> m17_rec, <span class="at">stratum =</span> m17_rec, </span>
-<span id="cb74-24"><a href="género.html#cb74-24" aria-hidden="true" tabindex="-1"></a>                              <span class="at">alluvium =</span> idencuesta, <span class="at">y =</span> porcentaje)) <span class="sc">+</span></span>
-<span id="cb74-25"><a href="género.html#cb74-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb74-26"><a href="género.html#cb74-26" aria-hidden="true" tabindex="-1"></a>  ggalluvial<span class="sc">::</span><span class="fu">geom_flow</span>(<span class="at">alpha =</span> .<span class="dv">66</span>) <span class="sc">+</span> </span>
-<span id="cb74-27"><a href="género.html#cb74-27" aria-hidden="true" tabindex="-1"></a>  ggalluvial<span class="sc">::</span><span class="fu">geom_stratum</span>(<span class="at">linetype =</span> <span class="dv">0</span>) <span class="sc">+</span></span>
-<span id="cb74-28"><a href="género.html#cb74-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
-<span id="cb74-29"><a href="género.html#cb74-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb74-30"><a href="género.html#cb74-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb74-31"><a href="género.html#cb74-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;top&#39;</span>,</span>
-<span id="cb74-32"><a href="género.html#cb74-32" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_blank</span>()) <span class="sc">+</span></span>
-<span id="cb74-33"><a href="género.html#cb74-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">begin =</span> <span class="dv">0</span>, <span class="at">end =</span> .<span class="dv">9</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">option =</span> <span class="st">&#39;viridis&#39;</span>) <span class="sc">+</span></span>
-<span id="cb74-34"><a href="género.html#cb74-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">data =</span> etiquetas.grafico, </span>
-<span id="cb74-35"><a href="género.html#cb74-35" aria-hidden="true" tabindex="-1"></a>            <span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">ifelse</span>(porcentaje <span class="sc">&gt;</span> <span class="fl">0.05</span> , scales<span class="sc">::</span><span class="fu">percent</span>(porcentaje, <span class="at">accuracy =</span> .<span class="dv">1</span>),<span class="st">&quot;&quot;</span>)),</span>
-<span id="cb74-36"><a href="género.html#cb74-36" aria-hidden="true" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_stack</span>(<span class="at">vjust =</span> .<span class="dv">5</span>),</span>
-<span id="cb74-37"><a href="género.html#cb74-37" aria-hidden="true" tabindex="-1"></a>            <span class="at">show.legend =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb74-38"><a href="género.html#cb74-38" aria-hidden="true" tabindex="-1"></a>            <span class="at">size=</span> <span class="fl">2.75</span>)</span>
-<span id="cb74-39"><a href="género.html#cb74-39" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb74-40"><a href="género.html#cb74-40" aria-hidden="true" tabindex="-1"></a>g16<span class="fl">.11</span></span></code></pre></div>
 
 </div>
 </div>
@@ -434,7 +318,6 @@ Figura 14.3: Porcentaje de trabajadores y trabajadoras por situación ocupaciona
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -453,6 +336,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -473,6 +357,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

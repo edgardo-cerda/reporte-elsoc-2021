@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Capítulo 17 Pandemia Covid-19 | Estudio Longitudinal Social de Chile</title>
   <meta name="description" content="Capítulo 17 Pandemia Covid-19 | Estudio Longitudinal Social de Chile" />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Capítulo 17 Pandemia Covid-19 | Estudio Longitudinal Social de Chile" />
   <meta property="og:type" content="book" />
@@ -33,7 +33,8 @@
 <link rel="prev" href="migración.html"/>
 <link rel="next" href="cómo-citar-este-informe.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,7 +50,8 @@
 
 
 
-
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
@@ -119,6 +121,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
 </head>
 
 <body>
@@ -131,9 +134,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>1</b> Introducción</a>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introducción</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="introducción.html"><a href="introducción.html#sobre-coes"><i class="fa fa-check"></i><b>1.1</b> Sobre COES</a></li>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#sobre-coes"><i class="fa fa-check"></i><b>1.1</b> Sobre COES</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="sobre-elsoc.html"><a href="sobre-elsoc.html"><i class="fa fa-check"></i><b>2</b> Sobre ELSOC</a>
 <ul>
@@ -281,168 +284,43 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Capítulo 17</span> Pandemia Covid-19</h1>
 <div id="cuarentenas" class="section level2" number="17.1">
 <h2><span class="header-section-number">17.1</span> Cuarentenas</h2>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb87-1"><a href="pandemia-covid-19.html#cb87-1" aria-hidden="true" tabindex="-1"></a>elsoc_long_2016_2021 <span class="sc">%&gt;%</span> </span>
-<span id="cb87-2"><a href="pandemia-covid-19.html#cb87-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fecha =</span> <span class="fu">as_date</span>(<span class="fu">make_date</span>(<span class="at">year =</span> annio_entr, <span class="at">month =</span> mes_entr, <span class="at">day =</span> dia_entr))) <span class="sc">%&gt;%</span> </span>
-<span id="cb87-3"><a href="pandemia-covid-19.html#cb87-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(cuarentenas_acum , <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&#39;comuna_cod&#39;</span>, <span class="st">&#39;fecha&#39;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb87-4"><a href="pandemia-covid-19.html#cb87-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(ola <span class="sc">==</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb87-5"><a href="pandemia-covid-19.html#cb87-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> fecha)) <span class="sc">+</span></span>
-<span id="cb87-6"><a href="pandemia-covid-19.html#cb87-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb87-7"><a href="pandemia-covid-19.html#cb87-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span></span>
-<span id="cb87-8"><a href="pandemia-covid-19.html#cb87-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb87-9"><a href="pandemia-covid-19.html#cb87-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb87-10"><a href="pandemia-covid-19.html#cb87-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_date</span>(<span class="at">date_breaks =</span> <span class="st">&quot;1 month&quot;</span>, <span class="at">date_labels =</span> <span class="st">&quot;%d %b %Y&quot;</span>)</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:hist-fecha-2021"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:hist-fecha-2021"></span>
 <img src="reporte-elsoc_files/figure-html/hist-fecha-2021-1.png" alt="Histograma Fechas de Entrevistas" width="672" />
 <p class="caption">
 Figura 17.1: Histograma Fechas de Entrevistas
 </p>
 </div>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb88-1"><a href="pandemia-covid-19.html#cb88-1" aria-hidden="true" tabindex="-1"></a>elsoc_long_2016_2021 <span class="sc">%&gt;%</span> </span>
-<span id="cb88-2"><a href="pandemia-covid-19.html#cb88-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fecha =</span> <span class="fu">as_date</span>(<span class="fu">make_date</span>(<span class="at">year =</span> annio_entr, <span class="at">month =</span> mes_entr, <span class="at">day =</span> dia_entr))) <span class="sc">%&gt;%</span> </span>
-<span id="cb88-3"><a href="pandemia-covid-19.html#cb88-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(cuarentenas_acum , <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&#39;comuna_cod&#39;</span>, <span class="st">&#39;fecha&#39;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb88-4"><a href="pandemia-covid-19.html#cb88-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(dias_cuarentena)) <span class="sc">%&gt;%</span> </span>
-<span id="cb88-5"><a href="pandemia-covid-19.html#cb88-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> dias_cuarentena)) <span class="sc">+</span> </span>
-<span id="cb88-6"><a href="pandemia-covid-19.html#cb88-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">bins =</span> <span class="dv">30</span>) <span class="sc">+</span> </span>
-<span id="cb88-7"><a href="pandemia-covid-19.html#cb88-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_density</span>() <span class="sc">+</span></span>
-<span id="cb88-8"><a href="pandemia-covid-19.html#cb88-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb88-9"><a href="pandemia-covid-19.html#cb88-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb88-10"><a href="pandemia-covid-19.html#cb88-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="at">label =</span> <span class="st">&quot;Tiempo (Nº de Días)&quot;</span>)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="reporte-elsoc_files/figure-html/dias_cuarentena-heter-1.png" alt="Heterogeneidad de Cuarentena Acumulada en el Panel" width="672" />
 <p class="caption">
 (#fig:dias_cuarentena-heter)Heterogeneidad de Cuarentena Acumulada en el Panel
 </p>
 </div>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb89-1"><a href="pandemia-covid-19.html#cb89-1" aria-hidden="true" tabindex="-1"></a>elsoc_long_2016_2021 <span class="sc">%&gt;%</span> </span>
-<span id="cb89-2"><a href="pandemia-covid-19.html#cb89-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fecha =</span> <span class="fu">as_date</span>(<span class="fu">make_date</span>(<span class="at">year =</span> annio_entr, <span class="at">month =</span> mes_entr, <span class="at">day =</span> dia_entr))) <span class="sc">%&gt;%</span> </span>
-<span id="cb89-3"><a href="pandemia-covid-19.html#cb89-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(cuarentenas_acum , <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&#39;comuna_cod&#39;</span>, <span class="st">&#39;fecha&#39;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb89-4"><a href="pandemia-covid-19.html#cb89-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">zona1 =</span> <span class="fu">factor</span>(car<span class="sc">::</span><span class="fu">recode</span>(region_cod, <span class="st">&quot;c(1,2,3,4,15) = &#39;Norte&#39;; c(5,6,7,8,16) = &#39;Centro&#39;; c(9,10,11,12,14) = &#39;Sur&#39;; 13 = &#39;Metropolitana&#39;&quot;</span>, </span>
-<span id="cb89-5"><a href="pandemia-covid-19.html#cb89-5" aria-hidden="true" tabindex="-1"></a>                                    <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Norte&quot;</span>,<span class="st">&quot;Centro&quot;</span>,<span class="st">&quot;Sur&quot;</span>,<span class="st">&quot;Metropolitana&quot;</span>))))  <span class="sc">%&gt;%</span> </span>
-<span id="cb89-6"><a href="pandemia-covid-19.html#cb89-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(ola <span class="sc">==</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb89-7"><a href="pandemia-covid-19.html#cb89-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prop</span>(dias_cuarentena_t, <span class="at">by =</span> <span class="fu">c</span>(zona1), <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb89-8"><a href="pandemia-covid-19.html#cb89-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_row</span>(<span class="at">zona1 =</span> <span class="st">&#39;Sur&#39;</span>, <span class="at">dias_cuarentena_t =</span> <span class="st">&#39;0 días&#39;</span>, <span class="at">prop =</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb89-9"><a href="pandemia-covid-19.html#cb89-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> prop, <span class="at">x =</span> zona1, <span class="at">fill =</span> dias_cuarentena_t, </span>
-<span id="cb89-10"><a href="pandemia-covid-19.html#cb89-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> scales<span class="sc">::</span><span class="fu">percent</span>(<span class="fu">ifelse</span>(prop<span class="sc">&gt;</span>.<span class="dv">01</span>, prop, <span class="cn">NA</span>), <span class="at">accuracy =</span> .<span class="dv">1</span>))) <span class="sc">+</span> </span>
-<span id="cb89-11"><a href="pandemia-covid-19.html#cb89-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb89-12"><a href="pandemia-covid-19.html#cb89-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">&#39;Stack&#39;</span>) <span class="sc">+</span></span>
-<span id="cb89-13"><a href="pandemia-covid-19.html#cb89-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
-<span id="cb89-14"><a href="pandemia-covid-19.html#cb89-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb89-15"><a href="pandemia-covid-19.html#cb89-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb89-16"><a href="pandemia-covid-19.html#cb89-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">begin =</span> .<span class="dv">33</span>, <span class="at">end =</span> .<span class="dv">85</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">option =</span> <span class="st">&#39;viridis&#39;</span>) <span class="sc">+</span></span>
-<span id="cb89-17"><a href="pandemia-covid-19.html#cb89-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">position =</span> <span class="fu">position_stack</span>(<span class="at">vjust =</span> .<span class="dv">5</span>),</span>
-<span id="cb89-18"><a href="pandemia-covid-19.html#cb89-18" aria-hidden="true" tabindex="-1"></a>            <span class="at">size=</span> <span class="fl">2.75</span>,</span>
-<span id="cb89-19"><a href="pandemia-covid-19.html#cb89-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&#39;black&#39;</span>, <span class="st">&#39;black&#39;</span>, <span class="st">&#39;white&#39;</span>, <span class="st">&#39;white&#39;</span>), <span class="dv">4</span>)) <span class="sc">+</span> </span>
-<span id="cb89-20"><a href="pandemia-covid-19.html#cb89-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;top&#39;</span>,</span>
-<span id="cb89-21"><a href="pandemia-covid-19.html#cb89-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_blank</span>()) </span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="reporte-elsoc_files/figure-html/dias_cuarentena-zona-1.png" alt="Días de Cuarentena Acumulada al momento de la entrevista, según Zona" width="672" />
 <p class="caption">
 (#fig:dias_cuarentena-zona)Días de Cuarentena Acumulada al momento de la entrevista, según Zona
 </p>
 </div>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb90-1"><a href="pandemia-covid-19.html#cb90-1" aria-hidden="true" tabindex="-1"></a>elsoc_long_2016_2021 <span class="sc">%&gt;%</span> </span>
-<span id="cb90-2"><a href="pandemia-covid-19.html#cb90-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fecha =</span> <span class="fu">as_date</span>(<span class="fu">make_date</span>(<span class="at">year =</span> annio_entr, <span class="at">month =</span> mes_entr, <span class="at">day =</span> dia_entr))) <span class="sc">%&gt;%</span> </span>
-<span id="cb90-3"><a href="pandemia-covid-19.html#cb90-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(cuarentenas_acum , <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&#39;comuna_cod&#39;</span>, <span class="st">&#39;fecha&#39;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb90-4"><a href="pandemia-covid-19.html#cb90-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">edadt =</span> <span class="fu">factor</span>(car<span class="sc">::</span><span class="fu">recode</span>(m0_edad, <span class="st">&quot;18:29 = 1; 30:49 = 2; 50:64 = 3; 65:150 = 4&quot;</span>),</span>
-<span id="cb90-5"><a href="pandemia-covid-19.html#cb90-5" aria-hidden="true" tabindex="-1"></a>                           <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;18-29&#39;</span>, <span class="st">&#39;30-49&#39;</span>, <span class="st">&#39;50-64&#39;</span>, <span class="st">&#39;65 o más&#39;</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb90-6"><a href="pandemia-covid-19.html#cb90-6" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(ola <span class="sc">==</span> <span class="dv">5</span> <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(dias_cuarentena_t)) <span class="sc">%&gt;%</span> </span>
-<span id="cb90-7"><a href="pandemia-covid-19.html#cb90-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prop</span>(dias_cuarentena_t, <span class="at">by =</span> edadt, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb90-8"><a href="pandemia-covid-19.html#cb90-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> prop, <span class="at">x =</span> edadt, <span class="at">fill =</span> dias_cuarentena_t, </span>
-<span id="cb90-9"><a href="pandemia-covid-19.html#cb90-9" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> scales<span class="sc">::</span><span class="fu">percent</span>(prop, <span class="at">accuracy =</span> .<span class="dv">1</span>))) <span class="sc">+</span> </span>
-<span id="cb90-10"><a href="pandemia-covid-19.html#cb90-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb90-11"><a href="pandemia-covid-19.html#cb90-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">&#39;Stack&#39;</span>) <span class="sc">+</span></span>
-<span id="cb90-12"><a href="pandemia-covid-19.html#cb90-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
-<span id="cb90-13"><a href="pandemia-covid-19.html#cb90-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb90-14"><a href="pandemia-covid-19.html#cb90-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb90-15"><a href="pandemia-covid-19.html#cb90-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">begin =</span> .<span class="dv">33</span>, <span class="at">end =</span> .<span class="dv">66</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">option =</span> <span class="st">&#39;viridis&#39;</span>) <span class="sc">+</span></span>
-<span id="cb90-16"><a href="pandemia-covid-19.html#cb90-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">position =</span> <span class="fu">position_stack</span>(<span class="at">vjust =</span> .<span class="dv">5</span>),</span>
-<span id="cb90-17"><a href="pandemia-covid-19.html#cb90-17" aria-hidden="true" tabindex="-1"></a>            <span class="at">size=</span> <span class="fl">2.75</span>, <span class="at">color =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&#39;black&#39;</span>, <span class="st">&#39;black&#39;</span>, <span class="st">&#39;white&#39;</span>, <span class="st">&#39;white&#39;</span>), <span class="dv">4</span>)) <span class="sc">+</span></span>
-<span id="cb90-18"><a href="pandemia-covid-19.html#cb90-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;top&#39;</span>,</span>
-<span id="cb90-19"><a href="pandemia-covid-19.html#cb90-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="reporte-elsoc_files/figure-html/dias_cuarentena-edad-1.png" alt="Días de Cuarentena Acumulada al momento de la entrevista, según Tramo Etario" width="672" />
 <p class="caption">
 (#fig:dias_cuarentena-edad)Días de Cuarentena Acumulada al momento de la entrevista, según Tramo Etario
 </p>
 </div>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb91-1"><a href="pandemia-covid-19.html#cb91-1" aria-hidden="true" tabindex="-1"></a>elsoc_long_2016_2021 <span class="sc">%&gt;%</span> </span>
-<span id="cb91-2"><a href="pandemia-covid-19.html#cb91-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fecha =</span> <span class="fu">as_date</span>(<span class="fu">make_date</span>(<span class="at">year =</span> annio_entr, <span class="at">month =</span> mes_entr, <span class="at">day =</span> dia_entr))) <span class="sc">%&gt;%</span> </span>
-<span id="cb91-3"><a href="pandemia-covid-19.html#cb91-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(cuarentenas_acum , <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&#39;comuna_cod&#39;</span>, <span class="st">&#39;fecha&#39;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb91-4"><a href="pandemia-covid-19.html#cb91-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(dias_cuarentena_t) <span class="sc">&amp;</span> <span class="sc">!</span>c48 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb91-5"><a href="pandemia-covid-19.html#cb91-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prop</span>(c48 <span class="sc">%in%</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">by =</span> dias_cuarentena_t, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb91-6"><a href="pandemia-covid-19.html#cb91-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> prop, <span class="at">x =</span> dias_cuarentena_t, <span class="at">fill =</span> dias_cuarentena_t, </span>
-<span id="cb91-7"><a href="pandemia-covid-19.html#cb91-7" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> scales<span class="sc">::</span><span class="fu">percent</span>(prop, <span class="at">accuracy =</span> .<span class="dv">1</span>))) <span class="sc">+</span> </span>
-<span id="cb91-8"><a href="pandemia-covid-19.html#cb91-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb91-9"><a href="pandemia-covid-19.html#cb91-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>() <span class="sc">+</span></span>
-<span id="cb91-10"><a href="pandemia-covid-19.html#cb91-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent, <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb91-11"><a href="pandemia-covid-19.html#cb91-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb91-12"><a href="pandemia-covid-19.html#cb91-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb91-13"><a href="pandemia-covid-19.html#cb91-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">begin =</span> .<span class="dv">33</span>, <span class="at">end =</span> .<span class="dv">85</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">option =</span> <span class="st">&#39;viridis&#39;</span>) <span class="sc">+</span></span>
-<span id="cb91-14"><a href="pandemia-covid-19.html#cb91-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.8</span>,</span>
-<span id="cb91-15"><a href="pandemia-covid-19.html#cb91-15" aria-hidden="true" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> .<span class="dv">9</span>),</span>
-<span id="cb91-16"><a href="pandemia-covid-19.html#cb91-16" aria-hidden="true" tabindex="-1"></a>            <span class="at">size=</span> <span class="fl">2.75</span>) <span class="sc">+</span> </span>
-<span id="cb91-17"><a href="pandemia-covid-19.html#cb91-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;none&#39;</span>,</span>
-<span id="cb91-18"><a href="pandemia-covid-19.html#cb91-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="reporte-elsoc_files/figure-html/dias_cuarentena-aislamiento-1.png" alt="Cumplimiento de Aislamiento Social, según Días de Cuarentena Acumulada al momento de la entrevista" width="672" />
 <p class="caption">
 (#fig:dias_cuarentena-aislamiento)Cumplimiento de Aislamiento Social, según Días de Cuarentena Acumulada al momento de la entrevista
 </p>
 </div>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb92-1"><a href="pandemia-covid-19.html#cb92-1" aria-hidden="true" tabindex="-1"></a>elsoc_long_2016_2021 <span class="sc">%&gt;%</span> </span>
-<span id="cb92-2"><a href="pandemia-covid-19.html#cb92-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fecha =</span> <span class="fu">as_date</span>(<span class="fu">make_date</span>(<span class="at">year =</span> annio_entr, <span class="at">month =</span> mes_entr, <span class="at">day =</span> dia_entr))) <span class="sc">%&gt;%</span> </span>
-<span id="cb92-3"><a href="pandemia-covid-19.html#cb92-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(cuarentenas_acum , <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&#39;comuna_cod&#39;</span>, <span class="st">&#39;fecha&#39;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb92-4"><a href="pandemia-covid-19.html#cb92-4" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(tipo_atricion <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> ola <span class="sc">==</span> <span class="dv">5</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb92-5"><a href="pandemia-covid-19.html#cb92-5" aria-hidden="true" tabindex="-1"></a>    purrr<span class="sc">::</span><span class="fu">map_at</span>(<span class="at">.at =</span> <span class="fu">vars</span>(<span class="fu">starts_with</span>(<span class="st">&#39;s11_0&#39;</span>)), </span>
-<span id="cb92-6"><a href="pandemia-covid-19.html#cb92-6" aria-hidden="true" tabindex="-1"></a>                <span class="at">.f =</span> <span class="cf">function</span>(s) car<span class="sc">::</span><span class="fu">recode</span>(s, <span class="st">&quot;1 = 0; 2 = 1; 3 = 2; 4:5 = 3; c(-888, -999) = NA&quot;</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb92-7"><a href="pandemia-covid-19.html#cb92-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.data.frame</span>() <span class="sc">%&gt;%</span>  </span>
-<span id="cb92-8"><a href="pandemia-covid-19.html#cb92-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">phq9 =</span> (s11_01 <span class="sc">+</span> s11_02 <span class="sc">+</span> s11_03 <span class="sc">+</span> s11_04 <span class="sc">+</span> s11_05 <span class="sc">+</span> s11_06 <span class="sc">+</span> s11_07 <span class="sc">+</span> s11_08 <span class="sc">+</span> s11_09),</span>
-<span id="cb92-9"><a href="pandemia-covid-19.html#cb92-9" aria-hidden="true" tabindex="-1"></a>         <span class="at">depr =</span> <span class="fu">factor</span>(car<span class="sc">::</span><span class="fu">recode</span>(phq9, <span class="st">&quot;0:4 = 1; 5:9 = 2; 10:14 = 3; 15:27 = 4&quot;</span>), </span>
-<span id="cb92-10"><a href="pandemia-covid-19.html#cb92-10" aria-hidden="true" tabindex="-1"></a>                       <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>),</span>
-<span id="cb92-11"><a href="pandemia-covid-19.html#cb92-11" aria-hidden="true" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;Sin sintomas o Minima&#39;</span>, <span class="st">&#39;Depresion Media&#39;</span>, <span class="st">&#39;Depresion Moderada&#39;</span>, <span class="st">&#39;Depresion Moderada-Severa</span><span class="sc">\n</span><span class="st">a Severa&#39;</span>))) <span class="sc">%&gt;%</span>  </span>
-<span id="cb92-12"><a href="pandemia-covid-19.html#cb92-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prop</span>(depr, <span class="at">by =</span> <span class="fu">c</span>(ola, dias_cuarentena_t), <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span>  </span>
-<span id="cb92-13"><a href="pandemia-covid-19.html#cb92-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> prop, <span class="at">x =</span> dias_cuarentena_t, <span class="at">fill =</span> depr,</span>
-<span id="cb92-14"><a href="pandemia-covid-19.html#cb92-14" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> scales<span class="sc">::</span><span class="fu">percent</span>(prop, <span class="at">accuracy =</span> .<span class="dv">1</span>))) <span class="sc">+</span> </span>
-<span id="cb92-15"><a href="pandemia-covid-19.html#cb92-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb92-16"><a href="pandemia-covid-19.html#cb92-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">&#39;Stack&#39;</span>) <span class="sc">+</span></span>
-<span id="cb92-17"><a href="pandemia-covid-19.html#cb92-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
-<span id="cb92-18"><a href="pandemia-covid-19.html#cb92-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb92-19"><a href="pandemia-covid-19.html#cb92-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb92-20"><a href="pandemia-covid-19.html#cb92-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">begin =</span> .<span class="dv">33</span>, <span class="at">end =</span> .<span class="dv">85</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">option =</span> <span class="st">&#39;viridis&#39;</span>) <span class="sc">+</span></span>
-<span id="cb92-21"><a href="pandemia-covid-19.html#cb92-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">position =</span> <span class="fu">position_stack</span>(<span class="at">vjust =</span> .<span class="dv">5</span>),</span>
-<span id="cb92-22"><a href="pandemia-covid-19.html#cb92-22" aria-hidden="true" tabindex="-1"></a>            <span class="at">size=</span> <span class="fl">2.75</span>, <span class="at">color =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&#39;black&#39;</span>, <span class="st">&#39;black&#39;</span>, <span class="st">&#39;white&#39;</span>, <span class="st">&#39;white&#39;</span>), <span class="dv">4</span>)) <span class="sc">+</span></span>
-<span id="cb92-23"><a href="pandemia-covid-19.html#cb92-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;top&#39;</span>,</span>
-<span id="cb92-24"><a href="pandemia-covid-19.html#cb92-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="reporte-elsoc_files/figure-html/dias_cuarentena-depr-1.png" alt="Sintomatología Depresiva, según Días de Cuarentena Acumulada al momento de la entrevista" width="672" />
 <p class="caption">
 (#fig:dias_cuarentena-depr)Sintomatología Depresiva, según Días de Cuarentena Acumulada al momento de la entrevista
 </p>
 </div>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb93-1"><a href="pandemia-covid-19.html#cb93-1" aria-hidden="true" tabindex="-1"></a>datos.g19<span class="fl">.8</span> <span class="ot">&lt;-</span> elsoc_long_2016_2021 <span class="sc">%&gt;%</span> </span>
-<span id="cb93-2"><a href="pandemia-covid-19.html#cb93-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">fecha =</span> <span class="fu">as_date</span>(<span class="fu">make_date</span>(<span class="at">year =</span> annio_entr, <span class="at">month =</span> mes_entr, <span class="at">day =</span> dia_entr))) <span class="sc">%&gt;%</span> </span>
-<span id="cb93-3"><a href="pandemia-covid-19.html#cb93-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(cuarentenas_acum , <span class="at">by =</span> <span class="fu">c</span>(<span class="st">&#39;comuna_cod&#39;</span>, <span class="st">&#39;fecha&#39;</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb93-4"><a href="pandemia-covid-19.html#cb93-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">m44_rec =</span> <span class="fu">factor</span>(car<span class="sc">::</span><span class="fu">recode</span>(m44, <span class="st">&quot;c(1,2)=&#39;Nada o Pocos Ahorros&#39;; c(3)=&#39;Algo de Ahorros&#39;;c(4,5)=&#39;Bastante o Muchos Ahorros&#39;&quot;</span>), <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&quot;Nada o Pocos Ahorros&quot;</span>, <span class="st">&quot;Algo de Ahorros&quot;</span>, <span class="st">&quot;Bastante o Muchos Ahorros&quot;</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb93-5"><a href="pandemia-covid-19.html#cb93-5" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(ola <span class="sc">==</span> <span class="dv">5</span> <span class="sc">&amp;</span> tipo_atricion <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(dias_cuarentena_t) <span class="sc">&amp;</span> <span class="sc">!</span>m44_rec <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>, <span class="cn">NA</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb93-6"><a href="pandemia-covid-19.html#cb93-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prop</span>(m44_rec<span class="sc">==</span><span class="st">&#39;Nada o Pocos Ahorros&#39;</span>, <span class="at">by =</span> <span class="fu">c</span>(dias_cuarentena_t), <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb93-7"><a href="pandemia-covid-19.html#cb93-7" aria-hidden="true" tabindex="-1"></a>  sjlabelled<span class="sc">::</span><span class="fu">as_label</span>(m44_rec, dias_cuarentena_t) </span></code></pre></div>
 <pre><code>## 1 variables were not found in the dataset: m44_rec</code></pre>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb95-1"><a href="pandemia-covid-19.html#cb95-1" aria-hidden="true" tabindex="-1"></a>g19<span class="fl">.8</span> <span class="ot">&lt;-</span> datos.g19<span class="fl">.8</span> <span class="sc">%&gt;%</span> </span>
-<span id="cb95-2"><a href="pandemia-covid-19.html#cb95-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> prop, <span class="at">x =</span> dias_cuarentena_t, </span>
-<span id="cb95-3"><a href="pandemia-covid-19.html#cb95-3" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> scales<span class="sc">::</span><span class="fu">percent</span>(prop, <span class="at">accuracy =</span> .<span class="dv">1</span>))) <span class="sc">+</span> </span>
-<span id="cb95-4"><a href="pandemia-covid-19.html#cb95-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb95-5"><a href="pandemia-covid-19.html#cb95-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">&#39;Stack&#39;</span>) <span class="sc">+</span></span>
-<span id="cb95-6"><a href="pandemia-covid-19.html#cb95-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
-<span id="cb95-7"><a href="pandemia-covid-19.html#cb95-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb95-8"><a href="pandemia-covid-19.html#cb95-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb95-9"><a href="pandemia-covid-19.html#cb95-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">begin =</span> .<span class="dv">33</span>, <span class="at">end =</span> .<span class="dv">85</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">option =</span> <span class="st">&#39;viridis&#39;</span>) <span class="sc">+</span></span>
-<span id="cb95-10"><a href="pandemia-covid-19.html#cb95-10" aria-hidden="true" tabindex="-1"></a>  <span class="co">#cambiar geom_text tal que: Stack y cambio colores</span></span>
-<span id="cb95-11"><a href="pandemia-covid-19.html#cb95-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">position =</span> <span class="fu">position_stack</span>(<span class="at">vjust =</span> .<span class="dv">5</span>),</span>
-<span id="cb95-12"><a href="pandemia-covid-19.html#cb95-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">size=</span> <span class="fl">2.75</span>, <span class="at">color=</span><span class="st">&quot;white&quot;</span>) <span class="sc">+</span> </span>
-<span id="cb95-13"><a href="pandemia-covid-19.html#cb95-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;top&#39;</span>,</span>
-<span id="cb95-14"><a href="pandemia-covid-19.html#cb95-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_blank</span>()) </span>
-<span id="cb95-15"><a href="pandemia-covid-19.html#cb95-15" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb95-16"><a href="pandemia-covid-19.html#cb95-16" aria-hidden="true" tabindex="-1"></a>g19<span class="fl">.8</span></span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="reporte-elsoc_files/figure-html/dias_cuarentena-ahorro-1.png" alt="Nivel de Ahorro &quot;Nada o Poco&quot;, según Días de Cuarentena Acumulada al momento de la entrevista (2021)" width="672" />
 <p class="caption">
@@ -452,13 +330,13 @@ Figura 17.1: Histograma Fechas de Entrevistas
 </div>
 <div id="estrés-financiero" class="section level2" number="17.2">
 <h2><span class="header-section-number">17.2</span> Estrés Financiero</h2>
-<div class="figure" style="text-align: center"><span id="fig:satisfaccion-wave"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:satisfaccion-wave"></span>
 <img src="reporte-elsoc_files/figure-html/satisfaccion-wave-1.png" alt="Satisfacción con el Ingreso por Ola" width="672" />
 <p class="caption">
 Figura 17.2: Satisfacción con el Ingreso por Ola
 </p>
 </div>
-<div class="figure" style="text-align: center"><span id="fig:satisfaccion-retiro"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:satisfaccion-retiro"></span>
 <img src="reporte-elsoc_files/figure-html/satisfaccion-retiro-1.png" alt="Satisfacción con el Ingreso según Retiro AFP" width="672" />
 <p class="caption">
 Figura 17.3: Satisfacción con el Ingreso según Retiro AFP
@@ -476,56 +354,19 @@ Figura 17.3: Satisfacción con el Ingreso según Retiro AFP
 (#fig:clase.sub.hij-1erretiro)Clase Social Subjetiva de Hijo según Primer Retiro AFP
 </p>
 </div>
-<div class="figure" style="text-align: center"><span id="fig:endeud-1retiro"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:endeud-1retiro"></span>
 <img src="reporte-elsoc_files/figure-html/endeud-1retiro-1.png" alt="Sobrecarga de Deuda según Primer Retiro AFP" width="672" />
 <p class="caption">
 Figura 17.4: Sobrecarga de Deuda según Primer Retiro AFP
 </p>
 </div>
-<div class="figure" style="text-align: center"><span id="fig:endeud-2retiro"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:endeud-2retiro"></span>
 <img src="reporte-elsoc_files/figure-html/endeud-2retiro-1.png" alt="Sobrecarga de Deuda según Primer Retiro AFP" width="672" />
 <p class="caption">
 Figura 17.5: Sobrecarga de Deuda según Primer Retiro AFP
 </p>
 </div>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb96-1"><a href="pandemia-covid-19.html#cb96-1" aria-hidden="true" tabindex="-1"></a>elsoc_long_2016_2021 <span class="sc">%&gt;%</span> </span>
-<span id="cb96-2"><a href="pandemia-covid-19.html#cb96-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(elsoc_wide_2016_2021 <span class="sc">%&gt;%</span> </span>
-<span id="cb96-3"><a href="pandemia-covid-19.html#cb96-3" aria-hidden="true" tabindex="-1"></a>              <span class="fu">filter</span>(<span class="sc">!</span>m63_02_w05 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>) <span class="sc">&amp;</span> <span class="sc">!</span>m63_03_w05 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb96-4"><a href="pandemia-covid-19.html#cb96-4" aria-hidden="true" tabindex="-1"></a>              <span class="fu">mutate</span>(<span class="at">retiros =</span> <span class="fu">factor</span>(<span class="fu">case_when</span>(m63_02_w05 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> m63_03_w05 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb96-5"><a href="pandemia-covid-19.html#cb96-5" aria-hidden="true" tabindex="-1"></a>                                                m63_02_w05 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
-<span id="cb96-6"><a href="pandemia-covid-19.html#cb96-6" aria-hidden="true" tabindex="-1"></a>                                                <span class="cn">TRUE</span> <span class="sc">~</span> <span class="dv">3</span>),</span>
-<span id="cb96-7"><a href="pandemia-covid-19.html#cb96-7" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>),</span>
-<span id="cb96-8"><a href="pandemia-covid-19.html#cb96-8" aria-hidden="true" tabindex="-1"></a>                                      <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;Ningún retiro&#39;</span>, </span>
-<span id="cb96-9"><a href="pandemia-covid-19.html#cb96-9" aria-hidden="true" tabindex="-1"></a>                                                 <span class="st">&#39;Primer retiro&#39;</span>, </span>
-<span id="cb96-10"><a href="pandemia-covid-19.html#cb96-10" aria-hidden="true" tabindex="-1"></a>                                                 <span class="st">&#39;Primer y segundo</span><span class="sc">\n</span><span class="st"> retiro&#39;</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb96-11"><a href="pandemia-covid-19.html#cb96-11" aria-hidden="true" tabindex="-1"></a>              <span class="fu">select</span>(idencuesta, retiros), <span class="at">by =</span> <span class="st">&#39;idencuesta&#39;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb96-12"><a href="pandemia-covid-19.html#cb96-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(tipo_atricion <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> ola <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">5</span>) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(retiros) <span class="sc">&amp;</span></span>
-<span id="cb96-13"><a href="pandemia-covid-19.html#cb96-13" aria-hidden="true" tabindex="-1"></a>           <span class="sc">!</span>m42_01 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>) <span class="sc">&amp;</span> <span class="sc">!</span>m42_02 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>) <span class="sc">&amp;</span> </span>
-<span id="cb96-14"><a href="pandemia-covid-19.html#cb96-14" aria-hidden="true" tabindex="-1"></a>           <span class="sc">!</span>m42_03 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>) <span class="sc">&amp;</span> <span class="sc">!</span>m42_04 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb96-15"><a href="pandemia-covid-19.html#cb96-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(m42_01, m42_02, m42_03, m42_04)) <span class="sc">%&gt;%</span> </span>
-<span id="cb96-16"><a href="pandemia-covid-19.html#cb96-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prop</span>(value, <span class="at">by =</span> <span class="fu">c</span>(ola, retiros, name), <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb96-17"><a href="pandemia-covid-19.html#cb96-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_label</span>(value, ola) <span class="sc">%&gt;%</span> </span>
-<span id="cb96-18"><a href="pandemia-covid-19.html#cb96-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(value <span class="sc">==</span> <span class="dv">1</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb96-19"><a href="pandemia-covid-19.html#cb96-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">name =</span> <span class="fu">factor</span>(name, </span>
-<span id="cb96-20"><a href="pandemia-covid-19.html#cb96-20" aria-hidden="true" tabindex="-1"></a>                       <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&#39;m42_01&#39;</span>, <span class="st">&#39;m42_02&#39;</span>, <span class="st">&#39;m42_03&#39;</span>, <span class="st">&#39;m42_04&#39;</span>),</span>
-<span id="cb96-21"><a href="pandemia-covid-19.html#cb96-21" aria-hidden="true" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;Casa</span><span class="sc">\n</span><span class="st">comercial&#39;</span>, <span class="st">&#39;Banco&#39;</span>, </span>
-<span id="cb96-22"><a href="pandemia-covid-19.html#cb96-22" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&#39;Parientes&#39;</span>, <span class="st">&#39;Otros&#39;</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb96-23"><a href="pandemia-covid-19.html#cb96-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> prop, <span class="at">x =</span> name, <span class="at">fill =</span> ola, </span>
-<span id="cb96-24"><a href="pandemia-covid-19.html#cb96-24" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> scales<span class="sc">::</span><span class="fu">percent</span>(prop, <span class="at">accuracy =</span> .<span class="dv">1</span>))) <span class="sc">+</span></span>
-<span id="cb96-25"><a href="pandemia-covid-19.html#cb96-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(.<span class="sc">~</span>retiros) <span class="sc">+</span></span>
-<span id="cb96-26"><a href="pandemia-covid-19.html#cb96-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb96-27"><a href="pandemia-covid-19.html#cb96-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">&quot;dodge2&quot;</span>) <span class="sc">+</span></span>
-<span id="cb96-28"><a href="pandemia-covid-19.html#cb96-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent,</span>
-<span id="cb96-29"><a href="pandemia-covid-19.html#cb96-29" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb96-30"><a href="pandemia-covid-19.html#cb96-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb96-31"><a href="pandemia-covid-19.html#cb96-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb96-32"><a href="pandemia-covid-19.html#cb96-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">begin =</span> .<span class="dv">33</span>, <span class="at">end =</span> .<span class="dv">66</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">option =</span> <span class="st">&#39;viridis&#39;</span>) <span class="sc">+</span> </span>
-<span id="cb96-33"><a href="pandemia-covid-19.html#cb96-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.8</span>,</span>
-<span id="cb96-34"><a href="pandemia-covid-19.html#cb96-34" aria-hidden="true" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> .<span class="dv">9</span>),</span>
-<span id="cb96-35"><a href="pandemia-covid-19.html#cb96-35" aria-hidden="true" tabindex="-1"></a>            <span class="at">size=</span> <span class="fl">2.75</span>)  <span class="sc">+</span></span>
-<span id="cb96-36"><a href="pandemia-covid-19.html#cb96-36" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;top&#39;</span>,</span>
-<span id="cb96-37"><a href="pandemia-covid-19.html#cb96-37" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:deuda-retiro1"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:deuda-retiro1"></span>
 <img src="reporte-elsoc_files/figure-html/deuda-retiro1-1.png" alt="Primer retiro de AFP, según deuda" width="672" />
 <p class="caption">
 Figura 17.6: Primer retiro de AFP, según deuda
@@ -544,7 +385,6 @@ Figura 17.6: Primer retiro de AFP, según deuda
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -563,6 +403,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -583,6 +424,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

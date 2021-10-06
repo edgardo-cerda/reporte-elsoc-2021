@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Capítulo 10 Cambio Constitucional | Estudio Longitudinal Social de Chile</title>
   <meta name="description" content="Capítulo 10 Cambio Constitucional | Estudio Longitudinal Social de Chile" />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Capítulo 10 Cambio Constitucional | Estudio Longitudinal Social de Chile" />
   <meta property="og:type" content="book" />
@@ -33,7 +33,8 @@
 <link rel="prev" href="justificación-de-la-violencia.html"/>
 <link rel="next" href="conflicto-y-cohesión-territorial-en-pandemia.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,7 +50,8 @@
 
 
 
-
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
@@ -119,6 +121,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
 </head>
 
 <body>
@@ -131,9 +134,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>1</b> Introducción</a>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introducción</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="introducción.html"><a href="introducción.html#sobre-coes"><i class="fa fa-check"></i><b>1.1</b> Sobre COES</a></li>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#sobre-coes"><i class="fa fa-check"></i><b>1.1</b> Sobre COES</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="sobre-elsoc.html"><a href="sobre-elsoc.html"><i class="fa fa-check"></i><b>2</b> Sobre ELSOC</a>
 <ul>
@@ -279,155 +282,31 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
             <section class="normal" id="section-">
 <div id="cambio-constitucional" class="section level1" number="10">
 <h1><span class="header-section-number">Capítulo 10</span> Cambio Constitucional</h1>
-<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="cambio-constitucional.html#cb25-1" aria-hidden="true" tabindex="-1"></a>datos.g11<span class="fl">.1</span> <span class="ot">&lt;-</span> elsoc_long_2016_2021 <span class="sc">%&gt;%</span> </span>
-<span id="cb25-2"><a href="cambio-constitucional.html#cb25-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(ola <span class="sc">==</span> <span class="dv">5</span> <span class="sc">&amp;</span> tipo_atricion <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> <span class="sc">!</span>c43 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb25-3"><a href="cambio-constitucional.html#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">edadt =</span> <span class="fu">factor</span>(car<span class="sc">::</span><span class="fu">recode</span>(m0_edad, <span class="st">&quot;18:29 = 1; 30:49 = 2; 50:64 = 3; 65:150 = 4&quot;</span>),</span>
-<span id="cb25-4"><a href="cambio-constitucional.html#cb25-4" aria-hidden="true" tabindex="-1"></a>                           <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;18-29&#39;</span>, <span class="st">&#39;30-49&#39;</span>, <span class="st">&#39;50-64&#39;</span>, <span class="st">&#39;65 o más&#39;</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb25-5"><a href="cambio-constitucional.html#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prop</span>(c43, <span class="at">by =</span> edadt, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb25-6"><a href="cambio-constitucional.html#cb25-6" aria-hidden="true" tabindex="-1"></a>  sjlabelled<span class="sc">::</span><span class="fu">as_label</span>(c43, edadt)</span>
-<span id="cb25-7"><a href="cambio-constitucional.html#cb25-7" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb25-8"><a href="cambio-constitucional.html#cb25-8" aria-hidden="true" tabindex="-1"></a>g11<span class="fl">.1</span> <span class="ot">&lt;-</span> datos.g11<span class="fl">.1</span> <span class="sc">%&gt;%</span> </span>
-<span id="cb25-9"><a href="cambio-constitucional.html#cb25-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> prop, <span class="at">x =</span> edadt, <span class="at">fill =</span> c43, </span>
-<span id="cb25-10"><a href="cambio-constitucional.html#cb25-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> scales<span class="sc">::</span><span class="fu">percent</span>(prop, <span class="at">accuracy =</span> .<span class="dv">1</span>))) <span class="sc">+</span></span>
-<span id="cb25-11"><a href="cambio-constitucional.html#cb25-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb25-12"><a href="cambio-constitucional.html#cb25-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">&#39;dodge2&#39;</span>) <span class="sc">+</span></span>
-<span id="cb25-13"><a href="cambio-constitucional.html#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent,</span>
-<span id="cb25-14"><a href="cambio-constitucional.html#cb25-14" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb25-15"><a href="cambio-constitucional.html#cb25-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb25-16"><a href="cambio-constitucional.html#cb25-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb25-17"><a href="cambio-constitucional.html#cb25-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">begin =</span> <span class="dv">0</span>, <span class="at">end =</span> .<span class="dv">85</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">option =</span> <span class="st">&#39;viridis&#39;</span>) <span class="sc">+</span></span>
-<span id="cb25-18"><a href="cambio-constitucional.html#cb25-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.8</span>,</span>
-<span id="cb25-19"><a href="cambio-constitucional.html#cb25-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> .<span class="dv">9</span>),</span>
-<span id="cb25-20"><a href="cambio-constitucional.html#cb25-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">size=</span> <span class="fl">2.75</span>)  <span class="sc">+</span> </span>
-<span id="cb25-21"><a href="cambio-constitucional.html#cb25-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;top&#39;</span>,</span>
-<span id="cb25-22"><a href="cambio-constitucional.html#cb25-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_blank</span>()) </span>
-<span id="cb25-23"><a href="cambio-constitucional.html#cb25-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb25-24"><a href="cambio-constitucional.html#cb25-24" aria-hidden="true" tabindex="-1"></a>g11<span class="fl">.1</span></span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:particip-edad"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:particip-edad"></span>
 <img src="reporte-elsoc_files/figure-html/particip-edad-1.png" alt="Participación en Plebiscito Nueva Constitucion" width="672" />
 <p class="caption">
 Figura 10.1: Participación en Plebiscito Nueva Constitucion
 </p>
 </div>
-<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="cambio-constitucional.html#cb26-1" aria-hidden="true" tabindex="-1"></a>datos.g11<span class="fl">.2</span> <span class="ot">&lt;-</span> elsoc_long_2016_2021 <span class="sc">%&gt;%</span> </span>
-<span id="cb26-2"><a href="cambio-constitucional.html#cb26-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(ola <span class="sc">==</span> <span class="dv">5</span> <span class="sc">&amp;</span> tipo_atricion <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> <span class="sc">!</span>c44 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>)<span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(c44)) <span class="sc">%&gt;%</span> </span>
-<span id="cb26-3"><a href="cambio-constitucional.html#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prop</span>(c44, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">vartype =</span> <span class="cn">NULL</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb26-4"><a href="cambio-constitucional.html#cb26-4" aria-hidden="true" tabindex="-1"></a>  sjlabelled<span class="sc">::</span><span class="fu">as_label</span>(c44) <span class="sc">%&gt;%</span> </span>
-<span id="cb26-5"><a href="cambio-constitucional.html#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">datos =</span> <span class="st">&#39;Datos ELSOC&#39;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb26-6"><a href="cambio-constitucional.html#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_row</span>(<span class="at">c44 =</span> <span class="fu">c</span>(<span class="st">&#39;Apruebo&#39;</span>, <span class="st">&#39;Rechazo&#39;</span>), <span class="at">prop =</span> <span class="fu">c</span>(.<span class="dv">7828</span>, .<span class="dv">2172</span>), <span class="at">datos =</span> <span class="fu">c</span>(<span class="st">&#39;Datos servel&#39;</span>, <span class="st">&#39;Datos servel&#39;</span>))</span>
-<span id="cb26-7"><a href="cambio-constitucional.html#cb26-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-8"><a href="cambio-constitucional.html#cb26-8" aria-hidden="true" tabindex="-1"></a>g11<span class="fl">.2</span> <span class="ot">&lt;-</span> datos.g11<span class="fl">.2</span> <span class="sc">%&gt;%</span> </span>
-<span id="cb26-9"><a href="cambio-constitucional.html#cb26-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> prop, <span class="at">x =</span> datos, <span class="at">fill =</span> c44, </span>
-<span id="cb26-10"><a href="cambio-constitucional.html#cb26-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> scales<span class="sc">::</span><span class="fu">percent</span>(prop, <span class="at">accuracy =</span> .<span class="dv">1</span>))) <span class="sc">+</span></span>
-<span id="cb26-11"><a href="cambio-constitucional.html#cb26-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb26-12"><a href="cambio-constitucional.html#cb26-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">&#39;dodge2&#39;</span>) <span class="sc">+</span></span>
-<span id="cb26-13"><a href="cambio-constitucional.html#cb26-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent,</span>
-<span id="cb26-14"><a href="cambio-constitucional.html#cb26-14" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb26-15"><a href="cambio-constitucional.html#cb26-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb26-16"><a href="cambio-constitucional.html#cb26-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb26-17"><a href="cambio-constitucional.html#cb26-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">begin =</span> <span class="dv">0</span>, <span class="at">end =</span> .<span class="dv">85</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">option =</span> <span class="st">&#39;viridis&#39;</span>) <span class="sc">+</span></span>
-<span id="cb26-18"><a href="cambio-constitucional.html#cb26-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.8</span>,</span>
-<span id="cb26-19"><a href="cambio-constitucional.html#cb26-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> .<span class="dv">9</span>),</span>
-<span id="cb26-20"><a href="cambio-constitucional.html#cb26-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">size=</span> <span class="fl">2.75</span>)  <span class="sc">+</span> </span>
-<span id="cb26-21"><a href="cambio-constitucional.html#cb26-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;top&#39;</span>,</span>
-<span id="cb26-22"><a href="cambio-constitucional.html#cb26-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span>
-<span id="cb26-23"><a href="cambio-constitucional.html#cb26-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb26-24"><a href="cambio-constitucional.html#cb26-24" aria-hidden="true" tabindex="-1"></a>g11<span class="fl">.2</span></span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:servel-apruebo"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:servel-apruebo"></span>
 <img src="reporte-elsoc_files/figure-html/servel-apruebo-1.png" alt="Voto retrospectivo Plebiscito Nueva Constitucion" width="672" />
 <p class="caption">
 Figura 10.2: Voto retrospectivo Plebiscito Nueva Constitucion
 </p>
 </div>
-<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="cambio-constitucional.html#cb27-1" aria-hidden="true" tabindex="-1"></a>datos.g11<span class="fl">.3</span> <span class="ot">&lt;-</span> elsoc_long_2016_2021 <span class="sc">%&gt;%</span> </span>
-<span id="cb27-2"><a href="cambio-constitucional.html#cb27-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(ola <span class="sc">==</span> <span class="dv">5</span> <span class="sc">&amp;</span> tipo_atricion <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> <span class="sc">!</span>c45 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">4</span>, <span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(c45)) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-3"><a href="cambio-constitucional.html#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prop</span>(c45, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">vartype =</span> <span class="cn">NULL</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-4"><a href="cambio-constitucional.html#cb27-4" aria-hidden="true" tabindex="-1"></a>  sjlabelled<span class="sc">::</span><span class="fu">as_label</span>(c45) <span class="sc">%&gt;%</span> </span>
-<span id="cb27-5"><a href="cambio-constitucional.html#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">datos =</span> <span class="st">&#39;Datos ELSOC&#39;</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb27-6"><a href="cambio-constitucional.html#cb27-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_row</span>(<span class="at">c45 =</span> <span class="fu">c</span>(<span class="st">&#39;Convencion Mixta&#39;</span>, <span class="st">&#39;Convencion Constitucional&#39;</span>), <span class="at">prop =</span> <span class="fu">c</span>(.<span class="dv">2101</span>, .<span class="dv">7899</span>), <span class="at">datos =</span> <span class="fu">c</span>(<span class="st">&#39;Datos servel&#39;</span>, <span class="st">&#39;Datos servel&#39;</span>))</span>
-<span id="cb27-7"><a href="cambio-constitucional.html#cb27-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-8"><a href="cambio-constitucional.html#cb27-8" aria-hidden="true" tabindex="-1"></a>g11<span class="fl">.3</span> <span class="ot">&lt;-</span> datos.g11<span class="fl">.3</span> <span class="sc">%&gt;%</span> </span>
-<span id="cb27-9"><a href="cambio-constitucional.html#cb27-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> prop, <span class="at">x =</span> datos, <span class="at">fill =</span> c45, </span>
-<span id="cb27-10"><a href="cambio-constitucional.html#cb27-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="fu">as.character</span>(scales<span class="sc">::</span><span class="fu">percent</span>(prop, <span class="at">accuracy =</span> .<span class="dv">1</span>)))) <span class="sc">+</span></span>
-<span id="cb27-11"><a href="cambio-constitucional.html#cb27-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb27-12"><a href="cambio-constitucional.html#cb27-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">&#39;dodge2&#39;</span>) <span class="sc">+</span></span>
-<span id="cb27-13"><a href="cambio-constitucional.html#cb27-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent,</span>
-<span id="cb27-14"><a href="cambio-constitucional.html#cb27-14" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, <span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb27-15"><a href="cambio-constitucional.html#cb27-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb27-16"><a href="cambio-constitucional.html#cb27-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb27-17"><a href="cambio-constitucional.html#cb27-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">begin =</span> <span class="dv">0</span>, <span class="at">end =</span> .<span class="dv">85</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">option =</span> <span class="st">&#39;viridis&#39;</span>) <span class="sc">+</span></span>
-<span id="cb27-18"><a href="cambio-constitucional.html#cb27-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">vjust =</span> <span class="sc">-</span><span class="fl">0.8</span>,</span>
-<span id="cb27-19"><a href="cambio-constitucional.html#cb27-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_dodge</span>(<span class="at">width =</span> .<span class="dv">9</span>),</span>
-<span id="cb27-20"><a href="cambio-constitucional.html#cb27-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">size=</span> <span class="fl">2.75</span>)  <span class="sc">+</span> </span>
-<span id="cb27-21"><a href="cambio-constitucional.html#cb27-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;top&#39;</span>,</span>
-<span id="cb27-22"><a href="cambio-constitucional.html#cb27-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span>
-<span id="cb27-23"><a href="cambio-constitucional.html#cb27-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb27-24"><a href="cambio-constitucional.html#cb27-24" aria-hidden="true" tabindex="-1"></a>g11<span class="fl">.3</span></span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:servel-cc"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:servel-cc"></span>
 <img src="reporte-elsoc_files/figure-html/servel-cc-1.png" alt="Voto Retrospectivo Plebiscito Nueva Constitucion" width="672" />
 <p class="caption">
 Figura 10.3: Voto Retrospectivo Plebiscito Nueva Constitucion
 </p>
 </div>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="cambio-constitucional.html#cb28-1" aria-hidden="true" tabindex="-1"></a>datos.g11<span class="fl">.4</span> <span class="ot">&lt;-</span> elsoc_long_2016_2021 <span class="sc">%&gt;%</span> </span>
-<span id="cb28-2"><a href="cambio-constitucional.html#cb28-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">c11 =</span> car<span class="sc">::</span><span class="fu">recode</span>(c11, <span class="st">&#39;1=2;2=1&#39;</span>), <span class="co"># en c11 1 = no participa, a diferencia de c43</span></span>
-<span id="cb28-3"><a href="cambio-constitucional.html#cb28-3" aria-hidden="true" tabindex="-1"></a>         <span class="at">particip_electoral =</span> <span class="fu">ifelse</span>(ola <span class="sc">==</span> <span class="dv">5</span>, c43, c11),</span>
-<span id="cb28-4"><a href="cambio-constitucional.html#cb28-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">pos_id =</span> <span class="fu">factor</span>(car<span class="sc">::</span><span class="fu">recode</span>(c15, <span class="at">recodes =</span> <span class="st">&quot;0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4&quot;</span>),</span>
-<span id="cb28-5"><a href="cambio-constitucional.html#cb28-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>),</span>
-<span id="cb28-6"><a href="cambio-constitucional.html#cb28-6" aria-hidden="true" tabindex="-1"></a>                         <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;Izquierda&#39;</span>, <span class="st">&quot;Centro&quot;</span>, <span class="st">&quot;Derecha&quot;</span>, <span class="st">&quot;No se identifica&quot;</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb28-7"><a href="cambio-constitucional.html#cb28-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(tipo_atricion <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> <span class="sc">!</span>particip_electoral <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>) <span class="sc">&amp;</span> </span>
-<span id="cb28-8"><a href="cambio-constitucional.html#cb28-8" aria-hidden="true" tabindex="-1"></a>           ola <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(pos_id)) <span class="sc">%&gt;%</span> </span>
-<span id="cb28-9"><a href="cambio-constitucional.html#cb28-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prop</span>(particip_electoral <span class="sc">==</span> <span class="dv">1</span>, <span class="at">by =</span> <span class="fu">c</span>(ola, pos_id), <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb28-10"><a href="cambio-constitucional.html#cb28-10" aria-hidden="true" tabindex="-1"></a>  sjlabelled<span class="sc">::</span><span class="fu">as_label</span>(pos_id) <span class="sc">%&gt;%</span> </span>
-<span id="cb28-11"><a href="cambio-constitucional.html#cb28-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">ola =</span> <span class="fu">factor</span>(ola, <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>,<span class="dv">3</span>,<span class="dv">5</span>), <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;Elecciones Presidenciales</span><span class="sc">\n</span><span class="st">de 2013&#39;</span>, <span class="st">&#39;Elecciones Presidenciales</span><span class="sc">\n</span><span class="st">de 2017&#39;</span>, <span class="st">&#39;Plebiscito cambio</span><span class="sc">\n</span><span class="st">constitucional&#39;</span>)))</span>
-<span id="cb28-12"><a href="cambio-constitucional.html#cb28-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-13"><a href="cambio-constitucional.html#cb28-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-14"><a href="cambio-constitucional.html#cb28-14" aria-hidden="true" tabindex="-1"></a>g11<span class="fl">.4</span> <span class="ot">&lt;-</span> datos.g11<span class="fl">.4</span> <span class="sc">%&gt;%</span> </span>
-<span id="cb28-15"><a href="cambio-constitucional.html#cb28-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> prop, <span class="at">x =</span> ola, <span class="at">color =</span> pos_id, <span class="at">group =</span> pos_id,</span>
-<span id="cb28-16"><a href="cambio-constitucional.html#cb28-16" aria-hidden="true" tabindex="-1"></a>              <span class="at">label =</span> scales<span class="sc">::</span><span class="fu">percent</span>(prop, <span class="at">accuracy =</span> .<span class="dv">1</span>))) <span class="sc">+</span></span>
-<span id="cb28-17"><a href="cambio-constitucional.html#cb28-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span>   </span>
-<span id="cb28-18"><a href="cambio-constitucional.html#cb28-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
-<span id="cb28-19"><a href="cambio-constitucional.html#cb28-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size =</span> <span class="fl">1.8</span>) <span class="sc">+</span></span>
-<span id="cb28-20"><a href="cambio-constitucional.html#cb28-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent,</span>
-<span id="cb28-21"><a href="cambio-constitucional.html#cb28-21" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb28-22"><a href="cambio-constitucional.html#cb28-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb28-23"><a href="cambio-constitucional.html#cb28-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb28-24"><a href="cambio-constitucional.html#cb28-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>(<span class="at">begin =</span> <span class="fl">0.22</span>, <span class="at">end =</span> .<span class="dv">66</span>, <span class="at">direction =</span> <span class="dv">1</span>, <span class="at">option =</span> <span class="st">&#39;viridis&#39;</span>) <span class="sc">+</span></span>
-<span id="cb28-25"><a href="cambio-constitucional.html#cb28-25" aria-hidden="true" tabindex="-1"></a>  ggrepel<span class="sc">::</span><span class="fu">geom_text_repel</span>(<span class="at">size=</span> <span class="fl">2.25</span>) <span class="sc">+</span> </span>
-<span id="cb28-26"><a href="cambio-constitucional.html#cb28-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;top&#39;</span>,</span>
-<span id="cb28-27"><a href="cambio-constitucional.html#cb28-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span>
-<span id="cb28-28"><a href="cambio-constitucional.html#cb28-28" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb28-29"><a href="cambio-constitucional.html#cb28-29" aria-hidden="true" tabindex="-1"></a>g11<span class="fl">.4</span></span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:particip-elect-id"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:particip-elect-id"></span>
 <img src="reporte-elsoc_files/figure-html/particip-elect-id-1.png" alt="Sí Participa en Elecciones según Identificación Política" width="672" />
 <p class="caption">
 Figura 10.4: Sí Participa en Elecciones según Identificación Política
 </p>
 </div>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="cambio-constitucional.html#cb29-1" aria-hidden="true" tabindex="-1"></a>datos.g11<span class="fl">.5</span> <span class="ot">&lt;-</span> elsoc_long_2016_2021 <span class="sc">%&gt;%</span> </span>
-<span id="cb29-2"><a href="cambio-constitucional.html#cb29-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(ola <span class="sc">==</span> <span class="dv">5</span> <span class="sc">&amp;</span> tipo_atricion <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> <span class="sc">!</span>c44 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>, <span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>) <span class="sc">&amp;</span> <span class="sc">!</span>c15 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb29-3"><a href="cambio-constitucional.html#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pos_id =</span> <span class="fu">factor</span>(car<span class="sc">::</span><span class="fu">recode</span>(c15, <span class="at">recodes =</span> <span class="st">&quot;0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4&quot;</span>),</span>
-<span id="cb29-4"><a href="cambio-constitucional.html#cb29-4" aria-hidden="true" tabindex="-1"></a>                         <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>),</span>
-<span id="cb29-5"><a href="cambio-constitucional.html#cb29-5" aria-hidden="true" tabindex="-1"></a>                         <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;Izquierda&#39;</span>, <span class="st">&quot;Centro&quot;</span>, <span class="st">&quot;Derecha&quot;</span>, <span class="st">&quot;No se identifica&quot;</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb29-6"><a href="cambio-constitucional.html#cb29-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prop</span>(c44, <span class="at">by =</span> <span class="fu">c</span>(pos_id), <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">vartype =</span> <span class="cn">NULL</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb29-7"><a href="cambio-constitucional.html#cb29-7" aria-hidden="true" tabindex="-1"></a>  sjlabelled<span class="sc">::</span><span class="fu">as_label</span>(c44, pos_id) </span>
-<span id="cb29-8"><a href="cambio-constitucional.html#cb29-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-9"><a href="cambio-constitucional.html#cb29-9" aria-hidden="true" tabindex="-1"></a>g11<span class="fl">.5</span> <span class="ot">&lt;-</span> datos.g11<span class="fl">.5</span> <span class="sc">%&gt;%</span> </span>
-<span id="cb29-10"><a href="cambio-constitucional.html#cb29-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> prop, <span class="at">x =</span> pos_id, <span class="at">fill =</span> c44, </span>
-<span id="cb29-11"><a href="cambio-constitucional.html#cb29-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="fu">as.character</span>(scales<span class="sc">::</span><span class="fu">percent</span>(prop, <span class="at">accuracy =</span> .<span class="dv">1</span>)))) <span class="sc">+</span> </span>
-<span id="cb29-12"><a href="cambio-constitucional.html#cb29-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb29-13"><a href="cambio-constitucional.html#cb29-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">&quot;Stack&quot;</span>) <span class="sc">+</span></span>
-<span id="cb29-14"><a href="cambio-constitucional.html#cb29-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
-<span id="cb29-15"><a href="cambio-constitucional.html#cb29-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb29-16"><a href="cambio-constitucional.html#cb29-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb29-17"><a href="cambio-constitucional.html#cb29-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">begin =</span> .<span class="dv">33</span>, <span class="at">end =</span> .<span class="dv">66</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">option =</span> <span class="st">&#39;viridis&#39;</span>) <span class="sc">+</span></span>
-<span id="cb29-18"><a href="cambio-constitucional.html#cb29-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">position =</span> <span class="fu">position_stack</span>(<span class="at">vjust =</span> .<span class="dv">5</span>),</span>
-<span id="cb29-19"><a href="cambio-constitucional.html#cb29-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">size=</span> <span class="fl">2.75</span>, <span class="at">color =</span> <span class="fu">rep.int</span>(<span class="fu">c</span>(<span class="st">&#39;black&#39;</span>, <span class="st">&#39;black&#39;</span>), <span class="dv">4</span>)) <span class="sc">+</span> </span>
-<span id="cb29-20"><a href="cambio-constitucional.html#cb29-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;top&#39;</span>,</span>
-<span id="cb29-21"><a href="cambio-constitucional.html#cb29-21" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span>
-<span id="cb29-22"><a href="cambio-constitucional.html#cb29-22" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb29-23"><a href="cambio-constitucional.html#cb29-23" aria-hidden="true" tabindex="-1"></a>g11<span class="fl">.5</span></span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:id-pol-voto"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:id-pol-voto"></span>
 <img src="reporte-elsoc_files/figure-html/id-pol-voto-1.png" alt="Voto Retrospectivo Plebicito, según Posición Ideológica" width="672" />
 <p class="caption">
 Figura 10.5: Voto Retrospectivo Plebicito, según Posición Ideológica
@@ -435,126 +314,24 @@ Figura 10.5: Voto Retrospectivo Plebicito, según Posición Ideológica
 </div>
 <div id="patrones-de-votación" class="section level2" number="10.1">
 <h2><span class="header-section-number">10.1</span> Patrones de Votación</h2>
-<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="cambio-constitucional.html#cb30-1" aria-hidden="true" tabindex="-1"></a>datos.g11<span class="fl">.6</span> <span class="ot">&lt;-</span> elsoc_wide_2016_2021 <span class="sc">%&gt;%</span> </span>
-<span id="cb30-2"><a href="cambio-constitucional.html#cb30-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(tipo_atricion <span class="sc">==</span> <span class="dv">1</span> </span>
-<span id="cb30-3"><a href="cambio-constitucional.html#cb30-3" aria-hidden="true" tabindex="-1"></a>                <span class="sc">&amp;</span> <span class="sc">!</span>c44_w05 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>, <span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>)</span>
-<span id="cb30-4"><a href="cambio-constitucional.html#cb30-4" aria-hidden="true" tabindex="-1"></a>                <span class="sc">&amp;</span> <span class="sc">!</span>c39_w03 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(c44_w05) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(c39_w03)) <span class="sc">%&gt;%</span> </span>
-<span id="cb30-5"><a href="cambio-constitucional.html#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">survey_design_elsoc</span>(<span class="at">weights =</span> <span class="st">&#39;ponderador02_w05&#39;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb30-6"><a href="cambio-constitucional.html#cb30-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prop</span>(c44_w05, <span class="at">by =</span> c39_w03, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">vartype =</span> <span class="cn">NULL</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb30-7"><a href="cambio-constitucional.html#cb30-7" aria-hidden="true" tabindex="-1"></a>  sjlabelled<span class="sc">::</span><span class="fu">as_label</span>(c44_w05, c39_w03) </span>
-<span id="cb30-8"><a href="cambio-constitucional.html#cb30-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-9"><a href="cambio-constitucional.html#cb30-9" aria-hidden="true" tabindex="-1"></a>g11<span class="fl">.6</span> <span class="ot">&lt;-</span> datos.g11<span class="fl">.6</span> <span class="sc">%&gt;%</span> </span>
-<span id="cb30-10"><a href="cambio-constitucional.html#cb30-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> prop, <span class="at">y =</span> c39_w03, <span class="at">fill =</span> c44_w05, </span>
-<span id="cb30-11"><a href="cambio-constitucional.html#cb30-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="fu">as.character</span>(scales<span class="sc">::</span><span class="fu">percent</span>(prop, <span class="at">accuracy =</span> .<span class="dv">1</span>)))) <span class="sc">+</span> </span>
-<span id="cb30-12"><a href="cambio-constitucional.html#cb30-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb30-13"><a href="cambio-constitucional.html#cb30-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">&quot;Stack&quot;</span>) <span class="sc">+</span></span>
-<span id="cb30-14"><a href="cambio-constitucional.html#cb30-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
-<span id="cb30-15"><a href="cambio-constitucional.html#cb30-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb30-16"><a href="cambio-constitucional.html#cb30-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb30-17"><a href="cambio-constitucional.html#cb30-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">begin =</span> .<span class="dv">33</span>, <span class="at">end =</span> .<span class="dv">66</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">option =</span> <span class="st">&#39;viridis&#39;</span>) <span class="sc">+</span></span>
-<span id="cb30-18"><a href="cambio-constitucional.html#cb30-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">ifelse</span>(prop <span class="sc">&gt;</span> <span class="fl">0.04</span> , scales<span class="sc">::</span><span class="fu">percent</span>(prop, <span class="at">accuracy =</span> .<span class="dv">1</span>),<span class="st">&quot;&quot;</span>)),</span>
-<span id="cb30-19"><a href="cambio-constitucional.html#cb30-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_stack</span>(<span class="at">vjust =</span> .<span class="dv">5</span>),</span>
-<span id="cb30-20"><a href="cambio-constitucional.html#cb30-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">show.legend =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb30-21"><a href="cambio-constitucional.html#cb30-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> <span class="fl">2.75</span>) <span class="sc">+</span> </span>
-<span id="cb30-22"><a href="cambio-constitucional.html#cb30-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;top&#39;</span>,</span>
-<span id="cb30-23"><a href="cambio-constitucional.html#cb30-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_blank</span>()) </span>
-<span id="cb30-24"><a href="cambio-constitucional.html#cb30-24" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb30-25"><a href="cambio-constitucional.html#cb30-25" aria-hidden="true" tabindex="-1"></a>g11<span class="fl">.6</span></span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:presi-voto-c44"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:presi-voto-c44"></span>
 <img src="reporte-elsoc_files/figure-html/presi-voto-c44-1.png" alt="Voto Retrospectivo Plebicito, según Posición Ideológica" width="672" />
 <p class="caption">
 Figura 10.6: Voto Retrospectivo Plebicito, según Posición Ideológica
 </p>
 </div>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="cambio-constitucional.html#cb31-1" aria-hidden="true" tabindex="-1"></a>datos.g11<span class="fl">.7</span> <span class="ot">&lt;-</span> elsoc_wide_2016_2021 <span class="sc">%&gt;%</span> </span>
-<span id="cb31-2"><a href="cambio-constitucional.html#cb31-2" aria-hidden="true" tabindex="-1"></a>  dplyr<span class="sc">::</span><span class="fu">filter</span>(tipo_atricion <span class="sc">==</span> <span class="dv">1</span> </span>
-<span id="cb31-3"><a href="cambio-constitucional.html#cb31-3" aria-hidden="true" tabindex="-1"></a>                <span class="sc">&amp;</span> <span class="sc">!</span>c45_w05 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">3</span>,<span class="dv">4</span>, <span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>)</span>
-<span id="cb31-4"><a href="cambio-constitucional.html#cb31-4" aria-hidden="true" tabindex="-1"></a>                <span class="sc">&amp;</span> <span class="sc">!</span>c39_w03 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(c45_w05) <span class="sc">&amp;</span> <span class="sc">!</span><span class="fu">is.na</span>(c39_w03)) <span class="sc">%&gt;%</span> </span>
-<span id="cb31-5"><a href="cambio-constitucional.html#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">survey_design_elsoc</span>(<span class="at">weights =</span> <span class="st">&#39;ponderador02_w05&#39;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb31-6"><a href="cambio-constitucional.html#cb31-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prop</span>(c45_w05, <span class="at">by =</span> c39_w03, <span class="at">na.rm =</span> <span class="cn">TRUE</span>, <span class="at">vartype =</span> <span class="cn">NULL</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb31-7"><a href="cambio-constitucional.html#cb31-7" aria-hidden="true" tabindex="-1"></a>  sjlabelled<span class="sc">::</span><span class="fu">as_label</span>(c45_w05, c39_w03) </span>
-<span id="cb31-8"><a href="cambio-constitucional.html#cb31-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-9"><a href="cambio-constitucional.html#cb31-9" aria-hidden="true" tabindex="-1"></a>g11<span class="fl">.7</span> <span class="ot">&lt;-</span> datos.g11<span class="fl">.7</span> <span class="sc">%&gt;%</span> </span>
-<span id="cb31-10"><a href="cambio-constitucional.html#cb31-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> prop, <span class="at">y =</span> c39_w03, <span class="at">fill =</span> c45_w05, </span>
-<span id="cb31-11"><a href="cambio-constitucional.html#cb31-11" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> <span class="fu">as.character</span>(scales<span class="sc">::</span><span class="fu">percent</span>(prop, <span class="at">accuracy =</span> .<span class="dv">1</span>)))) <span class="sc">+</span> </span>
-<span id="cb31-12"><a href="cambio-constitucional.html#cb31-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb31-13"><a href="cambio-constitucional.html#cb31-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">&quot;Stack&quot;</span>) <span class="sc">+</span></span>
-<span id="cb31-14"><a href="cambio-constitucional.html#cb31-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span></span>
-<span id="cb31-15"><a href="cambio-constitucional.html#cb31-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb31-16"><a href="cambio-constitucional.html#cb31-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb31-17"><a href="cambio-constitucional.html#cb31-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">begin =</span> .<span class="dv">33</span>, <span class="at">end =</span> .<span class="dv">66</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">option =</span> <span class="st">&#39;viridis&#39;</span>) <span class="sc">+</span></span>
-<span id="cb31-18"><a href="cambio-constitucional.html#cb31-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> <span class="fu">ifelse</span>(prop <span class="sc">&gt;</span> <span class="fl">0.04</span> , scales<span class="sc">::</span><span class="fu">percent</span>(prop, <span class="at">accuracy =</span> .<span class="dv">1</span>),<span class="st">&quot;&quot;</span>)),</span>
-<span id="cb31-19"><a href="cambio-constitucional.html#cb31-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">position =</span> <span class="fu">position_stack</span>(<span class="at">vjust =</span> .<span class="dv">5</span>),</span>
-<span id="cb31-20"><a href="cambio-constitucional.html#cb31-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">show.legend =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb31-21"><a href="cambio-constitucional.html#cb31-21" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> <span class="fl">2.75</span>,</span>
-<span id="cb31-22"><a href="cambio-constitucional.html#cb31-22" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="fu">rep.int</span>(<span class="fu">c</span>(<span class="st">&#39;black&#39;</span>, <span class="st">&#39;white&#39;</span>), <span class="dv">10</span>)) <span class="sc">+</span> </span>
-<span id="cb31-23"><a href="cambio-constitucional.html#cb31-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;top&#39;</span>,</span>
-<span id="cb31-24"><a href="cambio-constitucional.html#cb31-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_blank</span>()) </span>
-<span id="cb31-25"><a href="cambio-constitucional.html#cb31-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb31-26"><a href="cambio-constitucional.html#cb31-26" aria-hidden="true" tabindex="-1"></a>g11<span class="fl">.7</span></span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:presi-voto-c45"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:presi-voto-c45"></span>
 <img src="reporte-elsoc_files/figure-html/presi-voto-c45-1.png" alt="Voto Retrospectivo Plebicito, según Posición Ideológica" width="672" />
 <p class="caption">
 Figura 10.7: Voto Retrospectivo Plebicito, según Posición Ideológica
 </p>
 </div>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="cambio-constitucional.html#cb32-1" aria-hidden="true" tabindex="-1"></a>datos.<span class="fl">11.7</span> <span class="ot">&lt;-</span> elsoc_wide_2016_2021 <span class="sc">%&gt;%</span> </span>
-<span id="cb32-2"><a href="cambio-constitucional.html#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(tipo_atricion <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> <span class="sc">!</span>c43_w05 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>) <span class="sc">&amp;</span> </span>
-<span id="cb32-3"><a href="cambio-constitucional.html#cb32-3" aria-hidden="true" tabindex="-1"></a>           <span class="sc">!</span>c11_w03 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb32-4"><a href="cambio-constitucional.html#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">survey_design_elsoc</span>(<span class="at">weights =</span> <span class="st">&#39;ponderador02_w05&#39;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb32-5"><a href="cambio-constitucional.html#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prop</span>(c43_w05, <span class="at">by =</span> c11_w03) <span class="sc">%&gt;%</span> </span>
-<span id="cb32-6"><a href="cambio-constitucional.html#cb32-6" aria-hidden="true" tabindex="-1"></a>  sjlabelled<span class="sc">::</span><span class="fu">as_label</span>(c43_w05, c11_w03)</span>
-<span id="cb32-7"><a href="cambio-constitucional.html#cb32-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb32-8"><a href="cambio-constitucional.html#cb32-8" aria-hidden="true" tabindex="-1"></a>datos.<span class="fl">11.7</span> <span class="sc">%&gt;%</span> </span>
-<span id="cb32-9"><a href="cambio-constitucional.html#cb32-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> prop, <span class="at">x =</span> c11_w03, <span class="at">fill =</span> c43_w05, </span>
-<span id="cb32-10"><a href="cambio-constitucional.html#cb32-10" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> scales<span class="sc">::</span><span class="fu">percent</span>(prop, <span class="at">accuracy =</span> .<span class="dv">1</span>))) <span class="sc">+</span> </span>
-<span id="cb32-11"><a href="cambio-constitucional.html#cb32-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb32-12"><a href="cambio-constitucional.html#cb32-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">&quot;Stack&quot;</span>) <span class="sc">+</span></span>
-<span id="cb32-13"><a href="cambio-constitucional.html#cb32-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span> </span>
-<span id="cb32-14"><a href="cambio-constitucional.html#cb32-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb32-15"><a href="cambio-constitucional.html#cb32-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="at">label =</span> <span class="st">&quot;Participación Electoral en 2017&quot;</span>) <span class="sc">+</span></span>
-<span id="cb32-16"><a href="cambio-constitucional.html#cb32-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">begin =</span> .<span class="dv">33</span>, <span class="at">end =</span> .<span class="dv">66</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">option =</span> <span class="st">&#39;viridis&#39;</span>) <span class="sc">+</span> </span>
-<span id="cb32-17"><a href="cambio-constitucional.html#cb32-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">position =</span> <span class="fu">position_stack</span>(<span class="at">vjust =</span> .<span class="dv">5</span>),</span>
-<span id="cb32-18"><a href="cambio-constitucional.html#cb32-18" aria-hidden="true" tabindex="-1"></a>            <span class="at">show.legend =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb32-19"><a href="cambio-constitucional.html#cb32-19" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> <span class="fl">2.75</span>,</span>
-<span id="cb32-20"><a href="cambio-constitucional.html#cb32-20" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&#39;black&#39;</span>, <span class="st">&#39;white&#39;</span>), <span class="dv">2</span>)) <span class="sc">+</span> </span>
-<span id="cb32-21"><a href="cambio-constitucional.html#cb32-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;top&#39;</span>,</span>
-<span id="cb32-22"><a href="cambio-constitucional.html#cb32-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_blank</span>()) </span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:2020-vs-2021"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:2020-vs-2021"></span>
 <img src="reporte-elsoc_files/figure-html/2020-vs-2021-1.png" alt="Participación Electoral 2021, según la Participación en 2017" width="672" />
 <p class="caption">
 Figura 10.8: Participación Electoral 2021, según la Participación en 2017
 </p>
 </div>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="cambio-constitucional.html#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co">#grafico y caracterización pendiente</span></span>
-<span id="cb33-2"><a href="cambio-constitucional.html#cb33-2" aria-hidden="true" tabindex="-1"></a>elsoc_wide_2016_2021 <span class="sc">%&gt;%</span> </span>
-<span id="cb33-3"><a href="cambio-constitucional.html#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(tipo_atricion <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> <span class="sc">!</span>c11_w03 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>, <span class="dv">3</span>) <span class="sc">&amp;</span> <span class="sc">!</span>c43_w05 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>, <span class="dv">3</span>) <span class="sc">&amp;</span></span>
-<span id="cb33-4"><a href="cambio-constitucional.html#cb33-4" aria-hidden="true" tabindex="-1"></a>           <span class="sc">!</span>c15_w03 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb33-5"><a href="cambio-constitucional.html#cb33-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">cambio_participa =</span> <span class="fu">factor</span>(<span class="fu">case_when</span>(c11_w03 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> c43_w05 <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="dv">1</span>,</span>
-<span id="cb33-6"><a href="cambio-constitucional.html#cb33-6" aria-hidden="true" tabindex="-1"></a>                                             c11_w03 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> c43_w05 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">2</span>,</span>
-<span id="cb33-7"><a href="cambio-constitucional.html#cb33-7" aria-hidden="true" tabindex="-1"></a>                                             c11_w03 <span class="sc">==</span> <span class="dv">2</span> <span class="sc">&amp;</span> c43_w05 <span class="sc">==</span> <span class="dv">2</span> <span class="sc">~</span> <span class="dv">3</span>,</span>
-<span id="cb33-8"><a href="cambio-constitucional.html#cb33-8" aria-hidden="true" tabindex="-1"></a>                                             c11_w03 <span class="sc">==</span> <span class="dv">2</span> <span class="sc">&amp;</span> c43_w05 <span class="sc">==</span> <span class="dv">1</span> <span class="sc">~</span> <span class="dv">4</span>),</span>
-<span id="cb33-9"><a href="cambio-constitucional.html#cb33-9" aria-hidden="true" tabindex="-1"></a>                                   <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;Se mantiene no votando&#39;</span>, <span class="st">&#39;Cambia a votar&#39;</span>,</span>
-<span id="cb33-10"><a href="cambio-constitucional.html#cb33-10" aria-hidden="true" tabindex="-1"></a>                                              <span class="st">&#39;Cambia a No Votar&#39;</span>, <span class="st">&#39;Se mantiene votando&#39;</span>)),</span>
-<span id="cb33-11"><a href="cambio-constitucional.html#cb33-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">pos_id_w03 =</span> <span class="fu">factor</span>(car<span class="sc">::</span><span class="fu">recode</span>(c15_w03, <span class="st">&quot;0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4&quot;</span>),</span>
-<span id="cb33-12"><a href="cambio-constitucional.html#cb33-12" aria-hidden="true" tabindex="-1"></a>                         <span class="at">levels =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>),</span>
-<span id="cb33-13"><a href="cambio-constitucional.html#cb33-13" aria-hidden="true" tabindex="-1"></a>                         <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;Izquierda&#39;</span>, <span class="st">&quot;Centro&quot;</span>, <span class="st">&quot;Derecha&quot;</span>, <span class="st">&quot;No se identifica&quot;</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb33-14"><a href="cambio-constitucional.html#cb33-14" aria-hidden="true" tabindex="-1"></a>  elsoc<span class="sc">::</span><span class="fu">survey_design_elsoc</span>(<span class="at">weights =</span> <span class="st">&#39;ponderador02_w05&#39;</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb33-15"><a href="cambio-constitucional.html#cb33-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prop</span>(cambio_participa, <span class="at">by =</span> pos_id_w03, <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb33-16"><a href="cambio-constitucional.html#cb33-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> prop, <span class="at">x =</span> pos_id_w03, <span class="at">fill =</span> cambio_participa, </span>
-<span id="cb33-17"><a href="cambio-constitucional.html#cb33-17" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> scales<span class="sc">::</span><span class="fu">percent</span>(prop, <span class="at">accuracy =</span> .<span class="dv">1</span>))) <span class="sc">+</span> </span>
-<span id="cb33-18"><a href="cambio-constitucional.html#cb33-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb33-19"><a href="cambio-constitucional.html#cb33-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">position =</span> <span class="st">&quot;Stack&quot;</span>) <span class="sc">+</span></span>
-<span id="cb33-20"><a href="cambio-constitucional.html#cb33-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent) <span class="sc">+</span> </span>
-<span id="cb33-21"><a href="cambio-constitucional.html#cb33-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb33-22"><a href="cambio-constitucional.html#cb33-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="at">label =</span> <span class="st">&quot;Posición ideológica en 2017&quot;</span>) <span class="sc">+</span></span>
-<span id="cb33-23"><a href="cambio-constitucional.html#cb33-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_viridis_d</span>(<span class="at">begin =</span> .<span class="dv">33</span>, <span class="at">end =</span> .<span class="dv">66</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">option =</span> <span class="st">&#39;viridis&#39;</span>) <span class="sc">+</span> </span>
-<span id="cb33-24"><a href="cambio-constitucional.html#cb33-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="at">position =</span> <span class="fu">position_stack</span>(<span class="at">vjust =</span> .<span class="dv">5</span>),</span>
-<span id="cb33-25"><a href="cambio-constitucional.html#cb33-25" aria-hidden="true" tabindex="-1"></a>            <span class="at">show.legend =</span> <span class="cn">FALSE</span>,</span>
-<span id="cb33-26"><a href="cambio-constitucional.html#cb33-26" aria-hidden="true" tabindex="-1"></a>            <span class="at">size =</span> <span class="fl">2.75</span>,</span>
-<span id="cb33-27"><a href="cambio-constitucional.html#cb33-27" aria-hidden="true" tabindex="-1"></a>            <span class="at">color =</span> <span class="fu">rep</span>(<span class="fu">c</span>(<span class="st">&#39;black&#39;</span>, <span class="st">&#39;black&#39;</span>, <span class="st">&#39;white&#39;</span>, <span class="st">&#39;white&#39;</span>), <span class="dv">4</span>)) <span class="sc">+</span> </span>
-<span id="cb33-28"><a href="cambio-constitucional.html#cb33-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;top&#39;</span>,</span>
-<span id="cb33-29"><a href="cambio-constitucional.html#cb33-29" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
 <p><img src="reporte-elsoc_files/figure-html/cambio_participa-1.png" width="672" /></p>
 
 </div>
@@ -569,7 +346,6 @@ Figura 10.8: Participación Electoral 2021, según la Participación en 2017
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -588,6 +364,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -608,6 +385,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }

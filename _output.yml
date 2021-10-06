@@ -9,5 +9,3 @@ bookdown::gitbook:
     size: 2
   info: false
   github-repo: "edgardo-cerda/reporte-elsoc-2021"
-bookdown::pdf_book:
-  keep_tex: true

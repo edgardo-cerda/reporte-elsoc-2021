@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Capítulo 9 Justificación de la Violencia | Estudio Longitudinal Social de Chile</title>
   <meta name="description" content="Capítulo 9 Justificación de la Violencia | Estudio Longitudinal Social de Chile" />
-  <meta name="generator" content="bookdown 0.20 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.24 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Capítulo 9 Justificación de la Violencia | Estudio Longitudinal Social de Chile" />
   <meta property="og:type" content="book" />
@@ -33,7 +33,8 @@
 <link rel="prev" href="perfiles-ideológicos-de-los-chilenos.html"/>
 <link rel="next" href="cambio-constitucional.html"/>
 <script src="libs/header-attrs-2.11/header-attrs.js"></script>
-<script src="libs/jquery-2.2.3/jquery.min.js"></script>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
 <link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
 <link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
@@ -49,7 +50,8 @@
 
 
 
-
+<link href="libs/anchor-sections-1.0.1/anchor-sections.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.0.1/anchor-sections.js"></script>
 <script src="libs/kePrint-0.0.1/kePrint.js"></script>
 <link href="libs/lightable-0.0.1/lightable.css" rel="stylesheet" />
 
@@ -119,6 +121,7 @@ code span.vs { color: #4070a0; } /* VerbatimString */
 code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
+
 </head>
 
 <body>
@@ -131,9 +134,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <nav role="navigation">
 
 <ul class="summary">
-<li class="chapter" data-level="1" data-path="introducción.html"><a href="introducción.html"><i class="fa fa-check"></i><b>1</b> Introducción</a>
+<li class="chapter" data-level="1" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i><b>1</b> Introducción</a>
 <ul>
-<li class="chapter" data-level="1.1" data-path="introducción.html"><a href="introducción.html#sobre-coes"><i class="fa fa-check"></i><b>1.1</b> Sobre COES</a></li>
+<li class="chapter" data-level="1.1" data-path="index.html"><a href="index.html#sobre-coes"><i class="fa fa-check"></i><b>1.1</b> Sobre COES</a></li>
 </ul></li>
 <li class="chapter" data-level="2" data-path="sobre-elsoc.html"><a href="sobre-elsoc.html"><i class="fa fa-check"></i><b>2</b> Sobre ELSOC</a>
 <ul>
@@ -281,30 +284,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h1><span class="header-section-number">Capítulo 9</span> Justificación de la Violencia</h1>
 <div id="justificación-de-la-violencia-para-el-control-social-a-manos-de-ciudadanos" class="section level2" number="9.1">
 <h2><span class="header-section-number">9.1</span> Justificación de la violencia para el control social – a manos de ciudadanos</h2>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="justificación-de-la-violencia.html#cb23-1" aria-hidden="true" tabindex="-1"></a>elsoc_long_2016_2021 <span class="sc">%&gt;%</span> </span>
-<span id="cb23-2"><a href="justificación-de-la-violencia.html#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(tipo_atricion <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> ola <span class="sc">%in%</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">4</span> <span class="sc">&amp;</span></span>
-<span id="cb23-3"><a href="justificación-de-la-violencia.html#cb23-3" aria-hidden="true" tabindex="-1"></a>           <span class="sc">!</span>f05_01 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>) <span class="sc">&amp;</span> <span class="sc">!</span>f05_02 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>)) <span class="sc">%&gt;%</span>  </span>
-<span id="cb23-4"><a href="justificación-de-la-violencia.html#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(f05_01, f05_02, ola, ponderador02, segmento_disenno, estrato_disenno) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-5"><a href="justificación-de-la-violencia.html#cb23-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(f05_01, f05_02)) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-6"><a href="justificación-de-la-violencia.html#cb23-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prop</span>(value <span class="sc">%in%</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">by =</span> <span class="fu">c</span>(ola, name), <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-7"><a href="justificación-de-la-violencia.html#cb23-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">name =</span> <span class="fu">factor</span>(name,</span>
-<span id="cb23-8"><a href="justificación-de-la-violencia.html#cb23-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&#39;f05_01&#39;</span>, <span class="st">&#39;f05_02&#39;</span>),</span>
-<span id="cb23-9"><a href="justificación-de-la-violencia.html#cb23-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;Personas persigan y golpeen a un delincuente</span><span class="sc">\n</span><span class="st"> que acaba de cometer un asalto&#39;</span>,<span class="st">&#39;Personas amarren a un poste y desnuden a un</span><span class="sc">\n</span><span class="st"> delincuente que acaba de cometer un asalto&#39;</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-10"><a href="justificación-de-la-violencia.html#cb23-10" aria-hidden="true" tabindex="-1"></a>sjlabelled<span class="sc">::</span><span class="fu">as_label</span>(ola) <span class="sc">%&gt;%</span> </span>
-<span id="cb23-11"><a href="justificación-de-la-violencia.html#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> prop, <span class="at">x =</span> ola, <span class="at">color =</span> name, <span class="at">group =</span> name,</span>
-<span id="cb23-12"><a href="justificación-de-la-violencia.html#cb23-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> scales<span class="sc">::</span><span class="fu">percent</span>(prop, <span class="at">accuracy =</span> .<span class="dv">1</span>))) <span class="sc">+</span></span>
-<span id="cb23-13"><a href="justificación-de-la-violencia.html#cb23-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb23-14"><a href="justificación-de-la-violencia.html#cb23-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb23-15"><a href="justificación-de-la-violencia.html#cb23-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
-<span id="cb23-16"><a href="justificación-de-la-violencia.html#cb23-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent,</span>
-<span id="cb23-17"><a href="justificación-de-la-violencia.html#cb23-17" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">5</span>)) <span class="sc">+</span></span>
-<span id="cb23-18"><a href="justificación-de-la-violencia.html#cb23-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb23-19"><a href="justificación-de-la-violencia.html#cb23-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb23-20"><a href="justificación-de-la-violencia.html#cb23-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>(<span class="at">begin =</span> .<span class="dv">33</span>, <span class="at">end =</span> .<span class="dv">66</span>, <span class="at">direction =</span> <span class="sc">-</span><span class="dv">1</span>, <span class="at">option =</span> <span class="st">&#39;viridis&#39;</span>) <span class="sc">+</span> </span>
-<span id="cb23-21"><a href="justificación-de-la-violencia.html#cb23-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text_repel</span>() <span class="sc">+</span></span>
-<span id="cb23-22"><a href="justificación-de-la-violencia.html#cb23-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;top&#39;</span>,</span>
-<span id="cb23-23"><a href="justificación-de-la-violencia.html#cb23-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
-<div class="figure"><span id="fig:just-vio-ola"></span>
+<div class="figure"><span style="display:block;" id="fig:just-vio-ola"></span>
 <img src="reporte-elsoc_files/figure-html/just-vio-ola-1.png" alt="Justificación de la violencia en relación a delincuencia, según ola de encuesta" width="672" />
 <p class="caption">
 Figura 9.1: Justificación de la violencia en relación a delincuencia, según ola de encuesta
@@ -313,32 +293,7 @@ Figura 9.1: Justificación de la violencia en relación a delincuencia, según o
 </div>
 <div id="justificación-de-la-violencia-para-el-control-social-a-manos-de-carabineros" class="section level2" number="9.2">
 <h2><span class="header-section-number">9.2</span> Justificación de la violencia para el control social – a manos de carabineros</h2>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb24-1"><a href="justificación-de-la-violencia.html#cb24-1" aria-hidden="true" tabindex="-1"></a>elsoc_long_2016_2021 <span class="sc">%&gt;%</span> </span>
-<span id="cb24-2"><a href="justificación-de-la-violencia.html#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(tipo_atricion <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> muestra <span class="sc">==</span> <span class="dv">1</span> <span class="sc">&amp;</span> </span>
-<span id="cb24-3"><a href="justificación-de-la-violencia.html#cb24-3" aria-hidden="true" tabindex="-1"></a>           <span class="sc">!</span>f05_03 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>) <span class="sc">&amp;</span> <span class="sc">!</span>f05_04 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>) <span class="sc">&amp;</span> <span class="sc">!</span>f05_07 <span class="sc">%in%</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">888</span>, <span class="sc">-</span><span class="dv">999</span>)) <span class="sc">%&gt;%</span>  </span>
-<span id="cb24-4"><a href="justificación-de-la-violencia.html#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(f05_03, f05_04, f05_07, ola, ponderador02, segmento_disenno, estrato_disenno) <span class="sc">%&gt;%</span> </span>
-<span id="cb24-5"><a href="justificación-de-la-violencia.html#cb24-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">c</span>(f05_03, f05_04, f05_07)) <span class="sc">%&gt;%</span> </span>
-<span id="cb24-6"><a href="justificación-de-la-violencia.html#cb24-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">prop</span>(value <span class="sc">%in%</span> <span class="dv">4</span><span class="sc">:</span><span class="dv">5</span>, <span class="at">by =</span> <span class="fu">c</span>(ola, name), <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb24-7"><a href="justificación-de-la-violencia.html#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">name =</span> <span class="fu">factor</span>(name,</span>
-<span id="cb24-8"><a href="justificación-de-la-violencia.html#cb24-8" aria-hidden="true" tabindex="-1"></a>                       <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">&#39;f05_03&#39;</span>, <span class="st">&#39;f05_04&#39;</span>, <span class="st">&#39;f05_07&#39;</span>),</span>
-<span id="cb24-9"><a href="justificación-de-la-violencia.html#cb24-9" aria-hidden="true" tabindex="-1"></a>                       <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">&#39;Carabineros use la fuerza para</span><span class="sc">\n</span><span class="st"> reprimir manifestación pacífica&#39;</span>,</span>
-<span id="cb24-10"><a href="justificación-de-la-violencia.html#cb24-10" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&#39;Carabineros desaloje a la fuerza</span><span class="sc">\n</span><span class="st">a estudiantes de liceo en toma&#39;</span>,</span>
-<span id="cb24-11"><a href="justificación-de-la-violencia.html#cb24-11" aria-hidden="true" tabindex="-1"></a>                                  <span class="st">&#39;Estudiantes tiren piedras a Carabi-</span><span class="sc">\n</span><span class="st">neros en marcha por la educación&#39;</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb24-12"><a href="justificación-de-la-violencia.html#cb24-12" aria-hidden="true" tabindex="-1"></a>sjlabelled<span class="sc">::</span><span class="fu">as_label</span>(ola) <span class="sc">%&gt;%</span> </span>
-<span id="cb24-13"><a href="justificación-de-la-violencia.html#cb24-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">y =</span> prop, <span class="at">x =</span> ola, <span class="at">color =</span> name, <span class="at">group =</span> name,</span>
-<span id="cb24-14"><a href="justificación-de-la-violencia.html#cb24-14" aria-hidden="true" tabindex="-1"></a>             <span class="at">label =</span> scales<span class="sc">::</span><span class="fu">percent</span>(prop, <span class="at">accuracy =</span> .<span class="dv">1</span>))) <span class="sc">+</span></span>
-<span id="cb24-15"><a href="justificación-de-la-violencia.html#cb24-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span> </span>
-<span id="cb24-16"><a href="justificación-de-la-violencia.html#cb24-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span> </span>
-<span id="cb24-17"><a href="justificación-de-la-violencia.html#cb24-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb24-18"><a href="justificación-de-la-violencia.html#cb24-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">labels =</span> scales<span class="sc">::</span>percent,</span>
-<span id="cb24-19"><a href="justificación-de-la-violencia.html#cb24-19" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>, .<span class="dv">5</span>)) <span class="sc">+</span></span>
-<span id="cb24-20"><a href="justificación-de-la-violencia.html#cb24-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb24-21"><a href="justificación-de-la-violencia.html#cb24-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="at">label =</span> <span class="cn">NULL</span>) <span class="sc">+</span></span>
-<span id="cb24-22"><a href="justificación-de-la-violencia.html#cb24-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_viridis_d</span>(<span class="at">begin =</span> <span class="dv">0</span>, <span class="at">end =</span> .<span class="dv">75</span>, <span class="at">option =</span> <span class="st">&#39;viridis&#39;</span>) <span class="sc">+</span> </span>
-<span id="cb24-23"><a href="justificación-de-la-violencia.html#cb24-23" aria-hidden="true" tabindex="-1"></a>  ggrepel<span class="sc">::</span><span class="fu">geom_text_repel</span>() <span class="sc">+</span></span>
-<span id="cb24-24"><a href="justificación-de-la-violencia.html#cb24-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">&#39;top&#39;</span>,</span>
-<span id="cb24-25"><a href="justificación-de-la-violencia.html#cb24-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.title =</span> <span class="fu">element_blank</span>())</span></code></pre></div>
-<div class="figure" style="text-align: center"><span id="fig:just-carab-ola"></span>
+<div class="figure" style="text-align: center"><span style="display:block;" id="fig:just-carab-ola"></span>
 <img src="reporte-elsoc_files/figure-html/just-carab-ola-1.png" alt="Justificación de la violencia en relación al actuar de Carabineros, según ola" width="672" />
 <p class="caption">
 Figura 9.2: Justificación de la violencia en relación al actuar de Carabineros, según ola
@@ -357,7 +312,6 @@ Figura 9.2: Justificación de la violencia en relación al actuar de Carabineros
     </div>
   </div>
 <script src="libs/gitbook-2.6.7/js/app.min.js"></script>
-<script src="libs/gitbook-2.6.7/js/lunr.js"></script>
 <script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
 <script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
@@ -376,6 +330,7 @@ gitbook.start({
 "weibo": false,
 "instapaper": false,
 "vk": false,
+"whatsapp": false,
 "all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
 },
 "fontsettings": {
@@ -396,6 +351,10 @@ gitbook.start({
 "text": null
 },
 "download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
 "toc": {
 "collapse": "subsection"
 }
