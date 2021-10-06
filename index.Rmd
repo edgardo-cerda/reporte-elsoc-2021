@@ -40,10 +40,7 @@ library(lubridate)
 ```
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(cache=FALSE, 
-                      warning=FALSE, 
-                      message=FALSE,
-                      echo=FALSE) 
+knitr::opts_chunk$set(cache=FALSE, warning=FALSE, message=FALSE, echo=FALSE) 
 
 Sys.setlocale("LC_ALL","ES_ES.UTF-8")
 ```
