@@ -15,37 +15,29 @@ editor_options:
 <!-- ### 2.1 Identificación política por ola -->
 
 ```{r echo=FALSE}
-datos.2.1 <- elsoc_long_2016_2021 %>%
-  filter(tipo_atricion == 1) %>%
-  mutate(pos_id = car::recode(c15, recodes = "c(0,1,2,3,4)=1; c(5)=2; c(6,7,8,9,10)=3; c(11,12, -999, -888)=4")) %>%
-  mutate(pos_id = factor(pos_id, levels = c(1, 2, 3, 4),
+
+elsoc_long_2016_2021 %>%
+  filter(tipo_atricion == 1 & !c15 %in% c(-888, -999)) %>%
+  mutate(pos_id = factor(car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
+                         levels = c(1, 2, 3, 4),
                          labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
   prop(x = pos_id, by = ola, na.rm = TRUE) %>% 
-  sjlabelled::as_label(ola)
+  sjlabelled::as_label(ola) %>% 
+  ggplot(aes(y = prop, x = pos_id, fill = ola, 
+             label = scales::percent(prop, accuracy = .1))) +
+  theme_bw() + 
+  geom_col(position= 'dodge2') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75) +
+  theme(legend.position = 'top',
+        legend.title = element_blank())
 
-g.2.1 <- datos.2.1 %>% 
-    ggplot(aes(y = prop, x = pos_id, fill = ola, 
-               label = as.character(scales::percent(prop, accuracy = .1)))) +
-    theme_bw() + 
-    geom_col(position= 'dodge2') +
-    #escala del eje y en porcentajes del 0 al 100%
-    scale_y_continuous(labels = scales::percent,
-                       limits = c(0, 1)) +
-    #Nombres de los ejes se eliminan
-    ylab(label = NULL) +
-    xlab(label = NULL) +
-    #colores oficiales por ola: degradé 'viridis'
-    scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
-    #etiquetas por sobre cada barra
-    geom_text(vjust = -0.8,
-              position = position_dodge(width = .9),
-              size= 2.75) +
-    #posicionamiento de leyenda arriba
-    theme(legend.position = 'top',
-          legend.title = element_blank())
-
-
-g.2.1
 ```
 
 ### 2.2 Alluvial de cambios de Identificación política
@@ -56,9 +48,9 @@ g.2.1
 elsoc_panel_m1 <- elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1) %>% 
   group_by(idencuesta) %>% 
-  mutate(pos_id = car::recode(c15, recodes = "c(0,1,2,3,4)=1; c(5)=2; c(6,7,8,9,10)=3; c(11,12, -999, -888)=4")) %>%
-  mutate(pos_id = factor(pos_id, levels = c(1, 2, 3, 4),
-                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
+  mutate(pos_id = factor(car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
+                       levels = c(1, 2, 3, 4),
+                       labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
   ungroup() %>%
   sjlabelled::as_label(ola) %>% 
   survey_design_elsoc()
@@ -91,22 +83,21 @@ g.2.2
 ### 2.3 De acuerdo o Totalmente de acuerdo con la cuarentena según identificación política el año 2021
 
 
-```{r include=FALSE}
-datos.2.3 <- elsoc_long_2016_2021 %>% 
+```{r}
+elsoc_long_2016_2021 %>% 
   filter(ola == 5 & tipo_atricion == 1 & 
            !c37_10 %in% c(-888, -999) & !c15 %in% c(-888, -999)) %>% 
-    mutate(pos_id = car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
-           pos_id = factor(pos_id, levels = c(1, 2, 3, 4),
+    mutate(pos_id = factor(car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
+                         levels = c(1, 2, 3, 4),
                          labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
-  prop(c37_10, pos_id, na.rm = TRUE) %>% 
-  sjlabelled::as_label(c37_10, pos_id)
-
-g.2.3 <- datos.2.3 %>% 
-  ggplot(aes(y = prop, x = pos_id, fill = c37_10, 
+  prop(c37_10 %in% 4:5, pos_id, na.rm = TRUE) %>% 
+  sjlabelled::as_label(pos_id) %>% 
+  ggplot(aes(y = prop, x = pos_id, fill = pos_id,
                label = scales::percent(prop, accuracy = .1))) +
   theme_bw() + 
     geom_col() +
-    scale_y_continuous(labels = scales::percent) +
+    scale_y_continuous(labels = scales::percent,
+                       limits = c(0, 1)) +
     ylab(label = NULL) +
     xlab(label = NULL) +
     scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
@@ -115,8 +106,6 @@ g.2.3 <- datos.2.3 %>%
               size= 2.75) +
     theme(legend.position = 'none',   
           legend.title = element_blank())
-
-g.2.3
 
 ```
 
@@ -125,23 +114,21 @@ g.2.3
 
 <!-- ### 2.4 Grado de acuerdo con la frase "Es más importante darle prioridad a la actividad económica que a la salud de la población" según identificación política -->
 
-```{r include=FALSE}
+```{r}
 
-datos.2.4 <- elsoc_long_2016_2021 %>% 
+elsoc_long_2016_2021 %>% 
   filter(ola == 5 & tipo_atricion == 1 & 
            !c37_09 %in% c(-888, -999) & !c15 %in% c(-888, -999)) %>% 
-    mutate(pos_id = car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
-           pos_id = factor(pos_id, levels = c(1, 2, 3, 4),
+    mutate(pos_id = factor(car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
+                         levels = c(1, 2, 3, 4),
                          labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
-  prop(c37_09, pos_id, na.rm = TRUE) %>% 
-  sjlabelled::as_label(c37_09, pos_id)
-
-g.2.4 <- datos.2.4 %>% 
-  ggplot(aes(y = prop, x = pos_id, fill = c37_09, 
+  prop(c37_09 %in% 4:5, pos_id, na.rm = TRUE) %>% 
+  sjlabelled::as_label(c37_09, pos_id) %>% 
+  ggplot(aes(y = prop, x = pos_id, fill = pos_id, 
                label = scales::percent(prop, accuracy = .1))) +
   theme_bw() + 
     geom_col() +
-    scale_y_continuous(labels = scales::percent) + 
+    scale_y_continuous(labels = scales::percent, limits = c(0,1)) + 
     ylab(label = NULL) +
     xlab(label = NULL) +
     scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
@@ -151,129 +138,89 @@ g.2.4 <- datos.2.4 %>%
     theme(legend.position = 'none',   
           legend.title = element_blank())
 
-g.2.4
-
 ```
 
 ### 2.6 Grado de acuerdo con el aborto según identificación política
 
-```{r include=FALSE}
-datos.2.6 <- elsoc_long_2016_2021 %>%
-  filter(tipo_atricion == 1 & c37_02 %in% c(4,5)) %>%
-  mutate(aborto = car::recode(c37_02, recodes = "c(4,5)= 1;
-                                      else=NA", as.factor = TRUE)) %>%
-  mutate(pos_id = car::recode(c15, recodes = "c(0,1,2,3,4)=1; c(5)=2; c(6,7,8,9,10)=3; c(11,12, -999, -888)=4")) %>%
-  mutate(pos_id = factor(pos_id, levels = c(1, 2, 3, 4),
-                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
-   prop(x = pos_id, by = c(ola, aborto), na.rm = TRUE) %>%
-  sjlabelled::as_label(ola)
+```{r}
 
-g2.6 <-datos.2.6 %>% 
-  ggplot(aes(y = prop, x = pos_id,  
-               label = as.character(scales::percent(prop, accuracy = .1)))) +
+elsoc_long_2016_2021 %>%
+  filter(tipo_atricion == 1 & ola %in% 3:5 & !c37_02 %in% c(-888, -999) & !c15 %in% c(-888, -999)) %>%
+  mutate(pos_id = factor(car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
+                         levels = c(1, 2, 3, 4),
+                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
+  prop(c37_02 %in% 4:5, by = c(ola, pos_id), na.rm = TRUE) %>%
+  as_label(ola) %>% 
+  ggplot(aes(y = prop, x = pos_id, fill = ola,  
+               label = scales::percent(prop, accuracy = .1))) +
     theme_bw() + 
     geom_col(position= 'dodge2') +
-    #escala del eje y en porcentajes del 0 al 100%
     scale_y_continuous(labels = scales::percent,
                        limits = c(0, 1)) +
-    #Nombres de los ejes se eliminan
     ylab(label = NULL) +
     xlab(label = NULL) +
-    #colores oficiales por ola: degradé 'viridis'
     scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
-  facet_grid(.~ola) +
-    #etiquetas por sobre cada barra
     geom_text(vjust = -0.8,
               position = position_dodge(width = .9),
               size= 2.75) +
-    #posicionamiento de leyenda arriba
     theme(legend.position = 'top',
           legend.title = element_blank())
 
-#g2.6
 ```
 
 ### 2.7 Grado de acuerdo con la capitalizacion individual pensiones según identificación política
 
 ```{r}
-datos.2.7 <- elsoc_long_2016_2021 %>%
-  filter(tipo_atricion == 1) %>%
-  mutate(cap_pension = car::recode(c37_04, recodes = "c(1,2)= 1;
-                                      c(3)= 2; 
-                                      c(4,5)= 3;
-                                      else=NA", as.factor = TRUE)) %>%
-  mutate(pos_id = car::recode(c15, recodes = "c(0,1,2,3,4)=1; c(5)=2; c(6,7,8,9,10)=3; c(11,12, -999, -888)=4")) %>%
-  filter(cap_pension %in% c(3)) %>% 
-  mutate(pos_id = factor(pos_id, levels = c(1, 2, 3, 4),
-                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
-  prop(x = pos_id, by = c(cap_pension, ola), na.rm = TRUE) %>% 
-  sjlabelled::as_label(ola)
-```
 
-```{r}
-g2.7 <-datos.2.7 %>% 
-  ggplot(aes(y = prop, x = ola, fill = cap_pension, 
-               label = as.character(scales::percent(prop, accuracy = .1)))) +
+elsoc_long_2016_2021 %>%
+  filter(tipo_atricion == 1 & ola %in% 3:5 & !c37_02 %in% c(-888, -999) & !c15 %in% c(-888, -999)) %>%
+  mutate(pos_id = factor(car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
+                         levels = c(1, 2, 3, 4),
+                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
+  prop(c37_02 %in% 4:5, by = c(ola, pos_id), na.rm = TRUE) %>%
+  as_label(ola) %>% 
+  ggplot(aes(y = prop, x = pos_id, fill = ola,  
+               label = scales::percent(prop, accuracy = .1))) +
     theme_bw() + 
     geom_col(position= 'dodge2') +
-    #escala del eje y en porcentajes del 0 al 100%
     scale_y_continuous(labels = scales::percent,
                        limits = c(0, 1)) +
-    #Nombres de los ejes se eliminan
     ylab(label = NULL) +
     xlab(label = NULL) +
-    #colores oficiales por ola: degradé 'viridis'
     scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
-  facet_grid(.~pos_id) +
-    #etiquetas por sobre cada barra
     geom_text(vjust = -0.8,
               position = position_dodge(width = .9),
               size= 2.75) +
-    #posicionamiento de leyenda arriba
     theme(legend.position = 'top',
           legend.title = element_blank())
 
-#g2.7
 ```
 
-### 2.8 Grado de acuerdo con las restricciones de ingreso de migrantes según identificación política
+### 2.8 Grado de acuerdo con las restricciones de ingreso de migrantes según identificación política (2019)
 
 ```{r}
-datos.2.8 <- elsoc_long_2016_2021 %>%
-  filter(tipo_atricion == 1) %>%
-  mutate(rest_migrantes = car::recode(c37_05, recodes = "c(1,2)= 1;
-                                      c(3)= 2; 
-                                      c(4,5)= 3;
-                                      else=NA", as.factor = TRUE)) %>%
-  mutate(pos_id = car::recode(c15, recodes = "c(0,1,2,3,4)=1; c(5)=2; c(6,7,8,9,10)=3; c(11,12, -999, -888)=4")) %>%
-  filter(rest_migrantes %in% c(3)) %>% 
-  mutate(pos_id = factor(pos_id, levels = c(1, 2, 3, 4),
+elsoc_long_2016_2021 %>%
+  filter(tipo_atricion == 1 & ola %in% 3:5 & 
+           !c37_05 %in% c(-888, -999) & !c15 %in% c(-888, -999)) %>%
+    mutate(pos_id = factor(car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
+                         levels = c(1, 2, 3, 4),
                          labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
-  prop(x = pos_id, by = c(rest_migrantes, ola), na.rm = TRUE) %>% 
-  sjlabelled::as_label(ola) %>%
-  na.omit()
-g2.8 <-datos.2.8 %>% 
-  ggplot(aes(y = prop, x = ola, fill = rest_migrantes, 
-               label = as.character(scales::percent(prop, accuracy = .1)))) +
+  prop(x = c37_05 %in% 4:5, by = c(ola, pos_id), na.rm = TRUE) %>% 
+  as_label(ola) %>% 
+  ggplot(aes(y = prop, x = pos_id, fill = ola, 
+               label = scales::percent(prop, accuracy = .1))) +
     theme_bw() + 
     geom_col(position= 'dodge2') +
-    #escala del eje y en porcentajes del 0 al 100%
     scale_y_continuous(labels = scales::percent,
                        limits = c(0, 1)) +
-    #Nombres de los ejes se eliminan
     ylab(label = NULL) +
     xlab(label = NULL) +
-    #colores oficiales por ola: degradé 'viridis'
     scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
-  facet_grid(.~pos_id) +
-    #etiquetas por sobre cada barra
     geom_text(vjust = -0.8,
               position = position_dodge(width = .9),
               size= 2.75) +
-    #posicionamiento de leyenda arriba
     theme(legend.position = 'top',
           legend.title = element_blank())
 
-#g2.8
 ```
 

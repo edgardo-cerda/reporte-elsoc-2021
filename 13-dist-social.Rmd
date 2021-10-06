@@ -1,25 +1,9 @@
 # Distanciamiento y comportamiento prosocial en pandemia
 
-```{r library-13, include=FALSE}
-knitr::opts_chunk$set(cache=FALSE, 
-                      warning = FALSE, 
-                      message = FALSE) 
-Sys.setlocale("LC_ALL","ES_ES.UTF-8")
-
-#devtools::install_github('edgardo-cerda/elsoc', force = TRUE)
-library(elsoc)
-library(tidyverse)
-library(sjlabelled)
-library(ggrepel)
-library(survey)
-
-#load(file.path('1_input', 'ELSOC_Long_2016_2021_v1.00_R.RData'))
-elsoc::load_elsoc(format = 'long')
-```
-
 ## Distanciamiento social
 
 ```{r dist-total, fig.align='center', fig.cap='¿En qué medida usted ha seguido la recomendación de quedarse en su hogar, manteniendo el aislamiento social? (2021).'}
+
 datos.9.1 <- elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & ola %in% c(5) & !c48 %in% c(-888, -999)) %>% 
   mutate(dis_soc = factor(car::recode(c48, "c(1,2) = 1; c(3) = 2; c(4,5) = 3"),

@@ -10,72 +10,62 @@ editor_options:
 ## Justificación de la violencia para el control social – a manos de ciudadanos
 
 ```{r just-vio-ola, fig.aligN='center', fig.cap='Justificación de la violencia en relación a delincuencia, según ola de encuesta'}
-datos.g10.1 <- elsoc_long_2016_2021 %>% 
-  filter(tipo_atricion == 1 & muestra == 1) %>%  
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & ola %in% 1:4 &
+           !f05_01 %in% c(-888, -999) & !f05_02 %in% c(-888, -999)) %>%  
   select(f05_01, f05_02, ola, ponderador02, segmento_disenno, estrato_disenno) %>% 
   pivot_longer(cols = c(f05_01, f05_02)) %>% 
-  filter(!value %in% c(-888, -999)) %>% 
-  prop(value %in% c(4,5), by = c(ola, name), na.rm = TRUE) %>% 
+  prop(value %in% 4:5, by = c(ola, name), na.rm = TRUE) %>% 
   mutate(name = factor(name,
                        levels = c('f05_01', 'f05_02'),
                        labels = c('Personas persigan y golpeen a un delincuente\n que acaba de cometer un asalto','Personas amarren a un poste y desnuden a un\n delincuente que acaba de cometer un asalto'))) %>% 
-sjlabelled::as_label(ola,f05_01, f05_02)
-
-#graficamos
-
-g10.1 <-datos.g10.1 %>% 
-  ggplot(aes(y = prop, x = ola,
-             label = as.character(scales::percent(prop, accuracy = .1)))) +
+sjlabelled::as_label(ola) %>% 
+  ggplot(aes(y = prop, x = ola, color = name, group = name,
+             label = scales::percent(prop, accuracy = .1))) +
   theme_bw() + 
-  geom_col(position = "Stack") +
+  geom_point() + 
+  geom_line() + 
   scale_y_continuous(labels = scales::percent,
                      limits = c(0, .5)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  facet_wrap(datos.g10.1$name) +
-  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') + 
-  geom_text(position = position_stack(vjust = .5),
-            size= 2.75) +
+  scale_color_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') + 
+  geom_text_repel() +
   theme(legend.position = 'top',
         legend.title = element_blank())
 
-g10.1
 ```
 
 
 ## Justificación de la violencia para el control social – a manos de carabineros
 
 ```{r just-carab-ola, fig.align='center',fig.cap="Justificación de la violencia en relación al actuar de Carabineros, según ola"}
-datos.g10.2 <- elsoc_long_2016_2021 %>% 
-  filter(tipo_atricion == 1 & muestra == 1) %>%  
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & muestra == 1 & 
+           !f05_03 %in% c(-888, -999) & !f05_04 %in% c(-888, -999) & !f05_07 %in% c(-888, -999)) %>%  
   select(f05_03, f05_04, f05_07, ola, ponderador02, segmento_disenno, estrato_disenno) %>% 
   pivot_longer(cols = c(f05_03, f05_04, f05_07)) %>% 
-  filter(!value %in% c(-888, -999)) %>% 
-  prop(value %in% c(4,5), by = c(ola, name), na.rm = TRUE) %>% 
+  prop(value %in% 4:5, by = c(ola, name), na.rm = TRUE) %>% 
   mutate(name = factor(name,
                        levels = c('f05_03', 'f05_04', 'f05_07'),
-                       labels = c('Carabineros use la fuerza para\n reprimir manifestación pacífica','Carabineros desaloje a la fuerza\na estudiantes de liceo en toma','Estudiantes tiren piedras a Carabi-\nneros en marcha por la educación'))) %>% 
-sjlabelled::as_label(ola,f05_03, f05_04, f05_07)
-
-#graficamos
-
-g10.2 <-datos.g10.2 %>% 
-  ggplot(aes(y = prop, x = ola,
-             label = as.character(scales::percent(prop, accuracy = .1)))) +
+                       labels = c('Carabineros use la fuerza para\n reprimir manifestación pacífica',
+                                  'Carabineros desaloje a la fuerza\na estudiantes de liceo en toma',
+                                  'Estudiantes tiren piedras a Carabi-\nneros en marcha por la educación'))) %>% 
+sjlabelled::as_label(ola) %>% 
+  ggplot(aes(y = prop, x = ola, color = name, group = name,
+             label = scales::percent(prop, accuracy = .1))) +
   theme_bw() + 
-  geom_col(position = "Stack") +
+  geom_point() + 
+  geom_line() +
   scale_y_continuous(labels = scales::percent,
-                     limits = c(0, .3)) +
+                     limits = c(0, .5)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  facet_wrap(datos.g10.2$name) +
-  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') + 
-  geom_text(position = position_stack(vjust = .5),
-            size= 2.75) +
+  scale_color_viridis_d(begin = 0, end = .75, option = 'viridis') + 
+  ggrepel::geom_text_repel() +
   theme(legend.position = 'top',
         legend.title = element_blank())
 
-g10.2
 ```
 
 

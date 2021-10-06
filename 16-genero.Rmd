@@ -7,66 +7,6 @@ output:
 
 ## Sexismo hostil y benevolente
 
-```{r objetos, include=FALSE}
-#Escala sexismo
-elsoc_panel_m1$sexismo <- c( as.numeric(elsoc_panel_m1$g01_01) + as.numeric(elsoc_panel_m1$g01_02) +
-                          as.numeric(elsoc_panel_m1$g01_03) + as.numeric(elsoc_panel_m1$g01_04)) /4
-
-elsoc_panel_m1$sexismo_benevolo <- c( as.numeric(elsoc_panel_m1$g01_01) + as.numeric(elsoc_panel_m1$g01_02))/2
-elsoc_panel_m1$sexismo_benevolo <- factor(car::recode(as.numeric(elsoc_panel_m1$sexismo_benevolo), 'c(1,1.5,2)=1;c(2.5, 3, 3.5)=2;c(4,4.5, 5)= 3; else=NA', 
-                                             as.factor = TRUE), levels = c(1,2,3),
-                                labels = c('Debil', 'Medio', 'Fuerte'))
-elsoc_panel_m1$sexismo_benevolo <- na.replace(elsoc_panel_m1$sexismo_benevolo, "NS/NR") #recode NA en categoría "NS/NR"
-elsoc_panel_m1$sexismo_hostil <- c(as.numeric(elsoc_panel_m1$g01_03) + as.numeric(elsoc_panel_m1$g01_04))/2
-elsoc_panel_m1$sexismo_hostil <- factor(car::recode(as.numeric(elsoc_panel_m1$sexismo_hostil), 'c(1,1.5,2)=1;c(2.5, 3, 3.5)=2;c(4,4.5, 5)= 3; else=NA', 
-                                             as.factor = TRUE), levels = c(1,2,3),
-                                labels = c('Debil', 'Medio', 'Fuerte'))
-elsoc_panel_m1$sexismo_hostil <- na.replace(elsoc_panel_m1$sexismo_hostil, "NS/NR") #recode NA en categoría "NS/NR"
-
-elsoc_panel_m1$g01_01_rec <- factor(car::recode(as.numeric(elsoc_panel_m1$g01_01), 'c(1,2)=1;c(3)=2;c(4,5)= 3; else=NA', 
-                                             as.factor = TRUE), levels = c(1,2,3),
-                                labels = c('Desacuerdo', 'Ni acuerdo ni desacuerdo', 'De Acuerdo'))
-elsoc_panel_m1$g01_02_rec <- factor(car::recode(as.numeric(elsoc_panel_m1$g01_02), 'c(1,2)=1;c(3)=2;c(4,5)= 3; else=NA', as.factor = TRUE),
-                                levels = c(1,2,3),
-                                labels = c('Desacuerdo', 'Ni acuerdo ni desacuerdo', 'De Acuerdo'))
-
-elsoc_panel_m1$g01_03_rec <- factor(car::recode(as.numeric(elsoc_panel_m1$g01_03), 'c(1,2)=1;c(3)=2;c(4,5)= 3; else=NA', as.factor = TRUE),
-                                levels = c(1,2,3),
-                                labels = c('Desacuerdo', 'Ni acuerdo ni desacuerdo', 'De Acuerdo'))
-
-elsoc_panel_m1$g01_04_rec <- factor(car::recode(as.numeric(elsoc_panel_m1$g01_04), 'c(1,2)=1;c(3)=2;c(4,5)= 3; else=NA', as.factor = TRUE),
-                                levels = c(1,2,3),
-                                labels = c('Desacuerdo', 'Ni acuerdo ni desacuerdo', 'De Acuerdo'))
-
-
-#Variables 2018 al 2021
-elsoc_panel_m1$c19_01_rec <- factor(car::recode(as.numeric(elsoc_panel_m1$c19_01), 'c(1,2)=1;c(3)=2;c(4,5)= 3; else="NS/NR"', 
-                                             as.factor = TRUE), levels = c(1,2,3),
-                                labels = c('Desacuerdo', 'Ni acuerdo ni desacuerdo', 'De Acuerdo'))
-
-
-elsoc_panel_m1$c19_02_rec <- factor(car::recode(as.numeric(elsoc_panel_m1$c19_02), 'c(1,2)=1;c(3)=2;c(4,5)= 3; else="NS/NR"', as.factor = TRUE),
-                                levels = c(1,2,3),
-                                labels = c('Desacuerdo', 'Ni acuerdo ni desacuerdo', 'De Acuerdo'))
-
-elsoc_panel_m1$c19_03_rec <- factor(car::recode(as.numeric(elsoc_panel_m1$c19_03), 'c(1,2)=1;c(3)=2;c(4,5)= 3; else="NS/NR"', as.factor = TRUE),
-                                levels = c(1,2,3),
-                                labels = c('Desacuerdo', 'Ni acuerdo ni desacuerdo', 'De Acuerdo'))
-
-elsoc_panel_m1$c19_04_rec <- factor(car::recode(as.numeric(elsoc_panel_m1$c19_04), 'c(1,2)=1;c(3)=2;c(4,5)= 3; else="NS/NR"', as.factor = TRUE),
-                                levels = c(1,2,3),
-                                labels = c('Desacuerdo', 'Ni acuerdo ni desacuerdo', 'De Acuerdo'))
-
-#Horas de Cuidado
-elsoc_panel_m1$m17_rec <- factor(car::recode(elsoc_panel_m1$m17, '0:3=1;4:9=2;10:29=3;30:59=4;60:300=5', as.factor = TRUE), levels = c(1,2,3,4,5),
-                          labels = c('0-3 Horas','4-9 Horas','10-29 Horas', '30-59 Horas', '60 o más Horas'))
-elsoc_diseno <- svydesign(ids = ~segmento,
-                          strata = ~estrato, 
-                          weights = ~ponderador02,
-                          nest = TRUE,
-                          data = elsoc_panel_m1)
-```
-
 ```{r sexismo-sexo, fig.align='center', fig.cap='Sexismo benévolo y hostil, según sexo (2021). Porcentaje que responde "De acuerdo" o "Totalmente de acuerdo".'}
 
 elsoc_long_2016_2021 %>% 

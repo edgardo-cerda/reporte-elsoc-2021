@@ -13,8 +13,8 @@ editor_options:
 
 <!-- ### 1.1 ¿Cuál es el movimiento social que usted más valora de esta lista? Según ola del estudio  -->
 
-```{r include=FALSE}
-datos.1.1 <- elsoc_long_2016_2021 %>%
+```{r}
+elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1 & ola %in% c(4,5) & !c20 %in% c(-888, -999)) %>%
   mutate(mov = factor(c20, levels = c(11,12,5,8,6,3,4,7,1,2,10,9),
                          labels = c('Otro',
@@ -27,29 +27,26 @@ datos.1.1 <- elsoc_long_2016_2021 %>%
                                     'Antidelincuencia',
                                     'Estudiantil',
                                     'Laboral',
-                                    'Mov Social de Octubre (18/O)',
+                                    'Estallido social\nde Octubre 2019',
                                     'Pensiones'))) %>%
   prop(x = mov, by = ola, na.rm = TRUE) %>% 
-  sjlabelled::as_label(ola)
-
-
-
-g1.1 <- datos.1.1 %>% 
+  sjlabelled::as_label(ola) %>%
+  mutate(ola = factor(ola, levels = c('2021', '2019'))) %>% 
   ggplot(aes(y = prop, x = mov, fill = ola, 
              label = scales::percent(prop, accuracy = .1))) +
   theme_bw() + 
   geom_col(position = 'dodge2') +
   scale_y_continuous(labels = scales::percent,
-                     limits = c(0,0.5)) +
+                     limits = c(0,0.3)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = .66, end = .33, direction = -1, option = 'viridis') +
   coord_flip() +
-  theme(axis.text.x = element_text(size=rel(.9))) +
+  theme(axis.text.x = element_text(size=rel(.9)),
+        legend.position = 'top') +
   guides(fill = guide_legend(reverse = TRUE)) +
-  scale_x_discrete(labels = waiver( ))
+  scale_x_discrete()
 
-g1.1
 ```
 
 ### 1.2 Frecuencia de respuesta en "ninguno" ante la pregunta ¿Cuál es el movimiento social que usted más valora de esta lista? según posición política"
@@ -57,17 +54,15 @@ g1.1
 <!-- ### 1.2 Frecuencia de respuesta en "ninguno" ante la pregunta ¿Cuál es el movimiento social que usted más valora de esta lista? según posición política  -->
 
 ```{r}
-datos.1.2 <- elsoc_long_2016_2021 %>%
-    filter(tipo_atricion == 1 & muestra == 1 & !c20 %in% c(-888,-999)) %>%
-  mutate(pos_id = car::recode(c15, recodes = "c(0,1,2,3,4)=1; c(5)=2; c(6,7,8,9,10)=3; c(11,12, -999, -888)=4")) %>%
-  mutate(pos_id = factor(pos_id, levels = c(1, 2, 3, 4),
-                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
-  prop(c20 %in% c(12), by  = c(pos_id, ola), na.rm = TRUE) %>% 
-  sjlabelled::as_label(ola)
-
-g1.2 <-datos.1.2 %>% 
-    ggplot(aes(y = prop, x = ola, fill = pos_id, 
-               label = as.character(scales::percent(prop, accuracy = .1)))) +
+elsoc_long_2016_2021 %>%
+  filter(tipo_atricion == 1 & muestra == 1 & !c20 %in% c(-888,-999) & !c15 %in% c(-888,-999)) %>%
+  mutate(pos_id = factor(car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
+                       levels = c(1, 2, 3, 4),
+                       labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
+  prop(c20 %in% c(12), by = c(pos_id, ola), na.rm = TRUE) %>% 
+  sjlabelled::as_label(ola) %>%
+  ggplot(aes(y = prop, x = ola, fill = pos_id, 
+               label = scales::percent(prop, accuracy = .1))) +
   theme_bw() + 
     geom_col(position = 'dodge2') +
     scale_y_continuous(labels = scales::percent,
@@ -75,10 +70,8 @@ g1.2 <-datos.1.2 %>%
     ylab(label = NULL) +
     xlab(label = NULL) +
     scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
-    facet_wrap(datos.1.2$pos_id)+
     theme(legend.position = 'top',
           legend.title = element_blank()) 
-g1.2
 
 ```
 
@@ -86,15 +79,11 @@ g1.2
 ### 1.3 Alluvial de movimiento social que más valora
 
 ```{r}
-datos.1.3 <- elsoc_long_2016_2021 %>% 
-  mutate(movsoc = car::recode(c20, recodes = "1='1';2='1';3='1';
-                                          4='1';5='1';6='2';7='2';
-                                          8='1';9='1';10='1';11=NA;12='3';
-                                          c(-999,-888)=NA",as.factor=T)) %>% 
-   mutate(movsoc = factor(movsoc, levels = c(1,2,3),
+datos.1.3 <- elsoc_long_2016_2021 %>%
+  filter(tipo_atricion == 1 & !c15 %in% c(-888, -999)) %>% 
+  mutate(movsoc = car::recode(c20, "1:5 = 1; 8:10 = 1; 6:7 = 2; 11:12 = 3"),
+         movsoc = factor(movsoc, levels = c(1,2,3),
                          labels = c('Progresista', "Conservador", "Ninguno"))) %>%
-  dplyr::filter(tipo_atricion == 1) %>% 
-  dplyr::filter(!is.na(movsoc)) %>%
   group_by(idencuesta) %>%
   mutate(n_obs = n()) %>%
   ungroup() %>% 
@@ -127,10 +116,7 @@ g1.3 <- ggplot(datos.1.3 , aes(x = ola, fill = movsoc, stratum = movsoc,
             aes(label = scales::percent(porcentaje, accuracy = .1)),
             position = position_stack(vjust = .5),
             show.legend = FALSE,
-            size = 2.75,
-            color = c(rep('black', 5),
-                      rep('black', 5),
-                      rep('white', 5))) 
+            size = 2.75)
 
 g1.3
 ```
@@ -147,43 +133,30 @@ Conservador: Movimiento social provida o antiaborto, Movimiento social antidelin
 ### 1.4 Descriptivos generales
 
 ```{r}
-datos.1.4 <- elsoc_long_2016_2021 %>%
-  mutate(movsoc = car::recode(c20, recodes = "1='1';2='1';3='1';
-                                          4='1';5='1';6='2';7='2';
-                                          8='1';9='1';10='1';11=NA;12='3';
-                                          c(-999,-888)=NA",as.factor=T)) %>% 
-   mutate(movsoc = factor(movsoc, levels = c(3,2,1),
-                         labels = c("Ninguno", "Conservador", 'Progresista'))) %>%
-    filter(tipo_atricion == 1) %>%
+elsoc_long_2016_2021 %>%
+    filter(tipo_atricion == 1 & !c20 %in% c(-888, -999)) %>%
+    mutate(movsoc = car::recode(c20, "1:5 = 1; 8:10 = 1; 6:7 = 2; 11:12 = 3"),
+         movsoc = factor(movsoc, levels = c(3, 2, 1),
+                         labels = c('Ninguno', 'Conservador', 'Progresista'))) %>%
     dplyr::filter(!is.na(movsoc)) %>%
-  prop(movsoc, by  = c(ola), na.rm = TRUE)  %>% 
-  sjlabelled::as_label(ola) 
-
-g1.4 <-datos.1.4 %>% 
-    #indicar el contenido del gráfico: ejes y relleno (fill) por ola
+    prop(movsoc, by  = c(ola), na.rm = TRUE)  %>% 
+    sjlabelled::as_label(ola) %>% 
     ggplot(aes(y = prop, x = movsoc, fill = ola, 
-               label = as.character(scales::percent(prop, accuracy = .1)))) +
-    #fijar el fondo y el marco del gráfico uniforme
+               label = scales::percent(prop, accuracy = .1))) +
     theme_bw() + 
-    #geom_col para usar variable y=porcentaje. 'dodge2' para formato side-to-side
     geom_col(position= 'dodge2') +
-    #escala del eje y en porcentajes del 0 al 100%
     scale_y_continuous(labels = scales::percent,
                        limits = c(0, 1)) +
-    #Nombres de los ejes se eliminan
     ylab(label = NULL) +
     xlab(label = NULL) +
-    #colores oficiales por ola: degradé 'viridis'
     scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
     geom_text(hjust = -.1,
             position = position_dodge(width = 1),
             size= 2.75) +
-    #posicionamiento de leyenda arriba
     theme(legend.position = 'top',
           legend.title = element_blank()) +
   coord_flip()
 
-g1.4
 ```
 
 
@@ -197,13 +170,10 @@ datos.1.5 <-elsoc_long_2016_2021 %>%
                                           8='1';9='1';10='1';11=NA;12='3';
                                           c(-999,-888)=NA",as.factor=T)) %>% 
    mutate(movsoc = factor(movsoc, levels = c(1,2,3),
-                         labels = c('Progresista', "Conservador", "Ninguno"))) %>%
-  mutate(pos_id = car::recode(c15, recodes = 
-                  "c(0,1,2,3,4)=1; c(5)=2; c(6,7,8,9,10)=3; 
-                   c(11,12, -999, -888)=4")) %>%
-  mutate(pos_id = factor(pos_id, levels = c(1, 2, 3, 4),
-                         labels = c('Izquierda', "Centro", "Derecha", 
-                                    "No se identifica"))) %>%
+                         labels = c('Progresista', "Conservador", "Ninguno")),
+          pos_id = factor(car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
+                       levels = c(1, 2, 3, 4),
+                       labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
   dplyr::filter(!is.na(pos_id) & !is.na(movsoc)) %>%
   prop(movsoc, by  = c(ola, pos_id), na.rm = TRUE)%>% 
   sjlabelled::as_label(ola)
@@ -316,31 +286,27 @@ g1.7
 
 <!-- ### 1.8 Frecuencia de participación en movimientos sociales, según Ola de encuesta. Porcentaje que responde Frecuentemente o Muy frecuentemente  -->
 
-```{r include=FALSE}
-datos.1.8 <- elsoc_long_2016_2021 %>%
-  mutate(freq_part = car::recode(c22, recodes = "c(1,2,3)=1; c(4,5)=2; else=NA", as.factor = TRUE)) %>%
-  filter(tipo_atricion == 1 & muestra==1) %>%
-   prop(freq_part %in% c(2), by  = ola, na.rm = TRUE) %>%
-  sjlabelled::as_label(ola)
-
-
-g1.8 <- datos.1.8 %>% 
-    ggplot(aes(y = prop, x = ola, 
-               label = as.character(scales::percent(prop, accuracy = .1)))) +
+```{r}
+elsoc_long_2016_2021 %>%
+  filter(tipo_atricion == 1 & muestra==1 & !c22 %in% c(-888, -999)) %>%
+  prop(c22 %in% 4:5, by  = ola, na.rm = TRUE) %>%
+  sjlabelled::as_label(ola) %>% 
+  ggplot(aes(y = prop, x = ola, group = 1, 
+             label = scales::percent(prop, accuracy = .1))) +
   theme_bw() + 
-    geom_col() +
-    scale_y_continuous(labels = scales::percent,
-                       limits = c(0, 1)) +
-    ylab(label = NULL) +
-    xlab(label = NULL) +
-    scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
-    geom_text(vjust = -0.8,
-              position = position_dodge(width = .9),
-              size= 2.75) +
-    theme(legend.position = 'none',   
-          legend.title = element_blank())
+  geom_line() +
+  geom_point() +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, .25)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75) +
+  theme(legend.position = 'none',   
+        legend.title = element_blank())
 
-g1.8
 ```
 
 
@@ -349,154 +315,60 @@ g1.8
 ### 1.9 Bastante o Mucha confianza en el/la Presidente(a) de la República, el Gobierno y el Congreso Nacional según año
 
 ```{r}
-elsoc_long_2016_2021$conf_cong <- car::recode(as.numeric(elsoc_long_2016_2021$c05_07), 
-                                      recodes = "c(1,2)='Nada o Poca';
-                                      c(3)='Algo';
-                                      c(4,5)='Bastante o Mucha';
-                                      else=NA", as.factor = TRUE)
-elsoc_long_2016_2021$conf_pres <- car::recode(as.numeric(elsoc_long_2016_2021$c05_08), 
-                                      recode = "c(1,2)='Nada o Poca';
-                                      c(3)='Algo';
-                                      c(4,5)='Bastante o Mucha';
-                                      else=NA", as.factor = TRUE) 
-elsoc_long_2016_2021$conf_gob <- car::recode(as.numeric(elsoc_long_2016_2021$c05_01), 
-                                      recode = "c(1,2)='Nada o Poca';
-                                      c(3)='Algo';
-                                      c(4,5)='Bastante o Mucha';
-                                      else=NA", as.factor = TRUE)
 
-elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
-                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
-                          weights = ~ponderador02, #ponderador de corte transversal
-                          nest = TRUE,
-                          data = elsoc_long_2016_2021)
-datos.pres <- data.frame((svytable(~conf_pres + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(p_pres=Freq/sum(Freq))
-datos.pres$ola <- NULL
-
-datos.cong <- data.frame((svytable(~conf_cong + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(p_cong=Freq/sum(Freq))
-datos.cong$ola <- NULL
-
-datos.gob <- data.frame((svytable(~conf_gob + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(p_gob=Freq/sum(Freq))
-
-elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
-                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
-                          weights = ~ponderador02, #ponderador de corte transversal
-                          nest = TRUE,
-                          data = elsoc_long_2016_2021)
-
-datos.grafico.1.9 <- cbind(datos.pres, datos.cong, datos.gob)
-
-
-datos.1.9 <- datos.grafico.1.9 %>% 
-        pivot_longer(cols = starts_with('conf_'))  %>%
-        mutate(variable = factor(name,
-                             labels = c('Presidente/a de la Republica', 
-                                        'Congreso Nacional', 
-                                        'Gobierno de Chile'))) %>%
-                              filter(value == 'Bastante o Mucha') %>%
-                              drop_na() 
-
-datos.1.9$porcentaje <- with(datos.1.9, case_when(
-  variable == 'Presidente/a de la Republica' ~ p_pres,
-  variable == 'Congreso Nacional' ~ p_cong,
-  variable == 'Gobierno de Chile' ~ p_gob))
-
-
-g1.9 <- ggplot(datos.1.9,aes(y = porcentaje, x = ola, color = variable, group = variable,
-               label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & !c05_01 %in% c(-888, -999) & !c05_07 %in% c(-888, -999) & !c05_08 %in% c(-888, -999)) %>% 
+  pivot_longer(cols = c(c05_01, c05_07, c05_08)) %>% 
+  prop(value %in% 4:5, by = c(ola, name), na.rm = TRUE) %>% 
+  as_label(ola) %>% 
+  mutate(name = factor(name, 
+                       levels = c('c05_01', 'c05_07', 'c05_08'),
+                       labels = c('Presidente/a de la Republica', 'Congreso Nacional', 'Gobierno de Chile'))) %>% 
+  ggplot(aes(y = prop, x = ola, color = name, group = name,
+               label = scales::percent(prop, accuracy = .1))) +
     theme_bw() +  
     geom_line(size = 1) +
     geom_point(size = 1.8) +
     scale_y_continuous(labels = scales::percent,
-                       limits = c(0,1)) +
+                       limits = c(0,.5)) +
     ylab(label = NULL) +
     xlab(label = NULL) +
-    scale_color_viridis_d(begin = .33, end = .66, direction = 1, option = 'viridis') +
-    facet_wrap(.~variable)+
-    geom_text(vjust = -0.8,
-    posilinetion = position_dodge(width = .9),
-    size= 1.75) +
+    scale_color_viridis_d(begin = .1, end = .66, option = 'viridis') +
+    geom_text_repel() +
     theme(legend.position = 'top',
           legend.title = element_blank())
 
-g1.9
 ```
 
 ### 1.10 Bastante o Mucha confianza en Carabineros, el Poder Judicial y en Partidos Políticos según año
 
 ```{r}
 
-elsoc_long_2016_2021$conf_part <- car::recode(as.numeric(elsoc_long_2016_2021$c05_02), 
-                                      recodes = "c(1,2)='Nada o Poca';
-                                      c(3)='Algo';
-                                      c(4,5)='Bastante o Mucha';
-                                      else=NA", as.factor = TRUE)
-elsoc_long_2016_2021$conf_carab <- car::recode(as.numeric(elsoc_long_2016_2021$c05_03), 
-                                      recodes = "c(1,2)='Nada o Poca';
-                                      c(3)='Algo';
-                                      c(4,5)='Bastante o Mucha';
-                                      else=NA", as.factor = TRUE)
-elsoc_long_2016_2021$conf_jud <- car::recode(as.numeric(elsoc_long_2016_2021$c05_05), 
-                                      recodes = "c(1,2)='Nada o Poca';
-                                      c(3)='Algo';
-                                      c(4,5)='Bastante o Mucha';
-                                      else=NA", as.factor = TRUE)
-
-elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
-                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
-                          weights = ~ponderador02, #ponderador de corte transversal
-                          nest = TRUE,
-                          data = elsoc_long_2016_2021)
-
-datos.part <- data.frame((svytable(~conf_part + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(p_part=Freq/sum(Freq))
-datos.part$ola <- NULL
-
-datos.carb <- data.frame((svytable(~conf_carab + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(p_carb=Freq/sum(Freq))
-datos.carb$ola <- NULL
-
-datos.jud <- data.frame((svytable(~conf_jud + ola, elsoc_diseno, round = F))) %>% group_by(ola) %>% mutate(p_jud=Freq/sum(Freq))
-
-elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
-                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
-                          weights = ~ponderador02, #ponderador de corte transversal
-                          nest = TRUE,
-                          data = elsoc_long_2016_2021)
-
-datos.grafico.1.10 <- cbind(datos.part, datos.carb, datos.jud)
-
-#trasponer según variable
-datos.1.10 <- datos.grafico.1.10 %>% 
-        pivot_longer(cols = starts_with('conf_'))  %>%
-                mutate(variable = factor(name,
-                             labels = c('Partidos Políticos', 
-                                        'Carabineros de Chile', 
-                                        'Poder Judicial'))) %>%
-                              filter(value == 'Bastante o Mucha') %>%
-                              drop_na() 
-
-
-datos.1.10$porcentaje <- with(datos.1.10, case_when(
-  variable == 'Carabineros de Chile' ~ p_carb,
-  variable == 'Partidos Políticos' ~ p_part,
-  variable == 'Poder Judicial' ~ p_jud))
-
-g1.10 <- ggplot(datos.1.10,aes(y = porcentaje, x = ola, color = variable, group = variable,
-               label = as.character(scales::percent(porcentaje, accuracy = .1)))) +
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & 
+           !c05_02 %in% c(-888, -999) & !c05_03 %in% c(-888, -999) & !c05_05 %in% c(-888, -999)) %>% 
+  pivot_longer(cols = c(c05_02, c05_03, c05_05)) %>% 
+  prop(value %in% 4:5, by = c(ola, name), na.rm = TRUE) %>% 
+  as_label(ola) %>% 
+  mutate(name = factor(name, 
+                       levels = c('c05_02', 'c05_03', 'c05_05'),
+                       labels = c('Partidos Políticos', 
+                                  'Carabineros de Chile', 
+                                  'Poder Judicial'))) %>%
+  ggplot(aes(y = prop, x = ola, color = name, group = name,
+               label = scales::percent(prop, accuracy = .1))) +
     theme_bw() +  
     geom_line(size = 1) +
     geom_point(size = 1.8) +
     scale_y_continuous(labels = scales::percent,
-                       limits = c(0,1)) +
+                       limits = c(0,.5)) +
     ylab(label = NULL) +
     xlab(label = NULL) +
-    scale_color_viridis_d(begin = .33, end = .66, direction = 1, option = 'viridis') +
-    facet_wrap(.~variable)+
-    geom_text(vjust = -0.8,
-    posilinetion = position_dodge(width = .9),
-    size= 1.75) +
+    scale_color_viridis_d(begin = .1, end = .66, option = 'viridis') +
+    geom_text_repel() +
     theme(legend.position = 'top',
-          legend.title = element_blank()) 
-g1.10
+          legend.title = element_blank())
+
 
 ```
 

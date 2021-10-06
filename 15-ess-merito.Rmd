@@ -1,20 +1,4 @@
 # Estatus subjetivo y Percepción de Mérito
-```{r library-15, include=FALSE}
-knitr::opts_chunk$set(cache=FALSE, 
-                      warning = FALSE, 
-                      message = FALSE) 
-Sys.setlocale("LC_ALL","ES_ES.UTF-8")
-
-#devtools::install_github('edgardo-cerda/elsoc', force = TRUE)
-library(elsoc)
-library(tidyverse)
-library(sjlabelled)
-library(ggrepel)
-library(survey)
-
-#load(file.path('1_input', 'ELSOC_Long_2016_2021_v1.00_R.RData'))
-elsoc::load_elsoc(format = 'long')
-```
 
 ## Estatus subjetivo
 <!-- ### 11.1 En nuestra sociedad, hay grupos que tienden a ubicarse en los niveles más altos y grupos que tienden a ubicarse en los niveles más bajos de la sociedad ¿Dónde se ubicaría usted?, según ola de estudio. -->

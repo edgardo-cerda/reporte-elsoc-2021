@@ -7,6 +7,7 @@ editor_options:
 # Cambio Constitucional
 
 ```{r particip-edad, fig.align='center', fig.cap='Participación en Plebiscito Nueva Constitucion'}
+
 datos.g11.1 <- elsoc_long_2016_2021 %>% 
   dplyr::filter(ola == 5 & tipo_atricion == 1 & !c43 %in% c(3, -888, -999)) %>% 
   mutate(edadt = factor(car::recode(m0_edad, "18:29 = 1; 30:49 = 2; 50:64 = 3; 65:150 = 4"),
@@ -67,7 +68,7 @@ datos.g11.3 <- elsoc_long_2016_2021 %>%
   prop(c45, na.rm = TRUE, vartype = NULL) %>% 
   sjlabelled::as_label(c45) %>% 
   mutate(datos = 'Datos ELSOC') %>%
-  add_row(c45 = c('Convención Mixta', 'Convención Constitucional'), prop = c(.2101, .7899), datos = c('Datos servel', 'Datos servel'))
+  add_row(c45 = c('Convencion Mixta', 'Convencion Constitucional'), prop = c(.2101, .7899), datos = c('Datos servel', 'Datos servel'))
 
 g11.3 <- datos.g11.3 %>% 
   ggplot(aes(y = prop, x = datos, fill = c45, 
@@ -93,7 +94,9 @@ g11.3
 datos.g11.4 <- elsoc_long_2016_2021 %>% 
   mutate(c11 = car::recode(c11, '1=2;2=1'), # en c11 1 = no participa, a diferencia de c43
          particip_electoral = ifelse(ola == 5, c43, c11),
-         pos_id = factor(car::recode(c15, "c(11,12) = 'No se identifica'; c(0,1,2,3,4) = 'Izquierda'; c(5) = 'Centro'; c(6,7,8,9,10) = 'Derecha'"), levels = c('Izquierda', 'Centro', 'Derecha', 'No se identifica'))) %>%
+         pos_id = factor(car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
+                         levels = c(1, 2, 3, 4),
+                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
   filter(tipo_atricion == 1 & !particip_electoral %in% c(3, -888, -999) & 
            ola %in% c(1,3,5) & !is.na(pos_id)) %>% 
   prop(particip_electoral == 1, by = c(ola, pos_id), na.rm = TRUE) %>%
@@ -121,13 +124,13 @@ g11.4
 
 ```{r id-pol-voto, fig.align='center', fig.cap= "Voto Retrospectivo Plebicito, según Posición Ideológica"}
 datos.g11.5 <- elsoc_long_2016_2021 %>% 
-  mutate(pos_id = factor(car::recode(c15, "c(11,12) = 'No se identifica'; c(0,1,2,3,4) = 'Izquierda'; c(5) = 'Centro'; c(6,7,8,9,10) = 'Derecha'"), levels = c('Izquierda', 'Centro', 'Derecha', 'No se identifica'))) %>%
-  dplyr::filter(ola == 5 & tipo_atricion == 1 
-                & !c44 %in% c(3,4, -888, -999) & !is.na(c44) & !is.na(pos_id)) %>% 
+  filter(ola == 5 & tipo_atricion == 1 & !c44 %in% c(3,4, -888, -999) & !c15 %in% c(-888, -999)) %>% 
+  mutate(pos_id = factor(car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
+                         levels = c(1, 2, 3, 4),
+                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
   prop(c44, by = c(pos_id), na.rm = TRUE, vartype = NULL) %>% 
   sjlabelled::as_label(c44, pos_id) 
 
-  
 g11.5 <- datos.g11.5 %>% 
   ggplot(aes(y = prop, x = pos_id, fill = c44, 
              label = as.character(scales::percent(prop, accuracy = .1)))) + 
@@ -231,16 +234,34 @@ datos.11.7 %>%
 
 ```{r cambio_participa}
 #grafico y caracterización pendiente
-elsoc_wide_2016_2021$cambio_participa_w05 <- factor(with(elsoc_wide_2016_2021, case_when(
-  (c11_w03 == 2) & (c43_w05 == 2) ~ 1 ,
-  (c11_w03 == 2) & (c43_w05 == 1) ~ 2 ,
-  (c11_w03 == 1) & (c43_w05 == 2) ~ 3 ,
-  (c11_w03 == 1) & (c43_w05 == 1) ~ 4)),
-  labels = c('Se mantiene no votando',
-             'Cambia a votar',
-             'Cambia a No Votar',
-             'Se mantiene votando'))
+elsoc_wide_2016_2021 %>% 
+  filter(tipo_atricion == 1 & !c11_w03 %in% c(-888, -999, 3) & !c43_w05 %in% c(-888, -999, 3) &
+           !c15_w03 %in% c(-888, -999)) %>% 
+  mutate(cambio_participa = factor(case_when(c11_w03 == 1 & c43_w05 == 2 ~ 1,
+                                             c11_w03 == 1 & c43_w05 == 1 ~ 2,
+                                             c11_w03 == 2 & c43_w05 == 2 ~ 3,
+                                             c11_w03 == 2 & c43_w05 == 1 ~ 4),
+                                   labels = c('Se mantiene no votando', 'Cambia a votar',
+                                              'Cambia a No Votar', 'Se mantiene votando')),
+         pos_id_w03 = factor(car::recode(c15_w03, "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
+                         levels = c(1, 2, 3, 4),
+                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>% 
+  elsoc::survey_design_elsoc(weights = 'ponderador02_w05') %>% 
+  prop(cambio_participa, by = pos_id_w03, na.rm = TRUE) %>% 
+  ggplot(aes(y = prop, x = pos_id_w03, fill = cambio_participa, 
+             label = scales::percent(prop, accuracy = .1))) + 
+  theme_bw() + 
+  geom_col(position = "Stack") +
+  scale_y_continuous(labels = scales::percent) + 
+  ylab(label = NULL) +
+  xlab(label = "Posición ideológica en 2017") +
+  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') + 
+  geom_text(position = position_stack(vjust = .5),
+            show.legend = FALSE,
+            size = 2.75,
+            color = rep(c('black', 'black', 'white', 'white'), 4)) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank())
 
-sjmisc::frq(elsoc_wide_2016_2021$cambio_participa_w05)
 ```
 

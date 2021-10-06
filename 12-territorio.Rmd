@@ -1,25 +1,5 @@
 # Conflicto y cohesión territorial en pandemia
 
-```{r library-12, eval=FALSE}
-knitr::opts_chunk$set(cache=FALSE, 
-                      warning = FALSE, 
-                      message = FALSE) 
-Sys.setlocale("LC_ALL","ES_ES.UTF-8")
-
-#devtools::install_github('edgardo-cerda/elsoc', force = TRUE)
-library(elsoc)
-library(tidyverse)
-library(sjlabelled)
-library(ggrepel)
-library(survey)
-library(sf)
-library(chilemapas)
-library(rgdal)
-
-#load(file.path('1_input', 'ELSOC_Long_2016_2021_v1.00_R.RData'))
-elsoc::load_elsoc(format = 'long')
-```
-
 ## Conflictividad barrial
 
 <!-- ### 8.1 ¿Con qué frecuencia usted/alguien de su hogar se ha molestado o incomodado por problemas con sus vecinos? según ola de estudio -->
@@ -122,6 +102,7 @@ g8.3
 
 <!-- ### 8.4 Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona de residencia. Porcentaje con conflictos barriales "Siempre" o "Muchas veces".  -->
 ```{r confli-estrato, fig.align='center', fig.cap='Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona de residencia. Porcentaje con conflictos barriales "Siempre" o "Muchas veces".'}
+
 datos.8.4 <- elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & ola %in% c(4,5) & !t11_01 %in% c(-888, -999) &
            !t11_02 %in% c(-888, -999) & !t11_03 %in% c(-888, -999) & !t11_04 %in% c(-888, -999)) %>% 
@@ -239,7 +220,7 @@ elsoc_region$region_cod <- factor(elsoc_region$region_cod,
                                   labels = c('01','02','03','04','05','06','07','08',
                                             '09','10','11','13','14','15','16'))
 
-regiones <- generar_regiones()
+regiones <- chilemapas::generar_regiones()
 regiones <- merge(regiones,elsoc_region, by.x="codigo_region",by.y="region_cod",all.x=TRUE,sort=F)
 
 #para intentar hacer facet_wrap

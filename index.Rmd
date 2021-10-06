@@ -16,8 +16,9 @@ output:
     config:
       toolbar:
         position: static
+        download: ["pdf"]
   bookdown::pdf_book:
-    extra_dependencies: ["flafter"]
+    template: null
     toc: no
 
 geometry: "left=4cm, right=3cm, top=2.5cm, bottom=2.5cm"
@@ -35,57 +36,91 @@ editor_options:
 knitr::opts_chunk$set(cache=FALSE, 
                       warning = FALSE, 
                       message = FALSE,
-                      echo=FALSE) 
+                      echo=TRUE) 
 
 Sys.setlocale("LC_ALL","ES_ES.UTF-8")
 ```
 
 ```{r message=FALSE, warning=FALSE, include=FALSE, echo=FALSE,cache=FALSE} 
-pacman::p_load(knitr, kableExtra, dplyr, gridExtra, tidyverse, sjmisc, sjlabelled, sticky, ggrepel, ggalluvial, survey, spatstat, readxl, forcats,gtools, elsoc, panelr, ggplot2, tidyr, sf, chilemapas)
+pacman::p_load(knitr, kableExtra, dplyr, gridExtra, tidyverse, sjmisc, sjlabelled, sticky, ggrepel, ggalluvial, survey, spatstat, readxl, forcats,gtools, elsoc, panelr, ggplot2, tidyr, sf, chilemapas, lubridate)
 library(elsoc)
 ```
 
-```{r cargar objetos, include=FALSE, cache = FALSE}
+```{r datos-elsoc}
 remove(list = ls())
-#base de datos
-load("1_input/datos_elsoc.RData") 
-load("1_input/elsoc_covid.RData")
+
+# bases de datos ELSOC
 elsoc::load_elsoc(format = 'long')
 elsoc::load_elsoc(format = 'wide')
+```
+
+
+```{r datos-cuarentenas}
+
+# Datos de dias de cuarentena por comuna de Ministerio de Ciencia:
+
+# Url para descarga directa de datos desde el Github del Ministerio de Ciencia
+url <- "https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/output"
+
+## Cuarentenas desde 2020/03 hasta 2020/07/28 
+cuarentenas1_bruto <- read_csv(paste(url, "producto29", "Cuarentenas-Totales.csv", sep="/"))
+
+cuarentenas1 <- cuarentenas1_bruto %>% 
+  janitor::clean_names() %>% 
+  mutate(fecha_de_inicio = as_date(fecha_de_inicio),
+         fecha_de_termino = as_date(fecha_de_termino),
+         # cortar en fecha 2020/07/27 
+         fecha_de_termino = as_date(ifelse(fecha_de_termino > '2020/07/27', 
+                                           make_date(2020, 07, 27),
+                                           fecha_de_termino)),
+         csum1 = as.numeric(fecha_de_termino - fecha_de_inicio, units = 'days')) %>% 
+  filter(fecha_de_inicio < '2020/07/27') %>% 
+  rename(comuna_cod = codigo_cut_comuna) %>%
+  group_by(comuna_cod) %>% 
+  summarise(csum1 = mean(csum1, na.rm = TRUE)) %>% 
+  ungroup()
+
+## Cuarentenas desde 2020/07/28 al último día actualizado
+cuarentenas2_bruto <- read_csv(paste(url, 'producto74', "paso_a_paso_std.csv", sep="/"))
+
+cuarentenas2 <- cuarentenas2_bruto %>% 
+  janitor::clean_names() %>% 
+  mutate(fecha = as_date(fecha),
+         dia = weekdays(fecha),
+         cuarentena = case_when(paso==1 ~ 1,
+                                paso==2 & dia %in% c('Saturday', 'Sunday') ~ 1,
+                                TRUE ~ 0)) %>% 
+  filter(zona %in% c('Urbana', 'Total')) %>% 
+  # Días de cuarentena acumuladas desde el 2020/07/27 a la fecha de entrevista:
+  group_by(codigo_comuna, zona) %>% 
+  mutate(csum2 = cumsum(cuarentena),
+         comuna_cod = as.numeric(codigo_comuna)) %>% 
+  ungroup() %>% 
+  select(fecha, comuna_cod, csum2)
+
+# Unir fechas:
+cuarentenas_acum <- full_join(cuarentenas1,
+                              cuarentenas2,
+                              by = 'comuna_cod') %>% 
+  rowwise() %>% 
+  mutate(dias_cuarentena = sum(csum1, csum2, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  mutate(dias_cuarentena_t = factor(car::recode(dias_cuarentena, '0 = 1; 1:50 = 2; 51:100 = 3; 101:999 = 4'),
+                                    levels = 1:4,
+                                    labels = c('0 días', '1-50 días', '51-100 días', 'Más de 100 días'))) 
 
 ```
 
-```{r disenno, include=FALSE}
-elsoc_diseno <- svydesign(ids = ~segmento, #muestreo por conglomerado a nivel de manzanas (segmento)
-                          strata = ~estrato, #muestreo estratificado a nivel ciudad (estato)
-                          weights = ~ponderador02, #ponderador de corte transversal
-                          nest = TRUE,
-                          data = elsoc_panel_m1)
-
-#cuando es necesario usar todo el panel (independiente la muestra)
-elsoc_diseno_2 <- svydesign(ids = ~segmento,
-                          strata = ~estrato, 
-                          weights = ~ponderador02,
-                          nest = TRUE,
-                          data = elsoc_panel)
-
-#cuando se utilizan datos de covid en panel
-elsoc_diseno_3 <- svydesign(ids = ~segmento,
-                          strata = ~estrato, 
-                          weights = ~ponderador02,
-                          nest = TRUE,
-                          data = elsoc_covid_panel)
-```
 
 ```{r echo=FALSE }
-table_format = if(is_html_output()) {
+table_format = if (is_html_output()) {
   "html"
-} else if(is_latex_output()) {
+} else if (is_latex_output()) {
   "latex" 
 }
 
-fullw = if(is_html_output()) {T} else if(is_latex_output()) {F}
-fsize = if(is_html_output()) {14} else if(is_latex_output()) {8}
+fullw = if (is_html_output()) {TRUE} else if (is_latex_output()) {FALSE}
+fsize = if (is_html_output()) {14} else if(is_latex_output()) {8}
 
 ggplot2::theme_set(new = theme_test(base_family = "serif"))
 ```
