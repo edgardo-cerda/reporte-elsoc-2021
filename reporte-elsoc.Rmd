@@ -3,23 +3,10 @@ title: "Estudio Longitudinal Social de Chile"
 subtitle: "Resultados longitudinales 2016-2021"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
-documentclass: book
-classoption: openany
-bibliography:
-- book.bib
+bibliography: ["book.bib"]
 biblio-style: apalike
 link-citations: yes
-
-output:
-  bookdown::gitbook:
-    lib_dir: assets
-    config:
-      toolbar:
-        position: static
-        download: ["pdf"]
-  bookdown::pdf_book:
-    template: null
-    toc: no
+documentclass: book
 
 geometry: "left=4cm, right=3cm, top=2.5cm, bottom=2.5cm"
 fontsize: 12pt
@@ -32,19 +19,35 @@ editor_options:
     wrap: 72
 ---
 
+```{r message=FALSE, warning=FALSE, include=FALSE}
+
+pacman::p_load(knitr, kableExtra, dplyr, gridExtra, tidyverse, sjmisc, sjlabelled, sticky, ggrepel, ggalluvial, survey, spatstat, readxl, forcats,gtools, elsoc, panelr, ggplot2, tidyr, sf, chilemapas, lubridate)
+library(elsoc)
+
+```
+
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(cache=FALSE, 
-                      warning = FALSE, 
-                      message = FALSE,
-                      echo=TRUE) 
+                      warning=FALSE, 
+                      message=FALSE,
+                      echo=FALSE) 
 
 Sys.setlocale("LC_ALL","ES_ES.UTF-8")
 ```
 
-```{r message=FALSE, warning=FALSE, include=FALSE, echo=FALSE,cache=FALSE} 
-pacman::p_load(knitr, kableExtra, dplyr, gridExtra, tidyverse, sjmisc, sjlabelled, sticky, ggrepel, ggalluvial, survey, spatstat, readxl, forcats,gtools, elsoc, panelr, ggplot2, tidyr, sf, chilemapas, lubridate)
-library(elsoc)
+```{r include=FALSE }
+table_format = if (is_html_output()) {
+  "html"
+} else if (is_latex_output()) {
+  "latex" 
+}
+
+fullw = if (is_html_output()) {TRUE} else if (is_latex_output()) {FALSE}
+fsize = if (is_html_output()) {14} else if(is_latex_output()) {8}
+
+ggplot2::theme_set(new = theme_test(base_family = "serif"))
 ```
+
 
 ```{r datos-elsoc}
 remove(list = ls())
@@ -63,7 +66,7 @@ elsoc::load_elsoc(format = 'wide')
 url <- "https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/output"
 
 ## Cuarentenas desde 2020/03 hasta 2020/07/28 
-cuarentenas1_bruto <- read_csv(paste(url, "producto29", "Cuarentenas-Totales.csv", sep="/"))
+cuarentenas1_bruto <- readr::read_csv(paste(url, "producto29", "Cuarentenas-Totales.csv", sep="/"))
 
 cuarentenas1 <- cuarentenas1_bruto %>% 
   janitor::clean_names() %>% 
@@ -81,7 +84,7 @@ cuarentenas1 <- cuarentenas1_bruto %>%
   ungroup()
 
 ## Cuarentenas desde 2020/07/28 al último día actualizado
-cuarentenas2_bruto <- read_csv(paste(url, 'producto74', "paso_a_paso_std.csv", sep="/"))
+cuarentenas2_bruto <- readr::read_csv(paste(url, 'producto74', "paso_a_paso_std.csv", sep="/"))
 
 cuarentenas2 <- cuarentenas2_bruto %>% 
   janitor::clean_names() %>% 
@@ -109,20 +112,6 @@ cuarentenas_acum <- full_join(cuarentenas1,
                                     levels = 1:4,
                                     labels = c('0 días', '1-50 días', '51-100 días', 'Más de 100 días'))) 
 
-```
-
-
-```{r echo=FALSE }
-table_format = if (is_html_output()) {
-  "html"
-} else if (is_latex_output()) {
-  "latex" 
-}
-
-fullw = if (is_html_output()) {TRUE} else if (is_latex_output()) {FALSE}
-fsize = if (is_html_output()) {14} else if(is_latex_output()) {8}
-
-ggplot2::theme_set(new = theme_test(base_family = "serif"))
 ```
 
 # Introducción
