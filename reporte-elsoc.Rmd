@@ -1468,26 +1468,6 @@ elsoc_wide_2016_2021 %>%
 
 # Conflicto y cohesión territorial en pandemia
 
-```{r library-12, eval=FALSE}
-knitr::opts_chunk$set(cache=FALSE, 
-                      warning = FALSE, 
-                      message = FALSE) 
-Sys.setlocale("LC_ALL","ES_ES.UTF-8")
-
-#devtools::install_github('edgardo-cerda/elsoc', force = TRUE)
-library(elsoc)
-library(tidyverse)
-library(sjlabelled)
-library(ggrepel)
-library(survey)
-library(sf)
-library(chilemapas)
-library(rgdal)
-
-#load(file.path('1_input', 'ELSOC_Long_2016_2021_v1.00_R.RData'))
-elsoc::load_elsoc(format = 'long')
-```
-
 ## Conflictividad barrial
 
 <!-- ### 8.1 ¿Con qué frecuencia usted/alguien de su hogar se ha molestado o incomodado por problemas con sus vecinos? según ola de estudio -->
