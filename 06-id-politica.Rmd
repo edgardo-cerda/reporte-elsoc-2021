@@ -10,7 +10,7 @@ editor_options:
 
 ## Identificación política
 
-### 2.1 Identificación política por ola
+#### Identificación política por ola
 
 <!-- ### 2.1 Identificación política por ola -->
 
@@ -40,47 +40,53 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-### 2.2 Alluvial de cambios de Identificación política
+#### Cambios individual en Identificación política (2019-2021)
 
 <!-- ### 2.2 Alluvial de cambios de Identificación política (+o-) -->
 
-```{r include=FALSE}
-elsoc_panel_m1 <- elsoc_long_2016_2021 %>% 
-  filter(tipo_atricion == 1) %>% 
-  group_by(idencuesta) %>% 
-  mutate(pos_id = factor(car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
-                       levels = c(1, 2, 3, 4),
-                       labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
-  ungroup() %>%
-  sjlabelled::as_label(ola) %>% 
+```{r}
+
+datos_temp <- elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & ola %in% c(4, 5)) %>% 
+  mutate(pos_id = factor(car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4; c(-888, -999) = 5"),
+                         levels = c(1, 2, 3, 4, 5),
+                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica", "NS/NR"))) %>%
+  as_label(ola) %>% 
   survey_design_elsoc()
 
-datos.2.2 <- data.frame((svytable(~pos_id + ola + idencuesta, elsoc_panel_m1, round = F))) %>% dplyr::filter(Freq>0)  %>% group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>% na.omit()
+datos_alluvial <- svytable(~pos_id + ola + idencuesta, design = datos_temp) %>% 
+  as.data.frame() %>% 
+  group_by(ola) %>% 
+  mutate(prop = Freq/sum(Freq)) %>%
+  filter(Freq > 0)
 
-etiquetas.2.2 <- data.frame((svytable(~pos_id + ola, elsoc_panel_m1, round = F))) %>% group_by(ola) %>% mutate(porcentaje=Freq/sum(Freq)) %>% drop_na() %>% 
-  mutate(idencuesta = 1)
+etiquetas <- datos_alluvial %>% 
+  group_by(ola, pos_id) %>% 
+  summarise(prop = sum(prop, na.rm = TRUE),
+            idencuesta = 1)
 
-g.2.2 <- ggplot(datos.2.2, aes(x = ola, fill = pos_id, stratum = pos_id,
-                             alluvium = idencuesta, y = porcentaje))+
-    ggalluvial::geom_flow(alpha = .66) + 
-    ggalluvial::geom_stratum(linetype = 0) +
-    scale_y_continuous(labels = scales::percent) + 
-    ylab(label = NULL) +
-    xlab(label = NULL) + 
-    theme(legend.position = 'top',
-          legend.title = element_blank()) +
-    scale_fill_viridis_d(begin = 0, end = .95, direction = -1, option = 'viridis') +
-    geom_text(data = etiquetas.2.2, 
-              aes(label = ifelse(porcentaje > 0.03 , scales::percent(porcentaje, accuracy = .1),"")),
-              position = position_stack(vjust = .5),
-              show.legend = FALSE,
-              size = 2,
-              color = rep('white'))
+datos_alluvial %>% 
+  ggplot(aes(y = prop, x = ola, fill = fct_rev(pos_id), 
+             stratum = fct_rev(pos_id), alluvium = idencuesta)) +
+  ggalluvial::geom_flow(alpha = .66) + 
+  ggalluvial::geom_stratum(linetype = 0) +
+  scale_y_continuous(labels = scales::percent) + 
+  ylab(label = NULL) +
+  xlab(label = NULL) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  scale_fill_viridis_d(direction = -1) +
+  geom_text(data = etiquetas, 
+            aes(label = scales::percent(ifelse(prop < .01, NA, prop), accuracy = .1)),
+            position = position_stack(vjust = .5),
+            show.legend = FALSE,
+            size = 2.75,
+            color = rep(c('white', 'white', 'white', 'black', 'black'), 2)) + 
+  guides(fill = guide_legend(reverse = TRUE))
 
-g.2.2
 ```
 
-### 2.3 De acuerdo o Totalmente de acuerdo con la cuarentena según identificación política el año 2021
+#### De acuerdo o Totalmente de acuerdo con la cuarentena según identificación política el año 2021
 
 
 ```{r}

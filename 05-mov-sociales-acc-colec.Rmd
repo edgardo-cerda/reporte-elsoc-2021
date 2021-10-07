@@ -9,7 +9,7 @@ editor_options:
 
 ## Ciclo de movilización política y estallido social
 
-### 1.1 ¿Cuál es el movimiento social que usted más valora de esta lista? Según ola del estudio
+#### ¿Cuál es el movimiento social que usted más valora de esta lista? Según ola del estudio
 
 <!-- ### 1.1 ¿Cuál es el movimiento social que usted más valora de esta lista? Según ola del estudio  -->
 
@@ -43,9 +43,36 @@ elsoc_long_2016_2021 %>%
   scale_fill_viridis_d(begin = .66, end = .33, direction = -1, option = 'viridis') +
   coord_flip() +
   theme(axis.text.x = element_text(size=rel(.9)),
-        legend.position = 'top') +
+        legend.position = 'top',
+        legend.title = element_blank()) +
   guides(fill = guide_legend(reverse = TRUE)) +
   scale_x_discrete()
+
+```
+
+#### Frecuencia de respuesta en "ninguno" ante la pregunta ¿Cuál es el movimiento social que usted más valora de esta lista? según posición política"
+
+<!-- ### 1.2 Frecuencia de respuesta en "ninguno" ante la pregunta ¿Cuál es el movimiento social que usted más valora de esta lista? según posición política  -->
+
+```{r}
+
+elsoc_long_2016_2021 %>%
+  filter(tipo_atricion == 1 & !c20 %in% c(-888,-999)) %>%
+  prop(c20 == 12, by = ola, na.rm = TRUE) %>% 
+  as_label(ola) %>%
+  ggplot(aes(y = prop, x = ola, group = 1, 
+             label = scales::percent(prop, accuracy = .1))) +
+  theme_bw() + 
+  geom_line(color = viridis(1)) + 
+  geom_point(color = viridis(1)) + 
+  scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
+  geom_text_repel(color = viridis(1)) + 
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
 
 ```
 
@@ -54,6 +81,7 @@ elsoc_long_2016_2021 %>%
 <!-- ### 1.2 Frecuencia de respuesta en "ninguno" ante la pregunta ¿Cuál es el movimiento social que usted más valora de esta lista? según posición política  -->
 
 ```{r}
+
 elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1 & muestra == 1 & !c20 %in% c(-888,-999) & !c15 %in% c(-888,-999)) %>%
   mutate(pos_id = factor(car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
@@ -61,17 +89,19 @@ elsoc_long_2016_2021 %>%
                        labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
   prop(c20 %in% c(12), by = c(pos_id, ola), na.rm = TRUE) %>% 
   sjlabelled::as_label(ola) %>%
-  ggplot(aes(y = prop, x = ola, fill = pos_id, 
+  ggplot(aes(y = prop, x = ola, color = pos_id, group = pos_id,
                label = scales::percent(prop, accuracy = .1))) +
   theme_bw() + 
-    geom_col(position = 'dodge2') +
-    scale_y_continuous(labels = scales::percent,
-                       limits = c(0, 1)) +
-    ylab(label = NULL) +
-    xlab(label = NULL) +
-    scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
-    theme(legend.position = 'top',
-          legend.title = element_blank()) 
+  geom_point() + 
+  geom_line() +
+  geom_text_repel() +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_color_viridis_d(begin = 0, end = .75, direction = -1, option = 'viridis') +
+  theme(legend.position = 'top',
+        legend.title = element_blank())
 
 ```
 
@@ -79,6 +109,7 @@ elsoc_long_2016_2021 %>%
 ### 1.3 Alluvial de movimiento social que más valora
 
 ```{r}
+
 datos.1.3 <- elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1 & !c15 %in% c(-888, -999)) %>% 
   mutate(movsoc = car::recode(c20, "1:5 = 1; 8:10 = 1; 6:7 = 2; 11:12 = 3"),
@@ -294,16 +325,14 @@ elsoc_long_2016_2021 %>%
   ggplot(aes(y = prop, x = ola, group = 1, 
              label = scales::percent(prop, accuracy = .1))) +
   theme_bw() + 
-  geom_line() +
-  geom_point() +
+  geom_line(color = viridis(1)) +
+  geom_point(color = viridis(1)) +
   scale_y_continuous(labels = scales::percent,
                      limits = c(0, .25)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
-  geom_text(vjust = -0.8,
-            position = position_dodge(width = .9),
-            size= 2.75) +
+  geom_text_repel(color = viridis(1), size = 3) + 
   theme(legend.position = 'none',   
         legend.title = element_blank())
 
@@ -327,14 +356,14 @@ elsoc_long_2016_2021 %>%
   ggplot(aes(y = prop, x = ola, color = name, group = name,
                label = scales::percent(prop, accuracy = .1))) +
     theme_bw() +  
-    geom_line(size = 1) +
+    geom_line(size = .8) +
     geom_point(size = 1.8) +
     scale_y_continuous(labels = scales::percent,
                        limits = c(0,.5)) +
     ylab(label = NULL) +
     xlab(label = NULL) +
     scale_color_viridis_d(begin = .1, end = .66, option = 'viridis') +
-    geom_text_repel() +
+    geom_text_repel(size = 3) +
     theme(legend.position = 'top',
           legend.title = element_blank())
 
