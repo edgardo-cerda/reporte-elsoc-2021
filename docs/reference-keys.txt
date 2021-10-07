@@ -80,12 +80,13 @@ acceso-a-bases-de-datos-elsoc
 características-del-diseño-muestral
 características-del-levantamiento-de-datos
 atrición-de-la-muestra
-foco-en-el-cambio-individual
-nota-explicativa
+composición-de-la-muestra
+foco-en-el-cambio-longitudinal
 movimientos-sociales-y-acciones-colectivas
 ciclo-de-movilización-política-y-estallido-social
 cuál-es-el-movimiento-social-que-usted-más-valora-de-esta-lista-según-ola-del-estudio
 frecuencia-de-respuesta-en-ninguno-ante-la-pregunta-cuál-es-el-movimiento-social-que-usted-más-valora-de-esta-lista-según-posición-política
+frecuencia-de-respuesta-en-ninguno-ante-la-pregunta-cuál-es-el-movimiento-social-que-usted-más-valora-de-esta-lista-según-posición-política-1
 alluvial-de-movimiento-social-que-más-valora
 descriptivos-generales
 cambios-en-la-valoración-de-movimientos-sociales-según-posición-política
@@ -98,7 +99,7 @@ bastante-o-mucha-confianza-en-carabineros-el-poder-judicial-y-en-partidos-polít
 identificación-política
 identificación-política-1
 identificación-política-por-ola
-alluvial-de-cambios-de-identificación-política
+cambios-individual-en-identificación-política-2019-2021
 de-acuerdo-o-totalmente-de-acuerdo-con-la-cuarentena-según-identificación-política-el-año-2021
 grado-de-acuerdo-con-actividad-económica-versus-salud-pública-según-identificación-política-el-año-2021
 grado-de-acuerdo-con-el-aborto-según-identificación-política
@@ -106,8 +107,9 @@ grado-de-acuerdo-con-la-capitalizacion-individual-pensiones-según-identificaci�
 grado-de-acuerdo-con-las-restricciones-de-ingreso-de-migrantes-según-identificación-política-2019
 actitudes-hacia-la-democracia
 apoyo-a-la-democracia
-con-cuál-de-las-siguientes-frases-está-usted-más-de-acuerdo
-insatisfacción-con-la-democracia-por-ola
+preferencia-y-satisfacción-con-la-democracia-por-ola-2016-2021
+preferencia-y-satisfacción-con-la-democracia-según-posición-ideológica-2021
+preferencia-y-satisfacción-con-la-democracia-según-posición-ideológica-y-ola-2016-2021
 con-cuál-de-las-siguientes-frases-está-usted-más-de-acuerdo-2021-según-posición-ideológica
 perfiles-ideológicos-de-los-chilenos
 clases-latentes-motivación

@@ -36,6 +36,7 @@ library(sf)
 library(chilemapas)
 library(elsoc)
 library(lubridate)
+library(viridis)
 
 ```
 
@@ -121,6 +122,13 @@ cuarentenas_acum <- full_join(cuarentenas1,
   mutate(dias_cuarentena_t = factor(car::recode(dias_cuarentena, '0 = 1; 1:50 = 2; 51:100 = 3; 101:999 = 4'),
                                     levels = 1:4,
                                     labels = c('0 días', '1-50 días', '51-100 días', 'Más de 100 días'))) 
+
+```
+
+
+```{r}
+
+rm(list = setdiff(ls(), c('cuarentenas_acum', 'elsoc_long_2016_2021', 'elsoc_wide_2016_2021')))
 
 ```
 
