@@ -265,3 +265,197 @@ elsoc_wide_2016_2021 %>%
 
 ```
 
+## Optimismo constitucional
+
+```{r}
+elsoc_long_2016_2021 %>% 
+  subset(tipo_atricion == 1) %>% 
+  select(starts_with('c46_'), segmento_disenno, estrato_disenno, ponderador02) %>% 
+  pivot_longer(cols = starts_with('c46_')) %>% 
+  subset(!is.na(value)) %>% 
+  prop(value %in% 4:5, by = name) %>% 
+  mutate(name=factor(name,
+                     levels = c('c46_01','c46_02','c46_03','c46_04'),
+                     labels = c('Reducirá desigualdad\n en salud y educación','Empeorará condiciones\n económicas',
+                                'Reducirá la Corrupción','Poco impacto en la\n Calidad de vida'))) %>%
+  ggplot(aes(x = name, y = prop,
+             label = scales::percent(ifelse(prop>.01, prop, NA), accuracy = .1))) +
+  theme_bw() +
+  geom_col(fill = viridis::viridis(1)) +
+  geom_text(position = position_dodge(.9), vjust = -.5, size = 3) +
+  theme_bw()+
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis')
+
+```
+
+#### Optimismo constitucional según nivel educacional
+
+```{r}
+
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & !m01 %in% c(-888, -999)) %>% 
+  mutate(educ = factor(car::recode(m01, recodes = "1:3 = 1; 4:5 = 2; 6:7 = 3; 8:10 = 4"),
+                     levels = 1:4,
+                     labels = c("Basica", "Media", "Tecnica", "Universitaria"))) %>%
+  pivot_longer(cols = starts_with('c46_')) %>% 
+  filter(!is.na(value)) %>%
+  prop(value %in% c(4,5), by = c(educ, name)) %>% 
+  mutate(name = factor(name,
+                       levels = c('c46_01','c46_02','c46_03','c46_04'),
+                       labels = c('Reducirá desigualdad\n en salud y educación','Empeorará condiciones\n económicas',
+                                'Reducirá la Corrupción','Poco impacto en la\n Calidad de vida'))) %>% 
+  ggplot(aes(x = name, y = prop, fill = educ,
+             label = scales::percent(prop, accuracy = .1))) +
+  geom_col(position = 'dodge2') +
+  geom_text(position = position_dodge(.9), vjust = -.5, size = 3) + 
+  theme_bw() +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') + 
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+```
+
+#### Optimismo constitucional según nivel educacional
+
+```{r}
+
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & !c15 %in% c(-888, -999)) %>% 
+  mutate(pos_id = factor(car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
+                       levels = c(1, 2, 3, 4),
+                       labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
+  pivot_longer(cols = starts_with('c46_')) %>% 
+  filter(!is.na(value)) %>%
+  prop(value %in% c(4,5), by = c(pos_id, name)) %>% 
+  mutate(name = factor(name,
+                       levels = c('c46_01','c46_02','c46_03','c46_04'),
+                       labels = c('Reducirá desigualdad\n en salud y educación','Empeorará condiciones\n económicas',
+                                'Reducirá la Corrupción','Poco impacto en la\n Calidad de vida'))) %>% 
+  ggplot(aes(x = name, y = prop, fill = pos_id,
+             label = scales::percent(prop, accuracy = .1))) +
+  geom_col(position = 'dodge2') +
+  geom_text(position = position_dodge(.9), vjust = -.5, size = 3) + 
+  theme_bw() +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') + 
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+```
+
+#### Optimismo constitucional según interés en al politica
+
+```{r}
+
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & !c13 %in% c(-888, -999) & ola == 5) %>% 
+  mutate(interes = factor(car::recode(c13, recodes = "1:2 = 1; 3 = 2; 4:5 = 3"),
+                          levels = 1:3,
+                          labels = c('Nada o poco\ninterés', 
+                                     'Algo de interés', 
+                                     'Bastante o\nmuy interesado'))) %>%
+  pivot_longer(cols = starts_with('c46_')) %>% 
+  filter(!is.na(value)) %>%
+  prop(value %in% 4:5, by = c(name, interes)) %>% 
+  sjlabelled::as_label(interes) %>% 
+  mutate(name = factor(name,
+                       levels = c('c46_01','c46_02','c46_03','c46_04'),
+                       labels = c('Reducirá desigualdad\n en salud y educación','Empeorará condiciones\n económicas',
+                                'Reducirá la Corrupción','Poco impacto en la\n Calidad de vida'))) %>% 
+  ggplot(aes(x = name, y = prop, fill = interes,
+             label = scales::percent(prop, accuracy = .1))) +
+  geom_col(position = 'dodge2') +
+  geom_text(position = position_dodge(.9), vjust = -.5, size = 3) + 
+  theme_bw() +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .1, end = .85, direction = -1, option = 'viridis') + 
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+
+```
+
+#### Optimismo constitucional según justificación de la violencia para el cambio social (Trabajadores bloqueen las calles)
+
+```{r}
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & !f05_06 %in% c(-888, -999) & ola == 5) %>%
+  mutate(f05_06 = factor(car::recode(f05_06, "1 = 1; 2:3 = 2; 4:5 = 3"),
+                         levels = 1:3,
+                         labels = c('Nunca se justifica',
+                                    'Pocas o algunas veces\nse justifica',
+                                    'Muchas veces o siempre\nse justifica'))) %>% 
+  pivot_longer(cols = starts_with('c46_')) %>% 
+  filter(!is.na(value)) %>%
+  prop(value %in% 4:5, by = c(name, f05_06)) %>% 
+  sjlabelled::as_label(f05_06) %>% 
+  mutate(name = factor(name,
+                       levels = c('c46_01','c46_02','c46_03','c46_04'),
+                       labels = c('Reducirá desigualdad\n en salud y educación','Empeorará condiciones\n económicas',
+                                'Reducirá la Corrupción','Poco impacto en la\n Calidad de vida'))) %>% 
+  ggplot(aes(x = name, y = prop, fill = f05_06,
+             label = scales::percent(prop, accuracy = .1))) +
+  geom_col(position = 'dodge2') +
+  geom_text(position = position_dodge(.9), vjust = -.5, size = 3) + 
+  theme_bw() +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .1, end = .85, direction = -1, option = 'viridis') + 
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+
+```
+
+
+#### Optimismo constitucional según justificación de la violencia para el cambio social (Trabajadores bloqueen las calles)
+
+```{r}
+
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & !f05_07 %in% c(-888, -999) & ola == 5) %>%
+  mutate(f05_07 = factor(car::recode(f05_07, "1 = 1; 2:3 = 2; 4:5 = 3"),
+                         levels = 1:3,
+                         labels = c('Nunca se justifica',
+                                    'Pocas o algunas veces\nse justifica',
+                                    'Muchas veces o siempre\nse justifica'))) %>% 
+  pivot_longer(cols = starts_with('c46_')) %>% 
+  filter(!is.na(value)) %>%
+  prop(value %in% 4:5, by = c(name, f05_07)) %>% 
+  sjlabelled::as_label(f05_07) %>% 
+  mutate(name = factor(name,
+                       levels = c('c46_01','c46_02','c46_03','c46_04'),
+                       labels = c('Reducirá desigualdad\n en salud y educación','Empeorará condiciones\n económicas',
+                                'Reducirá la Corrupción','Poco impacto en la\n Calidad de vida'))) %>% 
+  ggplot(aes(x = name, y = prop, fill = f05_07,
+             label = scales::percent(prop, accuracy = .1))) +
+  geom_col(position = 'dodge2') +
+  geom_text(position = position_dodge(.9), vjust = -.5, size = 3) + 
+  theme_bw() +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .1, end = .85, direction = -1, option = 'viridis') + 
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+
+```
+

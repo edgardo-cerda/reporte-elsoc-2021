@@ -122,6 +122,12 @@ justificación-de-la-violencia-para-el-control-social-a-manos-de-ciudadanos
 justificación-de-la-violencia-para-el-control-social-a-manos-de-carabineros
 cambio-constitucional
 patrones-de-votación
+optimismo-constitucional
+optimismo-constitucional-según-nivel-educacional
+optimismo-constitucional-según-nivel-educacional-1
+optimismo-constitucional-según-interés-en-al-politica
+optimismo-constitucional-según-justificación-de-la-violencia-para-el-cambio-social-trabajadores-bloqueen-las-calles
+optimismo-constitucional-según-justificación-de-la-violencia-para-el-cambio-social-trabajadores-bloqueen-las-calles-1
 conflicto-y-cohesión-territorial-en-pandemia
 conflictividad-barrial
 cartografía-del-conflicto-barrial
