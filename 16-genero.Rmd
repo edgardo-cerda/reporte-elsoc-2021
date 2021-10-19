@@ -1,8 +1,4 @@
----
-output:
-  pdf_document: default
-  html_document: default
----
+
 # Género
 
 ## Sexismo hostil y benevolente

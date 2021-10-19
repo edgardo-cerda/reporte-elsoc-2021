@@ -1,0 +1,63 @@
+
+## Confianza en instituciones
+
+### 1.9 Bastante o Mucha confianza en el/la Presidente(a) de la República, el Gobierno y el Congreso Nacional según año
+
+```{r}
+
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & !c05_01 %in% c(-888, -999) & !c05_07 %in% c(-888, -999) & !c05_08 %in% c(-888, -999)) %>% 
+  pivot_longer(cols = c(c05_01, c05_07, c05_08)) %>% 
+  prop(value %in% 4:5, by = c(ola, name), na.rm = TRUE) %>% 
+  as_label(ola) %>% 
+  mutate(name = factor(name, 
+                       levels = c('c05_01', 'c05_07', 'c05_08'),
+                       labels = c('Presidente/a de la Republica', 'Congreso Nacional', 'Gobierno de Chile'))) %>% 
+  ggplot(aes(y = prop, x = ola, color = name, group = name,
+               label = scales::percent(prop, accuracy = .1))) +
+    theme_bw() +  
+    geom_line(size = .8) +
+    geom_point(size = 1.8) +
+    scale_y_continuous(labels = scales::percent,
+                       limits = c(0,.5)) +
+    ylab(label = NULL) +
+    xlab(label = NULL) +
+    scale_color_viridis_d(begin = .1, end = .66, option = 'viridis') +
+    geom_text_repel(size = 3) +
+    theme(legend.position = 'top',
+          legend.title = element_blank())
+
+```
+
+### 1.10 Bastante o Mucha confianza en Carabineros, el Poder Judicial y en Partidos Políticos según año
+
+```{r}
+
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & 
+           !c05_02 %in% c(-888, -999) & !c05_03 %in% c(-888, -999) & !c05_05 %in% c(-888, -999)) %>% 
+  pivot_longer(cols = c(c05_02, c05_03, c05_05)) %>% 
+  prop(value %in% 4:5, by = c(ola, name), na.rm = TRUE) %>% 
+  as_label(ola) %>% 
+  mutate(name = factor(name, 
+                       levels = c('c05_02', 'c05_03', 'c05_05'),
+                       labels = c('Partidos Políticos', 
+                                  'Carabineros de Chile', 
+                                  'Poder Judicial'))) %>%
+  ggplot(aes(y = prop, x = ola, color = name, group = name,
+               label = scales::percent(prop, accuracy = .1))) +
+    theme_bw() +  
+    geom_line(size = 1) +
+    geom_point(size = 1.8) +
+    scale_y_continuous(labels = scales::percent,
+                       limits = c(0,.5)) +
+    ylab(label = NULL) +
+    xlab(label = NULL) +
+    scale_color_viridis_d(begin = .1, end = .66, option = 'viridis') +
+    geom_text_repel() +
+    theme(legend.position = 'top',
+          legend.title = element_blank())
+
+
+```
+
