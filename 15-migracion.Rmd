@@ -1,6 +1,6 @@
-# Migración
+## Migración
  
-## Amenaza realista y amenaza simbólica respecto a inmigrantes
+### Amenaza realista y amenaza simbólica respecto a inmigrantes
  
 <!-- ### 14.1 "Con la llegada de migrantes a Chile, está aumentando el desempleo", según ola y origen de migrantes. Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo". -->
 ```{r amen1-wave, fig.align='center',fig.cap='Con la llegada de migrantes a Chile, está aumentando el desempleo", según ola y origen de migrantes. Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
@@ -195,7 +195,7 @@ datos.g14.4 %>%
 ```
 
 
-## Amenaza realista y simbólica respecto a inmigrantes según nivel educacional
+### Amenaza realista y simbólica respecto a inmigrantes según nivel educacional
 
 
 <!-- ### 14.5 Percepción de amenaza realista y simbólica respecto a inmigrantes, según nivel educacional (2021). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo". -->

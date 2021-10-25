@@ -1,6 +1,6 @@
-# Estatus subjetivo y Percepción de Mérito
+## Estatus subjetivo y Percepción de Mérito
 
-## Estatus subjetivo
+### Estatus subjetivo
 <!-- ### 11.1 En nuestra sociedad, hay grupos que tienden a ubicarse en los niveles más altos y grupos que tienden a ubicarse en los niveles más bajos de la sociedad ¿Dónde se ubicaría usted?, según ola de estudio. -->
 ```{r ess-ola, fig.align='center',fig.cap='En nuestra sociedad, hay grupos que tienden a ubicarse en los niveles más altos y grupos que tienden a ubicarse en los niveles más bajos de la sociedad ¿Dónde se ubicaría usted?, según ola de estudio.'}
 datos.11.1 <- elsoc_long_2016_2021 %>% 
@@ -141,7 +141,7 @@ g11.4 <- datos11.4 %>%
 g11.4
 ```
 
-## Movilidad social
+### Movilidad social
 
 <!-- ### 11.5  Perspectiva de movilidad social, según ola.\nNota: la perspectiva de movilidad social corresponde a la resta entre el estatus social esperado del hijo y el estatus social actual del encuestado. -->
 ```{r mov-soc-rec, fig.align='center',fig.cap='Perspectiva de movilidad social, según ola.\nNota: la perspectiva de movilidad social corresponde a la resta entre el estatus social esperado del hijo y el estatus social actual del encuestado.'}
@@ -212,7 +212,8 @@ g11.6 <- datos.11.6 %>%
   geom_text(vjust = -0.8,  size= 3.5)
 g11.6
 ```
-## Percepción de meritocracia
+
+### Percepción de meritocracia
 
 <!-- ### 11.7  Percepción de importancia y recompensas del mérito, según ola de estudio. Porcentaje de Respuestas "De acuerdo" y ”Totalmente de acuerdo".  -->
 ```{r merit-wave, fig.align='center',fig.cap='Percepción de importancia y recompensas del mérito, según ola de estudio. Porcentaje de Respuestas "De acuerdo" y ”Totalmente de acuerdo".'}

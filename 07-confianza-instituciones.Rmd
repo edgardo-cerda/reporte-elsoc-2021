@@ -1,6 +1,97 @@
 
 ## Confianza en instituciones
 
+
+### Confianza interpersonal
+
+```{r}
+
+elsoc_long_2016_2021 %>%
+  mutate(c04 = car::recode(c04, "2 = 1; 1 = 2") & !is_nsnr(c02)) %>%
+  pivot_longer(cols = c(c02, c03, c04)) %>% 
+  filter(tipo_atricion == 1 & !value %in% c(-888, -999)) %>% 
+  prop(value == 1 , by = c(name, ola), na.rm = TRUE) %>% 
+  sjlabelled::as_label(ola) %>%
+  mutate(name = factor(name, 
+                       levels = c('c02', 'c03', 'c04'),
+                       labels = c('Casi siempre se puede\nconfiar en las personas',
+                                  'La mayoría de las veces\nlas personas tratan de\nayudar a los demás',
+                                  'La mayoría de las personas\ntratan de ser justas'))) %>% 
+  ggplot(aes(y = prop, x = ola, color = name, group = name,
+             label = scales::percent(prop, accuracy = .1))) +
+  theme_bw() + 
+  geom_text_repel(nudge_y = .025, size = 3) +
+  geom_point() + 
+  geom_line() + 
+  scale_y_continuous(labels = scales::percent, limits = c(0,.5)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_color_viridis_d(end = .7, option = 'viridis') +
+  theme(axis.text.x = element_text(size = rel(.9)),
+        legend.position = 'top',
+        legend.title = element_blank())
+```
+
+```{r}
+
+elsoc_long_2016_2021 %>%
+  mutate(c04 = car::recode(c04, "2 = 1; 1 = 2")) %>%
+  pivot_longer(cols = c(c02, c03, c04)) %>% 
+  filter(tipo_atricion == 1 & !value %in% c(-888, -999)) %>% 
+  prop(value == 1 , by = c(name, ola), na.rm = TRUE) %>% 
+  sjlabelled::as_label(ola) %>%
+  mutate(name = factor(name, 
+                       levels = c('c02', 'c03', 'c04'),
+                       labels = c('Casi siempre se puede\nconfiar en las personas',
+                                  'La mayoría de las veces\nlas personas tratan de\nayudar a los demás',
+                                  'La mayoría de las personas\ntratan de ser justas'))) %>% 
+  ggplot(aes(y = prop, x = ola, color = name, group = name,
+             label = scales::percent(prop, accuracy = .1))) +
+  theme_bw() + 
+  geom_text_repel(nudge_y = .025, size = 3) +
+  geom_point() + 
+  geom_line() + 
+  scale_y_continuous(labels = scales::percent, limits = c(0,.5)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_color_viridis_d(end = .7, option = 'viridis') +
+  theme(axis.text.x = element_text(size = rel(.9)),
+        legend.position = 'top',
+        legend.title = element_blank())
+
+```
+
+### ¿Qué instituciones generan mayor confianza en la ciudadanía?
+
+```{r}
+
+elsoc_long_2016_2021 %>% 
+  pivot_longer(cols = c('c05_01', 'c05_02', 'c05_03', 'c05_07')) %>%
+  filter(tipo_atricion == 1 & !value %in% c(-888, -999)) %>% 
+  mutate(confia = value %in% 4:5) %>% 
+  prop(confia, by = c(ola, name), na.rm = TRUE) %>% 
+  as_label(ola) %>% 
+  mutate(name = factor(name, 
+                       levels = c('c05_01', 'c05_02', 'c05_03', 'c05_07'),
+                       labels = c('El Gobierno', 'Partidos políticos', 
+                                  'Carabineros', 'El Congreso'))) %>% 
+  filter(confia) %>% 
+  ggplot(aes(y = prop, x = ola, color = name, group = name, shape = name,
+               label = scales::percent(prop, accuracy = .1))) +
+  theme_bw() +
+  geom_line(size = .6) +
+  geom_point(size = 1.5) +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0,.5)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_color_viridis_d(begin = 0, end = .8, option = 'viridis') +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) 
+
+
+```
+
 ### 1.9 Bastante o Mucha confianza en el/la Presidente(a) de la República, el Gobierno y el Congreso Nacional según año
 
 ```{r}

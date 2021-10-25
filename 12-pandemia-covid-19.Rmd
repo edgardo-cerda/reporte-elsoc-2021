@@ -61,8 +61,6 @@ elsoc_long_2016_2021 %>%
 ```
 
 
-# Pandemia Covid-19
-
 ## Cuarentenas 
 ```{r hist-fecha-2021, fig.align='center', fig.cap="Histograma Fechas de Entrevistas"}
 elsoc_long_2016_2021 %>% 

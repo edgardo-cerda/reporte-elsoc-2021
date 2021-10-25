@@ -1,7 +1,7 @@
 
-# Género
+## Género
 
-## Sexismo hostil y benevolente
+### Sexismo hostil y benevolente
 
 ```{r sexismo-sexo, fig.align='center', fig.cap='Sexismo benévolo y hostil, según sexo (2021). Porcentaje que responde "De acuerdo" o "Totalmente de acuerdo".'}
 
@@ -69,8 +69,7 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-
-## Trabajo y género
+### Trabajo y género
 
 ```{r ocup-sexo, fig.align='center',fig.cap='Porcentaje de trabajadores y trabajadoras por situación ocupacional (2021), según sexo del entrevistado'}
 elsoc_long_2016_2021 %>% 

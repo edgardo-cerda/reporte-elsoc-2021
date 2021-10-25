@@ -1,5 +1,27 @@
 
-# Salud mental y bienestar
+# Pandemia
+
+## Salud mental y bienestar
+
+### ¿Cómo ha cambiado la salud mental y nivel de bienestar de la población?
+
+```{r}
+
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & !s03 %in% c(-888, -999)) %>% 
+  prop(s03 %in% 4:5, by = ola, na.rm = TRUE) %>% 
+  sjlabelled::as_label(s01, ola) %>% 
+  ggplot(aes(y = prop, x = ola, group = 1,
+             label = scales::percent(prop, accuracy = .1))) + 
+  theme_bw() + 
+  geom_point() + 
+  geom_line() +
+  scale_y_continuous(labels = scales::percent, limits = c(0,.25)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) + 
+  geom_text_repel()
+
+```
 
 ```{r depre-wave, echo=FALSE, fig.align='center', fig.cap= 'Síntomas de Depresión, según Ola del Estudio'}
 elsoc_long_2016_2021 %>% 
@@ -13,53 +35,20 @@ elsoc_long_2016_2021 %>%
   dplyr::filter(tipo_atricion == 1) %>% 
   prop(depr, by = c(ola), na.rm = TRUE) %>% 
   sjlabelled::as_label(depr, ola) %>% 
-  ggplot(aes(y = prop, x = ola, fill = depr, 
-             label = as.character(scales::percent(prop, accuracy = .1)))) + 
+  ggplot(aes(y = prop, x = ola, fill = fct_rev(depr), 
+             label = scales::percent(prop, accuracy = .1))) + 
   theme_bw() + 
   geom_col(position = 'Stack') +
   scale_y_continuous(labels = scales::percent) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = .33, end = .85, direction = -1, option = 'viridis') +
-  #cambiar geom_text tal que: Stack y cambio colores
+  scale_fill_viridis_d(begin = 0, end = .85, option = 'viridis') +
   geom_text(position = position_stack(vjust = .5),
-            size= 2.75, color = rep.int(c('black', 'black', 'white', 'white'), 5)) + 
+            size = 3, 
+            color = rep(rep(c('black', 'white'), each = 2), 5)) + 
   theme(legend.position = 'top',
-        legend.title = element_blank())
-
-```
-
-
-```{r depre-deuda-wave, echo=FALSE, fig.align='center', fig.cap="Síntomas de Depresión, según Ola del Estudio y Sobrecarga de Deuda"}
-
-elsoc_long_2016_2021 %>% 
-  purrr::map_at(.at = vars(starts_with('s11_0')), 
-                .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
-  as.data.frame() %>%  
-  mutate(phq9 = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09),
-         depr = factor(car::recode(phq9, "0:4 = 1; 5:9 = 2; 10:14 = 3; 15:27 = 4"), 
-                       levels = c(1,2,3,4),
-                       labels = c('Sin sintomas o Minima', 'Depresion Media', 'Depresion Moderada', 'Depresion Moderada-Severa\na Severa')),
-         m43_rec = factor(car::recode(m43,
-         "c(1,2)='Nada o Poco Sobrecargado'; c(3)='Algo Sobrecargado'; c(4,5)='Bastante o Muy Sobrecargado'",
-         levels = c('Nada o Poco Sobrecargado','Algo Sobrecargado', 'Bastante o Muy Sobrecargado')))) %>%
-  dplyr::filter(tipo_atricion == 1 & !m43_rec %in% c(-888, -999) & !is.na(m43_rec)) %>% 
-  prop(depr, by = c(ola, m43_rec), na.rm = TRUE) %>% 
-  sjlabelled::as_label(depr, ola, m43_rec) %>% 
-  ggplot(aes(y = prop, x = ola, fill = depr, 
-             label = as.character(scales::percent(prop, accuracy = .1)))) + 
-  theme_bw() + 
-  geom_col(position = 'Stack') +
-  scale_y_continuous(labels = scales::percent) +
-  ylab(label = NULL) +
-  xlab(label = NULL) +
-  scale_fill_viridis_d(begin = .33, end = .85, direction = -1, option = 'viridis') +
-  #cambiar geom_text tal que: Stack y cambio colores
-  geom_text(position = position_stack(vjust = .5),
-            size= 2.75, color = rep.int(c('black', 'black', 'white', 'white'), 9)) + 
-  facet_grid(~factor(m43_rec, levels=c('Nada o Poco Sobrecargado','Algo Sobrecargado','Bastante o Muy Sobrecargado'))) +
-  theme(legend.position = 'top',
-        legend.title = element_blank()) 
+        legend.title = element_blank()) + 
+  guides(fill = guide_legend(reverse = TRUE))
 
 ```
 

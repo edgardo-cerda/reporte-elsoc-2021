@@ -1,8 +1,8 @@
 
-# Justificación de la Violencia
+## Justificación de la Violencia
 
 
-## Justificación de la violencia para el control social – a manos de ciudadanos
+### Justificación de la violencia para el control social – a manos de ciudadanos
 
 ```{r just-vio-ola, fig.aligN='center', fig.cap='Justificación de la violencia en relación a delincuencia, según ola de encuesta'}
 elsoc_long_2016_2021 %>% 
@@ -32,7 +32,7 @@ sjlabelled::as_label(ola) %>%
 ```
 
 
-## Justificación de la violencia para el control social – a manos de carabineros
+### Justificación de la violencia para el control social – a manos de carabineros
 
 ```{r just-carab-ola, fig.align='center',fig.cap="Justificación de la violencia en relación al actuar de Carabineros, según ola"}
 elsoc_long_2016_2021 %>% 

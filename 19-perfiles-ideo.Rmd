@@ -1,9 +1,9 @@
 
-# Perfiles Ideológicos de los Chilenos 
+## Perfiles Ideológicos de los Chilenos 
 
-## Clases latentes: Motivación
+### Clases latentes: Motivación
 
-### Batería de preguntas
+#### Batería de preguntas
 
 - Las parejas homosexuales deberían poder adoptar hijos
 - El aborto debe ser legal bajo cualquier circunstancia
@@ -14,13 +14,13 @@
 - Se deberían clausurar empresas contaminantes, incluso si esto implica un aumento en el desempleo
 - El gasto social debe destinarse únicamente a los más pobres y vulnerables
 
-## Modelo teórico de perfiles ideólogicos
+### Modelo teórico de perfiles ideólogicos
 
 
-### Aproximación Empírica
+#### Aproximación Empírica
 
 
-### Perfiles ideológicos: Resultados principales
+#### Perfiles ideológicos: Resultados principales
 
 
 

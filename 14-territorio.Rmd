@@ -1,6 +1,6 @@
-# Conflicto y cohesión territorial en pandemia
+# Otros
 
-## Conflictividad barrial
+## Conflicto y cohesión territorial
 
 <!-- ### 8.1 ¿Con qué frecuencia usted/alguien de su hogar se ha molestado o incomodado por problemas con sus vecinos? según ola de estudio -->
 ```{r confli-olas, fig.align='center', fig.cap='¿Con qué frecuencia usted/alguien de su hogar se ha molestado o incomodado por problemas con sus vecinos? según ola de estudio '}
@@ -342,7 +342,7 @@ g8.8
 ```
 
 
-## Seguridad barrial
+### Seguridad barrial
 
 <!-- ### 8.9 ¿Qué tan seguro o inseguro se siente en el barrio o vecindario donde usted vive? Según ola del estudio. -->
 ```{r seguri-ola, fig.align='center', fig.cap='¿Qué tan seguro o inseguro se siente en el barrio o vecindario donde usted vive? Según ola del estudio.'}
@@ -498,7 +498,7 @@ g8.13 <- datos.8.13 %>%
 g8.13
 ```
 
-## Criminalidad barrial
+### Criminalidad barrial
 
 <!-- ### 8.14 ¿Con qué frecuencia se han producido crímenes (riñas, robos y tráfico de drogas) en su barrio?, según ola de estudio. -->
 ```{r crim-olas, fig.align='center', fig.cap='¿Con qué frecuencia se han producido crímenes (riñas, robos y tráfico de drogas) en su barrio?, según ola de estudio.'}
