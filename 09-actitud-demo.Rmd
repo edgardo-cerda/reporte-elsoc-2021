@@ -1,0 +1,126 @@
+
+## Actitudes hacia la democracia
+
+```{r}
+
+elsoc_long_2016_2021 %>%
+  filter(tipo_atricion == 1 & !is_nsnr(c01, c25)) %>% 
+  as_label(ola) %>% 
+  prop_list(c01 %in% 4:5, c25 == 1, by  = ola, na.rm = TRUE) %>% 
+  mutate(name = factor(name,
+                       levels = c('c25 == 1', 'c01 %in% 4:5'),
+                       labels = c('Prefiero la democracia sobre\ncualquier otra forma de gobierno', 'Satisfecho o Muy satisfecho\ncon la democracia'))) %>% 
+  ggplot(aes(y = prop, x = ola, group = name, color = name,
+               label = scales::percent(prop, accuracy = .1))) +
+  theme_bw() + 
+  geom_point(size = 1.75) +
+  geom_line() + 
+  geom_text_repel(size = 3, nudge_y = .025) +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_color_viridis_d(begin = 0, end = .66, direction = 1, option = 'viridis') +
+  theme(legend.position = 'top',   
+        legend.title = element_blank()) +
+  ggtitle('Preferencia por y satisfacción con la democracia, según ola',
+          subtitle = 'Porcentaje que responde...')
+
+```
+
+```{r}
+
+elsoc_long_2016_2021 %>%
+  filter(tipo_atricion == 1 & ola == 5 & !is_nsnr(c01, c25, c15)) %>% 
+  mutate(pos_id = factor(car::recode(c15, "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
+                         levels = c(1, 2, 3, 4),
+                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>% 
+  as_label(ola) %>% 
+  prop_list(c01 %in% 4:5, c25 == 1, by  = pos_id, na.rm = TRUE) %>% 
+  mutate(name = factor(name,
+                       levels = c('c25 == 1', 'c01 %in% 4:5'),
+                       labels = c('Prefiero la democracia sobre\ncualquier otra forma de gobierno', 'Satisfecho o Muy satisfecho\ncon la democracia'))) %>% 
+  ggplot(aes(y = prop, x = pos_id, fill = name,
+               label = scales::percent(prop, accuracy = .1))) +
+  facet_wrap(.~name) +
+  theme_bw() + 
+  geom_col(position = 'dodge2') + 
+  geom_text(position = position_dodge(.9), vjust = -.5, size = 3) + 
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .33, end = .66, direction = 1, option = 'viridis') +
+  theme(legend.position = 'none') +
+  ggtitle('Preferencia por y satisfacción con la democracia (2021),\nsegún posición ideológica',
+        subtitle = 'Porcentaje que responde...')
+
+```
+
+
+```{r}
+
+elsoc_long_2016_2021 %>%
+  filter(tipo_atricion == 1 & !is_nsnr(c01, c25, c15)) %>% 
+  mutate(pos_id = factor(car::recode(c15, "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
+                         levels = c(1, 2, 3, 4),
+                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>% 
+  as_label(ola) %>% 
+  prop_list(c01 %in% 4:5, c25 == 1, by  = c(ola, pos_id), na.rm = TRUE) %>% 
+  mutate(name = factor(name,
+                       levels = c('c25 == 1', 'c01 %in% 4:5'),
+                       labels = c('Prefiero la democracia sobre\ncualquier otra forma de gobierno', 'Satisfecho o Muy satisfecho\ncon la democracia'))) %>% 
+  ggplot(aes(y = prop, x = ola, group = name, color = name,
+               label = scales::percent(prop, accuracy = .1))) +
+  facet_wrap(.~pos_id) +
+  theme_bw() + 
+  geom_point(size = 1.75) + 
+  geom_text_repel(size = 3, nudge_y = .025) +
+  geom_line() +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_color_viridis_d(begin = .1, end = .66, direction = 1, option = 'viridis') +
+  theme(legend.position = 'top',   
+        legend.title = element_blank()) +
+  ggtitle('Preferencia por y satisfacción con la democracia (2021),\nsegún posición ideológica y ola',
+        subtitle = 'Porcentaje que responde...')
+
+```
+
+```{r}
+
+elsoc_long_2016_2021 %>%
+  filter(tipo_atricion == 1 & !is_nsnr(c25, c15) & ola == 5) %>%
+  mutate(pos_id = factor(car::recode(c15, "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
+                     levels = 1:4,
+                     labels = c('Izquierda', "Centro", "Derecha", "No se identifica")),
+         c25 = factor(c25, 
+                      levels = 1:4,
+                      labels = c('Democracia es preferible\na cualquier otra forma\nde gobierno', 
+                                 'En algunos casos,\n gobierno autoritario puede\n ser preferible',
+                                 'Da lo mismo régimen\ndemocrático o autoritario', 
+                                 'Ninguna'))) %>%
+  prop(x = c25, by = pos_id, na.rm = TRUE) %>% 
+  ggplot(aes(y = prop, x = pos_id, fill = fct_rev(c25), 
+             label = scales::percent(ifelse(prop < .01, NA, prop), accuracy = .1))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = 1, option = 'viridis') +
+  geom_text(position = position_stack(vjust = .5),
+            size = 3, na.rm = TRUE,
+            color = rep(c('black', 'black', 'white', 'white'), 4)) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank()) + 
+  guides(fill = guide_legend(reverse = TRUE)) +
+  ggtitle('Preferencia por la democracia (2021), según posición ideológica',
+        subtitle = 'Porcentaje que responde...')
+
+```
+
+
+

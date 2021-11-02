@@ -5,6 +5,7 @@
 ### Justificación de la violencia para el control social – a manos de ciudadanos
 
 ```{r just-vio-ola, fig.aligN='center', fig.cap='Justificación de la violencia en relación a delincuencia, según ola de encuesta'}
+
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & ola %in% 1:4 &
            !f05_01 %in% c(-888, -999) & !f05_02 %in% c(-888, -999)) %>%  
@@ -18,16 +19,19 @@ sjlabelled::as_label(ola) %>%
   ggplot(aes(y = prop, x = ola, color = name, group = name,
              label = scales::percent(prop, accuracy = .1))) +
   theme_bw() + 
-  geom_point() + 
+  geom_point(size = 1.75) + 
   geom_line() + 
   scale_y_continuous(labels = scales::percent,
                      limits = c(0, .5)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_color_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') + 
-  geom_text_repel() +
+  scale_color_viridis_d(begin = .33, end = .66, option = 'viridis') + 
+  geom_text_repel(size = 3, nudge_y = .02) +
   theme(legend.position = 'top',
-        legend.title = element_blank())
+        legend.title = element_blank()) +
+  ggtitle('Justificación de la violencia, según ola',
+          subtitle = 'Porcentaje que responde que Muchas veces o Siempre se justifica' )
+
 
 ```
 
@@ -50,16 +54,18 @@ sjlabelled::as_label(ola) %>%
   ggplot(aes(y = prop, x = ola, color = name, group = name,
              label = scales::percent(prop, accuracy = .1))) +
   theme_bw() + 
-  geom_point() + 
+  geom_point(size = 1.75) + 
   geom_line() +
   scale_y_continuous(labels = scales::percent,
                      limits = c(0, .5)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_color_viridis_d(begin = 0, end = .75, option = 'viridis') + 
-  ggrepel::geom_text_repel() +
+  scale_color_viridis_d(begin = 0, end = .7, option = 'viridis') + 
+  ggrepel::geom_text_repel(size = 3, nudge_y = .02) +
   theme(legend.position = 'top',
-        legend.title = element_blank())
+        legend.title = element_blank()) +
+  ggtitle('Justificación de la violencia, según ola',
+        subtitle = 'Porcentaje que responde que Muchas veces o Siempre se justifica' )
 
 ```
 

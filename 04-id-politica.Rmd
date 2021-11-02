@@ -1,73 +1,18 @@
 
-# Cambios sociales y políticos
+# Temas políticos
+
+¿Cómo ha cambiado la sociedad en temas políticos?
 
 ## Identificación política
-
-### Participación ciudadana e interés en política
-
-```{r}
-
-elsoc_long_2016_2021 %>%
-  filter(tipo_atricion == 1 & !c08_02 %in% c(-888, -999) & !c08_04 %in% c(-888, -999)) %>%
-  as_label(ola) %>% 
-  prop_list(c08_02 %in% 4:5, c08_04 %in% 4:5, by = ola, na.rm = TRUE) %>% 
-  mutate(name = factor(name,
-                       levels = c('c08_02 %in% 4:5', 'c08_04 %in% 4:5'),
-                       labels = c('Asiste a marcha o\nmanifestación pacífica',
-                       'Usa RRSS para opinar\nen temas públicos'))) %>% 
-  ggplot(aes(y = prop, x = ola, color = name, group = name,
-             label = scales::percent(prop, accuracy = .1))) +
-  theme_bw() + 
-  geom_point() + 
-  geom_line() +
-  # geom_text_repel(nudge_y = .01, size = 3) +
-  scale_y_continuous(labels = scales::percent, limits = c(0,.3)) +
-  ylab(label = NULL) +
-  xlab(label = NULL) +
-  scale_color_viridis_d(end = .66, option = 'viridis') +
-  theme(legend.position = 'top',
-        legend.title = element_blank()) + 
-  ggtitle(label = 'Participación ciudadana, según ola del estudio')
-
-```
-
-```{r}
-
-elsoc_long_2016_2021 %>%
-  filter(tipo_atricion == 1 & !c13 %in% c(-888, -999) & 
-           !c14_01 %in% c(-888, -999) & !c14_02 %in% c(-888, -999)) %>%
-  as_label(ola) %>% 
-  prop_list(c13 %in% 4:5, c14_01 %in% 4:5, c14_02 %in% 4:5, by = ola, na.rm = TRUE) %>% 
-  mutate(name = factor(name, 
-                       levels = c('c13 %in% 4:5', 'c14_01 %in% 4:5', 'c14_02 %in% 4:5'),
-                       labels = c('Se interesa en política', 'Habla de política\ncon familiares',
-                       'Se informa\nsobre política'))) %>% 
-  ggplot(aes(y = prop, x = ola, color = name, group = name,
-             label = scales::percent(prop, accuracy = .1))) +
-  theme_bw() + 
-  geom_point() + 
-  geom_line() +
-  geom_text(nudge_y = .025, size = 3) +
-  scale_y_continuous(labels = scales::percent, limits = c(0,.6)) +
-  ylab(label = NULL) +
-  xlab(label = NULL) +
-  scale_color_viridis_d(end = .7, option = 'viridis') +
-  theme(legend.position = 'top',
-        legend.title = element_blank()) + 
-  ggtitle(label = 'Interés en política, según ola del estudio')
-  
-```
-
 
 ### ¿Cómo se posicionan políticamente los chilenos?
 
 ```{r echo=FALSE}
-
 elsoc_long_2016_2021 %>%
-  filter(tipo_atricion == 1 & ola == 5 & !c15 %in% c(-888, -999)) %>%
-  mutate(pos_id = factor(car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
-                         levels = 1:4,
-                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
+  filter(tipo_atricion == 1 & ola == 5) %>%
+  mutate(pos_id = factor(car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4; c(-888, -999) = 5"),
+                         levels = 1:5,
+                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica", "NS/NR"))) %>%
   prop(x = pos_id, na.rm = TRUE) %>% 
   ggplot(aes(y = prop, fill = pos_id, x = pos_id, 
              label = scales::percent(prop, accuracy = .1))) +
@@ -83,45 +28,12 @@ elsoc_long_2016_2021 %>%
   theme(legend.position = 'top',
         legend.title = element_blank()) + 
   ggtitle(label = 'Identificación política (2021)')
-
 ```
 
-
-
-```{r echo=FALSE}
-
-elsoc_long_2016_2021 %>%
-  filter(tipo_atricion == 1 & ola == 5 & !c13 %in% c(-888, -999) & !c15 %in% c(-888, -999)) %>%
-  mutate(pos_id = factor(car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
-                         levels = 1:4,
-                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica")),
-         interes = factor(car::recode(c13, "1 = 1; 2:3 = 2; 4:5 = 3"),
-                          levels = 1:3,
-                          labels = c('Nada interesado/a', 'Poco o algo\ninteresado/a', 'Bastante o muy\ninteresado/a'))) %>%
-  prop(x = pos_id, by = interes, na.rm = TRUE) %>% 
-  ggplot(aes(y = prop, fill = fct_rev(pos_id), x = interes, 
-             label = scales::percent(prop, accuracy = .1))) +
-  theme_bw() + 
-  geom_col(position= 'stack') +
-  scale_y_continuous(labels = scales::percent) +
-  ylab(label = NULL) +
-  xlab(label = NULL) +
-  scale_fill_viridis_d(direction = -1, end = .85, option = 'viridis') +
-  geom_text(position = position_stack(vjust = .5),
-            size = 3,
-            color = rep(rep(c('white', 'black'), each = 2), 3)) + 
-  theme(legend.position = 'top',
-        legend.title = element_blank()) + 
-  guides(fill = guide_legend(reverse = TRUE)) + 
-  ggtitle(label = 'Identificación política, según grado de interes en la política (2021)')
-
-```
-
-### Cambios en la identificación política en el período 2016-2021
 
 
 Entre 2016 y 2021 la identificación con la izquierda se ha mantenido estable (25,3% en 2021), mientras que 
-el centro y la derecha han aumentado su participación (de 24,8% en 2016 a 36,1% en 2021, y de 14,1% a 17,5%, respectivament), en desmedro de la no identifiación política, que disminuyó de 35,8% a 19,3%
+el centro y la derecha han aumentado su participación (de 24,8% en 2016 a 36,1% en 2021, y de 14,1% a 17,5%, respectivament), en desmedro de la no identifiación política, que disminuyó de 35,8% a 19,3%.
 
 
 ```{r echo=FALSE}
@@ -152,7 +64,7 @@ elsoc_long_2016_2021 %>%
 ```
 
 
-Aunque los porcentajes son relativamente estables, esconden una alta fluidez en la identificación con las diferentes posiciones políticas por año
+Aunque los porcentajes son relativamente estables, esconden una alta fluidez en la identificación con las diferentes posiciones políticas por año.
 
 
 ```{r}
@@ -193,6 +105,34 @@ elsoc_long_2016_2021 %>%
 
 ```
 
+De manera consistente aproximadamente 48% de la población cambia su posición política cada año
+
+```{r}
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & !is_nsnr(c15)) %>%
+  mutate(c15 = factor(car::recode(c15, "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4; c(-888, -999) = 5"),
+                         levels = 1:4,
+                         labels = c('Izquierda', "Centro", "Derecha", "No se\nidentifica"))) %>% 
+  group_by(idencuesta) %>% 
+  mutate(cambia = c15 != lag(c15),
+         ola = factor(ola,
+                      levels = 1:5,
+                      labels = c('', '2016-2017', '2017-2018', '2018-2019', '2019-2021'))) %>% 
+  ungroup() %>% 
+  prop(cambia == TRUE, by = ola, na.rm = TRUE) %>% 
+  ggplot(aes(y = prop, x = ola, label = scales::percent(prop, .1))) + 
+  theme_bw() +
+  geom_col(fill = viridis(1, begin = .33)) +
+  geom_text(position = position_dodge(.9), vjust = -.5, size = 3) +
+  scale_y_continuous(labels = scales::percent, limits = c(0,1)) + 
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .33, end = .66, option = 'viridis') +
+  theme(legend.position = 'top') +
+  ggtitle(label = 'Cambios en identificación política, según ola',
+          subtitle = 'Porcentaje que cambia su posición política en cada ola' )
+
+```
 
 El grupo político más estable (comparando posiciones politicas entre 2016 y 2021) es el de centro: 54,0% de quienes se posicionaban políticamente de Centro, lo hicieron también en 2021. En contraste, la No identificación política es la menos estable: solo 31,3% de quienes no se identificaban políticamente en 2016, lo hicieron también en 2021. Para la izquierda y la derecha, estos porcentajes son 47,8% y 47,6%, respectivamente. 
 
@@ -228,9 +168,11 @@ elsoc_wide_2016_2021 %>%
   
 ```
 
+A mayor edad mayor estabilidad en la posición política entre años
+
 ```{r}
 elsoc_wide_2016_2021 %>% 
-  filter(tipo_atricion == 1 & !c15_w01 %in% c(-888, -999) & !c15_w04 %in% c(-888, -999)) %>% 
+  filter(tipo_atricion == 1 & !is_nsnr(c15_w01, c15_w04)) %>% 
   mutate(pos_id_w01 = factor(car::recode(c15_w01, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4; c(-888, -999) = 5"),
                          levels = 1:4,
                          labels = c('Izquierda', "Centro", "Derecha", "No se\nidentifica")),
@@ -252,51 +194,105 @@ elsoc_wide_2016_2021 %>%
   scale_fill_viridis_d(begin = .33, end = .66, option = 'viridis') +
   theme(legend.position = 'top') +
   ggtitle(label = 'Cambios en identificación política, según grupo etáreo',
-          subtitle = 'Porcentaje que cambia su identififación política entre 2016 y 2021' )
+          subtitle = 'Porcentaje que cambia su posición política entre 2016 y 2021' )
 
+```
+
+### Interés en la política y participación ciudadana
+
+```{r}
+
+elsoc_long_2016_2021 %>%
+  filter(tipo_atricion == 1 & !is_nsnr(c13)) %>% 
+  mutate(c13 = factor(car::recode(c13, "1 = 1; 2:3 = 2; 4:5 = 3"),
+                      levels = 1:3,
+                      labels = c('Nada interesado', 'Poco o algo interesado', 
+                                 'Bastante o Muy interesado'))) %>% 
+  prop(c13, by = ola, na.rm = TRUE) %>% 
+  as_label(ola) %>% 
+  ggplot(aes(y = prop, x = ola, group = c13, color = c13,
+             label = scales::percent(prop, accuracy = .1))) +
+  theme_bw() + 
+  geom_point(size = 1.5) + 
+  geom_line() +
+  geom_text_repel(nudge_y = .04, size = 3, color = 'black') +
+  scale_y_continuous(labels = scales::percent, limits = c(0,1)) +
+  scale_color_viridis_d(end = .75, option = 'viridis') +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) + 
+  ggtitle(label = 'Interés en política, según ola del estudio')
+  
 ```
 
 
 ```{r}
-elsoc_wide_2016_2021 %>% 
-  filter(tipo_atricion == 1 & !c15_w01 %in% c(-888, -999) & !c15_w04 %in% c(-888, -999) & 
-           !d01_01_w05 %in% c(-888, -999, NA)) %>% 
-  mutate(pos_id_w01 = factor(car::recode(c15_w01, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4; c(-888, -999) = 5"),
-                         levels = 1:4,
-                         labels = c('Izquierda', "Centro", "Derecha", "No se\nidentifica")),
-         pos_id_w05 = factor(car::recode(c15_w05, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4; c(-888, -999) = 5"),
-                         levels = 1:4,
-                         labels = c('Izquierda', "Centro", "Derecha", "No se\nidentifica")),
-         cambia = pos_id_w01 != pos_id_w05,
-         clase_sub = factor(car::recode(d01_01_w05, "0:4 = 1; 5 = 2; 6:10 = 3; else = NA"), 
-                            levels = 1:3, 
-                            labels = c("Baja y media baja", "Media", "Alta y media alta"))) %>%
-  survey_design_elsoc(weights = 'ponderador02_w05') %>% 
-  prop(cambia == TRUE, by = clase_sub, na.rm = TRUE) %>% 
-  ggplot(aes(y = prop, x = clase_sub, label = scales::percent(prop, .1))) + 
-  theme_bw() +
-  geom_col(fill = viridis(1, begin = .33)) +
-  geom_text(position = position_dodge(.9), vjust = -.5, size = 3) +
-  scale_y_continuous(labels = scales::percent, limits = c(0,1)) + 
+
+elsoc_long_2016_2021 %>%
+  filter(tipo_atricion == 1 & !is_nsnr(c08_02, c08_04, c14_01, c14_02)) %>%
+  as_label(ola) %>% 
+  prop_list(c08_02 %in% 4:5, c08_04 %in% 4:5, c14_01 %in% 4:5, c14_02 %in% 4:5, by = ola, na.rm = TRUE) %>% 
+  mutate(name = factor(name,
+                       levels = c('c08_02 %in% 4:5', 'c08_04 %in% 4:5', 'c14_01 %in% 4:5', 'c14_02 %in% 4:5'),
+                       labels = c('Asiste a marcha o\nmanifestación pacífica',
+                                  'Usa RRSS para opinar\nde temas públicos',
+                                  'Habla de política\ncon familiares',
+                                  'Se informa\nsobre política'))) %>% 
+  ggplot(aes(y = prop, x = ola, color = name, group = name,
+             label = scales::percent(prop, accuracy = .1))) +
+  theme_bw() + 
+  geom_point(size = 1.5) + 
+  geom_line() +
+  geom_text_repel(nudge_y = .025, size = 3) +
+  scale_y_continuous(labels = scales::percent, limits = c(0,1)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = .33, end = .66, option = 'viridis') +
-  theme(legend.position = 'top') +
-  ggtitle(label = 'Cambios en identificación política, según clase social subjetiva',
-          subtitle = 'Porcentaje que cambia su identififación política entre 2016 y 2021' )
+  scale_color_viridis_d(begin = 0, end = .7, direction = -1, option = 'viridis') +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) + 
+  guides(color = guide_legend(reverse = TRUE)) +
+  ggtitle(label = 'Participación ciudadana, según ola del estudio',
+          subtitle = 'Portaje que responde Frecuente o Muy frecuentemente')
 
 ```
 
+
+```{r echo=FALSE}
+
+elsoc_long_2016_2021 %>%
+  filter(tipo_atricion == 1 & ola == 5 & !c13 %in% c(-888, -999)) %>%
+  mutate(pos_id = factor(car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4; c(-888, -999) = 5"),
+                         levels = 1:5,
+                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica", "NS/NR")),
+         interes = factor(car::recode(c13, "1 = 1; 2:3 = 2; 4:5 = 3"),
+                          levels = 1:3,
+                          labels = c('Nada interesado/a', 'Poco o algo\ninteresado/a', 'Bastante o muy\ninteresado/a'))) %>%
+  prop(x = pos_id, by = interes, na.rm = TRUE) %>% 
+  ggplot(aes(y = prop, fill = fct_rev(pos_id), x = interes, 
+             label = scales::percent(ifelse(prop < .005, NA, prop), accuracy = .1))) +
+  theme_bw() + 
+  geom_col(position= 'stack') +
+  scale_y_continuous(labels = scales::percent) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(direction = -1, option = 'viridis') +
+  geom_text(position = position_stack(vjust = .5),
+            size = 3,
+            color = rep(c('white', 'white', 'white', 'black', 'black'), 3)) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank()) + 
+  guides(fill = guide_legend(reverse = TRUE)) + 
+  ggtitle(label = 'Identificación política, según grado de interes en la política (2021)')
+
+```
 
 ### Opinión en temas de discusión pública
 
 ```{r}
 
 elsoc_long_2016_2021 %>%
-  filter(tipo_atricion == 1 & ola %in% 4:5 & !c15 %in% c(-888, -999) & 
-           !c37_02 %in% c(-888, -999) & 
-           !c37_04 %in% c(-888, -999) & 
-           !c37_05 %in% c(-888, -999)) %>% 
+  filter(tipo_atricion == 1 & ola %in% 4:5 & !is_nsnr(c15, c37_02, c37_04, c37_05)) %>% 
   as_label(ola) %>% 
   mutate(pos_id = factor(car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
                          levels = c(1, 2, 3, 4),
@@ -311,8 +307,8 @@ elsoc_long_2016_2021 %>%
   ggplot(aes(x = pos_id, y = prop, 
              label = scales::percent(prop, .1))) +
   facet_wrap(.~name) +
-  geom_line() +
-  geom_point(aes(color = ola), size = 4, alpha = .66) + 
+  geom_line(size = .7, color = viridis(1, begin = .44, end = .44)) +
+  geom_point(aes(color = ola), size = 4) + 
   geom_point(color = 'black', size = 4, shape = 1) + 
   geom_text_repel(size= 3, nudge_x = .05, nudge_y = .033) +
   theme_bw() +
@@ -324,7 +320,6 @@ elsoc_long_2016_2021 %>%
         subtitle = 'Porcentaje que responde de acuerdo o muy de acuerdo') +
   scale_color_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
   theme(legend.position = 'top',
-        legend.title = element_blank()) 
+        legend.title = element_blank())
 
-    
 ```

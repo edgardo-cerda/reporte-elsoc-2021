@@ -37,6 +37,7 @@ library(chilemapas)
 library(elsoc)
 library(lubridate)
 library(viridis)
+library(treemapify)
 
 ```
 
@@ -57,22 +58,31 @@ fullw = if (is_html_output()) {TRUE} else if (is_latex_output()) {FALSE}
 fsize = if (is_html_output()) {14} else if(is_latex_output()) {8}
 
 ggplot2::theme_set(new = theme_test(base_family = "serif"))
-options(knitr.kable.NA = '-')
+options(knitr.kable.NA = '')
 
 ```
 
+```{r}
 
-```{r datos-elsoc}
 remove(list = ls())
 
-# bases de datos ELSOC
-elsoc::load_elsoc(format = 'long')
-elsoc::load_elsoc(format = 'wide')
+load(file.path('..', '..', '..', '2_Bases_de_Datos', '10_Combinacion_de_Olas_ELSOC', '0E_Bases_de_Datos_Resultantes_2016_2021', 'ELSOC_Long_2016_2021_v1.00_R.RData'))
+
+load(file.path('..', '..', '..', '2_Bases_de_Datos', '10_Combinacion_de_Olas_ELSOC', '0E_Bases_de_Datos_Resultantes_2016_2021', 'ELSOC_Wide_2016_2021_v1.00_R.RData'))
+
+load(file.path('1_input', 'cuarentenas_acum.RData'))
+
 ```
 
+```{r datos-elsoc}
 
-```{r datos-cuarentenas}
+# bases de datos ELSOC
+# elsoc::load_elsoc(format = 'long')
+# elsoc::load_elsoc(format = 'wide')
 
+```
+
+```{r datos-cuarentenas, eval=FALSE}
 # Datos de dias de cuarentena por comuna de Ministerio de Ciencia:
 
 # Url para descarga directa de datos desde el Github del Ministerio de Ciencia
@@ -130,6 +140,6 @@ cuarentenas_acum <- full_join(cuarentenas1,
 
 ```{r}
 
-rm(list = setdiff(ls(), c('cuarentenas_acum', 'elsoc_long_2016_2021', 'elsoc_wide_2016_2021')))
+rm(list = setdiff(ls(), c('elsoc_long_cuarentenas', 'elsoc_long_2016_2021', 'elsoc_wide_2016_2021')))
 
 ```
