@@ -1,4 +1,4 @@
-# Cómo citar este informe: {-}
+# Como citar este informe: {-}
 
 :::{.blue-box}
 > COES (2021) Radiografía del Cambio Social: Análisis de Resultados Longitudinales ELSOC 2016-2021. Presentación de Resultados COES. Septiembre, Santiago de Chile.
