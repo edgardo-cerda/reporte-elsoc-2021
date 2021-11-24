@@ -1,7 +1,8 @@
-
 # Introduccion
 
-El Centro de Estudios de Conflicto y Cohesión Social (COES) tiene el agrado de publicar el informe “Radiografía del Cambio Social”, el cual consolida los principales hallazgos longitudinales de cinco mediciones anuales del Estudio Longitudinal Social de Chile (ELSOC 2016-2021).
+<div style="text-align: justify">
+
+El Centro de Estudios de Conflicto y Cohesión Social ([COES](https://coes.cl/)) tiene el agrado de publicar el informe “Radiografía del Cambio Social”, el cual consolida los principales hallazgos longitudinales de cinco mediciones anuales del Estudio Longitudinal Social de Chile ([ELSOC](https://coes.cl/encuesta-panel/)).
 
 ELSOC es una encuesta desarrollada para analizar longitudinalmente, en un estudio panel, la evolución del conflicto y cohesión social en la sociedad chilena, basándose en modelos conceptuales descritos en la literatura nacional e internacional de las disciplinas del ámbito de la Economía, Sociología, Psicología, Ciencia Política y Estudios Urbanos. De este modo, se orienta a examinar los principales antecedentes, factores moderadores y mediadores, así como las principales consecuencias asociadas al desarrollo de distintas formas de sociabilidad en Chile.
 
@@ -11,8 +12,287 @@ Ambos fenómenos han significado un desafío para ELSOC, ya que afecta tanto la 
 
 ## Sobre COES
 
-El Centro de Estudios de Conflicto y Cohesión Social (COES) desarrolla investigación colaborativa en temas relacionados al conflicto social y la cohesión (convivencia) en Chile, por medio de un equipo multidisciplinario proveniente de las ciencias sociales y humanidades. COES centra sus actividades académicas y de difusión en el análisis de las múltiples manifestaciones del conflicto y cohesión social en Chile, sus causas, así como también su contexto cultural e histórico.
+El Centro de Estudios de Conflicto y Cohesión Social ([COES](https://coes.cl/)) desarrolla investigación colaborativa en temas relacionados al conflicto social y la cohesión (convivencia) en Chile, por medio de un equipo multidisciplinario proveniente de las ciencias sociales y humanidades. COES centra sus actividades académicas y de difusión en el análisis de las múltiples manifestaciones del conflicto y cohesión social en Chile, sus causas, así como también su contexto cultural e histórico.
 
-COES está patrocinado por la Universidad de Chile y la Pontificia Universidad Católica de Chile, y como instituciones asociadas se encuentran la Universidad Diego Portales y la Universidad Adolfo Ibáñez. COES cuenta con el apoyo del Fondo de Financiamiento de Centros de Investigación en Áreas Prioritarias (FONDAP, dependiente de la Agencia Nacional de Investigación y Desarrollo (ANID) del Ministerio de Ciencia, Tecnología, Conocimiento e Innovación. ELSOC además cuenta como socio al Instituto Milenio para la Investigación en Depresión y Personalidad (MIDAP).
+COES está patrocinado por la Universidad de Chile y la Pontificia Universidad Católica de Chile, y como instituciones asociadas se encuentran la Universidad Diego Portales y la Universidad Adolfo Ibáñez. COES cuenta con el apoyo del Fondo de Financiamiento de Centros de Investigación en Áreas Prioritarias ([FONDAP](https://www.conicyt.cl/fondap/sobre-fondap/que-es-fondap/), dependiente de la Agencia Nacional de Investigación y Desarrollo ([ANID](https://www.anid.cl/)) del Ministerio de Ciencia, Tecnología, Conocimiento e Innovación ([MinCiencia](https://www.minciencia.gob.cl/)). ELSOC además cuenta como socio al Instituto Milenio para la Investigación en Depresión y Personalidad ([MIDAP](https://midap.org/)).
+
+
+## Sobre ELSOC
+
+### Descripción del estudio
+
+El [Estudio Longitudinal Social de Chile (ELSOC)](https://coes.cl/encuesta-panel/) es una encuesta panel, representativa de la población nacional urbana, que analiza la estabilidad y cambio de las creencias, actitudes y percepciones que tenemos los chilenos y chilenas respecto de la convivencia y del conflicto, la cohesión y una amplia gama de aspectos políticos y sociales a lo largo del tiempo. 
+
+Este estudio sigue la evolución de cerca de 4.500 chilenos y chilenas a lo largo de una década. Actualmente se encuentran disponibles 5 olas del estudio, abarcando el período entre 2016 y 2021. Sus temas de estudio y su aspecto longitudinal convierten a ELSOC en un recurso único en Chile y América Latina para analizar la evolución de la sociedad chilena y para el desarrollo de las ciencias sociales en Chile.
+
+Durante los últimos años, ELSOC se ha consolidado como un importante insumo para el desarrollo de investigación científica y aplicada en ciencias sociales. En el sitio web de (ELSOC)(https://coes.cl/encuesta-panel/) se puede acceder a más información sobre el estudio. 
+
+### Acceso a Bases de Datos ELSOC
+
+Las bases de datos y documentación correspondientes se encuentran disponibles, de manera libre y gratuita, en un repositorio de datos, al cual se podrá acceder en el link:
+
+https://dataverse.harvard.edu/dataverse/elsoc
+
+En este sitio se obtendrá acceso a los datos de las 5 mediciones transversales de ELSOC, así como bases longitudinales que integran las distintas mediciones. En colaboración con el Centro de Inteligencia Territorial ([CIT](https://cit.uai.cl/)), se pone también a disposición las bases ELSOC-CIT. Estas bases de datos permiten combinar la información de ELSOC, y estimaciones e indicadores territoriales y geoespaciales de distinta índole, proveniente de diversas fuentes de información nacional para los períodos 2016 a 2019. 
+
+ELSOC tiene un compromiso con los más altos estándares científicos en términos de producción y análisis de datos. Dentro de esta visión global, ELSOC se guía por las principales pautas de Transparencia y Apertura en la investigación científica. Por esta misma razón, los códigos utilizados para el desarrollo de este documento se encontrarán disponibles en https://github.com/centro-coes.
+
+
+### Características del diseño muestral
+
+- Unidad de Análisis: Individuos
+
+- Muestra objetivo: 3.000 individuos en muestra original (a partir de 2016) y 1.500 en muestra refresco (a partir de 2018)
+
+- Población Objetivo: Hombres y mujeres de 18 a 75 años, residentes habituales de viviendas particulares ocupadas en zonas urbanas, localizadas en 40 ciudades (92 comunas, 13 regiones) del país
+
+- Periodicidad: Anual. 
+
+```{r ilust-olas-elsoc, echo=FALSE, fig.cap = "Mediciones de ELSOC"}
+knitr::include_graphics(file.path('inputs', 'imagenes', 'olas_elsoc.png'))
+```
+
+
+- Marco Muestral: Marco de muestreo de manzanas del pre-censo 2011
+
+- Diseño Muestral: Probabilístico, estratificado (por tamaño de ciudades), por conglomerados y multietápico
+
+- Unidades de Muestreo: Primero se eligen ciudades (UPM), luego manzanas (USM), y sub-bloques y viviendas (UTM). La unidad final de selección es la persona
+
+```{r ilust-etapas-seleccion, echo=FALSE, fig.cap = "Muestreo de ELSOC"}
+knitr::include_graphics(file.path('inputs/imagenes/etapas_seleccion.jpg'))
+```
+
+
+**Organismo Ejecutor**: Consultora Stephanie Eckman y Centro de Inteligencia Territorial (CIT) de la Universidad Adolfo Ibáñez
+
+### Características del levantamiento de datos
+
+- Formato de aplicación: Cuestionario estructurado. Levantamiento en formato CAPI (Encuesta presencial con asistencia de tablet). Excepcionalmente se cambió a formato CATI (Encuesta telefónica con asistencia de tablet) durante 2021, debido a contingencia COVID-19
+
+- Período de Aplicación: entre Julio y Noviembre de cada año. Debido al estallido social, la cuarta medición se aplicó entre el 21 de noviembre de 2019 y el 9 de marzo de 2020. Debido a la pandemia, la quinta medición se aplicó entre el 29 de enero de 2021 y 12 de julio de 2021
+
+- Instrumento: Cuestionario compuesto por preguntas cerradas de carácter simple y múltiple junto a algunas preguntas abiertas. Combina módulos de preguntas permanentes (medidas en todas las olas) y otras intercaladas entre olas
+
+- Cobertura Temática: Contiene siete módulos temáticos: Territorio, Redes y actitudes sociales, Ciudadanía y democracia, Desigualdad y legitimidad, Conflicto social, Salud y bienestar y Caracterización sociodemográfica
+
+- Incentivos a la participación: Entrega de incentivos monetarios para el encuestado ($ 6.000 CLP) y de material sobre el estudio (ELSOC y COES). Acciones de seguimiento basadas en la información de contacto (correo electrónico para cumpleaños y días festivos)
+
+- Entrenamiento de entrevistadores: Contratación de entrevistadores con experiencia en encuestas complejas y/o longitudinales. Capacitación centralizada y presencial para coordinadores de campo y un subconjunto de entrevistadores en Santiago (incluidos ejercicios prácticos para la implementación del cuestionario, uso de tabletas y protocolo de contacto). Actividades adicionales en otras regiones de Chile. Diseño de un Manual de entrevistador especializado para el proyecto
+
+- Operaciones de Control y Supervisión: Coordinadores de campo supervisan el trabajo de entrevistadores, verificando el número de visitas, el contacto, la identidad del participante y preguntas claves. Organismo ejecutor realiza una supervisión interna de al menos el 10% de la muestra (entrevistando nuevamente a algunos encuestados), verificando la duración y la respuesta de los participantes
+
+**Organismo Ejecutor**: Levantamiento a cargo de Centro Micro Datos (CMD) de la Universidad de Chile
+
+
+
+## Atrición de la muestra
+
+El diseño de ELSOC contempló entrevistar a 3.000 personas en su muestra original y 1.500 en la muestra refresco. Sin embargo, es habitual que en encuestas panel se reduce el número de participantes, dado que algunos optan voluntariamente por dejar de participar y otras personas no pueden ser recontactadas. Este fenómeno es conocido como atrición, y pueden tener efectos nocivos sobre la utilidad de los datos longitudinales. En el caso de ELSOC, la tasa de atrición es comparativamente baja en comparación a otros estudios similares, por lo que no se considera al momento un problema significativo. A pesar de esto, el año 2018 se introduce una muestra refresco para contraarrestar el efecto de la atrición. 
+
+El año 2021, la atrición presenta un alza importante debido a la mayor dificultad que implica el levantamiento durante la pandemia de COVID-19 y al cambio de modalidad.
+
+```{r tabla-atricion, echo=FALSE}
+
+elsoc_long_2016_2021 %>% 
+  group_by(ola, muestra) %>% 
+  summarise(n = n()) %>% 
+  group_by(muestra) %>% 
+  mutate(atricion = abs(n/lag(n) - 1)) %>% 
+  pivot_wider(names_from = muestra, values_from = c(n, atricion)) %>% 
+  mutate(ola = factor(ola, levels = 1:5, labels = c(2016:2019, 2021)),
+         n_1 = scales::number(n_1),
+         n_2 = scales::number(n_2),
+         atricion_1 = scales::percent(atricion_1),
+         atricion_2 = scales::percent(atricion_2)) %>% 
+  select(ola, n_1, atricion_1, n_2, atricion_2) %>% 
+  kbl(align = c('c', 'c', 'c', 'c', 'c'),
+      col.name = c('Medición', rep(c('Muestra lograda', 'Atrición'), 2)),
+      caption = 'Atrición de las muestras de ELSOC entre olas') %>% 
+  kable_styling(full_width = F) %>% 
+  kable_classic_2() %>% 
+  add_header_above(c(" " = 1, 'Muestra original' = 2, 'Muestra refresco' = 2))
+
+```
+
+
+### Atrición acumulada según Sexo, Grupo etáreo, Nivel educacional y Estrato
+
+Para el cálculo de atrición acumulada se considera el período 2016-2021 para la muestra original, y el período 2018-2021 para la muestra refresco
+
+ - Según sexo:
+ 
+```{r tabla-atricion-sexo}
+elsoc_long_2016_2021 %>% 
+  mutate(ola = ifelse(muestra == 2 & ola == 3, 1, ola)) %>% 
+  filter(ola %in% c(1, 5)) %>% 
+  as_label(m0_sexo) %>% 
+  group_by(ola, muestra, m0_sexo) %>% 
+  summarise(n = n()) %>% 
+  group_by(muestra, m0_sexo) %>% 
+  mutate(atricion = abs(n/lag(n) - 1)) %>%
+  pivot_wider(names_from = muestra, values_from = c(n, atricion)) %>% 
+  filter(ola == 5) %>% select(-ola) %>% 
+  mutate(n_1 = scales::number(n_1),
+         n_2 = scales::number(n_2),
+         atricion_1 = scales::percent(atricion_1),
+         atricion_2 = scales::percent(atricion_2)) %>% 
+  select(m0_sexo, n_1, n_2, atricion_1, atricion_2) %>% 
+  kbl(align = c('l', 'c', 'c', 'c', 'c'),
+      col.name = c('Sexo', rep(c('Muestra original', 'Muestra refresco'), 2)),
+      caption = 'Atrición acumulada de ELSOC, según sexo') %>% 
+  kable_styling(full_width = F) %>% 
+  kable_classic_2() %>% 
+  add_header_above(c(" " = 1, 'Muestra lograda en 2021' = 2, 'Atrición acumulada' = 2))
+
+```
+
+ - Según grupo etáreo:
+
+```{r tabla-atricion-edad}
+elsoc_long_2016_2021 %>% 
+  mutate(edadt = factor(car::recode(m0_edad, "18:29 = 1; 30:49 = 2; 50:64 = 3; 65:150 = 4"),
+                      levels = 1:4,
+                      labels = c('18-29', '30-49', '50-64', '65 o más')),
+         ola = ifelse(muestra == 2 & ola == 3, 1, ola)) %>% 
+  filter(ola %in% c(1, 5)) %>% 
+  as_label(edadt) %>% 
+  group_by(ola, muestra, edadt) %>% 
+  summarise(n = n()) %>% 
+  group_by(muestra, edadt) %>% 
+  mutate(atricion = abs(n/lag(n) - 1)) %>%
+  pivot_wider(names_from = muestra, values_from = c(n, atricion)) %>% 
+  filter(ola == 5) %>% select(-ola) %>% 
+  mutate(n_1 = scales::number(n_1),
+         n_2 = scales::number(n_2),
+         atricion_1 = scales::percent(atricion_1),
+         atricion_2 = scales::percent(atricion_2)) %>% 
+  select(edadt, n_1, n_2, atricion_1, atricion_2) %>% 
+  kbl(align = c('l', 'c', 'c', 'c', 'c'),
+      col.name = c('Grupo etáreo', rep(c('Muestra original', 'Muestra refresco'), 2)),
+      caption = 'Atrición acumulada de ELSOC, según grupo etáreo') %>% 
+  kable_styling(full_width = F) %>% 
+  kable_classic_2() %>% 
+  add_header_above(c(" " = 1, 'Muestra lograda en 2021' = 2, 'Atrición acumulada' = 2))
+
+```
+
+- Según nivel educacional:
+
+```{r tabla-atricion-educ}
+elsoc_long_2016_2021 %>% 
+  filter(!m01 %in% c(-888, -999)) %>% 
+  mutate(educ = factor(car::recode(m01, recodes = "1:3 = 1; 4:5 = 2; 6:7 = 3; 8:10 = 4"),
+                       levels = 1:4,
+                       labels = c("Basica", "Media", "Tecnica", "Universitaria")),
+         ola = ifelse(muestra == 2 & ola == 3, 1, ola)) %>% 
+  filter(ola %in% c(1, 5)) %>% 
+  as_label(educ) %>% 
+  group_by(ola, muestra, educ) %>% 
+  summarise(n = n()) %>% 
+  group_by(muestra, educ) %>% 
+  mutate(atricion = abs(n/lag(n) - 1)) %>%
+  pivot_wider(names_from = muestra, values_from = c(n, atricion)) %>% 
+  filter(ola == 5) %>% select(-ola) %>% 
+  mutate(n_1 = scales::number(n_1),
+         n_2 = scales::number(n_2),
+         atricion_1 = scales::percent(atricion_1),
+         atricion_2 = scales::percent(atricion_2)) %>% 
+  select(educ, n_1, n_2, atricion_1, atricion_2) %>% 
+  kbl(align = c('l', 'c', 'c', 'c', 'c'),
+      col.name = c('Nivel educacional', rep(c('Muestra original', 'Muestra refresco'), 2)),
+      caption = 'Atrición acumulada de ELSOC, según nivel educacional') %>% 
+  kable_styling(full_width = F) %>% 
+  kable_classic_2() %>% 
+  add_header_above(c(" " = 1, 'Muestra lograda en 2021' = 2, 'Atrición acumulada' = 2))
+
+```
+
+- Según estrato:
+
+```{r tabla-atricion-estrato}
+
+elsoc_long_2016_2021 %>% 
+  mutate(estrato = factor(car::recode(estrato, recodes = "5:6=5"),
+                       levels = 1:5,
+                       labels = c("Santiago", "Valparaíso", "Concepción",
+                                  "Ciudades\ngrandes", "Ciudades medianas\no pequeñas")),
+         ola = ifelse(muestra == 2 & ola == 3, 1, ola)) %>% 
+  filter(ola %in% c(1, 5)) %>% 
+  as_label(estrato) %>% 
+  group_by(ola, muestra, estrato) %>% 
+  summarise(n = n()) %>% 
+  group_by(muestra, estrato) %>% 
+  mutate(atricion = abs(n/lag(n) - 1)) %>%
+  pivot_wider(names_from = muestra, values_from = c(n, atricion)) %>% 
+  filter(ola == 5) %>% select(-ola) %>% 
+  mutate(n_1 = scales::number(n_1),
+         n_2 = scales::number(n_2),
+         atricion_1 = scales::percent(atricion_1),
+         atricion_2 = scales::percent(atricion_2)) %>% 
+  select(estrato, n_1, n_2, atricion_1, atricion_2) %>% 
+  kbl(align = c('l', 'c', 'c', 'c', 'c'),
+      col.name = c('Estrato', rep(c('Muestra original', 'Muestra refresco'), 2)),
+      caption = 'Atrición acumulada de ELSOC, según estrato') %>% 
+  kable_styling(full_width = F) %>% 
+  kable_classic_2() %>% 
+  add_header_above(c(" " = 1, 'Muestra lograda en 2021' = 2, 'Atrición acumulada' = 2))
+
+
+```
+
+
+### Foco en el cambio longitudinal
+
+Radiografía del Cambio Social tiene como objetivo fundamental caracterizar la estabilidad y el cambio en opiniones, actitudes y conductas de los participantes a lo largo del tiempo, enfocándose en distintas dimensiones de la cohesión y conflicto en Chile. 
+
+Para el logro de dicho objetivo, el presente reporte se centrará en un subconjunto de participantes del estudio: los 1.513 entrevistados y entrevistadas que participaron en las cinco olas de ELSOC (por lo tanto, todos son parte de la muestra original). Dicha submuestra será la base empírica de los hallazgos expuestos en las siguientes secciones. 
+
+A continuación se describe a este grupo de participantes según los mismos atributos sociodemográficos (sexo, edad, educación y zona de residencia). 
+
+Los resultados presentados a continuación incorporan el diseño muestral complejo de la encuesta, por lo que incorporan los ponderadores muestrales ajustados a población regional y sexo, según estrato y conglomerado muestral.
+
+
+```{r graf-composicion-muestra, fig.cap='Composición de muestra longitudinal'}
+
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & ola == 5) %>% 
+  as_label(m0_sexo) %>% 
+  mutate(edadt = factor(car::recode(m0_edad, "18:29 = 1; 30:49 = 2; 50:64 = 3; 65:150 = 4"),
+                      levels = 1:4,
+                      labels = c('18-29', '30-49', '50-64', '65 o más'))) %>%
+  mutate(educ = factor(car::recode(m01, recodes = "1:3 = 1; 4:5 = 2; 6:7 = 3; 8:10 = 4"),
+                       levels = 1:4,
+                       labels = c("Basica", "Media", "Tecnica", "Universitaria"))) %>%
+  mutate(estrato = factor(car::recode(estrato, recodes = "5:6=5"),
+                       levels = 1:5,
+                       labels = c("Santiago", "Valparaíso", "Concepción",
+                                  "Ciudades\ngrandes", "Medianas o\npequeñas"))) %>%
+  prop_list(m0_sexo, edadt, educ, estrato, na.rm = TRUE) %>% 
+  mutate(name = factor(name, levels = c('m0_sexo', 'edadt', 'educ', 'estrato'),
+                       labels = c('Sexo', 'Tramo de edad', 'Nivel educacional', 'Estrato'))) %>% 
+  ggplot(aes(y = prop, x = fct_rev(value), fill = value,
+             label = scales::percent(prop, .1))) +
+  facet_wrap(.~name, scales = 'free_y') +
+  theme_bw() + 
+  geom_col(position = 'dodge2',
+           fill = c(viridis(2, begin = .33, end = .66, direction = -1), 
+                    viridis(4, end = .85, direction = -1), 
+                    viridis(4, end = .85, direction = -1), 
+                    viridis(5, end = .85, direction = -1))) +
+  geom_text(position = position_dodge(.9), hjust = -0.1, size = 3) +
+  coord_flip() +
+  xlab(NULL) + 
+  ylab(NULL) +
+  scale_y_continuous(labels = scales::percent, limits = c(0,1)) + 
+  theme(legend.position = 'none')
+
+
+```
+
+
+
+
+
 
 

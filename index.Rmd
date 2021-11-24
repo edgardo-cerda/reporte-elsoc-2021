@@ -3,23 +3,29 @@ title: "Estudio Longitudinal Social de Chile"
 subtitle: "Resultados longitudinales 2016-2021"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
+documentclass: book
 bibliography: ["book.bib"]
+csl: "inputs/bib/apa-no-ampersand.csl"
 biblio-style: apalike
 link-citations: yes
-documentclass: book
-
+linkcolor: blue
 geometry: "left=4cm, right=3cm, top=2.5cm, bottom=2.5cm"
 fontsize: 12pt
 linestretch: 1.5
 toc-depth: 1
 lof: True
 lot: True
+github-repo: "edgardo-cerda/reporte-elsoc-2021"
+url: "https://edgardo-cerda.github.io/reporte-elsoc-2021/"
+always_allow_html: true
 editor_options: 
   markdown: 
     wrap: 72
+    
 ---
 
-```{r message=FALSE, warning=FALSE, include=FALSE}
+
+```{r packages, message=FALSE, warning=FALSE, include=FALSE}
 
 library(knitr)
 library(kableExtra)
@@ -42,12 +48,12 @@ library(treemapify)
 ```
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(cache=FALSE, warning=FALSE, message=FALSE, echo=FALSE) 
+knitr::opts_chunk$set(cache=FALSE, warning=FALSE, message=FALSE, echo=FALSE, fig.topcaption = TRUE, fig.align = 'center')
 
 Sys.setlocale("LC_ALL","ES_ES.UTF-8")
 ```
 
-```{r include=FALSE }
+```{r formats, include=FALSE }
 table_format = if (is_html_output()) {
   "html"
 } else if (is_latex_output()) {
@@ -62,7 +68,7 @@ options(knitr.kable.NA = '')
 
 ```
 
-```{r}
+```{r cargar-datos}
 
 remove(list = ls())
 
@@ -70,15 +76,15 @@ load(file.path('..', '..', '..', '2_Bases_de_Datos', '10_Combinacion_de_Olas_ELS
 
 load(file.path('..', '..', '..', '2_Bases_de_Datos', '10_Combinacion_de_Olas_ELSOC', '0E_Bases_de_Datos_Resultantes_2016_2021', 'ELSOC_Wide_2016_2021_v1.00_R.RData'))
 
-load(file.path('1_input', 'cuarentenas_acum.RData'))
+load(file.path('inputs', 'cuarentenas_acum.RData'))
 
 ```
 
-```{r datos-elsoc}
+```{r datos-elsoc, eval=FALSE}
 
 # bases de datos ELSOC
-# elsoc::load_elsoc(format = 'long')
-# elsoc::load_elsoc(format = 'wide')
+elsoc::load_elsoc(format = 'long')
+elsoc::load_elsoc(format = 'wide')
 
 ```
 
@@ -138,7 +144,7 @@ cuarentenas_acum <- full_join(cuarentenas1,
 ```
 
 
-```{r}
+```{r remover-datos-sin-uso}
 
 rm(list = setdiff(ls(), c('elsoc_long_cuarentenas', 'elsoc_long_2016_2021', 'elsoc_wide_2016_2021')))
 
