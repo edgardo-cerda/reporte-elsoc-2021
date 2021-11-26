@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.11.24)  24 NOV 2021 18:37
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.11.24)  26 NOV 2021 15:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -375,7 +375,8 @@ Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
 )
 (c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/fancyvrb/fancyvrb.
 sty
-Package: fancyvrb 2021/11/18 v4.0 verbatim text (tvz,hv)
+Package: fancyvrb 2021/11/24\nobreakspace {} 4.1a\nobreakspace {}verbatim text 
+(tvz,hv)
 \FV@CodeLineNo=\count283
 \FV@InFile=\read2
 \FV@TabBox=\box52
@@ -1054,7 +1055,7 @@ l.607 \caption
 Here is how much of TeX's memory you used:
  13566 strings out of 480313
  223058 string characters out of 5895779
- 532714 words of memory out of 5000000
+ 532716 words of memory out of 5000000
  31077 multiletter control sequences out of 15000+600000
  458583 words of font info for 71 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
