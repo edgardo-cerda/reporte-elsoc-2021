@@ -48,23 +48,25 @@ ELSOC tiene un compromiso con los más altos estándares científicos en términ
 
 - Periodicidad: Anual. 
 
-```{r ilust-olas-elsoc, echo=FALSE, fig.cap = "Mediciones de ELSOC"}
-knitr::include_graphics(file.path('inputs', 'imagenes', 'olas_elsoc.png'))
-```
-
+- Diseño Muestral: Probabilístico, estratificado (por tamaño de ciudades), por conglomerados y multietápico
 
 - Marco Muestral: Marco de muestreo de manzanas del pre-censo 2011
 
-- Diseño Muestral: Probabilístico, estratificado (por tamaño de ciudades), por conglomerados y multietápico
-
 - Unidades de Muestreo: Primero se eligen ciudades (UPM), luego manzanas (USM), y sub-bloques y viviendas (UTM). La unidad final de selección es la persona
 
-```{r ilust-etapas-seleccion, echo=FALSE, fig.cap = "Muestreo de ELSOC"}
-knitr::include_graphics(file.path('inputs/imagenes/etapas_seleccion.jpg'))
+**Organismo Ejecutor**: Consultora Stephanie Eckman y Centro de Inteligencia Territorial (CIT) de la Universidad Adolfo Ibáñez
+
+```{r ilust-olas-elsoc, echo=FALSE, fig.cap = "Mediciones de ELSOC"}
+
+knitr::include_graphics(file.path('inputs', 'imagenes', 'olas_elsoc.png'))
+
 ```
 
+```{r ilust-etapas-seleccion, echo=FALSE, fig.cap = "Muestreo de ELSOC"}
 
-**Organismo Ejecutor**: Consultora Stephanie Eckman y Centro de Inteligencia Territorial (CIT) de la Universidad Adolfo Ibáñez
+knitr::include_graphics(file.path('inputs/imagenes/etapas_seleccion.jpg'))
+
+```
 
 ### Características del levantamiento de datos
 

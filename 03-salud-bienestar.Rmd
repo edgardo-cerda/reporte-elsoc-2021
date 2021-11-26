@@ -457,11 +457,11 @@ elsoc_long_2016_2021 %>%
 elsoc_long_2016_2021 %>% 
   filter(ola == 5 & tipo_atricion == 1) %>% 
   left_join(elsoc_long_cuarentenas, by = c('idencuesta', 'ola')) %>% 
-  mutate(cuarentenas30t = factor(car::recode(cuarentenas30, "0 = 1; 1:14 = 2; 15:21 = 3; 22:30 = 4"),
+  mutate(cuarentena_acum.30t = factor(car::recode(cuarentena_acum.30, "0 = 1; 1:14 = 2; 15:21 = 3; 22:30 = 4"),
                                  levels = 1:4,
                                  labels = c('0 días', '1-14 días', '15-21 días', '22-30 días'))) %>% 
-  prop(cuarentenas30t) %>% 
-  ggplot(aes(y = prop, x = cuarentenas30t, fill = cuarentenas30t,
+  prop(cuarentena_acum.30t) %>% 
+  ggplot(aes(y = prop, x = cuarentena_acum.30t, fill = cuarentena_acum.30t,
              label = scales::percent(prop, accuracy = .1))) +
   theme_bw() + 
   geom_col(position = 'dodge2') +
@@ -512,16 +512,16 @@ elsoc_long_2016_2021 %>%
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1, ola == 5) %>%
   left_join(elsoc_long_cuarentenas, by = c('idencuesta', 'ola')) %>%
-  mutate(cuarentenas30t = factor(car::recode(cuarentenas30, "0 = 1; 1:14 = 2; 15:21 = 3; 22:30 = 4"),
+  mutate(cuarentena_acum.30t = factor(car::recode(cuarentena_acum.30, "0 = 1; 1:14 = 2; 15:21 = 3; 22:30 = 4"),
                                  levels = 1:4,
                                  labels = c('0 días', '1-14 días', '15-21 días', '22-30 días'))) %>% 
   purrr::map_at(.at = vars(starts_with('s11_0')), 
                 .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
   as.data.frame() %>%  
   mutate(phq9 = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09)) %>%
-  prop(phq9 >= 10, by = cuarentenas30t, na.rm = TRUE) %>% 
+  prop(phq9 >= 10, by = cuarentena_acum.30t, na.rm = TRUE) %>% 
   as_label(ola) %>% 
-  ggplot(aes(y = prop, x = cuarentenas30t, fill = cuarentenas30t,
+  ggplot(aes(y = prop, x = cuarentena_acum.30t, fill = cuarentena_acum.30t,
              label = scales::percent(prop, accuracy = .1))) + 
   theme_bw() + 
   geom_col(position = 'dodge2') +

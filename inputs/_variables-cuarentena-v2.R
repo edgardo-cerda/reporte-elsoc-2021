@@ -3,13 +3,14 @@ library(elsoc)
 library(lubridate)
 
 load_elsoc()
+setwd(dirname(rstudioapi::getActiveDocumentContext()$path))
 
 ## DATA CUARENTENA ---------
 # Url para descarga directa de datos desde el Github del Ministerio de Ciencia
 url <- "https://raw.githubusercontent.com/MinCiencia/Datos-COVID19/master/output"
 
 ## Cuarentenas desde 2020/03 hasta 2020/07/28 
-cuarentenas1_bruto <- read_csv(paste(url, "producto29", "Cuarentenas-Totales.csv", sep = "/"))
+cuarentenas1_bruto <- readr::read_csv(paste(url, "producto29", "Cuarentenas-Totales.csv", sep = "/"))
 
 cuarentenas1_acum <- cuarentenas1_bruto %>% 
   janitor::clean_names() %>% 
@@ -38,7 +39,7 @@ cuarentenas2 <- cuarentenas2_bruto %>%
                                 TRUE ~ 0)) %>% 
   filter(zona %in% c('Urbana', 'Total'))
 
-# Cuarentena acomulada desde el 2020/07/27 a la fecha de entrevista:
+# Cuarentena acumulada desde el 2020/07/27 a la fecha respectiva:
 cuarentenas2_acum <- cuarentenas2 %>% 
   group_by(codigo_comuna, zona) %>% 
   mutate(csum2 = cumsum(cuarentena),
@@ -46,32 +47,30 @@ cuarentenas2_acum <- cuarentenas2 %>%
   ungroup() %>% 
   select(fecha, comuna_cod, csum2)
 
-# Unir fechas:
+# Cuarentenas acumuladas por comuna y fecha desde inicio de las cuarentenas:
 cuarentenas_acum <- full_join(cuarentenas1_acum,
                               cuarentenas2_acum,
                               by = 'comuna_cod') %>% 
   rowwise() %>% 
-  mutate(csum = sum(csum1, csum2, na.rm = TRUE))
-
-### Función para calcular dias de cuarentena en ventana de tiempo por comuna desde fecha de término hacia atrás
-dias_cuarentena <- function(fecha_termino, comuna_cod, ventana) {
-  cond <- with(cuarentenas2, codigo_comuna == comuna_cod &
-                 fecha >= fecha_termino - ventana + 1 &
-                 fecha <= fecha_termino)
-  dias_cuarentena <- sum(cuarentenas2$cuarentena[cond])
-  return(dias_cuarentena)
-}
+  mutate(cuarentena_acum = sum(csum1, csum2, na.rm = TRUE)) %>% 
+  select(comuna_cod, fecha, cuarentena_acum) %>%
+  # Cuarentenas acumuladas en ventanas de tiempo
+  arrange(comuna_cod, fecha) %>% 
+  group_by(comuna_cod) %>% 
+  mutate(cuarentena_acum.14 = cuarentena_acum - dplyr::lag(cuarentena_acum, n = 14),
+         cuarentena_acum.30 = cuarentena_acum - dplyr::lag(cuarentena_acum, n = 30),
+         cuarentena_acum.60 = cuarentena_acum - dplyr::lag(cuarentena_acum, n = 60),
+         cuarentena_acum.90 = cuarentena_acum - dplyr::lag(cuarentena_acum, n = 90)
+         )
 
 ### Pegar fechas de cuarentenas en distintas ventanas de tiempo a datos elsoc:
 elsoc_long_cuarentenas <- elsoc_long_2016_2021 %>% 
   filter(ola == 5) %>% 
-  mutate(fecha = as_date(make_date(year = annio_entr, month = mes_entr, day = dia_entr)),
-         cuarentenas14 = purrr::map2_dbl(.x = fecha, .y = comuna_cod, 14, .f = dias_cuarentena),
-         cuarentenas30 = purrr::map2_dbl(.x = fecha, .y = comuna_cod, 30, .f = dias_cuarentena)) %>% 
-  select(idencuesta, ola, cuarentenas14, cuarentenas30)
+  mutate(fecha = make_date(year = annio_entr, month = mes_entr, day = dia_entr)) %>% 
+  left_join(cuarentenas_acum, by = c('comuna_cod', 'fecha')) %>% 
+  select(idencuesta, ola, starts_with('cuarentena_acum'))
 
-save(elsoc_long_cuarentenas, file = file.path('1_input', 'cuarentenas_acum.RData'))
-
+save(elsoc_long_cuarentenas, file = 'cuarentenas_acum.RData')
 
 elsoc_covid <- elsoc_long_covid %>% 
   purrr::map_at(.at = vars(starts_with('s11_0')), 
