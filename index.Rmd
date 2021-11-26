@@ -68,19 +68,19 @@ options(knitr.kable.NA = '')
 
 ```
 
-```{r cargar-datos}
+```{r cargar-datos, eval=FALSE}
 
 remove(list = ls())
-
-load(file.path('..', '..', '..', '2_Bases_de_Datos', '10_Combinacion_de_Olas_ELSOC', '0E_Bases_de_Datos_Resultantes_2016_2021', 'ELSOC_Long_2016_2021_v1.00_R.RData'))
-
-load(file.path('..', '..', '..', '2_Bases_de_Datos', '10_Combinacion_de_Olas_ELSOC', '0E_Bases_de_Datos_Resultantes_2016_2021', 'ELSOC_Wide_2016_2021_v1.00_R.RData'))
+# 
+# load(file.path('..', '..', '..', '2_Bases_de_Datos', '10_Combinacion_de_Olas_ELSOC', '0E_Bases_de_Datos_Resultantes_2016_2021', 'ELSOC_Long_2016_2021_v1.00_R.RData'))
+# 
+# load(file.path('..', '..', '..', '2_Bases_de_Datos', '10_Combinacion_de_Olas_ELSOC', '0E_Bases_de_Datos_Resultantes_2016_2021', 'ELSOC_Wide_2016_2021_v1.00_R.RData'))
 
 load(file.path('inputs', 'cuarentenas_acum.RData'))
 
 ```
 
-```{r datos-elsoc, eval=FALSE}
+```{r datos-elsoc}
 
 # bases de datos ELSOC
 elsoc::load_elsoc(format = 'long')
