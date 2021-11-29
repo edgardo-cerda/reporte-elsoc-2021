@@ -357,6 +357,19 @@ tabpart_3<-table(tip_par$class_part_3)
 tabpart_3
 prop.table(tabpart_3)
 
+tipos_part4 <- poLCA(var, tip_par, nclass=4, na.rm = T, maxiter = 5000)
+tip_par$class_part_4<- as.factor(tipos_part4$predclass)
+tabpart_4<-table(tip_par$class_part_4)
+tabpart_4
+prop.table(tabpart_4)
+
+tipos_part5 <- poLCA(var, tip_par, nclass=5, na.rm = T, maxiter = 5000)
+tip_par$class_part_5<- as.factor(tipos_part5$predclass)
+tabpart_5<-table(tip_par$class_part_5)
+tabpart_5
+prop.table(tabpart_5)
+
+#Gráfico 3 clases.
 tab1 <- tip_par %>% group_by(class_part_3, c11_w01) %>%
   summarise (n = n()) %>% mutate(freq = n / sum(n)) %>% 
   mutate(var = 1) %>% rename(Clase=class_part_3, Participa=c11_w01)
@@ -394,15 +407,9 @@ tab_3 %>% ggplot(aes(x = freq, y = var, fill = Participa)) +
   labs(y="Evento", x="Proporción",
        title = "Perfiles de participación: 3 clases", fill = "") +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 5), limits=c(0, 1)) +
-  theme_bw() + theme(legend.position = "bottom", plot.title = element_text(size=14))
+  theme_bw() + theme(legend.position = "bottom", plot.title = element_text(size=14))  + scale_fill_viridis_d(begin = .15, end = .66, direction = -1, option = 'viridis')
 
-
-tipos_part4 <- poLCA(var, tip_par, nclass=4, na.rm = T, maxiter = 5000)
-tip_par$class_part_4<- as.factor(tipos_part4$predclass)
-tabpart_4<-table(tip_par$class_part_4)
-tabpart_4
-prop.table(tabpart_4)
-
+#Gráfico 4 clases.
 tab1 <- tip_par %>% group_by(class_part_4, c11_w01) %>%
   summarise (n = n()) %>% mutate(freq = n / sum(n)) %>% 
   mutate(var = 1) %>% rename(Clase=class_part_4, Participa=c11_w01)
@@ -440,14 +447,9 @@ tab_4 %>% ggplot(aes(x = freq, y = var, fill = Participa)) +
   labs(y="Evento", x="Proporción",
        title = "Perfiles de participación: 4 clases", fill = "") +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 5), limits=c(0, 1)) +
-  theme_bw() + theme(legend.position = "bottom", plot.title = element_text(size=14))
+  theme_bw() + theme(legend.position = "bottom", plot.title = element_text(size=14))  + scale_fill_viridis_d(begin = .15, end = .66, direction = -1, option = 'viridis')
 
-tipos_part5 <- poLCA(var, tip_par, nclass=5, na.rm = T, maxiter = 5000)
-tip_par$class_part_5<- as.factor(tipos_part5$predclass)
-tabpart_5<-table(tip_par$class_part_5)
-tabpart_5
-prop.table(tabpart_5)
-
+#Gráfico 5 clases.
 tab1 <- tip_par %>% group_by(class_part_5, c11_w01) %>%
   summarise (n = n()) %>% mutate(freq = n / sum(n)) %>% 
   mutate(var = 1) %>% rename(Clase=class_part_5, Participa=c11_w01)
@@ -485,7 +487,7 @@ tab_5 %>% ggplot(aes(x = freq, y = var, fill = Participa)) +
   labs(y="Evento", x="Proporción",
        title = "Perfiles de participación: 5 clases", fill = "") +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 5), limits=c(0, 1)) +
-  theme_bw() + theme(legend.position = "bottom", plot.title = element_text(size=14))
+  theme_bw() + theme(legend.position = "bottom", plot.title = element_text(size=14)) + scale_fill_viridis_d(begin = .15, end = .66, direction = -1, option = 'viridis')
 
 
 
