@@ -76,7 +76,7 @@ remove(list = ls())
 # 
 # load(file.path('..', '..', '..', '2_Bases_de_Datos', '10_Combinacion_de_Olas_ELSOC', '0E_Bases_de_Datos_Resultantes_2016_2021', 'ELSOC_Wide_2016_2021_v1.00_R.RData'))
 
-load(file.path('inputs', 'cuarentenas_acum.RData'))
+# load(file.path('inputs', 'cuarentenas_acum.RData'))
 
 ```
 
@@ -88,7 +88,7 @@ elsoc::load_elsoc(format = 'wide')
 
 ```
 
-```{r datos-cuarentenas, eval=FALSE}
+```{r datos-cuarentenas}
 
 ## DATA CUARENTENA ---------
 # Url para descarga directa de datos desde el Github del Ministerio de Ciencia
