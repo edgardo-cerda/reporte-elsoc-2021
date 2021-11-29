@@ -50,6 +50,8 @@ library(treemapify)
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(cache=FALSE, warning=FALSE, message=FALSE, echo=FALSE, fig.topcaption = TRUE, fig.align = 'center')
 
+options(tinytex.verbose = TRUE)
+  
 Sys.setlocale("LC_ALL","ES_ES.UTF-8")
 ```
 
@@ -68,19 +70,19 @@ options(knitr.kable.NA = '')
 
 ```
 
-```{r cargar-datos}
+```{r cargar-datos, eval=FALSE}
 
 remove(list = ls())
+# 
+# load(file.path('..', '..', '..', '2_Bases_de_Datos', '10_Combinacion_de_Olas_ELSOC', '0E_Bases_de_Datos_Resultantes_2016_2021', 'ELSOC_Long_2016_2021_v1.00_R.RData'))
+# 
+# load(file.path('..', '..', '..', '2_Bases_de_Datos', '10_Combinacion_de_Olas_ELSOC', '0E_Bases_de_Datos_Resultantes_2016_2021', 'ELSOC_Wide_2016_2021_v1.00_R.RData'))
 
-load(file.path('..', '..', '..', '2_Bases_de_Datos', '10_Combinacion_de_Olas_ELSOC', '0E_Bases_de_Datos_Resultantes_2016_2021', 'ELSOC_Long_2016_2021_v1.00_R.RData'))
-
-load(file.path('..', '..', '..', '2_Bases_de_Datos', '10_Combinacion_de_Olas_ELSOC', '0E_Bases_de_Datos_Resultantes_2016_2021', 'ELSOC_Wide_2016_2021_v1.00_R.RData'))
-
-load(file.path('inputs', 'cuarentenas_acum.RData'))
+# load(file.path('inputs', 'cuarentenas_acum.RData'))
 
 ```
 
-```{r datos-elsoc, eval=FALSE}
+```{r datos-elsoc}
 
 # bases de datos ELSOC
 elsoc::load_elsoc(format = 'long')
@@ -88,7 +90,7 @@ elsoc::load_elsoc(format = 'wide')
 
 ```
 
-```{r datos-cuarentenas, eval=FALSE}
+```{r datos-cuarentenas}
 
 ## DATA CUARENTENA ---------
 # Url para descarga directa de datos desde el Github del Ministerio de Ciencia
