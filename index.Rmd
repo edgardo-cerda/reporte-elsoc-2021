@@ -50,6 +50,8 @@ library(treemapify)
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(cache=FALSE, warning=FALSE, message=FALSE, echo=FALSE, fig.topcaption = TRUE, fig.align = 'center')
 
+options(tinytex.verbose = TRUE)
+  
 Sys.setlocale("LC_ALL","ES_ES.UTF-8")
 ```
 

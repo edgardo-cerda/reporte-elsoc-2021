@@ -402,7 +402,9 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-```{r graf-particip_movsocial-olas, fig.cap='Participación en movimientos sociales valorados, según ola'}
+
+```{r graf-participmovsocial-olas, fig.cap='Participación en movimientos sociales valorados, según ola'}
+
 elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1 & muestra==1 & !c22 %in% c(-888, -999)) %>%
   prop(c22 %in% 4:5, by  = ola, na.rm = TRUE) %>%
@@ -426,7 +428,8 @@ elsoc_long_2016_2021 %>%
 ```
 
 
-```{r graf-particip_movsociales2-ola, fig.cap='Participación en movimientos sociales valorados, según ola'}
+```{r graf-participmovsociales2-ola, fig.cap='Participación en tipos de movimientos sociales, según ola'}
+
 elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1 & muestra==1 & !c22 %in% c(-888, -999) & !c20 %in% c(-888, -999)) %>%
   mutate(mov_soc = factor(car::recode(c20, "1:5 = 1; 6:7 = 2; 8:10 = 1; 11:12 = 3"),
@@ -459,7 +462,7 @@ elsoc_long_2016_2021 %>%
 
 ### Justificación de la violencia para el control social
 
-```{r graf-just_violencia1-ola, fig.cap='Justificación de la violencia a manos de ciudadanos, según ola'}
+```{r graf-justviolencia1-ola, fig.cap='Justificación de la violencia a manos de ciudadanos, según ola'}
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & ola %in% 1:4 &
@@ -492,7 +495,7 @@ sjlabelled::as_label(ola) %>%
 ```
 
 
-```{r graf-just_violencia2-ola, fig.cap = 'Justificación de la violencia, según ola'}
+```{r graf-justviolencia2-ola, fig.cap = 'Justificación de la violencia, según ola'}
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & 
@@ -529,7 +532,7 @@ elsoc_long_2016_2021 %>%
 
 ### Confianza interpersonal
 
-```{r graf-confianza_interpersonal-ola, fig.cap = 'Confianza interpersonal, según ola'}
+```{r graf-confianzainterpersonal-ola, fig.cap = 'Confianza interpersonal, según ola'}
 
 elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1 & !is_nsnr(c02, c04)) %>% 
@@ -558,7 +561,7 @@ elsoc_long_2016_2021 %>%
 ```
 
 
-```{r graf-confianza_interpersonal-educ, fig.cap = 'Confianza interpersonal (2021), según nivel educacional'}
+```{r graf-confianzainterpersonal-educ, fig.cap = 'Confianza interpersonal (2021), según nivel educacional'}
 
 elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1, ola == 5, !is_nsnr(c02, c04, m01)) %>% 
@@ -589,7 +592,7 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-```{r graf-conf_instituciones1-ola, fig.cap = 'Grado de confianza en instituciones, según ola'}
+```{r graf-confinstituciones1-ola, fig.cap = 'Grado de confianza en instituciones, según ola'}
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & !is_nsnr(c05_01, c05_07, c05_08)) %>% 
@@ -616,7 +619,7 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-```{r graf-conf_instituciones2-ola, fig.cap = 'Grado de confianza en instituciones, según ola'}
+```{r graf-confinstituciones2-ola, fig.cap = 'Grado de confianza en instituciones, según ola'}
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & !is_nsnr(c05_02, c05_03, c05_05)) %>% 
@@ -647,7 +650,7 @@ elsoc_long_2016_2021 %>%
 ```
 
 
-```{r graf-cambio-confianza_instituciones-ola, fig.cap = 'Cambio en grado de confianza en instituciones (2016-2021)'}
+```{r graf-cambio-confianzainstituciones-ola, fig.cap = 'Cambio en grado de confianza en instituciones (2016-2021)'}
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & !is_nsnr(c05_01, c05_02, c05_03, c05_05, c05_07, c05_08),
@@ -689,7 +692,7 @@ elsoc_long_2016_2021 %>%
 
 ## Actitudes hacia la democracia
 
-```{r graf-preferencia_democracia-ola, fig.cap = 'Preferencia por y satisfacción con la democracia, según ola'}
+```{r graf-preferenciademocracia-ola, fig.cap = 'Preferencia por y satisfacción con la democracia, según ola'}
 
 elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1 & !is_nsnr(c01, c25)) %>% 
@@ -716,7 +719,7 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-```{r graf-preferencia_democracia-idpolitica, fig.cap = 'Preferencia por y satisfacción con la democracia (2021), según posición ideológica'}
+```{r graf-preferenciademocracia-idpolitica, fig.cap = 'Preferencia por y satisfacción con la democracia (2021), según posición ideológica'}
 
 elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1 & ola == 5 & !is_nsnr(c01, c25, c15)) %>% 
@@ -745,7 +748,7 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-```{r graf-preferencia_democracia2-idpolitica, fig.cap = 'Preferencia por la democracia (2021), según posición ideológica'}
+```{r graf-preferenciademocracia2-idpolitica, fig.cap = 'Preferencia por la democracia (2021), según posición ideológica'}
 
 elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1 & !is_nsnr(c25, c15) & ola == 5) %>%
@@ -784,7 +787,7 @@ elsoc_long_2016_2021 %>%
 ## Cambio constitucional
 
 
-```{r graf-particip_elect-ola, fig.cap = 'Participación electoral, según elección'}
+```{r graf-participelect-ola, fig.cap = 'Participación electoral, según elección'}
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & ola %in% c(1,3,5) & !is_nsnr(c15, c11, c43, values = c(3, -888, -999))) %>% 
@@ -840,7 +843,7 @@ elsoc_long_2016_2021 %>%
 ```
 
 
-```{r graf-particip_elect-olas-edad, fig.cap = 'Participación electoral, según tramo de edad'}
+```{r graf-participelect-olas-edad, fig.cap = 'Participación electoral, según tramo de edad'}
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & ola %in% c(1,3,5) & !is_nsnr(c15, c11, c43, values = c(3, -888, -999))) %>% 
@@ -873,7 +876,7 @@ elsoc_long_2016_2021 %>%
 ```
 
 
-```{r graf-voto_plebiscito-idpolitica, fig.cap = 'Voto en plebiscito de 2020, según identificación política'}
+```{r graf-votoplebiscito-idpolitica, fig.cap = 'Voto en plebiscito de 2020, según identificación política'}
 
 elsoc_long_2016_2021 %>% 
   dplyr::filter(tipo_atricion == 1 & !is_nsnr(c15, c43, c44)) %>% 
@@ -983,7 +986,7 @@ elsoc_wide_2016_2021 %>%
 
 ## Optimismo constitucional
 
-```{r graf-optimismo_constitucional, fig.cap = 'Optimismo constitucional'}
+```{r graf-optimismoconstitucional, fig.cap = 'Optimismo constitucional'}
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1, ola == 5, !is_nsnr(c46_01, c46_02, c46_03, c46_04)) %>% 
   prop_list(c46_01 %in% 4:5, c46_02 %in% 4:5, c46_03 %in% 4:5, c46_04 %in% 4:5, na.rm = TRUE) %>% 
@@ -1009,7 +1012,7 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-```{r graf-optimismo_constitucional-voto_plebiscito, fig.cap = 'Optimismo constitucional, según voto en plebiscito de 2020'}
+```{r graf-optimismoconstitucional-votoplebiscito, fig.cap = 'Optimismo constitucional, según voto en plebiscito de 2020'}
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1, ola == 5, 
@@ -1044,50 +1047,8 @@ elsoc_long_2016_2021 %>%
 ```
 
 
-```{r optimismo-democracia}
 
-optimistas <- elsoc_long_2016_2021 %>% 
-  filter(tipo_atricion == 1, !is_nsnr(c46_01, c46_02, c46_03, c46_04)) %>% 
-  mutate(c46_02 = 6 - c46_02,
-         c46_04 = 6 - c46_04) %>% 
-  rowwise() %>% 
-  mutate(optimismo = mean(c46_01 , c46_02, c46_03, c46_04, na.rm = TRUE)) %>% 
-  ungroup() %>% 
-  mutate(optimista = factor(optimismo >= 4,
-                            levels = c(TRUE, FALSE),
-                            labels = c('Optimista', 'No optimista'))) %>% 
-  select(idencuesta, optimismo, optimista)
-  
-
-elsoc_long_2016_2021 %>% 
-  filter(tipo_atricion == 1, !is_nsnr(c46_01, c46_02, c46_03, c46_04), !is_nsnr(c25, c15)) %>%
-  left_join(optimistas, by = 'idencuesta') %>% 
-  filter(!is.na(optimista)) %>% 
-  mutate(pos_id = factor(car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4; c(-888, -999) = 5"),
-                         levels = 1:5,
-                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica", "NS/NR"))) %>%
-  as_label(ola) %>% 
-  prop(c25 == 1, by = c(ola, optimista, pos_id), na.rm = TRUE) %>% 
-  ggplot(aes(y = prop, x = ola, group = optimista, color = optimista,
-               label = scales::percent(prop, accuracy = .1))) +
-  theme_bw() + 
-  geom_point(size = 1.75) +
-  facet_wrap(.~pos_id) +
-  geom_line() + 
-  geom_text_repel(size = 3) +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
-  ylab(label = NULL) +
-  xlab(label = NULL) +
-  scale_color_viridis_d(begin = 0, end = .66, direction = 1, option = 'viridis') +
-  theme(legend.position = 'top',   
-        legend.title = element_blank()) +
-  ggtitle(NULL,
-          subtitle = 'Porcentaje que responde...')
-
-```
-
-```{r graf-optimismo_constitucional-educ, fig.cap = 'Optimismo constitucional, según nivel educacional'}
+```{r graf-optimismoconstitucional-educ, fig.cap = 'Optimismo constitucional, según nivel educacional'}
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1, ola == 5, 
@@ -1121,7 +1082,7 @@ elsoc_long_2016_2021 %>%
 ```
 
 
-```{r graf-optimismo_constitucional-idpolitica, fig.cap = 'Optimismo constitucional, según identificación política'}
+```{r graf-optimismoconstitucional-idpolitica, fig.cap = 'Optimismo constitucional, según identificación política'}
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1, ola == 5, 
@@ -1154,3 +1115,44 @@ elsoc_long_2016_2021 %>%
 ```
 
 
+
+```{r optimismo-democracia}
+
+
+elsoc_long_2016_2021 %>% 
+  left_join(elsoc_long_2016_2021 %>% 
+              filter(tipo_atricion == 1, !is_nsnr(c46_01, c46_02, c46_03, c46_04)) %>% 
+              mutate(c46_02 = 6 - c46_02,
+                     c46_04 = 6 - c46_04) %>%
+              rowwise() %>%
+              mutate(optimismo = mean(c46_01 , c46_02, c46_03, c46_04, na.rm = TRUE),
+                     optimista = factor(optimismo >= 4,
+                                        levels = c(TRUE, FALSE),
+                                        labels = c('Optimista', 'No optimista'))) %>%
+              select(idencuesta, optimismo, optimista), by = 'idencuesta') %>% 
+  
+  filter(tipo_atricion == 1, !is_nsnr(c46_01, c46_02, c46_03, c46_04), !is_nsnr(c25, c15)) %>%
+  filter(!is.na(optimista)) %>% 
+  mutate(pos_id = factor(car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4; c(-888, -999) = 5"),
+                         levels = 1:5,
+                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica", "NS/NR"))) %>%
+  as_label(ola) %>% 
+  prop(c25 == 1, by = c(ola, optimista, pos_id), na.rm = TRUE) %>% 
+  ggplot(aes(y = prop, x = ola, group = optimista, color = optimista,
+               label = scales::percent(prop, accuracy = .1))) +
+  theme_bw() + 
+  geom_point(size = 1.75) +
+  facet_wrap(.~pos_id) +
+  geom_line() + 
+  geom_text_repel(size = 3) +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_color_viridis_d(begin = 0, end = .66, direction = 1, option = 'viridis') +
+  theme(legend.position = 'top',   
+        legend.title = element_blank()) +
+  ggtitle(NULL,
+          subtitle = 'Porcentaje que responde...')
+
+```

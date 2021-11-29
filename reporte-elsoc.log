@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.11.24)  26 NOV 2021 15:37
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2021.11.24)  29 NOV 2021 12:19
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -599,8 +599,7 @@ d-pdftex.def
 File: l3backend-pdftex.def 2021-10-18 L3 backend support: PDF output (pdfTeX)
 \l__color_backend_stack_int=\count311
 \l__pdf_internal_box=\box73
-)
-No file reporte-elsoc.aux.
+) (./reporte-elsoc.aux)
 \openout1 = `reporte-elsoc.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 148.
@@ -652,6 +651,7 @@ Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 LaTeX Info: Redefining \ref on input line 148.
 LaTeX Info: Redefining \pageref on input line 148.
 LaTeX Info: Redefining \nameref on input line 148.
+(./reporte-elsoc.out) (./reporte-elsoc.out)
 \@outlinefile=\write4
 \openout4 = `reporte-elsoc.out'.
 
@@ -730,19 +730,19 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 {c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdfte
 x.map}] [2
 
-]
+] (./reporte-elsoc.toc)
 \tf@toc=\write5
 \openout5 = `reporte-elsoc.toc'.
 
 [3] [4
 
-]
+] (./reporte-elsoc.lot)
 \tf@lot=\write6
 \openout6 = `reporte-elsoc.lot'.
 
 [5] [6
 
-]
+] (./reporte-elsoc.lof)
 \tf@lof=\write7
 \openout7 = `reporte-elsoc.lof'.
 
@@ -763,7 +763,7 @@ LaTeX Font Info:    Trying to load font information for TS1+lmr on input line 2
 (c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ts1lmr.fd
 File: ts1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
 )
-<inputs/imagenes/olas_elsoc.png, id=80, 766.5438pt x 264.99pt>
+<inputs/imagenes/olas_elsoc.png, id=105, 766.5438pt x 264.99pt>
 File: inputs/imagenes/olas_elsoc.png Graphic file (type png)
 <use inputs/imagenes/olas_elsoc.png>
 Package pdftex.def Info: inputs/imagenes/olas_elsoc.png  used on input line 224
@@ -774,7 +774,7 @@ Overfull \hbox (351.47467pt too wide) in paragraph at lines 224--225
  [][] 
  []
 
-<inputs/imagenes/etapas_seleccion.jpg, id=81, 875.4306pt x 375.804pt>
+<inputs/imagenes/etapas_seleccion.jpg, id=106, 875.4306pt x 375.804pt>
 File: inputs/imagenes/etapas_seleccion.jpg Graphic file (type jpg)
 <use inputs/imagenes/etapas_seleccion.jpg>
 Package pdftex.def Info: inputs/imagenes/etapas_seleccion.jpg  used on input li
@@ -844,7 +844,7 @@ l.409
                                                   \__shipout_drop_firstpage_...
 l.409 
       ]
-<reporte-elsoc_files/figure-latex/graf-composicion-muestra-1.pdf, id=125, 469.7
+<reporte-elsoc_files/figure-latex/graf-composicion-muestra-1.pdf, id=150, 469.7
 55pt x 325.215pt>
 File: reporte-elsoc_files/figure-latex/graf-composicion-muestra-1.pdf Graphic f
 ile (type pdf)
@@ -862,7 +862,7 @@ e-latex/graf-composicion-muestra-1.pdf>] [20
 
 ]
 Chapter 2.
-<reporte-elsoc_files/figure-latex/graf-idpolitica-1.pdf, id=148, 469.755pt x 32
+<reporte-elsoc_files/figure-latex/graf-idpolitica-1.pdf, id=172, 469.755pt x 32
 5.215pt>
 File: reporte-elsoc_files/figure-latex/graf-idpolitica-1.pdf Graphic file (type
  pdf)
@@ -870,7 +870,7 @@ File: reporte-elsoc_files/figure-latex/graf-idpolitica-1.pdf Graphic file (type
 Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-idpolitica-1.pdf
   used on input line 438.
 (pdftex.def)             Requested size: 415.12747pt x 287.39594pt.
-<reporte-elsoc_files/figure-latex/graf-idpolitica-ola-1.pdf, id=149, 469.755pt 
+<reporte-elsoc_files/figure-latex/graf-idpolitica-ola-1.pdf, id=173, 469.755pt 
 x 325.215pt>
 File: reporte-elsoc_files/figure-latex/graf-idpolitica-ola-1.pdf Graphic file (
 type pdf)
@@ -878,7 +878,7 @@ type pdf)
 Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-idpolitica-ola-1
 .pdf  used on input line 450.
 (pdftex.def)             Requested size: 415.12747pt x 287.39594pt.
-<reporte-elsoc_files/figure-latex/graf-alluvial-idpolitica-ola-1.pdf, id=150, 4
+<reporte-elsoc_files/figure-latex/graf-alluvial-idpolitica-ola-1.pdf, id=174, 4
 69.755pt x 325.215pt>
 File: reporte-elsoc_files/figure-latex/graf-alluvial-idpolitica-ola-1.pdf Graph
 ic file (type pdf)
@@ -886,7 +886,7 @@ ic file (type pdf)
 Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-alluvial-idpolit
 ica-ola-1.pdf  used on input line 461.
 (pdftex.def)             Requested size: 415.12747pt x 287.39594pt.
-<reporte-elsoc_files/figure-latex/graf-cambios-idpolitica-ola-1.pdf, id=151, 46
+<reporte-elsoc_files/figure-latex/graf-cambios-idpolitica-ola-1.pdf, id=175, 46
 9.755pt x 325.215pt>
 File: reporte-elsoc_files/figure-latex/graf-cambios-idpolitica-ola-1.pdf Graphi
 c file (type pdf)
@@ -918,7 +918,7 @@ l.480
 l.480 
        <./reporte-elsoc_files/figure-latex/graf-alluvial-idpolitica-ola-1.pdf> 
 <./reporte-elsoc_files/figure-latex/graf-cambios-idpolitica-ola-1.pdf>]
-<reporte-elsoc_files/figure-latex/graf-cambios-idpol-idpol-1.pdf, id=197, 469.7
+<reporte-elsoc_files/figure-latex/graf-cambios-idpol-idpol-1.pdf, id=219, 469.7
 55pt x 325.215pt>
 File: reporte-elsoc_files/figure-latex/graf-cambios-idpol-idpol-1.pdf Graphic f
 ile (type pdf)
@@ -926,7 +926,7 @@ ile (type pdf)
 Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-cambios-idpol-id
 pol-1.pdf  used on input line 483.
 (pdftex.def)             Requested size: 415.12747pt x 287.39594pt.
-<reporte-elsoc_files/figure-latex/graf-cambios-idpolitica-edad-1.pdf, id=198, 4
+<reporte-elsoc_files/figure-latex/graf-cambios-idpolitica-edad-1.pdf, id=220, 4
 69.755pt x 325.215pt>
 File: reporte-elsoc_files/figure-latex/graf-cambios-idpolitica-edad-1.pdf Graph
 ic file (type pdf)
@@ -934,7 +934,7 @@ ic file (type pdf)
 Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-cambios-idpoliti
 ca-edad-1.pdf  used on input line 494.
 (pdftex.def)             Requested size: 415.12747pt x 287.39594pt.
-<reporte-elsoc_files/figure-latex/graf-interespolitica-ola-1.pdf, id=199, 469.7
+<reporte-elsoc_files/figure-latex/graf-interespolitica-ola-1.pdf, id=221, 469.7
 55pt x 325.215pt>
 File: reporte-elsoc_files/figure-latex/graf-interespolitica-ola-1.pdf Graphic f
 ile (type pdf)
@@ -942,7 +942,7 @@ ile (type pdf)
 Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-interespolitica-
 ola-1.pdf  used on input line 506.
 (pdftex.def)             Requested size: 415.12747pt x 287.39594pt.
-<reporte-elsoc_files/figure-latex/graf-participciudadana-ola-1.pdf, id=200, 469
+<reporte-elsoc_files/figure-latex/graf-participciudadana-ola-1.pdf, id=222, 469
 .755pt x 325.215pt>
 File: reporte-elsoc_files/figure-latex/graf-participciudadana-ola-1.pdf Graphic
  file (type pdf)
@@ -950,7 +950,7 @@ File: reporte-elsoc_files/figure-latex/graf-participciudadana-ola-1.pdf Graphic
 Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-participciudadan
 a-ola-1.pdf  used on input line 515.
 (pdftex.def)             Requested size: 415.12747pt x 287.39594pt.
-<reporte-elsoc_files/figure-latex/graf-idpolitica-interespolitica-1.pdf, id=201
+<reporte-elsoc_files/figure-latex/graf-idpolitica-interespolitica-1.pdf, id=223
 , 469.755pt x 325.215pt>
 File: reporte-elsoc_files/figure-latex/graf-idpolitica-interespolitica-1.pdf Gr
 aphic file (type pdf)
@@ -958,7 +958,7 @@ aphic file (type pdf)
 Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-idpolitica-inter
 espolitica-1.pdf  used on input line 524.
 (pdftex.def)             Requested size: 415.12747pt x 287.39594pt.
-<reporte-elsoc_files/figure-latex/graf-temaspublicos-idpolitica-1.pdf, id=202, 
+<reporte-elsoc_files/figure-latex/graf-temaspublicos-idpolitica-1.pdf, id=224, 
 469.755pt x 325.215pt>
 File: reporte-elsoc_files/figure-latex/graf-temaspublicos-idpolitica-1.pdf Grap
 hic file (type pdf)
@@ -966,7 +966,7 @@ hic file (type pdf)
 Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-temaspublicos-id
 politica-1.pdf  used on input line 536.
 (pdftex.def)             Requested size: 415.12747pt x 287.39594pt.
-<reporte-elsoc_files/figure-latex/graf-movsocial-1.pdf, id=203, 469.755pt x 325
+<reporte-elsoc_files/figure-latex/graf-movsocial-1.pdf, id=225, 469.755pt x 325
 .215pt>
 File: reporte-elsoc_files/figure-latex/graf-movsocial-1.pdf Graphic file (type 
 pdf)
@@ -1016,7 +1016,7 @@ ate ignored
 l.565   M
          ovimiento social de apoyo a la causa estudiantil <./reporte-elsoc_file
 s/figure-latex/graf-temaspublicos-idpolitica-1.pdf>]
-<reporte-elsoc_files/figure-latex/graf-movsociales-movsocial-olas-1.pdf, id=271
+<reporte-elsoc_files/figure-latex/graf-movsociales-movsocial-olas-1.pdf, id=292
 , 469.755pt x 325.215pt>
 File: reporte-elsoc_files/figure-latex/graf-movsociales-movsocial-olas-1.pdf Gr
 aphic file (type pdf)
@@ -1024,7 +1024,7 @@ aphic file (type pdf)
 Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-movsociales-movs
 ocial-olas-1.pdf  used on input line 594.
 (pdftex.def)             Requested size: 415.12747pt x 287.39594pt.
-<reporte-elsoc_files/figure-latex/graf-particip_movsocial-olas-1.pdf, id=272, 4
+<reporte-elsoc_files/figure-latex/graf-particip_movsocial-olas-1.pdf, id=293, 4
 69.755pt x 325.215pt>
 File: reporte-elsoc_files/figure-latex/graf-particip_movsocial-olas-1.pdf Graph
 ic file (type pdf)
@@ -1053,10 +1053,10 @@ Type  H <return>  for immediate help.
 l.607 \caption
               {Participación en movimientos sociales valorados, según ola} 
 Here is how much of TeX's memory you used:
- 13566 strings out of 480313
- 223058 string characters out of 5895779
- 532716 words of memory out of 5000000
- 31077 multiletter control sequences out of 15000+600000
+ 13622 strings out of 480313
+ 224537 string characters out of 5895779
+ 534196 words of memory out of 5000000
+ 31121 multiletter control sequences out of 15000+600000
  458583 words of font info for 71 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  60i,9n,63p,789b,400s stack positions out of 5000i,500n,10000p,200000b,80000s

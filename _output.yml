@@ -25,10 +25,10 @@ bookdown::gitbook:
     info: no
   citation_package: default
 
-bookdown::pdf_book:
-  includes:
-      in_header: preamble.tex
-  latex_engine: pdflatex
-  keep_tex: yes
-  citation_package: default
-  # pandoc_args: [ "--csl", "bib/apa.csl"]
+# bookdown::pdf_book:
+#   includes:
+#       in_header: preamble.tex
+#   latex_engine: pdflatex
+#   keep_tex: yes
+#   citation_package: default
+#   # pandoc_args: [ "--csl", "bib/apa.csl"]
