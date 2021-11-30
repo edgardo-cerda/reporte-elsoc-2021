@@ -210,6 +210,55 @@ elsoc_long_2016_2021 %>%
 ```
 
 
+```{r lca-depre}
+
+K <- 3
+elsoc_lca <- elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1, !is_nsnr(s11_01, s11_02, s11_03, s11_04, s11_05, s11_06, s11_07, s11_08, s11_09)) %>% 
+  purrr::map_at(.at = vars(starts_with('s11_0')), 
+                .f = function(s) car::recode(s, "1:2 = 1; 3:5 = 2")) %>%
+  as.data.frame()
+
+lca <- poLCA(cbind(s11_01, s11_02, s11_03, s11_04, s11_05, s11_06, s11_07, s11_08, s11_09) ~ 1, 
+      data = elsoc_lca , nclass = K, na.rm = TRUE, maxiter = 5000, nrep = 10)
+elsoc_lca$class <- as.factor(lca$predclass)
+
+elsoc_lca %>%
+  prop_list(s11_01, s11_02, s11_03, s11_04, s11_05, s11_06, s11_07, s11_08, s11_09, 
+            by = class, na.rm = TRUE) %>%
+  mutate(name = factor(name,
+                       levels = glue::glue('s11_0{1:9}'),
+                       labels = c('Poco interés\no alegría', 'Decaimiento o\ndesesperanza', 'Sueño\nalterado', 
+                                  'Falta de\nenergía',
+                                  'Apetito\nalterado', 'Dificultad para\nconcentrarse', 
+                                  'Mala opinión\nde sí mismo', 'Enlatecimiento\nfísico', 'Pensamiento\nde muerte')),
+         clase = factor(class,
+                        levels = 1:K,
+                        labels = paste0('(', scales::percent(
+                          elsoc_lca %>%
+                            prop(class, na.rm = TRUE) %>%
+                            pull(prop), .1), ')')),
+         participa = factor(value,
+                            levels = 1:2, 
+                            labels = c('Sin síntoma', 'Con síntoma'))) %>% 
+  ggplot(aes(x = prop, y = fct_rev(name), fill = participa)) + 
+  geom_col(position = 'stack') + 
+  facet_grid(~ clase) +
+  labs(y = "Evento", 
+       x = "Proporción",
+       title = glue::glue("Perfiles de sintomatología depresiva: {K} clases"), 
+       fill = "") +
+  scale_x_continuous(breaks = seq(0, 1, .25),
+                     labels = scales::percent) +
+  guides(fill = guide_legend(reverse = TRUE)) +
+  theme_bw() + 
+  theme(legend.position = "top", 
+        plot.title = element_text(size = 14),
+        axis.text.x = element_text(size = 8)) + 
+  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis')
+
+```
+
 ```{r depre-year-sexo, echo=FALSE, fig.align='center'}
 
 elsoc_long_2016_2021 %>% 

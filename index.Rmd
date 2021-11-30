@@ -27,6 +27,7 @@ editor_options:
 
 ```{r packages, message=FALSE, warning=FALSE, include=FALSE}
 
+library(poLCA)
 library(knitr)
 library(kableExtra)
 library(gridExtra)
