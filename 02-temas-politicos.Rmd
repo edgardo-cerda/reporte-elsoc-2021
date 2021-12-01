@@ -1405,6 +1405,43 @@ rm(tab)
 
 ```
 
+```{r graf-participacion-optimismo, fig.cap = 'Participación según optimismo constitucional'}
 
+tab <-elsoc_wide_2016_2021 %>%   
+  filter(!is_nsnr(c46_01_w05, c46_02_w05, c46_03_w05, c46_04_w05), 
+         !is_nsnr(c11_w01, c11_w03, c43_w05)) %>%
+  rowwise() %>%
+          mutate(optimismo = mean(c46_01_w05, c46_02_w05, c46_03_w05, c46_04_w05, na.rm = TRUE)) %>%
+          mutate(optimista = factor(optimismo >= 4,
+                                        levels = c(TRUE, FALSE),
+                                        labels = c('Optimista', 'No optimista'))) %>%
+  mutate(c11_w01 = factor(car::recode(c11_w01, recodes = "2 = 1; 1 = 0; 3 = 0"))) %>%
+  mutate(c11_w03 = factor(car::recode(c11_w03, recodes = "2 = 1; 1 = 0; 3 = 0"))) %>%
+  mutate(c43_w05 = factor(car::recode(c43_w05, recodes = "2 = 1; 1 = 0; 3 = 0")))
 
+tab1<-tab %>% group_by(optimista, c11_w01) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
+  mutate(var = 1) %>% rename(participa=c11_w01) %>% filter(!is.na(optimista)) %>%
+  filter(!is.na(participa)) %>% filter(participa==1)
+tab2<-tab %>% group_by(optimista, c11_w03) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
+  mutate(var = 2) %>% rename(participa=c11_w03) %>% filter(!is.na(optimista)) %>%
+  filter(!is.na(participa)) %>% filter(participa==1)
+tab3<-tab %>% group_by(optimista, c43_w05) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
+  mutate(var = 3) %>% rename(participa=c43_w05) %>% filter(!is.na(optimista)) %>%
+  filter(!is.na(participa)) %>% filter(participa==1)
+tab<- rbind(tab1, tab2, tab3)
+rm(tab1, tab2, tab3)
+
+tab %>%
+  ggplot(aes(x=var, y=freq, color=optimista)) +
+  geom_line() +
+  geom_point() +
+  labs(y="Proporción", x="Elección",
+       title = "Participación según optimismo actual") +
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 10), limits=c(0, 1)) +
+  scale_x_continuous(breaks = c(1,2,3), labels=c("Elección 2013", "Elección 2017", "Plebiscito")) +
+  scale_color_viridis_d(begin = .33, end = .88, option = 'viridis', name  =" ") +
+  theme_minimal( ) + theme(legend.position = "bottom", plot.title = element_text(size=12))
+rm(tab)
+
+```
 
