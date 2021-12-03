@@ -3,9 +3,34 @@
 
 ## Salud mental y bienestar de la población
 
-### ¿Cómo ha cambiado la salud mental y nivel de bienestar de la población?
+### ¿Cómo se encuentra, y cómo ha cambiado la salud mental y nivel de bienestar de la población?
 
-```{r}
+```{r salud-bienestar-2021, fig.cap = 'Satisfacción con la vida y salud subjetiva (ola 2021)'}
+
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & ola == 5 & !is_nsnr(s01, s02, s03)) %>% 
+  prop_list(s01 %in% 4:5, s02 %in% 4:5, s03 %in% 4:5, na.rm = TRUE) %>% 
+  mutate(name = factor(name,
+                       levels = c('s01 %in% 4:5', 's02 %in% 4:5', 's03 %in% 4:5'),
+                       labels = c('Esta satisfecho o muy\nsatisfecho con su vida',
+                                  'Su vida se acerca o se acerca\ncompletamente a su ideal',
+                                  'Su salud es muy buena\no Excelente'))) %>% 
+  ggplot(aes(y = prop, x = name, fill = name,
+             label = scales::percent(prop, accuracy = .1))) + 
+  theme_bw() + 
+  geom_col() +
+  geom_text(position = position_dodge(.9), 
+            vjust = -.5, size = 3) +
+  scale_y_continuous(labels = scales::percent, limits = c(0,1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +  
+  scale_fill_viridis_d(end = .75, option = 'viridis') +
+  theme(legend.position = 'none') +
+  ggtitle(NULL, 'Porcentaje que responde que...')
+
+```
+
+```{r salud-bienestar-olas, fig.cap = 'Satisfacción con la vida y salud subjetiva, según ola'}
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & !is_nsnr(s01, s02, s03)) %>% 
@@ -28,114 +53,48 @@ elsoc_long_2016_2021 %>%
   scale_color_viridis_d(end = .75, option = 'viridis') +
   theme(legend.position = 'top',
         legend.title = element_blank()) +
-  ggtitle('Satisfacción con la vida y salud subjetiva, según ola',
-          'Porcentaje que responde que...')
-
-```
-
-```{r}
-
-elsoc_long_2016_2021 %>% 
-  filter(tipo_atricion == 1 & ola %in% c(1, 3, 5) & !is_nsnr(s04, s08, s09)) %>% 
-  sjlabelled::as_label(ola) %>%
-  prop_list(s04 %in% 1:4, s08 == 0, s09 == 2, by = ola, na.rm = TRUE) %>% 
-  mutate(name = factor(name,
-                       levels = c('s04 %in% 1:4', 's08 == 0', 's09 == 2'),
-                       labels = c('Practica deporte o actividad física\nmás de 1 o 2 veces por semana',
-                                  'No fuma regularmente',
-                                  'No consume alcohol\nregularmente'))) %>% 
-  ggplot(aes(y = prop, x = ola, group = name, color = name,
-             label = scales::percent(prop, accuracy = .1))) + 
-  theme_bw() + 
-  geom_point(size = 1.75) + 
-  geom_line() +
-  geom_text_repel(nudge_y = .025, size = 3, color = 'black') +
-  scale_y_continuous(labels = scales::percent, limits = c(0,1)) +
-  ylab(label = NULL) +
-  xlab(label = NULL) +  
-  scale_color_viridis_d(end = .75, option = 'viridis') +
-  theme(legend.position = 'top',
-        legend.title = element_blank()) +
-  ggtitle('Conducta saludable, según ola',
-          'Porcentaje que responde que...')
-
-```
-
-
-```{r}
-
-elsoc_long_2016_2021 %>% 
-  filter(tipo_atricion == 1 & ola %in% c(1, 3, 5) & !is_nsnr(s04, s08, s09)) %>% 
-  sjlabelled::as_label(ola) %>%
-  mutate(suma = 4 - (s04 %in% 1:4) - (s08 == 0) - (s09 == 2)) %>% 
-  prop(suma, by = ola, na.rm = TRUE) %>% 
-  mutate(conducta_saludable = 
-           factor(suma, levels = 1:4,
-                  labels = c('Practica deporte, y\nno fuma, ni consume\nalcohol regularmente',
-                             'Realiza 1 de 3\nconductas no\nsaludables',
-                             'Realiza 2 de 3\nconductas no\nsaludables',
-                             'No practica deporte,\nfuma y consume\nalcohol regularmente'))) %>% 
-  ggplot(aes(y = prop, x = ola, fill = fct_rev(conducta_saludable),
-             label = scales::percent(prop, accuracy = .1))) + 
-  theme_bw() + 
-  geom_col() +
-  geom_text(position = position_stack(vjust = .5), 
-            color = rep(rep(c('black', 'white'), each = 2), 3),
-            size = 3) +
-  scale_y_continuous(labels = scales::percent) +
-  ylab(label = NULL) +
-  xlab(label = NULL) +  
-  scale_fill_viridis_d(end = .75, option = 'viridis') +
-  theme(legend.position = 'top',
-        legend.title = element_blank()) +
-  ggtitle('Conducta saludable, según ola',
-          'Porcentaje que responde que...') +
-  guides(fill = guide_legend(reverse = TRUE))
-
-```
-
-
-```{r}
-
-elsoc_long_2016_2021 %>% 
-  filter(tipo_atricion == 1,
-         !is_nsnr(s01, s02, s03) & !is_nsnr(s04, s08, s09),
-         ola == 5) %>% 
-  sjlabelled::as_label(ola) %>%
-  mutate(suma = 4 - (s04 %in% 1:4) - (s08 == 0) - (s09 == 2),
-         conducta_saludable = 
-           factor(suma, levels = 1:4,
-                  labels = c('Practica deporte, y\nno fuma, ni consume\nalcohol regularmente',
-                             'Realiza 1 de 3\nconductas no\nsaludables',
-                             'Realiza 2 de 3\nconductas no\nsaludables',
-                             'No practica deporte,\nfuma y consume\nalcohol regularmente'))) %>% 
-  prop_list(s01 %in% 4:5, s02 %in% 4:5, s03 %in% 4:5, 
-            by = conducta_saludable, na.rm = TRUE) %>% 
-  mutate(name = factor(name,
-                       levels = c('s01 %in% 4:5', 's02 %in% 4:5', 's03 %in% 4:5'),
-                       labels = c('Esta satisfecho o muy\nsatisfecho con su vida',
-                                  'Su vida se acerca o se acerca\ncompletamente a su ideal',
-                                  'Su salud es muy buena\no Excelente'))) %>% 
-  ggplot(aes(y = prop, x = conducta_saludable, group = name, color = name,
-             label = scales::percent(prop, accuracy = .1))) + 
-  theme_bw() + 
-  geom_point(size = 1.75) + 
-  geom_line() +
-  geom_text_repel(nudge_y = .025, size = 3, color = 'black') +
-  scale_y_continuous(labels = scales::percent, limits = c(0,1)) +
-  ylab(label = NULL) +
-  xlab(label = NULL) +  
-  scale_color_viridis_d(end = .75, option = 'viridis') +
-  theme(legend.position = 'top',
-        legend.title = element_blank()) +
-  ggtitle('Satisfacción con la vida y salud subjetiva, según conducta saludable (2021)',
-          'Porcentaje que responde que...')
+  ggtitle(NULL, 'Porcentaje que responde que...')
 
 ```
 
 ### Sintomatología depresiva
 
-```{r depre-wave, echo=FALSE, fig.align='center'}
+```{r depre-wave, fig.cap = 'Porcentaje que presenta síntomas de depresión (2021)'}
+
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1, ola == 5) %>% 
+  purrr::map_at(.at = vars(starts_with('s11_0')), 
+                .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
+  as.data.frame() %>%  
+  mutate(phq9 = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09),
+         depr = factor(car::recode(phq9, "0:4 = 1; 5:9 = 2; 10:14 = 3; 15:27 = 4"), 
+                       levels = c(1,2,3,4),
+                       labels = c('Sin sintomas o síntomas\nde depresión mínima', 
+                                  'Síntomas de\ndepresion media', 
+                                  'Síntomas de\ndepresion moderada', 
+                                  'Síntomas de depresion\nmoderada-severa\no severa'))) %>%
+  prop(depr, na.rm = TRUE) %>% 
+  ggplot(aes(y = prop, x = depr, fill = fct_rev(depr), 
+             label = scales::percent(prop, accuracy = .1))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, option = 'viridis') +
+  geom_text(position = position_stack(vjust = .5),
+            size = 3, 
+            color = rep(rep(c('black', 'white'), each = 2), 5)) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank()) + 
+  guides(fill = guide_legend(reverse = TRUE))
+
+```
+
+
+
+```{r depre-wave, fig.cap = 'Porcentaje que presenta síntomas de depresión, según ola'}
+
 elsoc_long_2016_2021 %>% 
   purrr::map_at(.at = vars(starts_with('s11_0')), 
                 .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
@@ -143,7 +102,10 @@ elsoc_long_2016_2021 %>%
   mutate(phq9 = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09),
          depr = factor(car::recode(phq9, "0:4 = 1; 5:9 = 2; 10:14 = 3; 15:27 = 4"), 
                        levels = c(1,2,3,4),
-                       labels = c('Sin sintomas o Minima', 'Depresion Media', 'Depresion Moderada', 'Depresion Moderada-Severa\na Severa'))) %>%
+                       labels = c('Sin sintomas o síntomas\nde depresión mínima', 
+                                  'Síntomas de\ndepresion media', 
+                                  'Síntomas de\ndepresion moderada', 
+                                  'Síntomas de depresion\nmoderada-severa\no severa'))) %>%
   dplyr::filter(tipo_atricion == 1) %>% 
   prop(depr, by = c(ola), na.rm = TRUE) %>% 
   sjlabelled::as_label(depr, ola) %>% 
@@ -160,8 +122,7 @@ elsoc_long_2016_2021 %>%
             color = rep(rep(c('black', 'white'), each = 2), 5)) + 
   theme(legend.position = 'top',
         legend.title = element_blank()) + 
-  guides(fill = guide_legend(reverse = TRUE)) +
-  ggtitle('Síntomas de depresión, según ola')
+  guides(fill = guide_legend(reverse = TRUE))
 
 ```
 
@@ -219,8 +180,8 @@ elsoc_lca <- elsoc_long_2016_2021 %>%
                 .f = function(s) car::recode(s, "1:2 = 1; 3:5 = 2")) %>%
   as.data.frame()
 
-lca <- poLCA(cbind(s11_01, s11_02, s11_03, s11_04, s11_05, s11_06, s11_07, s11_08, s11_09) ~ 1, 
-      data = elsoc_lca , nclass = K, na.rm = TRUE, maxiter = 5000, nrep = 10)
+lca <- poLCA(cbind(s11_01, s11_02, s11_03, s11_04, s11_05, s11_06, s11_07, s11_08, s11_09) ~ 1,
+      data = elsoc_lca , nclass = K, na.rm = TRUE, maxiter = 5000)
 elsoc_lca$class <- as.factor(lca$predclass)
 
 elsoc_lca %>%
@@ -389,7 +350,6 @@ En 2021 no hay hombres en la categoría Trabajo doméstico no remunerado $^{*}$
 
 
 
-
 ## COVID - 19
 
 
@@ -506,9 +466,9 @@ elsoc_long_2016_2021 %>%
 elsoc_long_2016_2021 %>% 
   filter(ola == 5 & tipo_atricion == 1) %>% 
   left_join(elsoc_long_cuarentenas, by = c('idencuesta', 'ola')) %>% 
-  mutate(cuarentena_acum.30t = factor(car::recode(cuarentena_acum.30, "0 = 1; 1:14 = 2; 15:21 = 3; 22:30 = 4"),
-                                 levels = 1:4,
-                                 labels = c('0 días', '1-14 días', '15-21 días', '22-30 días'))) %>% 
+  mutate(cuarentena_acum.30t = factor(car::recode(cuarentena_acum.30, "0 = 1; 1:14 = 2; 15:21 = 3; 22:28 = 4; 29:30 = 5"),
+                                 levels = 1:5,
+                                 labels = c('0 días', '1-14 días', '15-21 días', '22-28 días', '29-30 días'))) %>% 
   prop(cuarentena_acum.30t) %>% 
   ggplot(aes(y = prop, x = cuarentena_acum.30t, fill = cuarentena_acum.30t,
              label = scales::percent(prop, accuracy = .1))) +
@@ -569,7 +529,6 @@ elsoc_long_2016_2021 %>%
   as.data.frame() %>%  
   mutate(phq9 = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09)) %>%
   prop(phq9 >= 10, by = cuarentena_acum.30t, na.rm = TRUE) %>% 
-  as_label(ola) %>% 
   ggplot(aes(y = prop, x = cuarentena_acum.30t, fill = cuarentena_acum.30t,
              label = scales::percent(prop, accuracy = .1))) + 
   theme_bw() + 
@@ -599,7 +558,6 @@ elsoc_long_2016_2021 %>%
   as.data.frame() %>%  
   mutate(phq9 = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09)) %>%
   prop(phq9 >= 10, by = m60, na.rm = TRUE) %>% 
-  as_label(ola) %>% 
   ggplot(aes(y = prop, x = m60, fill = m60,
              label = scales::percent(prop, accuracy = .1))) + 
   theme_bw() + 
@@ -617,63 +575,6 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-
-
-### Grado de acuerdo con actividad económica versus salud pública según identificación política el año 2021
-
-```{r}
-
-elsoc_long_2016_2021 %>% 
-  filter(ola == 5 & tipo_atricion == 1 & 
-           !c37_09 %in% c(-888, -999) & !c15 %in% c(-888, -999)) %>% 
-    mutate(pos_id = factor(car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
-                         levels = c(1, 2, 3, 4),
-                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
-  prop(c37_09 %in% 4:5, pos_id, na.rm = TRUE) %>% 
-  sjlabelled::as_label(c37_09, pos_id) %>% 
-  ggplot(aes(y = prop, x = pos_id, fill = pos_id, 
-               label = scales::percent(prop, accuracy = .1))) +
-  theme_bw() + 
-    geom_col() +
-    scale_y_continuous(labels = scales::percent, limits = c(0,1)) + 
-    ylab(label = NULL) +
-    xlab(label = NULL) +
-    scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
-    geom_text(vjust = -0.8,
-              position = position_dodge(width = .9),
-              size= 2.75) +
-    theme(legend.position = 'none',   
-          legend.title = element_blank())
-
-```
-
-
-```{r}
-
-elsoc_long_2016_2021 %>% 
-  filter(ola == 5 & tipo_atricion == 1 & 
-           !c37_10 %in% c(-888, -999) & !c15 %in% c(-888, -999)) %>% 
-    mutate(pos_id = factor(car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
-                         levels = c(1, 2, 3, 4),
-                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
-  prop(c37_10 %in% 4:5, pos_id, na.rm = TRUE) %>% 
-  sjlabelled::as_label(pos_id) %>% 
-  ggplot(aes(y = prop, x = pos_id, fill = pos_id,
-               label = scales::percent(prop, accuracy = .1))) +
-  theme_bw() + 
-    geom_col() +
-    scale_y_continuous(labels = scales::percent,
-                       limits = c(0, 1)) +
-    ylab(label = NULL) +
-    xlab(label = NULL) +
-    scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
-    geom_text(vjust = -0.8,
-              position = position_dodge(width = .9),
-              size= 2.75) +
-    theme(legend.position = 'none',   
-          legend.title = element_blank())
-
-```
 
 ## Estrés Financiero
 
@@ -698,31 +599,6 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-```{r satisfaccion-retiro, echo=FALSE, fig.align='center'}
-datos.g19.11 <- elsoc_long_2016_2021 %>% 
-  dplyr::filter(muestra == 1 & tipo_atricion == 1
-                & !m16 %in% c(-888, -999, NA) & !m63_02 %in% c(-888, -999, NA)) %>% 
-  prop(m16, by = c(m63_02), na.rm = TRUE) %>% 
-  sjlabelled::as_label(m16, m63_02) 
-
-
-g19.11 <- datos.g19.11 %>% 
-  ggplot(aes(y = prop, x = m63_02, fill = m16, 
-             label = scales::percent(prop, accuracy = .1))) + 
-  theme_bw() + 
-  geom_col(position = 'Stack') +
-  scale_y_continuous(labels = scales::percent) +
-  ylab(label = NULL) +
-  xlab(label = NULL) +
-  scale_fill_viridis_d(begin = .33, end = .85, direction = -1, option = 'viridis') +
-  #cambiar geom_text tal que: Stack y cambio colores
-  geom_text(position = position_stack(vjust = .5),
-            size= 2.75) + 
-  theme(legend.position = 'top',
-        legend.title = element_blank()) 
-
-g19.11
-```
 
 ```{r clase.sub-benef.estatal, echo=FALSE, fig.align='center'}
 
