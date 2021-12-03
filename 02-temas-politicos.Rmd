@@ -318,8 +318,6 @@ elsoc_long_2016_2021 %>%
 ```
 
 
-
-
 ## Movimientos Sociales y Acciones Colectivas
 
 ### Tipología de participación política
@@ -339,7 +337,7 @@ elsoc_long_2016_2021 %>%
 # tip_par$par_mov_w04[tip_par$c08_01_w04>=4 | tip_par$c08_02_w04>=4 | tip_par$c08_03_w04>=4 | tip_par$c08_04_w04>=4 | tip_par$c08_05_w04>=4]<-2
 # tip_par$par_mov_w05<-1
 # tip_par$par_mov_w05[tip_par$c08_02_w05>=4 | tip_par$c08_04_w05>=4 | tip_par$c08_05_w05>=4]<-2
-# 
+#  
 # tip_par$c11_w01[tip_par$c11_w01<=0 | tip_par$c11_w01==3]<-NA
 # tip_par$c11_w03[tip_par$c11_w03<=0 | tip_par$c11_w03==3]<-NA
 # tip_par$c43_w05[tip_par$c43_w05<=0 | tip_par$c43_w05==3]<-NA
@@ -350,13 +348,13 @@ elsoc_long_2016_2021 %>%
 # var <- cbind(c11_w01, c11_w03, c43_w05, par_mov_w01, par_mov_w02, par_mov_w03, par_mov_w04, par_mov_w05)~1
 # 
 # library(poLCA)
-# tipos_part3 <- poLCA(var, tip_par, nclass=3, na.rm = T, maxiter = 5000)
+# tipos_part3 <- poLCA(var, tip_par, nclass=3, na.rm = T, maxiter = 5000, nrep=10)
 # tip_par$class_part_3<- as.factor(tipos_part3$predclass)
-# 
-# tipos_part4 <- poLCA(var, tip_par, nclass=4, na.rm = T, maxiter = 5000)
+#  
+# tipos_part4 <- poLCA(var, tip_par, nclass=4, na.rm = T, maxiter = 5000, nrep=10)
 # tip_par$class_part_4<- as.factor(tipos_part4$predclass)
 # 
-# tipos_part5 <- poLCA(var, tip_par, nclass=5, na.rm = T, maxiter = 5000)
+# tipos_part5 <- poLCA(var, tip_par, nclass=5, na.rm = T, maxiter = 5000, nrep=10)
 # tip_par$class_part_5<- as.factor(tipos_part5$predclass)
 #  
 # #Guardar base especial.
@@ -438,7 +436,7 @@ tab8 <- tip_par %>% group_by(class_part_4, par_mov_w05) %>%
 tab_4<- rbind(tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8)
 rm(tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8)
 
-tab_4$Clase  <- factor(tab_4$Clase, levels = c(1,2,3,4), labels = c("Institucionales (17.11%)", "Indecisos (22.22%)", "Movilizados (9.88%)", "Desinteresados (50.78%)"))
+tab_4$Clase  <- factor(tab_4$Clase, levels = c(1,2,3,4), labels = c("Movilizados (16.77%)", "Desinteresados (58.9%)", "Reclutados (4.84%)", "Institucionales (19.5%)"))
 tab_4$Participa  <- factor(tab_4$Participa, levels = c(1,2), labels = c("No participa", "Participa"))
 tab_4$var  <- factor(tab_4$var, levels = c(1,2,3,4,5,6,7,8), labels = c("Elección 2013", "Elección 2017", "Plebiscito", "Protesta W1", "Protesta W2", "Protesta W3", "Protesta W4", "Protesta W5"))
 
@@ -481,7 +479,7 @@ tab8 <- tip_par %>% group_by(class_part_5, par_mov_w05) %>%
 tab_5<- rbind(tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8)
 rm(tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8)
 
-tab_5$Clase  <- factor(tab_5$Clase, levels = c(1,2,3,4,5), labels = c("(47.1%)", "(5.11%)", "(7.5%)", "(24.06%)", "(16.22%)"))
+tab_5$Clase  <- factor(tab_5$Clase, levels = c(1,2,3,4,5), labels = c("(23.52%)", "(3.61%)", "(8.79%)", "(46.01%)", "(18.06%)"))
 tab_5$Participa  <- factor(tab_5$Participa, levels = c(1,2), labels = c("No participa", "Participa"))
 tab_5$var  <- factor(tab_5$var, levels = c(1,2,3,4,5,6,7,8), labels = c("Elección 2013", "Elección 2017", "Plebiscito", "Protesta W1", "Protesta W2", "Protesta W3", "Protesta W4", "Protesta W5"))
 
@@ -492,6 +490,8 @@ tab_5 %>% ggplot(aes(x = freq, y = var, fill = Participa)) +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 5), limits=c(0, 1)) +
   theme_bw() + theme(legend.position = "bottom", plot.title = element_text(size=14)) + scale_fill_viridis_d(begin = .33, end = .88, direction = -1, option = 'viridis')
 
+rm(tab_3, tab_4, tab_5, tip_par)
+
 ```
 
 ```{r tipos_democracia, fig.cap = 'Legitimidad democrática por tipos de participación'}
@@ -499,7 +499,7 @@ tab_5 %>% ggplot(aes(x = freq, y = var, fill = Participa)) +
 tip_par<-read.csv("participacion_tipos.csv", sep=",", encoding="UTF-8")
 tip_par <- tip_par[c("idencuesta", "class_part_4")]
 tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
-tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Institucionales", "Indecisos", "Movilizados", "Desinteresados"))
+tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Movilizados", "Desinteresados", "Reclutados", "Institucionales"))
 tip_par <- mutate(tip_par, c25_w01 = car::recode(tip_par$c25_w01, "1 = 1; c(-999, -888) = NA; c(2,3,4) = 0"))
 tip_par <- mutate(tip_par, c25_w02 = car::recode(tip_par$c25_w02, "1 = 1; c(-999, -888) = NA; c(2,3,4) = 0"))
 tip_par <- mutate(tip_par, c25_w03 = car::recode(tip_par$c25_w03, "1 = 1; c(-999, -888) = NA; c(2,3,4) = 0"))
@@ -524,6 +524,7 @@ tab %>%
   scale_x_continuous(breaks = c(1,2,3,4,5), labels=c("W1", "W2", "W3", "W4", "W5")) +
   scale_color_viridis_d(begin = .33, end = .88, option = 'viridis', name  ="Tipo de participación") +
   theme_minimal( ) + theme(legend.position = "bottom", plot.title = element_text(size=12))
+rm(tab, tip_par)
 
 ```
 
@@ -661,6 +662,45 @@ elsoc_long_2016_2021 %>%
 
 ```
 
+## Participación electoral
+
+```{r graf-participacion-estres2021, fig.cap='Participación electoral según estres financiero en 2021'}
+
+tab <-elsoc_wide_2016_2021 %>%   
+  filter(!is_nsnr(m43_w05), 
+         !is_nsnr(c11_w01, c11_w03, c43_w05)) %>%
+          mutate(name = factor(m43_w05,
+          levels = c(1,2,3,4,5),
+          labels = c('Nada sobrecargado', 'No muy sobrecargado', 'Algo sobrecargado', 'Bastante sobrecargado', 'Muy sobrecargado'))) %>%
+  mutate(c11_w01 = factor(car::recode(c11_w01, recodes = "2 = 1; 1 = 0; 3 = 0"))) %>%
+  mutate(c11_w03 = factor(car::recode(c11_w03, recodes = "2 = 1; 1 = 0; 3 = 0"))) %>%
+  mutate(c43_w05 = factor(car::recode(c43_w05, recodes = "2 = 1; 1 = 0; 3 = 0"))) %>%
+  filter(tipo_atricion == 1) %>% filter(!is.na(m43_w05))
+
+tab1<-tab %>% group_by(name, c11_w01) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
+  mutate(var = 1) %>% rename(participa=c11_w01) %>%
+  filter(!is.na(participa)) %>% filter(participa==1)
+tab2<-tab %>% group_by(name, c11_w03) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
+  mutate(var = 2) %>% rename(participa=c11_w03) %>%
+  filter(!is.na(participa)) %>% filter(participa==1)
+tab3<-tab %>% group_by(name, c43_w05) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
+  mutate(var = 3) %>% rename(participa=c43_w05) %>%
+  filter(!is.na(participa)) %>% filter(participa==1)
+tab<- rbind(tab1, tab2, tab3)
+rm(tab1, tab2, tab3)
+
+tab %>%
+  ggplot(aes(x=var, y=freq, color=name)) +
+  geom_line() +
+  geom_point() +
+  labs(y="Proporción",
+       title = "Participación según sobrecarga en pandemia") +
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 10), limits=c(0, 1)) +
+  scale_x_continuous(breaks = c(1,2,3), labels=c("Elección 2013", "Elección 2017", "Plebiscito")) +
+  scale_color_viridis_d(begin = .33, end = .88, option = 'viridis', name  =" ") +
+  theme_minimal( ) + theme(legend.position = "bottom", plot.title = element_text(size=12))
+rm(tab)
+```
 
 ## Justificación de la Violencia
 
@@ -1374,7 +1414,8 @@ tab<-elsoc_wide_2016_2021 %>%
   mutate(c28_w01 = factor(car::recode(c28_w01, recodes = "4:5 = 1; 1:3 = 0"))) %>%
   mutate(c28_w02 = factor(car::recode(c28_w02, recodes = "4:5 = 1; 1:3 = 0"))) %>%
   mutate(c28_w03 = factor(car::recode(c28_w03, recodes = "4:5 = 1; 1:3 = 0"))) %>%
-  mutate(c28_w04 = factor(car::recode(c28_w04, recodes = "4:5 = 1; 1:3 = 0")))
+  mutate(c28_w04 = factor(car::recode(c28_w04, recodes = "4:5 = 1; 1:3 = 0"))) %>%
+  filter(tipo_atricion == 1)
 
 tab1<-tab %>% group_by(optimista, c28_w01) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
   mutate(var = 1) %>% rename(cambio=c28_w01) %>% filter(!is.na(optimista)) %>%
@@ -1417,7 +1458,8 @@ tab <-elsoc_wide_2016_2021 %>%
                                         labels = c('Optimista', 'No optimista'))) %>%
   mutate(c11_w01 = factor(car::recode(c11_w01, recodes = "2 = 1; 1 = 0; 3 = 0"))) %>%
   mutate(c11_w03 = factor(car::recode(c11_w03, recodes = "2 = 1; 1 = 0; 3 = 0"))) %>%
-  mutate(c43_w05 = factor(car::recode(c43_w05, recodes = "2 = 1; 1 = 0; 3 = 0")))
+  mutate(c43_w05 = factor(car::recode(c43_w05, recodes = "2 = 1; 1 = 0; 3 = 0"))) %>%
+  filter(tipo_atricion == 1)
 
 tab1<-tab %>% group_by(optimista, c11_w01) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
   mutate(var = 1) %>% rename(participa=c11_w01) %>% filter(!is.na(optimista)) %>%
@@ -1435,7 +1477,7 @@ tab %>%
   ggplot(aes(x=var, y=freq, color=optimista)) +
   geom_line() +
   geom_point() +
-  labs(y="Proporción", x="Elección",
+  labs(y="Proporción",
        title = "Participación según optimismo actual") +
   scale_y_continuous(breaks = scales::pretty_breaks(n = 10), limits=c(0, 1)) +
   scale_x_continuous(breaks = c(1,2,3), labels=c("Elección 2013", "Elección 2017", "Plebiscito")) +
