@@ -1487,3 +1487,52 @@ rm(tab)
 
 ```
 
+```{r graf-movimientos-optimismo, fig.cap = 'Participación en movimiento que más valora según optimismo constitucional'}
+
+tab<-elsoc_wide_2016_2021 %>%   
+  filter(!is_nsnr(c46_01_w05, c46_02_w05, c46_03_w05, c46_04_w05), 
+         !is_nsnr(c22_w01, c22_w02, c22_w03, c22_w04, c22_w05)) %>%
+  rowwise() %>%
+          mutate(optimismo = mean(c46_01_w05, c46_02_w05, c46_03_w05, c46_04_w05, na.rm = TRUE)) %>%
+          mutate(optimista = factor(optimismo >= 4,
+                                        levels = c(TRUE, FALSE),
+                                        labels = c('Optimista', 'No optimista'))) %>%
+  mutate(c22_w01 = factor(car::recode(c22_w01, recodes = "4:5 = 1; 1:3 = 0"))) %>%
+  mutate(c22_w02 = factor(car::recode(c22_w02, recodes = "4:5 = 1; 1:3 = 0"))) %>%
+  mutate(c22_w03 = factor(car::recode(c22_w03, recodes = "4:5 = 1; 1:3 = 0"))) %>%
+  mutate(c22_w04 = factor(car::recode(c22_w04, recodes = "4:5 = 1; 1:3 = 0"))) %>%
+  mutate(c22_w05 = factor(car::recode(c22_w05, recodes = "4:5 = 1; 1:3 = 0"))) %>%
+  filter(tipo_atricion == 1)
+
+tab1<-tab %>% group_by(optimista, c22_w01) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
+  mutate(var = 1) %>% rename(Participa=c22_w01) %>% filter(!is.na(optimista)) %>%
+  filter(!is.na(Participa)) %>% filter(Participa==1)
+tab2<-tab %>% group_by(optimista, c22_w02) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
+  mutate(var = 2) %>% rename(Participa=c22_w02) %>% filter(!is.na(optimista)) %>%
+  filter(!is.na(Participa)) %>% filter(Participa==1)
+tab3<-tab %>% group_by(optimista, c22_w03) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
+  mutate(var = 3) %>% rename(Participa=c22_w03) %>% filter(!is.na(optimista)) %>%
+  filter(!is.na(Participa)) %>% filter(Participa==1)
+tab4<-tab %>% group_by(optimista, c22_w04) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
+  mutate(var = 4) %>% rename(Participa=c22_w04) %>% filter(!is.na(optimista)) %>%
+  filter(!is.na(Participa)) %>% filter(Participa==1)
+tab5<-tab %>% group_by(optimista, c22_w05) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
+  mutate(var = 5) %>% rename(Participa=c22_w05) %>% filter(!is.na(optimista)) %>%
+  filter(!is.na(Participa)) %>% filter(Participa==1)
+
+tab<- rbind(tab1, tab2, tab3, tab4, tab5)
+rm(tab1, tab2, tab3, tab4, tab5)
+
+tab %>%
+  ggplot(aes(x=var, y=freq, color=optimista)) +
+  geom_line() +
+  geom_point() +
+  labs(y="Proporción", x="Wave",
+       title = "Participa frecuente o muy frecuentemente en el movimiento social que más valora") +
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 5), limits=c(0, 0.25)) +
+  scale_x_continuous(breaks = c(1,2,3,4,5), labels=c("W1", "W2", "W3", "W4", "W5")) +
+  scale_color_viridis_d(begin = .33, end = .88, option = 'viridis', name  =" ") +
+  theme_minimal( ) + theme(legend.position = "bottom", plot.title = element_text(size=12))
+rm(tab)
+
+```
