@@ -528,6 +528,182 @@ rm(tab, tip_par)
 
 ```
 
+```{r tipos_posición política, fig.cap = 'Posición política por tipos de participación'}
+
+tip_par<-read.csv("participacion_tipos.csv", sep=",", encoding="UTF-8")
+tip_par <- tip_par[c("idencuesta", "class_part_4")]
+tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
+tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Movilizados", "Desinteresados", "Reclutados", "Institucionales"))
+
+tip_par %>%   
+  filter(!is_nsnr(class_part_4, c15_w05))  %>%
+  drop_na(c("class_part_4", "c15_w05")) %>%
+  filter(tipo_atricion==1) %>%
+  mutate(pos_id = factor(car::recode(c15_w01, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
+                         levels = 1:4,
+                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
+group_by(class_part_4, pos_id) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
+  filter(!is.na(pos_id)) %>% 
+  ggplot(aes(y = freq, fill = class_part_4, x = pos_id)) +
+  theme_bw() + 
+  geom_col(position = 'dodge2') + 
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 10), limits=c(0, 1)) +
+     labs(y="Proporción", x="Posición política",
+       title = "Identificación política por tipo de participación") +
+  scale_fill_viridis_d(end = .85, option = 'viridis') +
+  theme(axis.text.x = element_text(size = rel(.9)),
+        legend.position = 'top',
+        legend.title = element_blank())
+
+
+```
+
+```{r tipos_sexo, fig.cap = 'Sexo por tipos de participación'}
+
+tip_par<-read.csv("participacion_tipos.csv", sep=",", encoding="UTF-8")
+tip_par <- tip_par[c("idencuesta", "class_part_4")]
+tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
+tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Movilizados", "Desinteresados", "Reclutados", "Institucionales"))
+
+tip_par %>%   
+  filter(!is_nsnr(class_part_4, m0_sexo_w01))  %>%
+  drop_na(c("class_part_4", "m0_sexo_w01")) %>%
+  filter(tipo_atricion==1) %>%
+  mutate(pos_id = factor(car::recode(m0_sexo_w01, recodes = "1 = 1; 2 = 2"),
+                         levels = 1:2,
+                         labels = c("Hombre", "Mujer"))) %>%
+group_by(class_part_4, pos_id) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
+  ggplot(aes(y = freq, fill = class_part_4, x = pos_id)) +
+  theme_bw() + 
+  geom_col(position = 'dodge2') + 
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 10), limits=c(0, 1)) +
+     labs(y="Proporción", x="Sexo",
+       title = "Sexo por tipo de participación") +
+  scale_fill_viridis_d(end = .85, option = 'viridis') +
+  theme(axis.text.x = element_text(size = rel(.9)),
+        legend.position = 'top',
+        legend.title = element_blank())
+
+
+```
+
+```{r tipos_edad, fig.cap = 'Edad por tipos de participación'}
+
+tip_par<-read.csv("participacion_tipos.csv", sep=",", encoding="UTF-8")
+tip_par <- tip_par[c("idencuesta", "class_part_4")]
+tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
+tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Movilizados", "Desinteresados", "Reclutados", "Institucionales"))
+
+tip_par %>%   
+  filter(!is_nsnr(class_part_4, m0_edad_w05))  %>%
+  drop_na(c("class_part_4", "m0_edad_w05")) %>%
+  filter(tipo_atricion==1) %>%
+  mutate(pos_id = factor(car::recode(m0_edad_w05, "18:29 = 1; 30:49 = 2; 50:64 = 3; 65:150 = 4"),
+                        levels = 1:4,
+                        labels = c('18-29', '30-49', '50-64', '65 o más'))) %>%
+group_by(class_part_4, pos_id) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
+  ggplot(aes(y = freq, fill = class_part_4, x = pos_id)) +
+  theme_bw() + 
+  geom_col(position = 'dodge2') + 
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 10), limits=c(0, 1)) +
+     labs(y="Proporción", x="Tramo etario",
+       title = "Edad por tipo de participación") +
+  scale_fill_viridis_d(end = .85, option = 'viridis') +
+  theme(axis.text.x = element_text(size = rel(.9)),
+        legend.position = 'top',
+        legend.title = element_blank())
+
+
+```
+
+```{r tipos_posición política, fig.cap = 'Posición política por tipos de participación'}
+
+tip_par<-read.csv("participacion_tipos.csv", sep=",", encoding="UTF-8")
+tip_par <- tip_par[c("idencuesta", "class_part_4")]
+tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
+tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Movilizados", "Desinteresados", "Reclutados", "Institucionales"))
+
+tip_par %>%   
+  filter(!is_nsnr(class_part_4, c15_w05))  %>%
+  drop_na(c("class_part_4", "c15_w05")) %>%
+  filter(tipo_atricion==1) %>%
+  mutate(pos_id = factor(car::recode(c15_w01, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
+                         levels = 1:4,
+                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
+group_by(pos_id, class_part_4) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
+    filter(!is.na(pos_id)) %>% 
+ggplot(aes(x = freq, y = pos_id, fill = class_part_4)) + 
+  geom_bar(stat = 'identity', position = 'stack') +
+  labs(y="Indentificación política", x="Proporción",
+       title = "Identificación política por tipo de participación", fill = "") +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 5), limits=c(0, 1)) +
+  theme_bw() + scale_fill_viridis_d(end = .85, option = 'viridis') +
+  theme(axis.text.x = element_text(size = rel(.9)),
+        legend.position = 'top',
+        legend.title = element_blank())
+
+
+
+
+```
+
+```{r tipos_sexo, fig.cap = 'Sexo por tipos de participación'}
+
+tip_par<-read.csv("participacion_tipos.csv", sep=",", encoding="UTF-8")
+tip_par <- tip_par[c("idencuesta", "class_part_4")]
+tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
+tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Movilizados", "Desinteresados", "Reclutados", "Institucionales"))
+
+tip_par %>%   
+  filter(!is_nsnr(class_part_4, m0_sexo_w01))  %>%
+  drop_na(c("class_part_4", "m0_sexo_w01")) %>%
+  filter(tipo_atricion==1) %>%
+  mutate(pos_id = factor(car::recode(m0_sexo_w01, recodes = "1 = 1; 2 = 2"),
+                         levels = 1:2,
+                         labels = c("Hombre", "Mujer"))) %>%
+group_by(pos_id, class_part_4) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
+ggplot(aes(x = freq, y = pos_id, fill = class_part_4)) + 
+  geom_bar(stat = 'identity', position = 'stack') +
+  labs(y="Sexo", x="Proporción",
+       title = "Sexo por tipo de participación", fill = "") +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 5), limits=c(0, 1)) +
+  theme_bw() + scale_fill_viridis_d(end = .85, option = 'viridis') +
+  theme(axis.text.x = element_text(size = rel(.9)),
+        legend.position = 'top',
+        legend.title = element_blank())
+
+
+```
+
+```{r tipos_edad, fig.cap = 'Edad por tipos de participación'}
+
+tip_par<-read.csv("participacion_tipos.csv", sep=",", encoding="UTF-8")
+tip_par <- tip_par[c("idencuesta", "class_part_4")]
+tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
+tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Movilizados", "Desinteresados", "Reclutados", "Institucionales"))
+
+tip_par %>%   
+  filter(!is_nsnr(class_part_4, m0_edad_w05))  %>%
+  drop_na(c("class_part_4", "m0_edad_w05")) %>%
+  filter(tipo_atricion==1) %>%
+  mutate(pos_id = factor(car::recode(m0_edad_w05, "18:29 = 1; 30:49 = 2; 50:64 = 3; 65:150 = 4"),
+                        levels = 1:4,
+                        labels = c('18-29', '30-49', '50-64', '65 o más'))) %>%
+group_by(pos_id, class_part_4) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
+ggplot(aes(x = freq, y = pos_id, fill = class_part_4)) + 
+  geom_bar(stat = 'identity', position = 'stack') +
+  labs(y="Tramo etario", x="Proporción",
+       title = "Edad por tipo de participación", fill = "") +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 5), limits=c(0, 1)) +
+  theme_bw() + scale_fill_viridis_d(end = .85, option = 'viridis') +
+  theme(axis.text.x = element_text(size = rel(.9)),
+        legend.position = 'top',
+        legend.title = element_blank())
+
+
+
+```
+
 ### Ciclo de movilización política y estallido social
 
 ```{r graf-movsocial, fig.cap = '¿Cuál de los siguientes movimientos sociales más valora? (2019-2021)'}
