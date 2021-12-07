@@ -45,14 +45,13 @@ library(elsoc)
 library(lubridate)
 library(viridis)
 library(treemapify)
+library(statar)
 
 ```
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(cache=FALSE, warning=FALSE, message=FALSE, echo=FALSE, fig.topcaption = TRUE, fig.align = 'center')
 
-options(tinytex.verbose = TRUE)
-  
 Sys.setlocale("LC_ALL","ES_ES.UTF-8")
 ```
 
@@ -86,8 +85,11 @@ remove(list = ls())
 ```{r datos-elsoc}
 
 # bases de datos ELSOC
-elsoc::load_elsoc(format = 'long')
-elsoc::load_elsoc(format = 'wide')
+elsoc::load_elsoc('long')
+elsoc::load_elsoc('wide')
+
+# Estimaciones de EGP
+elsoc_egp <- sjlabelled::read_data(file.path('inputs', 'elsoc_egp.dta'))
 
 ```
 

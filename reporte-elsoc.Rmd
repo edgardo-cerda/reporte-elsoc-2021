@@ -1,3 +1,75 @@
+--- 
+title: "Estudio Longitudinal Social de Chile"
+subtitle: "Resultados longitudinales 2016-2021"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+documentclass: book
+bibliography: ["book.bib"]
+csl: "inputs/bib/apa-no-ampersand.csl"
+biblio-style: apalike
+link-citations: yes
+linkcolor: blue
+geometry: "left=4cm, right=3cm, top=2.5cm, bottom=2.5cm"
+fontsize: 12pt
+linestretch: 1.5
+toc-depth: 1
+lof: True
+lot: True
+github-repo: "edgardo-cerda/reporte-elsoc-2021"
+url: "https://edgardo-cerda.github.io/reporte-elsoc-2021/"
+always_allow_html: true
+editor_options: 
+  markdown: 
+    wrap: 72
+    
+---
+
+
+
+<!--chapter:end:index.Rmd-->
+
+
+# Introduccion
+
+Placeholder
+
+
+## Sobre COES
+## Sobre ELSOC
+### Descripción del estudio
+### Acceso a Bases de Datos ELSOC
+### Características del diseño muestral
+### Características del levantamiento de datos
+## Atrición de la muestra
+### Atrición acumulada según Sexo, Grupo etáreo, Nivel educacional y Estrato
+### Foco en el cambio longitudinal
+
+<!--chapter:end:01-introduccion.Rmd-->
+
+
+# Temas políticos
+
+Placeholder
+
+
+## Identificación política
+### ¿Cómo se posicionan políticamente los chilenos?
+### Interés en la política y participación ciudadana
+### Opinión en temas de discusión pública
+## Movimientos Sociales y Acciones Colectivas
+### Tipología de participación política
+### Ciclo de movilización política y estallido social
+## Participación electoral
+## Justificación de la Violencia
+### Justificación de la violencia para el control social
+## Confianza interpersonal y en instituciones
+### Confianza interpersonal
+## Actitudes hacia la democracia
+## Cambio constitucional
+## Optimismo constitucional
+
+<!--chapter:end:02-temas-politicos.Rmd-->
+
 
 # Temas de salud mental y bienestar
 
@@ -169,7 +241,7 @@ elsoc_long_2016_2021 %>%
   purrr::map_at(.at = vars(starts_with('s11_0')), 
                 .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
   as.data.frame() %>%  
-  dplyr::filter(tipo_atricion == 1) %>% 
+  dplyr::filter(tipo_atricion == 1 & ola %in% c(1, 5)) %>% 
   mutate(phq9 = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09),
          depr = factor(car::recode(phq9, "0:4 = 1; 5:9 = 2; 10:14 = 3; 15:27 = 4"),
                        levels = c(1,2,3,4),
@@ -201,7 +273,7 @@ elsoc_long_2016_2021 %>%
       aes(label = scales::percent(prop, accuracy = .1)),
       position = position_stack(vjust = .5),
       show.legend = FALSE,
-      color = rep(c('white', 'white', 'black', 'black'), 5),
+      color = rep(c('white', 'white', 'black', 'black'), 2),
             size = 3) + 
   guides(fill = guide_legend(reverse = TRUE))
 
@@ -252,12 +324,14 @@ indicadores_lca(list(lca3, lca4, lca5))
 
 # Agregar etiquetas (4 clases)
 
-elsoc_depr_lca$class_depr <- factor(elsoc_depr_lca$class4,
+elsoc_depr_lca$class4r <- factor(elsoc_depr_lca$class4,
                              levels = c('2', '3', '4', '1'),
-                             labels = c('Prevalencia baja de\nsíntomas de depresión',
-                                        'Prevalencia media-baja de\nsíntomas de depresión',
-                                        'Prevalencia media-alta de\nsíntomas de depresión',
-                                        'Prevalencia alta de\nsíntomas de depresión'))
+                             labels = c('baja', 'media-baja', 'media-alta', 'alta'))
+
+elsoc_depr_lca$class_depr <- factor(elsoc_depr_lca$class4r,
+                                    labels = glue::glue("{get_labels(elsoc_depr_lca$class4r)} ({scales::percent(elsoc_depr_lca %>% survey_design_elsoc(weights = 'ponderador02_w05') %>%
+                                    prop(class4r, na.rm = TRUE) %>%
+                                    pull(prop), .1)})"))
 
 ```
 
@@ -276,12 +350,7 @@ elsoc_depr_lca %>%
                              labels = c('Sin sintomas o síntomas\nde depresión mínima', 
                                   'Síntomas de\ndepresion media', 
                                   'Síntomas de\ndepresion moderada', 
-                                  'Síntomas de depresion\nmoderada-severa o severa')),
-           class_depr = factor(class_depr,
-                                    labels = glue::glue("{get_labels(elsoc_depr_lca$class_depr)}\n ({scales::percent(elsoc_depr_lca %>% survey_design_elsoc(weights = 'ponderador02_w05') %>%
-                                    prop(class_depr, na.rm = TRUE) %>%
-                                    pull(prop), .1)})"))
-           ) %>% 
+                                  'Síntomas de depresion\nmoderada-severa o severa'))) %>% 
     ggplot(aes(x = prop, y = fct_rev(name), fill = fct_rev(sintomas))) + 
     geom_col(position = 'stack') + 
     facet_grid(~ class_depr) +
@@ -300,105 +369,93 @@ elsoc_depr_lca %>%
 
 ```
 
-
-
 ```{r}
 
 elsoc_long_2016_2021 %>%
-  left_join(elsoc_depr_lca %>% select(idencuesta, class_depr), by = 'idencuesta') %>%
+  left_join(elsoc_depr_lca)
+  prop(class_depr, by = c(ola, m0_sexo), na.rm = TRUE) %>% 
+  sjlabelled::as_label(ola, m0_sexo)
+
+  ggplot(aes(y = prop, x = ola, 
+                   color = m0_sexo, group = m0_sexo,
+              label = scales::percent(prop, accuracy = .1))) +
+  theme_bw() +   
+  geom_line() +
+  geom_point(size = 1.75) +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0,0.5)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_color_viridis_d(begin = .33, end = .66, direction = 1, option = 'viridis') +
+  ggrepel::geom_text_repel(size = 3, nudge_y = .025) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank())  + 
+  ggtitle(label = 'Síntomas depresivos, según sexo', 
+          'Porcentaje con sintomas de depresión moderada, moderada-severa o severa')
+ 
+
+```
+
+
+```{r depre-year-sexo, echo=FALSE, fig.align='center'}
+
+elsoc_long_2016_2021 %>% 
   purrr::map_at(.at = vars(starts_with('s11_0')), 
                 .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
   as.data.frame() %>%  
-  dplyr::filter(tipo_atricion == 1) %>% 
+  mutate(phq9 = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09)) %>% 
+  dplyr::filter(tipo_atricion == 1 & muestra == 1) %>% 
+  prop(phq9>=10, by = c(ola, m0_sexo), na.rm = TRUE) %>% 
+  sjlabelled::as_label(ola, m0_sexo) %>% 
+  ggplot(aes(y = prop, x = ola, 
+                   color = m0_sexo, group = m0_sexo,
+              label = scales::percent(prop, accuracy = .1))) +
+  theme_bw() +   
+  geom_line() +
+  geom_point(size = 1.75) +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0,0.5)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_color_viridis_d(begin = .33, end = .66, direction = 1, option = 'viridis') +
+  ggrepel::geom_text_repel(size = 3, nudge_y = .025) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank())  + 
+  ggtitle(label = 'Síntomas depresivos, según sexo', 
+          'Porcentaje con sintomas de depresión moderada, moderada-severa o severa')
+ 
+```
+
+```{r depre-edad-sexo, echo=FALSE, fig.align='center'}
+
+elsoc_long_2016_2021 %>% 
+  purrr::map_at(.at = vars(starts_with('s11_0')), 
+                .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
+  as.data.frame() %>%  
   mutate(phq9 = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09),
-         depr = factor(car::recode(phq9, "0:4 = 1; 5:9 = 2; 10:14 = 3; 15:27 = 4"),
-                       levels = c(1,2,3,4),
-                       labels = c('Sin sintomas o síntomas\nde depresión mínima', 
-                                  'Síntomas de\ndepresion media', 
-                                  'Síntomas de\ndepresion moderada', 
-                                  'Síntomas de depresion\nmoderada-severa o severa'))) %>% 
-  as_label(ola) %>% 
-  survey_design_elsoc() %>%
-  svytable(~depr + class_depr + ola + idencuesta, design = .) %>% 
-  as.data.frame() %>% 
-  group_by(ola, class_depr) %>% 
-  mutate(prop = Freq/sum(Freq)) %>%
-  filter(Freq > 0) %>% 
-  ggplot(aes(y = prop, x = ola, fill = fct_rev(depr), 
-             stratum = fct_rev(depr), alluvium = idencuesta)) +
-  theme_bw() +
-  facet_wrap(~class_depr) +
-  ggalluvial::geom_flow(alpha = .66) + 
-  ggalluvial::geom_stratum(linetype = 0, width = .55) +
-  scale_y_continuous(labels = scales::percent) + 
-  ylab(label = NULL) +
-  xlab(label = NULL) + 
-  theme(legend.position = 'top',
-        legend.title = element_blank()) +
-  scale_fill_viridis_d(end = .8) +
-  # geom_text(data = function(x) { group_by(.data = x, ola, depr) %>%
-  #     summarise(prop = sum(prop, na.rm = TRUE), idencuesta = 1) %>%
-  #     ungroup()}, 
-  #     aes(label = scales::percent(prop, accuracy = .1)),
-  #     position = position_stack(vjust = .5),
-  #     show.legend = FALSE) +
-  #     # color = rep(c('white', 'white', 'black', 'black'), 2),
-  #     #       size = 3) + 
-  guides(fill = guide_legend(reverse = TRUE))
-
-
-```
-
-
-```{r}
-
-elsoc_depr_lca %>% 
-  filter(tipo_atricion == 1) %>% 
-  survey_design_elsoc(weights = 'ponderador02_w05') %>% 
-  prop(class_depr, by = m0_sexo_w05, na.rm = TRUE) %>% 
-  sjlabelled::as_label(class_depr, m0_sexo_w05) %>%
-  ggplot(aes(x = prop, y = m0_sexo_w05, 
-                   fill = fct_rev(class_depr),
-              label = scales::percent(prop, accuracy = .1))) +
+         edadt = factor(car::recode(m0_edad, "18:29 = 1; 30:49 = 2; 50:64 = 3; 65:150 = 4"),
+                           labels = c('18-29', '30-49', '50-64', '65 o más'))) %>% 
+  dplyr::filter(ola %in% c(1, 5) & tipo_atricion == 1 & muestra == 1) %>% 
+  prop(phq9 >= 10, by = c(ola, edadt), na.rm = TRUE) %>% 
+  sjlabelled::as_label(ola, edadt) %>% 
+  ggplot(aes(y = prop, x = edadt, 
+                   group = ola, color = ola,
+                   label = scales::percent(prop, accuracy = .1))) +
   theme_bw() +   
-  geom_col() +
+  geom_line() +
+  geom_point(size = 1.75) +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0,0.5)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_x_continuous(labels = scales::percent) +
-  scale_fill_viridis_d(begin = .1, end = .8, direction = 1, option = 'viridis') +
+  scale_color_viridis_d(begin = .33, end = .66, direction = 1, option = 'viridis') +
+  ggrepel::geom_text_repel(size = 3) + 
   theme(legend.position = 'top',
         legend.title = element_blank())  + 
-  guides(fill = guide_legend(reverse = TRUE)) +
-  ggtitle(label = 'Síntomas depresivos, según sexo')
-
-
-```
-
-```{r}
-
-elsoc_depr_lca %>% 
-  filter(tipo_atricion == 1) %>% 
-  survey_design_elsoc(weights = 'ponderador02_w05') %>% 
-  mutate(edadt = factor(car::recode(m0_edad_w05, "18:29 = 1; 30:49 = 2; 50:64 = 3; 65:150 = 4"),
-                        labels = c('18-29', '30-49', '50-64', '65 o más'))) %>% 
-  prop(class_depr, by = edadt, na.rm = TRUE) %>% 
-  sjlabelled::as_label(class_depr, edadt) %>%
-  ggplot(aes(x = prop, y = edadt, 
-                   fill = fct_rev(class_depr),
-              label = scales::percent(prop, accuracy = .1))) +
-  theme_bw() +   
-  geom_col() +
-  ylab(label = NULL) +
-  xlab(label = NULL) +
-  scale_x_continuous(labels = scales::percent) +
-  scale_fill_viridis_d(begin = .1, end = .8, direction = 1, option = 'viridis') +
-  theme(legend.position = 'top',
-        legend.title = element_blank())  + 
-  guides(fill = guide_legend(reverse = TRUE)) +
-  ggtitle(label = 'Síntomas depresivos, según sexo')
+  ggtitle(label = 'Síntomas depresivos, según tramo de edad y ola del estudio', 
+          'Porcentaje con sintomas de depresión moderada, moderada-severa o severa')
 
 ```
-
 
 
 ```{r}
@@ -494,7 +551,6 @@ elsoc_long_2016_2021 %>%
 
 
 ```{r}
-
 elsoc_long_2016_2021 %>%
   filter(ola %in% 4:5) %>% 
   mutate(sit_ocup = factor(car::recode(m02, "1:3 = 1; 7 = 2; 6 = 3; 5 = 4; c(4, 8, 9) = 5"), 
@@ -732,6 +788,35 @@ elsoc_long_2016_2021 %>%
 
 ```
 
+```{r}
+elsoc_long_2016_2021 %>% 
+  filter(ola == 5 & tipo_atricion == 1, !is_nsnr(m60) & !is.na(m60)) %>% 
+  mutate(m60 = factor(m60, levels = 1:3,
+                      labels = c('Trabajo de manera\ncompleta desde el hogar',
+                                 'Trabajo de manera\n parcial en el hogar',
+                                 'Trabajo fuera del hogar'))) %>%
+  purrr::map_at(.at = vars(starts_with('s11_0')), 
+                .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
+  as.data.frame() %>%  
+  mutate(phq9 = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09)) %>%
+  prop(phq9 >= 10, by = m60, na.rm = TRUE) %>% 
+  ggplot(aes(y = prop, x = m60, fill = m60,
+             label = scales::percent(prop, accuracy = .1))) + 
+  theme_bw() + 
+  geom_col(position = 'dodge2') +
+  scale_y_continuous(labels = scales::percent, limits = c(0,1)) +
+  scale_fill_viridis_d(begin = 0, end = .85, option = 'viridis') +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  geom_text(position = position_dodge(.9),
+            vjust = -.5,
+            size = 3) +
+  theme(legend.position = 'none') +
+  ggtitle(label = 'Síntomas depresivos, según modalidad de trabajo', 
+          'Porcentaje con sintomas de depresión moderada, moderada-severa o severa')
+
+```
+
 
 ## Estrés Financiero
 
@@ -757,65 +842,108 @@ elsoc_long_2016_2021 %>%
 ```
 
 
-```{r clase.sub-benef.estatal, fig.cap = 'Porcentaje que accedió a beneficios y retiro del 10%'}
+```{r clase.sub-benef.estatal, echo=FALSE, fig.align='center'}
 
-elsoc_long_2016_2021 %>% 
-  filter(tipo_atricion == 1, ola == 5, !is_nsnr(m63_01, m63_02, m63_03)) %>% 
-  prop_list(m63_01 == 1, m63_02 == 1, m63_03 == 1, na.rm = TRUE) %>% 
-  mutate(name = factor(name,
-                       levels = glue::glue('m63_0{1:3} == 1'),
-                       labels = c('Beneficios del Estado',
-                                  'Primer retiro 10% AFP',
-                                  'Segundo retiro 10% AFP'))) %>% 
-  ggplot(aes(y = prop, x = name, fill = name,
+datos.g19.12 <- elsoc_long_2016_2021 %>% 
+  mutate(clase.sub = factor(car::recode(d01_01, "c(0,1,2,3)='Baja y media baja'; c(4, 5)='Media'; c(6,7,8,9,10)='Alta y media alta'"),
+                           levels = c("Baja y media baja", "Media", "Alta y media alta"))) %>%
+  dplyr::filter(muestra == 1 & tipo_atricion == 1
+                & !clase.sub %in% c(-888, -999, NA) & !m63_01 %in% c(-888, -999, NA)) %>% 
+  prop(clase.sub, by = c(m63_01), na.rm = TRUE) %>% 
+  sjlabelled::as_label(clase.sub, m63_01) 
+
+g19.12 <- datos.g19.12 %>% 
+  ggplot(aes(y = prop, x = m63_01, fill = clase.sub, 
              label = scales::percent(prop, accuracy = .1))) + 
   theme_bw() + 
-  geom_col() +
-  scale_y_continuous(labels = scales::percent, limits = 0:1) +
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = .33, end = .85, direction = -1) +
-  geom_text(position = position_dodge(.9),
-            vjust = -.5,
+  scale_fill_viridis_d(begin = .33, end = .85, direction = -1, option = 'viridis') +
+  #cambiar geom_text tal que: Stack y cambio colores
+  geom_text(position = position_stack(vjust = .5),
             size= 2.75) + 
-  theme(legend.position = 'none')
+  theme(legend.position = 'top',
+        legend.title = element_blank()) 
 
+g19.12
+```
+
+```{r clase.sub.hij-1erretiro, echo=FALSE, fig.align='center'}
+datos.g19.13 <- elsoc_long_2016_2021 %>% 
+  mutate(clase.sub.hijos = factor(car::recode(d01_03, "c(0,1,2,3)='Baja y media baja'; c(4, 5,6)='Media'; c(7,8,9,10)='Alta y media alta'"),
+                           levels = c("Baja y media baja", "Media", "Alta y media alta"))) %>%
+  dplyr::filter(muestra == 1 & tipo_atricion == 1
+                & !clase.sub.hijos %in% c(-888, -999, NA) & !m63_01 %in% c(-888, -999, NA)) %>% 
+  prop(clase.sub.hijos, by = c(m63_02), na.rm = TRUE) %>% 
+  sjlabelled::as_label(clase.sub.hijos, m63_02) 
+
+g19.13 <- datos.g19.13 %>% 
+  ggplot(aes(y = prop, x = m63_02, fill = clase.sub.hijos, 
+             label = scales::percent(prop, accuracy = .1))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .33, end = .85, direction = -1, option = 'viridis') +
+  #cambiar geom_text tal que: Stack y cambio colores
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+g19.13
 ```
 
 ```{r endeud-1retiro, echo=FALSE, fig.align='center'}
+datos.g19.14 <- elsoc_long_2016_2021 %>% 
+  dplyr::filter(muestra == 1 & tipo_atricion == 1
+                & !m43 %in% c(-888, -999, NA) & !is.na(m43) & !m63_02 %in% c(-888, -999, NA)) %>% 
+  prop(m43, by = c(m63_02), na.rm = TRUE) %>% 
+  sjlabelled::as_label(m43, m63_02) 
 
-elsoc_long_2016_2021 %>% 
-  dplyr::filter(tipo_atricion == 1, ola == 5, !is_nsnr(m63_01, m63_02, m63_03), !is_nsnr(m29, m30, m30b)) %>%
-  mutate(m30 = as.numeric(car::recode(m30, "1 = 110000; 2 = 251000; 3 = 305000; 4 = 355000; 5 = 400000; 
-  6 = 445000; 7 = 490000; 8 = 535000; 9 = 585000; 10 = 640000; 
-  11 = 700000; 12 = 765000; 13 = 845000; 14 = 935000; 15 = 1040000;
-  16 = 1180000; 17 = 1375000; 18 = 1670000; 19 = 2275000; 20 = 2700000; NA = NA")),
-  m30b = as.numeric(car::recode(m30b, "1 = 170000; 2 = 300000; 3 = 400000; 4 = 600000; 5 = 1200000; NA = NA")),
-  m29_imp = ifelse(!is.na(m29), m29, ifelse(ola == 5, m30b, m30))) %>% 
-  group_by(ola) %>% 
-  mutate(quintil = xtile(m29, n = 5, wt = ponderador02),
-         quintil = factor(quintil, levels = 1:5, labels = glue::glue('Quintil {1:5}'))) %>%
-  ungroup() %>% 
-  prop_list(m63_01 == 1, m63_02 == 1, m63_03 == 1, by = quintil, na.rm = TRUE) %>% 
-  mutate(name = factor(name,
-                       levels = glue::glue('m63_0{1:3} == 1'),
-                       labels = c('Beneficios del Estado',
-                                  'Primer retiro 10% AFP',
-                                  'Segundo retiro 10% AFP'))) %>% 
-  ggplot(aes(y = prop, x = name, fill = quintil,
+g19.14 <- datos.g19.14  %>% 
+  ggplot(aes(y = prop, x = m63_02, fill = m43, 
              label = scales::percent(prop, accuracy = .1))) + 
   theme_bw() + 
-  geom_col(position = 'dodge2') + 
-  scale_y_continuous(labels = scales::percent, limits = 0:1) +
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = .33, end = .85, direction = -1) +
-  geom_text(position = position_dodge(.9),
-            vjust = -.5,
+  scale_fill_viridis_d(begin = .33, end = .85, direction = -1, option = 'viridis') +
+  #cambiar geom_text tal que: Stack y cambio colores
+  geom_text(position = position_stack(vjust = .5),
             size= 2.75) + 
-  theme(legend.position = 'top')
+  theme(legend.position = 'top',
+        legend.title = element_blank())
 
+g19.14
+```
 
+```{r endeud-2retiro, echo=FALSE, fig.align='center'}
+datos.g19.15 <- elsoc_long_2016_2021 %>% 
+  dplyr::filter(muestra == 1 & tipo_atricion == 1
+                & !m43 %in% c(-888, -999, NA) & !is.na(m43) & !m63_03 %in% c(-888, -999, NA)) %>% 
+  prop(m43, by = c(m63_03), na.rm = TRUE) %>% 
+  sjlabelled::as_label(m43, m63_03) 
+
+g19.15 <- datos.g19.15  %>% 
+  ggplot(aes(y = prop, x = m63_03, fill = m43, 
+             label = scales::percent(prop, accuracy = .1))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .33, end = .85, direction = -1, option = 'viridis') +
+  #cambiar geom_text tal que: Stack y cambio colores
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank()) 
+g19.15
 ```
 
 ```{r deuda-retiro1, fig.align='center'}
@@ -891,10 +1019,173 @@ g9.1 <- datos.9.1 %>%
 g9.1
 ```
 
+```{r dist-quintil, fig.align='center', fig.cap='¿En qué medida usted ha seguido la recomendación de quedarse en su hogar, manteniendo el aislamiento social? según quintil de ingreso. Suma de respuestas "Frecuente o "Muy frecuentemente" (2021).'}
+datos.9.2 <- elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & muestra == 1 & ola %in% c(5) & !t01 %in% c(-888, -999)) %>% 
+  mutate(dis_soc = factor(car::recode(c48, "c(1,2) = 1; c(3) = 2; c(4,5) = 3"),
+                               levels = c(1,2,3), labels= c("Nunca o casi nunca", "A veces",
+                                         "Frecuentemente o\nmuy frecuentemente")),
+         m30 = as.numeric(car::recode(m30,"1=110000;2=251000;3=305000;4=355000;5=400000;6=445000;
+                                           7=490000;8=535000;9=585000;10=640000;11=700000;12=765000;
+                                           13=845000;14=935000;15=1040000;16=1180000;17=1375000;
+                                           18=1670000;19=2275000;20=2700000;NA=NA")),
+         m29_imp = ifelse(!is.na(m29),m29, m30),
+         n_hogar = case_when(ola == 1 ~ nhogar1, ola == 2 ~ m46_nhogar,
+                             ola == 3 ~ m54, ola == 4 ~ m54, ola == 5 ~ m54)) %>%
+  mutate(ing_pc = (m29_imp/n_hogar)) %>%
+  sjlabelled::as_label(ola) %>% 
+  group_by(ola) %>% 
+  mutate(quintil = factor(ntile(-desc(ing_pc), 5), levels = c(1,2,3,4,5),
+         labels = c('Q1', 'Q2', 'Q3', 'Q4', 'Q5'))) %>% 
+  prop(x = dis_soc, by = c(ola, quintil), na.rm = TRUE) %>% 
+  filter(dis_soc == "Frecuentemente o\nmuy frecuentemente")
+
+g9.2 <- 
+  datos.9.2 %>% 
+  ggplot(aes(y = prop, x = quintil, fill = quintil, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Dodge') +
+  scale_y_continuous(labels = scales::percent,
+                      limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .99, direction = -1, option = 'viridis') +
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75) + 
+  theme(legend.position = 'none',
+        legend.title = element_blank())
+g9.2
+```
+
+
+```{r dist-edad, fig.align='center', fig.cap='¿En qué medida usted ha seguido la recomendación de quedarse en su hogar, manteniendo el aislamiento social? según edad. Suma de respuestas "Frecuente o "Muy frecuentemente" (2021).'}
+datos.9.3 <- elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & muestra == 1 & ola %in% c(5) & !c48 %in% c(-888, -999)) %>% 
+  mutate(dis_soc = factor(car::recode(c48, "c(1,2) = 1; c(3) = 2; c(4,5) = 3"),
+                               levels = c(1,2,3),
+                               labels= c("Nunca o\ncasi nunca", "A veces",
+                                         "Frecuentemente o\nmuy frecuentemente")),
+         edadt = factor(car::recode(m0_edad, "18:29=1; 30:49=2; 50:64=3 ;65:150=4"),
+                        levels = c(1,2,3,4), labels = c('18-29', '30-49', '50-64', '65 o más'))) %>%
+  prop(x = dis_soc, by = edadt, na.rm = TRUE) %>% 
+  filter(dis_soc == "Frecuentemente o\nmuy frecuentemente")
+
+g9.3 <- 
+  datos.9.3 %>% 
+  ggplot(aes(y = prop, x = edadt, fill = edadt, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Dodge') +
+  scale_y_continuous(labels = scales::percent,
+                      limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .99, direction = -1, option = 'viridis') +
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75) + 
+  theme(legend.position = 'none',
+        legend.title = element_blank())
+g9.3
+```
+
+```{r dist-estrato, fig.align='center', fig.cap='¿En qué medida usted ha seguido la recomendación de quedarse en su hogar, manteniendo el aislamiento social? según estrato muestral (2021).'}
+datos.9.4 <- elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & muestra == 1 & ola %in% c(5) & !c48 %in% c(-888, -999)) %>% 
+  mutate(dis_soc = factor(car::recode(c48, "c(1,2) = 1; c(3) = 2; c(4,5) = 3"),
+                               levels = c(1,2,3),
+                               labels= c("Nunca o\ncasi nunca", "A veces",
+                                         "Frecuentemente o\nmuy frecuentemente")),
+         estrato = factor(estrato, levels = c(1,2,3,4,5,6),
+                          labels = c('Gran\nSantiago', 'Gran\nValparaíso', 'Gran\nConcepción',
+                                     'Ciudades\ngrandes', 'Ciudades\nmedianas', 'Ciudades\npequeñas'))) %>%
+  prop(x = dis_soc, by = estrato, na.rm = TRUE)
+
+g9.4 <- datos.9.4 %>%
+  ggplot(aes(y = prop, x = estrato, fill = dis_soc, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .99, direction = -1, option = 'viridis') +
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75, color = rep.int(c( 'black','black','white'), 6)) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+g9.4
+```
+
+```{r dist-telet, fig.align='center', fig.cap='¿En qué medida usted ha seguido la recomendación de quedarse en su hogar, manteniendo el aislamiento social? según tipo de trabajo en pandemia. Suma de respuestas "Frecuente o "Muy frecuentemente" (2021).'}
+datos.9.5 <- elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & muestra == 1 & ola %in% c(5) & !c48 %in% c(-888, -999) & !m60 %in% c(-888, -999)) %>% 
+  mutate(dis_soc = factor(car::recode(c48, "c(1,2) = 1; c(3) = 2; c(4,5) = 3"),
+                               levels = c(1,2,3),
+                               labels= c("Nunca o\ncasi nunca", "A veces",
+                                         "Frecuentemente o\nmuy frecuentemente")),
+         trab_pandemia = factor(m60, labels = c('Trabajo de manera\ncompleta desde el hogar',
+                                                'Trabajo de manera\nparcial desde el hogar',
+                                                'Trabajo fuera\ndel hogar'))) %>%
+  prop(x = dis_soc, by = trab_pandemia, na.rm = TRUE) %>% 
+  filter(dis_soc == "Frecuentemente o\nmuy frecuentemente") %>% 
+  drop_na()
+
+g9.5 <- 
+  datos.9.5 %>% 
+  ggplot(aes(y = prop, x = trab_pandemia, fill = trab_pandemia, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Dodge') +
+  scale_y_continuous(labels = scales::percent,
+                      limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .99, direction = -1, option = 'viridis') +
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75) + 
+  theme(legend.position = 'none',
+        legend.title = element_blank())
+g9.5
+```
+
+```{r dist-covid, fig.align='center', fig.cap='¿En qué medida usted ha seguido la recomendación de quedarse en su hogar, manteniendo el aislamiento social? según diagnóstico con coronavirus. Suma de respuestas "Frecuente o "Muy frecuentemente" (2021).'}
+datos.9.6 <- elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & muestra == 1 & ola %in% c(5) & !c48 %in% c(-888, -999) & !s31 %in% c(-888, -999)) %>% 
+  mutate(dis_soc = factor(car::recode(c48, "c(1,2) = 1; c(3) = 2; c(4,5) = 3"),
+                               levels = c(1,2,3),
+                               labels= c("Nunca o\ncasi nunca", "A veces",
+                                         "Frecuentemente o\nmuy frecuentemente")),
+         covid = factor(s31, labels = c('Si','No'))) %>%
+  prop(x = dis_soc, by = covid, na.rm = TRUE) %>% 
+  filter(dis_soc == "Frecuentemente o\nmuy frecuentemente") %>% 
+  drop_na()
+
+g9.6 <- 
+  datos.9.6 %>% 
+  ggplot(aes(y = prop, x = covid, fill = covid, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Dodge') +
+  scale_y_continuous(labels = scales::percent,
+                      limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .77, direction = -1, option = 'viridis') +
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75) + 
+  theme(legend.position = 'none',
+        legend.title = element_blank())
+g9.6
+```
 
 
 
 ## Situación económica
+
 
 
 ```{r}
@@ -930,8 +1221,6 @@ lca_clases5 <- poLCA(cbind(quintil, clase_sub, egp07) ~ 1,
                     data = elsoc_clase , nclass = 5, na.rm = TRUE, maxiter = 5000, nrep = 10)
 elsoc_clase$class5 <- as.factor(lca_clases5$predclass)
 
-indicadores_lca(list(lca_clases3, lca_clases4, lca_clases5))
-
 ```
 
 
@@ -965,4 +1254,53 @@ elsoc_clase %>%
   scale_fill_viridis_d(begin = 0, end = 1, direction = -1, option = 'viridis')
 
 ```
+
+
+<!--chapter:end:03-salud-bienestar.Rmd-->
+
+
+# Temas sociales
+
+Placeholder
+
+
+## Conflicto y cohesión territorial
+### Cartografía del conflicto barrial
+## Confianza en vecinos
+### Seguridad barrial
+### Criminalidad barrial
+### Cartografía de la criminalidad barrial
+## Migración
+### Amenaza realista y amenaza simbólica respecto a inmigrantes
+### Amenaza realista y simbólica respecto a inmigrantes según nivel educacional
+## Género
+### Sexismo hostil y benevolente
+### Trabajo y género
+## Estatus subjetivo y Percepción de Mérito
+### Estatus subjetivo
+### Movilidad social
+### Percepción de meritocracia
+
+<!--chapter:end:04-temas-sociales.Rmd-->
+
+# Como citar este informe: {-}
+
+:::{.blue-box}
+> COES (2021) Radiografía del Cambio Social: Análisis de Resultados Longitudinales ELSOC 2016-2021. Presentación de Resultados COES. Septiembre, Santiago de Chile.
+:::
+
+**Entrada Bibtex:**
+
+```{r,echo=TRUE,eval=FALSE}
+@techreport{coes_Radiografia_2021,
+  title = {Radiograf\'ia Del {{Cambio Social}}: {{An\'alisis}} de {{Resultados Longitudinales ELSOC}} 2016-2021.},
+  author = {COES},
+  year = {2021},
+  month = sep,
+  address = {{Santiago de Chile, Chile}},
+  institution = {{Centro de Estudios de Conflicto y Cohesi\'on Social}}
+}
+```
+
+<!--chapter:end:05-cierre.Rmd-->
 
