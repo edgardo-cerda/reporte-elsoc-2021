@@ -616,6 +616,63 @@ group_by(class_part_4, pos_id) %>% summarise (n = n()) %>% mutate(freq = n / sum
 
 ```
 
+```{r tipos_interes, fig.cap = 'Interés por tipos de participación'}
+
+tip_par<-read.csv("participacion_tipos.csv", sep=",", encoding="UTF-8")
+tip_par <- tip_par[c("idencuesta", "class_part_4")]
+tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
+tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Movilizados", "Desinteresados", "Reclutados", "Institucionales"))
+
+tip_par %>%   
+  filter(!is_nsnr(class_part_4, c13_w05))  %>%
+  drop_na(c("class_part_4", "c13_w05")) %>%
+  filter(tipo_atricion==1) %>%
+  mutate(pos_id = factor(car::recode(c13_w05, "1:2 = 1; 3 = 2; 4:5 = 3"),
+                        levels = 1:3,
+                        labels = c('Nada o poco interesado', 'Algo interesado', 'Bastante o muy interesado'))) %>%
+group_by(class_part_4, pos_id) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
+  ggplot(aes(y = freq, fill = class_part_4, x = pos_id)) +
+  theme_bw() + 
+  geom_col(position = 'dodge2') + 
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 10), limits=c(0, 1)) +
+     labs(y="Proporción", x="Interés en la política",
+       title = "Interés en la política por tipo de participación") +
+  scale_fill_viridis_d(end = .85, option = 'viridis') +
+  theme(axis.text.x = element_text(size = rel(.9)),
+        legend.position = 'top',
+        legend.title = element_blank())
+
+```
+
+```{r tipos_satisfaccion, fig.cap = 'Satisfacción con la democracia por tipos de participación'}
+
+tip_par<-read.csv("participacion_tipos.csv", sep=",", encoding="UTF-8")
+tip_par <- tip_par[c("idencuesta", "class_part_4")]
+tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
+tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Movilizados", "Desinteresados", "Reclutados", "Institucionales"))
+
+tip_par %>%   
+  filter(!is_nsnr(class_part_4, c01_w05))  %>%
+  drop_na(c("class_part_4", "c01_w05")) %>%
+  filter(tipo_atricion==1) %>%
+  mutate(pos_id = factor(car::recode(c01_w05, "1:2 = 1; 3 = 2; 4:5 = 3"),
+                        levels = 1:3,
+                        labels = c('Nada o poco satisfecho', 'Algo satisfecho', 'Bastante o muy satisfecho'))) %>%
+group_by(class_part_4, pos_id) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
+  ggplot(aes(y = freq, fill = class_part_4, x = pos_id)) +
+  theme_bw() + 
+  geom_col(position = 'dodge2') + 
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 10), limits=c(0, 1)) +
+     labs(y="Proporción", x="Satisfacción con la democracia",
+       title = "Satisfacción con la democracia por tipo de participación") +
+  scale_fill_viridis_d(end = .85, option = 'viridis') +
+  theme(axis.text.x = element_text(size = rel(.9)),
+        legend.position = 'top',
+        legend.title = element_blank())
+
+```
+
+
 ```{r tipos_posición política, fig.cap = 'Posición política por tipos de participación'}
 
 tip_par<-read.csv("participacion_tipos.csv", sep=",", encoding="UTF-8")
@@ -641,9 +698,6 @@ ggplot(aes(x = freq, y = pos_id, fill = class_part_4)) +
   theme(axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
         legend.title = element_blank())
-
-
-
 
 ```
 
@@ -701,6 +755,61 @@ ggplot(aes(x = freq, y = pos_id, fill = class_part_4)) +
         legend.title = element_blank())
 
 
+
+```
+
+```{r tipos_interes, fig.cap = 'Interés por tipos de participación'}
+
+tip_par<-read.csv("participacion_tipos.csv", sep=",", encoding="UTF-8")
+tip_par <- tip_par[c("idencuesta", "class_part_4")]
+tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
+tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Movilizados", "Desinteresados", "Reclutados", "Institucionales"))
+
+tip_par %>%   
+  filter(!is_nsnr(class_part_4, c13_w05))  %>%
+  drop_na(c("class_part_4", "c13_w05")) %>%
+  filter(tipo_atricion==1) %>%
+  mutate(pos_id = factor(car::recode(c13_w05, "1:2 = 1; 3 = 2; 4:5 = 3"),
+                        levels = 1:3,
+                        labels = c('Nada o poco interesado', 'Algo interesado', 'Bastante o muy interesado'))) %>%
+group_by(pos_id, class_part_4) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
+ggplot(aes(x = freq, y = pos_id, fill = class_part_4)) + 
+  geom_bar(stat = 'identity', position = 'stack') +
+  labs(y="Interés en la política", x="Proporción",
+       title = "Interés en la política por tipo de participación", fill = "") +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 5), limits=c(0, 1)) +
+  theme_bw() + scale_fill_viridis_d(end = .85, option = 'viridis') +
+  theme(axis.text.x = element_text(size = rel(.9)),
+        legend.position = 'top',
+        legend.title = element_blank())
+
+```
+
+```{r tipos_satisfaccion, fig.cap = 'Satisfacción con la democracia por tipos de participación'}
+
+tip_par<-read.csv("participacion_tipos.csv", sep=",", encoding="UTF-8")
+tip_par <- tip_par[c("idencuesta", "class_part_4")]
+tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
+tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Movilizados", "Desinteresados", "Reclutados", "Institucionales"))
+
+tip_par %>%   
+  filter(!is_nsnr(class_part_4, c01_w05))  %>%
+  drop_na(c("class_part_4", "c01_w05")) %>%
+  filter(tipo_atricion==1) %>%
+  mutate(pos_id = factor(car::recode(c01_w01, "1:2 = 1; 3 = 2; 4:5 = 3"),
+                        levels = 1:3,
+                        labels = c('Nada o poco satisfecho', 'Algo satisfecho', 'Bastante o muy satisfecho'))) %>%
+group_by(pos_id, class_part_4) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
+   filter(!is.na(pos_id)) %>%
+ggplot(aes(x = freq, y = pos_id, fill = class_part_4)) + 
+  geom_bar(stat = 'identity', position = 'stack') +
+  labs(y="Satisfacción con la democracia", x="Proporción",
+       title = "Satisfacción con la democracia por tipo de participación", fill = "") +
+  scale_x_continuous(breaks = scales::pretty_breaks(n = 5), limits=c(0, 1)) +
+  theme_bw() + scale_fill_viridis_d(end = .85, option = 'viridis') +
+  theme(axis.text.x = element_text(size = rel(.9)),
+        legend.position = 'top',
+        legend.title = element_blank())
 
 ```
 
