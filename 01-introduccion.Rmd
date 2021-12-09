@@ -292,7 +292,61 @@ elsoc_long_2016_2021 %>%
 
 ```
 
+### Levantamiento durante período de pandemia
 
+Dado las condiciones especiales de 2021 (pandemia), el levantamiento se hizo en formato telefónico. Explicar esto en más detalle.
+
+Aproximadamente un 75% de los encuestados fue entrevistado entre febrero y marzo de 2021
+
+```{r hist-fecha-2021, fig.align='center'}
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & ola == 5) %>% 
+  mutate(fecha = make_date(year = annio_entr, month = mes_entr, day = dia_entr),
+         semana = lubridate::week(fecha)) %>% 
+  group_by(semana) %>% 
+  summarise(n = n()) %>%
+  mutate(fecha = make_date(year = 2021, month = 1, day = 1) + 7*semana) %>% 
+  ggplot(mapping = aes(y = n, x = fecha)) +
+  theme_bw() +
+  geom_col(fill = viridis(1, begin = .33)) +
+  scale_y_continuous(limits = c(0,400)) + 
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_x_date(date_labels = "%d-%m",
+               date_breaks = '2 weeks') +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  ggtitle('¿Cuándo fueron encuestados los entrevistado? (2021)',
+          'Frecuencia de encuestas, según fecha')
+
+```
+
+Más del 50% de los encuestados tuvieron 0 días de cuarentena en la comuna de residencia el mes en previo a la entrevista
+
+```{r}
+elsoc_long_2016_2021 %>% 
+  filter(ola == 5 & tipo_atricion == 1) %>% 
+  left_join(elsoc_long_cuarentenas, by = c('idencuesta', 'ola')) %>% 
+  mutate(cuarentena_acum.30t = factor(car::recode(cuarentena_acum.30, "0 = 1; 1:14 = 2; 15:21 = 3; 22:28 = 4; 29:30 = 5"),
+                                 levels = 1:5,
+                                 labels = c('0 días', '1-14 días', '15-21 días', '22-28 días', '29-30 días'))) %>% 
+  prop(cuarentena_acum.30t) %>% 
+  ggplot(aes(y = prop, x = cuarentena_acum.30t, fill = cuarentena_acum.30t,
+             label = scales::percent(prop, accuracy = .1))) +
+  theme_bw() + 
+  geom_col(position = 'dodge2') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(end = .66, direction = -1, option = 'viridis') +
+  geom_text(vjust = -0.5,
+            position = position_dodge(width = .9),
+            size = 3)  + 
+  theme(legend.position = 'none') + 
+  ggtitle('Días acumulados en cuarentena, el mes previo a la encuesta',
+          'Distribución de los encuestados, según días en cuarentena')
+
+```
 
 
 
