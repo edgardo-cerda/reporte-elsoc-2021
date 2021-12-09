@@ -165,6 +165,6 @@ elsoc_long_cuarentenas <- elsoc_long_2016_2021 %>%
 
 ```{r remover-datos-sin-uso}
 
-rm(list = setdiff(ls(), c('elsoc_long_cuarentenas', 'elsoc_long_2016_2021', 'elsoc_wide_2016_2021')))
+rm(list = setdiff(ls(), c('elsoc_long_cuarentenas', 'elsoc_egp', 'elsoc_long_2016_2021', 'elsoc_wide_2016_2021')))
 
 ```

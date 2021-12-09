@@ -363,8 +363,8 @@ tip_par<-read.csv("participacion_tipos.csv", sep=",", encoding="UTF-8")
 
 #Gráfico 3 clases.
 tabpart_3<-table(tip_par$class_part_3)
-tabpart_3
-prop.table(tabpart_3)
+# tabpart_3
+# prop.table(tabpart_3)
 tab1 <- tip_par %>% group_by(class_part_3, c11_w01) %>%
   summarise (n = n()) %>% mutate(freq = n / sum(n)) %>% 
   mutate(var = 1) %>% rename(Clase=class_part_3, Participa=c11_w01)
@@ -390,24 +390,28 @@ tab8 <- tip_par %>% group_by(class_part_3, par_mov_w05) %>%
   summarise (n = n()) %>% mutate(freq = n / sum(n)) %>% 
   mutate(var = 8) %>% rename(Clase=class_part_3, Participa=par_mov_w05)
 
-tab_3<- rbind(tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8)
+tab_3 <- rbind(tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8)
 rm(tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8)
 
 tab_3$Clase  <- factor(tab_3$Clase, levels = c(1,2,3), labels = c("(27.88%)", "(53.92%)", "(18.2%)"))
 tab_3$Participa  <- factor(tab_3$Participa, levels = c(1,2), labels = c("No participa", "Participa"))
 tab_3$var  <- factor(tab_3$var, levels = c(1,2,3,4,5,6,7,8), labels = c("Elección 2013", "Elección 2017", "Plebiscito", "Protesta W1", "Protesta W2", "Protesta W3", "Protesta W4", "Protesta W5"))
 
-tab_3 %>% ggplot(aes(x = freq, y = var, fill = Participa)) + 
-  geom_bar(stat = 'identity', position = 'stack') + facet_grid(~ Clase) +
+tab_3 %>% 
+  ggplot(aes(x = freq, y = var, fill = Participa)) + 
+  geom_bar(stat = 'identity', position = 'stack') + 
+  facet_grid(~ Clase) +
   labs(y="Evento", x="Proporción",
        title = "Perfiles de participación: 3 clases", fill = "") +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 5), limits=c(0, 1)) +
-  theme_bw() + theme(legend.position = "bottom", plot.title = element_text(size=14))  + scale_fill_viridis_d(begin = .33, end = .88, direction = -1, option = 'viridis')
+  theme_bw() + 
+  theme(legend.position = "top", plot.title = element_text(size=14))  + 
+  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis')
 
 #Gráfico 4 clases.
 tabpart_4<-table(tip_par$class_part_4)
-tabpart_4
-prop.table(tabpart_4)
+# tabpart_4
+# prop.table(tabpart_4)
 tab1 <- tip_par %>% group_by(class_part_4, c11_w01) %>%
   summarise (n = n()) %>% mutate(freq = n / sum(n)) %>% 
   mutate(var = 1) %>% rename(Clase=class_part_4, Participa=c11_w01)
@@ -440,17 +444,21 @@ tab_4$Clase  <- factor(tab_4$Clase, levels = c(1,2,3,4), labels = c("Movilizados
 tab_4$Participa  <- factor(tab_4$Participa, levels = c(1,2), labels = c("No participa", "Participa"))
 tab_4$var  <- factor(tab_4$var, levels = c(1,2,3,4,5,6,7,8), labels = c("Elección 2013", "Elección 2017", "Plebiscito", "Protesta W1", "Protesta W2", "Protesta W3", "Protesta W4", "Protesta W5"))
 
-tab_4 %>% ggplot(aes(x = freq, y = var, fill = Participa)) + 
-  geom_bar(stat = 'identity', position = 'stack') + facet_grid(~ Clase) +
+tab_4 %>% 
+  ggplot(aes(x = freq, y = var, fill = Participa)) + 
+  geom_bar(stat = 'identity', position = 'stack') + 
+  facet_grid(~ Clase) +
   labs(y="Evento", x="Proporción",
        title = "Perfiles de participación: 4 clases", fill = "") +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 5), limits=c(0, 1)) +
-  theme_bw() + theme(legend.position = "bottom", plot.title = element_text(size=14))  + scale_fill_viridis_d(begin = .33, end = .88, direction = -1, option = 'viridis')
+  theme_bw() + theme(legend.position = "top", 
+                     plot.title = element_text(size=14))  + 
+  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis')
 
 #Gráfico 5 clases.
 tabpart_5<-table(tip_par$class_part_5)
-tabpart_5
-prop.table(tabpart_5)
+# tabpart_5
+# prop.table(tabpart_5)
 tab1 <- tip_par %>% group_by(class_part_5, c11_w01) %>%
   summarise (n = n()) %>% mutate(freq = n / sum(n)) %>% 
   mutate(var = 1) %>% rename(Clase=class_part_5, Participa=c11_w01)
@@ -483,12 +491,15 @@ tab_5$Clase  <- factor(tab_5$Clase, levels = c(1,2,3,4,5), labels = c("(23.52%)"
 tab_5$Participa  <- factor(tab_5$Participa, levels = c(1,2), labels = c("No participa", "Participa"))
 tab_5$var  <- factor(tab_5$var, levels = c(1,2,3,4,5,6,7,8), labels = c("Elección 2013", "Elección 2017", "Plebiscito", "Protesta W1", "Protesta W2", "Protesta W3", "Protesta W4", "Protesta W5"))
 
-tab_5 %>% ggplot(aes(x = freq, y = var, fill = Participa)) + 
+tab_5 %>% 
+  ggplot(aes(x = freq, y = var, fill = Participa)) + 
   geom_bar(stat = 'identity', position = 'stack') + facet_grid(~ Clase) +
   labs(y="Evento", x="Proporción",
        title = "Perfiles de participación: 5 clases", fill = "") +
   scale_x_continuous(breaks = scales::pretty_breaks(n = 5), limits=c(0, 1)) +
-  theme_bw() + theme(legend.position = "bottom", plot.title = element_text(size=14)) + scale_fill_viridis_d(begin = .33, end = .88, direction = -1, option = 'viridis')
+  theme_bw() + theme(legend.position = "top", 
+                     plot.title = element_text(size=14)) + 
+  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis')
 
 rm(tab_3, tab_4, tab_5, tip_par)
 
@@ -538,17 +549,21 @@ tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), label
 tip_par %>%   
   filter(!is_nsnr(class_part_4, c15_w05))  %>%
   drop_na(c("class_part_4", "c15_w05")) %>%
-  filter(tipo_atricion==1) %>%
+  filter(tipo_atricion == 1) %>%
   mutate(pos_id = factor(car::recode(c15_w01, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
                          levels = 1:4,
                          labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
-group_by(class_part_4, pos_id) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
-  filter(!is.na(pos_id)) %>% 
-  ggplot(aes(y = freq, fill = class_part_4, x = pos_id)) +
+  survey_design_elsoc(weights = 'ponderador02_w05') %>% 
+  prop(pos_id, by = class_part_4, na.rm = TRUE) %>% 
+  ggplot(aes(y = prop, x = class_part_4, fill = pos_id,
+             label = scales::percent(prop, .1))) +
   theme_bw() + 
   geom_col(position = 'dodge2') + 
-  scale_y_continuous(breaks = scales::pretty_breaks(n = 10), limits=c(0, 1)) +
-     labs(y="Proporción", x="Posición política",
+  geom_text(position = position_dodge(.9), vjust = -.5,
+            size = 3) +
+  scale_y_continuous(labels = scales::percent, 
+                     limits = c(0, 1)) +
+     labs(y = "Proporción", x = "Tipo de participación",
        title = "Identificación política por tipo de participación") +
   scale_fill_viridis_d(end = .85, option = 'viridis') +
   theme(axis.text.x = element_text(size = rel(.9)),
@@ -569,17 +584,21 @@ tip_par %>%
   filter(!is_nsnr(class_part_4, m0_sexo_w01))  %>%
   drop_na(c("class_part_4", "m0_sexo_w01")) %>%
   filter(tipo_atricion==1) %>%
-  mutate(pos_id = factor(car::recode(m0_sexo_w01, recodes = "1 = 1; 2 = 2"),
-                         levels = 1:2,
-                         labels = c("Hombre", "Mujer"))) %>%
-group_by(class_part_4, pos_id) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
-  ggplot(aes(y = freq, fill = class_part_4, x = pos_id)) +
+  survey_design_elsoc(weights = 'ponderador02_w05') %>% 
+  mutate(m0_sexo_w05 = factor(m0_sexo_w05, levels = 1:2,
+                              labels = c('Hombre', 'Mujer'))) %>% 
+  prop(m0_sexo_w05, by = class_part_4, na.rm = TRUE) %>% 
+  ggplot(aes(y = prop, x = class_part_4, fill = m0_sexo_w05,
+             label = scales::percent(prop, .1))) +
   theme_bw() + 
-  geom_col(position = 'dodge2') + 
-  scale_y_continuous(breaks = scales::pretty_breaks(n = 10), limits=c(0, 1)) +
-     labs(y="Proporción", x="Sexo",
+  geom_col(position = 'dodge2') +
+  geom_text(position = position_dodge(.9), vjust = -.5,
+            size = 3) +
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 10), 
+                     limits=c(0, 1)) +
+     labs(y="Proporción", x="Tipo de participación",
        title = "Sexo por tipo de participación") +
-  scale_fill_viridis_d(end = .85, option = 'viridis') +
+  scale_fill_viridis_d(begin = .33, end = .66, option = 'viridis') +
   theme(axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
         legend.title = element_blank())
@@ -598,15 +617,20 @@ tip_par %>%
   filter(!is_nsnr(class_part_4, m0_edad_w05))  %>%
   drop_na(c("class_part_4", "m0_edad_w05")) %>%
   filter(tipo_atricion==1) %>%
-  mutate(pos_id = factor(car::recode(m0_edad_w05, "18:29 = 1; 30:49 = 2; 50:64 = 3; 65:150 = 4"),
+  mutate(edadt = factor(car::recode(m0_edad_w05, "18:29 = 1; 30:49 = 2; 50:64 = 3; 65:150 = 4"),
                         levels = 1:4,
                         labels = c('18-29', '30-49', '50-64', '65 o más'))) %>%
-group_by(class_part_4, pos_id) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
-  ggplot(aes(y = freq, fill = class_part_4, x = pos_id)) +
+  survey_design_elsoc(weights = 'ponderador02_w05') %>% 
+  prop(edadt, by = class_part_4, na.rm = TRUE) %>% 
+  ggplot(aes(y = prop, x = class_part_4, fill = edadt,
+             label = scales::percent(prop, .1))) +
   theme_bw() + 
-  geom_col(position = 'dodge2') + 
-  scale_y_continuous(breaks = scales::pretty_breaks(n = 10), limits=c(0, 1)) +
-     labs(y="Proporción", x="Tramo etario",
+  geom_col(position = 'dodge2') +
+  geom_text(position = position_dodge(.9), vjust = -.5,
+            size = 3) +
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 10), 
+                     limits=c(0, 1)) +
+     labs(y="Proporción", x="Tipo de participación",
        title = "Edad por tipo de participación") +
   scale_fill_viridis_d(end = .85, option = 'viridis') +
   theme(axis.text.x = element_text(size = rel(.9)),
@@ -627,20 +651,26 @@ tip_par %>%
   filter(!is_nsnr(class_part_4, c13_w05))  %>%
   drop_na(c("class_part_4", "c13_w05")) %>%
   filter(tipo_atricion==1) %>%
-  mutate(pos_id = factor(car::recode(c13_w05, "1:2 = 1; 3 = 2; 4:5 = 3"),
+  mutate(interes = factor(car::recode(c13_w05, "1:2 = 1; 3 = 2; 4:5 = 3"),
                         levels = 1:3,
                         labels = c('Nada o poco interesado', 'Algo interesado', 'Bastante o muy interesado'))) %>%
-group_by(class_part_4, pos_id) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
-  ggplot(aes(y = freq, fill = class_part_4, x = pos_id)) +
+  survey_design_elsoc(weights = 'ponderador02_w05') %>% 
+  prop(interes, by = class_part_4, na.rm = TRUE) %>% 
+  ggplot(aes(y = prop, x = class_part_4, fill = interes,
+             label = scales::percent(prop, .1))) +
   theme_bw() + 
-  geom_col(position = 'dodge2') + 
-  scale_y_continuous(breaks = scales::pretty_breaks(n = 10), limits=c(0, 1)) +
-     labs(y="Proporción", x="Interés en la política",
+  geom_col(position = 'dodge2') +
+  geom_text(position = position_dodge(.9), vjust = -.5,
+            size = 3) +
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 10), 
+                     limits=c(0, 1)) +
+     labs(y="Proporción", x="Tipo de participación",
        title = "Interés en la política por tipo de participación") +
   scale_fill_viridis_d(end = .85, option = 'viridis') +
   theme(axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
         legend.title = element_blank())
+
 
 ```
 
@@ -655,15 +685,20 @@ tip_par %>%
   filter(!is_nsnr(class_part_4, c01_w05))  %>%
   drop_na(c("class_part_4", "c01_w05")) %>%
   filter(tipo_atricion==1) %>%
-  mutate(pos_id = factor(car::recode(c01_w05, "1:2 = 1; 3 = 2; 4:5 = 3"),
+  mutate(satisfaccion = factor(car::recode(c01_w05, "1:2 = 1; 3 = 2; 4:5 = 3"),
                         levels = 1:3,
                         labels = c('Nada o poco satisfecho', 'Algo satisfecho', 'Bastante o muy satisfecho'))) %>%
-group_by(class_part_4, pos_id) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
-  ggplot(aes(y = freq, fill = class_part_4, x = pos_id)) +
+  survey_design_elsoc(weights = 'ponderador02_w05') %>% 
+  prop(satisfaccion, by = class_part_4, na.rm = TRUE) %>% 
+  ggplot(aes(y = prop, x = class_part_4, fill = satisfaccion,
+             label = scales::percent(prop, .1))) +
   theme_bw() + 
-  geom_col(position = 'dodge2') + 
-  scale_y_continuous(breaks = scales::pretty_breaks(n = 10), limits=c(0, 1)) +
-     labs(y="Proporción", x="Satisfacción con la democracia",
+  geom_col(position = 'dodge2') +
+  geom_text(position = position_dodge(.9), vjust = -.5,
+            size = 3) +
+  scale_y_continuous(breaks = scales::pretty_breaks(n = 10), 
+                     limits=c(0, 1)) +
+     labs(y="Proporción", x="Tipo de participación",
        title = "Satisfacción con la democracia por tipo de participación") +
   scale_fill_viridis_d(end = .85, option = 'viridis') +
   theme(axis.text.x = element_text(size = rel(.9)),
