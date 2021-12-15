@@ -371,7 +371,7 @@ Fue modificada incorporando sólo marchas (c08_02). Además se categorizó como 
 # write.csv(tip_par, file="participacion_tipos3.csv", row.names = F, fileEncoding = "UTF-8")
 
 #Gráfico 3 clases.
-tip_par<-read.csv("participacion_tipos3.csv", sep=",", encoding="UTF-8")
+tip_par <- read.csv(file.path('inputs', 'participacion_tipos3.csv'), sep=",", encoding="UTF-8")
 tip_par <- tip_par[c("idencuesta", "class_part_3", "par_mov_w01", "par_mov_w02", "par_mov_w03", "par_mov_w04", "par_mov_w05")]
 tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta") %>%
   survey_design_elsoc(weights = 'ponderador02_w05')
@@ -423,7 +423,7 @@ tab_3 %>%
         legend.title = element_blank())
 
 #Gráfico 4 clases.
-tip_par<-read.csv("participacion_tipos3.csv", sep=",", encoding="UTF-8")
+tip_par <- read.csv(file.path('inputs', 'participacion_tipos3.csv'), sep=",", encoding="UTF-8")
 tip_par <- tip_par[c("idencuesta", "class_part_4", "par_mov_w01", "par_mov_w02", "par_mov_w03", "par_mov_w04", "par_mov_w05")]
 tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta") %>%
   survey_design_elsoc(weights = 'ponderador02_w05')
@@ -475,7 +475,7 @@ tab_4 %>%
         legend.title = element_blank())
 
 #Gráfico 5 clases.
-tip_par<-read.csv("participacion_tipos3.csv", sep=",", encoding="UTF-8")
+tip_par <- read.csv(file.path('inputs', 'participacion_tipos3.csv'), sep=",", encoding="UTF-8")
 tip_par <- tip_par[c("idencuesta", "class_part_5", "par_mov_w01", "par_mov_w02", "par_mov_w03", "par_mov_w04", "par_mov_w05")]
 tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta") %>%
   survey_design_elsoc(weights = 'ponderador02_w05')
@@ -530,7 +530,7 @@ rm(tab_3, tab_4, tab_5, tip_par)
 
 ```{r tipos-democracia, fig.cap = 'Legitimidad democrática por tipos de participación'}
 
-tip_par<-read.csv("participacion_tipos3.csv", sep=",", encoding="UTF-8")
+tip_par <- read.csv(file.path('inputs', 'participacion_tipos3.csv'), sep=",", encoding="UTF-8")
 tip_par <- tip_par[c("idencuesta", "class_part_4")]
 tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
 tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Desafectados", "Movilizados", "Institucionales", "Reclutados"))
@@ -564,7 +564,7 @@ rm(tab, tip_par)
 
 ```{r tipos-posicion-política, fig.cap = 'Posición política por tipos de participación'}
 
-tip_par<-read.csv("participacion_tipos3.csv", sep=",", encoding="UTF-8")
+tip_par <- read.csv(file.path('inputs', 'participacion_tipos3.csv'), sep=",", encoding="UTF-8")
 tip_par <- tip_par[c("idencuesta", "class_part_4")]
 tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
 tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Desafectados", "Movilizados", "Institucionales", "Reclutados"))
@@ -598,7 +598,7 @@ tip_par %>%
 
 ```{r tipos-sexo, fig.cap = 'Sexo por tipos de participación'}
 
-tip_par<-read.csv("participacion_tipos3.csv", sep=",", encoding="UTF-8")
+tip_par <- read.csv(file.path('inputs', 'participacion_tipos3.csv'), sep=",", encoding="UTF-8")
 tip_par <- tip_par[c("idencuesta", "class_part_4")]
 tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
 tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Desafectados", "Movilizados", "Institucionales", "Reclutados"))
@@ -631,7 +631,7 @@ tip_par %>%
 
 ```{r tipos-edad, fig.cap = 'Edad por tipos de participación'}
 
-tip_par<-read.csv("participacion_tipos3.csv", sep=",", encoding="UTF-8")
+tip_par <- read.csv(file.path('inputs', 'participacion_tipos3.csv'), sep=",", encoding="UTF-8")
 tip_par <- tip_par[c("idencuesta", "class_part_4")]
 tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
 tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Desafectados", "Movilizados", "Institucionales", "Reclutados"))
@@ -665,7 +665,7 @@ tip_par %>%
 
 ```{r tipos-interes, fig.cap = 'Interés por tipos de participación'}
 
-tip_par<-read.csv("participacion_tipos3.csv", sep=",", encoding="UTF-8")
+tip_par <- read.csv(file.path('inputs', 'participacion_tipos3.csv'), sep=",", encoding="UTF-8")
 tip_par <- tip_par[c("idencuesta", "class_part_4")]
 tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
 tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Desafectados", "Movilizados", "Institucionales", "Reclutados"))
@@ -699,7 +699,7 @@ tip_par %>%
 
 ```{r tipos-satisfaccion, fig.cap = 'Satisfacción con la democracia por tipos de participación'}
 
-tip_par<-read.csv("participacion_tipos3.csv", sep=",", encoding="UTF-8")
+tip_par <- read.csv(file.path('inputs', 'participacion_tipos3.csv'), sep=",", encoding="UTF-8")
 tip_par <- tip_par[c("idencuesta", "class_part_4")]
 tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
 tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Desafectados", "Movilizados", "Institucionales", "Reclutados"))
@@ -733,7 +733,7 @@ tip_par %>%
 
 ```{r tipos-posicion-politica2, fig.cap = 'Posición política por tipos de participación'}
 
-tip_par<-read.csv("participacion_tipos3.csv", sep=",", encoding="UTF-8")
+tip_par <- read.csv(file.path('inputs', 'participacion_tipos3.csv'), sep=",", encoding="UTF-8")
 tip_par <- tip_par[c("idencuesta", "class_part_4")]
 tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
 tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Desafectados", "Movilizados", "Institucionales", "Reclutados"))
@@ -761,7 +761,7 @@ ggplot(aes(x = freq, y = pos_id, fill = class_part_4)) +
 
 ```{r tipos-sexo2, fig.cap = 'Sexo por tipos de participación'}
 
-tip_par<-read.csv("participacion_tipos3.csv", sep=",", encoding="UTF-8")
+tip_par <- read.csv(file.path('inputs', 'participacion_tipos3.csv'), sep=",", encoding="UTF-8")
 tip_par <- tip_par[c("idencuesta", "class_part_4")]
 tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
 tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Desafectados", "Movilizados", "Institucionales", "Reclutados"))
@@ -789,7 +789,7 @@ ggplot(aes(x = freq, y = pos_id, fill = class_part_4)) +
 
 ```{r tipos-edad2, fig.cap = 'Edad por tipos de participación'}
 
-tip_par<-read.csv("participacion_tipos3.csv", sep=",", encoding="UTF-8")
+tip_par <- read.csv(file.path('inputs', 'participacion_tipos3.csv'), sep=",", encoding="UTF-8")
 tip_par <- tip_par[c("idencuesta", "class_part_4")]
 tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
 tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Desafectados", "Movilizados", "Institucionales", "Reclutados"))
@@ -818,7 +818,7 @@ ggplot(aes(x = freq, y = pos_id, fill = class_part_4)) +
 
 ```{r tipos-interes2, fig.cap = 'Interés por tipos de participación'}
 
-tip_par<-read.csv("participacion_tipos3.csv", sep=",", encoding="UTF-8")
+tip_par <- read.csv(file.path('inputs', 'participacion_tipos3.csv'), sep=",", encoding="UTF-8")
 tip_par <- tip_par[c("idencuesta", "class_part_4")]
 tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
 tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Desafectados", "Movilizados", "Institucionales", "Reclutados"))
@@ -845,7 +845,7 @@ ggplot(aes(x = freq, y = pos_id, fill = class_part_4)) +
 
 ```{r tipos-satisfaccion2, fig.cap = 'Satisfacción con la democracia por tipos de participación'}
 
-tip_par<-read.csv("participacion_tipos3.csv", sep=",", encoding="UTF-8")
+tip_par <- read.csv(file.path('inputs', 'participacion_tipos3.csv'), sep=",", encoding="UTF-8")
 tip_par <- tip_par[c("idencuesta", "class_part_4")]
 tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
 tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Desafectados", "Movilizados", "Institucionales", "Reclutados"))

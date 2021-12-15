@@ -208,6 +208,7 @@ elsoc_long_2016_2021 %>%
 ```
 
 ```{r, results='hide'}
+
 elsoc_depr_lca <- elsoc_wide_2016_2021 %>% 
   dplyr::filter(tipo_atricion == 1) %>% 
   purrr::map_at(.at = vars(starts_with('s11_0')), 
@@ -237,7 +238,7 @@ lca5 <- poLCA(cbind(depr_w01, depr_w02, depr_w03, depr_w04, depr_w05) ~ 1,
 
 elsoc_depr_lca$class3 <- as.factor(lca3$predclass)
 elsoc_depr_lca$class4 <- as.factor(lca4$predclass)
-elsoc_depr_lca$class5 <- as.factor(lca5$predclass)
+elsoc_depr_lca$class5 <- as.factor(lca5 $predclass)
 
 indicadores_lca <- function(x) {
   purrr::map_df(.x = x, .f = function(k) {
