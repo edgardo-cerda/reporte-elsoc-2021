@@ -1758,7 +1758,8 @@ tab<-elsoc_wide_2016_2021 %>%
   mutate(c28_w02 = factor(car::recode(c28_w02, recodes = "4:5 = 1; 1:3 = 0"))) %>%
   mutate(c28_w03 = factor(car::recode(c28_w03, recodes = "4:5 = 1; 1:3 = 0"))) %>%
   mutate(c28_w04 = factor(car::recode(c28_w04, recodes = "4:5 = 1; 1:3 = 0"))) %>%
-  filter(tipo_atricion == 1)
+  filter(tipo_atricion == 1)  %>% 
+survey_design_elsoc(weights = 'ponderador02_w05')
 
 tab1<-tab %>% group_by(optimista, c28_w01) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
   mutate(var = 1) %>% rename(cambio=c28_w01) %>% filter(!is.na(optimista)) %>%
@@ -1802,7 +1803,8 @@ tab <-elsoc_wide_2016_2021 %>%
   mutate(c11_w01 = factor(car::recode(c11_w01, recodes = "2 = 1; 1 = 0; 3 = 0"))) %>%
   mutate(c11_w03 = factor(car::recode(c11_w03, recodes = "2 = 1; 1 = 0; 3 = 0"))) %>%
   mutate(c43_w05 = factor(car::recode(c43_w05, recodes = "2 = 1; 1 = 0; 3 = 0"))) %>%
-  filter(tipo_atricion == 1)
+  filter(tipo_atricion == 1)  %>% 
+survey_design_elsoc(weights = 'ponderador02_w05')
 
 tab1<-tab %>% group_by(optimista, c11_w01) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
   mutate(var = 1) %>% rename(participa=c11_w01) %>% filter(!is.na(optimista)) %>%
@@ -1845,7 +1847,8 @@ tab<-elsoc_wide_2016_2021 %>%
   mutate(c22_w03 = factor(car::recode(c22_w03, recodes = "4:5 = 1; 1:3 = 0"))) %>%
   mutate(c22_w04 = factor(car::recode(c22_w04, recodes = "4:5 = 1; 1:3 = 0"))) %>%
   mutate(c22_w05 = factor(car::recode(c22_w05, recodes = "4:5 = 1; 1:3 = 0"))) %>%
-  filter(tipo_atricion == 1)
+  filter(tipo_atricion == 1)  %>% 
+survey_design_elsoc(weights = 'ponderador02_w05')
 
 tab1<-tab %>% group_by(optimista, c22_w01) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
   mutate(var = 1) %>% rename(Participa=c22_w01) %>% filter(!is.na(optimista)) %>%
