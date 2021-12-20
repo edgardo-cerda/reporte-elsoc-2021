@@ -1374,9 +1374,22 @@ g11.7 <- datos.11.7 %>%
 g11.7
 ```
 
+##Propuestas Bárbara.
 
+![](Images/Confianza_inmigracion_esc.png)
 
+![](Images/Confianza_inmigracion_escjh.png)
+![](Images/Confianza_inmigracion_dsesc.png)
 
+![](Images/Confianza_inmigracion_naeu.png)
+![](Images/Confianza_inmigracion_lac.png)
+![](Images/Confianza_pueblos.png)
+![](Images/Confianza_zonas.png)
+
+![](Images/Confianza_inmigracion.png)
+![](Images/Confianza_genero.png)
+![](Images/Confianza_ingresos.png)
+![](Images/Confianza_evolucion.png)
 
 
 
