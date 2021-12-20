@@ -5,6 +5,31 @@
 
 ### ¿Cómo se encuentra, y cómo ha cambiado la salud mental y nivel de bienestar de la población?
 
+
+```{r}
+elsoc_clase <- elsoc_long_2016_2021 %>% 
+  mutate(m30 = as.numeric(car::recode(m30, "1 = 110000; 2 = 251000; 
+  3 = 305000; 4 = 355000; 5 = 400000; 
+  6 = 445000; 7 = 490000; 8 = 535000; 9 = 585000; 10 = 640000; 
+  11 = 700000; 12 = 765000; 13 = 845000; 14 = 935000; 15 = 1040000;
+  16 = 1180000; 17 = 1375000; 18 = 1670000; 19 = 2275000; 20 = 2700000; NA = NA")),
+  m30b = as.numeric(car::recode(m30b, "1 = 170000; 2 = 300000; 3 = 400000; 4 = 600000; 5 = 1200000; NA = NA")),
+  m29_imp = ifelse(!is.na(m29), m29, ifelse(ola == 5, m30b, m30))) %>% 
+  group_by(ola) %>% 
+  mutate(quintil = xtile(m29, n = 5, wt = ponderador02),
+         quintil = factor(quintil, levels = 1:5, labels = glue::glue('Quintil {1:5}'))) %>%
+  ungroup() %>% 
+  mutate(clase_sub = 
+           factor(car::recode(d01_01, "0:2 = 1; 3:4 = 2; 5 = 3; 6:7 = 4; 8:10 = 5"),
+                  levels = 1:5,
+                  labels = c('Baja', 'Media baja', 'Media', 'Media alta', 'Alta'))) %>% 
+  left_join(elsoc_egp, by = c('idencuesta', 'ola')) %>% 
+  select(idencuesta, ola, quintil, egp07, egp11, clase_sub)
+
+```
+
+Alta satisfacción con la vida vs baja cantidad de personas que percibe buen estado de salud
+
 ```{r salud-bienestar-2021, fig.cap = 'Satisfacción con la vida y salud subjetiva (ola 2021)'}
 
 elsoc_long_2016_2021 %>% 
@@ -29,6 +54,10 @@ elsoc_long_2016_2021 %>%
   ggtitle(NULL, 'Porcentaje que responde que...')
 
 ```
+
+
+Destaca la menor satisfacción con la vida y menor percepción de que la vida se acerca al ideal durante 2019. Posible efecto del contexto de estallido social (en sintonía con mayor sintomatología depresiva). 
+Aumento de satisfacción con la vida en 2021 posiblemente se asocia con mejoría de situación sanitaria (contraste con pandemia 2020 y estallido 2019).
 
 ```{r salud-bienestar-olas, fig.cap = 'Satisfacción con la vida y salud subjetiva, según ola'}
 
@@ -59,6 +88,9 @@ elsoc_long_2016_2021 %>%
 
 ### Sintomatología depresiva
 
+La lectura del gráfico no es intuitiva, pero se entiende que las personas sin síntomas están más satisfechas, se acercan más a su ideal o tienen una mejor salud percibida. Tiene mucho sentido, pero gráfico debe venir acompañado de nota para poder leerlo. 
+
+
 ```{r depre-wave, fig.cap = 'Porcentaje que presenta síntomas de depresión (2021)'}
 
 elsoc_long_2016_2021 %>% 
@@ -88,6 +120,10 @@ elsoc_long_2016_2021 %>%
   theme(legend.position = 'none')
 
 ```
+
+Confirma que contexto de estallido social pudo haber golpeado fuertemente la salud mental de las personas. También podría sugerir que en 2021 podría haber mejorado la salud mental de las personas en comparación con 2020, si se considera que en octubre 2020 (usando misma escala) el Termómetro Social hubo menor prevalencia de síntomas depresivos moderados a severos. Esto puede estar asociado a mejoría de condiciones sanitarias (además, un gran porcentaje de encuestados respondió en febrero, algunos de ellos en vacaciones).
+
+La figura 3.5 debe presentarse antes que la figura 3.4
 
 
 ```{r depre-bienestar, fig.cap = 'Satisfacción con la vida y salud subjetiva (ola 2021), según Sintomas de depresión'}
@@ -127,6 +163,8 @@ elsoc_long_2016_2021 %>%
 
 ```
 
+Confirma alta oscilación de la carga de síntomas a lo largo del tiempo. Entre participantes sin síntomas o síntomas leves, una proporción importante permanece en un estado saludable. 
+¿Cuántas personas no bajan en ninguna ola del punto de corte (10 o más puntos en la escala) entre 2016-2021 (es decir, permanece en categoría síntomas moderados a severos)? 
 
 
 ```{r depre-wave2, fig.cap = 'Porcentaje que presenta síntomas de depresión, según ola'}
@@ -162,7 +200,94 @@ elsoc_long_2016_2021 %>%
 
 ```
 
+Prevalencia de síntomas depresivos moderados a severos según sexo 2016-2021 (muestra alta brecha entre hombres y mujeres en 2019, lo cual podría estar hablando de un mayor impacto del estallido en las mujeres). Llama la atención también la baja prevalencia de síntomas depresivos moderados a severos en hombres en 2021. 
 
+```{r depre-wave-sexo, fig.cap = 'Porcentaje que presenta síntomas de depresión moderados a severos, según sexo y ola'}
+
+elsoc_long_2016_2021 %>% 
+  purrr::map_at(.at = vars(starts_with('s11_0')), 
+                .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
+  as.data.frame() %>%  
+  mutate(phq9 = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09)) %>% 
+  dplyr::filter(tipo_atricion == 1) %>% 
+  prop(phq9 >= 10 , by = c(ola, m0_sexo), na.rm = TRUE) %>% 
+  sjlabelled::as_label(ola, m0_sexo) %>% 
+  ggplot(aes(y = prop, x = ola, fill = m0_sexo, 
+             label = scales::percent(prop, accuracy = .1))) + 
+  theme_bw() + 
+  geom_col(position = 'dodge2') +
+  scale_y_continuous(labels = scales::percent, limits = 0:1) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0.33, end = .66, option = 'viridis') +
+  geom_text(position = position_dodge(.9), vjust = -.5,
+            size = 3) +
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+```
+
+
+```{r depre-wave-quintil, fig.cap = 'Porcentaje que presenta síntomas de depresión moderados a severos, según sexo y ola'}
+
+elsoc_long_2016_2021 %>% 
+  purrr::map_at(.at = vars(starts_with('s11_0')), 
+                .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
+  as.data.frame() %>%  
+  mutate(phq9 = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09),
+         educ = factor(car::recode(m01, recodes = "1:3 = 1; 4:5 = 2; 6:7 = 3; 8:10 = 4"),
+                       levels = 1:4,
+                       labels = c("Basica", "Media", "Tecnica", "Universitaria"))) %>% 
+  dplyr::filter(tipo_atricion == 1, !is_nsnr(m01)) %>% 
+  prop(phq9 >= 10 , by = c(ola, educ), na.rm = TRUE) %>% 
+  sjlabelled::as_label(ola, educ) %>% 
+  ggplot(aes(y = prop, x = ola, fill = educ, 
+             label = scales::percent(prop, accuracy = .1))) + 
+  theme_bw() + 
+  geom_col(position = 'dodge2') +
+  scale_y_continuous(labels = scales::percent, limits = 0:1) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, option = 'viridis') +
+  geom_text(position = position_dodge(.9), vjust = -.5,
+            size = 3) +
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+```
+
+```{r}
+
+
+elsoc_long_2016_2021 %>% 
+  left_join(elsoc_clase) %>% 
+  purrr::map_at(.at = vars(starts_with('s11_0')), 
+                .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
+  as.data.frame() %>%  
+  mutate(phq9 = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09)) %>% 
+  dplyr::filter(tipo_atricion == 1, !is_nsnr(quintil), !is.na(quintil)) %>% 
+  prop(phq9 >= 10 , by = c(ola, quintil), na.rm = TRUE) %>% 
+  sjlabelled::as_label(ola, quintil) %>% 
+  ggplot(aes(y = prop, x = ola, fill = quintil, 
+             label = scales::percent(prop, accuracy = .1))) + 
+  theme_bw() + 
+  geom_col(position = 'dodge2') +
+  scale_y_continuous(labels = scales::percent, limits = 0:1) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, option = 'viridis') +
+  geom_text(position = position_dodge(.9), vjust = -.5,
+            size = 3) +
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+```
+
+
+Confirma alta oscilación de la carga de síntomas a lo largo del tiempo. Entre participantes sin síntomas o síntomas leves, una proporción importante permanece en un estado saludable. 
+¿Cuántas personas no bajan en ninguna ola del punto de corte (10 o más puntos en la escala) entre 2016-2021 (es decir, permanece en categoría síntomas moderados a severos)? 
+
+  
 ```{r depre-alluvial, fig.cap = 'Cambios en síntomas depresivos entre 2016 y 2021'}
 
 elsoc_long_2016_2021 %>% 
@@ -270,6 +395,11 @@ elsoc_depr_lca$class_depr <- factor(elsoc_depr_lca$class4,
 
 ```
 
+Esto es sin duda lo más interesante de esta sección. Pero necesitamos que nos expliquen en detalle cómo se construyeron los perfiles de sintomatología depresiva.
+La palabra “prevalencia” en las leyendas no corresponde para clasificar los perfiles de trayectoria. Tal vez sea más pertinente hablar de “baja carga de síntomas”, “carga media-baja” o “baja severidad de síntomas” (le daremos una vuelta a la manera de nombrar). 
+Entendemos que 9.8% de los participante se mantuvo en un perfil de alta carga de síntomas depresivos a lo largo de las olas (es decir, hubo persistencia o recurrencia de los síntomas moderados a severos a lo largo del tiempo), lo cual hace sentido. Algunos estudios sugieren que el impacto económico de la depresión en la población está relacionado con su duración más que con su gravedad. La persistencia de los síntomas severos representa una alta carga individual, familiar y posiblemente para el sistema de salud (son personas que tienden a enfermarse más y utilizan más los servicios de salud, licencias médicas, ausentismo laboral, etc). Por eso caracterizar a ese grupo es muy relevante en términos de salud pública.
+
+
 
 ```{r, fig.cap = 'Perfiles de sintomatología depresiva: 4 clases (2016-2021)'}
       
@@ -308,7 +438,7 @@ elsoc_depr_lca %>%
 
 ```
 
-
+Interesante, pero difícil de interpretar. Dada su complejidad, mejor no presentar en reporte. 
 
 ```{r, fig.cap = 'Cambios en síntomas de depresión, según perfiles de sintomatología depresiva (2016-2021)'}
 
@@ -357,6 +487,7 @@ elsoc_long_2016_2021 %>%
 
 ```
 
+Este gráfico es muy interesante, porque si entendemos bien, las mujeres son quienes presentan en mayor proporción persistencia de los síntomas depresivos más severos (es decir, les cuesta más salir de un estado depresivo). Esto es consistente con la literatura internacional. 
 
 ```{r, fig.cap = 'Perfiles de sintomatología depresiva, según sexo'}
 
@@ -412,6 +543,10 @@ elsoc_depr_lca %>%
 
 
 ## Parte economía:
+
+Esta parte debería ir en un apartado independiente (“Economía y trabajo”?), no en salud y bienestar.
+De todos modos, sería interesante hacer el cruce entre acceso a beneficios y retiros del 10% con síntomas depresivos, para explorar si el acceso a bonos mitiga carga de síntomas.
+
 
 ```{r}
 
@@ -514,28 +649,6 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-
-```{r}
-elsoc_clase <- elsoc_long_2016_2021 %>% 
-  mutate(m30 = as.numeric(car::recode(m30, "1 = 110000; 2 = 251000; 
-  3 = 305000; 4 = 355000; 5 = 400000; 
-  6 = 445000; 7 = 490000; 8 = 535000; 9 = 585000; 10 = 640000; 
-  11 = 700000; 12 = 765000; 13 = 845000; 14 = 935000; 15 = 1040000;
-  16 = 1180000; 17 = 1375000; 18 = 1670000; 19 = 2275000; 20 = 2700000; NA = NA")),
-  m30b = as.numeric(car::recode(m30b, "1 = 170000; 2 = 300000; 3 = 400000; 4 = 600000; 5 = 1200000; NA = NA")),
-  m29_imp = ifelse(!is.na(m29), m29, ifelse(ola == 5, m30b, m30))) %>% 
-  group_by(ola) %>% 
-  mutate(quintil = xtile(m29, n = 5, wt = ponderador02),
-         quintil = factor(quintil, levels = 1:5, labels = glue::glue('Quintil {1:5}'))) %>%
-  ungroup() %>% 
-  mutate(clase_sub = 
-           factor(car::recode(d01_01, "0:2 = 1; 3:4 = 2; 5 = 3; 6:7 = 4; 8:10 = 5"),
-                  levels = 1:5,
-                  labels = c('Baja', 'Media baja', 'Media', 'Media alta', 'Alta'))) %>% 
-  left_join(elsoc_egp, by = c('idencuesta', 'ola')) %>% 
-  select(idencuesta, ola, quintil, egp07, egp11, clase_sub)
-
-```
 
 ```{r}
 elsoc_long_2016_2021 %>% 
@@ -794,6 +907,7 @@ elsoc_long_2016_2021 %>%
 
 ## COVID - 19
 
+Parece que el 10,7% calza bien con los datos de diagnóstico a nivel nacional (en torno al 10%). De todos modos chequear (si coincide, buen punto a favor de la encuesta).  
 
 ```{r covid-sexo, fig.align='center'}
 
@@ -849,6 +963,7 @@ elsoc_long_2016_2021 %>%
 
 ```
 
+Mayor porcentaje de diagnóstico en Q5 puede estar dando cuenta de mayor acceso a exámenes, no necesariamente mayor prevalencia de COVID en ese grupo (comunas de estrato socioeconómico bajo han tenido mayor incidencia del virus y mayor tasa de mortalidad). Si se presenta, esto debe subrayarse. 
 
 ```{r depre clase.sub, fig.cap = 'Cercanía de contagio de covid, según clase social (2021)'}
 
@@ -877,6 +992,7 @@ elsoc_long_2016_2021 %>%
 
 ```
 
+Interesante mayor exposición de ciertas categorías ocupacionales, en particular trabajadores manuales. Sin embargo, la relación teórica entre categoría ocupacional y tener algún conocido diagnosticado no es tan evidente (sacaríamos columnas de la derecha). 
 
 ```{r, fig.cap = 'Cercanía de contagio de covid, según clase social (2021)'}
 
@@ -913,6 +1029,7 @@ elsoc_long_2016_2021 %>%
 
 ```
 
+Resultado similar a lo encontrado en encuesta Termómetro social. Las personas reportan alto apego a las medidas sanitarias. 
 
 ```{r dist-total, fig.align='center', fig.cap='¿En qué medida usted ha seguido la recomendación de quedarse en su hogar, manteniendo el aislamiento social? (2021).'}
 
@@ -941,6 +1058,7 @@ elsoc_long_2016_2021 %>%
 
 ```
 
+Es coherente que personas que nunca o casi nunca hayan seguido recomendaciones de aislamiento hayan tenido mayores niveles de diagnóstico. Nuevamente la relación con los conocidos no es teóricamente evidente (sacaríamos las columnas de la derecha).
 
 ```{r}
 
@@ -975,6 +1093,8 @@ elsoc_long_2016_2021 %>%
 
 
 ```
+
+Hace sentido la diferencia de cumplimiento de distanciamiento social entre Q1 y Q5. Sin embargo, podría ser más pertinente utilizar nivel educacional como criterio de estratificación. 
 
 ```{r, fig.cap='Cumplimiento de distaniamiento social (2021), según quintiles de ingreso'}
 
