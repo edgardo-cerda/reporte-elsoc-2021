@@ -1,9 +1,9 @@
 
-# Temas de salud mental y bienestar
+# Salud mental y bienestar
 
-## Salud mental y bienestar de la población
+## Bienestar
 
-### ¿Cómo se encuentra, y cómo ha cambiado la salud mental y nivel de bienestar de la población?
+¿Cómo se encuentra, y cómo ha cambiado la salud mental y nivel de bienestar de la población?
 
 
 ```{r}
@@ -90,30 +90,37 @@ elsoc_long_2016_2021 %>%
         legend.title = element_blank()) +
   ggtitle(NULL, 'Porcentaje que responde que...')
 
+
 ```
 
 
-```{r statisf-wave-sexo, fig.cap = 'Porcentaje que se siente Satisfecho o Totalmente satisfecho con su vida, según sexo y ola'}
+```{r salud-bienestar-sexo, fig.cap = 'Satisfacción con la vida y salud subjetiva, según sexo (2021)'}
 
 elsoc_long_2016_2021 %>% 
-  dplyr::filter(tipo_atricion == 1, !is_nsnr(s01)) %>% 
-  prop(s01 %in% 4:5 , by = c(ola, m0_sexo), na.rm = TRUE) %>% 
-  sjlabelled::as_label(ola, m0_sexo) %>% 
-  ggplot(aes(y = prop, x = ola, fill = m0_sexo, 
+  filter(tipo_atricion == 1 & ola == 5 & !is_nsnr(s01, s02, s03)) %>% 
+  as_label(m0_sexo) %>% 
+  prop_list(s01 %in% 4:5, s02 %in% 4:5, s03 %in% 4:5, by = m0_sexo, na.rm = TRUE) %>% 
+  mutate(name = factor(name,
+                       levels = c('s01 %in% 4:5', 's02 %in% 4:5', 's03 %in% 4:5'),
+                       labels = c('Esta satisfecho o muy\nsatisfecho con su vida',
+                                  'Su vida se acerca o se acerca\ncompletamente a su ideal',
+                                  'Su salud es muy buena\no Excelente'))) %>% 
+  ggplot(aes(y = prop, x = name, fill = m0_sexo,
              label = scales::percent(prop, accuracy = .1))) + 
   theme_bw() + 
   geom_col(position = 'dodge2') +
-  scale_y_continuous(labels = scales::percent, limits = 0:1) +
+  geom_text(position = position_dodge(.9), 
+            vjust = -.5, size = 3) +
+  scale_y_continuous(labels = scales::percent, limits = c(0,1)) +
   ylab(label = NULL) +
-  xlab(label = NULL) +
-  scale_fill_viridis_d(begin = 0.33, end = .66, option = 'viridis') +
-  geom_text(position = position_dodge(.9), vjust = -.5,
-            size = 3) +
-  theme(legend.position = 'top',
-        legend.title = element_blank())
+  xlab(label = NULL) +  
+  scale_fill_viridis_d(begin = .33, end = .66) +
+  theme(legend.position = 'top', legend.title = element_blank()) +
+  ggtitle(NULL, 'Porcentaje que responde que...')
 
+
+  
 ```
-
 
 ### Sintomatología depresiva
 
@@ -352,10 +359,6 @@ indicadores_lca <- function(x) {
 ```
 
 
-```{r}
-indicadores_lca(list(lca3, lca4, lca5))
-```
-
 
 Esto es sin duda lo más interesante de esta sección. Pero necesitamos que nos expliquen en detalle cómo se construyeron los perfiles de sintomatología depresiva.
 La palabra “prevalencia” en las leyendas no corresponde para clasificar los perfiles de trayectoria. Tal vez sea más pertinente hablar de “baja carga de síntomas”, “carga media-baja” o “baja severidad de síntomas” (le daremos una vuelta a la manera de nombrar). 
@@ -536,6 +539,12 @@ elsoc_depr_lca %>%
 ```
 
 
+```{r}
+indicadores_lca(list(lca3, lca4, lca5))
+
+```
+
+
 Este gráfico es muy interesante, porque si entendemos bien, las mujeres son quienes presentan en mayor proporción persistencia de los síntomas depresivos más severos (es decir, les cuesta más salir de un estado depresivo). Esto es consistente con la literatura internacional. 
 
 ```{r, fig.cap = 'Cargas de sintomatología depresiva, según sexo'}
@@ -616,7 +625,7 @@ elsoc_depr_lca %>%
 ```
 
 
-## Economía y bienestar:
+## Economía y bienestar
 
 Esta parte debería ir en un apartado independiente (“Economía y trabajo”?), no en salud y bienestar.
 De todos modos, sería interesante hacer el cruce entre acceso a beneficios y retiros del 10% con síntomas depresivos, para explorar si el acceso a bonos mitiga carga de síntomas.
@@ -636,18 +645,15 @@ elsoc_long_2016_2021 %>%
   dplyr::filter(tipo_atricion == 1, !is_nsnr(quintil), !is.na(quintil)) %>% 
   prop(phq9 >= 10 , by = c(quintil), na.rm = TRUE) %>% 
   sjlabelled::as_label(quintil) %>% 
-  ggplot(aes(y = prop, x = quintil, fill = quintil, 
+  ggplot(aes(y = prop, x = quintil, 
              label = scales::percent(prop, accuracy = .1))) + 
   theme_bw() + 
-  geom_col(position = 'dodge2') +
+  geom_col(position = 'dodge2', fill = viridis(1, begin = .33)) +
   scale_y_continuous(labels = scales::percent, limits = 0:1) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = 0, end = .85, option = 'viridis') +
   geom_text(position = position_dodge(.9), vjust = -.5,
-            size = 3) +
-  theme(legend.position = 'top',
-        legend.title = element_blank())
+            size = 3) 
 
 ```
 
@@ -791,7 +797,7 @@ elsoc_long_2016_2021 %>%
   ggplot(aes(y = prop, x = m60,
              label = scales::percent(ifelse(prop>0.01, prop, NA), accuracy = .1))) + 
   theme_bw() + 
-  geom_col(position = 'dodge2', fill = viridis(1, begin = .33)) +
+  geom_col(position = 'dodge2', fill = viridis(1, begin = .5)) +
   scale_y_continuous(labels = scales::percent, limits = 0:1) +
   ylab(label = NULL) +
   xlab(label = NULL) +
@@ -813,6 +819,38 @@ elsoc_long_2016_2021 %>%
                        labels = c('Casa\ncomercial', 'Banco', 
                                   'Parientes', 'Otros'))) %>% 
   ggplot(aes(y = prop, x = name, fill = ola, 
+             label = scales::percent(prop, accuracy = .1))) +
+  theme_bw() + 
+  geom_col(position = "dodge2") +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(end = .85, direction = -1, option = 'viridis') + 
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75)  +
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+```
+
+
+```{r ndeudas-depr, fig.cap = 'Porcentaje que presenta síntomas de depresión moderados a severos, según número de deudas y ola'}
+
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & ola %in% c(1, 3, 5),
+         !is_nsnr(m42_01, m42_02, m42_03, m42_04)) %>% 
+  mutate(deudas = car::recode((m42_01 == 1) + (m42_02 == 1) + (m42_03 == 1) + (m42_04 == 1),
+         "0 = '0'; 1 = '1'; 2:4 = '2 o más'")) %>% 
+  filter(!is.na(deudas)) %>% 
+  purrr::map_at(.at = vars(starts_with('s11_0')), 
+                .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
+  as.data.frame() %>% 
+  mutate(phq9 = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09)) %>% 
+  prop(phq9 >= 10 , by = c(deudas, ola), na.rm = TRUE, vartype = 'cv') %>% 
+  as_label(ola) %>% 
+  ggplot(aes(y = prop, x = ola, fill = deudas, 
              label = scales::percent(prop, accuracy = .1))) +
   theme_bw() + 
   geom_col(position = "dodge2") +
@@ -863,13 +901,15 @@ elsoc_long_2016_2021 %>%
 ```{r covid-diagnostico-quintil, fig.cap = 'Porcentaje que ha sido diagnosticado y que conoce a alguien diagnosticado con COVID-19, según quintiles de ingreso (2021)'}
 
 elsoc_long_2016_2021 %>% 
-  left_join(elsoc_clase) %>% 
-  dplyr::filter(ola == 5, tipo_atricion == 1 & !is_nsnr(s31, r03_09) & !is.na(quintil)) %>%
-  prop_list(s31 == 1, r03_09 > 1, by = quintil, na.rm = TRUE) %>% 
+  dplyr::filter(ola == 5, tipo_atricion == 1 & !is_nsnr(s31, r03_09, m02)) %>%
+  mutate(educ = factor(car::recode(m01, recodes = "1:3 = 1; 4:5 = 2; 6:7 = 3; 8:10 = 4"),
+                       levels = 1:4,
+                       labels = c("Basica", "Media", "Tecnica", "Universitaria"))) %>% 
+  prop_list(s31 == 1, r03_09 > 1, by = educ, na.rm = TRUE) %>% 
   mutate(name = factor(name, levels = c('s31 == 1', 'r03_09 > 1'),
                        labels = c('Fue diagnosticado con COVID-19',
                                   'Tiene al menos un conocido/a que\nfue diagnosticado con COVID-19'))) %>% 
-  ggplot(aes(y = prop, x = name, fill = quintil,
+  ggplot(aes(y = prop, x = name, fill = educ,
              label = scales::percent(prop, accuracy = .1))) +
   theme_bw() + 
   geom_col(position = 'dodge2') +
@@ -947,14 +987,16 @@ elsoc_long_2016_2021 %>%
 ```{r temas-covid-quintil, fig.cap = 'Porcentaje De acuerdo o Muy de acuerdo con..., según quintiles de ingreso (2021)'}
 
 elsoc_long_2016_2021 %>% 
-  left_join(elsoc_clase) %>% 
-  filter(ola == 5, tipo_atricion == 1, !is_nsnr(quintil, c37_09, c37_10), !is.na(quintil)) %>% 
-  prop_list(c37_09 %in% 4:5, c37_10 %in% 4:5, by = quintil, na.rm = TRUE) %>% 
+  filter(ola == 5, tipo_atricion == 1, !is_nsnr(m02, c37_09, c37_10)) %>% 
+  mutate(educ = factor(car::recode(m01, recodes = "1:3 = 1; 4:5 = 2; 6:7 = 3; 8:10 = 4"),
+                     levels = 1:4,
+                     labels = c("Basica", "Media", "Tecnica", "Universitaria"))) %>% 
+  prop_list(c37_09 %in% 4:5, c37_10 %in% 4:5, by = educ, na.rm = TRUE) %>% 
   mutate(name = factor(name, 
                        levels = c('c37_09 %in% 4:5', 'c37_10 %in% 4:5'),
                        labels = c('Es más importante darle prioridad a\nla actividad económica que a la\nsalud de la población', 
                                   'Las cuarentenas estrictas son\nmuy necesarias para resguardar la\nsalud de la poblacion'))) %>% 
-  ggplot(aes(y = prop, x = name, fill = quintil,
+  ggplot(aes(y = prop, x = name, fill = educ,
              label = scales::percent(prop, accuracy = .1))) +
   theme_bw() + 
   geom_col(position = 'dodge2') +
@@ -1001,29 +1043,6 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-```{r dist-educ, fig.cap = 'Porcentaje que sigue aislamiento social Frecuente o Muy frecuentemente, según nivel educacional (2021)'}
-
-elsoc_long_2016_2021 %>% 
-  filter(tipo_atricion == 1 & ola == 5,
-         !is_nsnr(c48, m01)) %>% 
-  mutate(educ = factor(car::recode(m01, recodes = "1:3 = 1; 4:5 = 2; 6:7 = 3; 8:10 = 4"),
-                       levels = 1:4,
-                       labels = c("Basica", "Media", "Tecnica", "Universitaria"))) %>% 
-  prop(c48 %in% 4:5, educ, na.rm = TRUE) %>% 
-  ggplot(aes(y = prop, x = educ, 
-             label = scales::percent(prop, accuracy = .1))) +
-  theme_bw() + 
-  geom_col(position = 'dodge2', fill = viridis(1, begin = .5)) +
-  scale_y_continuous(labels = scales::percent,
-                      limits = 0:1) +
-  ylab(label = NULL) +
-  xlab(label = NULL) +
-  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
-  geom_text(vjust = -0.8,
-            position = position_dodge(width = .9),
-            size= 2.75)
-
-```
 
 Es coherente que personas que nunca o casi nunca hayan seguido recomendaciones de aislamiento hayan tenido mayores niveles de diagnóstico. Nuevamente la relación con los conocidos no es teóricamente evidente (sacaríamos las columnas de la derecha).
 
@@ -1054,4 +1073,59 @@ elsoc_long_2016_2021 %>%
         legend.title = element_blank())
 
 ```
+
+
+```{r dist-educ, fig.cap = 'Porcentaje que sigue aislamiento social Frecuente o Muy frecuentemente, según nivel educacional (2021)'}
+
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & ola == 5,
+         !is_nsnr(c48, m01)) %>% 
+  mutate(educ = factor(car::recode(m01, recodes = "1:3 = 1; 4:5 = 2; 6:7 = 3; 8:10 = 4"),
+                       levels = 1:4,
+                       labels = c("Basica", "Media", "Tecnica", "Universitaria"))) %>% 
+  prop(c48 %in% 4:5, educ, na.rm = TRUE) %>% 
+  ggplot(aes(y = prop, x = educ, 
+             label = scales::percent(prop, accuracy = .1))) +
+  theme_bw() + 
+  geom_col(position = 'dodge2', fill = viridis(1, begin = .5)) +
+  scale_y_continuous(labels = scales::percent,
+                      limits = 0:1) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75)
+
+```
+
+
+```{r dist-opinion, fig.cap = 'Porcentaje que sigue aislamiento social Frecuente o Muy frecuentemente, según grado de acuerdo con cuarentenas (2021)'}
+
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & ola == 5,
+         !is_nsnr(c48, c37_10), !is.na(c37_10)) %>% 
+  mutate(c37_10 = factor(car::recode(c37_10, "1:2 = 1; 3 = 2; 4:5 = 3"),
+                         levels = 1:3,
+                         labels = c('En desacuerdo o\nTotalmente en desacuerdo', 
+                                    'Ni de acuerdo\nni en desacuerdo',
+                                    'De acuerdo o\nTotalmente de acuerdo'))) %>% 
+  prop(c48 %in% 4:5, c37_10, na.rm = TRUE) %>% 
+  ggplot(aes(y = prop, x = c37_10, 
+             label = scales::percent(prop, accuracy = .1))) +
+  theme_bw() + 
+  geom_col(position = 'dodge2', fill = viridis(1, begin = .5)) +
+  scale_y_continuous(labels = scales::percent,
+                      limits = 0:1) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75)
+
+
+
+```
+
 
