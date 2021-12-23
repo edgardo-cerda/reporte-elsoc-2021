@@ -872,7 +872,7 @@ elsoc_long_2016_2021 %>%
 
 Parece que el 10,7% calza bien con los datos de diagnóstico a nivel nacional (en torno al 10%). De todos modos chequear (si coincide, buen punto a favor de la encuesta).  
 
-```{r covid-diagnostico, fig.cap = 'Porcentaje que ha sido diagnosticado y que conoce a alguien diagnosticado con COVID-a9 (2021)'}
+```{r covid-diagnostico, fig.cap = 'Porcentaje que ha sido diagnosticado y que conoce a alguien diagnosticado con COVID-19 (2021)'}
 
 elsoc_long_2016_2021 %>% 
   dplyr::filter(ola == 5, tipo_atricion == 1 & !is_nsnr(s31) & !is_nsnr(r03_09)) %>%
@@ -898,7 +898,7 @@ elsoc_long_2016_2021 %>%
 ```
 
 
-```{r covid-diagnostico-quintil, fig.cap = 'Porcentaje que ha sido diagnosticado y que conoce a alguien diagnosticado con COVID-19, según quintiles de ingreso (2021)'}
+```{r covid-diagnostico-educ, fig.cap = 'Porcentaje que ha sido diagnosticado y que conoce a alguien diagnosticado con COVID-19, según nivel educacional (2021)'}
 
 elsoc_long_2016_2021 %>% 
   dplyr::filter(ola == 5, tipo_atricion == 1 & !is_nsnr(s31, r03_09, m02)) %>%
@@ -927,7 +927,7 @@ elsoc_long_2016_2021 %>%
 ```
 
 
-```{r temas-covid, fig.cap = 'Porcentaje De acuerdo o Muy de acuerdo con... (2021)'}
+```{r temas-covid, fig.cap = 'Porcentaje De acuerdo o Muy de acuerdo con medidas sanitarias (2021)'}
 
 elsoc_long_2016_2021 %>% 
   filter(ola == 5, tipo_atricion == 1, !is_nsnr(c37_09, c37_10)) %>% 
@@ -954,43 +954,13 @@ elsoc_long_2016_2021 %>%
 ```
 
 
-```{r temas-covid-educ, fig.cap = 'Porcentaje De acuerdo o Muy de acuerdo con..., según nivel educacional (2021)'}
+```{r temas-covid-educ, fig.cap = 'Porcentaje De acuerdo o Muy de acuerdo con medidas sanitarias, según nivel educacional (2021)'}
 
 elsoc_long_2016_2021 %>% 
   filter(ola == 5, tipo_atricion == 1, !is_nsnr(m01, c37_09, c37_10)) %>% 
   mutate(educ = factor(car::recode(m01, recodes = "1:3 = 1; 4:5 = 2; 6:7 = 3; 8:10 = 4"),
                        levels = 1:4,
                        labels = c("Basica", "Media", "Tecnica", "Universitaria"))) %>% 
-  prop_list(c37_09 %in% 4:5, c37_10 %in% 4:5, by = educ, na.rm = TRUE) %>% 
-  mutate(name = factor(name, 
-                       levels = c('c37_09 %in% 4:5', 'c37_10 %in% 4:5'),
-                       labels = c('Es más importante darle prioridad a\nla actividad económica que a la\nsalud de la población', 
-                                  'Las cuarentenas estrictas son\nmuy necesarias para resguardar la\nsalud de la poblacion'))) %>% 
-  ggplot(aes(y = prop, x = name, fill = educ,
-             label = scales::percent(prop, accuracy = .1))) +
-  theme_bw() + 
-  geom_col(position = 'dodge2') +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
-  ylab(label = NULL) +
-  xlab(label = NULL) + 
-  scale_fill_viridis_d(end = .85, direction = -1, option = 'viridis') +
-  geom_text(vjust = -0.5,
-            position = position_dodge(width = .9),
-            size = 3)  + 
-  theme(legend.position = 'top', legend.title = element_blank()) + 
-  ggtitle(NULL, 'En el contexto actual de la pandemia del coronavirus...')
-
-
-```
-
-```{r temas-covid-quintil, fig.cap = 'Porcentaje De acuerdo o Muy de acuerdo con..., según quintiles de ingreso (2021)'}
-
-elsoc_long_2016_2021 %>% 
-  filter(ola == 5, tipo_atricion == 1, !is_nsnr(m02, c37_09, c37_10)) %>% 
-  mutate(educ = factor(car::recode(m01, recodes = "1:3 = 1; 4:5 = 2; 6:7 = 3; 8:10 = 4"),
-                     levels = 1:4,
-                     labels = c("Basica", "Media", "Tecnica", "Universitaria"))) %>% 
   prop_list(c37_09 %in% 4:5, c37_10 %in% 4:5, by = educ, na.rm = TRUE) %>% 
   mutate(name = factor(name, 
                        levels = c('c37_09 %in% 4:5', 'c37_10 %in% 4:5'),
