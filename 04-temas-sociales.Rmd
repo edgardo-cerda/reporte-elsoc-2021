@@ -1541,18 +1541,20 @@ rm(tab)
 territorial$porig[territorial$porig < 0] <- NA
 territorial$hbtes[territorial$hbtes < 0] <- NA
 territorial$p_orig <- territorial$porig/territorial$hbtes
-territorial$quintil <- quantcut(territorial$p_orig, q=5, na.rm=T, 
-                                labels=c("Q1", "Q2", "Q3", "Q4", "Q5"))
 
 tab<-territorial %>%   
-  filter(!is_nsnr(quintil, t01_w01, t01_w02, t01_w03, t01_w04, t01_w05))  %>%
-  drop_na(c("quintil", "t01_w01", "t01_w02", "t01_w03", "t01_w04", "t01_w05")) %>%
+  filter(!is_nsnr(t01_w01, t01_w02, t01_w03, t01_w04, t01_w05))  %>%
+  drop_na(c("t01_w01", "t01_w02", "t01_w03", "t01_w04", "t01_w05")) %>%
   filter(tipo_atricion==1)  %>%
+  mutate(quintil = xtile(p_orig, n = 5, wt = ponderador02_w05)) %>%
+         mutate(quintil = factor(quintil, levels = 1:5, labels = glue::glue('Q{1:5}')))  %>%
   rowwise() %>%
           mutate(confianza = mean(t01_w01, t01_w02, t01_w03, t01_w04, t01_w05, na.rm = TRUE)) %>%
           mutate(Confía= factor(confianza >= 4,
                                         levels = c(TRUE, FALSE),
                                         labels = c('Confía', 'No confía'))) %>%
+  filter(!is_nsnr(quintil))  %>%
+  drop_na(c("quintil")) %>%
   survey_design_elsoc(weights = 'ponderador02_w05') %>%
   group_by(quintil, Confía) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
   filter(!is.na(Confía)) %>%
@@ -1576,22 +1578,25 @@ tab %>% ggplot(aes(y = freq, x = quintil, label = scales::percent(freq, accuracy
 
 territorial$inmigrante[territorial$inmigrante < 0] <- NA
 territorial$p_inmigracion <- territorial$inmigrante/territorial$hbtes
-territorial$quintil <- quantcut(territorial$p_inmigracion, q=5, na.rm=T, 
-                                labels=c("Q1", "Q2", "Q3", "Q4", "Q5"))
 
 tab<-territorial %>%   
-  filter(!is_nsnr(quintil, t01_w01, t01_w02, t01_w03, t01_w04, t01_w05))  %>%
-  drop_na(c("quintil", "t01_w01", "t01_w02", "t01_w03", "t01_w04", "t01_w05")) %>%
+  filter(!is_nsnr(t01_w01, t01_w02, t01_w03, t01_w04, t01_w05))  %>%
+  drop_na(c("t01_w01", "t01_w02", "t01_w03", "t01_w04", "t01_w05")) %>%
   filter(tipo_atricion==1)  %>%
+  mutate(quintil = xtile(p_inmigracion, n = 5, wt = ponderador02_w05)) %>%
+         mutate(quintil = factor(quintil, levels = 1:5, labels = glue::glue('Q{1:5}')))  %>%
   rowwise() %>%
           mutate(confianza = mean(t01_w01, t01_w02, t01_w03, t01_w04, t01_w05, na.rm = TRUE)) %>%
           mutate(Confía= factor(confianza >= 4,
                                         levels = c(TRUE, FALSE),
                                         labels = c('Confía', 'No confía'))) %>%
+  filter(!is_nsnr(quintil))  %>%
+  drop_na(c("quintil")) %>%
   survey_design_elsoc(weights = 'ponderador02_w05') %>%
   group_by(quintil, Confía) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
   filter(!is.na(Confía)) %>%
   filter(!is.na(quintil)) %>% filter(Confía=="Confía")
+  
   
 tab %>% ggplot(aes(y = freq, x = quintil, label = scales::percent(freq, accuracy = .1))) +
   theme_bw() +   
@@ -1617,18 +1622,20 @@ territorial$venezolano[territorial$venezonlano< 0] <- NA
 territorial$haitiano[territorial$haitiano < 0] <- NA
 territorial$inmig_lac <- territorial$argentino+territorial$colombiano+territorial$peruano+territorial$boliviano+territorial$venezolano+territorial$haitiano
 territorial$p_inmig_lac <- territorial$inmig_lac/territorial$hbtes
-territorial$quintil <- quantcut(territorial$p_inmig_lac, q=5, na.rm=T, 
-                                labels=c("Q1", "Q2", "Q3", "Q4", "Q5"))
 
 tab<-territorial %>%   
-  filter(!is_nsnr(quintil, t01_w01, t01_w02, t01_w03, t01_w04, t01_w05))  %>%
-  drop_na(c("quintil", "t01_w01", "t01_w02", "t01_w03", "t01_w04", "t01_w05")) %>%
+  filter(!is_nsnr(t01_w01, t01_w02, t01_w03, t01_w04, t01_w05))  %>%
+  drop_na(c("t01_w01", "t01_w02", "t01_w03", "t01_w04", "t01_w05")) %>%
   filter(tipo_atricion==1)  %>%
+  mutate(quintil = xtile(p_inmig_lac, n = 5, wt = ponderador02_w05)) %>%
+         mutate(quintil = factor(quintil, levels = 1:5, labels = glue::glue('Q{1:5}')))  %>%
   rowwise() %>%
           mutate(confianza = mean(t01_w01, t01_w02, t01_w03, t01_w04, t01_w05, na.rm = TRUE)) %>%
           mutate(Confía= factor(confianza >= 4,
                                         levels = c(TRUE, FALSE),
                                         labels = c('Confía', 'No confía'))) %>%
+  filter(!is_nsnr(quintil))  %>%
+  drop_na(c("quintil")) %>%
   survey_design_elsoc(weights = 'ponderador02_w05') %>%
   group_by(quintil, Confía) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
   filter(!is.na(Confía)) %>%
@@ -1654,18 +1661,20 @@ territorial$europeo[territorial$europeo < 0] <- NA
 territorial$norteamericano[territorial$norteamericano < 0] <- NA
 territorial$inmig_eu <- territorial$europeo+territorial$norteamericano
 territorial$p_inmig_eu <- territorial$inmig_eu/territorial$hbtes
-territorial$quintil <- quantcut(territorial$p_inmig_eu, q=5, na.rm=T, 
-                                labels=c("Q1", "Q2", "Q3", "Q4", "Q5"))
 
 tab<-territorial %>%   
-  filter(!is_nsnr(quintil, t01_w01, t01_w02, t01_w03, t01_w04, t01_w05))  %>%
-  drop_na(c("quintil", "t01_w01", "t01_w02", "t01_w03", "t01_w04", "t01_w05")) %>%
+  filter(!is_nsnr(t01_w01, t01_w02, t01_w03, t01_w04, t01_w05))  %>%
+  drop_na(c("t01_w01", "t01_w02", "t01_w03", "t01_w04", "t01_w05")) %>%
   filter(tipo_atricion==1)  %>%
+  mutate(quintil = xtile(p_inmig_eu, n = 5, wt = ponderador02_w05)) %>%
+         mutate(quintil = factor(quintil, levels = 1:5, labels = glue::glue('Q{1:5}')))  %>%
   rowwise() %>%
           mutate(confianza = mean(t01_w01, t01_w02, t01_w03, t01_w04, t01_w05, na.rm = TRUE)) %>%
           mutate(Confía= factor(confianza >= 4,
                                         levels = c(TRUE, FALSE),
                                         labels = c('Confía', 'No confía'))) %>%
+  filter(!is_nsnr(quintil))  %>%
+  drop_na(c("quintil")) %>%
   survey_design_elsoc(weights = 'ponderador02_w05') %>%
   group_by(quintil, Confía) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
   filter(!is.na(Confía)) %>%
@@ -1688,18 +1697,20 @@ tab %>% ggplot(aes(y = freq, x = quintil, label = scales::percent(freq, accuracy
 ```{r confianzaveci-quintilesc, fig.align='center',fig.cap='Evolución de confianza en los vecinos según quintil de  escolaridad'}
 
 territorial$escolaridad[territorial$escolaridad < 0] <- NA
-territorial$quintil <- quantcut(territorial$escolaridad, q=5, na.rm=T, 
-                                labels=c("Q1", "Q2", "Q3", "Q4", "Q5"))
 
 tab<-territorial %>%   
-  filter(!is_nsnr(quintil, t01_w01, t01_w02, t01_w03, t01_w04, t01_w05))  %>%
-  drop_na(c("quintil", "t01_w01", "t01_w02", "t01_w03", "t01_w04", "t01_w05")) %>%
+  filter(!is_nsnr(t01_w01, t01_w02, t01_w03, t01_w04, t01_w05))  %>%
+  drop_na(c("t01_w01", "t01_w02", "t01_w03", "t01_w04", "t01_w05")) %>%
   filter(tipo_atricion==1)  %>%
+  mutate(quintil = xtile(escolaridad, n = 5, wt = ponderador02_w05)) %>%
+         mutate(quintil = factor(quintil, levels = 1:5, labels = glue::glue('Q{1:5}')))  %>%
   rowwise() %>%
           mutate(confianza = mean(t01_w01, t01_w02, t01_w03, t01_w04, t01_w05, na.rm = TRUE)) %>%
           mutate(Confía= factor(confianza >= 4,
                                         levels = c(TRUE, FALSE),
                                         labels = c('Confía', 'No confía'))) %>%
+  filter(!is_nsnr(quintil))  %>%
+  drop_na(c("quintil")) %>%
   survey_design_elsoc(weights = 'ponderador02_w05') %>%
   group_by(quintil, Confía) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
   filter(!is.na(Confía)) %>%
@@ -1722,18 +1733,20 @@ tab %>% ggplot(aes(y = freq, x = quintil, label = scales::percent(freq, accuracy
 ```{r confianzaveci-quintilescjefe, fig.align='center',fig.cap='Evolución de confianza en los vecinos según quintil de  escolaridad del jefe de hogar'}
 
 territorial$jhescm[territorial$jhescm < 0] <- NA
-territorial$quintil <- quantcut(territorial$jhescm, q=5, na.rm=T, 
-                                labels=c("Q1", "Q2", "Q3", "Q4", "Q5"))
 
 tab<-territorial %>%   
-  filter(!is_nsnr(quintil, t01_w01, t01_w02, t01_w03, t01_w04, t01_w05))  %>%
-  drop_na(c("quintil", "t01_w01", "t01_w02", "t01_w03", "t01_w04", "t01_w05")) %>%
+  filter(!is_nsnr(t01_w01, t01_w02, t01_w03, t01_w04, t01_w05))  %>%
+  drop_na(c("t01_w01", "t01_w02", "t01_w03", "t01_w04", "t01_w05")) %>%
   filter(tipo_atricion==1)  %>%
+  mutate(quintil = xtile(jhescm, n = 5, wt = ponderador02_w05)) %>%
+         mutate(quintil = factor(quintil, levels = 1:5, labels = glue::glue('Q{1:5}')))  %>%
   rowwise() %>%
           mutate(confianza = mean(t01_w01, t01_w02, t01_w03, t01_w04, t01_w05, na.rm = TRUE)) %>%
           mutate(Confía= factor(confianza >= 4,
                                         levels = c(TRUE, FALSE),
                                         labels = c('Confía', 'No confía'))) %>%
+  filter(!is_nsnr(quintil))  %>%
+  drop_na(c("quintil")) %>%
   survey_design_elsoc(weights = 'ponderador02_w05') %>%
   group_by(quintil, Confía) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
   filter(!is.na(Confía)) %>%
@@ -1757,18 +1770,20 @@ tab %>% ggplot(aes(y = freq, x = quintil, label = scales::percent(freq, accuracy
 
 territorial$jhescsd[territorial$jhessd < 0] <- NA
 territorial$jhescsd2<-territorial$jhescsd*territorial$jhescsd
-territorial$quintil <- quantcut(territorial$jhescsd2, q=5, na.rm=T, 
-                                labels=c("Q1", "Q2", "Q3", "Q4", "Q5"))
 
 tab<-territorial %>%   
-  filter(!is_nsnr(quintil, t01_w01, t01_w02, t01_w03, t01_w04, t01_w05))  %>%
-  drop_na(c("quintil", "t01_w01", "t01_w02", "t01_w03", "t01_w04", "t01_w05")) %>%
+  filter(!is_nsnr(t01_w01, t01_w02, t01_w03, t01_w04, t01_w05))  %>%
+  drop_na(c("t01_w01", "t01_w02", "t01_w03", "t01_w04", "t01_w05")) %>%
   filter(tipo_atricion==1)  %>%
+  mutate(quintil = xtile(jhescsd2, n = 5, wt = ponderador02_w05)) %>%
+         mutate(quintil = factor(quintil, levels = 1:5, labels = glue::glue('Q{1:5}')))  %>%
   rowwise() %>%
           mutate(confianza = mean(t01_w01, t01_w02, t01_w03, t01_w04, t01_w05, na.rm = TRUE)) %>%
           mutate(Confía= factor(confianza >= 4,
                                         levels = c(TRUE, FALSE),
                                         labels = c('Confía', 'No confía'))) %>%
+  filter(!is_nsnr(quintil))  %>%
+  drop_na(c("quintil")) %>%
   survey_design_elsoc(weights = 'ponderador02_w05') %>%
   group_by(quintil, Confía) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
   filter(!is.na(Confía)) %>%
@@ -1787,9 +1802,5 @@ tab %>% ggplot(aes(y = freq, x = quintil, label = scales::percent(freq, accuracy
         legend.title = element_blank())
 
 ```
-
-
-
-
 
 
