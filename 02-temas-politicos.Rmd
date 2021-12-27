@@ -321,8 +321,6 @@ elsoc_long_2016_2021 %>%
 
 ### Tipología de participación política
 
-Fue modificada incorporando sólo marchas (c08_02). Además se categorizó como 1 cuando participa en marchas a veces, frecuente o muy frecuentemente y como 0 cuando participa nunca o casi nunca. Junto a lo anterior se probó eliminar las olas 1 y 5 para que tanto participación electoral como en protestas tengan 3 variables cada una, pesando lo mismo en el modelo. Los resultados de esto último eran confusos por lo que se definió mantener las 5 olas de participación en protestas. Los resultados descriptivos para cada clase están con factores de expansión incorporados.
-
 ```{r tip-participacion}
 
 tip_par <- read.csv(file.path('inputs', 'participacion_tipos3.csv'), sep=",", encoding="UTF-8")
