@@ -1429,48 +1429,6 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-
-```{r optimismo-democracia}
-
-
-elsoc_long_2016_2021 %>% 
-  left_join(elsoc_long_2016_2021 %>% 
-              filter(tipo_atricion == 1, !is_nsnr(c46_01, c46_02, c46_03, c46_04)) %>% 
-              mutate(c46_02 = 6 - c46_02,
-                     c46_04 = 6 - c46_04) %>%
-              rowwise() %>%
-              mutate(optimismo = mean(c46_01 , c46_02, c46_03, c46_04, na.rm = TRUE),
-                     optimista = factor(optimismo >= 4,
-                                        levels = c(TRUE, FALSE),
-                                        labels = c('Optimista', 'No optimista'))) %>%
-              select(idencuesta, optimismo, optimista), by = 'idencuesta') %>% 
-  
-  filter(tipo_atricion == 1, !is_nsnr(c46_01, c46_02, c46_03, c46_04), !is_nsnr(c25, c15)) %>%
-  filter(!is.na(optimista)) %>% 
-  mutate(pos_id = factor(car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4; c(-888, -999) = 5"),
-                         levels = 1:5,
-                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica", "NS/NR"))) %>%
-  as_label(ola) %>% 
-  prop(c25 == 1, by = c(ola, optimista, pos_id), na.rm = TRUE) %>% 
-  ggplot(aes(y = prop, x = ola, group = optimista, color = optimista,
-               label = scales::percent(prop, accuracy = .1))) +
-  theme_bw() + 
-  geom_point(size = 1.75) +
-  facet_wrap(.~pos_id) +
-  geom_line() + 
-  geom_text_repel(size = 3) +
-  scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
-  ylab(label = NULL) +
-  xlab(label = NULL) +
-  scale_color_viridis_d(begin = 0, end = .66, direction = 1, option = 'viridis') +
-  theme(legend.position = 'top',   
-        legend.title = element_blank()) +
-  ggtitle(NULL,
-          subtitle = 'Porcentaje que responde...')
-
-```
-
 ```{r graf-cambioconstitucion-optimismo, fig.cap = 'Relevancia de cambio de Constitución según optimismo constitucional'}
 
 tab<-elsoc_wide_2016_2021 %>%   
