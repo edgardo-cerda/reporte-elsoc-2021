@@ -16,6 +16,7 @@ fig:graf-interespolitica-ola
 fig:graf-participciudadana-ola
 fig:graf-idpolitica-interespolitica
 fig:graf-temaspublicos-idpolitica
+fig:tip-participacion
 fig:tipos-posicion-politica2
 fig:tipos-sexo2
 fig:tipos-edad2
@@ -27,7 +28,6 @@ fig:graf-movsocial
 fig:graf-movsociales-movsocial-olas
 fig:graf-participmovsocial-olas
 fig:graf-participmovsociales2-ola
-fig:graf-participacion-estres2021
 fig:graf-justviolencia1-ola
 fig:graf-justviolencia2-ola
 fig:graf-confianzainterpersonal-ola
@@ -150,7 +150,6 @@ opinión-en-temas-de-discusión-pública
 movimientos-sociales-y-acciones-colectivas
 tipología-de-participación-política
 ciclo-de-movilización-política-y-estallido-social
-participación-electoral
 justificación-de-la-violencia
 justificación-de-la-violencia-para-el-control-social
 confianza-interpersonal-y-en-instituciones
