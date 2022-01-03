@@ -760,13 +760,13 @@ tab<- rbind(tab1, tab2, tab3)
 rm(tab1, tab2, tab3)
 
 tab %>%
-  ggplot(aes(x=var, y=freq, color=name)) +
+  ggplot(aes(x=var, y=freq, color=name, label = scales::percent(freq, .1))) +
   geom_line() +
   geom_point() +
-  labs(y="Proporción",
+  labs(y=" ", x= " ",
        title = "Participación según sobrecarga en pandemia") +
-  scale_y_continuous(breaks = scales::pretty_breaks(n = 10), limits=c(0, 1)) +
-  scale_x_continuous(breaks = c(1,2,3), labels=c("Elección 2013", "Elección 2017", "Plebiscito")) +
+  scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
+  scale_x_continuous(breaks = c(1,2,3), labels=c("Elección 2013", "Elección 2017", "Plebiscito 2020")) +
   scale_color_viridis_d(begin = .33, end = .88, option = 'viridis', name  =" ") +
   theme_minimal( ) + theme(legend.position = "bottom", plot.title = element_text(size=12))
 rm(tab)
@@ -1462,13 +1462,13 @@ tab<- rbind(tab1, tab2, tab3, tab4)
 rm(tab1, tab2, tab3, tab4)
 
 tab %>%
-  ggplot(aes(x=var, y=freq, color=optimista)) +
+  ggplot(aes(x=var, y=freq, color=optimista, label = scales::percent(freq, .1))) +
   geom_line() +
   geom_point() +
-  labs(y="Proporción", x="Wave",
+  labs(y=" ", x=" ",
        title = "De acuerdo o totalmente de acuerdo con cambiar la Constitución, según optimismo actual") +
-  scale_y_continuous(breaks = scales::pretty_breaks(n = 10), limits=c(0, 1)) +
-  scale_x_continuous(breaks = c(1,2,3,4), labels=c("W1", "W2", "W3", "W4")) +
+  scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
+  scale_x_continuous(breaks = c(1,2,3,4), labels=c("2016", "2017", "2018", "2019")) +
   scale_color_viridis_d(begin = .33, end = .88, option = 'viridis', name  =" ") +
   theme_minimal( ) + theme(legend.position = "bottom", plot.title = element_text(size=12))
 rm(tab)
@@ -1504,13 +1504,13 @@ tab<- rbind(tab1, tab2, tab3)
 rm(tab1, tab2, tab3)
 
 tab %>%
-  ggplot(aes(x=var, y=freq, color=optimista)) +
+  ggplot(aes(x=var, y=freq, color=optimista, label = scales::percent(freq, .1))) +
   geom_line() +
   geom_point() +
-  labs(y="Proporción",
+  labs(y=" ", x=" ",
        title = "Participación según optimismo actual") +
-  scale_y_continuous(breaks = scales::pretty_breaks(n = 10), limits=c(0, 1)) +
-  scale_x_continuous(breaks = c(1,2,3), labels=c("Elección 2013", "Elección 2017", "Plebiscito")) +
+  scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
+  scale_x_continuous(breaks = c(1,2,3), labels=c("Elección 2013", "Elección 2017", "Plebiscito 2020")) +
   scale_color_viridis_d(begin = .33, end = .88, option = 'viridis', name  =" ") +
   theme_minimal( ) + theme(legend.position = "bottom", plot.title = element_text(size=12))
 rm(tab)
@@ -1555,13 +1555,13 @@ tab<- rbind(tab1, tab2, tab3, tab4, tab5)
 rm(tab1, tab2, tab3, tab4, tab5)
 
 tab %>%
-  ggplot(aes(x=var, y=freq, color=optimista)) +
+  ggplot(aes(x=var, y=freq, color=optimista, label = scales::percent(freq, .1))) +
   geom_line() +
   geom_point() +
-  labs(y="Proporción", x="Wave",
+  labs(y=" ", x=" ",
        title = "Participa frecuente o muy frecuentemente en el movimiento social que más valora") +
-  scale_y_continuous(breaks = scales::pretty_breaks(n = 5), limits=c(0, 0.25)) +
-  scale_x_continuous(breaks = c(1,2,3,4,5), labels=c("W1", "W2", "W3", "W4", "W5")) +
+  scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
+  scale_x_continuous(breaks = c(1,2,3,4,5), labels=c("2016", "2017", "2018", "2019", "2021")) +
   scale_color_viridis_d(begin = .33, end = .88, option = 'viridis', name  =" ") +
   theme_minimal( ) + theme(legend.position = "bottom", plot.title = element_text(size=12))
 rm(tab)
