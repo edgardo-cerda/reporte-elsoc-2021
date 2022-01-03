@@ -321,7 +321,7 @@ elsoc_long_2016_2021 %>%
 
 ### Tipología de participación política
 
-```{r tip-participacion}
+```{r tip-participacion, fig.cap = 'Perfiles de participación política'}
 
 tip_par <- read.csv(file.path('inputs', 'participacion_tipos3.csv'), sep=",", encoding="UTF-8")
 tip_par <- tip_par[c("idencuesta", "class_part_4", "par_mov_w01", "par_mov_w02", "par_mov_w03", "par_mov_w04", "par_mov_w05")]
@@ -391,15 +391,15 @@ tip_par %>%
   mutate(pos_id = factor(car::recode(c15_w05, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
                          levels = 1:4,
                          labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
-group_by(pos_id, class_part_4) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
+group_by(class_part_4, pos_id) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
     filter(!is.na(pos_id)) %>% 
-ggplot(aes(x = freq, y = pos_id, fill = class_part_4, label = scales::percent(freq, .1))) + 
+ggplot(aes(x = freq, y = class_part_4, fill = pos_id, label = scales::percent(freq, .1))) + 
   geom_bar(stat = 'identity', position = 'stack') +
-  labs(y="Identificación política", x="",
-       title = "Perfil de participación según posición política", fill = "") +
+  labs(y=" ", x=" ",
+       title = "Posición política según perfil de participación", fill = "") +
   scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
   guides(fill = guide_legend(reverse = TRUE)) +
-  geom_text(position = position_stack(vjust = .5), size = 3,
+  geom_text(position = position_stack(vjust = .5), size = 2,
             color = rep(c('white', 'white', 'black', 'black'), 4)) +
   theme_bw() + scale_fill_viridis_d(end = .85, option = 'viridis') +
   theme(axis.text.x = element_text(size = rel(.9)),
@@ -422,15 +422,15 @@ tip_par %>%
   mutate(pos_id = factor(car::recode(m0_sexo_w01, recodes = "1 = 1; 2 = 2"),
                          levels = 1:2,
                          labels = c("Hombre", "Mujer"))) %>%
-group_by(pos_id, class_part_4) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
-ggplot(aes(x = freq, y = pos_id, fill = class_part_4, label = scales::percent(freq, .1))) + 
+group_by(class_part_4, pos_id) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
+ggplot(aes(x = freq, y = class_part_4, fill = pos_id, label = scales::percent(freq, .1))) + 
   geom_bar(stat = 'identity', position = 'stack') +
-  labs(y="Sexo", x="",
-       title = "Perfil de participación según sexo", fill = "") +
+  labs(y="", x="",
+       title = "Sexo según perfil de participación", fill = "") +
   scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
   guides(fill = guide_legend(reverse = TRUE)) +
   geom_text(position = position_stack(vjust = .5), size = 3,
-            color = rep(c('white', 'white', 'black', 'black'), 2)) +
+            color = rep(c('white', 'black'), 4)) +
   theme_bw() + scale_fill_viridis_d(end = .85, option = 'viridis') +
   theme(axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
@@ -454,11 +454,11 @@ tip_par %>%
   mutate(pos_id = factor(car::recode(m0_edad_w05, "18:29 = 1; 30:49 = 2; 50:64 = 3; 65:150 = 4"),
                         levels = 1:4,
                         labels = c('18-29', '30-49', '50-64', '65 o más'))) %>%
-group_by(pos_id, class_part_4) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
-ggplot(aes(x = freq, y = pos_id, fill = class_part_4, label = scales::percent(freq, .1))) + 
+group_by(class_part_4, pos_id) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
+ggplot(aes(x = freq, y = class_part_4, fill = pos_id, label = scales::percent(freq, .1))) + 
   geom_bar(stat = 'identity', position = 'stack') +
-  labs(y="Tramo etario", x="",
-       title = "Perfil de participación según edad", fill = "") +
+  labs(y="", x="",
+       title = "Edad según perfil de participación", fill = "") +
   scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
   guides(fill = guide_legend(reverse = TRUE)) +
   geom_text(position = position_stack(vjust = .5), size = 3,
@@ -484,15 +484,15 @@ tip_par %>%
   mutate(pos_id = factor(car::recode(c13_w05, "1:2 = 1; 3 = 2; 4:5 = 3"),
                         levels = 1:3,
                         labels = c('Nada o poco interesado', 'Algo interesado', 'Bastante o muy interesado'))) %>%
-group_by(pos_id, class_part_4) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
-ggplot(aes(x = freq, y = pos_id, fill = class_part_4, label = scales::percent(freq, .1))) + 
+group_by(class_part_4, pos_id) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
+ggplot(aes(x = freq, y = class_part_4, fill = pos_id, label = scales::percent(freq, .1))) + 
   geom_bar(stat = 'identity', position = 'stack') +
-  labs(y="Interés en la política", x="",
-       title = "Perfil de participación según interés en la política", fill = "") +
+  labs(y="", x="",
+       title = "Interés en la política según perfil de participación", fill = "") +
   scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
   guides(fill = guide_legend(reverse = TRUE)) +
   geom_text(position = position_stack(vjust = .5), size = 3,
-            color = rep(c('white', 'white', 'black', 'black'), 3)) +
+            color = rep(c('white', 'white', 'black'), 4)) +
   theme_bw() + scale_fill_viridis_d(end = .85, option = 'viridis') +
   theme(axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
@@ -514,16 +514,16 @@ tip_par %>%
   mutate(pos_id = factor(car::recode(c01_w05, "1:2 = 1; 3 = 2; 4:5 = 3"),
                         levels = 1:3,
                         labels = c('Nada o poco satisfecho', 'Algo satisfecho', 'Bastante o muy satisfecho'))) %>%
-group_by(pos_id, class_part_4) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
+group_by(class_part_4, pos_id) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
    filter(!is.na(pos_id)) %>%
-ggplot(aes(x = freq, y = pos_id, fill = class_part_4, label = scales::percent(freq, .1))) + 
+ggplot(aes(x = freq, y = class_part_4, fill = pos_id, label = scales::percent(freq, .1))) + 
   geom_bar(stat = 'identity', position = 'stack') +
-  labs(y="Satisfacción con la democracia", x="",
-       title = "Perfil de participación por satisfacción con la democracia", fill = "") +
+  labs(y="", x="",
+       title = "Satisfacción con la democracia según perfil de participación", fill = "") +
   scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
   guides(fill = guide_legend(reverse = TRUE)) +
   geom_text(position = position_stack(vjust = .5), size = 3,
-            color = rep(c('white', 'white', 'black', 'black'), 3)) +
+            color = rep(c('white', 'white', 'black'), 4)) +
   theme_bw() + scale_fill_viridis_d(end = .85, option = 'viridis') +
   theme(axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
@@ -548,15 +548,15 @@ tip_par %>%
                                    'Un gobierno autoritario puede ser preferible',
                                    'Da lo mismo',
                                    'Ninguna'))) %>%
-group_by(pos_id, class_part_4) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
+group_by(class_part_4, pos_id) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
    filter(!is.na(pos_id)) %>%
-ggplot(aes(x = freq, y = pos_id, fill = class_part_4, label = scales::percent(freq, .1))) + 
+ggplot(aes(x = freq, y = class_part_4, fill = pos_id, label = scales::percent(freq, .1))) + 
   geom_bar(stat = 'identity', position = 'stack') +
-  labs(y="Preferencia por democracia", x="",
-       title = "Perfil de participación por legitimidad democrática", fill = "") +
+  labs(y="", x="",
+       title = "Legitimidad democrática según perfil de participación", fill = "") +
   scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
   guides(fill = guide_legend(reverse = TRUE)) +
-  geom_text(position = position_stack(vjust = .5), size = 3,
+  geom_text(position = position_stack(vjust = .5), size = 2,
             color = rep(c('white', 'white', 'black', 'black'), 4)) +
   theme_bw() + scale_fill_viridis_d(end = .85, option = 'viridis') +
   theme(axis.text.x = element_text(size = rel(.9)),
@@ -581,16 +581,16 @@ tip_par %>%
  mutate(pos_id = factor(optimismo >= 4,
                         levels = c(TRUE, FALSE),
                         labels = c('Optimista', 'No optimista'))) %>%
-group_by(pos_id, class_part_4) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
+group_by(class_part_4, pos_id) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
    filter(!is.na(pos_id)) %>%
-ggplot(aes(x = freq, y = pos_id, fill = class_part_4, label = scales::percent(freq, .1))) + 
+ggplot(aes(x = freq, y = class_part_4, fill = pos_id, label = scales::percent(freq, .1))) + 
   geom_bar(stat = 'identity', position = 'stack') +
-  labs(y="Optimismo constitucional", x="",
-       title = "Perfil de participación por optimismo constitucional", fill = "") +
+  labs(y="", x="",
+       title = "Optimismo constitucional según perfil de participación", fill = "") +
   scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
   guides(fill = guide_legend(reverse = TRUE)) +
   geom_text(position = position_stack(vjust = .5), size = 3,
-            color = rep(c('white', 'white', 'black', 'black'), 2)) +
+            color = rep(c('white', 'black'), 4)) +
   theme_bw() + scale_fill_viridis_d(end = .85, option = 'viridis') +
   theme(axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
@@ -730,46 +730,6 @@ elsoc_long_2016_2021 %>%
   ggtitle(label = NULL,
           subtitle = 'Porcentaje que participa Frecuentemente o Muy frecuentemente')
 
-```
-
-## Participación electoral
-
-```{r graf-participacion-estres2021, fig.cap='Participación electoral según estres financiero en 2021'}
-
-tab <-elsoc_wide_2016_2021 %>%   
-  filter(!is_nsnr(m43_w05), 
-         !is_nsnr(c11_w01, c11_w03, c43_w05)) %>%
-          mutate(name = factor(m43_w05,
-          levels = c(1,2,3,4,5),
-          labels = c('Nada sobrecargado', 'No muy sobrecargado', 'Algo sobrecargado', 'Bastante sobrecargado', 'Muy sobrecargado'))) %>%
-  mutate(c11_w01 = factor(car::recode(c11_w01, recodes = "2 = 1; 1 = 0; 3 = 0"))) %>%
-  mutate(c11_w03 = factor(car::recode(c11_w03, recodes = "2 = 1; 1 = 0; 3 = 0"))) %>%
-  mutate(c43_w05 = factor(car::recode(c43_w05, recodes = "2 = 1; 1 = 0; 3 = 0"))) %>%
-  filter(tipo_atricion == 1) %>% filter(!is.na(m43_w05))
-
-tab1<-tab %>% group_by(name, c11_w01) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
-  mutate(var = 1) %>% rename(participa=c11_w01) %>%
-  filter(!is.na(participa)) %>% filter(participa==1)
-tab2<-tab %>% group_by(name, c11_w03) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
-  mutate(var = 2) %>% rename(participa=c11_w03) %>%
-  filter(!is.na(participa)) %>% filter(participa==1)
-tab3<-tab %>% group_by(name, c43_w05) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
-  mutate(var = 3) %>% rename(participa=c43_w05) %>%
-  filter(!is.na(participa)) %>% filter(participa==1)
-tab<- rbind(tab1, tab2, tab3)
-rm(tab1, tab2, tab3)
-
-tab %>%
-  ggplot(aes(x=var, y=freq, color=name, label = scales::percent(freq, .1))) +
-  geom_line() +
-  geom_point() +
-  labs(y=" ", x= " ",
-       title = "Participación según sobrecarga en pandemia") +
-  scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
-  scale_x_continuous(breaks = c(1,2,3), labels=c("Elección 2013", "Elección 2017", "Plebiscito 2020")) +
-  scale_color_viridis_d(begin = .33, end = .88, option = 'viridis', name  =" ") +
-  theme_minimal( ) + theme(legend.position = "bottom", plot.title = element_text(size=12))
-rm(tab)
 ```
 
 ## Justificación de la Violencia
