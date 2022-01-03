@@ -274,6 +274,89 @@ g8.6 <- datos.8.6 %>%
 g8.6
 ```
 
+```{r confvecinos-sexo, fig.align='center', fig.cap='En términos generales, ¿cuánto confía usted en sus vecinos? según sexo.'}
+
+load_elsoc('territorial-2017')
+territorial <- merge(elsoc_wide_2016_2021, elsoc_terr_2017, by="idencuesta")
+
+tab<-territorial %>%   
+  filter(!is_nsnr(m0_sexo_w01, t01_w01, t01_w02, t01_w03, t01_w04, t01_w05))  %>%
+  drop_na(c("m0_sexo_w01", "t01_w01", "t01_w02", "t01_w03", "t01_w04", "t01_w05")) %>%
+  filter(tipo_atricion==1) %>%
+  mutate(t01_w01 = factor(car::recode(t01_w01, recodes = "4:5 = 1; 1:3 = 0"))) %>%
+  mutate(t01_w02 = factor(car::recode(t01_w02, recodes = "4:5 = 1; 1:3 = 0"))) %>%
+  mutate(t01_w03 = factor(car::recode(t01_w03, recodes = "4:5 = 1; 1:3 = 0"))) %>%
+  mutate(t01_w04 = factor(car::recode(t01_w04, recodes = "4:5 = 1; 1:3 = 0"))) %>%
+  mutate(t01_w05 = factor(car::recode(t01_w05, recodes = "4:5 = 1; 1:3 = 0"))) %>%
+  survey_design_elsoc(weights = 'ponderador02_w05') %>%
+  mutate(m0_sexo_w01 = factor(car::recode(m0_sexo_w01, recodes = "1 = 1; 2 = 2"),
+                              levels = 1:2,
+                              labels = c('Hombre', "Mujer")))
+
+tab1<- tab %>% group_by(m0_sexo_w01, t01_w01) %>%
+  summarise (n = n()) %>%
+  mutate(freq = n / sum(n)) %>%
+  mutate(var = 1) %>%
+  rename(Confía=t01_w01) %>% 
+  filter(!is.na(Confía)) %>%
+  filter(!is.na(m0_sexo_w01)) %>% 
+  filter(Confía==1)
+
+tab2<-tab %>% 
+  group_by(m0_sexo_w01, t01_w02) %>%
+  summarise (n = n()) %>%
+  mutate(freq = n / sum(n)) %>%
+  mutate(var = 2) %>%
+  rename(Confía=t01_w02) %>%
+  filter(!is.na(Confía)) %>%
+  filter(!is.na(m0_sexo_w01)) %>%
+  filter(Confía==1)
+
+
+tab3<-tab %>% group_by(m0_sexo_w01, t01_w03) %>%
+  summarise (n = n()) %>% 
+  mutate(freq = n / sum(n)) %>%
+  mutate(var = 3) %>%
+  rename(Confía=t01_w03) %>%
+  filter(!is.na(Confía)) %>%
+  filter(!is.na(m0_sexo_w01)) %>%
+  filter(Confía==1)
+
+tab4<-tab %>% group_by(m0_sexo_w01, t01_w04) %>%
+  summarise (n = n()) %>%
+  mutate(freq = n / sum(n)) %>%
+  mutate(var = 4) %>% 
+  rename(Confía=t01_w04) %>%
+  filter(!is.na(Confía)) %>%
+  filter(!is.na(m0_sexo_w01)) %>%
+  filter(Confía==1)
+
+tab5<-tab %>% group_by(m0_sexo_w01, t01_w05) %>%
+  summarise (n = n()) %>%
+  mutate(freq = n / sum(n)) %>%
+  mutate(var = 5) %>% 
+  rename(Confía=t01_w05) %>% 
+  filter(!is.na(Confía)) %>%
+  filter(!is.na(m0_sexo_w01)) %>% 
+  filter(Confía==1)
+
+tab<- rbind(tab1, tab2, tab3, tab4, tab5)
+
+ggplot(data= tab, aes(x=var, y=freq, color=m0_sexo_w01)) +
+  geom_line(size = 1) +
+  geom_point(size = 1.8) +
+  theme_bw() +   
+  scale_color_viridis_d(begin = 0, end = .66, direction = 1, option = 'viridis') +
+  labs(y="", x="",
+       title = "") +
+  scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
+  scale_x_continuous(breaks = c(1,2,3,4,5), labels=c("2016", "2017", "2018", "2019", "2021")) +
+  geom_text_repel(data=tab, aes(label=paste0(round((freq*100),1),"%"),  y=freq),
+                  size = 3.5,  inherit.aes = TRUE)+
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+```
+
 <!-- ### 8.7 En términos generales, ¿cuánto confía usted en sus vecinos? Según ola del estudio y zona geográfica. Suma de Respuestas “Bastante” y “Mucho”.  -->
 ```{r vecinos-zona, fig.align='center', fig.cap='En términos generales, ¿cuánto confía usted en sus vecinos? Según ola del estudio y zona geográfica. Suma de Respuestas “Bastante” y “Mucho”.'}
 datos.8.7 <- elsoc_long_2016_2021 %>% 
@@ -305,40 +388,516 @@ g8.7
 
 <!-- ### 8.8 En términos generales, ¿cuánto confía usted en sus vecinos? Según ola del estudio y quintil de ingreso. Suma de Respuestas “Bastante” y “Mucho”. -->
 ```{r vecinos-quintil, fig.align='center', fig.cap='En términos generales, ¿cuánto confía usted en sus vecinos? Según ola del estudio y quintil de ingreso. Suma de Respuestas “Bastante” y “Mucho”.'}
-datos.8.8 <- elsoc_long_2016_2021 %>% 
-  filter(tipo_atricion == 1 & muestra == 1 & ola %in% c(4,5) & !t01 %in% c(-888, -999)) %>% 
-  mutate(m30 = as.numeric(car::recode(m30,"1=110000;2=251000;3=305000;4=355000;5=400000;
-                                           6=445000;7=490000;8=535000;9=585000;10=640000;11=700000;12=765000;
-                                           13=845000;14=935000;15=1040000;16=1180000;17=1375000;18=1670000;
-                                           19=2275000;20=2700000;NA=NA")),
-         m30b = as.numeric(car::recode(m30b, "1 = 125000; 2 = 300000; 3 = 400000; 4 = 620000; 5 = 1100000; NA = NA")),
-         m29_imp = ifelse(!is.na(m29), m29, ifelse(ola == 5, m30b ,m30)),
-         n_hogar = case_when(ola == 1 ~ nhogar1, ola == 2 ~ m46_nhogar,
-                             ola == 3 ~ m54, ola == 4 ~ m54, ola == 5 ~ m54),
-         ing_pc = (m29_imp/n_hogar)) %>%
-  group_by(ola) %>% 
-  mutate(quintil = factor(ntile(-desc(ing_pc), 5), 
-                          levels = c(1,2,3,4,5),
-                          labels = c('Q1', 'Q2', 'Q3', 'Q4', 'Q5'))) %>% 
-  prop(x = t01 %in% c(4, 5), by = c(ola, quintil), na.rm = TRUE) %>% 
-  sjlabelled::as_label(ola)
+territorial$quintil <- quantcut(territorial$m29_w05, q=5, na.rm=T, 
+                                labels=c("Q1", "Q2", "Q3", "Q4", "Q5"))
 
-g8.8 <- datos.8.8 %>% 
-  ggplot(aes(y = prop, x = quintil, fill = ola, 
-             label = scales::percent(prop, accuracy = .1))) + 
-  theme_bw() + 
-  geom_col(position = 'Dodge') +
+tab<-territorial %>%   
+  filter(!is_nsnr(quintil, t01_w01, t01_w02, t01_w03, t01_w04, t01_w05))  %>%
+  drop_na(c("quintil", "t01_w01", "t01_w02", "t01_w03", "t01_w04", "t01_w05")) %>%
+  filter(tipo_atricion==1) %>%
+  survey_design_elsoc(weights = 'ponderador02_w05') %>%
+  mutate(t01_w01 = factor(car::recode(t01_w01, recodes = "4:5 = 1; 1:3 = 0"))) %>%
+  mutate(t01_w02 = factor(car::recode(t01_w02, recodes = "4:5 = 1; 1:3 = 0"))) %>%
+  mutate(t01_w03 = factor(car::recode(t01_w03, recodes = "4:5 = 1; 1:3 = 0"))) %>%
+  mutate(t01_w04 = factor(car::recode(t01_w04, recodes = "4:5 = 1; 1:3 = 0"))) %>%
+  mutate(t01_w05 = factor(car::recode(t01_w05, recodes = "4:5 = 1; 1:3 = 0")))
+
+tab1<-tab %>% group_by(quintil, t01_w01) %>% 
+  summarise (n = n()) %>% 
+  mutate(freq = n / sum(n)) %>%
+  mutate(var = 1) %>% 
+  rename(Confía=t01_w01) %>%
+  filter(!is.na(Confía)) %>%
+  filter(!is.na(quintil)) %>% 
+  filter(Confía==1) %>%
+  filter(quintil=="Q1" | quintil=="Q5")
+
+tab2<-tab %>% group_by(quintil, t01_w02) %>% 
+  summarise (n = n()) %>% 
+  mutate(freq = n / sum(n)) %>%
+  mutate(var = 2) %>% 
+  rename(Confía=t01_w02) %>% 
+  filter(!is.na(Confía)) %>%
+  filter(!is.na(quintil)) %>% 
+  filter(Confía==1) %>%
+  filter(quintil=="Q1" | quintil=="Q5")
+
+tab3<-tab %>% group_by(quintil, t01_w03) %>%
+  summarise (n = n()) %>% 
+  mutate(freq = n / sum(n)) %>%
+  mutate(var = 3) %>%
+  rename(Confía=t01_w03) %>% 
+  filter(!is.na(Confía)) %>%
+  filter(!is.na(quintil)) %>% 
+  filter(Confía==1) %>%
+  filter(quintil=="Q1" | quintil=="Q5")
+
+tab4<-tab %>% group_by(quintil, t01_w04) %>% 
+  summarise (n = n()) %>%
+  mutate(freq = n / sum(n)) %>%
+  mutate(var = 4) %>% 
+  rename(Confía=t01_w04) %>% 
+  filter(!is.na(Confía)) %>%
+  filter(!is.na(quintil)) %>% 
+  filter(Confía==1) %>%
+  filter(quintil=="Q1" | quintil=="Q5")
+
+tab5<-tab %>% group_by(quintil, t01_w05) %>%
+  summarise (n = n()) %>%
+  mutate(freq = n / sum(n)) %>%
+  mutate(var = 5) %>% 
+  rename(Confía=t01_w05) %>%
+  filter(!is.na(Confía)) %>%
+  filter(!is.na(quintil)) %>%
+  filter(Confía==1) %>%
+  filter(quintil=="Q1" | quintil=="Q5")
+
+tab<- rbind(tab1, tab2, tab3, tab4, tab5)
+
+
+tab %>%
+  ggplot(aes(x=var, y=freq, color=quintil)) +
+  geom_line(size = 1) +
+  geom_point(size = 1.8) +
+  theme_bw() +   
+  scale_color_viridis_d(begin = 0, end = .66, direction = 1, option = 'viridis') +
+  labs(y="", x="",
+       title = "") +
+  scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
+  scale_x_continuous(breaks = c(1,2,3,4,5), labels=c("2016", "2017", "2018", "2019", "2021")) +
+  geom_text_repel(data=tab, aes(label=paste0(round((freq*100),1),"%"),  y=freq),
+                  size = 3.5,  inherit.aes = TRUE)+
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+```
+
+```{r confianzaveci-quintilesc, fig.align='center',fig.cap='Confianza en los vecinos según quintil de  escolaridad'}
+
+territorial$escolaridad[territorial$escolaridad < 0] <- NA
+
+tab<-territorial %>%   
+  filter(!is_nsnr(t01_w01, t01_w02, t01_w03, t01_w04, t01_w05))  %>%
+  drop_na(c("t01_w01", "t01_w02", "t01_w03", "t01_w04", "t01_w05")) %>%
+  filter(tipo_atricion==1)  %>%
+  mutate(quintil = xtile(escolaridad, n = 5, wt = ponderador02_w05)) %>%
+         mutate(quintil = factor(quintil, levels = 1:5, labels = glue::glue('Q{1:5}')))  %>%
+  rowwise() %>%
+          mutate(confianza = mean(t01_w01, t01_w02, t01_w03, t01_w04, t01_w05, na.rm = TRUE)) %>%
+          mutate(Confía= factor(confianza >= 4,
+                                        levels = c(TRUE, FALSE),
+                                        labels = c('Confía', 'No confía'))) %>%
+  filter(!is_nsnr(quintil))  %>%
+  drop_na(c("quintil")) %>%
+  survey_design_elsoc(weights = 'ponderador02_w05') %>%
+  group_by(quintil, Confía) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
+  filter(!is.na(Confía)) %>%
+  filter(!is.na(quintil)) %>% filter(Confía=="Confía")
+  
+tab %>% ggplot(aes(y = freq, x = quintil, label = scales::percent(freq, accuracy = .1))) +
+  theme_bw() +   
+  geom_col(fill = viridis(1, begin = .5)) +
+  geom_text(position = position_dodge(.9), vjust = -.5, size = 3) +
   scale_y_continuous(labels = scales::percent,
-                     limits = c(0, 1)) +
+                     limits = c(0,1)) +
+  labs(y="", x="",
+       title = "Confianza en los vecinos según quintil de escolaridad en zona censal") +
+  scale_color_viridis_d(end = .66, direction = 1, option = 'viridis') +
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+```
+
+```{r confianzaveci-quintilinm, fig.align='center',fig.cap='Confianza en los vecinos según quintil de inmigrantes'}
+
+territorial$inmigrante[territorial$inmigrante < 0] <- NA
+territorial$p_inmigracion <- territorial$inmigrante/territorial$hbtes
+
+tab<-territorial %>%   
+  filter(!is_nsnr(t01_w01, t01_w02, t01_w03, t01_w04, t01_w05))  %>%
+  drop_na(c("t01_w01", "t01_w02", "t01_w03", "t01_w04", "t01_w05")) %>%
+  filter(tipo_atricion==1)  %>%
+  mutate(quintil = xtile(p_inmigracion, n = 5, wt = ponderador02_w05)) %>%
+         mutate(quintil = factor(quintil, levels = 1:5, labels = glue::glue('Q{1:5}')))  %>%
+  rowwise() %>%
+          mutate(confianza = mean(t01_w01, t01_w02, t01_w03, t01_w04, t01_w05, na.rm = TRUE)) %>%
+          mutate(Confía= factor(confianza >= 4,
+                                        levels = c(TRUE, FALSE),
+                                        labels = c('Confía', 'No confía'))) %>%
+  filter(!is_nsnr(quintil))  %>%
+  drop_na(c("quintil")) %>%
+  survey_design_elsoc(weights = 'ponderador02_w05') %>%
+  group_by(quintil, Confía) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
+  filter(!is.na(Confía)) %>%
+  filter(!is.na(quintil)) %>% filter(Confía=="Confía")
+  
+  
+tab %>% ggplot(aes(y = freq, x = quintil, label = scales::percent(freq, accuracy = .1))) +
+  theme_bw() +   
+  geom_col(fill = viridis(1, begin = .5)) +
+  geom_text(position = position_dodge(.9), vjust = -.5, size = 3) +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0,1)) +
+  labs(y="", x="",
+       title = "Confianza en los vecinos según quintil de proporción de inmigrantes en zona censal") +
+  scale_color_viridis_d(end = .66, direction = 1, option = 'viridis') +
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+```
+
+
+```{r frecvisitavecinos-ola, fig.align='center', fig.cap='Frecuencia de visita a vecinos según ola de estudio.'}
+tab <- elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & muestra == 1 & !c07_01 %in% c(-888, -999)) %>% 
+  mutate(barrio_conf = factor(car::recode(c07_01, "1 = 1; 2 = 2; 3 = 3"),
+                               levels = c(1,2,3),
+                               labels = c('Nunca', 'Una o dos veces', 'Mas de dos veces'))) %>%
+  sjlabelled::as_label(ola) %>%
+  prop(x = barrio_conf, by = ola, na.rm = TRUE)
+
+tab %>% 
+  ggplot(aes(y = prop, x = ola, fill = barrio_conf, 
+             label = as.character(scales::percent(prop, accuracy = .1)))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  scale_fill_viridis_d(begin = .11, end = .88, direction = 1, option = 'viridis') +
+  geom_text(position = position_stack(vjust = .5),
+            size= 2.75, color = rep(c('white', 'white', 'black'), 5)) + 
   theme(legend.position = 'top',
-        legend.title = element_blank()) +
-  geom_text(vjust = -0.8,
-            position = position_dodge(width = .9),
-            size= 2.75)
-g8.8
+        legend.title = element_blank())
+
+```
+
+```{r frecvisita-sexo, fig.align='center',fig.cap='Frecuencia de visita vecinos según sexo'}
+
+tab<-territorial %>%   
+  filter(!is_nsnr(m0_sexo_w01, c07_01_w01, c07_01_w02, c07_01_w03, c07_01_w04, c07_01_w05))  %>%
+  drop_na(c("m0_sexo_w01", "c07_01_w01", "c07_01_w02", "c07_01_w03", "c07_01_w04", "c07_01_w05")) %>%
+  filter(tipo_atricion==1) %>%
+  mutate(c07_01_w01 = factor(car::recode(c07_01_w01, recodes = "2:3 = 1; 1 = 0"))) %>%
+  mutate(c07_01_w02 = factor(car::recode(c07_01_w02, recodes = "2:3 = 1; 1 = 0"))) %>%
+  mutate(c07_01_w03 = factor(car::recode(c07_01_w03, recodes = "2:3 = 1; 1 = 0"))) %>%
+  mutate(c07_01_w04 = factor(car::recode(c07_01_w04, recodes = "2:3 = 1; 1 = 0"))) %>%
+  mutate(c07_01_w05 = factor(car::recode(c07_01_w05, recodes = "2:3 = 1; 1 = 0"))) %>%
+  survey_design_elsoc(weights = 'ponderador02_w05') %>%
+  mutate(m0_sexo_w01 = factor(car::recode(m0_sexo_w01, recodes = "1 = 1; 2 = 2"),
+                              levels = 1:2,
+                              labels = c('Hombre', "Mujer")))
+
+tab1<- tab %>% group_by(m0_sexo_w01, c07_01_w01) %>%
+  summarise (n = n()) %>%
+  mutate(freq = n / sum(n)) %>%
+  mutate(var = 1) %>%
+  rename(Visita=c07_01_w01) %>% 
+  filter(!is.na(Visita)) %>%
+  filter(!is.na(m0_sexo_w01)) %>% 
+  filter(Visita==1)
+
+tab2<-tab %>% 
+  group_by(m0_sexo_w01, c07_01_w02) %>%
+  summarise (n = n()) %>%
+  mutate(freq = n / sum(n)) %>%
+  mutate(var = 2) %>%
+  rename(Visita=c07_01_w02) %>%
+  filter(!is.na(Visita)) %>%
+  filter(!is.na(m0_sexo_w01)) %>%
+  filter(Visita==1)
+
+
+tab3<-tab %>% group_by(m0_sexo_w01, c07_01_w03) %>%
+  summarise (n = n()) %>% 
+  mutate(freq = n / sum(n)) %>%
+  mutate(var = 3) %>%
+  rename(Visita=c07_01_w03) %>%
+  filter(!is.na(Visita)) %>%
+  filter(!is.na(m0_sexo_w01)) %>%
+  filter(Visita==1)
+
+tab4<-tab %>% group_by(m0_sexo_w01, c07_01_w04) %>%
+  summarise (n = n()) %>%
+  mutate(freq = n / sum(n)) %>%
+  mutate(var = 4) %>% 
+  rename(Visita=c07_01_w04) %>%
+  filter(!is.na(Visita)) %>%
+  filter(!is.na(m0_sexo_w01)) %>%
+  filter(Visita==1)
+
+tab5<-tab %>% group_by(m0_sexo_w01, c07_01_w05) %>%
+  summarise (n = n()) %>%
+  mutate(freq = n / sum(n)) %>%
+  mutate(var = 5) %>% 
+  rename(Visita=c07_01_w05) %>% 
+  filter(!is.na(Visita)) %>%
+  filter(!is.na(m0_sexo_w01)) %>% 
+  filter(Visita==1)
+
+tab<- rbind(tab1, tab2, tab3, tab4, tab5)
+
+ggplot(data= tab, aes(x=var, y=freq, color=m0_sexo_w01)) +
+  geom_line(size = 1) +
+  geom_point(size = 1.8) +
+  theme_bw() +   
+  scale_color_viridis_d(begin = 0, end = .66, direction = 1, option = 'viridis') +
+  labs(y="", x="",
+       title = "") +
+  scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
+  scale_x_continuous(breaks = c(1,2,3,4,5), labels=c("2016", "2017", "2018", "2019", "2021")) +
+  geom_text_repel(data=tab, aes(label=paste0(round((freq*100),1),"%"),  y=freq),
+                  size = 3.5,  inherit.aes = TRUE)+
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+```
+
+```{r frecvisita-zona, fig.align='center',fig.cap='Frecuencia de visita vecinos por zona'}
+
+tab<-territorial %>%   
+  filter(!is_nsnr(estrato_w05, c07_01_w01, c07_01_w02, c07_01_w03, c07_01_w04, c07_01_w05))  %>%
+  drop_na(c("estrato_w05","c07_01_w01", "c07_01_w02", "c07_01_w03", "c07_01_w04", "c07_01_w05")) %>%
+  filter(tipo_atricion==1) %>%
+  survey_design_elsoc(weights = 'ponderador02_w05') %>%
+  mutate(c07_01_w01 = factor(car::recode(c07_01_w01, recodes = "2:3 = 1; 1 = 0"))) %>%
+  mutate(c07_01_w02 = factor(car::recode(c07_01_w02, recodes = "2:3 = 1; 1 = 0"))) %>%
+  mutate(c07_01_w03 = factor(car::recode(c07_01_w03, recodes = "2:3 = 1; 1 = 0"))) %>%
+  mutate(c07_01_w04 = factor(car::recode(c07_01_w04, recodes = "2:3 = 1; 1 = 0"))) %>%
+  mutate(c07_01_w05 = factor(car::recode(c07_01_w05, recodes = "2:3 = 1; 1 = 0"))) %>%
+  mutate(estrato_w05 = factor(car::recode(estrato_w05, recodes = "1=1; 2=2; 3=3; 4=4; 5=5; 6=6"),
+                              levels = 1:6,
+                              labels = c("Gran Santiago", "Gran Valparaíso", "Gran Concepción", "Ciudades grandes",
+                                         "Ciudades medianas","Ciudades pequeñas")))
+
+tab1<- tab %>% group_by(estrato_w05, c07_01_w01) %>%
+  summarise (n = n()) %>%
+  mutate(freq = n / sum(n)) %>%
+  mutate(var = 1) %>%
+  rename(Visita=c07_01_w01) %>% 
+  filter(!is.na(Visita)) %>%
+  filter(!is.na(estrato_w05)) %>%
+  filter(Visita==1) %>%
+  filter(estrato_w05=="Gran Santiago" | estrato_w05=="Gran Concepción" | estrato_w05=="Ciudades pequeñas")
+
+tab2<-tab %>% group_by(estrato_w05, c07_01_w02) %>%
+  summarise (n = n()) %>%
+  mutate(freq = n / sum(n)) %>%
+  mutate(var = 2) %>% 
+  rename(Visita=c07_01_w02) %>% 
+  filter(!is.na(Visita)) %>%
+  filter(!is.na(estrato_w05)) %>% 
+  filter(Visita==1) %>%
+  filter(estrato_w05=="Gran Santiago" | estrato_w05=="Gran Concepción" | estrato_w05=="Ciudades pequeñas")
+
+tab3<-tab %>% group_by(estrato_w05, c07_01_w03) %>%
+  summarise (n = n()) %>%
+  mutate(freq = n / sum(n)) %>%
+  mutate(var = 3) %>%
+  rename(Visita=c07_01_w03) %>%
+  filter(!is.na(Visita)) %>%
+  filter(!is.na(estrato_w05)) %>%
+  filter(Visita==1) %>%
+  filter(estrato_w05=="Gran Santiago" | estrato_w05=="Gran Concepción" | estrato_w05=="Ciudades pequeñas")
+
+tab4<-tab %>% group_by(estrato_w05, c07_01_w04) %>% 
+  summarise (n = n()) %>% 
+  mutate(freq = n / sum(n)) %>%
+  mutate(var = 4) %>%
+  rename(Visita=c07_01_w04) %>% 
+  filter(!is.na(Visita)) %>%
+  filter(!is.na(estrato_w05)) %>%
+  filter(Visita==1) %>%
+  filter(estrato_w05=="Gran Santiago" | estrato_w05=="Gran Concepción" | estrato_w05=="Ciudades pequeñas")
+
+tab5<-tab %>% group_by(estrato_w05, c07_01_w05) %>%
+  summarise (n = n()) %>% 
+  mutate(freq = n / sum(n)) %>%
+  mutate(var = 5) %>% 
+  rename(Visita=c07_01_w05) %>% 
+  filter(!is.na(Visita)) %>%
+  filter(!is.na(estrato_w05)) %>% 
+  filter(Visita==1) %>%
+  filter(estrato_w05=="Gran Santiago" | estrato_w05=="Gran Concepción" | estrato_w05=="Ciudades pequeñas")
+
+tab<- rbind(tab1, tab2, tab3, tab4, tab5)
+
+
+tab %>%
+  ggplot(aes(x=var, y=freq, color=estrato_w05)) +
+  geom_line(size = 1) +
+  geom_point(size = 1.8) +
+  theme_bw() +   
+  scale_color_viridis_d(begin = 0, end = .66, direction = 1, option = 'viridis') +
+  labs(y="", x="",
+       title = "") +
+  scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
+  scale_x_continuous(breaks = c(1,2,3,4,5), labels=c("2016", "2017", "2018", "2019", "2021")) +
+  geom_text_repel(data=tab, aes(label=paste0(round((freq*100),1),"%"),  y=freq),
+                  size = 3.5,  inherit.aes = TRUE)+
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+```
+
+```{r frecvisita-quintil, fig.align='center',fig.cap='Frecuencia de visita vecinos por quintil'}
+
+territorial$quintil <- quantcut(territorial$m29_w05, q=5, na.rm=T, 
+                                labels=c("Q1", "Q2", "Q3", "Q4", "Q5"))
+
+tab<-territorial %>%   
+  filter(!is_nsnr(quintil, c07_01_w01, c07_01_w02, c07_01_w03, c07_01_w04, c07_01_w05))  %>%
+  drop_na(c("quintil","c07_01_w01", "c07_01_w02", "c07_01_w03", "c07_01_w04", "c07_01_w05")) %>%
+  filter(tipo_atricion==1) %>%
+  survey_design_elsoc(weights = 'ponderador02_w05') %>%
+  mutate(c07_01_w01 = factor(car::recode(c07_01_w01, recodes = "2:3 = 1; 1 = 0"))) %>%
+  mutate(c07_01_w02 = factor(car::recode(c07_01_w02, recodes = "2:3 = 1; 1 = 0"))) %>%
+  mutate(c07_01_w03 = factor(car::recode(c07_01_w03, recodes = "2:3 = 1; 1 = 0"))) %>%
+  mutate(c07_01_w04 = factor(car::recode(c07_01_w04, recodes = "2:3 = 1; 1 = 0"))) %>%
+  mutate(c07_01_w05 = factor(car::recode(c07_01_w05, recodes = "2:3 = 1; 1 = 0")))
+
+tab1<-tab %>% group_by(quintil, c07_01_w01) %>% 
+  summarise (n = n()) %>% 
+  mutate(freq = n / sum(n)) %>%
+  mutate(var = 1) %>% 
+  rename(Visita=c07_01_w01) %>%
+  filter(!is.na(Visita)) %>%
+  filter(!is.na(quintil)) %>% 
+  filter(Visita==1) %>%
+  filter(quintil=="Q1" | quintil=="Q5")
+
+tab2<-tab %>% group_by(quintil, c07_01_w02) %>% 
+  summarise (n = n()) %>% 
+  mutate(freq = n / sum(n)) %>%
+  mutate(var = 2) %>% 
+  rename(Visita=c07_01_w02) %>% 
+  filter(!is.na(Visita)) %>%
+  filter(!is.na(quintil)) %>% 
+  filter(Visita==1) %>%
+  filter(quintil=="Q1" | quintil=="Q5")
+
+tab3<-tab %>% group_by(quintil, c07_01_w03) %>%
+  summarise (n = n()) %>% 
+  mutate(freq = n / sum(n)) %>%
+  mutate(var = 3) %>%
+  rename(Visita=c07_01_w03) %>% 
+  filter(!is.na(Visita)) %>%
+  filter(!is.na(quintil)) %>% 
+  filter(Visita==1) %>%
+  filter(quintil=="Q1" | quintil=="Q5")
+
+tab4<-tab %>% group_by(quintil, c07_01_w04) %>% 
+  summarise (n = n()) %>%
+  mutate(freq = n / sum(n)) %>%
+  mutate(var = 4) %>% 
+  rename(Visita=c07_01_w04) %>% 
+  filter(!is.na(Visita)) %>%
+  filter(!is.na(quintil)) %>% 
+  filter(Visita==1) %>%
+  filter(quintil=="Q1" | quintil=="Q5")
+
+tab5<-tab %>% group_by(quintil, c07_01_w05) %>%
+  summarise (n = n()) %>%
+  mutate(freq = n / sum(n)) %>%
+  mutate(var = 5) %>% 
+  rename(Visita=c07_01_w05) %>%
+  filter(!is.na(Visita)) %>%
+  filter(!is.na(quintil)) %>%
+  filter(Visita==1) %>%
+  filter(quintil=="Q1" | quintil=="Q5")
+
+tab<- rbind(tab1, tab2, tab3, tab4, tab5)
+
+
+tab %>%
+  ggplot(aes(x=var, y=freq, color=quintil)) +
+  geom_line(size = 1) +
+  geom_point(size = 1.8) +
+  theme_bw() +   
+  scale_color_viridis_d(begin = 0, end = .66, direction = 1, option = 'viridis') +
+  labs(y="", x="",
+       title = "") +
+  scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
+  scale_x_continuous(breaks = c(1,2,3,4,5), labels=c("2016", "2017", "2018", "2019", "2021")) +
+  geom_text_repel(data=tab, aes(label=paste0(round((freq*100),1),"%"),  y=freq),
+                  size = 3.5,  inherit.aes = TRUE)+
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+```
+
+```{r frecvisita-quintilesc, fig.align='center',fig.cap='Frecuencia de visita vecinos según quintil de  escolaridad'}
+
+territorial$escolaridad[territorial$escolaridad < 0] <- NA
+
+tab<-territorial %>%   
+  filter(!is_nsnr(c07_01_w01, c07_01_w02, c07_01_w03, c07_01_w04, c07_01_w05))  %>%
+  drop_na(c("c07_01_w01", "c07_01_w02", "c07_01_w03", "c07_01_w04", "c07_01_w05")) %>%
+  filter(tipo_atricion==1)  %>%
+  mutate(quintil = xtile(escolaridad, n = 5, wt = ponderador02_w05)) %>%
+         mutate(quintil = factor(quintil, levels = 1:5, labels = glue::glue('Q{1:5}')))  %>%
+  rowwise() %>%
+          mutate(confianza = mean(c07_01_w01, c07_01_w02, c07_01_w03, c07_01_w04, c07_01_w05, na.rm = TRUE)) %>%
+          mutate(Confía= factor(confianza > 1,
+                                        levels = c(TRUE, FALSE),
+                                        labels = c('Visita', 'No visita'))) %>%
+  filter(!is_nsnr(quintil))  %>%
+  drop_na(c("quintil")) %>%
+  survey_design_elsoc(weights = 'ponderador02_w05') %>%
+  group_by(quintil, Confía) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
+  filter(!is.na(Confía)) %>%
+  filter(!is.na(quintil)) %>% filter(Confía=="Visita")
+  
+tab %>% ggplot(aes(y = freq, x = quintil, label = scales::percent(freq, accuracy = .1))) +
+  theme_bw() +   
+  geom_col(fill = viridis(1, begin = .5)) +
+  geom_text(position = position_dodge(.9), vjust = -.5, size = 3) +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0,1)) +
+  labs(y="", x="",
+       title = "Frecuencia de visita a vecinos según quintil de escolaridad en zona censal") +
+  scale_color_viridis_d(end = .66, direction = 1, option = 'viridis') +
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+```
+
+
+```{r frecvisita-quintilinm, fig.align='center',fig.cap='Frecuencia de visita a vecinos según quintil de inmigrantes'}
+
+territorial$inmigrante[territorial$inmigrante < 0] <- NA
+territorial$p_inmigracion <- territorial$inmigrante/territorial$hbtes
+
+tab<-territorial %>%   
+  filter(!is_nsnr(c07_01_w01, c07_01_w02, c07_01_w03, c07_01_w04, c07_01_w05))  %>%
+  drop_na(c("t01_w01", "t01_w02", "t01_w03", "t01_w04", "t01_w05")) %>%
+  filter(tipo_atricion==1)  %>%
+  mutate(quintil = xtile(p_inmigracion, n = 5, wt = ponderador02_w05)) %>%
+         mutate(quintil = factor(quintil, levels = 1:5, labels = glue::glue('Q{1:5}')))  %>%
+  rowwise() %>%
+          mutate(confianza = mean(c07_01_w01, c07_01_w02, c07_01_w03, c07_01_w04, c07_01_w05, na.rm = TRUE)) %>%
+          mutate(Confía= factor(confianza > 1,
+                                        levels = c(TRUE, FALSE),
+                                        labels = c('Visita', 'No visita'))) %>%
+  filter(!is_nsnr(quintil))  %>%
+  drop_na(c("quintil")) %>%
+  survey_design_elsoc(weights = 'ponderador02_w05') %>%
+  group_by(quintil, Confía) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
+  filter(!is.na(Confía)) %>%
+  filter(!is.na(quintil)) %>% filter(Confía=="Visita")
+  
+  
+tab %>% ggplot(aes(y = freq, x = quintil, label = scales::percent(freq, accuracy = .1))) +
+  theme_bw() +   
+  geom_col(fill = viridis(1, begin = .5)) +
+  geom_text(position = position_dodge(.9), vjust = -.5, size = 3) +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0,1)) +
+  labs(y="", x="",
+       title = "Frecuencia de visita a vecinos según quintil de proporción de inmigrantes en zona censal") +
+  scale_color_viridis_d(end = .66, direction = 1, option = 'viridis') +
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
 ```
 
 
@@ -1535,6 +2094,8 @@ tab %>%
 rm(tab)
 
 ```
+
+
 
 ```{r confianzaveci-quintilpueblos, fig.align='center',fig.cap='Evolución de confianza en los vecinos según quintil de pueblos originarios'}
 
