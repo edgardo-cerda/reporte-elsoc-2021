@@ -1,6 +1,7 @@
 --- 
 title: "Estudio Longitudinal Social de Chile"
 subtitle: "Resultados longitudinales 2016-2021"
+author: "Equipo ELSOC"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 documentclass: book
