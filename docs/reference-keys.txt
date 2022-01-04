@@ -53,11 +53,11 @@ fig:graf-participacion-optimismo
 fig:graf-movimientos-optimismo
 fig:salud-bienestar-2021
 fig:salud-bienestar-olas
-fig:salud-bienestar-sexo
 fig:depre-wave
 fig:depre-bienestar
 fig:depre-wave2
 fig:depre-wave-sexo
+fig:salud-bienestar-sexo
 fig:depre-alluvial
 fig:unnamed-chunk-3
 fig:unnamed-chunk-4
@@ -65,11 +65,9 @@ fig:unnamed-chunk-5
 fig:unnamed-chunk-6
 fig:unnamed-chunk-7
 fig:unnamed-chunk-8
-fig:unnamed-chunk-9
 fig:depre-quintil
-fig:sitlab-sexo
-fig:cambio-sitlab-sexo
 fig:depre-sitlab
+fig:sitlab-sexo
 fig:trabremoto
 fig:depre-trabremoto
 fig:deudas

@@ -97,34 +97,6 @@ elsoc_long_2016_2021 %>%
 ```
 
 
-```{r salud-bienestar-sexo, fig.cap = 'Satisfacción con la vida y salud subjetiva, según sexo (2021)'}
-
-elsoc_long_2016_2021 %>% 
-  filter(tipo_atricion == 1 & ola == 5 & !is_nsnr(s01, s02, s03)) %>% 
-  as_label(m0_sexo) %>% 
-  prop_list(s01 %in% 4:5, s02 %in% 4:5, s03 %in% 4:5, by = m0_sexo, na.rm = TRUE) %>% 
-  mutate(name = factor(name,
-                       levels = c('s01 %in% 4:5', 's02 %in% 4:5', 's03 %in% 4:5'),
-                       labels = c('Esta satisfecho o muy\nsatisfecho con su vida',
-                                  'Su vida se acerca o se acerca\ncompletamente a su ideal',
-                                  'Su salud es muy buena\no Excelente'))) %>% 
-  ggplot(aes(y = prop, x = name, fill = m0_sexo,
-             label = scales::percent(prop, accuracy = .1))) + 
-  theme_bw() + 
-  geom_col(position = 'dodge2') +
-  geom_text(position = position_dodge(.9), 
-            vjust = -.5, size = 3) +
-  scale_y_continuous(labels = scales::percent, limits = c(0,1)) +
-  ylab(label = NULL) +
-  xlab(label = NULL) +  
-  scale_fill_viridis_d(begin = .33, end = .66) +
-  theme(legend.position = 'top', legend.title = element_blank()) +
-  ggtitle(NULL, 'Porcentaje que responde que...')
-
-
-  
-```
-
 ### Sintomatología depresiva
 
 
@@ -247,21 +219,50 @@ elsoc_long_2016_2021 %>%
   dplyr::filter(tipo_atricion == 1) %>% 
   prop(phq9 >= 10 , by = c(ola, m0_sexo), na.rm = TRUE) %>% 
   sjlabelled::as_label(ola, m0_sexo) %>% 
-  ggplot(aes(y = prop, x = ola, fill = m0_sexo, 
+  ggplot(aes(y = prop, x = ola, color = m0_sexo, group = m0_sexo,
              label = scales::percent(prop, accuracy = .1))) + 
   theme_bw() + 
-  geom_col(position = 'dodge2') +
+  geom_point(size = 1.75) + 
+  geom_line() +
+  geom_text_repel(nudge_y = .025, size = 3, color = 'black') +
   scale_y_continuous(labels = scales::percent, limits = 0:1) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = 0.33, end = .66, option = 'viridis') +
-  geom_text(position = position_dodge(.9), vjust = -.5,
-            size = 3) +
+  scale_color_viridis_d(begin = .33, end = .66) +
   theme(legend.position = 'top',
         legend.title = element_blank())
 
+
+  
 ```
 
+
+```{r salud-bienestar-sexo, fig.cap = 'Satisfacción con la vida y salud subjetiva, según sexo (2021)'}
+
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & ola == 5 & !is_nsnr(s01, s02, s03)) %>% 
+  as_label(m0_sexo) %>% 
+  prop_list(s01 %in% 4:5, s02 %in% 4:5, s03 %in% 4:5, by = m0_sexo, na.rm = TRUE) %>% 
+  mutate(name = factor(name,
+                       levels = c('s01 %in% 4:5', 's02 %in% 4:5', 's03 %in% 4:5'),
+                       labels = c('Esta satisfecho o muy\nsatisfecho con su vida',
+                                  'Su vida se acerca o se acerca\ncompletamente a su ideal',
+                                  'Su salud es muy buena\no Excelente'))) %>% 
+  ggplot(aes(y = prop, x = name, fill = m0_sexo,
+             label = scales::percent(prop, accuracy = .1))) + 
+  theme_bw() + 
+  geom_col(position = 'dodge2') +
+  geom_text(position = position_dodge(.9), 
+            vjust = -.5, size = 3) +
+  scale_y_continuous(labels = scales::percent, limits = c(0,1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +  
+  scale_fill_viridis_d(begin = .33, end = .66) +
+  theme(legend.position = 'top', legend.title = element_blank()) +
+  ggtitle(NULL, 'Porcentaje que responde que...')
+
+
+```
 
 Confirma alta oscilación de la carga de síntomas a lo largo del tiempo. Entre participantes sin síntomas o síntomas leves, una proporción importante permanece en un estado saludable. 
 ¿Cuántas personas no bajan en ninguna ola del punto de corte (10 o más puntos en la escala) entre 2016-2021 (es decir, permanece en categoría síntomas moderados a severos)? 
@@ -308,6 +309,82 @@ elsoc_long_2016_2021 %>%
       color = rep(c('black', 'black', 'white', 'white'), 5),
             size = 3) + 
   guides(fill = guide_legend(reverse = TRUE))
+
+```
+
+
+```{r, fig.cap = 'Porcentaje que presenta síntomas de depresión moderada a severa de forma reiterada, según número de ocurrencias' }
+
+elsoc_wide_2016_2021 %>% 
+  dplyr::filter(tipo_atricion == 1) %>% 
+  purrr::map_at(.at = vars(starts_with('s11_0')), 
+                .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
+  as.data.frame() %>%
+  mutate(
+    phq9_w01 = (s11_01_w01 + s11_02_w01 + s11_03_w01 + s11_04_w01 + s11_05_w01 + s11_06_w01 + s11_07_w01 + s11_08_w01+ s11_09_w01),
+    phq9_w02 = (s11_01_w02 + s11_02_w02 + s11_03_w02 + s11_04_w02 + s11_05_w02 + s11_06_w02 + s11_07_w02 + s11_08_w02+ s11_09_w02),
+    phq9_w03 = (s11_01_w03 + s11_02_w03 + s11_03_w03 + s11_04_w03 + s11_05_w03 + s11_06_w03 + s11_07_w03 + s11_08_w03+ s11_09_w03),
+    phq9_w04 = (s11_01_w04 + s11_02_w04 + s11_03_w04 + s11_04_w04 + s11_05_w04 + s11_06_w04 + s11_07_w04 + s11_08_w04+ s11_09_w04),
+    phq9_w05 = (s11_01_w05 + s11_02_w05 + s11_03_w05 + s11_04_w05 + s11_05_w05 + s11_06_w05 + s11_07_w05 + s11_08_w05+ s11_09_w05)) %>% 
+  mutate(n_depr = (phq9_w01 > 10) + (phq9_w02 > 10) + (phq9_w03 > 10) + (phq9_w04 > 10) + (phq9_w05 > 10),
+         n_depr = factor(n_depr, 
+                         levels = 0:5,
+                         labels = c('No presentó síntomas\nde depresión en\nninguna ola',
+                                    glue::glue('Presentó en\n{1:4} de 5 olas'),
+                                    'Presentó síntomas\nen todas las olas'))) %>% 
+  survey_design_elsoc(weights = 'ponderador02_w05') %>% 
+  prop(n_depr, na.rm = TRUE) %>% 
+  as_factor(n_depr) %>% 
+  ggplot(aes(y = prop, x = n_depr, 
+             label = scales::percent(prop, accuracy = .1))) + 
+  theme_bw() + 
+  geom_col(position = 'dodge2', fill = viridis(1, begin = .33)) +
+  scale_y_continuous(labels = scales::percent, limits = 0:1) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  geom_text(position = position_dodge(.9), vjust = -.5,
+            size = 3) 
+
+```
+
+
+
+
+
+```{r, fig.cap = 'Porcentaje que presenta síntomas de depresión moderada a severa de forma reiterada, según número de ocurrencias y sexo' }
+
+elsoc_wide_2016_2021 %>% 
+  dplyr::filter(tipo_atricion == 1) %>% 
+  purrr::map_at(.at = vars(starts_with('s11_0')), 
+                .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
+  as.data.frame() %>%
+  mutate(
+    phq9_w01 = (s11_01_w01 + s11_02_w01 + s11_03_w01 + s11_04_w01 + s11_05_w01 + s11_06_w01 + s11_07_w01 + s11_08_w01+ s11_09_w01),
+    phq9_w02 = (s11_01_w02 + s11_02_w02 + s11_03_w02 + s11_04_w02 + s11_05_w02 + s11_06_w02 + s11_07_w02 + s11_08_w02+ s11_09_w02),
+    phq9_w03 = (s11_01_w03 + s11_02_w03 + s11_03_w03 + s11_04_w03 + s11_05_w03 + s11_06_w03 + s11_07_w03 + s11_08_w03+ s11_09_w03),
+    phq9_w04 = (s11_01_w04 + s11_02_w04 + s11_03_w04 + s11_04_w04 + s11_05_w04 + s11_06_w04 + s11_07_w04 + s11_08_w04+ s11_09_w04),
+    phq9_w05 = (s11_01_w05 + s11_02_w05 + s11_03_w05 + s11_04_w05 + s11_05_w05 + s11_06_w05 + s11_07_w05 + s11_08_w05+ s11_09_w05)) %>% 
+  mutate(n_depr = (phq9_w01 > 10) + (phq9_w02 > 10) + (phq9_w03 > 10) + (phq9_w04 > 10) + (phq9_w05 > 10),
+         n_depr = factor(n_depr, 
+                         levels = 0:5,
+                         labels = c('No presentó síntomas\nde depresión en\nninguna ola',
+                                    glue::glue('Presentó en\n{1:4} de 5 olas'),
+                                    'Presentó síntomas\nen todas las olas'))) %>% 
+  survey_design_elsoc(weights = 'ponderador02_w05') %>% 
+  prop(n_depr, by = m0_sexo_w05, na.rm = TRUE) %>% 
+  as_label(m0_sexo_w05, n_depr) %>% 
+  ggplot(aes(y = prop, x = n_depr, fill = m0_sexo_w05,
+             label = scales::percent(prop, accuracy = .1))) + 
+  theme_bw() + 
+  geom_col(position = 'dodge2') +
+  scale_y_continuous(labels = scales::percent, limits = 0:1) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .33, end = .66) +
+  geom_text(position = position_dodge(.9), vjust = -.5,
+            size = 3) +
+  theme(legend.position = 'top',
+        legend.title = element_blank())
 
 ```
 
@@ -444,106 +521,6 @@ elsoc_depr_lca %>%
 ```
 
 
-```{r, fig.cap = 'Cargas de sintomatología depresiva, según deciles de ingreso (en 2021)'}
-
-elsoc_depr_lca %>% 
-  left_join(elsoc_clase %>% filter(ola == 5)) %>%  
-  filter(tipo_atricion == 1, !is.na(decil)) %>% 
-  survey_design_elsoc(weights = 'ponderador02_w05') %>% 
-  prop(class_depr, by = decil, na.rm = TRUE) %>% 
-  sjlabelled::as_label(class_depr, decil) %>%
-  ggplot(aes(x = prop, y = decil, 
-                   fill = fct_rev(class_depr),
-              label = scales::percent(prop, accuracy = .1))) +
-  theme_bw() +   
-  geom_col() +
-  geom_text(position = position_stack(vjust = .5), size = 3,
-            color = rep(c('black', 'black', 'white', 'white'), 10)) +
-  ylab(label = NULL) +
-  xlab(label = NULL) +
-  scale_x_continuous(labels = scales::percent) +
-  scale_fill_viridis_d(begin = .1, end = .8, direction = 1, option = 'viridis') +
-  theme(legend.position = 'top',
-        legend.title = element_blank())  + 
-  guides(fill = guide_legend(reverse = TRUE))
-
-```
-
-
-```{r, fig.cap = 'Porcentaje que presenta síntomas de depresión moderada a severa de forma reiterada, según número de ocurrencias' }
-
-elsoc_wide_2016_2021 %>% 
-  dplyr::filter(tipo_atricion == 1) %>% 
-  purrr::map_at(.at = vars(starts_with('s11_0')), 
-                .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
-  as.data.frame() %>%
-  mutate(
-    phq9_w01 = (s11_01_w01 + s11_02_w01 + s11_03_w01 + s11_04_w01 + s11_05_w01 + s11_06_w01 + s11_07_w01 + s11_08_w01+ s11_09_w01),
-    phq9_w02 = (s11_01_w02 + s11_02_w02 + s11_03_w02 + s11_04_w02 + s11_05_w02 + s11_06_w02 + s11_07_w02 + s11_08_w02+ s11_09_w02),
-    phq9_w03 = (s11_01_w03 + s11_02_w03 + s11_03_w03 + s11_04_w03 + s11_05_w03 + s11_06_w03 + s11_07_w03 + s11_08_w03+ s11_09_w03),
-    phq9_w04 = (s11_01_w04 + s11_02_w04 + s11_03_w04 + s11_04_w04 + s11_05_w04 + s11_06_w04 + s11_07_w04 + s11_08_w04+ s11_09_w04),
-    phq9_w05 = (s11_01_w05 + s11_02_w05 + s11_03_w05 + s11_04_w05 + s11_05_w05 + s11_06_w05 + s11_07_w05 + s11_08_w05+ s11_09_w05)) %>% 
-  mutate(n_depr = (phq9_w01 > 10) + (phq9_w02 > 10) + (phq9_w03 > 10) + (phq9_w04 > 10) + (phq9_w05 > 10),
-         n_depr = factor(n_depr, 
-                         levels = 0:5,
-                         labels = c('No presentó síntomas\nde depresión en\nninguna ola',
-                                    glue::glue('Presentó en\n{1:4} de 5 olas'),
-                                    'Presentó síntomas\nen todas las olas'))) %>% 
-  survey_design_elsoc(weights = 'ponderador02_w05') %>% 
-  prop(n_depr, na.rm = TRUE) %>% 
-  as_factor(n_depr) %>% 
-  ggplot(aes(y = prop, x = n_depr, 
-             label = scales::percent(prop, accuracy = .1))) + 
-  theme_bw() + 
-  geom_col(position = 'dodge2', fill = viridis(1, begin = .33)) +
-  scale_y_continuous(labels = scales::percent, limits = 0:1) +
-  ylab(label = NULL) +
-  xlab(label = NULL) +
-  geom_text(position = position_dodge(.9), vjust = -.5,
-            size = 3) 
-
-```
-
-
-
-
-
-```{r, fig.cap = 'Porcentaje que presenta síntomas de depresión moderada a severa de forma reiterada, según número de ocurrencias y sexo' }
-
-elsoc_wide_2016_2021 %>% 
-  dplyr::filter(tipo_atricion == 1) %>% 
-  purrr::map_at(.at = vars(starts_with('s11_0')), 
-                .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
-  as.data.frame() %>%
-  mutate(
-    phq9_w01 = (s11_01_w01 + s11_02_w01 + s11_03_w01 + s11_04_w01 + s11_05_w01 + s11_06_w01 + s11_07_w01 + s11_08_w01+ s11_09_w01),
-    phq9_w02 = (s11_01_w02 + s11_02_w02 + s11_03_w02 + s11_04_w02 + s11_05_w02 + s11_06_w02 + s11_07_w02 + s11_08_w02+ s11_09_w02),
-    phq9_w03 = (s11_01_w03 + s11_02_w03 + s11_03_w03 + s11_04_w03 + s11_05_w03 + s11_06_w03 + s11_07_w03 + s11_08_w03+ s11_09_w03),
-    phq9_w04 = (s11_01_w04 + s11_02_w04 + s11_03_w04 + s11_04_w04 + s11_05_w04 + s11_06_w04 + s11_07_w04 + s11_08_w04+ s11_09_w04),
-    phq9_w05 = (s11_01_w05 + s11_02_w05 + s11_03_w05 + s11_04_w05 + s11_05_w05 + s11_06_w05 + s11_07_w05 + s11_08_w05+ s11_09_w05)) %>% 
-  mutate(n_depr = (phq9_w01 > 10) + (phq9_w02 > 10) + (phq9_w03 > 10) + (phq9_w04 > 10) + (phq9_w05 > 10),
-         n_depr = factor(n_depr, 
-                         levels = 0:5,
-                         labels = c('No presentó síntomas\nde depresión en\nninguna ola',
-                                    glue::glue('Presentó en\n{1:4} de 5 olas'),
-                                    'Presentó síntomas\nen todas las olas'))) %>% 
-  survey_design_elsoc(weights = 'ponderador02_w05') %>% 
-  prop(n_depr, by = m0_sexo_w05, na.rm = TRUE) %>% 
-  as_label(m0_sexo_w05, n_depr) %>% 
-  ggplot(aes(y = prop, x = n_depr, fill = m0_sexo_w05,
-             label = scales::percent(prop, accuracy = .1))) + 
-  theme_bw() + 
-  geom_col(position = 'dodge2') +
-  scale_y_continuous(labels = scales::percent, limits = 0:1) +
-  ylab(label = NULL) +
-  xlab(label = NULL) +
-  scale_fill_viridis_d(begin = .33, end = .66) +
-  geom_text(position = position_dodge(.9), vjust = -.5,
-            size = 3) +
-  theme(legend.position = 'top',
-        legend.title = element_blank())
-
-```
 
 ## Economía y bienestar
 
@@ -578,73 +555,6 @@ elsoc_long_2016_2021 %>%
 ```
 
 
-```{r sitlab-sexo, fig.cap = 'Situación laboral, según sexo (2021)'}
-
-elsoc_long_2016_2021 %>%
-  filter(ola == 5, tipo_atricion == 1 & !is_nsnr(m02)) %>% 
-  mutate(sit_ocup = factor(car::recode(m02, "1:3 = 1; 7 = 2; 6 = 3; 5 = 4; c(4, 8, 9) = 5"), 
-                           levels = c(1, 2, 3, 4, 5),
-                           labels = c("Trabajo remunerado", "Trabajo doméstico\nno remunerado", "Desempleado/a", "Jubilado/a o\npensionado/a", "Otros (inactivos)"))
-         ) %>% 
-  prop(sit_ocup, by = m0_sexo, na.rm = TRUE) %>% 
-  as_label(m0_sexo) %>% 
-  ggplot(aes(y = prop, x = m0_sexo, fill = fct_rev(sit_ocup),
-             label = scales::percent(ifelse(prop>.01, prop, NA), accuracy = .1))) + 
-  theme_bw() + 
-  geom_col(position = 'stack') +
-  geom_text(position = position_stack(vjust = .5), size = 3, na.rm = TRUE,
-            color = rep(c('white', 'white', 'white', 'black', 'black'), 2)) +
-  scale_y_continuous(labels = scales::percent) +
-  ylab(label = NULL) +
-  xlab(label = NULL) +
-  theme(legend.position = 'top',
-        legend.title = element_blank()) +
-    guides(fill = guide_legend(reverse = TRUE))+
-  scale_fill_viridis_d(end = .85, direction = -1)
-
-```
-
-
-```{r cambio-sitlab-sexo, fig.cap = 'Cambios en situación laboral, según sexo (2019-2021)'}
-
-elsoc_long_2016_2021 %>%
-  filter(ola %in% 4:5) %>% 
-  mutate(sit_ocup = factor(car::recode(m02, "1:3 = 1; 7 = 2; 6 = 3; 5 = 4; c(4, 8, 9) = 5"), 
-                           levels = c(1, 2, 3, 4, 5),
-                           labels = c("Trabajo remunerado", "Trabajo doméstico\nno remunerado", "Desempleado/a", "Jubilado/a o\npensionado/a", "Otros (inactivos)"))
-         ) %>% 
-  as_label(ola, m0_sexo) %>% 
-  dplyr::filter(tipo_atricion == 1 & !is_nsnr(m02)) %>% 
-  survey_design_elsoc() %>%
-  svytable(~sit_ocup + ola + m0_sexo + idencuesta, design = .) %>% 
-  as.data.frame() %>% 
-  group_by(ola, m0_sexo) %>% 
-  mutate(prop = Freq/sum(Freq)) %>%
-  filter(Freq > 0) %>% 
-  ggplot(aes(y = prop, x = ola, fill = fct_rev(sit_ocup), 
-             stratum = fct_rev(sit_ocup), alluvium = idencuesta)) +
-  theme_bw() +
-  facet_wrap(~m0_sexo) +
-  ggalluvial::geom_flow(alpha = .66) + 
-  ggalluvial::geom_stratum(linetype = 0, width = .55) +
-  scale_y_continuous(labels = scales::percent) + 
-  ylab(label = NULL) +
-  xlab(label = NULL) + 
-  theme(legend.position = 'top',
-        legend.title = element_blank()) +
-  scale_fill_viridis_d(direction = -1, end = .9) +
-  geom_text(data = function(x) { group_by(.data = x, ola, m0_sexo, sit_ocup) %>%
-      summarise(prop = sum(prop, na.rm = TRUE), idencuesta = 1) %>%
-      ungroup()}, 
-      aes(label = scales::percent(ifelse(prop>.01, prop, NA), accuracy = .1)),
-      position = position_stack(vjust = .5),
-      show.legend = FALSE,
-      color = rep(c('white', 'white', 'white', 'black', 'black'), 4),
-            size = 3, na.rm = TRUE) +
-  guides(fill = guide_legend(reverse = TRUE))
-
-```
-
 ```{r depre-sitlab, fig.cap = 'Porcentaje que presenta síntomas de depresión moderados a severos, según situación laboral y sexo (2021)'}
 
 elsoc_long_2016_2021 %>% 
@@ -672,6 +582,33 @@ elsoc_long_2016_2021 %>%
   theme(legend.position = 'top', legend.title = element_blank())
 
 ```
+
+```{r sitlab-sexo, fig.cap = 'Situación laboral, según sexo (2021)'}
+
+elsoc_long_2016_2021 %>%
+  filter(ola == 5, tipo_atricion == 1 & !is_nsnr(m02)) %>% 
+  mutate(sit_ocup = factor(car::recode(m02, "1:3 = 1; 7 = 2; 6 = 3; 5 = 4; c(4, 8, 9) = 5"), 
+                           levels = c(1, 2, 3, 4, 5),
+                           labels = c("Trabajo remunerado", "Trabajo doméstico\nno remunerado", "Desempleado/a", "Jubilado/a o\npensionado/a", "Otros (inactivos)"))
+         ) %>% 
+  prop(sit_ocup, by = m0_sexo, na.rm = TRUE) %>% 
+  as_label(m0_sexo) %>% 
+  ggplot(aes(y = prop, x = m0_sexo, fill = fct_rev(sit_ocup),
+             label = scales::percent(ifelse(prop>.01, prop, NA), accuracy = .1))) + 
+  theme_bw() + 
+  geom_col(position = 'stack') +
+  geom_text(position = position_stack(vjust = .5), size = 3, na.rm = TRUE,
+            color = rep(c('white', 'white', 'white', 'black', 'black'), 2)) +
+  scale_y_continuous(labels = scales::percent) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+    guides(fill = guide_legend(reverse = TRUE))+
+  scale_fill_viridis_d(end = .85, direction = -1)
+
+```
+
 
 
 ```{r trabremoto, fig.cap = 'Porcentaje que trabaja en modalidad remota (2021)'}
