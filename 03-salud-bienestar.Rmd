@@ -39,7 +39,7 @@ elsoc_clase <- elsoc_long_2016_2021 %>%
 
 Alta satisfacción con la vida vs baja cantidad de personas que percibe buen estado de salud
 
-```{r salud-bienestar-2021, fig.cap = 'Satisfacción con la vida y salud subjetiva (ola 2021)'}
+```{r salud-bienestar-2021, fig.cap = 'Satisfacción con la vida, ideal de vida y salud subjetiva (ola 2021)'}
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & ola == 5 & !is_nsnr(s01, s02, s03)) %>% 
@@ -68,7 +68,7 @@ elsoc_long_2016_2021 %>%
 Destaca la menor satisfacción con la vida y menor percepción de que la vida se acerca al ideal durante 2019. Posible efecto del contexto de estallido social (en sintonía con mayor sintomatología depresiva). 
 Aumento de satisfacción con la vida en 2021 posiblemente se asocia con mejoría de situación sanitaria (contraste con pandemia 2020 y estallido 2019).
 
-```{r salud-bienestar-olas, fig.cap = 'Satisfacción con la vida y salud subjetiva, según ola'}
+```{r salud-bienestar-olas, fig.cap = 'Satisfacción con la vida, ideal de vida y salud subjetiva, según ola'}
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & !is_nsnr(s01, s02, s03)) %>% 
@@ -237,7 +237,7 @@ elsoc_long_2016_2021 %>%
 ```
 
 
-```{r salud-bienestar-sexo, fig.cap = 'Satisfacción con la vida y salud subjetiva, según sexo (2021)'}
+```{r salud-bienestar-sexo, fig.cap = 'Satisfacción con la vida, ideal de vida y salud subjetiva, según sexo (2021)'}
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & ola == 5 & !is_nsnr(s01, s02, s03)) %>% 
@@ -726,6 +726,136 @@ elsoc_long_2016_2021 %>%
 
 ```
 
+```{r}
+elsoc_long_2016_2021 %>% 
+  left_join(elsoc_wide_2016_2021 %>% 
+              select(idencuesta, m63_02_w05, m63_03_w05), by = 'idencuesta') %>% 
+  filter(tipo_atricion == 1 & ola %in% c(1, 3, 5),
+         !is_nsnr(m43, m63_02_w05, m63_03_w05)) %>% 
+  mutate(retiros = factor(case_when(m63_02_w05 == 2 ~ 1,
+                                    m63_02_w05 == 1 & m63_03_w05 == 2 ~ 2,
+                                    m63_02_w05 == 1 & m63_03_w05 == 1 ~ 3),
+                          levels = 1:3, labels = c('No realizó ningún\nretiro',
+                                                   'Realizó el primer\n retiro',
+                                                   'Realizó el primer\ny segundo retiro')
+                                    )) %>% 
+  prop(m43 %in% 4:5, by = c(ola, retiros), na.rm = TRUE, vartype = 'cv') %>% 
+  as_label(ola, retiros) %>% 
+  ggplot(aes(y = prop, x = ola, group = retiros, color = retiros,
+             label = scales::percent(prop, accuracy = .1))) +
+  theme_bw() + 
+  geom_line() + 
+  geom_point() + 
+  scale_y_continuous(labels = scales::percent, limits = 0:1) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_color_viridis_d(end = .85, direction = -1, option = 'viridis') + 
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+```
+
+
+```{r}
+
+elsoc_long_2016_2021 %>% 
+  left_join(elsoc_wide_2016_2021 %>% 
+              select(idencuesta, m63_02_w05, m63_03_w05), by = 'idencuesta') %>% 
+  filter(tipo_atricion == 1 & ola %in% c(1, 3, 5),
+         !is_nsnr(m44, m63_02_w05, m63_03_w05)) %>% 
+  mutate(retiros = factor(case_when(m63_02_w05 == 2 ~ 1,
+                                    m63_02_w05 == 1 & m63_03_w05 == 2 ~ 2,
+                                    m63_02_w05 == 1 & m63_03_w05 == 1 ~ 3),
+                          levels = 1:3, labels = c('No realizó ningún\nretiro',
+                                                   'Realizó el primer\n retiro',
+                                                   'Realizó el primer\ny segundo retiro')
+                                    )) %>% 
+  prop(m44 %in% 1, by = c(ola, retiros), na.rm = TRUE, vartype = 'cv') %>% 
+  as_label(ola, retiros) %>% 
+  ggplot(aes(y = prop, x = ola, group = retiros, color = retiros,
+             label = scales::percent(prop, accuracy = .1))) +
+  theme_bw() + 
+  geom_line() + 
+  geom_point() + 
+  scale_y_continuous(labels = scales::percent, limits = 0:1) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_color_viridis_d(end = .85, direction = -1, option = 'viridis') + 
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+
+```
+
+
+```{r}
+
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & ola %in% c(1, 3, 5),
+         !is_nsnr(m43)) %>% 
+    purrr::map_at(.at = vars(starts_with('s11_0')), 
+                .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
+  as.data.frame() %>% 
+  mutate(phq9 = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09),
+         m43 = factor(car::recode(m43, "1 = 1; 2:3 = 2; 4:5 = 3"),
+                      levels = 1:3,
+                      labels = c('Nada sobrecargado',
+                                 'No muy o algo sobrecargado',
+                                 'Bastante o Muy sobrecargado'))) %>% 
+  prop(phq9 >= 10 , by = c(m43, ola), na.rm = TRUE, vartype = 'cv') %>% 
+  filter(!is.na(m43)) %>% 
+  as_label(ola, m43) %>% 
+  ggplot(aes(y = prop, x = ola, fill = m43,
+             label = scales::percent(prop, accuracy = .1))) +
+  theme_bw() + 
+  geom_col(position = 'dodge2') +
+  scale_y_continuous(labels = scales::percent, limits = 0:1) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(end = .85, direction = -1, option = 'viridis') + 
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+
+```
+
+
+```{r}
+
+
+elsoc_long_2016_2021 %>% 
+  left_join(elsoc_wide_2016_2021 %>% 
+              select(idencuesta, m63_02_w05, m63_03_w05), by = 'idencuesta') %>% 
+    purrr::map_at(.at = vars(starts_with('s11_0')), 
+                .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
+  as.data.frame() %>% 
+  mutate(phq9 = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09)) %>% 
+  filter(tipo_atricion == 1, ola %in% 4:5,!is_nsnr(phq9, m63_02_w05, m63_03_w05)) %>% 
+  mutate(retiros = factor(case_when(m63_02_w05 == 2 ~ 1,
+                                    m63_02_w05 == 1 & m63_03_w05 == 2 ~ 2,
+                                    m63_02_w05 == 1 & m63_03_w05 == 1 ~ 3),
+                          levels = 1:3, labels = c('No realizó ningún\nretiro',
+                                                   'Realizó el primer\n retiro',
+                                                   'Realizó el primer\ny segundo retiro')
+                                    )) %>% 
+  prop(phq9 > 10, by = c(ola, retiros), na.rm = TRUE) %>% 
+  as_label(ola, retiros) %>%
+  ggplot(aes(y = prop, x = retiros,
+             label = scales::percent(prop, .1))) +
+  geom_line(size = .7) +
+  geom_point(aes(color = ola), size = 4) + 
+  geom_point(color = 'black', size = 4, shape = 1) + 
+  geom_text_repel(size = 3, nudge_x = .02) +
+  theme_bw() +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, .33)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) + 
+  scale_color_viridis_d(begin = .33, end = .66, direction = -1) +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) + 
+  ggtitle(label = NULL)
+
+```
 
 ## COVID - 19
 
