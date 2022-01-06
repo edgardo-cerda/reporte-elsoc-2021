@@ -378,9 +378,14 @@ tab8 <- tip_par %>% group_by(class_part_4, par_mov_w05) %>%
 tab_4<- rbind(tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8)
 rm(tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8)
 
-tab_4$Clase  <- factor(tab_4$Clase, levels = c(1,2,3,4), labels = c("Desafectados\n(56.51%)", "Manifestantes puros\n(3%)", "Institucionales\n(24.34%)", "Reactivos\n(16.16%)"))
-tab_4$Participa  <- factor(tab_4$Participa, levels = c(1,2), labels = c("No participa", "Participa"))
-tab_4$var  <- factor(tab_4$var, levels = c(1,2,3,4,5,6,7,8), labels = c("Elección 2013", "Elección 2017", "Plebiscito 2020", "Marcha 2016", "Marcha 2017", "Marcha 2018", "Marcha 2019", "Marcha 2021"))
+tab_4$Clase  <- factor(tab_4$Clase, levels = c(1,2,3,4), 
+                       labels = c("Desafectados\n(56.51%)", "Manifestantes puros\n(3%)", 
+                                  "Institucionales\n(24.34%)", "Reactivos\n(16.16%)"))
+tab_4$Participa  <- factor(tab_4$Participa, levels = c(1,2), 
+                           labels = c("No participa", "Participa"))
+tab_4$var  <- factor(tab_4$var, levels = c(1,2,3,4,5,6,7,8), 
+                     labels = c("Elección 2013", "Elección 2017", "Plebiscito 2020", 
+                                "Marcha 2016", "Marcha 2017", "Marcha 2018", "Marcha 2019", "Marcha 2021"))
 
 tab_4 %>% 
   ggplot(aes(x = freq, y = var, fill = Participa)) + 
@@ -407,7 +412,9 @@ La Figura \@ref(fig:tipos-posicion-politica2) muestra cómo se distribuyen estos
 tip_par <- read.csv(file.path('inputs', 'participacion_tipos3.csv'), sep=",", encoding="UTF-8")
 tip_par <- tip_par[c("idencuesta", "class_part_4")]
 tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
-tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Desafectados", "Manifestantes puros", "Institucionales", "Reactivos"))
+tip_par$class_part_4  <- factor(tip_par$class_part_4, 
+                                levels = 1:4, 
+                                labels = c("Desafectados", "Manifestantes puros", "Institucionales", "Reactivos"))
 
 tip_par %>%   
   filter(!is_nsnr(class_part_4, c15_w05))  %>%
@@ -432,6 +439,28 @@ tip_par %>%
         legend.position = 'top',
         legend.title = element_blank())
 
+tip_par %>%   
+  filter(!is_nsnr(class_part_4, c15_w05))  %>%
+  drop_na(c("class_part_4", "c15_w05")) %>%
+  filter(tipo_atricion == 1) %>%
+  mutate(pos_id = factor(car::recode(c15_w05, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
+                         levels = 1:4,
+                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
+  survey_design_elsoc(weights = 'ponderador02_w05') %>% 
+  prop(pos_id, by = class_part_4, na.rm = TRUE) %>% 
+  ggplot(aes(x = prop, y = class_part_4, 
+             fill = pos_id, label = scales::percent(prop, .1))) + 
+  geom_bar(stat = 'identity', position = 'stack') +
+  labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
+  scale_x_continuous(labels = scales::percent) +
+  guides(fill = guide_legend(reverse = TRUE)) +
+  geom_text(position = position_stack(vjust = .5), size = 3,
+            color = rep(c('white', 'white', 'black', 'black'), 4)) +
+  theme_bw() + scale_fill_viridis_d(end = .85, option = 'viridis') +
+  theme(axis.text.x = element_text(size = rel(.9)),
+        legend.position = 'top',
+        legend.title = element_blank())
+
 ```
 
 La Figura \@ref(fig:tipos-sexo2) muestra que los grupos de participación tienen similar composición por sexo, aunque los Reactivos tienen una leve mayor concentración de hombres. En contraste, en la Figura \@ref(fig:tipos-edad2) se observan marcadas variaciones en términos de edad. Los Reactivos y manifestantes puros son los grupos con mayor concentración juvenil, con un 19,4% y 15,9% respectivamente. Los desafectados, en cambio, obtienen la más alta proporción de adultos mayores con un 29,2%.
@@ -448,13 +477,38 @@ tip_par %>%
   filter(!is_nsnr(class_part_4, m0_sexo_w01))  %>%
   drop_na(c("class_part_4", "m0_sexo_w01")) %>%
   filter(tipo_atricion==1) %>%
-  mutate(pos_id = factor(car::recode(m0_sexo_w01, recodes = "1 = 1; 2 = 2"),
+  mutate(m0_sexo_w01 = factor(car::recode(m0_sexo_w01, recodes = "1 = 1; 2 = 2"),
                          levels = 1:2,
                          labels = c("Hombre", "Mujer"))) %>%
-  group_by(class_part_4, pos_id) %>% 
+  group_by(class_part_4, m0_sexo_w01) %>% 
   summarise(n = n()) %>% 
   mutate(freq = n / sum(n)) %>%
-  ggplot(aes(x = freq, y = class_part_4, fill = pos_id, label = scales::percent(freq, .1))) + 
+  ggplot(aes(x = freq, y = class_part_4, fill = m0_sexo_w01, 
+             label = scales::percent(freq, .1))) + 
+  geom_bar(stat = 'identity', position = 'stack') +
+  labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
+  scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
+  guides(fill = guide_legend(reverse = TRUE)) +
+  geom_text(position = position_stack(vjust = .5), 
+            size = 3,
+            color = rep(c('white', 'black'), 4)) +
+  theme_bw() + 
+  scale_fill_viridis_d(begin = .33, end = .66) +
+  theme(axis.text.x = element_text(size = rel(.9)),
+        legend.position = 'top',
+        legend.title = element_blank())
+
+tip_par %>%   
+  filter(!is_nsnr(class_part_4, m0_sexo_w01))  %>%
+  drop_na(c("class_part_4", "m0_sexo_w01")) %>%
+  filter(tipo_atricion==1) %>%
+  mutate(m0_sexo_w01 = factor(car::recode(m0_sexo_w01, recodes = "1 = 1; 2 = 2"),
+                         levels = 1:2,
+                         labels = c("Hombre", "Mujer"))) %>%
+  survey_design_elsoc(weights = 'ponderador02_w05') %>% 
+  prop(m0_sexo_w01, by = class_part_4, na.rm = TRUE) %>% 
+  ggplot(aes(x = prop, y = class_part_4, fill = m0_sexo_w01, 
+             label = scales::percent(prop, .1))) + 
   geom_bar(stat = 'identity', position = 'stack') +
   labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
   scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
@@ -491,6 +545,30 @@ tip_par %>%
   geom_bar(stat = 'identity', position = 'stack') +
   labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
   scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
+  guides(fill = guide_legend(reverse = TRUE)) +
+  geom_text(position = position_stack(vjust = .5), 
+            size = 3,
+            color = rep(c('white', 'white', 'black', 'black'), 4)) +
+  theme_bw() + 
+  scale_fill_viridis_d(end = .85) +
+  theme(axis.text.x = element_text(size = rel(.9)),
+        legend.position = 'top',
+        legend.title = element_blank())
+
+tip_par %>%   
+  filter(!is_nsnr(class_part_4, m0_edad_w05))  %>%
+  drop_na(c("class_part_4", "m0_edad_w05")) %>%
+  filter(tipo_atricion==1) %>%
+  mutate(pos_id = factor(car::recode(m0_edad_w05, "18:29 = 1; 30:49 = 2; 50:64 = 3; 65:150 = 4"),
+                        levels = 1:4,
+                        labels = c('18-29', '30-49', '50-64', '65 o más'))) %>%
+  survey_design_elsoc(weights = 'ponderador02_w05') %>% 
+  prop(pos_id, by = class_part_4, na.rm = TRUE) %>% 
+  ggplot(aes(x = prop, y = class_part_4, fill = pos_id, 
+             label = scales::percent(prop, .1))) + 
+  geom_bar(stat = 'identity', position = 'stack') +
+  labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
+  scale_x_continuous(labels = scales::percent) +
   guides(fill = guide_legend(reverse = TRUE)) +
   geom_text(position = position_stack(vjust = .5), 
             size = 3,
@@ -539,6 +617,30 @@ tip_par %>%
         legend.position = 'top',
         legend.title = element_blank())
 
+tip_par %>%   
+  filter(!is_nsnr(class_part_4, c13_w05))  %>%
+  drop_na(c("class_part_4", "c13_w05")) %>%
+  filter(tipo_atricion == 1) %>%
+  mutate(pos_id = factor(car::recode(c13_w05, "1:2 = 1; 3 = 2; 4:5 = 3"),
+                        levels = 1:3,
+                        labels = c('Nada o poco interesado', 'Algo interesado', 'Bastante o muy interesado'))) %>%
+  survey_design_elsoc(weights = 'ponderador02_w05') %>% 
+  prop(pos_id, by = class_part_4, na.rm = TRUE) %>% 
+  ggplot(aes(x = prop, y = class_part_4, fill = pos_id, 
+             label = scales::percent(prop, .1))) + 
+  geom_bar(stat = 'identity', position = 'stack') +
+  labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
+  scale_x_continuous(labels = scales::percent) +
+  guides(fill = guide_legend(reverse = TRUE)) +
+  geom_text(position = position_stack(vjust = .5), 
+            size = 3,
+            color = rep(c('white', 'white', 'black'), 4)) +
+  theme_bw() + 
+  scale_fill_viridis_d(end = .85, option = 'viridis') +
+  theme(axis.text.x = element_text(size = rel(.9)),
+        legend.position = 'top',
+        legend.title = element_blank())
+
 ```
 
 La Figura \@ref(fig:tipos-satisfaccion2) muestra una alta insatisfacción con la democracia de parte de todos los grupos, aunque esta es aún más pronunciada en el grupo de los Manifestantes puros (79,5%) e Institucionales (72,6%). Los niveles de satisfacción con la democracia son más altos entre los Reactivos, seguidos cercanamente por los Desafectados. Es decir, una marcada distancia de toda forma de acción política no pareciera ser indicativo de mayores niveles de insatisfacción política, más bien lo contrario. La Figura \@ref(fig:tipos-legitimidad2) muestra que los Manifestantes puros y Reactivos tienen una mayor preferencia por la democracia como régimen de gobierno, con un 84,1% y 74% respectivamente, versus sólo un 47,9% y 39,5% de apoyo democrático entre los Desafectados e Institucionales. Esto implica, no sin bastante ironía, que el grupo que más vota en elecciones políticas nacionales es también el que menos explícitamente apoya la democracia como régimen político.
@@ -576,6 +678,29 @@ tip_par %>%
         legend.position = 'top',
         legend.title = element_blank())
 
+tip_par %>%   
+  filter(!is_nsnr(class_part_4, c01_w05))  %>%
+  drop_na(c("class_part_4", "c01_w05")) %>%
+  filter(tipo_atricion==1) %>%
+  mutate(pos_id = factor(car::recode(c01_w05, "1:2 = 1; 3 = 2; 4:5 = 3"),
+                        levels = 1:3,
+                        labels = c('Nada o poco satisfecho', 'Algo satisfecho', 'Bastante o muy satisfecho'))) %>%
+  survey_design_elsoc(weights = 'ponderador02_w05') %>% 
+  prop(pos_id, by = class_part_4, na.rm = TRUE) %>% 
+  ggplot(aes(x = prop, y = class_part_4, 
+           fill = pos_id, label = scales::percent(prop, .1))) + 
+  geom_bar(stat = 'identity', position = 'stack') +
+  labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
+  scale_x_continuous(labels = scales::percent) +
+  guides(fill = guide_legend(reverse = TRUE)) +
+  geom_text(position = position_stack(vjust = .5), size = 3,
+            color = rep(c('white', 'white', 'black'), 4)) +
+  theme_bw() + 
+  scale_fill_viridis_d(end = .85, option = 'viridis') +
+  theme(axis.text.x = element_text(size = rel(.9)),
+        legend.position = 'top',
+        legend.title = element_blank())
+
 ```
 
 ```{r tipos-legitimidad2, fig.cap = 'Legitimidad democrática según perfil de participación'}
@@ -597,14 +722,40 @@ tip_par %>%
                                    'Da lo mismo',
                                    'Ninguna'))) %>%
   group_by(class_part_4, pos_id) %>% 
-  summarise (n = n()) %>% 
-  mutate(freq = n / sum(n)) %>%
+  summarise(n = n()) %>% 
+  mutate(prop = n / sum(n)) %>%
   filter(!is.na(pos_id)) %>%
-  ggplot(aes(x = freq, y = class_part_4, 
-             fill = fct_rev(pos_id), label = scales::percent(freq, .1))) + 
+  ggplot(aes(x = prop, y = class_part_4, 
+             fill = fct_rev(pos_id), label = scales::percent(prop, .1))) + 
   geom_bar(stat = 'identity', position = 'stack') +
   labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
-  scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
+  scale_x_continuous(labels = scales::percent) +
+  guides(fill = guide_legend(reverse = TRUE)) +
+  geom_text(position = position_stack(vjust = .5), size = 3,
+            color = rep(c('white', 'white', 'black', 'black'), 4)) +
+  theme_bw() + 
+  scale_fill_viridis_d(end = .85, direction = -1, option = 'viridis') +
+  theme(axis.text.x = element_text(size = rel(.9)),
+        legend.position = 'top',
+        legend.title = element_blank())
+
+tip_par %>%   
+  filter(!is_nsnr(class_part_4, c25_w05))  %>%
+  drop_na(c("class_part_4", "c25_w05")) %>%
+  filter(tipo_atricion==1) %>%
+  mutate(pos_id = factor(car::recode(c25_w05, "1 = 1; 2 = 2; 3 = 3; 4=4"),
+                        levels = 1:4,
+                        labels = c('La democracia\nes preferible', 
+                                   'Un gobierno autoritario\npuede ser preferible',
+                                   'Da lo mismo',
+                                   'Ninguna'))) %>%
+  survey_design_elsoc(weights = 'ponderador02_w05') %>% 
+  prop(pos_id, by = class_part_4, na.rm = TRUE) %>% 
+  ggplot(aes(x = prop, y = class_part_4, 
+             fill = fct_rev(pos_id), label = scales::percent(prop, .1))) + 
+  geom_bar(stat = 'identity', position = 'stack') +
+  labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
+  scale_x_continuous(labels = scales::percent) +
   guides(fill = guide_legend(reverse = TRUE)) +
   geom_text(position = position_stack(vjust = .5), size = 3,
             color = rep(c('white', 'white', 'black', 'black'), 4)) +
@@ -646,6 +797,31 @@ tip_par %>%
   geom_bar(stat = 'identity', position = 'stack') +
   labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
   scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
+  guides(fill = guide_legend(reverse = TRUE)) +
+  geom_text(position = position_stack(vjust = .5), size = 3,
+            color = rep(c('white', 'black'), 4)) +
+  theme_bw() + 
+  scale_fill_viridis_d(begin = .33, end = .66) +
+  theme(axis.text.x = element_text(size = rel(.9)),
+        legend.position = 'top',
+        legend.title = element_blank())
+
+tip_par %>%   
+  filter(!is_nsnr(class_part_4, c46_01_w05, c46_02_w05, c46_03_w05, c46_04_w05))  %>%
+  drop_na(c("class_part_4", "c46_01_w05", "c46_02_w05", "c46_03_w05", "c46_04_w05")) %>%
+  filter(tipo_atricion==1) %>%
+  rowwise() %>%
+  mutate(optimismo = mean(c46_01_w05, c46_02_w05, c46_03_w05, c46_04_w05, na.rm = TRUE),
+         pos_id = factor(optimismo >= 4,
+                        levels = c(TRUE, FALSE),
+                        labels = c('Optimista', 'No optimista'))) %>%
+  survey_design_elsoc(weights = 'ponderador02_w05') %>% 
+  prop(pos_id, by = class_part_4, na.rm = TRUE) %>% 
+  ggplot(aes(x = prop, y = class_part_4, fill = pos_id, 
+             label = scales::percent(prop, .1))) + 
+  geom_bar(stat = 'identity', position = 'stack') +
+  labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
+  scale_x_continuous(labels = scales::percent) +
   guides(fill = guide_legend(reverse = TRUE)) +
   geom_text(position = position_stack(vjust = .5), size = 3,
             color = rep(c('white', 'black'), 4)) +

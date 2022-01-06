@@ -625,8 +625,6 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-
-
 De igual forma, la situación laboral se encuentra altamente correlacionada con la presencia de síntomas moderados a severos de depresión. El grupo con menor presencia de dichos síntomas en 2021 es el de aquellos y aquellas con trabajo remunerado (15,3%), seguido de jubilados(as) o pensionados(as) (17,8%).
 
 Diversos estudios han mostrado que el trabajo remunerado estable es un factor protector de la salud mental, mientras que el trabajo informal, el subempleo, la desocupación o las trayectorias laborales interrumpidas constituyen un factor de riesgo (Kessler et al, 2003; Rosenthal et al, 2012).

@@ -2,7 +2,6 @@
 
 ## Conflicto y cohesión territorial
 
-<!-- ### 8.1 ¿Con qué frecuencia usted/alguien de su hogar se ha molestado o incomodado por problemas con sus vecinos? según ola de estudio -->
 
 Chile es un país marcado por altos niveles de segregación espacial (REF), los cuales acarrean consigo importantes diferencias y desigualdades socioeconómicas entre diferentes zonas del país y también dentro de las distintas ciudades y territorios. Por ende, para entender fenómenos de conflicto y cohesión social, es importante considerar el nivel barrial, es decir, el nivel en que los/as chilenos/as perciben la existencia de problemas o conflictos con sus vecinos. 
 
@@ -35,7 +34,6 @@ g8.1
 
 A su vez, en la Figura 4.2 podemos observar que, aunque los porcentajes de personas que reportan distintos niveles de conflicto no cambian considerablemente entre 2019 y 2021, si existen personas que cambian sus percepciones individuales de conflicto con sus vecinos en distintas direcciones, sea esto para menores niveles de conflicto pero también para niveles de conflicto más elevados. Por ejemplo, algunas personas que antes reportaban haber tenido “pocos o algunos” conflictos con vecinos, el año 2021 reportan “nunca” haberlos tenido, mientras que bastantes personas que habían reportado “nunca” haber tenido conflictos, en 2021 si reportan haberse sentido molestos o incomodados por problemas con sus vecinos “pocas o algunas veces”. Finalmente, del 10.3% de las personas que en 2019 reportaron tener problemas “muchas veces o siempre” con sus vecinos, cerca de la mitad reportan en 2021 una disminución de estos para “pocas o algunas veces''.
 
-<!-- ### 8.2 Cambios en frecuencia de conflictos barriales -->
 ```{r confli-cambio, fig.align='center', fig.cap='Cambios en frecuencia de conflictos barriales'}
 
 elsoc_diseno <- elsoc_long_2016_2021 %>% 
@@ -59,6 +57,7 @@ etiquetas.8.2 <- data.frame((svytable(~barrio_confli_rec + ola, elsoc_diseno, ro
 g8.2 <- 
   ggplot(datos.8.2, aes(x = ola, fill = barrio_confli_rec, stratum = barrio_confli_rec, 
                            alluvium = idencuesta, y = prop)) +
+  theme_bw() +
   ggalluvial::geom_flow(alpha = .66) + 
   ggalluvial::geom_stratum(linetype = 0) +
   scale_y_continuous(labels = scales::percent) + 
@@ -76,7 +75,6 @@ g8.2 <-
 g8.2
 ```
 
-<!-- ### 8.3 Porce´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´´{+}egún ola del estudio y zona geográfica. Porcentaje con conflictos barriales "Siempre" o "Muchas veces".  -->
 ```{r confli-zona, fig.align='center', fig.cap='Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona geográfica. Porcentaje con conflictos barriales "Siempre" o "Muchas veces"'}
 
 datos.8.3 <- elsoc_long_2016_2021 %>% 
@@ -108,7 +106,7 @@ g8.3 <- datos.8.3 %>%
 g8.3
 ```
 
-<!-- ### 8.4 Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona de residencia. Porcentaje con conflictos barriales "Siempre" o "Muchas veces".  -->
+
 ```{r confli-estrato, fig.align='center', fig.cap='Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona de residencia. Porcentaje con conflictos barriales "Siempre" o "Muchas veces".'}
 
 datos.8.4 <- elsoc_long_2016_2021 %>% 
@@ -143,7 +141,6 @@ g8.4
 ```
 
 
-<!-- ### 8.5 Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y quintil de ingreso. Porcentaje con conflictos barriales "Siempre" o "Muchas veces".  -->
 ```{r confli-quintil, fig.align='center', fig.cap='Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y quintil de ingreso. Porcentaje con conflictos barriales "Siempre" o "Muchas veces".'}
 datos.8.5 <- elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & ola %in% c(4,5) & !t11_01 %in% c(-888, -999) &
@@ -210,6 +207,7 @@ g.confli.rm <- comunas_rm %>%
   scale_fill_viridis_c(begin = .11, end = .88, direction = -1, option = 'viridis') +
   theme_bw()
 g.confli.rm
+
 ```
 
 ```{r confli-region2, fig.align='center', fig.cap='Frecuencia promedio de problemas con vecinos, según región de Chile (2021)', message=FALSE, warning=FALSE}
@@ -261,7 +259,6 @@ La confianza entre vecinos es un prerrequisito indispensable para la sustentabil
 
 En esta línea, en la Figura 4.8 se puede observar una progresiva evolución de bastante o mucha confianza entre 2016 y 2018, para descender el 2019, y mantenerse relativamente estable el 2021 al 47% de bastante o mucha confianza.
 
-<!-- ### 8.6 En términos generales, ¿cuánto confía usted en sus vecinos? según ola de estudio -->
 ```{r vecinos-ola, fig.align='center', fig.cap='En términos generales, ¿cuánto confía usted en sus vecinos? según ola de estudio.'}
 datos.8.6 <- elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & !t01 %in% c(-888, -999)) %>% 
@@ -769,8 +766,7 @@ tab %>%
   geom_line() +
   theme_bw() +   
   scale_color_viridis_d(begin = 0, end = .66, direction = 1, option = 'viridis') +
-  labs(y="", x="",
-       title = "") +
+  labs(y = NULL, x = NULL, title = NULL) +
   scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
   scale_x_continuous(breaks = c(1,2,3,4,5), labels=c("2016", "2017", "2018", "2019", "2021")) +
   geom_text_repel(data=tab, aes(label=paste0(round((freq*100),1),"%"),  y=freq),
