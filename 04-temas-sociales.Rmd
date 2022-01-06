@@ -469,8 +469,8 @@ tab<- rbind(tab1, tab2, tab3, tab4, tab5)
 
 tab %>%
   ggplot(aes(x=var, y=freq, color=quintil)) +
-  geom_line(size = 1) +
-  geom_point(size = 1.8) +
+  geom_point(size = 1.75) + 
+  geom_line() +
   theme_bw() +   
   scale_color_viridis_d(begin = 0, end = .66, direction = 1, option = 'viridis') +
   labs(y="", x="",
@@ -678,8 +678,8 @@ tab5<-tab %>% group_by(m0_sexo_w01, c07_01_w05) %>%
 tab<- rbind(tab1, tab2, tab3, tab4, tab5)
 
 ggplot(data= tab, aes(x=var, y=freq, color=m0_sexo_w01)) +
-  geom_line(size = 1) +
-  geom_point(size = 1.8) +
+  geom_point(size = 1.75) + 
+  geom_line() +
   theme_bw() +   
   scale_color_viridis_d(begin = 0, end = .66, direction = 1, option = 'viridis') +
   labs(y="", x="",
@@ -765,8 +765,8 @@ tab<- rbind(tab1, tab2, tab3, tab4, tab5)
 
 tab %>%
   ggplot(aes(x=var, y=freq, color=estrato_w05)) +
-  geom_line(size = 1) +
-  geom_point(size = 1.8) +
+  geom_point(size = 1.75) + 
+  geom_line() +
   theme_bw() +   
   scale_color_viridis_d(begin = 0, end = .66, direction = 1, option = 'viridis') +
   labs(y="", x="",
@@ -851,8 +851,8 @@ tab<- rbind(tab1, tab2, tab3, tab4, tab5)
 
 tab %>%
   ggplot(aes(x=var, y=freq, color=quintil)) +
-  geom_line(size = 1) +
-  geom_point(size = 1.8) +
+  geom_point(size = 1.75) + 
+  geom_line() +
   theme_bw() +   
   scale_color_viridis_d(begin = 0, end = .66, direction = 1, option = 'viridis') +
   labs(y="", x="",
@@ -1002,8 +1002,8 @@ g8.10 <- datos.8.10 %>%
   ggplot(aes(y = prop, x = ola, color = zona1, group = zona1,
              label = as.character(scales::percent(prop, accuracy = .1)))) +
   theme_bw() +   
-  geom_line(size = 1) +
-  geom_point(size = 1.8) +
+  geom_point(size = 1.75) + 
+  geom_line() +
   scale_y_continuous(labels = scales::percent,
                      limits = c(0,.5)) +
   ylab(label = NULL) +
@@ -1033,8 +1033,8 @@ g8.11 <- datos.8.11 %>%
   ggplot(aes(y = prop, x = ola, color = educ, group = educ,
              label = as.character(scales::percent(prop, accuracy = .1)))) +
   theme_bw() +   
-  geom_line(size = 1) +
-  geom_point(size = 1.8) +
+  geom_point(size = 1.75) + 
+  geom_line() +
   scale_y_continuous(labels = scales::percent,
                      limits = c(0,.5)) +
   ylab(label = NULL) +
@@ -1062,8 +1062,8 @@ g8.12 <- datos.8.12 %>%
   ggplot(aes(y = prop, x = ola, color = edadt, group = edadt,
              label = as.character(scales::percent(prop, accuracy = .1)))) +
   theme_bw() +   
-  geom_line(size = 1) +
-  geom_point(size = 1.8) +
+  geom_point(size = 1.75) + 
+  geom_line() +
   scale_y_continuous(labels = scales::percent,
                      limits = c(0,.5)) +
   ylab(label = NULL) +
@@ -1104,8 +1104,8 @@ g8.13 <- datos.8.13 %>%
   ggplot(aes(y = prop, x = ola, color = quintil, group = quintil,
              label = as.character(scales::percent(prop, accuracy = .1)))) +
   theme_bw() +   
-  geom_line(size = 1) +
-  geom_point(size = 1.8) +
+  geom_point(size = 1.75) + 
+  geom_line() +
   scale_y_continuous(labels = scales::percent,
                      limits = c(0,.5)) +
   ylab(label = NULL) +
@@ -1247,8 +1247,8 @@ g8.17 <- datos.8.17 %>%
   ggplot(aes(y = prop, x = ola, color = quintil, group = quintil,
              label = as.character(scales::percent(prop, accuracy = .1)))) +
   theme_bw() +   
-  geom_line(size = 1) +
-  geom_point(size = 1.8) +
+  geom_point(size = 1.75) + 
+  geom_line() +
   scale_y_continuous(labels = scales::percent,
                      limits = c(0,.6)) +
   ylab(label = NULL) +
@@ -1374,8 +1374,8 @@ datos.g14.1 %>%
   ggplot(aes(y = prop, x = ola, color = cuestion_mig, group = cuestion_mig,
              label = scales::percent(prop, accuracy = .1))) +
   theme_bw() +   
-  geom_line(size = 1) +
-  geom_point(size = 1.8) +
+  geom_point(size = 1.75) + 
+  geom_line() +
   scale_y_continuous(labels = scales::percent,
                      limits = c(0, 1)) +
   ylab(label = NULL) +
@@ -1404,8 +1404,8 @@ ggplot(aes(y = prop, x = ola, color = cuestion_mig, group = cuestion_mig,
              label = scales::percent(prop, accuracy = .1))) +
   facet_wrap(.~macrozona) +
   theme_bw() +   
-  geom_line(size = 1) +
-  geom_point(size = 1.8) +
+  geom_point(size = 1.75) + 
+  geom_line() +
   scale_y_continuous(labels = scales::percent,
                      limits = c(0, 1)) +
   ylab(label = NULL) +
@@ -1430,8 +1430,8 @@ datos.g14.2 %>%
   ggplot(aes(y = prop, x = ola, color = cuestion_mig, group = cuestion_mig,
                            label = scales::percent(prop, accuracy = .1))) +
   theme_bw() +   
-  geom_line(size = 1) +
-  geom_point(size = 1.8) +
+  geom_point(size = 1.75) + 
+  geom_line() +
   scale_y_continuous(labels = scales::percent,
                      limits = c(0, 1)) +
   ylab(label = NULL) +
@@ -1458,8 +1458,8 @@ elsoc_long_2016_2021 %>%
              label = scales::percent(prop, accuracy = .1))) +
   facet_wrap(.~macrozona) +
   theme_bw() +   
-  geom_line(size = 1) +
-  geom_point(size = 1.8) +
+  geom_point(size = 1.75) + 
+  geom_line() +
   scale_y_continuous(labels = scales::percent,
                      limits = c(0, 1)) +
   ylab(label = NULL) +
@@ -1488,8 +1488,8 @@ datos.g14.3 %>%
   ggplot(aes(y = prop, x = ola, color = cuestion_mig, group = cuestion_mig,
                           label = as.character(scales::percent(prop, accuracy = .1)))) +
   theme_bw() +   
-  geom_line(size = 1) +
-  geom_point(size = 1.8) +
+  geom_point(size = 1.75) + 
+  geom_line() +
   scale_y_continuous(labels = scales::percent,
                      limits = c(0,1)) +
   ylab(label = NULL) +
@@ -1517,8 +1517,8 @@ elsoc_long_2016_2021 %>%
              label = scales::percent(prop, accuracy = .1))) +
   facet_wrap(.~macrozona) +
   theme_bw() +   
-  geom_line(size = 1) +
-  geom_point(size = 1.8) +
+  geom_point(size = 1.75) + 
+  geom_line() +
   scale_y_continuous(labels = scales::percent,
                      limits = c(0, 1)) +
   ylab(label = NULL) +
@@ -1978,8 +1978,8 @@ g11.6 <- datos.11.6 %>%
   ggplot(aes(y = m_mov_social, x = ola, group = value, color = value,
              label = m_mov_social)) +
   theme_bw() +
-  geom_line(size = 1) +
-  geom_point(size = 1.8) +
+  geom_point(size = 1.75) + 
+  geom_line() +
   scale_y_continuous(limits = c(0,6)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
@@ -1995,29 +1995,28 @@ g11.6
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1) %>%  
-  select(c18_09, c18_10, d05_02, d05_04, ola, ponderador02, segmento_disenno, estrato_disenno) %>% 
-  pivot_longer(cols = c(c18_09, c18_10, d05_02, d05_04)) %>% 
+  select(c18_09, d05_04, ola, ponderador02, segmento_disenno, estrato_disenno) %>% 
+  pivot_longer(cols = c(c18_09, d05_04)) %>% 
   filter(!value %in% c(-888, -999)) %>% 
   prop(value %in% c(4,5), by = c(ola, name), na.rm = TRUE) %>% 
   as_label(ola) %>% 
   mutate(name = factor(name,
-                       levels = c('c18_09', 'c18_10', 'd05_02', 'd05_04'),
+                       levels = c('c18_09', 'd05_04'),
                        labels = c('Personas son\nrecompensadas\npor su esfuerzo',
-                               'Personas son\nrecompensadas\npor su inteligencia',
-                               'Educación es\nimportante para\nsurgir en la vida',
                                'Trabajo duro\nes importante para\nsurgir en la vida'))) %>% 
   ggplot(aes(y = prop, x = ola, color = name, group = name,
              label = scales::percent(prop, accuracy = .1))) +
   theme_bw() +   
-  geom_line(size = 1) +
-  geom_point(size = 1.8) +
+  geom_point(size = 1.75) + 
+  geom_line() +
   scale_y_continuous(labels = scales::percent,
                      limits = c(0,1)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_color_viridis_d(begin = 0, end = .66, direction = 1, option = 'viridis') +
-  geom_text(vjust = -0.8,
-            size= 2.75) +
+  scale_color_viridis_d(begin = .33, end = .66, 
+                        direction = 1, option = 'viridis') +
+  geom_text(vjust = -0.8, color = 'black',
+            size = 3) +
   theme(legend.position = 'top',
         legend.title = element_blank())
 

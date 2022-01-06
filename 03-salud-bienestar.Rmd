@@ -342,9 +342,6 @@ Cabe destacar también que un 41,9% de la población presentó síntomas moderad
 
 Distintas dimensiones demográficas o socioeconómicas pueden aumentar indirectamente el riesgo de recurrencia o persistencia de los síntomas depresivos en el tiempo a través de su asociación con una mayor severidad de los síntomas o mayor predisposición a presentar comorbilidades de salud, entre otros factores. La literatura internacional sugiere que algunos factores sociodemográficos y económicos asociados a la recurrencia y persistencia de la depresión son el género femenino (Brunoni et al 2020, Schramm et al 2020), el bajo nivel socioeconómico (Musliner et al, 2016) y la mayor edad (Hardeveld et al 2013).
 
-En este sentido, nuevamente se observa una marcada brecha de género en términos de la presencia reiterada de síntomas depresivos moderados a severos: en hombres, el porcentaje que no ha presentado síntomas moderados a severos en ninguna ola del estudio es de 68,5%; mientras que este porcentaje es de 45,2% en mujeres. De igual forma, solo 0,7% de los hombres presentaron síntomas moderados a severos en todas las olas, versus 3,4% entre las mujeres.
-
-
 
 ```{r ndepr, fig.cap = 'Porcentaje que presenta síntomas de depresión moderada a severa de forma reiterada, según número de ocurrencias' }
 
@@ -381,7 +378,7 @@ elsoc_wide_2016_2021 %>%
 ```
 
 
-
+En este sentido, nuevamente se observa una marcada brecha de género en términos de la presencia reiterada de síntomas depresivos moderados a severos: en hombres, el porcentaje que no ha presentado síntomas moderados a severos en ninguna ola del estudio es de 68,5%; mientras que este porcentaje es de 45,2% en mujeres. De igual forma, solo 0,7% de los hombres presentaron síntomas moderados a severos en todas las olas, versus 3,4% entre las mujeres.
 
 
 ```{r ndepr-sexo, fig.cap = 'Porcentaje que presenta síntomas de depresión moderada a severa de forma reiterada, según número de ocurrencias y sexo' }
@@ -601,6 +598,35 @@ elsoc_long_2016_2021 %>%
             size = 3) 
 
 ```
+
+```{r depre-educ, fig.cap = 'Porcentaje que presenta síntomas de depresión moderados a severos, según nivel educacional (2021)'}
+
+elsoc_long_2016_2021 %>% 
+  filter(ola == 5) %>% 
+  purrr::map_at(.at = vars(starts_with('s11_0')), 
+                .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
+  as.data.frame() %>%  
+  mutate(phq9 = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09),
+         educ = factor(car::recode(m01, recodes = "1:3 = 1; 4:5 = 2; 6:7 = 3; 8:10 = 4"),
+                       levels = 1:4,
+                       labels = c("Basica", "Media", "Tecnica", "Universitaria"))) %>% 
+  dplyr::filter(tipo_atricion == 1, !is_nsnr(m01)) %>% 
+  prop(phq9 >= 10 , by = educ, na.rm = TRUE) %>% 
+  sjlabelled::as_label(educ) %>% 
+  ggplot(aes(y = prop, x = educ, 
+             label = scales::percent(prop, accuracy = .1))) + 
+  theme_bw() + 
+  geom_col(position = 'dodge2', fill = viridis(1, begin = .5)) +
+  scale_y_continuous(labels = scales::percent, limits = 0:1) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  geom_text(position = position_dodge(.9), vjust = -.5,
+            size = 3) 
+
+```
+
+
+
 De igual forma, la situación laboral se encuentra altamente correlacionada con la presencia de síntomas moderados a severos de depresión. El grupo con menor presencia de dichos síntomas en 2021 es el de aquellos y aquellas con trabajo remunerado (15,3%), seguido de jubilados(as) o pensionados(as) (17,8%).
 
 Diversos estudios han mostrado que el trabajo remunerado estable es un factor protector de la salud mental, mientras que el trabajo informal, el subempleo, la desocupación o las trayectorias laborales interrumpidas constituyen un factor de riesgo (Kessler et al, 2003; Rosenthal et al, 2012).

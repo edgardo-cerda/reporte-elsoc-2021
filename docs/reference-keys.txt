@@ -63,6 +63,7 @@ fig:perfiles-depr-sexo
 fig:perfiles-depr-edad
 fig:perfiles-depr-quintil
 fig:depre-quintil
+fig:depre-educ
 fig:depre-sitlab
 fig:sitlab-sexo
 fig:trabremoto
