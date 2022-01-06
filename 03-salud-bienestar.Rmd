@@ -1,10 +1,7 @@
 
 # Salud mental y bienestar
 
-## Bienestar
-
-#### ¿Cómo se encuentra, y cómo ha cambiado la salud mental y nivel de bienestar de la población?
-
+## Salud mental y bienestar
 
 ```{r datos-clases-sociales}
 
@@ -39,7 +36,7 @@ elsoc_clase <- elsoc_long_2016_2021 %>%
 
 Chile es un país que se caracteriza por una carga de trastornos mentales relativamente alta con escaso acceso a servicios de salud mental (Vicente et al, 2016). La irrupción de significativos fenómenos locales y globales, como el Estallido Social ocurrido a partir de octubre de 2019 y sus repercusiones políticas e institucionales, así como la pandemia por COVID-19 y las medidas para contenerla, con sus impactos en la salud, condiciones económicas y de sociabilidad de la población; han tenido un marcado efecto sobre la salud mental y el nivel de bienestar de la población (Wu et al, 2021; Duarte & Jiménez, 2021).
 
-A pesar de las difíciles condiciones sanitarias y económicas, los datos ELSOC nos permiten señalar que la población chilena presenta aún un alto porcentaje de satisfacción con la vida: 83,7% responde estar satisfecho o muy satisfecho con su vida (Figura 3.1), y 63,5% responde que su vida se acerca o se acerca completamente a su ideal. 
+A pesar de las difíciles condiciones sanitarias y económicas, los datos ELSOC nos permiten señalar que la población chilena presenta aún un alto porcentaje de satisfacción con la vida: 83,7% responde estar satisfecho o muy satisfecho con su vida (Figura \@ref(fig:salud-bienestar-2021)), y 63,5% responde que su vida se acerca o se acerca completamente a su ideal. 
 
 Esto es consistente con los datos de otras encuestas realizadas en contexto pre-pandémico o pandémico. Lo que muestran encuestas previas, como la Encuesta de Desarrollo Humano del 2011 (PNUD, 2012) o la encuesta Termómetro Social de octubre 2020 (DESOC-COES, 2020) es que, en general, los chilenos están satisfechos con sus vidas.
 
@@ -112,7 +109,7 @@ En cuanto a sintomatología depresiva, ELSOC utiliza la escala PHQ-9 (Patient He
 
 Los resultados de la escala PHQ-9 son clasificados en 4 categorías, según la presencia y habitualidad de síntomas depresivos: de 0-9 se considera “Sin síntomas o con síntomas depresivos mínimos”, de 10-14 “Sintomatología depresiva media”; de 15-19 “Sintomatología depresiva moderada” y de 20-27 “Sintomatología depresiva moderada-severa o severa”.
 
-Los resultados de 2021 muestran que, si bien un 48,6% de la población no presenta o presenta síntomas mínimos de depresión (Figura 3.4), un alto porcentaje presenta síntomas depresivos, en distintos niveles de severidad. Un 32,6% de la población presenta sintomatología depresiva media, 11,2% síntomas depresivos moderados, y 7,7% de depresión moderada-severa a severa (Figura 3.4), lo que revela una alta prevalencia de este tipo de síntomas en la población general y confirma una deteriorada situación de la salud mental en Chile.
+Los resultados de 2021 muestran que, si bien un 48,6% de la población no presenta o presenta síntomas mínimos de depresión (Figura \ref(fig:depre-2021)), un alto porcentaje presenta síntomas depresivos, en distintos niveles de severidad. Un 32,6% de la población presenta sintomatología depresiva media, 11,2% síntomas depresivos moderados, y 7,7% de depresión moderada-severa a severa (Figura \@ref(fig:depre-2021)), lo que revela una alta prevalencia de este tipo de síntomas en la población general y confirma una deteriorada situación de la salud mental en Chile.
 
 
 ```{r depre-2021, fig.cap = 'Porcentaje que presenta síntomas de depresión (2021)'}

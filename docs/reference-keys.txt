@@ -154,8 +154,7 @@ actitudes-hacia-la-democracia
 participación-electoral
 proceso-constituyente
 salud-mental-y-bienestar
-bienestar
-cómo-se-encuentra-y-cómo-ha-cambiado-la-salud-mental-y-nivel-de-bienestar-de-la-población
+salud-mental-y-bienestar-1
 sintomatología-depresiva
 trayectorias-de-síntomas-depresivos
 economía-y-bienestar

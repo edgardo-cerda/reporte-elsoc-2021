@@ -1,15 +1,13 @@
 
 # Temas políticos
 
-¿Cómo ha cambiado la sociedad en temas políticos?
-
 ## Identificación política
 
 ### ¿Cómo se posicionan políticamente los chilenos?
 
 La emergencia y consolidación en el poder de nuevas coaliciones políticas, así como la intensificación de los ciclos de protesta, hacen preguntarse por cómo ha evolucionado la identidad política de los chilenos. 
 
-La Figura 2.1 muestra la foto más reciente de ELSOC acerca de cómo se distribuyen las preferencias ideológicas de la población adulta chilena, mientras que el gráfico 2.2 muestra el cambio en las preferencias entre los años 2016 y 2021. Este último indica que la no identificación con posiciones ideológicas ha dejado de ser la respuesta mayoritaria, reafirmando al centro como la posición política con que más sujetos se identifican. Así, en 2021, por primera vez se observa que menos de un 20% afirma no identificarse con ninguna posición del espectro izquierda-derecha, al tiempo que el centro obtiene más de un 35% de identificación. 
+La Figura \@ref(fig:graf-idpolitica) muestra la foto más reciente de ELSOC acerca de cómo se distribuyen las preferencias ideológicas de la población adulta chilena, mientras que el Figura \@ref(fig:graf-idpolitica-ola) muestra el cambio en las preferencias entre los años 2016 y 2021. Este último indica que la no identificación con posiciones ideológicas ha dejado de ser la respuesta mayoritaria, reafirmando al centro como la posición política con que más sujetos se identifican. Así, en 2021, por primera vez se observa que menos de un 20% afirma no identificarse con ninguna posición del espectro izquierda-derecha, al tiempo que el centro obtiene más de un 35% de identificación. 
 
 
 ```{r graf-idpolitica, fig.cap='Identificación política (2021)'}
@@ -61,7 +59,7 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-Las Figuras 2.3 es un gráfico aluvial que muestra cómo las personas mantienen o cambian sus posiciones ideológicas en cada ola del estudio. Se evidencia como trás los muy estables números agregados de cada año se esconde una proporción importante de personas transitan entre categorías ideológicas, aunque mayoritariamente entre grupos adyacentes.  La Figura 2.4 muestra el porcentaje que en cada ola del estudio respondió otra categoría ideológica que había mencionado el año anterior. Como se puede observar casi la mitad de las personas cambia de posición política consistentemente año a año. Estos patrones hablan a favor de dos segmentos de la población (numéricamente similares); uno con perfiles ideológicos altamente cristalizados y estables, y otro más bien volátil y fluctuante.
+Las Figura \@ref(fig:graf-alluvial-idpolitica-ola) es un gráfico aluvial que muestra cómo las personas mantienen o cambian sus posiciones ideológicas en cada ola del estudio. Se evidencia como trás los muy estables números agregados de cada año se esconde una proporción importante de personas transitan entre categorías ideológicas, aunque mayoritariamente entre grupos adyacentes.  La Figura \@ref(fig:graf-cambios-idpolitica-ola) muestra el porcentaje que en cada ola del estudio respondió otra categoría ideológica que había mencionado el año anterior. Como se puede observar casi la mitad de las personas cambia de posición política consistentemente año a año. Estos patrones hablan a favor de dos segmentos de la población (numéricamente similares); uno con perfiles ideológicos altamente cristalizados y estables, y otro más bien volátil y fluctuante.
 
 
 ```{r graf-alluvial-idpolitica-ola, fig.cap = 'Cambios en la identificación política, según ola del estudio'}
@@ -130,7 +128,7 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-La Figura 2.5 muestra el cambio entre posiciones ideológicas entre 2016 y 2021 según la posición mencionada en 2016. Destaca que las personas identificadas con el centro son las más estables, con cerca de un 54% que se mantuvo en la misma posición. Las personas de  izquierda y derecha tienen un comportamiento espejo, donde cerca de un 47% de cada grupo mantiene su identidad 5 años después de la primera entrevista, mientras que el resto migra mayoritariamente al centro y en una menor proporción a la no identificación. La ausencia de identidad ideológica se asocia a mayor volatilidad, donde sólo un 31% mantuvo su posición, obteniendo elevada migración al centro (32%) y la izquierda (21%). La Figura 2.6 denota que los cambios inter-ola de posición ideológica se concentran mayormente en población jóven (70% entre 18-29 años), mientras que entre los grupos mayores los niveles de cambio son menores y más similares entre grupos etarios (57% entre 30-49 años y 50% entre mayores de 65). Este patrón es enteramente consistente con la hipótesis de los años impresionables según la cual las actitudes de las personas son más inestables durante la adolescencia tardía y la adultez temprana, pero que se solidifican rápidamente y permanecen estables durante el resto del ciclo de vida (Krosnick y Alwin, 1989) .
+La Figura \@ref(fig:graf-cambios-idpol-idpol) muestra el cambio entre posiciones ideológicas entre 2016 y 2021 según la posición mencionada en 2016. Destaca que las personas identificadas con el centro son las más estables, con cerca de un 54% que se mantuvo en la misma posición. Las personas de  izquierda y derecha tienen un comportamiento espejo, donde cerca de un 47% de cada grupo mantiene su identidad 5 años después de la primera entrevista, mientras que el resto migra mayoritariamente al centro y en una menor proporción a la no identificación. La ausencia de identidad ideológica se asocia a mayor volatilidad, donde sólo un 31% mantuvo su posición, obteniendo elevada migración al centro (32%) y la izquierda (21%). La Figura \@ref(fig:graf-cambios-idpolitica-edad) denota que los cambios inter-ola de posición ideológica se concentran mayormente en población jóven (70% entre 18-29 años), mientras que entre los grupos mayores los niveles de cambio son menores y más similares entre grupos etarios (57% entre 30-49 años y 50% entre mayores de 65). Este patrón es enteramente consistente con la hipótesis de los años impresionables según la cual las actitudes de las personas son más inestables durante la adolescencia tardía y la adultez temprana, pero que se solidifican rápidamente y permanecen estables durante el resto del ciclo de vida (Krosnick y Alwin, 1989) .
 
 
 ```{r graf-cambios-idpol-idpol, fig.cap = 'Cambios en identificación política entre 2016 y 2021'}
@@ -193,12 +191,11 @@ elsoc_wide_2016_2021 %>%
 
 ```
 
-### Interés en la política y opinión pública
+## Interés en la política y opinión pública
 
 Un antecedente actitudinal fundamental de nivel de participación política de las personas es el nivel de interés general en la política y la frecuencia de discusión sobre temas políticos (Verba, Schlozman y Brady, 1995). 
 
-La Figura 2.7 muestra que el 2019 se produjo un alza importante en las personas bastante o muy interesadas en la política, pasando de 12,2% a 21,9%. Así mismo, la Figure 2.8 indica cambios similares en el porcentaje de personas que mencionan hablar de política con familiares (de 16% a 26%) o que usan redes sociales para opinar sobre temas políticos (10% a 20%). Estas alzas coinciden con las masivas, y en ocasiones altamente disruptivas, marchas ocurridas en el marco del llamado estallido social (la medición del 2019 se inició el 20 de noviembre). En contraste, el incremento en los niveles de politización observados entre 2018 y 2019 se revierten en buena medida en la última ola del estudio, donde el nivel de interés en política cae a un 15,2%, el hablar de política con familiares a un 21%, y el uso de redes sociales para opinar sobre temas políticos a un 14.5%. 
-
+La Figura \@ref(fig:graf-interespolitica-ola) muestra que el 2019 se produjo un alza importante en las personas bastante o muy interesadas en la política, pasando de 12,2% a 21,9%. Así mismo, la Figura \@ref(fig:graf-participciudadana-ola) indica cambios similares en el porcentaje de personas que mencionan hablar de política con familiares (de 16% a 26%) o que usan redes sociales para opinar sobre temas políticos (10% a 20%). Estas alzas coinciden con las masivas, y en ocasiones altamente disruptivas, marchas ocurridas en el marco del llamado estallido social (la medición del 2019 se inició el 20 de noviembre). En contraste, el incremento en los niveles de politización observados entre 2018 y 2019 se revierten en buena medida en la última ola del estudio, donde el nivel de interés en política cae a un 15,2%, el hablar de política con familiares a un 21%, y el uso de redes sociales para opinar sobre temas políticos a un 14.5%. 
 
 
 ```{r graf-interespolitica-ola, fig.cap = 'Interés en política, según ola del estudio'}
@@ -255,7 +252,7 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-La Figura 2.9 muestra una fuerte asociación estadística entre interés en política y preferencias ideológicas en el año 2021. La proporción de personas de izquierda crece en categorías de mayor interés, mientras que los individuos de derecha alcanzan proporciones similares sin importar el nivel de interés político. Los sujetos de centro se concentran en mayor medida en niveles de interés bajos, mientras que los sujetos que no se identifican tienden a coincidir con ausencia de interés en la política.
+La Figura \@ref(fig:graf-idpolitica-interespolitica) muestra una fuerte asociación estadística entre interés en política y preferencias ideológicas en el año 2021. La proporción de personas de izquierda crece en categorías de mayor interés, mientras que los individuos de derecha alcanzan proporciones similares sin importar el nivel de interés político. Los sujetos de centro se concentran en mayor medida en niveles de interés bajos, mientras que los sujetos que no se identifican tienden a coincidir con ausencia de interés en la política.
 
 
 ```{r graf-idpolitica-interespolitica, fig.cap = 'Identificación política, según grado de interes en la política (2021)'}
@@ -287,7 +284,7 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-ELSOC también ha registrado durante múltiples años la opinión de las personas encuestadas respecto a diversos temas de discusión pública. Aquí pueden volver a verse patrones de cambio y estabilidad entre los años 2019 y 2021. La Figura 2.10 muestra, por un lado, que todos los grupos ideológicos han mantenido su posición frente al tema del aborto libre, pero por otra parte, se observa un incrementado acentuado, que fluctua entre los 12 y 17 puntos porcentuales, en el nivel de acuerdo con tomar medidas más drásticas para evitar mayor inmigración. Las alzas se pueden incluso notar en grupos menos proclives a estar de acuerdo con mayores restricciones como las personas que se identifican con la izquierda. En materia de pensiones, las personas de izquierda y centro han mantenido sus posiciones similares, mientras que las de derecha y que no se identifican han incrementado su acuerdo con que las personas deben ser responsables de su propia pensión, cuestión que puede deberse a la mediatización de los retiros de las AFP como derecho de propiedad individual sobre los fondos de pensiones.
+ELSOC también ha registrado durante múltiples años la opinión de las personas encuestadas respecto a diversos temas de discusión pública. Aquí pueden volver a verse patrones de cambio y estabilidad entre los años 2019 y 2021. La Figura \@ref(fig:graf-temaspublicos-idpolitica) muestra, por un lado, que todos los grupos ideológicos han mantenido su posición frente al tema del aborto libre, pero por otra parte, se observa un incrementado acentuado, que fluctua entre los 12 y 17 puntos porcentuales, en el nivel de acuerdo con tomar medidas más drásticas para evitar mayor inmigración. Las alzas se pueden incluso notar en grupos menos proclives a estar de acuerdo con mayores restricciones como las personas que se identifican con la izquierda. En materia de pensiones, las personas de izquierda y centro han mantenido sus posiciones similares, mientras que las de derecha y que no se identifican han incrementado su acuerdo con que las personas deben ser responsables de su propia pensión, cuestión que puede deberse a la mediatización de los retiros de las AFP como derecho de propiedad individual sobre los fondos de pensiones.
 
 ```{r graf-temaspublicos-idpolitica, fig.cap = 'Acuerdo con temas de discusión pública, según posición política (2019-2021)'}
 
@@ -307,7 +304,7 @@ elsoc_long_2016_2021 %>%
   ggplot(aes(x = pos_id, y = prop, 
              label = scales::percent(prop, .1))) +
   facet_wrap(.~name) +
-  geom_line(size = .7, color = viridis(1, begin = .44, end = .44)) +
+  geom_line(size = .7) +
   geom_point(aes(color = ola), size = 4) + 
   geom_point(color = 'black', size = 4, shape = 1) + 
   geom_text_repel(size= 3, nudge_x = .05, nudge_y = .033) +
@@ -324,7 +321,7 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-### Análisis de Clases Latentes: Participación política
+## Análisis de Clases Latentes: Participación política
 
 El proceso de cambio constitucional, las recientes elecciones presidenciales y el estallido social han implicado transformaciones en materia de participación política en el país. El plebiscito superó por primera vez el 50% de participación desde la instauración del voto voluntario e inscripción automática, mientras que la segunda vuelta presidencial incorporó a cerca de 1.300.000 votantes más que la misma elección de 2017. Asimismo, el estallido social supuso un incremento nunca antes visto de eventos de protesta (Observatorio de Conflictos, 2020). Ante este panorama, cabe preguntarse cómo es la estructura longitudinal de participación política de los chilenos y chilenas, tanto en el ámbito electoral como en manifestaciones. 
 
@@ -334,7 +331,7 @@ Con el objetivo de determinar patrones de participación política en el tiempo,
 
 #### Perfiles de participación: principales resultados
 
-La Figura 2.11 muestra los perfiles de participación identificados y su caracterización según las variables que compusieron el análisis de clases latentes. Consistente con el diagnóstico de un elevado nivel de desconfianza política en la sociedad chilena, el grupo más numeroso, con un 56,51% de los individuos, corresponde justamente al grupo de Desafectados. Estos se caracterizan por sus virtualmente nulos niveles de participación política, ya sea convencional (votar) o no convencional (participar en marchas). No obstante, se observan niveles de participación levemente más elevados en las elecciones de 2013 y el plebiscito, aunque muy distantes de los promedios nacionales.
+La Figura \@ref(fig:tip-participacion) muestra los perfiles de participación identificados y su caracterización según las variables que compusieron el análisis de clases latentes. Consistente con el diagnóstico de un elevado nivel de desconfianza política en la sociedad chilena, el grupo más numeroso, con un 56,51% de los individuos, corresponde justamente al grupo de Desafectados. Estos se caracterizan por sus virtualmente nulos niveles de participación política, ya sea convencional (votar) o no convencional (participar en marchas). No obstante, se observan niveles de participación levemente más elevados en las elecciones de 2013 y el plebiscito, aunque muy distantes de los promedios nacionales.
 
 Un 3% compone el grupo de los Manifestantes puros, que tienden a participar activamente de eventos de protesta en todas las olas del estudio, al tiempo que se restan de procesos electorales. Se observa que su participación no convencional tendió a decrecer en 2021, probablemente debido a los efectos de la pandemia. Sorprendentemente, su inactividad en procesos electorales se acentuó aún más en el plebiscito de 2020.
 
@@ -352,6 +349,7 @@ tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta") %>%
 #tabpart_4<-table(tip_par$class_part_4)
 # tabpart_4
 # prop.table(tabpart_4)
+
 tab1 <- tip_par %>% group_by(class_part_4, c11_w01) %>%
   summarise (n = n()) %>% mutate(freq = n / sum(n)) %>% 
   mutate(var = 1) %>% rename(Clase=class_part_4, Participa=c11_w01)
@@ -380,27 +378,28 @@ tab8 <- tip_par %>% group_by(class_part_4, par_mov_w05) %>%
 tab_4<- rbind(tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8)
 rm(tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8)
 
-tab_4$Clase  <- factor(tab_4$Clase, levels = c(1,2,3,4), labels = c("Desafectados (56.51%)", "Manifestantes puros (3%)", "Institucionales (24.34%)", "Reactivos (16.16%)"))
+tab_4$Clase  <- factor(tab_4$Clase, levels = c(1,2,3,4), labels = c("Desafectados\n(56.51%)", "Manifestantes puros\n(3%)", "Institucionales\n(24.34%)", "Reactivos\n(16.16%)"))
 tab_4$Participa  <- factor(tab_4$Participa, levels = c(1,2), labels = c("No participa", "Participa"))
-tab_4$var  <- factor(tab_4$var, levels = c(1,2,3,4,5,6,7,8), labels = c("Elección 2013", "Elección 2017", "Plebiscito", "Marcha 2016", "Marcha 2017", "Marcha 2018", "Marcha 2019", "Marcha 2021"))
+tab_4$var  <- factor(tab_4$var, levels = c(1,2,3,4,5,6,7,8), labels = c("Elección 2013", "Elección 2017", "Plebiscito 2020", "Marcha 2016", "Marcha 2017", "Marcha 2018", "Marcha 2019", "Marcha 2021"))
 
 tab_4 %>% 
   ggplot(aes(x = freq, y = var, fill = Participa)) + 
   geom_bar(stat = 'identity', position = 'stack') + 
   facet_grid(~ Clase) +
-  labs(y=" ", x="",
-       title = "", fill = "") +
+  labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
   scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
-  theme_bw() + scale_fill_viridis_d(end = .85, option = 'viridis') +
+  theme_bw() + 
+  scale_fill_viridis_d(end = .5) +
   theme(axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
-        legend.title = element_blank())
+        legend.title = element_blank()) + 
+  scale_fill_viridis_d(begin = .2, end = .7)
 
 ```
 
 #### Caracterización de perfiles de participación
 
-La Figura 2.12 muestra cómo se distribuyen estos grupos según posiciones ideológicas. Destacan los Manifestantes puros, que a pesar de ser un grupo pequeño, son muy homogéneos en términos ideológicos con una fuerte concentración de individuos auto posicionados como de izquierda (69,8%). Aunque en forma más matizada, las personas de izquierda también se encuentran concentrados entre los Reactivos con un 38%, seguidos por las personas de centro con un 35%. En contraste, los Institucionales están mayoritariamente compuestos por individuos sin preferencias ideológicas (34%), de centro (36.4%) y de derecha (14.6%). El grupo con mayor presencia de derecha es el grupo de los Desafectados (19%), que también cuenta con una fuerte presencia de encuestados que se identifican con el centro político (38%) y que no se identifican (22.6%). Este último patrón es consistente con la distribución del nivel de interés en política según grupos ideológicos vistos más arriba. 
+La Figura \@ref(fig:tipos-posicion-politica2) muestra cómo se distribuyen estos grupos según posiciones ideológicas. Destacan los Manifestantes puros, que a pesar de ser un grupo pequeño, son muy homogéneos en términos ideológicos con una fuerte concentración de individuos auto posicionados como de izquierda (69,8%). Aunque en forma más matizada, las personas de izquierda también se encuentran concentrados entre los Reactivos con un 38%, seguidos por las personas de centro con un 35%. En contraste, los Institucionales están mayoritariamente compuestos por individuos sin preferencias ideológicas (34%), de centro (36.4%) y de derecha (14.6%). El grupo con mayor presencia de derecha es el grupo de los Desafectados (19%), que también cuenta con una fuerte presencia de encuestados que se identifican con el centro político (38%) y que no se identifican (22.6%). Este último patrón es consistente con la distribución del nivel de interés en política según grupos ideológicos vistos más arriba. 
 
 
 ```{r tipos-posicion-politica2, fig.cap = 'Posición política según perfil de participación'}
@@ -413,19 +412,20 @@ tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), label
 tip_par %>%   
   filter(!is_nsnr(class_part_4, c15_w05))  %>%
   drop_na(c("class_part_4", "c15_w05")) %>%
-  filter(tipo_atricion==1) %>%
+  filter(tipo_atricion == 1) %>%
   mutate(pos_id = factor(car::recode(c15_w05, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
                          levels = 1:4,
                          labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
-group_by(class_part_4, pos_id) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
-    filter(!is.na(pos_id)) %>% 
-ggplot(aes(x = freq, y = class_part_4, fill = pos_id, label = scales::percent(freq, .1))) + 
+  group_by(class_part_4, pos_id) %>% 
+  summarise (n = n()) %>% 
+  mutate(freq = n / sum(n)) %>%
+  filter(!is.na(pos_id)) %>% 
+  ggplot(aes(x = freq, y = class_part_4, fill = pos_id, label = scales::percent(freq, .1))) + 
   geom_bar(stat = 'identity', position = 'stack') +
-  labs(y=" ", x=" ",
-       title = "", fill = "") +
+  labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
   scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
   guides(fill = guide_legend(reverse = TRUE)) +
-  geom_text(position = position_stack(vjust = .5), size = 2,
+  geom_text(position = position_stack(vjust = .5), size = 3,
             color = rep(c('white', 'white', 'black', 'black'), 4)) +
   theme_bw() + scale_fill_viridis_d(end = .85, option = 'viridis') +
   theme(axis.text.x = element_text(size = rel(.9)),
@@ -434,7 +434,7 @@ ggplot(aes(x = freq, y = class_part_4, fill = pos_id, label = scales::percent(fr
 
 ```
 
-La Figura 2.13 muestra que los grupos de participación tienen similar composición por sexo, aunque los Reactivos tienen una leve mayor concentración de hombres. En contraste, en la Figura 2.14 se observan marcadas variaciones en términos de edad. Los Reactivos y manifestantes puros son los grupos con mayor concentración juvenil, con un 19,4% y 15,9% respectivamente. Los desafectados, en cambio, obtienen la más alta proporción de adultos mayores con un 29,2%.
+La Figura \@ref(fig:tipos-sexo2) muestra que los grupos de participación tienen similar composición por sexo, aunque los Reactivos tienen una leve mayor concentración de hombres. En contraste, en la Figura \@ref(fig:tipos-edad2) se observan marcadas variaciones en términos de edad. Los Reactivos y manifestantes puros son los grupos con mayor concentración juvenil, con un 19,4% y 15,9% respectivamente. Los desafectados, en cambio, obtienen la más alta proporción de adultos mayores con un 29,2%.
 
 
 ```{r tipos-sexo2, fig.cap = 'Sexo según perfil de participación'}
@@ -451,16 +451,19 @@ tip_par %>%
   mutate(pos_id = factor(car::recode(m0_sexo_w01, recodes = "1 = 1; 2 = 2"),
                          levels = 1:2,
                          labels = c("Hombre", "Mujer"))) %>%
-group_by(class_part_4, pos_id) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
-ggplot(aes(x = freq, y = class_part_4, fill = pos_id, label = scales::percent(freq, .1))) + 
+  group_by(class_part_4, pos_id) %>% 
+  summarise(n = n()) %>% 
+  mutate(freq = n / sum(n)) %>%
+  ggplot(aes(x = freq, y = class_part_4, fill = pos_id, label = scales::percent(freq, .1))) + 
   geom_bar(stat = 'identity', position = 'stack') +
-  labs(y="", x="",
-       title = "", fill = "") +
+  labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
   scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
   guides(fill = guide_legend(reverse = TRUE)) +
-  geom_text(position = position_stack(vjust = .5), size = 3,
+  geom_text(position = position_stack(vjust = .5), 
+            size = 3,
             color = rep(c('white', 'black'), 4)) +
-  theme_bw() + scale_fill_viridis_d(end = .85, option = 'viridis') +
+  theme_bw() + 
+  scale_fill_viridis_d(begin = .33, end = .66) +
   theme(axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
         legend.title = element_blank())
@@ -472,7 +475,7 @@ ggplot(aes(x = freq, y = class_part_4, fill = pos_id, label = scales::percent(fr
 tip_par <- read.csv(file.path('inputs', 'participacion_tipos3.csv'), sep=",", encoding="UTF-8")
 tip_par <- tip_par[c("idencuesta", "class_part_4")]
 tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
-tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Desafectados", "Manifestantes puros", "Institucionales", "Reactivos"))
+tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Desafectados", "Manifestantes\npuros", "Institucionales", "Reactivos"))
 
 tip_par %>%   
   filter(!is_nsnr(class_part_4, m0_edad_w05))  %>%
@@ -481,16 +484,19 @@ tip_par %>%
   mutate(pos_id = factor(car::recode(m0_edad_w05, "18:29 = 1; 30:49 = 2; 50:64 = 3; 65:150 = 4"),
                         levels = 1:4,
                         labels = c('18-29', '30-49', '50-64', '65 o más'))) %>%
-group_by(class_part_4, pos_id) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
-ggplot(aes(x = freq, y = class_part_4, fill = pos_id, label = scales::percent(freq, .1))) + 
+  group_by(class_part_4, pos_id) %>% 
+  summarise(n = n()) %>% 
+  mutate(freq = n / sum(n)) %>%
+  ggplot(aes(x = freq, y = class_part_4, fill = pos_id, label = scales::percent(freq, .1))) + 
   geom_bar(stat = 'identity', position = 'stack') +
-  labs(y="", x="",
-       title = "", fill = "") +
+  labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
   scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
   guides(fill = guide_legend(reverse = TRUE)) +
-  geom_text(position = position_stack(vjust = .5), size = 3,
+  geom_text(position = position_stack(vjust = .5), 
+            size = 3,
             color = rep(c('white', 'white', 'black', 'black'), 4)) +
-  theme_bw() + scale_fill_viridis_d(end = .85, option = 'viridis') +
+  theme_bw() + 
+  scale_fill_viridis_d(end = .85) +
   theme(axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
         legend.title = element_blank())
@@ -498,7 +504,7 @@ ggplot(aes(x = freq, y = class_part_4, fill = pos_id, label = scales::percent(fr
 ```
 
 
-La Figura 2.15 indica que los grupos con menor interés en la política son los institucionales y desafectados, con un 80,3% y 72,1% de personas con nada o poco interés. A ello le siguen los reactivos, con un 44,3%. El grupo de manifestantes puros es el que alcanza mayores niveles de interés, con un 63,6% de individuos muy o bastante interesados, seguido de los reactivos con un 27,4%. Este patrón resulta del todo relevante ya que confirma que en Chile las personas más politizadas expresan sus demandas y preocupaciones por los canales no institucionales, al tiempo que los menos politizados abiertamente no participan de ninguna instancia o si lo hacen emplean los canales formales.
+La Figura \@ref(fig:tipos-interes2) indica que los grupos con menor interés en la política son los institucionales y desafectados, con un 80,3% y 72,1% de personas con nada o poco interés. A ello le siguen los reactivos, con un 44,3%. El grupo de manifestantes puros es el que alcanza mayores niveles de interés, con un 63,6% de individuos muy o bastante interesados, seguido de los reactivos con un 27,4%. Este patrón resulta del todo relevante ya que confirma que en Chile las personas más politizadas expresan sus demandas y preocupaciones por los canales no institucionales, al tiempo que los menos politizados abiertamente no participan de ninguna instancia o si lo hacen emplean los canales formales.
 
 
 
@@ -507,32 +513,35 @@ La Figura 2.15 indica que los grupos con menor interés en la política son los 
 tip_par <- read.csv(file.path('inputs', 'participacion_tipos3.csv'), sep=",", encoding="UTF-8")
 tip_par <- tip_par[c("idencuesta", "class_part_4")]
 tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
-tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Desafectados", "Manifestantes puros", "Institucionales", "Reactivos"))
+tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Desafectados", "Manifestantes\npuros", "Institucionales", "Reactivos"))
 
 tip_par %>%   
   filter(!is_nsnr(class_part_4, c13_w05))  %>%
   drop_na(c("class_part_4", "c13_w05")) %>%
-  filter(tipo_atricion==1) %>%
+  filter(tipo_atricion == 1) %>%
   mutate(pos_id = factor(car::recode(c13_w05, "1:2 = 1; 3 = 2; 4:5 = 3"),
                         levels = 1:3,
                         labels = c('Nada o poco interesado', 'Algo interesado', 'Bastante o muy interesado'))) %>%
-group_by(class_part_4, pos_id) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
-ggplot(aes(x = freq, y = class_part_4, fill = pos_id, label = scales::percent(freq, .1))) + 
+  group_by(class_part_4, pos_id) %>% 
+  summarise(n = n()) %>% 
+  mutate(freq = n / sum(n)) %>%
+  ggplot(aes(x = freq, y = class_part_4, fill = pos_id, label = scales::percent(freq, .1))) + 
   geom_bar(stat = 'identity', position = 'stack') +
-  labs(y="", x="",
-       title = "", fill = "") +
+  labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
   scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
   guides(fill = guide_legend(reverse = TRUE)) +
-  geom_text(position = position_stack(vjust = .5), size = 3,
+  geom_text(position = position_stack(vjust = .5), 
+            size = 3,
             color = rep(c('white', 'white', 'black'), 4)) +
-  theme_bw() + scale_fill_viridis_d(end = .85, option = 'viridis') +
+  theme_bw() + 
+  scale_fill_viridis_d(end = .85, option = 'viridis') +
   theme(axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
         legend.title = element_blank())
 
 ```
 
-La Figura 2.16 muestra una alta insatisfacción con la democracia de parte de todos los grupos, aunque esta es aún más pronunciada en el grupo de los Manifestantes puros (79,5%) e Institucionales (72,6%). Los niveles de satisfacción con la democracia son más altos entre los Reactivos, seguidos cercanamente por los Desafectados. Es decir, una marcada distancia de toda forma de acción política no pareciera ser indicativo de mayores niveles de insatisfacción política, más bien lo contrario. La Figura 2.17 muestra que los Manifestantes puros y Reactivos tienen una mayor preferencia por la democracia como régimen de gobierno, con un 84,1% y 74% respectivamente, versus sólo un 47,9% y 39,5% de apoyo democrático entre los Desafectados e Institucionales. Esto implica, no sin bastante ironía, que el grupo que más vota en elecciones políticas nacionales es también el que menos explícitamente apoya la democracia como régimen político.
+La Figura \@ref(fig:tipos-satisfaccion2) muestra una alta insatisfacción con la democracia de parte de todos los grupos, aunque esta es aún más pronunciada en el grupo de los Manifestantes puros (79,5%) e Institucionales (72,6%). Los niveles de satisfacción con la democracia son más altos entre los Reactivos, seguidos cercanamente por los Desafectados. Es decir, una marcada distancia de toda forma de acción política no pareciera ser indicativo de mayores niveles de insatisfacción política, más bien lo contrario. La Figura \@ref(fig:tipos-legitimidad2) muestra que los Manifestantes puros y Reactivos tienen una mayor preferencia por la democracia como régimen de gobierno, con un 84,1% y 74% respectivamente, versus sólo un 47,9% y 39,5% de apoyo democrático entre los Desafectados e Institucionales. Esto implica, no sin bastante ironía, que el grupo que más vota en elecciones políticas nacionales es también el que menos explícitamente apoya la democracia como régimen político.
 
 
 ```{r tipos-satisfaccion2, fig.cap = 'Satisfacción con la democracia según perfil de participación'}
@@ -549,17 +558,20 @@ tip_par %>%
   mutate(pos_id = factor(car::recode(c01_w05, "1:2 = 1; 3 = 2; 4:5 = 3"),
                         levels = 1:3,
                         labels = c('Nada o poco satisfecho', 'Algo satisfecho', 'Bastante o muy satisfecho'))) %>%
-group_by(class_part_4, pos_id) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
-   filter(!is.na(pos_id)) %>%
-ggplot(aes(x = freq, y = class_part_4, fill = pos_id, label = scales::percent(freq, .1))) + 
+  group_by(class_part_4, pos_id) %>% 
+  summarise(n = n()) %>% 
+  mutate(freq = n / sum(n)) %>%
+  filter(!is.na(pos_id)) %>%
+  ggplot(aes(x = freq, y = class_part_4, 
+           fill = pos_id, label = scales::percent(freq, .1))) + 
   geom_bar(stat = 'identity', position = 'stack') +
-  labs(y="", x="",
-       title = "", fill = "") +
+  labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
   scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
   guides(fill = guide_legend(reverse = TRUE)) +
   geom_text(position = position_stack(vjust = .5), size = 3,
             color = rep(c('white', 'white', 'black'), 4)) +
-  theme_bw() + scale_fill_viridis_d(end = .85, option = 'viridis') +
+  theme_bw() + 
+  scale_fill_viridis_d(end = .85, option = 'viridis') +
   theme(axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
         legend.title = element_blank())
@@ -571,7 +583,8 @@ ggplot(aes(x = freq, y = class_part_4, fill = pos_id, label = scales::percent(fr
 tip_par <- read.csv(file.path('inputs', 'participacion_tipos3.csv'), sep=",", encoding="UTF-8")
 tip_par <- tip_par[c("idencuesta", "class_part_4")]
 tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
-tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Desafectados", "Manifestantes puros", "Institucionales", "Reactivos"))
+tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = 1:4,
+                                labels = c("Desafectados", "Manifestantes\npuros", "Institucionales", "Reactivos"))
 
 tip_par %>%   
   filter(!is_nsnr(class_part_4, c25_w05))  %>%
@@ -579,21 +592,24 @@ tip_par %>%
   filter(tipo_atricion==1) %>%
   mutate(pos_id = factor(car::recode(c25_w05, "1 = 1; 2 = 2; 3 = 3; 4=4"),
                         levels = 1:4,
-                        labels = c('La democracia es preferible', 
-                                   'Un gobierno autoritario puede ser preferible',
+                        labels = c('La democracia\nes preferible', 
+                                   'Un gobierno autoritario\npuede ser preferible',
                                    'Da lo mismo',
                                    'Ninguna'))) %>%
-group_by(class_part_4, pos_id) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
-   filter(!is.na(pos_id)) %>%
-ggplot(aes(x = freq, y = class_part_4, fill = pos_id, label = scales::percent(freq, .1))) + 
+  group_by(class_part_4, pos_id) %>% 
+  summarise (n = n()) %>% 
+  mutate(freq = n / sum(n)) %>%
+  filter(!is.na(pos_id)) %>%
+  ggplot(aes(x = freq, y = class_part_4, 
+             fill = fct_rev(pos_id), label = scales::percent(freq, .1))) + 
   geom_bar(stat = 'identity', position = 'stack') +
-  labs(y="", x="",
-       title = "", fill = "") +
+  labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
   scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
   guides(fill = guide_legend(reverse = TRUE)) +
-  geom_text(position = position_stack(vjust = .5), size = 2,
+  geom_text(position = position_stack(vjust = .5), size = 3,
             color = rep(c('white', 'white', 'black', 'black'), 4)) +
-  theme_bw() + scale_fill_viridis_d(end = .85, option = 'viridis') +
+  theme_bw() + 
+  scale_fill_viridis_d(end = .85, direction = -1, option = 'viridis') +
   theme(axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
         legend.title = element_blank())
@@ -601,7 +617,7 @@ ggplot(aes(x = freq, y = class_part_4, fill = pos_id, label = scales::percent(fr
 ```
 
 
-Respecto al actual proceso constituyente, la Figura 2.18 muestra los niveles de optimismo constitucional. Se observan los mayores niveles de optimismo entre Manifestantes puros y Reactivos, con alrededor de un 75% de optimismo entre ambos grupos, mientras que los desafectados e institucionales alcanzan un optimismo que bordea el 61%. Esto implica que entre todos los grupos prevalece una sensación positiva acerca del proceso constitucional, sin desmedro de encontrar diferencias inter grupales relevantes. 
+Respecto al actual proceso constituyente, la Figura \@ref(fig:tipos-optimismo2) muestra los niveles de optimismo constitucional. Se observan los mayores niveles de optimismo entre Manifestantes puros y Reactivos, con alrededor de un 75% de optimismo entre ambos grupos, mientras que los desafectados e institucionales alcanzan un optimismo que bordea el 61%. Esto implica que entre todos los grupos prevalece una sensación positiva acerca del proceso constitucional, sin desmedro de encontrar diferencias inter grupales relevantes. 
 
 
 
@@ -610,37 +626,40 @@ Respecto al actual proceso constituyente, la Figura 2.18 muestra los niveles de 
 tip_par <- read.csv(file.path('inputs', 'participacion_tipos3.csv'), sep=",", encoding="UTF-8")
 tip_par <- tip_par[c("idencuesta", "class_part_4")]
 tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
-tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Desafectados", "Manifestantes puros", "Institucionales", "Reactivos"))
+tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), 
+                                labels = c("Desafectados", "Manifestantes\npuros", "Institucionales", "Reactivos"))
 
 tip_par %>%   
   filter(!is_nsnr(class_part_4, c46_01_w05, c46_02_w05, c46_03_w05, c46_04_w05))  %>%
   drop_na(c("class_part_4", "c46_01_w05", "c46_02_w05", "c46_03_w05", "c46_04_w05")) %>%
   filter(tipo_atricion==1) %>%
   rowwise() %>%
-  mutate(optimismo = mean(c46_01_w05, c46_02_w05, c46_03_w05, c46_04_w05, na.rm = TRUE)) %>%
- mutate(pos_id = factor(optimismo >= 4,
+  mutate(optimismo = mean(c46_01_w05, c46_02_w05, c46_03_w05, c46_04_w05, na.rm = TRUE),
+         pos_id = factor(optimismo >= 4,
                         levels = c(TRUE, FALSE),
                         labels = c('Optimista', 'No optimista'))) %>%
-group_by(class_part_4, pos_id) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
-   filter(!is.na(pos_id)) %>%
-ggplot(aes(x = freq, y = class_part_4, fill = pos_id, label = scales::percent(freq, .1))) + 
+  group_by(class_part_4, pos_id) %>% 
+  summarise (n = n()) %>% 
+  mutate(freq = n / sum(n)) %>%
+  filter(!is.na(pos_id)) %>%
+  ggplot(aes(x = freq, y = class_part_4, fill = pos_id, label = scales::percent(freq, .1))) + 
   geom_bar(stat = 'identity', position = 'stack') +
-  labs(y="", x="",
-       title = "", fill = "") +
+  labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
   scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
   guides(fill = guide_legend(reverse = TRUE)) +
   geom_text(position = position_stack(vjust = .5), size = 3,
             color = rep(c('white', 'black'), 4)) +
-  theme_bw() + scale_fill_viridis_d(end = .85, option = 'viridis') +
+  theme_bw() + 
+  scale_fill_viridis_d(begin = .33, end = .66) +
   theme(axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
         legend.title = element_blank())
 
 ```
 
-### Ciclo de movilización política y estallido social
+## Ciclo de movilización política y estallido social
 
-Desde hace varios años en Chile se han desarrollado múltiples movimientos sociales, algunos de los cuales corresponden a movimientos progresistas, orientados a promover cambio social (por ejemplo, el movimiento Estudiantil, de pensiones, ambientalista) y otros a movimientos más conservadores (por ejemplo, el movimiento pro-vida o antiaborto o movimie to antidelicuencia). Proveyendo una lista de movimientos que han alcanzado visibilidad en Chile, se les ha consultado a los/as chilenos/as por los movimientos que más valoran. Tal como se puede apreciar en la Figura 2.19, para 7 movimientos se ha observado un aumento gradual en los niveles de valoración, (5 progresistas y 2 conversadores). Sin embargo, llama la atención la disminución sustantiva que alcanzó la valoración del estallido social pasando desde un 22,8 % a un 15,7 % en el 2021. En su conjunto la valoración da cuenta del nivel de apoyo que tienen estos movimientos sociales.
+Desde hace varios años en Chile se han desarrollado múltiples movimientos sociales, algunos de los cuales corresponden a movimientos progresistas, orientados a promover cambio social (por ejemplo, el movimiento Estudiantil, de pensiones, ambientalista) y otros a movimientos más conservadores (por ejemplo, el movimiento pro-vida o antiaborto o movimie to antidelicuencia). Proveyendo una lista de movimientos que han alcanzado visibilidad en Chile, se les ha consultado a los/as chilenos/as por los movimientos que más valoran. Tal como se puede apreciar en la Figura \@ref(fig:graf-movsocial), para 7 movimientos se ha observado un aumento gradual en los niveles de valoración, (5 progresistas y 2 conversadores). Sin embargo, llama la atención la disminución sustantiva que alcanzó la valoración del estallido social pasando desde un 22,8 % a un 15,7 % en el 2021. En su conjunto la valoración da cuenta del nivel de apoyo que tienen estos movimientos sociales.
 
 
 ```{r graf-movsocial, fig.cap = '¿Cuál de los siguientes movimientos sociales más valora? (2019-2021)'}
@@ -657,7 +676,7 @@ elsoc_long_2016_2021 %>%
   sjlabelled::as_label(ola) %>%
   ggplot(aes(y = prop, x = reorder(c20, orden), 
              label = scales::percent(prop, .1))) +
-  geom_line(size = .7, color = viridis(1, begin = .44, end = .44)) +
+  geom_line(size = .7) +
   geom_point(aes(color = ola), size = 4) + 
   geom_point(color = 'black', size = 4, shape = 1) + 
   geom_text_repel(size= 3) +
@@ -675,7 +694,7 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-Al analizar cómo ha evolucionado la valoración de los movimientos progresistas y conservadores a lo largo de los años (ver Figura 2.20), se puede constatar un aumento sustantivo de la valoración de los movimientos progresistas que alcanzan un nivel muy alto el año del estallido social (2019) y el año en que se llevó a cabo el plebiscito para la convención constituyente (2021). Esta alta valoración de los movimientos progresistas revela en parte el nivel de politización que alcanzó la población, particularmente durante los dos últimos años al valorar aquellos movimientos que se orientan particularmente al cambio social. Un patrón opuesto se observa en el caso de los movimientos conservadores donde se constata una caída gradual a lo largo de los años de su valoración, siendo especialmente bajo el 2019 y 2021.
+Al analizar cómo ha evolucionado la valoración de los movimientos progresistas y conservadores a lo largo de los años (ver Figura \@ref(fig:graf-movsociales-movsocial-olas)), se puede constatar un aumento sustantivo de la valoración de los movimientos progresistas que alcanzan un nivel muy alto el año del estallido social (2019) y el año en que se llevó a cabo el plebiscito para la convención constituyente (2021). Esta alta valoración de los movimientos progresistas revela en parte el nivel de politización que alcanzó la población, particularmente durante los dos últimos años al valorar aquellos movimientos que se orientan particularmente al cambio social. Un patrón opuesto se observa en el caso de los movimientos conservadores donde se constata una caída gradual a lo largo de los años de su valoración, siendo especialmente bajo el 2019 y 2021.
 
 
 ```{r graf-movsociales-movsocial-olas, fig.cap = 'Movimiento social que más valora, Según ola'}
@@ -768,7 +787,7 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-### Justificación de la Violencia
+## Justificación de la Violencia
 
 La justificación de la violencia por parte de diferentes grupos siempre ha existido en las sociedades. En este sentido, para algunas personas, parece razonable la utilización de violencia para imponer demandas (violencia para el cambio social) mientras, para otras, la violencia policial o ciudadana se justifica si tiene como fin mantener el orden y seguridad en un contexto de alta efervescencia social (violencia para el control social). No obstante, el uso de la violencia, más allá de su propósito, trae consigo el riesgo de aumentar ciclos de violencia, generando una potencial escalada de hechos violentos que ponen en riesgo la convivencia y la seguridad de la ciudadanía y las fuerzas del orden. En Chile, desde el Estallido Social, se han visto distintos tipos de actos violentos y por ende es necesario entender cómo se configuran los cambios en la justificación de la violencia por parte de las fuerzas de orden y de la sociedad civil.
 
@@ -776,7 +795,7 @@ En particular, la violencia para el control social se refiere a actos de agresi�
 
 En ELSOC, analizamos la evolución de la justificación de dos tipos de violencia que buscan el control social: la violencia a manos de ciudadanos y la violencia policial.
 
-Como se puede observar en la Figura 2.23, existe un grado importante de justificación de la violencia en contra de delincuentes, un patrón que se mantiene relativamente estable a lo largo del tiempo, alcanzando valores más elevados el año 2018 y un decrecimiento de su justificación durante el año 2019 respecto de la tendencia del año anterior.
+Como se puede observar en la Figura \@ref(fig:graf-justviolencia1-ola), existe un grado importante de justificación de la violencia en contra de delincuentes, un patrón que se mantiene relativamente estable a lo largo del tiempo, alcanzando valores más elevados el año 2018 y un decrecimiento de su justificación durante el año 2019 respecto de la tendencia del año anterior.
 
 Así, cuando se pregunta sobre la justificación para perseguir y golpear a un delincuente que acaba de cometer un asalto, el año 2016, un 29% de los/as chilenos/as cree que se justifica “muchas veces o siempre” este actuar, mientras en 2019 este valor baja a un 25.6%. 
 
@@ -815,7 +834,7 @@ sjlabelled::as_label(ola) %>%
 
 ```
 
-Tal como lo revela la Figura 2.24, por lo general, existe una baja justificación de la violencia policial en distintos contextos a lo largo del tiempo. Más concretamente, cuando se trata del uso de violencia para reprimir una marcha pacífica, durante el año de 2016, el 7% de los encuestados reporta justificarse “muchas veces o siempre” el uso de la violencia. Esta justificación cae considerablemente el año 2019 (3.6%) periodo en el cual ocurre el estallido social, sin embargo, registra una nueva alza llegando a un  6.1% el año 2021.
+Tal como lo revela la Figura \@ref(fig:graf-justviolencia2-ola), por lo general, existe una baja justificación de la violencia policial en distintos contextos a lo largo del tiempo. Más concretamente, cuando se trata del uso de violencia para reprimir una marcha pacífica, durante el año de 2016, el 7% de los encuestados reporta justificarse “muchas veces o siempre” el uso de la violencia. Esta justificación cae considerablemente el año 2019 (3.6%) periodo en el cual ocurre el estallido social, sin embargo, registra una nueva alza llegando a un  6.1% el año 2021.
 
 Por otro lado, el uso de la violencia para desalojar a estudiantes de liceos en toma presenta un peak de justificación el año 2018 (17,9%), reduciéndose de manera sustantiva el año 2019 llegando a sólo un 8.2%, pero aumentando nuevamente a un 12.2% el año 2021.
 
@@ -855,14 +874,13 @@ elsoc_long_2016_2021 %>%
 
 ```
 
+## Confianza interpersonal y en instituciones
 
-### Confianza interpersonal y en instituciones
-
-#### Confianza interpersonal
+### Confianza interpersonal
 
 Durante las últimas décadas, las ciencias sociales han acumulado mucha evidencia que muestra que la confianza social es un atributo social de mucha importancia y cin múltiples consecuencias. Entre otras cosas, se ha asociado con comportamientos prosociales y menor criminalidad (Uslaner, 2000), mayor crecimiento económico (Dincer & Uslaner, 2010; Whiteley, 2000; Zak y Knack, 2001), mercados más eficientes (Fukuyama, 1996), democracias más robustas, y con mayor confianza en las instituciones (Newton & Zmerli, 2011, Putnam et al., 1994). En este contexto, el registro longitudinal de ELSOC de la confianza social de la población adulta chilena resulta de mucha importancia.
 
-El gráfico 2.25 muestra la evolución de dos indicadores comunes de confianza social durante cada ola de la encuesta. Se puede notar que en Chile el indicador que consulta acerca de cuán confiables son las personas desconocidas, el ‘otro’ social imaginario, registra sistemáticamente niveles bajos que usualmente bordean el 12%. Más preocupante aún, entre 2019 y 2021, la confianza social bajó del 11,4% al 7,9%, un nivel de decrecimiento que es observado por primera vez en ELSOC. Estas bajas podrían estar potencialmente asociadas a la creciente polazaciónpolarización que se observa en el país, así como a los efectos del distanciamiento social forzados por la pandemia del Coronavirus. La percepción de que las personas son justas presenta un registro más favorable con un nivel  estable alrededor del 30%. 
+El gráfico \@ref(fig:graf-confianzainterpersonal-ola) muestra la evolución de dos indicadores comunes de confianza social durante cada ola de la encuesta. Se puede notar que en Chile el indicador que consulta acerca de cuán confiables son las personas desconocidas, el ‘otro’ social imaginario, registra sistemáticamente niveles bajos que usualmente bordean el 12%. Más preocupante aún, entre 2019 y 2021, la confianza social bajó del 11,4% al 7,9%, un nivel de decrecimiento que es observado por primera vez en ELSOC. Estas bajas podrían estar potencialmente asociadas a la creciente polazaciónpolarización que se observa en el país, así como a los efectos del distanciamiento social forzados por la pandemia del Coronavirus. La percepción de que las personas son justas presenta un registro más favorable con un nivel  estable alrededor del 30%. 
 
 
 ```{r graf-confianzainterpersonal-ola, fig.cap = 'Confianza interpersonal, según ola'}
@@ -885,15 +903,14 @@ elsoc_long_2016_2021 %>%
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_color_viridis_d(begin = .33, end = .66, option = 'viridis') +
-  theme(axis.text.x = element_text(size = rel(.9)),
-        legend.position = 'top',
+  theme(legend.position = 'top',
         legend.title = element_blank()) + 
   ggtitle(NULL,
           subtitle = 'Porcentaje que responde que...')
 
 ```
 
-Detrás de la estabilidad temporal yace un gran nivel de diferenciación transversal en la confianza según distintos grupos socioeconómicos, particularmente educacionales. El gráfico 2.26 caracteriza la marcada desconfianza interpersonal en 2021, mostrando diferencias muy pronunciadas entre individuos con menor nivel educativo, que confían mucho menos y son más recelosos de cuán justos serán los demás,, e individuos con alto registro educacional registran mayor confianza en el otro y mayor percepción de comportamiento justo.
+Detrás de la estabilidad temporal yace un gran nivel de diferenciación transversal en la confianza según distintos grupos socioeconómicos, particularmente educacionales. El gráfico \@ref(fig:graf-confianzainterpersonal-educ) caracteriza la marcada desconfianza interpersonal en 2021, mostrando diferencias muy pronunciadas entre individuos con menor nivel educativo, que confían mucho menos y son más recelosos de cuán justos serán los demás,, e individuos con alto registro educacional registran mayor confianza en el otro y mayor percepción de comportamiento justo.
 
 ```{r graf-confianzainterpersonal-educ, fig.cap = 'Confianza interpersonal (2021), según nivel educacional'}
 
@@ -918,17 +935,16 @@ elsoc_long_2016_2021 %>%
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(end = .85, option = 'viridis') +
-  theme(axis.text.x = element_text(size = rel(.9)),
-        legend.position = 'top',
+  theme(legend.position = 'top',
         legend.title = element_blank()) + 
   ggtitle(NULL,
           subtitle = 'Porcentaje que responde que...')
 
 ```
 
-#### Confianza en las instituciones
+### Confianza en las instituciones
 
-Las instituciones conforman los pilares organizacionales básicos de una sociedad, por lo que la estabilidad política está condicionada por la confianza que tienen los ciudadanos en las instituciones (Newton & Norris, 1999). Por ello, parte de las explicaciones al estallido social de 2019 se fundan en la elevada desafección que existe con las instituciones políticas (Sehnbruch & Donoso, 2020). Así, en el gráfico 2.27 y 2.28, se observan dos patrones altamente relevantes. En primer lugar, el nivel de confianza en las instituciones, y las políticas en particular, son extremadamente bajas. Año tras año, el porcentaje de personas encuestadas que mencionan confiar ‘Mucho’ o ‘Bastante’ en el Congreso y Partidos Políticos no alcanza siquiera el 5% de la población. Asimismo, el Poder Judicial y Presidente de la República registran durante sus mejores años niveles que apenas sobrepasan el 10%. La única institución, que logra alcanzar niveles más elevados, sin desmedro de una pronunciada baja durante el periodo de observación, son Carabineros de Chile con un mínimo de confianza de 20,6% en 2019 y 24,7% en 2021. 
+Las instituciones conforman los pilares organizacionales básicos de una sociedad, por lo que la estabilidad política está condicionada por la confianza que tienen los ciudadanos en las instituciones (Newton & Norris, 1999). Por ello, parte de las explicaciones al estallido social de 2019 se fundan en la elevada desafección que existe con las instituciones políticas (Sehnbruch & Donoso, 2020). Así, en el gráfico \@ref(fig:graf-confinstituciones1-ola) y \@ref(fig:graf-confinstituciones2-ola), se observan dos patrones altamente relevantes. En primer lugar, el nivel de confianza en las instituciones, y las políticas en particular, son extremadamente bajas. Año tras año, el porcentaje de personas encuestadas que mencionan confiar ‘Mucho’ o ‘Bastante’ en el Congreso y Partidos Políticos no alcanza siquiera el 5% de la población. Asimismo, el Poder Judicial y Presidente de la República registran durante sus mejores años niveles que apenas sobrepasan el 10%. La única institución, que logra alcanzar niveles más elevados, sin desmedro de una pronunciada baja durante el periodo de observación, son Carabineros de Chile con un mínimo de confianza de 20,6% en 2019 y 24,7% en 2021. 
 
 Segundo, varias instituciones como el Congreso, Gobierno y Carabineros experimentan una pronunciada baja en la confianza el 2019. Las primeras dos instituciones incluso llegan a niveles ínfimos de un sólo dígito, presumiblemente asociado al Estallido Social, al tiempo que los niveles logran recuperarse levemente en 2021. No se observan vaivenes en los Partidos Políticos ya que los niveles de confianza ni siquiera alcanzan el 1% en 2019 y 2020. Aunque las alzas constatadas durante la última ola son muy embrionarias, es posible que sean el resultado del proceso de cambio constitucional, que supone la elaboración de una nueva institución política -la Convención Constitucional- que involucró cambios relevantes en el sistema de representación, como la paridad de género, inclusión de escaños reservados a pueblos indígenas y la incorporación de listas completamente independientes de partidos políticos.				
 
@@ -1010,7 +1026,7 @@ elsoc_long_2016_2021 %>%
   ungroup() %>% 
   ggplot(aes(y = prop, x = reorder(name, orden), 
              label = scales::percent(prop, .1))) +
-  geom_line(size = .7, color = viridis(1, begin = .44, end = .44)) +
+  geom_line(size = .7) +
   geom_point(aes(color = ola), size = 4) + 
   geom_point(color = 'black', size = 4, shape = 1) + 
   geom_text_repel(size= 3, nudge_x = .02) +
@@ -1029,9 +1045,9 @@ elsoc_long_2016_2021 %>%
 ```
 
 
-#### Actitudes hacia la democracia
+### Actitudes hacia la democracia
 
-La literatura ha distinguido entre el apoyo a los principios del régimen democrático y el respaldo a su desempeño (Easton, 1975; Norris, 1999). Así, el apoyo a la democracia como valor último se ha denominado legitimidad democrática, mientras que la evaluación del funcionamiento de la democracia constituye la satisfacción con la democracia. El gráfico 2.30 muestra que en Chile se consolida el fenómeno global del ciudadano crítico (Norris, 1999), que refiere a individuos altamente comprometidos con la democracia como regimen político, superando niveles del 50%, aunque también altamente insatisfechos con su funcionamiento, pues desde 2019 la satisfacción con la democracia no supera el 6%.
+La literatura ha distinguido entre el apoyo a los principios del régimen democrático y el respaldo a su desempeño (Easton, 1975; Norris, 1999). Así, el apoyo a la democracia como valor último se ha denominado legitimidad democrática, mientras que la evaluación del funcionamiento de la democracia constituye la satisfacción con la democracia. El gráfico \@ref(fig:graf-preferenciademocracia-ola) muestra que en Chile se consolida el fenómeno global del ciudadano crítico (Norris, 1999), que refiere a individuos altamente comprometidos con la democracia como regimen político, superando niveles del 50%, aunque también altamente insatisfechos con su funcionamiento, pues desde 2019 la satisfacción con la democracia no supera el 6%.
 
 
 ```{r graf-preferenciademocracia-ola, fig.cap = 'Preferencia por y satisfacción con la democracia, según ola'}
@@ -1061,7 +1077,7 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-El gráfico 2.31 y 2.32 indican que el fenómeno del ciudadano crítico es transversal a la identificación en el espectro izquierda-derecha, aunque se presenta más marcadamente en sujetos identificados con la izquierda que legitiman en un 74,8% la democracia y solo un 4,1% está satisfecho o muy satisfecho con su funcionamiento. En contraste, los individuos de derecha tienen una menor legitimidad democrática, del 38,7%, al tiempo que un 8,9% está satisfecho o muy satisfecho con su funcionamiento.
+El gráfico \@ref(fig:graf-preferenciademocracia-idpolitica) y \@ref(fig:graf-preferenciademocracia2-idpolitica) indican que el fenómeno del ciudadano crítico es transversal a la identificación en el espectro izquierda-derecha, aunque se presenta más marcadamente en sujetos identificados con la izquierda que legitiman en un 74,8% la democracia y solo un 4,1% está satisfecho o muy satisfecho con su funcionamiento. En contraste, los individuos de derecha tienen una menor legitimidad democrática, del 38,7%, al tiempo que un 8,9% está satisfecho o muy satisfecho con su funcionamiento.
 
 
 ```{r graf-preferenciademocracia-idpolitica, fig.cap = 'Preferencia por y satisfacción con la democracia (2021), según posición ideológica'}
@@ -1103,7 +1119,7 @@ elsoc_long_2016_2021 %>%
          c25 = factor(c25, 
                       levels = 1:4,
                       labels = c('Democracia es preferible\na cualquier otra forma\nde gobierno', 
-                                 'En algunos casos,\n gobierno autoritario puede\n ser preferible',
+                                 'En algunos casos, un\ngobierno autoritario\npuede ser preferible',
                                  'Da lo mismo régimen\ndemocrático o autoritario', 
                                  'Ninguna'))) %>%
   prop(x = c25, by = pos_id, na.rm = TRUE) %>% 
@@ -1127,10 +1143,9 @@ elsoc_long_2016_2021 %>%
 ```
 
 
-### Participación electoral
+## Participación electoral
 
-
-Con el inicio del proceso constituyente, durante 2020 y 2021 se realizaron procesos electorales novedosos en el país, los que combinados con los efectos de la pandemia, pudieron haber alterado el comportamiento electoral de los ciudadanos. El gráfico 2.33 muestra que existe un sobre-reporte de haber participado en elecciones, cuestión que coincide con la literatura de encuestas (Silver et al., 1986). Mientras que en el plebiscito participó un 50,9% del padrón electoral, ELSOC reporta un 68,6%, sobrerrepresentación que parece mantenerse estable elección a elección. No obstante, el gráfico 2.34 muestra que ELSOC se acerca bastante a la realidad al medir la intención de voto retrospectiva, con una diferencia de sólo 5% al predecir el apruebo respecto a los datos del SERVEL.
+Con el inicio del proceso constituyente, durante 2020 y 2021 se realizaron procesos electorales novedosos en el país, los que combinados con los efectos de la pandemia, pudieron haber alterado el comportamiento electoral de los ciudadanos. El gráfico \@ref(fig:graf-participelect-ola) muestra que existe un sobre-reporte de haber participado en elecciones, cuestión que coincide con la literatura de encuestas (Silver et al., 1986). Mientras que en el plebiscito participó un 50,9% del padrón electoral, ELSOC reporta un 68,6%, sobrerrepresentación que parece mantenerse estable elección a elección. No obstante, el gráfico @ref(fig:graf-servel-apruebo) muestra que ELSOC se acerca bastante a la realidad al medir la intención de voto retrospectiva, con una diferencia de sólo 5% al predecir el apruebo respecto a los datos del SERVEL.
 
 
 ```{r graf-participelect-ola, fig.cap = 'Participación electoral, según elección'}
@@ -1188,7 +1203,7 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-El gráfico 2.35 muestra que los patrones de participación electoral se vieron fuertemente alterados con el advenimiento de la pandemia y el proceso constituyente. La participación entre los adultos y adultos mayores se redujo considerablemente, mientras que aumentó la participación de personas menores de 49 años. Mientras que el 91% de los mayores de 65 años mencionaron haber votado en la elección del 2013, esta cifra se reduce a un 67% en el Plebiscito de 2020. En cambio los jóvenes de 18 a 29 años ascienden su participación desde un 53% en 2013 hasta un 75% en 2020. Esto constituye un severo cambio en la composición del electorado, pero cuya continuidad en el tiempo es aún desconocida.
+El gráfico \@ref(fig:graf-participelect-olas-edad) muestra que los patrones de participación electoral se vieron fuertemente alterados con el advenimiento de la pandemia y el proceso constituyente. La participación entre los adultos y adultos mayores se redujo considerablemente, mientras que aumentó la participación de personas menores de 49 años. Mientras que el 91% de los mayores de 65 años mencionaron haber votado en la elección del 2013, esta cifra se reduce a un 67% en el Plebiscito de 2020. En cambio los jóvenes de 18 a 29 años ascienden su participación desde un 53% en 2013 hasta un 75% en 2020. Esto constituye un severo cambio en la composición del electorado, pero cuya continuidad en el tiempo es aún desconocida.
 
 
 ```{r graf-participelect-olas-edad, fig.cap = 'Participación electoral, según tramo de edad'}
@@ -1223,7 +1238,7 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-En términos de preferencias ideológicas, el gráfico 2.36 muestra que la opción por el apruebo fue más votada entre los sujetos identificados con la izquierda, con un 80,2% comparado con un 46,7% entre quienes se identifican con la derecha. También se producen diferencias importantes en los niveles de abstención entre grupos ideológicos, donde un 18% de las personas que se identifican con la izquierda no votaron, cifra que asciende a un 36% y 32% entre las personas de centro y derecha, respectivamente. Esto es consistente con la idea de que la promesa de una transformación institucional se convirtió en fuerte motivante de participación. Los niveles de apoyo a la opción del Apruebo según tendencia ideológica se reiteran en el gráfico 2.38 que muestra que quienes votaron por candidatos de izquierda en elecciones pasadas también tendieron a votar de sobremanera por el apruebo. Por otro lado, el gráfico 2.37 robustece la idea del voto como hábito, pues quienes votaron en elecciones anteriores participaron del plebiscito en mayor proporción.
+En términos de preferencias ideológicas, el gráfico \@ref(fig:graf-votoplebiscito-idpolitica) muestra que la opción por el apruebo fue más votada entre los sujetos identificados con la izquierda, con un 80,2% comparado con un 46,7% entre quienes se identifican con la derecha. También se producen diferencias importantes en los niveles de abstención entre grupos ideológicos, donde un 18% de las personas que se identifican con la izquierda no votaron, cifra que asciende a un 36% y 32% entre las personas de centro y derecha, respectivamente. Esto es consistente con la idea de que la promesa de una transformación institucional se convirtió en fuerte motivante de participación. Los niveles de apoyo a la opción del Apruebo según tendencia ideológica se reiteran en el gráfico \@ref(fig:graf-voto-votoprevio) que muestra que quienes votaron por candidatos de izquierda en elecciones pasadas también tendieron a votar de sobremanera por el apruebo. Por otro lado, el gráfico \@ref(fig:graf-voto-votopresi) robustece la idea del voto como hábito, pues quienes votaron en elecciones anteriores participaron del plebiscito en mayor proporción.
 
 
 
@@ -1296,7 +1311,6 @@ elsoc_wide_2016_2021 %>%
 ```
 
 
-
 ```{r graf-voto-votopresi, fig.cap= "Voto en plebiscito de 2020, según voto en elección presidencial de 2017"}
 
 elsoc_wide_2016_2021 %>% 
@@ -1335,9 +1349,9 @@ elsoc_wide_2016_2021 %>%
 
 ```
 
-### Proceso Constituyente
+## Proceso Constituyente
 
-El plebiscito de 2020 dió inicio al proceso constituyente con un resultado del 78,31% por el apruebo y 79,18% por la opción de una Convención Constitucional. Pese a la magnitud del triunfo, la mediatización del cambio constitucional ha generado diversas posturas sobre el proceso en la opinión pública. El gráfico 2.39 muestra que existen altos niveles de optimismo respecto a los efectos que tendrá el proceso constitucional sobre la sociedad chilena. Un 62% de las personas encuestadas está de acuerdo o muy de acuerdo con que el proceso constituyente reducirá la desigualdad y un 50,2% con que disminuirá la corrupción. En contraste, los ítem que reflejan un prospecto desfavorable encuentran menor apoyo; un 33% de personas que están de acuerdo o muy de acuerdo con que impactará poco en la calidad de vida y un 22,9% considera que empeorará las condiciones económicas. Como es de esperar, los gráficos 2.40 y 2.41 muestran que existe un mayor nivel de optimismo entre quienes votaron apruebo (72,7%), al tiempo que el optimismo es similar entre grupos educativos. En el gráfico 2.42 se observa que la izquierda y las personas sin identificación política tienen los mayores niveles de optimismo, 72,7% y 66,9% respectivamente, en contraste al 61,4% del centro y el 44,8% de la derecha.
+El plebiscito de 2020 dió inicio al proceso constituyente con un resultado del 78,31% por el apruebo y 79,18% por la opción de una Convención Constitucional. Pese a la magnitud del triunfo, la mediatización del cambio constitucional ha generado diversas posturas sobre el proceso en la opinión pública. El gráfico \@ref(fig:graf-optimismoconstitucional) muestra que existen altos niveles de optimismo respecto a los efectos que tendrá el proceso constitucional sobre la sociedad chilena. Un 62% de las personas encuestadas está de acuerdo o muy de acuerdo con que el proceso constituyente reducirá la desigualdad y un 50,2% con que disminuirá la corrupción. En contraste, los ítem que reflejan un prospecto desfavorable encuentran menor apoyo; un 33% de personas que están de acuerdo o muy de acuerdo con que impactará poco en la calidad de vida y un 22,9% considera que empeorará las condiciones económicas. Como es de esperar, los gráficos \@ref(fig:graf-optimismoconstitucional-votoplebiscito) y \@ref(fig:graf-optimismoconstitucional-educ) muestran que existe un mayor nivel de optimismo entre quienes votaron apruebo (72,7%), al tiempo que el optimismo es similar entre grupos educativos. En el gráfico \@ref(fig:graf-optimismoconstitucional-idpolitica) se observa que la izquierda y las personas sin identificación política tienen los mayores niveles de optimismo, 72,7% y 66,9% respectivamente, en contraste al 61,4% del centro y el 44,8% de la derecha.
 
 
 
@@ -1400,8 +1414,6 @@ elsoc_long_2016_2021 %>%
         subtitle = 'Porcentaje de acuerdo o muy de acuerdo en promedio con atributos positivos')
 
 ```
-
-
 
 ```{r graf-optimismoconstitucional-educ, fig.cap = 'Optimismo constitucional, según nivel educacional'}
 
