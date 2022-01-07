@@ -12,6 +12,8 @@ La Figura \@ref(fig:graf-idpolitica) muestra la foto más reciente de ELSOC acer
 
 ```{r graf-idpolitica, fig.cap = 'Identificación política (2021)'}
 
+# elsoc::load_elsoc('long')
+
 elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1 & ola == 5) %>%
   mutate(pos_id = factor(car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4; c(-888, -999) = 5"),
@@ -35,6 +37,8 @@ elsoc_long_2016_2021 %>%
 
 
 ```{r graf-idpolitica-ola, fig.cap='Identificación política, según ola del estudio'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1) %>%
@@ -64,6 +68,8 @@ Las Figura \@ref(fig:graf-alluvial-idpolitica-ola) es un gráfico aluvial que mu
 
 
 ```{r graf-alluvial-idpolitica-ola, fig.cap = 'Cambios en identificación política, según ola del estudio'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & ola %in% 1:5) %>% 
@@ -104,6 +110,8 @@ elsoc_long_2016_2021 %>%
 
 ```{r graf-cambios-idpolitica-ola, fig.cap = 'Porcentaje que cambia su identificación política entre olas del estudio, según ola'}
 
+# elsoc::load_elsoc('long')
+
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & !is_nsnr(c15)) %>%
   mutate(c15 = factor(car::recode(c15, "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4; c(-888, -999) = 5"),
@@ -132,6 +140,8 @@ La Figura \@ref(fig:graf-cambios-idpol-idpol) muestra el cambio entre posiciones
 
 
 ```{r graf-cambios-idpol-idpol, fig.cap = 'Posición política en 2021, según posición política en 2016'}
+
+# elsoc::load_elsoc('wide')
 
 elsoc_wide_2016_2021 %>% 
   filter(tipo_atricion == 1) %>% 
@@ -164,6 +174,8 @@ elsoc_wide_2016_2021 %>%
 
 
 ```{r graf-cambios-idpolitica-edad, fig.cap = 'Porcentaje que cambia su identificación política entre 2016 y 2021, según grupo etáreo'}
+
+# elsoc::load_elsoc('wide')
 
 elsoc_wide_2016_2021 %>% 
   filter(tipo_atricion == 1 & !is_nsnr(c15_w01, c15_w04)) %>% 
@@ -199,6 +211,8 @@ La Figura \@ref(fig:graf-interespolitica-ola) muestra que el 2019 se produjo un 
 
 ```{r graf-interespolitica-ola, fig.cap = 'Porcentaje Bastante o Muy interesado en política, según ola del estudio'}
 
+# elsoc::load_elsoc('long')
+
 elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1 & !is_nsnr(c13)) %>% 
   prop(c13 %in% 4:5, by = ola, na.rm = TRUE) %>% 
@@ -220,6 +234,8 @@ elsoc_long_2016_2021 %>%
 
 
 ```{r graf-participciudadana-ola, fig.cap = 'Participación ciudadana, según ola del estudio'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1 & !is_nsnr(c08_02, c08_04, c14_01, c14_02)) %>%
@@ -254,6 +270,8 @@ La Figura \@ref(fig:graf-idpolitica-interespolitica) muestra una fuerte asociaci
 
 ```{r graf-idpolitica-interespolitica, fig.cap = 'Identificación política, según grado de interes en la política (2021)'}
 
+# elsoc::load_elsoc('long')
+
 elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1 & ola == 5 & !c13 %in% c(-888, -999)) %>%
   mutate(pos_id = factor(car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4; c(-888, -999) = 5"),
@@ -284,6 +302,8 @@ elsoc_long_2016_2021 %>%
 ELSOC también ha registrado durante múltiples años la opinión de las personas encuestadas respecto a diversos temas de discusión pública. Aquí pueden volver a verse patrones de cambio y estabilidad entre los años 2019 y 2021. La Figura \@ref(fig:graf-temaspublicos-idpolitica) muestra, por un lado, que todos los grupos ideológicos han mantenido su posición frente al tema del aborto libre, pero por otra parte, se observa un incrementado acentuado, que fluctua entre los 12 y 17 puntos porcentuales, en el nivel de acuerdo con tomar medidas más drásticas para evitar mayor inmigración. Las alzas se pueden incluso notar en grupos menos proclives a estar de acuerdo con mayores restricciones como las personas que se identifican con la izquierda. En materia de pensiones, las personas de izquierda y centro han mantenido sus posiciones similares, mientras que las de derecha y que no se identifican han incrementado su acuerdo con que las personas deben ser responsables de su propia pensión, cuestión que puede deberse a la mediatización de los retiros de las AFP como derecho de propiedad individual sobre los fondos de pensiones.
 
 ```{r graf-temaspublicos-idpolitica, fig.cap = 'Acuerdo con temas de discusión pública, según posición política (2019-2021)'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1 & ola %in% 4:5 & !is_nsnr(c15, c37_02, c37_04, c37_05)) %>% 
@@ -339,7 +359,7 @@ Finalmente, un 16,16% son los Reactivos, sujetos con bajos niveles de participac
 
 ```{r tip-participacion5, fig.cap = 'Perfiles de participación política: 5 clases'}
 
-load(file.path('inputs', 'participacion_tipos5.RData'))
+# load(file.path('inputs', 'participacion_tipos5.RData'))
 
 tip_par <- tip_par %>% 
   select(idencuesta, class_part_5, par_mov_w01, par_mov_w02, par_mov_w03, par_mov_w04, par_mov_w05, c11_w01, c11_w03, c43_w05) %>% 
@@ -444,6 +464,7 @@ La Figura \@ref(fig:tipos-posicion-politica2) muestra cómo se distribuyen estos
 ```{r tipos-posicion-politica2, fig.cap = 'Posición política según perfil de participación'}
 
 # load(file.path('inputs', 'participacion_tipos5.RData'))
+# elsoc::load_elsoc('wide')
 
 tip_par %>% 
   select(idencuesta, class_part_5, par_mov_w01, par_mov_w02, par_mov_w03, par_mov_w04, par_mov_w05, c11_w01, c11_w03, c43_w05) %>% 
@@ -482,6 +503,7 @@ La Figura \@ref(fig:tipos-sexo2) muestra que los grupos de participación tienen
 ```{r tipos-sexo2, fig.cap = 'Sexo según perfil de participación'}
 
 # load(file.path('inputs', 'participacion_tipos5.RData'))
+# elsoc::load_elsoc('wide')
 
 tip_par %>% 
   select(idencuesta, class_part_5, par_mov_w01, par_mov_w02, par_mov_w03, par_mov_w04, par_mov_w05, c11_w01, c11_w03, c43_w05) %>% 
@@ -512,6 +534,7 @@ tip_par %>%
 ```{r tipos-edad2, fig.cap = 'Edad según perfil de participación'}
 
 # load(file.path('inputs', 'participacion_tipos5.RData'))
+# elsoc::load_elsoc('wide')
 
 tip_par %>% 
   select(idencuesta, class_part_5, par_mov_w01, par_mov_w02, par_mov_w03, par_mov_w04, par_mov_w05, c11_w01, c11_w03, c43_w05) %>% 
@@ -547,6 +570,7 @@ La Figura \@ref(fig:tipos-interes2) indica que los grupos con menor interés en 
 ```{r tipos-interes2, fig.cap = 'Interés en la política según perfil de participación'}
 
 # load(file.path('inputs', 'participacion_tipos5.RData'))
+# elsoc::load_elsoc('wide')
 
 tip_par %>% 
   select(idencuesta, class_part_5, par_mov_w01, par_mov_w02, par_mov_w03, par_mov_w04, par_mov_w05, c11_w01, c11_w03, c43_w05) %>% 
@@ -582,6 +606,7 @@ La Figura \@ref(fig:tipos-satisfaccion2) muestra una alta insatisfacción con la
 ```{r tipos-satisfaccion2, fig.cap = 'Satisfacción con la democracia según perfil de participación'}
 
 # load(file.path('inputs', 'participacion_tipos5.RData'))
+# elsoc::load_elsoc('wide')
 
 tip_par %>% 
   select(idencuesta, class_part_5, par_mov_w01, par_mov_w02, par_mov_w03, par_mov_w04, par_mov_w05, c11_w01, c11_w03, c43_w05) %>% 
@@ -614,6 +639,7 @@ tip_par %>%
 ```{r tipos-legitimidad2, fig.cap = 'Legitimidad democrática según perfil de participación'}
 
 # load(file.path('inputs', 'participacion_tipos5.RData'))
+# elsoc::load_elsoc('wide')
 
 tip_par %>% 
   select(idencuesta, class_part_5, par_mov_w01, par_mov_w02, par_mov_w03, par_mov_w04, par_mov_w05, c11_w01, c11_w03, c43_w05) %>% 
@@ -655,6 +681,7 @@ Respecto al actual proceso constituyente, la Figura \@ref(fig:tipos-optimismo2) 
 ```{r tipos-optimismo2, fig.cap = 'Optimismo constitucional según perfil de participación'}
 
 # load(file.path('inputs', 'participacion_tipos5.RData'))
+# elsoc::load_elsoc('wide')
 
 tip_par %>% 
   select(idencuesta, class_part_5, par_mov_w01, par_mov_w02, par_mov_w03, par_mov_w04, par_mov_w05, c11_w01, c11_w03, c43_w05) %>% 
@@ -693,6 +720,8 @@ Desde hace varios años en Chile se han desarrollado múltiples movimientos soci
 
 ```{r graf-movsocial, fig.cap = '¿Cuál de los siguientes movimientos sociales más valora? (2019-2021)'}
 
+# elsoc::load_elsoc('long')
+
 elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1 & ola %in% c(4,5) & !c20 %in% c(-888, -999)) %>%
   mutate(c20 = factor(c20, levels = 1:12,
@@ -729,6 +758,8 @@ Al analizar cómo ha evolucionado la valoración de los movimientos progresistas
 
 ```{r graf-movsociales-movsocial-olas, fig.cap = 'Movimiento social que más valora, Según ola'}
 
+# elsoc::load_elsoc('long')
+
 elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1 & !c20 %in% c(-888, -999)) %>%
   mutate(movsoc = car::recode(c20, "1:5 = 1; 8:10 = 1; 6:7 = 2; 11:12 = 3"),
@@ -760,6 +791,8 @@ Cuando analizamos la participación política según el movimiento social más v
 
 ```{r graf-participmovsocial-olas, fig.cap='Participación en movimientos sociales valorados, según ola'}
 
+# elsoc::load_elsoc('long')
+
 elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1 & muestra==1 & !c22 %in% c(-888, -999)) %>%
   prop(c22 %in% 4:5, by  = ola, na.rm = TRUE) %>%
@@ -790,6 +823,8 @@ En su conjunto, estos resultados revelan mayores niveles de movilización social
 
 
 ```{r graf-participmovsociales2-ola, fig.cap='Participación en tipos de movimientos sociales, según ola'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1 & muestra==1 & !c22 %in% c(-888, -999) & !c20 %in% c(-888, -999)) %>%
@@ -834,6 +869,8 @@ Por otro lado, cuando se pregunta cuán justificable es que las personas amarren
 
 ```{r graf-justviolencia1-ola, fig.cap='Justificación de la violencia a manos de ciudadanos, según ola'}
 
+# elsoc::load_elsoc('long')
+
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & ola %in% 1:4 &
            !f05_01 %in% c(-888, -999) & !f05_02 %in% c(-888, -999)) %>%  
@@ -873,6 +910,8 @@ Al consultar sobre el uso de violencia policial cuando estudiantes tiran piedras
 Resumidamente, en comparación con años anteriores, el año de 2019 existen menores niveles de justificación de la violencia policial en los tres contextos analizados, pero el año 2021, vuelve a aumentar el nivel de justificación de la violencia policial, un fenómeno que puede potencialmente atribuirse al contexto post estallido social y a una menor validación de la movilización social durante la pandemia.
 
 ```{r graf-justviolencia2-ola, fig.cap = 'Justificación de la violencia, según ola'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & 
@@ -915,6 +954,8 @@ El gráfico \@ref(fig:graf-confianzainterpersonal-ola) muestra la evolución de 
 
 ```{r graf-confianzainterpersonal-ola, fig.cap = 'Confianza interpersonal, según ola'}
 
+# elsoc::load_elsoc('long')
+
 elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1 & !is_nsnr(c02, c04)) %>% 
   as_label(ola) %>% 
@@ -943,6 +984,8 @@ elsoc_long_2016_2021 %>%
 Detrás de la estabilidad temporal yace un gran nivel de diferenciación transversal en la confianza según distintos grupos socioeconómicos, particularmente educacionales. El gráfico \@ref(fig:graf-confianzainterpersonal-educ) caracteriza la marcada desconfianza interpersonal en 2021, mostrando diferencias muy pronunciadas entre individuos con menor nivel educativo, que confían mucho menos y son más recelosos de cuán justos serán los demás,, e individuos con alto registro educacional registran mayor confianza en el otro y mayor percepción de comportamiento justo.
 
 ```{r graf-confianzainterpersonal-educ, fig.cap = 'Confianza interpersonal (2021), según nivel educacional'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1, ola == 5, !is_nsnr(c02, c04, m01)) %>% 
@@ -981,6 +1024,8 @@ Segundo, varias instituciones como el Congreso, Gobierno y Carabineros experimen
 
 ```{r graf-confinstituciones1-ola, fig.cap = 'Grado de confianza en instituciones, según ola'}
 
+# elsoc::load_elsoc('long')
+
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & !is_nsnr(c05_01, c05_07, c05_08)) %>% 
   as_label(ola) %>% 
@@ -1007,6 +1052,8 @@ elsoc_long_2016_2021 %>%
 ```
 
 ```{r graf-confinstituciones2-ola, fig.cap = 'Grado de confianza en instituciones, según ola'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & !is_nsnr(c05_02, c05_03, c05_05)) %>% 
@@ -1038,6 +1085,8 @@ elsoc_long_2016_2021 %>%
 
 
 ```{r graf-cambio-confianzainstituciones-ola, fig.cap = 'Cambio en grado de confianza en instituciones (2016-2021)'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & !is_nsnr(c05_01, c05_02, c05_03, c05_05, c05_07, c05_08),
@@ -1082,6 +1131,8 @@ La literatura ha distinguido entre el apoyo a los principios del régimen democr
 
 ```{r graf-preferenciademocracia-ola, fig.cap = 'Preferencia por y satisfacción con la democracia, según ola'}
 
+# elsoc::load_elsoc('long')
+
 elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1 & !is_nsnr(c01, c25)) %>% 
   as_label(ola) %>% 
@@ -1112,6 +1163,8 @@ El gráfico \@ref(fig:graf-preferenciademocracia-idpolitica) y \@ref(fig:graf-pr
 
 ```{r graf-preferenciademocracia-idpolitica, fig.cap = 'Preferencia por y satisfacción con la democracia (2021), según posición ideológica'}
 
+# elsoc::load_elsoc('long')
+
 elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1 & ola == 5 & !is_nsnr(c01, c25, c15)) %>% 
   mutate(pos_id = factor(car::recode(c15, "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
@@ -1140,6 +1193,8 @@ elsoc_long_2016_2021 %>%
 ```
 
 ```{r graf-preferenciademocracia2-idpolitica, fig.cap = 'Preferencia por la democracia (2021), según posición ideológica'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1 & !is_nsnr(c25, c15) & ola == 5) %>%
@@ -1180,6 +1235,8 @@ Con el inicio del proceso constituyente, durante 2020 y 2021 se realizaron proce
 
 ```{r graf-participelect-ola, fig.cap = 'Participación electoral, según elección'}
 
+# elsoc::load_elsoc('long')
+
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & ola %in% c(1,3,5) & !is_nsnr(c15, c11, c43, values = c(3, -888, -999))) %>% 
   mutate(particip_electoral = ifelse(ola == 5, c43, c11)) %>% 
@@ -1207,6 +1264,8 @@ elsoc_long_2016_2021 %>%
 
 
 ```{r graf-servel-apruebo, fig.cap='Voto retrospectivo Plebiscito Nueva Constitucion'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   dplyr::filter(ola == 5 & tipo_atricion == 1 & !c44 %in% c(3, 4, -888, -999)& !is.na(c44)) %>% 
@@ -1237,6 +1296,8 @@ El gráfico \@ref(fig:graf-participelect-olas-edad) muestra que los patrones de 
 
 
 ```{r graf-participelect-olas-edad, fig.cap = 'Participación electoral, según tramo de edad'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & ola %in% c(1,3,5) & !is_nsnr(c15, c11, c43, values = c(3, -888, -999))) %>% 
@@ -1274,6 +1335,8 @@ En términos de preferencias ideológicas, el gráfico \@ref(fig:graf-votoplebis
 
 ```{r graf-votoplebiscito-idpolitica, fig.cap = 'Voto en plebiscito de 2020, según identificación política'}
 
+# elsoc::load_elsoc('long')
+
 elsoc_long_2016_2021 %>% 
   dplyr::filter(tipo_atricion == 1 & !is_nsnr(c15, c43, c44)) %>% 
   mutate(pos_id = factor(car::recode(c15, "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
@@ -1305,6 +1368,8 @@ elsoc_long_2016_2021 %>%
 ```
 
 ```{r graf-voto-votoprevio, fig.cap = 'Voto en plebiscito de 2020, según voto en elecciones previas'}
+
+# elsoc::load_elsoc('wide')
 
 elsoc_wide_2016_2021 %>% 
   filter(tipo_atricion == 1, !is_nsnr(c11_w01, c11_w03, c43_w05, values = c(3, -888, -999))) %>% 
@@ -1342,6 +1407,8 @@ elsoc_wide_2016_2021 %>%
 
 
 ```{r graf-voto-votopresi, fig.cap= "Voto en plebiscito de 2020, según voto en elección presidencial de 2017"}
+
+# elsoc::load_elsoc('wide')
 
 elsoc_wide_2016_2021 %>% 
   dplyr::filter(tipo_atricion == 1 & !is_nsnr(c11_w03, c39_w03, c43_w05, c44_w05)) %>% 
@@ -1386,6 +1453,9 @@ El plebiscito de 2020 dió inicio al proceso constituyente con un resultado del 
 
 
 ```{r graf-optimismoconstitucional, fig.cap = 'Optimismo constitucional'}
+
+# elsoc::load_elsoc('long')
+
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1, ola == 5, !is_nsnr(c46_01, c46_02, c46_03, c46_04)) %>% 
   prop_list(c46_01 %in% 4:5, c46_02 %in% 4:5, c46_03 %in% 4:5, c46_04 %in% 4:5, na.rm = TRUE) %>% 
@@ -1412,6 +1482,8 @@ elsoc_long_2016_2021 %>%
 ```
 
 ```{r graf-optimismoconstitucional-votoplebiscito, fig.cap = 'Optimismo constitucional, según voto en plebiscito de 2020'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1, ola == 5, 
@@ -1447,6 +1519,8 @@ elsoc_long_2016_2021 %>%
 
 ```{r graf-optimismoconstitucional-educ, fig.cap = 'Optimismo constitucional, según nivel educacional'}
 
+# elsoc::load_elsoc('long')
+
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1, ola == 5, 
          !is_nsnr(c46_01, c46_02, c46_03, c46_04),
@@ -1480,6 +1554,8 @@ elsoc_long_2016_2021 %>%
 
 
 ```{r graf-optimismoconstitucional-idpolitica, fig.cap = 'Optimismo constitucional, según identificación política'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1, ola == 5, 
