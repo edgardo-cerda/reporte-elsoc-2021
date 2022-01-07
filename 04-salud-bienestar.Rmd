@@ -1033,9 +1033,7 @@ Las personas que reportan un mayor cumplimiento de las medidas de aislamiento so
 ```{r covid-dist, fig.cap = 'Porcentaje que ha sido diagnosticado con COVID, según cumplimiento de aislamiento social (2021)'}
 
 elsoc_long_2016_2021 %>% 
-  left_join(elsoc_clase) %>% 
-  dplyr::filter(ola == 5, tipo_atricion == 1, !is_nsnr(c48),
-                !is_nsnr(s31, r03_09, d01_01) & !is.na(quintil)) %>%
+  dplyr::filter(ola == 5, tipo_atricion == 1, !is_nsnr(s31, c48)) %>%
   mutate(c48 = factor(car::recode(c48, "1:2 = 1; 3 = 2; 4:5 = 3"),
                                levels = 1:3,
                                labels= c("Nunca o casi nunca", "A veces",
