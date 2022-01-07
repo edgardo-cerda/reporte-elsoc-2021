@@ -16,7 +16,7 @@ fig:graf-interespolitica-ola
 fig:graf-participciudadana-ola
 fig:graf-idpolitica-interespolitica
 fig:graf-temaspublicos-idpolitica
-fig:tip-participacion
+fig:tip-participacion5
 fig:tipos-posicion-politica2
 fig:tipos-sexo2
 fig:tipos-edad2
@@ -61,7 +61,6 @@ fig:ndepr-sexo
 fig:perfiles-depr
 fig:perfiles-depr-sexo
 fig:perfiles-depr-edad
-fig:perfiles-depr-quintil
 fig:depre-quintil
 fig:depre-educ
 fig:depre-sitlab
@@ -83,8 +82,6 @@ fig:confli-cambio
 fig:confli-zona
 fig:confli-estrato
 fig:confli-quintil
-fig:confli-comuna
-fig:confli-region2
 fig:vecinos-ola
 fig:confvecinos-sexo
 fig:vecinos-zona
@@ -106,8 +103,6 @@ fig:crim-olas
 fig:crim-zona
 fig:crim-estrato
 fig:crim-quintil
-fig:crimi-comuna
-fig:confli-region
 fig:amen1-wave
 fig:amen1-zona
 fig:amen2-wave
@@ -125,18 +120,7 @@ fig:ess-cambio
 fig:ess-quintil
 fig:esshijos-ess
 fig:mov-soc-rec
-fig:mov-soc
 fig:merit-wave
-introduccion
-sobre-coes
-sobre-elsoc
-descripción-del-estudio
-acceso-a-bases-de-datos-elsoc
-características-del-diseño-muestral
-características-del-levantamiento-de-datos
-atrición-de-la-muestra
-foco-en-el-cambio-longitudinal
-elsoc-en-pandemia
 temas-políticos
 identificación-política
 interés-en-la-política-y-opinión-pública
@@ -156,4 +140,3 @@ conflicto-y-cohesión-territorial
 migración
 sexismo-hostil-y-benevolente
 estatus-subjetivo-y-percepción-de-mérito
-referencias

@@ -479,7 +479,7 @@ tip_par %>%
                          labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
   survey_design_elsoc(weights = 'ponderador02_w05') %>% 
   prop(pos_id, by = class_part_5, na.rm = TRUE) %>% 
-  ggplot(aes(x = prop, y = class_part_5, fill = fct_rev(pos_id), 
+  ggplot(aes(x = prop, y = fct_rev(class_part_5), fill = fct_rev(pos_id), 
              label = scales::percent(ifelse(prop < .01, NA, prop), .1))) + 
   geom_bar(stat = 'identity', position = 'stack') +
   labs(y = NULL, x = NULL, title = NULL, fill = NULL) +

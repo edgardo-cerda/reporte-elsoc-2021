@@ -31,16 +31,16 @@ Desde 2019 y hasta la fecha, Chile se ha visto remecido por importantes eventos 
 
 Ambos fenómenos han significado un desafío para ELSOC, ya que afecta tanto la forma en que son levantados los datos, como las preguntas que el estudio debe abordar. Sin embargo, ELSOC presente una gran oportunidad única: la posibilidad de observar el efecto que éstos fenómenos tienen sobre la población chilena desde una perspectiva longitudinal.
 
-## Sobre COES
+## Sobre COES {-}
 
 El Centro de Estudios de Conflicto y Cohesión Social ([COES](https://coes.cl/)) desarrolla investigación colaborativa en temas relacionados al conflicto social y la cohesión (convivencia) en Chile, por medio de un equipo multidisciplinario proveniente de las ciencias sociales y humanidades. COES centra sus actividades académicas y de difusión en el análisis de las múltiples manifestaciones del conflicto y cohesión social en Chile, sus causas, así como también su contexto cultural e histórico.
 
 COES está patrocinado por la Universidad de Chile y la Pontificia Universidad Católica de Chile, y como instituciones asociadas se encuentran la Universidad Diego Portales y la Universidad Adolfo Ibáñez. COES cuenta con el apoyo del Fondo de Financiamiento de Centros de Investigación en Áreas Prioritarias ([FONDAP](https://www.conicyt.cl/fondap/sobre-fondap/que-es-fondap/), dependiente de la Agencia Nacional de Investigación y Desarrollo ([ANID](https://www.anid.cl/)) del Ministerio de Ciencia, Tecnología, Conocimiento e Innovación ([MinCiencia](https://www.minciencia.gob.cl/)). ELSOC además cuenta como socio al Instituto Milenio para la Investigación en Depresión y Personalidad ([MIDAP](https://midap.org/)).
 
 
-## Sobre ELSOC
+## Sobre ELSOC {-}
 
-### Descripción del estudio
+### Descripción del estudio {-}
 
 El [Estudio Longitudinal Social de Chile (ELSOC)](https://coes.cl/encuesta-panel/) es una encuesta panel, representativa de la población nacional urbana, que analiza la estabilidad y cambio de las creencias, actitudes y percepciones que tenemos los chilenos y chilenas respecto de la convivencia y del conflicto, la cohesión y una amplia gama de aspectos políticos y sociales a lo largo del tiempo. 
 
@@ -48,7 +48,7 @@ Este estudio sigue la evolución de cerca de 4.500 chilenos y chilenas a lo larg
 
 Durante los últimos años, ELSOC se ha consolidado como un importante insumo para el desarrollo de investigación científica y aplicada en ciencias sociales. En el sitio web de (ELSOC)(https://coes.cl/encuesta-panel/) se puede acceder a más información sobre el estudio. 
 
-### Acceso a Bases de Datos ELSOC
+### Acceso a Bases de Datos ELSOC {-}
 
 Las bases de datos y documentación correspondientes se encuentran disponibles, de manera libre y gratuita, en un repositorio de datos, al cual se podrá acceder en el link:
 
@@ -59,7 +59,7 @@ En este sitio se obtendrá acceso a los datos de las 5 mediciones transversales 
 ELSOC tiene un compromiso con los más altos estándares científicos en términos de producción y análisis de datos. Dentro de esta visión global, ELSOC se guía por las principales pautas de Transparencia y Apertura en la investigación científica. Por esta misma razón, los códigos utilizados para el desarrollo de este documento se encontrarán disponibles en https://github.com/centro-coes.
 
 
-### Características del diseño muestral
+### Características del diseño muestral {-}
 
 - Unidad de Análisis: Individuos
 
@@ -89,7 +89,7 @@ knitr::include_graphics(file.path('inputs/imagenes/etapas_seleccion.jpg'))
 
 ```
 
-### Características del levantamiento de datos
+### Características del levantamiento de datos {-}
 
 - Formato de aplicación: Cuestionario estructurado. Levantamiento en formato CAPI (Encuesta presencial con asistencia de tablet). Excepcionalmente se cambió a formato CATI (Encuesta telefónica con asistencia de tablet) durante 2021, debido a contingencia COVID-19
 
@@ -108,8 +108,7 @@ knitr::include_graphics(file.path('inputs/imagenes/etapas_seleccion.jpg'))
 **Organismo Ejecutor**: Levantamiento a cargo de Centro Micro Datos (CMD) de la Universidad de Chile
 
 
-
-## Atrición de la muestra
+## Atrición de la muestra {-}
 
 El diseño de ELSOC contempló entrevistar a 3.000 personas en su muestra original y 1.500 en la muestra refresco. Sin embargo, es habitual que en encuestas panel se reduce el número de participantes, dado que algunos optan voluntariamente por dejar de participar y otras personas no pueden ser recontactadas. Este fenómeno es conocido como atrición, y pueden tener efectos nocivos sobre la utilidad de los datos longitudinales. En el caso de ELSOC, la tasa de atrición es comparativamente baja en comparación a otros estudios similares, por lo que no se considera al momento un problema significativo. A pesar de esto, el año 2018 se introduce una muestra refresco para contraarrestar el efecto de la atrición. 
 
@@ -265,7 +264,7 @@ elsoc_long_2016_2021 %>%
 ```
 
 
-## Foco en el cambio longitudinal
+## Foco en el cambio longitudinal {-}
 
 Radiografía del Cambio Social tiene como objetivo fundamental caracterizar la estabilidad y el cambio en opiniones, actitudes y conductas de los participantes a lo largo del tiempo, enfocándose en distintas dimensiones de la cohesión y conflicto en Chile. 
 
@@ -315,7 +314,7 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-##  ELSOC en pandemia
+##  ELSOC en pandemia {-}
 
 La crisis sanitaria a raíz del COVID-19 ha planteado una serie de desafíos importantes a los sistemas estadísticos a nivel general, y a las encuestas de opinión pública en particular. A partir de los planteado por la Organización Internacional del Trabajo (OIT, 2020) la mayoría de las oficinas nacionales de estadística ha informado un impacto significativo en sus operaciones, particularmente en aquellas que se llevan a cabo de manera presencial. Para sobrellevar estos problemas, varias organizaciones han tenido que transformar sus operaciones presenciales a levantamientos por teléfono o encuestas web.
 
