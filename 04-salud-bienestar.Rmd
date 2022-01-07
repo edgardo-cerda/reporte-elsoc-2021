@@ -1,0 +1,1057 @@
+
+# Salud mental y bienestar
+
+## Salud mental y bienestar
+
+Chile es un país que se caracteriza por una carga de trastornos mentales relativamente alta con escaso acceso a servicios de salud mental (Vicente et al, 2016). La irrupción de significativos fenómenos locales y globales, como el Estallido Social ocurrido a partir de octubre de 2019 y sus repercusiones políticas e institucionales, así como la pandemia por COVID-19 y las medidas para contenerla, con sus impactos en la salud, condiciones económicas y de sociabilidad de la población; han tenido un marcado efecto sobre la salud mental y el nivel de bienestar de la población (Wu et al, 2021; Duarte & Jiménez, 2021).
+
+A pesar de las difíciles condiciones sanitarias y económicas, los datos ELSOC nos permiten señalar que la población chilena presenta aún un alto porcentaje de satisfacción con la vida: 83,7% responde estar satisfecho o muy satisfecho con su vida (Figura \@ref(fig:salud-bienestar-2021)), y 63,5% responde que su vida se acerca o se acerca completamente a su ideal. 
+
+Esto es consistente con los datos de otras encuestas realizadas en contexto pre-pandémico o pandémico. Lo que muestran encuestas previas, como la Encuesta de Desarrollo Humano del 2011 (PNUD, 2012) o la encuesta Termómetro Social de octubre 2020 (DESOC-COES, 2020) es que, en general, los chilenos están satisfechos con sus vidas.
+
+Por otra parte, y en contraste, solo un 15,8% indicó en 2021 que su salud es muy buena o excelente. 
+
+
+```{r salud-bienestar-2021, fig.cap = 'Satisfacción con la vida, ideal de vida y salud subjetiva (ola 2021)'}
+
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & ola == 5 & !is_nsnr(s01, s02, s03)) %>% 
+  prop_list(s01 %in% 4:5, s02 %in% 4:5, s03 %in% 4:5, na.rm = TRUE) %>% 
+  mutate(name = factor(name,
+                       levels = c('s01 %in% 4:5', 's02 %in% 4:5', 's03 %in% 4:5'),
+                       labels = c('Esta satisfecho o muy\nsatisfecho con su vida',
+                                  'Su vida se acerca o se acerca\ncompletamente a su ideal',
+                                  'Su salud es muy buena\no Excelente'))) %>% 
+  ggplot(aes(y = prop, x = name, fill = name,
+             label = scales::percent(prop, accuracy = .1))) + 
+  theme_bw() + 
+  geom_col() +
+  geom_text(position = position_dodge(.9), 
+            vjust = -.5, size = 3) +
+  scale_y_continuous(labels = scales::percent, limits = c(0,1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +  
+  scale_fill_viridis_d(end = .75, option = 'viridis') +
+  theme(legend.position = 'none') +
+  ggtitle(NULL, 'Porcentaje que responde que...')
+
+```
+
+
+Al analizar la evolución de estos indicadores, encontramos dos fenómenos que destacan: una fuerte caída en términos de salud subjetiva y satisfacción con la vida durante 2019; y una más fuerte y, quizás contraintuitiva, recuperación a partir de 2021.
+
+El 2019 el porcentaje que reporta estar satisfecho o muy satisfecho con su vida cae a 70,4% (desde 79,4% el 2018), y a 55,0% entre quienes indican que su vida se acerca o se acerca completamente a su ideal (desde 62,7%). Estos fenómenos se encuentran probablemente asociados al contexto estallido social ocurrido a partir de octubre de 2019 (encuesta fue realizada a partir de noviembre de 2019). 
+
+Por otra parte, el 2021 se aprecia un marcado aumento en la satisfacción y acercamiento al ideal de vida, llegando a porcentajes superiores a niveles previos a 2019: 83,7% y 63,5%, respectivamente. Estos resultados resultan particularmente contraintuitivos, ya que existe evidencia que muestra un deterioro en la calidad de vida de la población y una percepción de mayor vulnerabilidad durante la pandemia (DESOC-COES, 2020). Sin embargo, es posible que este resultado se encuentre asociado a la mejoría en la situación sanitaria del país al momento en que fue realizada la encuesta (a partir de febrero de 2021), pero también a fenómenos de resiliencia o aumento de la solidaridad social ante situaciones adversas, como ha reportado literatura internacional durante la pandemia (Bavel et al, 2020).
+
+```{r salud-bienestar-olas, fig.cap = 'Satisfacción con la vida, ideal de vida y salud subjetiva, según ola'}
+
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & !is_nsnr(s01, s02, s03)) %>% 
+  sjlabelled::as_label(ola) %>%
+  prop_list(s01 %in% 4:5, s02 %in% 4:5, s03 %in% 4:5, by = ola, na.rm = TRUE) %>% 
+  mutate(name = factor(name,
+                       levels = c('s01 %in% 4:5', 's02 %in% 4:5', 's03 %in% 4:5'),
+                       labels = c('Esta satisfecho o muy\nsatisfecho con su vida',
+                                  'Su vida se acerca o se acerca\ncompletamente a su ideal',
+                                  'Su salud es muy buena\no Excelente'))) %>% 
+  ggplot(aes(y = prop, x = ola, group = name, color = name,
+             label = scales::percent(prop, accuracy = .1))) + 
+  theme_bw() + 
+  geom_point(size = 1.75) + 
+  geom_line() +
+  geom_text_repel(nudge_y = .025, size = 3, color = 'black') +
+  scale_y_continuous(labels = scales::percent, limits = c(0,1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +  
+  scale_color_viridis_d(end = .75, option = 'viridis') +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  ggtitle(NULL, 'Porcentaje que responde que...')
+
+
+```
+
+### Sintomatología depresiva {-}
+
+En cuanto a sintomatología depresiva, ELSOC utiliza la escala PHQ-9 (Patient Health Questionnaire), un cuestionario de autorreporte que permite establecer la presencia y severidad de los síntomas^[Debido al contexto de pandemia, en 2021 la escala PHQ-9 no fue aplicada como un cuestionario de auto reporte]. Si bien no es un instrumento de diagnóstico, ha demostrado una buena precisión diagnóstica (Kroenke et al, 2001; Levis et al, 2019) y ha sido validado para la población chilena (Baader et al, 2012).
+
+Los resultados de la escala PHQ-9 son clasificados en 4 categorías, según la presencia y habitualidad de síntomas depresivos: de 0-9 se considera “Sin síntomas o con síntomas depresivos mínimos”, de 10-14 “Sintomatología depresiva media”; de 15-19 “Sintomatología depresiva moderada” y de 20-27 “Sintomatología depresiva moderada-severa o severa”.
+
+Los resultados de 2021 muestran que, si bien un 48,6% de la población no presenta o presenta síntomas mínimos de depresión (Figura \ref(fig:depre-2021)), un alto porcentaje presenta síntomas depresivos, en distintos niveles de severidad. Un 32,6% de la población presenta sintomatología depresiva media, 11,2% síntomas depresivos moderados, y 7,7% de depresión moderada-severa a severa (Figura \@ref(fig:depre-2021)), lo que revela una alta prevalencia de este tipo de síntomas en la población general y confirma una deteriorada situación de la salud mental en Chile.
+
+
+```{r depre-2021, fig.cap = 'Porcentaje que presenta síntomas de depresión (2021)'}
+
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1, ola == 5) %>% 
+  purrr::map_at(.at = vars(starts_with('s11_0')), 
+                .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
+  as.data.frame() %>%  
+  mutate(phq9 = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09),
+         depr = factor(car::recode(phq9, "0:4 = 1; 5:9 = 2; 10:14 = 3; 15:27 = 4"), 
+                       levels = c(1,2,3,4),
+                       labels = c('Sin sintomas o síntomas\nde depresión mínima', 
+                                  'Síntomas de\ndepresion media', 
+                                  'Síntomas de\ndepresion moderada', 
+                                  'Síntomas de depresion\nmoderada-severa o severa'))) %>%
+  prop(depr, na.rm = TRUE) %>% 
+  ggplot(aes(y = prop, x = depr, fill = depr, 
+             label = scales::percent(prop, accuracy = .1))) + 
+  theme_bw() + 
+  geom_col(position = 'dodge2') +
+  scale_y_continuous(labels = scales::percent, limits = 0:1) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1) +
+  geom_text(position = position_dodge2(.9),
+            size = 3, 
+            vjust = -.5) +
+  theme(legend.position = 'none')
+
+```
+
+Como es de esperar, la existencia de síntomas depresivos se encuentra altamente correlacionada con la satisfacción con la vida y con el porcentaje que considera que su vida se acerca a su ideal: un 93,2% de aquellos y aquellas que no presentan síntomas depresivos se encuentran satisfechos o muy satisfechos con su vida, mientras que este porcentaje se reduce a 53,8% entre aquellos que presentan sintomatología depresiva moderada-severa a severa. Ahora bien, este último resultado podría parecer paradojal, puesto que se trata de un grupo de personas que se encuentran satisfechas con sus vidas pero al mismo tiempo sufren un estado depresivo, caracterizado por intensa tristeza. Esta aparente paradoja podría explicarse a partir del modelo de “dos continuos” (Westerhof & Keyes, 2010; Kinderman et al, 2015), en el cual los trastornos mentales (como la depresión) y la salud mental y bienestar están relacionados, pero son dimensiones diferentes (un continuo indica la presencia o ausencia de salud mental y bienestar subjetivo, mientras que el otro indica la presencia o ausencia de psicopatología). Esto permite entender que personas con un mismo nivel de severidad de síntomas puedan tener diferentes niveles de adaptación psicosocial, y un impacto diferente en la calidad de vida y satisfacción con la misma.
+
+```{r depre-bienestar, fig.cap = 'Satisfacción con la vida, ideal de vida y salud subjetiva (ola 2021), según Sintomas de depresión'}
+
+elsoc_long_2016_2021 %>% 
+  purrr::map_at(.at = vars(starts_with('s11_0')), 
+                .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
+  as.data.frame() %>%  
+  mutate(phq9 = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09),
+         depr = factor(car::recode(phq9, "0:4 = 1; 5:9 = 2; 10:14 = 3; 15:27 = 4"), 
+                       levels = c(1,2,3,4),
+                       labels = c('Sin sintomas o síntomas\nde depresión mínima', 
+                                  'Síntomas de\ndepresion media', 
+                                  'Síntomas de\ndepresion moderada', 
+                                  'Síntomas de depresion\nmoderada-severa o severa'))) %>%
+  filter(tipo_atricion == 1 & ola == 5, !is_nsnr(s01, s02, s03) & !is.na(depr)) %>%  
+  prop_list(s01 %in% 4:5, s02 %in% 4:5, s03 %in% 4:5, by = depr, na.rm = TRUE) %>% 
+  mutate(name = factor(name,
+                       levels = c('s01 %in% 4:5', 's02 %in% 4:5', 's03 %in% 4:5'),
+                       labels = c('Está satisfecho o muy\nsatisfecho con su vida',
+                                  'Su vida se acerca o se acerca\ncompletamente a su ideal',
+                                  'Su salud es muy buena\no Excelente'))) %>% 
+  ggplot(aes(y = prop, color = name, x = depr, group = name,
+             label = scales::percent(prop, accuracy = .1))) + 
+  theme_bw() + 
+  geom_point(size = 1.75) + 
+  geom_line() +
+  geom_text_repel(nudge_y = .025, size = 3, color = 'black') +
+  scale_y_continuous(labels = scales::percent, limits = 0:1) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_color_viridis_d(begin = 0, end = .8, direction = -1) +
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+```
+
+
+Al igual que en términos de satisfacción con la vida, la prevalencia de síntomas depresivos aumentó el año 2019, en particular la prevalencia de sintomatología depresiva media, al pasar de 33,0% a 40,9% entre 2018 y 2019. Asimismo, la relativamente alta prevalencia de síntomas depresivos moderados a severos en 2019 (25,1%) parece mostrar un efecto importante y negativo del contexto de estallido social sobre la salud mental de la población. Este resultado se encuentra en sintonía con la literatura internacional. De hecho, se estima que después de grandes protestas sociales la prevalencia de depresión aumenta en torno a 7% (Ni et al, 2020), lo cual refleja un impacto comparable a los de los desastres naturales o conflictos armados. Un estudio longitudinal realizado en Hong Kong mostró que la depresión y los síntomas de estrés postraumático aumentaron significativamente luego del estallido social ocurrido a principios de 2019 en dicho país (Ni et al, 2020). 
+
+De igual manera, el 2021 se experimenta una disminución en la prevalencia de síntomas depresivos, pasando de 34,0% el porcentaje que no presenta o que presenta síntomas mínimos de depresión en 2019, a 48,6% en 2021. Asimismo, en 2021 se observa una de las prevalencias más bajas de sintomatología depresiva moderada a severa (18,9%) durante todo el periodo. 
+
+Estos resultados sugieren que los síntomas depresivos son sensibles a las condiciones sociales, económicas y políticas, y que los cambios en la prevalencia de síntomas dependen del alcance de los efectos de la pandemia en diferentes grupos sociales.
+
+Utilizando la misma escala para evaluar síntomas en una muestra representativa de la población nacional, la Encuesta Termómetro Social de Octubre 2020 mostró una prevalencia de 26,2% de síntomas depresivos moderados a severos (Duarte y Jiménez, en evaluación). Esto se encuentra en sintonía con la evidencia internacional, la cual sugiere que los mayores niveles de problemas de salud mental se observaron con mayor frecuencia durante los primeros meses de pandemia (Xiong et al, 2020), aumentando respecto al contexto pre pandémico (Pierce et al., 2020; Ettman et al., 2020), pero disminuyendo levemente a medida que pasaban los meses (McGinty et al., 2020; O’Connor et al, 2020; Hyland et al, 2021). La literatura emergente de COVID-19 sugiere que el bienestar psicológico debería mejorar a medida que disminuye la gravedad de la pandemia, se relajan las medidas de cuarentena y distanciamiento físico, y las personas se adaptan progresivamente a las restricciones relacionadas con la pandemia.
+ 
+La menor prevalencia de síntomas depresivos moderados a severos en 2021 podría estar asociada también a las respuestas específicas ante la crisis, por ejemplo, el acceso a subsidios o retiro de los ahorros de fondos previsionales (ver siguiente sección Economía y bienestar). 
+
+
+```{r depre-olas, fig.cap = 'Porcentaje que presenta síntomas de depresión, según ola'}
+
+elsoc_long_2016_2021 %>% 
+  purrr::map_at(.at = vars(starts_with('s11_0')), 
+                .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
+  as.data.frame() %>%  
+  mutate(phq9 = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09),
+         depr = factor(car::recode(phq9, "0:4 = 1; 5:9 = 2; 10:14 = 3; 15:27 = 4"), 
+                       levels = c(1,2,3,4),
+                       labels = c('Sin sintomas o síntomas\nde depresión mínima', 
+                                  'Síntomas de\ndepresion media', 
+                                  'Síntomas de\ndepresion moderada', 
+                                  'Síntomas de depresion\nmoderada-severa\no severa'))) %>%
+  dplyr::filter(tipo_atricion == 1) %>% 
+  prop(depr, by = c(ola), na.rm = TRUE) %>% 
+  sjlabelled::as_label(depr, ola) %>% 
+  ggplot(aes(y = prop, x = ola, fill = fct_rev(depr), 
+             label = scales::percent(prop, accuracy = .1))) + 
+  theme_bw() + 
+  geom_col(position = 'Stack') +
+  scale_y_continuous(labels = scales::percent) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, option = 'viridis') +
+  geom_text(position = position_stack(vjust = .5),
+            size = 3, 
+            color = rep(rep(c('black', 'white'), each = 2), 5)) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank()) + 
+  guides(fill = guide_legend(reverse = TRUE))
+
+```
+
+
+Uno de los hallazgos más consistentes en epidemiología psiquiátrica es que la depresión afecta principalmente a las mujeres, con prevalencias que tienden a ser dos veces más altas que en hombres (Salk et al, 2017; Jiménez et al, 2021). Consistente con ello, ELSOC muestra una importante brecha de género en términos de prevalencia de síntomas depresivos. En 2021, 27,0% de las mujeres presentaron síntomas depresivos moderados a severos, mientras que en hombres este porcentaje fue de 9,6%. Se observa además que las mayores brechas de género en la prevalencia de síntomas depresivos se produjeron en 2019 y 2021, lo que podría sugerir que las condiciones de mayor conflictividad social durante 2019 y las condiciones de pandemia durante 2020-2021 podrían haber afectado particularmente la salud mental de las mujeres. 
+
+Es bien sabido que las mujeres están más expuestas a desventajas sociales, tienen más probabilidades que los hombres de tener contratos de trabajo informales y su vulnerabilidad podría agravarse en períodos de inestabilidad económica como el actual (United Nations, 2020; Wenham et al, 2020). Asimismo, en Chile, al igual que en otros países de América Latina, las mujeres tienden a desempeñar muchos roles simultáneamente (empleadas, dueñas de casa y cuidadoras), haciendo más probable que experimenten cargas adicionales durante la pandemia (Rojas et al, 2021).
+
+
+```{r depre-olas-sexo, fig.cap = 'Porcentaje que presenta síntomas de depresión moderados a severos, según sexo y ola'}
+
+elsoc_long_2016_2021 %>% 
+  purrr::map_at(.at = vars(starts_with('s11_0')), 
+                .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
+  as.data.frame() %>%  
+  mutate(phq9 = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09)) %>% 
+  dplyr::filter(tipo_atricion == 1) %>% 
+  prop(phq9 >= 10 , by = c(ola, m0_sexo), na.rm = TRUE) %>% 
+  sjlabelled::as_label(ola, m0_sexo) %>% 
+  ggplot(aes(y = prop, x = ola, color = m0_sexo, group = m0_sexo,
+             label = scales::percent(prop, accuracy = .1))) + 
+  theme_bw() + 
+  geom_point(size = 1.75) + 
+  geom_line() +
+  geom_text_repel(nudge_y = .025, size = 3, color = 'black') +
+  scale_y_continuous(labels = scales::percent, limits = 0:1) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_color_viridis_d(begin = .33, end = .66) +
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+
+```
+
+Por otra parte, los datos muestran que existen brechas de género significativas en términos de estado de salud general percibido, pero no en términos de satisfacción con la vida entre los años de estudio.
+
+
+```{r salud-bienestar-sexo, fig.cap = 'Satisfacción con la vida, ideal de vida y salud subjetiva, según sexo (2021)'}
+
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & ola == 5 & !is_nsnr(s01, s02, s03)) %>% 
+  as_label(m0_sexo) %>% 
+  prop_list(s01 %in% 4:5, s02 %in% 4:5, s03 %in% 4:5, by = m0_sexo, na.rm = TRUE) %>% 
+  mutate(name = factor(name,
+                       levels = c('s01 %in% 4:5', 's02 %in% 4:5', 's03 %in% 4:5'),
+                       labels = c('Esta satisfecho o muy\nsatisfecho con su vida',
+                                  'Su vida se acerca o se acerca\ncompletamente a su ideal',
+                                  'Su salud es muy buena\no Excelente'))) %>% 
+  ggplot(aes(y = prop, x = name, fill = m0_sexo,
+             label = scales::percent(prop, accuracy = .1))) + 
+  theme_bw() + 
+  geom_col(position = 'dodge2') +
+  geom_text(position = position_dodge(.9), 
+            vjust = -.5, size = 3) +
+  scale_y_continuous(labels = scales::percent, limits = c(0,1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +  
+  scale_fill_viridis_d(begin = .33, end = .66) +
+  theme(legend.position = 'top', legend.title = element_blank()) +
+  ggtitle(NULL, 'Porcentaje que responde que...')
+
+
+```
+
+Diversos estudios muestran que la depresión y los síntomas depresivos son más frecuentes entre las personas pertenecientes a grupos socioeconómicos bajos (Jiménez et al, 2021). De hecho, la última Encuesta Nacional de Salud muestra que la prevalencia de síntomas depresivos es tres veces mayor en el primer quintil que en el quinto quintil de ingresos (MINSAL, 2018).
+
+Una de las ventajas que posee ELSOC sobre otras encuestas y estudios transversales, es que permite analizar el cambio y evolución temporal de los fenómenos de bienestar y salud mental en la población. Esto permite, por ejemplo, analizar la persistencia o recurrencia de los síntomas depresivos a lo largo del tiempo. La mayoría de las investigaciones internacionales sobre este fenómeno se han basado en muestras clínicas, que suelen ser construidas por conveniencia y son relativamente pequeñas, lo que limita la generalización de sus hallazgos. Asimismo, estos estudios han trabajado principalmente con variables clínicas, dando menos importancia a otros determinantes sociales y económicos de la salud mental. Esta es una de las ventajas comparativas de ELSOC.
+
+Uno de los primeros resultados que se obtienen es que la presencia de síntomas depresivos oscila considerablemente a lo largo del tiempo. 
+
+```{r depre-alluvial, fig.cap = 'Cambios en síntomas depresivos entre 2016 y 2021'}
+
+elsoc_long_2016_2021 %>% 
+  purrr::map_at(.at = vars(starts_with('s11_0')), 
+                .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
+  as.data.frame() %>%  
+  dplyr::filter(tipo_atricion == 1) %>% 
+  mutate(phq9 = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09),
+         depr = factor(car::recode(phq9, "0:4 = 1; 5:9 = 2; 10:14 = 3; 15:27 = 4"),
+                       levels = c(1,2,3,4),
+                       labels = c('Sin sintomas o síntomas\nde depresión mínima', 
+                                  'Síntomas de\ndepresion media', 
+                                  'Síntomas de\ndepresion moderada', 
+                                  'Síntomas de depresion\nmoderada-severa o severa'))) %>% 
+  as_label(ola) %>% 
+  survey_design_elsoc() %>%
+  svytable(~depr + ola + idencuesta, design = .) %>% 
+  as.data.frame() %>% 
+  group_by(ola) %>% 
+  mutate(prop = Freq/sum(Freq)) %>%
+  filter(Freq > 0) %>% 
+  ggplot(aes(y = prop, x = ola, fill = fct_rev(depr), 
+             stratum = fct_rev(depr), alluvium = idencuesta)) +
+  theme_bw() +
+  ggalluvial::geom_flow(alpha = .66) + 
+  ggalluvial::geom_stratum(linetype = 0, width = .55) +
+  scale_y_continuous(labels = scales::percent) + 
+  ylab(label = NULL) +
+  xlab(label = NULL) + 
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+  scale_fill_viridis_d(end = .85) +
+  geom_text(data = function(x) { group_by(.data = x, ola, depr) %>%
+      summarise(prop = sum(prop, na.rm = TRUE), idencuesta = 1) %>%
+      ungroup()}, 
+      aes(label = scales::percent(prop, accuracy = .1)),
+      position = position_stack(vjust = .5),
+      show.legend = FALSE,
+      color = rep(c('black', 'black', 'white', 'white'), 5),
+            size = 3) + 
+  guides(fill = guide_legend(reverse = TRUE))
+
+```
+
+Las trayectorias de los síntomas depresivos en la población general son heterogéneas, ya que la mayoría de los individuos no muestran síntomas o muestran síntomas leves, mientras que una minoría experimenta una alta carga de síntomas recurrentes o persistentes. Al considerar el período completo de análisis, observamos que 56,0% de la población en estudio no presentó síntomas moderados a severos de depresión en las 5 olas del estudio, mientras que un 2,1% presentó esta carga de síntomas en todas las olas. Éste último grupo es particularmente relevante, ya que la literatura muestra que muchos de los efectos negativos de la depresión se ven potenciados por su persistencia. La persistencia o recurrencia de los síntomas depresivos afecta negativamente a diferentes áreas de la calidad de vida relacionada con la salud (Rubio et al. 2011) y se asocia con un deterioro del funcionamiento y una carga personal y social en la vida de las personas (García-Toro et al 2013, Schramm et al 2020). Algunos estudios sugieren que el impacto económico de la depresión en la sociedad está relacionado con su duración en el tiempo más que con su severidad (Angst et al 2009, Nübe et al 2020).
+
+Cabe destacar también que un 41,9% de la población presentó síntomas moderados a severos de depresión en al menos una de las olas del estudio, revelando una alta prevalencia de éstos en el tiempo.
+
+Distintas dimensiones demográficas o socioeconómicas pueden aumentar indirectamente el riesgo de recurrencia o persistencia de los síntomas depresivos en el tiempo a través de su asociación con una mayor severidad de los síntomas o mayor predisposición a presentar comorbilidades de salud, entre otros factores. La literatura internacional sugiere que algunos factores sociodemográficos y económicos asociados a la recurrencia y persistencia de la depresión son el género femenino (Brunoni et al 2020, Schramm et al 2020), el bajo nivel socioeconómico (Musliner et al, 2016) y la mayor edad (Hardeveld et al 2013).
+
+
+```{r ndepr, fig.cap = 'Porcentaje que presenta síntomas de depresión moderada a severa de forma reiterada, según número de ocurrencias' }
+
+elsoc_wide_2016_2021 %>% 
+  dplyr::filter(tipo_atricion == 1) %>% 
+  purrr::map_at(.at = vars(starts_with('s11_0')), 
+                .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
+  as.data.frame() %>%
+  mutate(
+    phq9_w01 = (s11_01_w01 + s11_02_w01 + s11_03_w01 + s11_04_w01 + s11_05_w01 + s11_06_w01 + s11_07_w01 + s11_08_w01+ s11_09_w01),
+    phq9_w02 = (s11_01_w02 + s11_02_w02 + s11_03_w02 + s11_04_w02 + s11_05_w02 + s11_06_w02 + s11_07_w02 + s11_08_w02+ s11_09_w02),
+    phq9_w03 = (s11_01_w03 + s11_02_w03 + s11_03_w03 + s11_04_w03 + s11_05_w03 + s11_06_w03 + s11_07_w03 + s11_08_w03+ s11_09_w03),
+    phq9_w04 = (s11_01_w04 + s11_02_w04 + s11_03_w04 + s11_04_w04 + s11_05_w04 + s11_06_w04 + s11_07_w04 + s11_08_w04+ s11_09_w04),
+    phq9_w05 = (s11_01_w05 + s11_02_w05 + s11_03_w05 + s11_04_w05 + s11_05_w05 + s11_06_w05 + s11_07_w05 + s11_08_w05+ s11_09_w05)) %>% 
+  mutate(n_depr = (phq9_w01 > 10) + (phq9_w02 > 10) + (phq9_w03 > 10) + (phq9_w04 > 10) + (phq9_w05 > 10),
+         n_depr = factor(n_depr, 
+                         levels = 0:5,
+                         labels = c('No presentó síntomas\nde depresión en\nninguna ola',
+                                    glue::glue('Presentó en\n{1:4} de 5 olas'),
+                                    'Presentó síntomas\nen todas las olas'))) %>% 
+  survey_design_elsoc(weights = 'ponderador02_w05') %>% 
+  prop(n_depr, na.rm = TRUE) %>% 
+  as_factor(n_depr) %>% 
+  ggplot(aes(y = prop, x = n_depr, 
+             label = scales::percent(prop, accuracy = .1))) + 
+  theme_bw() + 
+  geom_col(position = 'dodge2', fill = viridis(1, begin = .33)) +
+  scale_y_continuous(labels = scales::percent, limits = 0:1) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  geom_text(position = position_dodge(.9), vjust = -.5,
+            size = 3) 
+
+```
+
+
+En este sentido, nuevamente se observa una marcada brecha de género en términos de la presencia reiterada de síntomas depresivos moderados a severos: en hombres, el porcentaje que no ha presentado síntomas moderados a severos en ninguna ola del estudio es de 68,5%; mientras que este porcentaje es de 45,2% en mujeres. De igual forma, solo 0,7% de los hombres presentaron síntomas moderados a severos en todas las olas, versus 3,4% entre las mujeres.
+
+
+```{r ndepr-sexo, fig.cap = 'Porcentaje que presenta síntomas de depresión moderada a severa de forma reiterada, según número de ocurrencias y sexo' }
+
+elsoc_wide_2016_2021 %>% 
+  dplyr::filter(tipo_atricion == 1) %>% 
+  purrr::map_at(.at = vars(starts_with('s11_0')), 
+                .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
+  as.data.frame() %>%
+  mutate(
+    phq9_w01 = (s11_01_w01 + s11_02_w01 + s11_03_w01 + s11_04_w01 + s11_05_w01 + s11_06_w01 + s11_07_w01 + s11_08_w01+ s11_09_w01),
+    phq9_w02 = (s11_01_w02 + s11_02_w02 + s11_03_w02 + s11_04_w02 + s11_05_w02 + s11_06_w02 + s11_07_w02 + s11_08_w02+ s11_09_w02),
+    phq9_w03 = (s11_01_w03 + s11_02_w03 + s11_03_w03 + s11_04_w03 + s11_05_w03 + s11_06_w03 + s11_07_w03 + s11_08_w03+ s11_09_w03),
+    phq9_w04 = (s11_01_w04 + s11_02_w04 + s11_03_w04 + s11_04_w04 + s11_05_w04 + s11_06_w04 + s11_07_w04 + s11_08_w04+ s11_09_w04),
+    phq9_w05 = (s11_01_w05 + s11_02_w05 + s11_03_w05 + s11_04_w05 + s11_05_w05 + s11_06_w05 + s11_07_w05 + s11_08_w05+ s11_09_w05)) %>% 
+  mutate(n_depr = (phq9_w01 > 10) + (phq9_w02 > 10) + (phq9_w03 > 10) + (phq9_w04 > 10) + (phq9_w05 > 10),
+         n_depr = factor(n_depr, 
+                         levels = 0:5,
+                         labels = c('No presentó síntomas\nde depresión en\nninguna ola',
+                                    glue::glue('Presentó en\n{1:4} de 5 olas'),
+                                    'Presentó síntomas\nen todas las olas'))) %>% 
+  survey_design_elsoc(weights = 'ponderador02_w05') %>% 
+  prop(n_depr, by = m0_sexo_w05, na.rm = TRUE) %>% 
+  as_label(m0_sexo_w05, n_depr) %>% 
+  ggplot(aes(y = prop, x = n_depr, fill = m0_sexo_w05,
+             label = scales::percent(prop, accuracy = .1))) + 
+  theme_bw() + 
+  geom_col(position = 'dodge2') +
+  scale_y_continuous(labels = scales::percent, limits = 0:1) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .33, end = .66) +
+  geom_text(position = position_dodge(.9), vjust = -.5,
+            size = 3) +
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+```
+
+### Trayectorias de síntomas depresivos {-}
+
+Para analizar las potenciales trayectorias en sintomatología depresiva de los sujetos del estudio se realiza un análisis de clases latentes considerando las 5 olas del estudio. El resultado obtenido nos indica la presencia de 4 “clases” o perfiles de individuos según su carga de síntomas depresivos en el tiempo.
+
+Un 33,7% corresponde a un perfil de trayectoria con baja carga de síntomas depresivos, al presentar una muy baja probabilidad de presentar síntomas depresivos en las 5 olas; un 44,0% corresponde a un perfil de trayectoria con carga media-baja de síntomas depresivos, al tener en torno a 90% de probabilidad de no presentar síntomas, presentar síntomas mínimos o sintomatología depresiva media, oscilando entre estas categorías. Destaca el alza importante de sintomatología depresiva media en 2019 entre este grupo.
+
+Un 12,5% se clasifica en una carga media-alta de síntomas de depresión, al presentar altas probabilidades de mostrar síntomas medios o moderados de depresión. Finalmente, un 9,8% se clasifica en la categoría de Carga alta de síntomas de depresión, al mostrar altas probabilidades de síntomas de depresión moderada-severa a severa. Este último grupo nos señala que aproximadamente un 10% de la población presenta de forma sostenida síntomas elevados de depresión.
+
+
+```{r perfiles-depr, fig.cap = 'Perfiles de sintomatología depresiva: 4 clases (2016-2021)'}
+
+load(file = file.path('inputs', 'elsoc_depr_lca.RData'))
+
+elsoc_depr_lca %>% 
+  survey_design_elsoc(weights = 'ponderador02_w05') %>% 
+  prop_list(depr_w01, depr_w02, depr_w03, depr_w04, depr_w05, 
+              by = class_depr, na.rm = TRUE) %>%
+    mutate(name = factor(name,
+                         levels = glue::glue('depr_w0{1:5}'),
+                         labels = c(2016:2019, 2021)),
+           sintomas = factor(value,
+                             levels = 1:4,
+                             labels = c('Sin sintomas o síntomas\nde depresión mínima', 
+                                  'Síntomas de\ndepresion media', 
+                                  'Síntomas de\ndepresion moderada', 
+                                  'Síntomas de depresion\nmoderada-severa o severa')),
+           class_depr = factor(class_depr,
+                                    labels = glue::glue("{get_labels(elsoc_depr_lca$class_depr)}\n ({scales::percent(elsoc_depr_lca %>% survey_design_elsoc(weights = 'ponderador02_w05') %>%
+                                    prop(class_depr, na.rm = TRUE) %>%
+                                    pull(prop), .1)})"))
+           ) %>% 
+    ggplot(aes(x = prop, y = fct_rev(name), fill = fct_rev(sintomas))) + 
+    geom_col(position = 'stack') + 
+    facet_grid(~ class_depr) +
+    labs(y = "Ola del estudio", 
+         x = "Proporción",
+         fill = "") +
+    scale_x_continuous(breaks = seq(0, 1, .25),
+                       labels = scales::percent) +
+    guides(fill = guide_legend(reverse = TRUE)) +
+    theme_bw() + 
+    theme(legend.position = "top", 
+          plot.title = element_text(size = 14),
+          axis.text.x = element_text(size = 8)) + 
+    scale_fill_viridis_d(end = .85)
+
+```
+
+Al analizar cómo se distribuye la población entre las distintas trayectorias de síntomas depresivos, encontramos que en torno a un 14,4% de las mujeres, versus un 4,5% de los hombres, presenta una carga alta de síntomas depresivos a lo largo del tiempo. Esto confirma que las mujeres no sólo presentan una mayor prevalencia de síntomas depresivos, sino que además sufren una mayor persistencia y recurrencia de los síntomas a lo largo del tiempo. Dicho de otro modo, a las mujeres les cuesta más recuperarse de un episodio depresivo que a los hombres, lo cual es consistente con otros estudios (Brunoni et al, 2020; Schramm et al 2020). Es posible interpretar este hallazgo en relación con el hecho de que las mujeres están expuestas con mayor frecuencia a desventajas sociales (niveles de educación e ingresos más bajos, ocupaciones menos calificadas, desigualdades de poder y estatus) y a factores de estrés a lo largo de la vida (inseguridad económica, sobrecarga de trabajo) (Hammarström et al, 2009). Las mujeres, sobre todo aquellas que pertenecen al estrato socioeconómico bajo, tienden a tener menos control sobre áreas importantes de sus vidas en comparación con los hombres, lo que puede aumentar el riesgo de sufrir síntomas depresivos a lo largo del tiempo (Hammarström et al, 2009).
+
+```{r perfiles-depr-sexo, fig.cap = 'Cargas de sintomatología depresiva, según sexo'}
+
+load(file = file.path('inputs', 'elsoc_depr_lca.RData'))
+
+elsoc_depr_lca %>% 
+  filter(tipo_atricion == 1) %>% 
+  survey_design_elsoc(weights = 'ponderador02_w05') %>% 
+  prop(class_depr, by = m0_sexo_w05, na.rm = TRUE) %>% 
+  sjlabelled::as_label(class_depr, m0_sexo_w05) %>%
+  ggplot(aes(x = prop, y = m0_sexo_w05, 
+                   fill = fct_rev(class_depr),
+              label = scales::percent(prop, accuracy = .1))) +
+  theme_bw() +   
+  geom_col() +
+  geom_text(position = position_stack(vjust = .5), size = 3,
+            color = rep(c('black', 'black', 'white', 'white'), 2)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_x_continuous(labels = scales::percent) +
+  scale_fill_viridis_d(begin = .1, end = .8, direction = 1, option = 'viridis') +
+  theme(legend.position = 'top',
+        legend.title = element_blank())  + 
+  guides(fill = guide_legend(reverse = TRUE))
+
+
+```
+
+
+[Descripción resultado]
+
+
+```{r perfiles-depr-edad, fig.cap = 'Cargas de sintomatología depresiva, según tramo de edad (en 2016)'}
+
+load(file = file.path('inputs', 'elsoc_depr_lca.RData'))
+
+elsoc_depr_lca %>% 
+  filter(tipo_atricion == 1) %>% 
+  survey_design_elsoc(weights = 'ponderador02_w05') %>% 
+  mutate(edadt = factor(car::recode(m0_edad_w01, "18:29 = 1; 30:49 = 2; 50:64 = 3; 65:150 = 4"),
+                        levels = 1:4,
+                        labels = c('18-29', '30-49', '50-64', '65 o más'))) %>% 
+  prop(class_depr, by = edadt, na.rm = TRUE) %>% 
+  sjlabelled::as_label(class_depr, edadt) %>%
+  ggplot(aes(x = prop, y = edadt, 
+                   fill = fct_rev(class_depr),
+              label = scales::percent(prop, accuracy = .1))) +
+  theme_bw() +   
+  geom_col() +
+  geom_text(position = position_stack(vjust = .5), size = 3,
+            color = rep(c('black', 'black', 'white', 'white'), 4)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_x_continuous(labels = scales::percent) +
+  scale_fill_viridis_d(begin = .1, end = .8, direction = 1, option = 'viridis') +
+  theme(legend.position = 'top',
+        legend.title = element_blank())  + 
+  guides(fill = guide_legend(reverse = TRUE))
+
+```
+
+Estudios previos han mostrado que el estatus socioeconómico bajo, medido por ingresos o nivel educacional, está asociado a una mayor persistencia y recurrencia de los síntomas depresivos a lo largo del tiempo (Musliner et al 2016). De hecho, algunos estudios sugieren que las desventajas socioeconómicas parecen ser más importantes en la persistencia de los síntomas depresivos que en su desencadenamiento (Lorant et al. 2003).
+
+[Descripción resultado + interpretación]
+
+
+Estos resultados podrían también sugerir que la persistencia de problemas de salud mental a lo largo del tiempo pueden agravar las desventajas asociadas a la posición socioeconómica, produciendo un círculo vicioso difícil de romper (Lund et al, 2018).
+
+
+```{r perfiles-depr-quintil, fig.cap = 'Cargas de sintomatología depresiva, según quintiles de ingreso (en 2021)'}
+# 
+# load(file = file.path('inputs', 'elsoc_depr_lca.RData'))
+# 
+# elsoc_depr_lca %>% 
+#   filter(!is_nsnr(m30, m30b, nhogar1, m46_nhogar, m54)) %>% 
+#   mutate(m30 = as.numeric(car::recode(m30, "1 = 110000; 2 = 251000; 
+#   3 = 305000; 4 = 355000; 5 = 400000; 
+#   6 = 445000; 7 = 490000; 8 = 535000; 9 = 585000; 10 = 640000; 
+#   11 = 700000; 12 = 765000; 13 = 845000; 14 = 935000; 15 = 1040000;
+#   16 = 1180000; 17 = 1375000; 18 = 1670000; 19 = 2275000; 20 = 2700000; NA = NA")),
+#   m30b = as.numeric(car::recode(m30b, "1 = 170000; 2 = 300000; 3 = 400000; 4 = 600000; 5 = 1200000; NA = NA")),
+#   m29_imp = ifelse(!is.na(m29), m29, ifelse(ola == 5, m30b, m30)),
+#   nhogar = case_when(ola == 1 ~ nhogar1,
+#                      ola == 2 ~ m46_nhogar,
+#                      TRUE ~ m54),
+#   ypc = m29_imp / nhogar) %>%  
+#   group_by(ola) %>% 
+#   mutate(quintil = xtile(ypc, n = 5, wt = ponderador02),
+#          quintil = factor(quintil, levels = 1:5, labels = glue::glue('Quintil {1:5}'))
+#          ) %>%
+#   ungroup() %>% 
+#   filter(tipo_atricion == 1, !is.na(quintil)) %>% 
+#   survey_design_elsoc(weights = 'ponderador02_w05') %>% 
+#   prop(class_depr, by = quintil, na.rm = TRUE) %>% 
+#   sjlabelled::as_label(class_depr, quintil) %>%
+#   ggplot(aes(x = prop, y = quintil, 
+#                    fill = fct_rev(class_depr),
+#               label = scales::percent(prop, accuracy = .1))) +
+#   theme_bw() +   
+#   geom_col() +
+#   geom_text(position = position_stack(vjust = .5), size = 3,
+#             color = rep(c('black', 'black', 'white', 'white'), 5)) +
+#   ylab(label = NULL) +
+#   xlab(label = NULL) +
+#   scale_x_continuous(labels = scales::percent) +
+#   scale_fill_viridis_d(begin = .1, end = .8, direction = 1, option = 'viridis') +
+#   theme(legend.position = 'top',
+#         legend.title = element_blank())  + 
+#   guides(fill = guide_legend(reverse = TRUE))
+
+```
+
+
+
+## Economía y bienestar
+
+El estatus socioeconómico, generalmente medido en términos de ingresos, nivel educacional o empleo, ha demostrado ser un poderoso predictor de las condiciones de salud mental de las personas a lo largo de sus trayectorias de vida (Lund et al 2018).
+
+La presencia de síntomas depresivos se encuentra altamente correlacionada con la situación económica de los individuos. La Figura \@ref(fig:depre-quintil) nos muestra cómo en 2021, a medida que aumentan los ingresos per cápita del hogar, disminuye de forma sostenida la presencia de síntomas de depresión moderados a severos: un 26,7% del Quintil 1 de ingresos muestra síntomas moderados a severos, mientras que solo un 10,3% del 5to quintil presenta estos síntomas.
+
+Ahora bien, no es fácil estimar si los menores niveles de ingreso son la causa o el efecto de los problemas de salud mental; es decir, si los menores recursos económicos se asocian a mayores factores de estrés y, en última instancia, peor salud mental (“causalidad social”), o si más bien los problemas de salud mental preceden al lugar desfavorecido de las personas (“selección social”) (Lund et al, 2018).  
+
+```{r depre-quintil, fig.cap = 'Porcentaje que presenta síntomas de depresión moderados a severos, según quintiles de ingreso del hogar (2021)'}
+
+elsoc_long_2016_2021 %>% 
+  filter(ola == 5, !is_nsnr(m30, m30b, nhogar1, m46_nhogar, m54)) %>% 
+  mutate(m30 = as.numeric(car::recode(m30, "1 = 110000; 2 = 251000; 
+  3 = 305000; 4 = 355000; 5 = 400000; 
+  6 = 445000; 7 = 490000; 8 = 535000; 9 = 585000; 10 = 640000; 
+  11 = 700000; 12 = 765000; 13 = 845000; 14 = 935000; 15 = 1040000;
+  16 = 1180000; 17 = 1375000; 18 = 1670000; 19 = 2275000; 20 = 2700000; NA = NA")),
+  m30b = as.numeric(car::recode(m30b, "1 = 170000; 2 = 300000; 3 = 400000; 4 = 600000; 5 = 1200000; NA = NA")),
+  m29_imp = ifelse(!is.na(m29), m29, ifelse(ola == 5, m30b, m30)),
+  nhogar = case_when(ola == 1 ~ nhogar1,
+                     ola == 2 ~ m46_nhogar,
+                     TRUE ~ m54),
+  ypc = m29_imp / nhogar) %>%  
+  group_by(ola) %>% 
+  mutate(quintil = xtile(ypc, n = 5, wt = ponderador02),
+         quintil = factor(quintil, levels = 1:5, labels = glue::glue('Quintil {1:5}'))
+         ) %>%
+  ungroup() %>% 
+  purrr::map_at(.at = vars(starts_with('s11_0')), 
+                .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
+  as.data.frame() %>%  
+  mutate(phq9 = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09)) %>% 
+  dplyr::filter(tipo_atricion == 1, !is_nsnr(quintil), !is.na(quintil)) %>% 
+  prop(phq9 >= 10 , by = c(quintil), na.rm = TRUE) %>% 
+  sjlabelled::as_label(quintil) %>% 
+  ggplot(aes(y = prop, x = quintil, 
+             label = scales::percent(prop, accuracy = .1))) + 
+  theme_bw() + 
+  geom_col(position = 'dodge2', fill = viridis(1, begin = .5)) +
+  scale_y_continuous(labels = scales::percent, limits = 0:1) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  geom_text(position = position_dodge(.9), vjust = -.5,
+            size = 3) 
+
+```
+
+De igual forma, a medida que aumenta el nivel educacional alcanzado por los encuestados, es menor la presencia de síntomas moderados a severos de depresión: 26,0% de quienes  alcanzaron educación básica presentan síntomas de depresión moderada a severa, mientras que este porcentaje es de 16,0% para aquellos y aquellas con educación universitaria.
+
+```{r depre-educ, fig.cap = 'Porcentaje que presenta síntomas de depresión moderados a severos, según nivel educacional (2021)'}
+
+elsoc_long_2016_2021 %>% 
+  filter(ola == 5) %>% 
+  purrr::map_at(.at = vars(starts_with('s11_0')), 
+                .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
+  as.data.frame() %>%  
+  mutate(phq9 = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09),
+         educ = factor(car::recode(m01, recodes = "1:3 = 1; 4:5 = 2; 6:7 = 3; 8:10 = 4"),
+                       levels = 1:4,
+                       labels = c("Basica", "Media", "Tecnica", "Universitaria"))) %>% 
+  dplyr::filter(tipo_atricion == 1, !is_nsnr(m01)) %>% 
+  prop(phq9 >= 10 , by = educ, na.rm = TRUE) %>% 
+  sjlabelled::as_label(educ) %>% 
+  ggplot(aes(y = prop, x = educ, 
+             label = scales::percent(prop, accuracy = .1))) + 
+  theme_bw() + 
+  geom_col(position = 'dodge2', fill = viridis(1, begin = .5)) +
+  scale_y_continuous(labels = scales::percent, limits = 0:1) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  geom_text(position = position_dodge(.9), vjust = -.5,
+            size = 3) 
+
+```
+
+De igual forma, la situación laboral se encuentra altamente correlacionada con la presencia de síntomas moderados a severos de depresión. El grupo con menor presencia de dichos síntomas en 2021 es el de aquellos y aquellas con trabajo remunerado (15,3%), seguido de jubilados(as) o pensionados(as) (17,8%).
+
+Diversos estudios han mostrado que el trabajo remunerado estable es un factor protector de la salud mental, mientras que el trabajo informal, el subempleo, la desocupación o las trayectorias laborales interrumpidas constituyen un factor de riesgo (Kessler et al, 2003; Rosenthal et al, 2012).
+
+Uno de los grupos con mayor presencia de síntomas depresivos moderados a severos es el de quienes se dedican a trabajos domésticos no remunerados (33,2%). Es importante destacar que este grupo está compuesto completamente por mujeres, representando la situación laboral de un 22,4% de las mujeres (Figura \@ref(fig:depre-sitlab)). Existe evidencia que muestra que las mujeres que realizan trabajos no remunerados (como tareas domésticas o cuidado de ancianos o niños) suelen estar sometidas a factores ambientales desfavorables, como la sobrecarga de trabajo y la desigualdad de poder y estatus, lo que podría provocar sentimientos de baja autoestima y síntomas depresivos (Hammarström et al 2009, Magaña et al 2020).
+
+```{r depre-sitlab, fig.cap = 'Porcentaje que presenta síntomas de depresión moderados a severos, según situación laboral y sexo (2021)'}
+
+elsoc_long_2016_2021 %>% 
+  filter(ola == 5, tipo_atricion == 1 & !is_nsnr(m02)) %>% 
+  mutate(sit_ocup = factor(car::recode(m02, "1:3 = 1; 7 = 2; 6 = 3; 5 = 4; c(4, 8, 9) = 5"), 
+                           levels = c(1, 2, 3, 4, 5),
+                           labels = c("Trabajo remunerado", "Trabajo doméstico\nno remunerado", "Desempleado/a", "Jubilado/a o\npensionado/a", "Otros (inactivos)"))
+         ) %>% 
+  purrr::map_at(.at = vars(starts_with('s11_0')), 
+                .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
+  as.data.frame() %>%  
+  mutate(phq9 = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09)) %>% 
+  prop(phq9 >= 10 , by = c(sit_ocup, m0_sexo), na.rm = TRUE) %>% 
+  sjlabelled::as_label(sit_ocup, m0_sexo) %>% 
+  ggplot(aes(y = prop, x = sit_ocup, fill = m0_sexo,
+             label = scales::percent(ifelse(prop>0.01, prop, NA), accuracy = .1))) + 
+  theme_bw() + 
+  geom_col(position = 'dodge2') +
+  scale_y_continuous(labels = scales::percent, limits = 0:1) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .33, end = .66, direction = -1) +
+  geom_text(position = position_dodge(.9), vjust = -.5,
+            size = 3, na.rm = TRUE) +
+  theme(legend.position = 'top', legend.title = element_blank())
+
+```
+
+```{r sitlab-sexo, fig.cap = 'Situación laboral, según sexo (2021)'}
+
+elsoc_long_2016_2021 %>%
+  filter(ola == 5, tipo_atricion == 1 & !is_nsnr(m02)) %>% 
+  mutate(sit_ocup = factor(car::recode(m02, "1:3 = 1; 7 = 2; 6 = 3; 5 = 4; c(4, 8, 9) = 5"), 
+                           levels = c(1, 2, 3, 4, 5),
+                           labels = c("Trabajo remunerado", "Trabajo doméstico\nno remunerado", "Desempleado/a", "Jubilado/a o\npensionado/a", "Otros (inactivos)"))
+         ) %>% 
+  prop(sit_ocup, by = m0_sexo, na.rm = TRUE) %>% 
+  as_label(m0_sexo) %>% 
+  ggplot(aes(y = prop, x = m0_sexo, fill = fct_rev(sit_ocup),
+             label = scales::percent(ifelse(prop>.01, prop, NA), accuracy = .1))) + 
+  theme_bw() + 
+  geom_col(position = 'stack') +
+  geom_text(position = position_stack(vjust = .5), size = 3, na.rm = TRUE,
+            color = rep(c('white', 'white', 'white', 'black', 'black'), 2)) +
+  scale_y_continuous(labels = scales::percent) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  theme(legend.position = 'top',
+        legend.title = element_blank()) +
+    guides(fill = guide_legend(reverse = TRUE))+
+  scale_fill_viridis_d(end = .85, direction = -1)
+
+```
+
+La pandemia de COVID-19 generó una ruptura en la vida cotidiana y laboral de las personas. Desde mediados de marzo de 2020, el gobierno introdujo medidas de distanciamiento físico y severas restricciones de movimiento, forzando a un grupo importante de la población a trabajar de forma remota, ya sea de forma completa desde su hogar o con distintas modalidades híbridas de trabajo presencial y remoto. Los resultados de la encuesta nos señalan que un 19,2% de los trabajadores y trabajadoras remunerados trabajaba de manera completa desde el hogar al momento de ser encuestados, y un 9,4% de manera híbrida. La modalidad de trabajo presencial, sin embargo, continuó siendo la forma más habitual de trabajo, con 71,4%.
+
+
+```{r trabremoto, fig.cap = 'Porcentaje que trabaja en modalidad remota (2021)'}
+
+elsoc_long_2016_2021 %>% 
+  filter(ola == 5 & tipo_atricion == 1, !is_nsnr(m60)) %>% 
+  prop(m60, na.rm = TRUE) %>% 
+  mutate(m60 = factor(m60, levels = 1:3,
+                      labels = c('Trabajo de manera\ncompleta desde el hogar',
+                                 'Trabajo de manera\n parcial en el hogar',
+                                 'Trabajo fuera del hogar'))) %>% 
+  ggplot(aes(y = prop, x = m60, 
+             label = scales::percent(prop, accuracy = .1))) +
+  theme_bw() + 
+  geom_col(position = 'dodge2', fill = viridis(1, begin = .5)) +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
+  geom_text(vjust = -0.5,
+            position = position_dodge(width = .9),
+            size = 3)  + 
+  theme(legend.position = 'top', legend.title = element_blank())
+
+```
+
+En concordancia con resultados comentados previamente, el grupo de personas que no posee un trabajo remunerado presentan una mayor prevalencia de síntomas depresivos (24,6%). 
+
+Aquellos que trabajaron de forma completa desde el hogar presentaron mayor presencia de síntomas depresivos moderados a severos que quienes trabajaron de forma presencial (16,7% versus 15,5%, respectivamente), sin embargo, esta diferencia no es estadísticamente significativa. Ahora bien, quienes trabajan de manera parcial en el hogar constituyen el grupo que presenta una menor prevalencia de síntomas (11,2%). Este último resultado podría estar sugiriendo que modalidades de trabajo híbrido permiten combinar lo mejor de ambos mundos, por ejemplo, mayor autonomía en el uso del tiempo y un mejor equilibrio entre la vida familiar y laboral, reduciendo los tiempos de desplazamiento, sin perder las ventajas de la socialización presencial con pares (como el apoyo social). De este modo, podría representar una modalidad de trabajo que permite sostener condiciones favorables para la calidad de vida. Por cierto, es probable que una gran cantidad de personas que pueden desarrollar modalidades híbridas de trabajo tienen trabajos flexibles y se encuentran en las categoría de mayor nivel educacional. 
+
+```{r depre-trabremoto, fig.cap = 'Porcentaje que presenta síntomas de depresión moderados a severos, según trabajo remoto (2021)'}
+
+elsoc_long_2016_2021 %>% 
+  filter(ola == 5 & tipo_atricion == 1, !is_nsnr(m02, m60)) %>% 
+  mutate(m60 = ifelse(m02 %in% 1:3, m60, 4),
+         m60 = factor(m60, levels = 1:4,
+                      labels = c('Trabajo de manera\ncompleta desde el hogar',
+                                 'Trabajo de manera\n parcial en el hogar',
+                                 'Trabajo fuera del hogar',
+                                 'Sin trabajo remunerado'))) %>% 
+  purrr::map_at(.at = vars(starts_with('s11_0')), 
+                .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
+  as.data.frame() %>% 
+  mutate(phq9 = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09)) %>% 
+  prop(phq9 >= 10 , by = m60, na.rm = TRUE) %>% 
+  sjlabelled::as_label(m60) %>% 
+  ggplot(aes(y = prop, x = m60,
+             label = scales::percent(ifelse(prop > 0.01, prop, NA), accuracy = .1))) + 
+  theme_bw() + 
+  geom_col(position = 'dodge2', fill = viridis(1, begin = .5)) +
+  scale_y_continuous(labels = scales::percent, limits = 0:1) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  geom_text(position = position_dodge(.9), vjust = -.5,
+            size = 3, na.rm = TRUE)
+
+```
+
+Distintos estudios nacionales han reportado que los hogares chilenos se caracterizan por altos niveles de endeudamiento (Pérez-Roa 2020). Los resultados de la encuesta muestran que las personas que se sienten “bastante” o “muy sobrecargados” por deudas presentan consistentemente mayores niveles de síntomas depresivos moderados a severos. [Introducir valores]. Estudios previos han encontrado un efecto negativo del endeudamiento en la salud de las personas asociado a mayores niveles de ansiedad, estrés y estigmatización social (Sweet et al, 2013). Un estudio nacional mostró una mayor presencia de síntomas depresivos en personas con estados de deuda persistentes (Hojman et al, 2016).
+
+
+```{r deudas, fig.cap = 'Porcentaje que posee deudas con..., según ola'}
+
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & ola %in% c(1, 3, 5),
+         !is_nsnr(m42_01, m42_02, m42_03, m42_04)) %>% 
+  pivot_longer(cols = c(m42_01, m42_02, m42_03, m42_04)) %>% 
+  prop(value == 1, by = c(ola, name), na.rm = TRUE) %>% 
+  as_label(ola) %>% 
+  mutate(name = factor(name, 
+                       levels = c('m42_01', 'm42_02', 'm42_03', 'm42_04'),
+                       labels = c('Casa\ncomercial', 'Banco', 
+                                  'Parientes', 'Otros'))) %>% 
+  ggplot(aes(y = prop, x = name, fill = ola, 
+             label = scales::percent(prop, accuracy = .1))) +
+  theme_bw() + 
+  geom_col(position = "dodge2") +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(end = .85, direction = -1, option = 'viridis') + 
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75)  +
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+```
+
+Las medidas de protección financiera, el acceso a beneficios económicos y los programas de transferencia monetaria reducen la inseguridad económica y de este modo pueden contribuir a mitigar los impactos de la crisis económicas en el bienestar psicológico de la población (Stuckler & Basu, 2013; Donnelly & Farina, 2021; Wahlbeck & McDaid, 2012). En efecto, los datos ELSOC nos muestran que que la prevalencia de síntomas depresivos moderados a severos se redujo en mayor medida entre quienes hicieron uso de ambos retiros (al momento del levantamiento se habían realizado solo 2 retiros), seguido por quienes hicieron sólo un retiro y, finalmente, de quienes no hicieron uso de ninguno de estos beneficios.
+
+
+```{r sobrecarga-depr, fig.cap = 'Porcentaje que presenta síntomas moderados a severos de depresión, según sobrecarga de deudas'}
+
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & ola %in% c(1, 3, 5),
+         !is_nsnr(m43)) %>% 
+    purrr::map_at(.at = vars(starts_with('s11_0')), 
+                .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
+  as.data.frame() %>% 
+  mutate(phq9 = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09),
+         m43 = factor(m43, levels = 1:5,
+                      labels = c('Nada\nsobrecargado',
+                                 'No muy\nsobrecargado',
+                                 'Algo sobrecargado',
+                                 'Bastante\nsobrecargado',
+                                 'Muy sobrecargado'))) %>% 
+  prop(phq9 >= 10 , by = c(m43, ola), na.rm = TRUE, vartype = 'cv') %>% 
+  filter(!is.na(m43)) %>% 
+  as_label(ola, m43) %>% 
+  ggplot(aes(y = prop, x = ola, fill = m43,
+             label = scales::percent(prop, accuracy = .1))) +
+  theme_bw() + 
+  geom_col(position = 'dodge2') +
+    geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75)  +
+  scale_y_continuous(labels = scales::percent, limits = 0:1) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(end = .85, direction = -1, option = 'viridis') + 
+  theme(legend.position = 'top',
+        legend.title = element_blank())
+
+```
+
+```{r depr-retiros, fig.cap = 'Porcentaje que presenta síntomas moderados a severos de depresión, según retiro de fondos de AFP en 2021'}
+
+elsoc_long_2016_2021 %>% 
+  left_join(elsoc_wide_2016_2021 %>% 
+              select(idencuesta, m63_02_w05, m63_03_w05), by = 'idencuesta') %>% 
+    purrr::map_at(.at = vars(starts_with('s11_0')), 
+                .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
+  as.data.frame() %>% 
+  mutate(phq9 = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09)) %>% 
+  filter(tipo_atricion == 1, ola %in% 4:5,!is_nsnr(phq9, m63_02_w05, m63_03_w05)) %>% 
+  mutate(retiros = factor(case_when(m63_02_w05 == 2 ~ 1,
+                                    m63_02_w05 == 1 & m63_03_w05 == 2 ~ 2,
+                                    m63_02_w05 == 1 & m63_03_w05 == 1 ~ 3),
+                          levels = 1:3, labels = c('No realizó ningún\nretiro',
+                                                   'Realizó el primer\n retiro',
+                                                   'Realizó el primer\ny segundo retiro')
+                                    )) %>% 
+  prop(phq9 > 10, by = c(ola, retiros), na.rm = TRUE) %>% 
+  as_label(ola, retiros) %>%
+  ggplot(aes(y = prop, x = retiros,
+             label = scales::percent(prop, .1))) +
+  geom_line(size = .7) +
+  geom_point(aes(color = ola), size = 4) + 
+  geom_point(color = 'black', size = 4, shape = 1) + 
+  geom_text_repel(size = 3, nudge_x = .02) +
+  theme_bw() +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, .33)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) + 
+  scale_color_viridis_d(begin = .33, end = .66, direction = -1) +
+  theme(legend.position = 'top',
+        axis.text.x = element_text(size = 10),
+        legend.title = element_blank()) + 
+  ggtitle(label = NULL)
+
+```
+
+## COVID - 19
+
+De acuerdo al estudio, 10,7% de la población ha sido diagnosticado con COVID-19, porcentaje superior al porcentaje oficial reportado por el Ministerio de Salud (5,1% en marzo de 2021). 
+
+Por otra parte, 69,2% reporta tener al menos un conocido o conocida que ha sido diagnosticado con COVID-19.
+
+```{r covid-diagnostico, fig.cap = 'Porcentaje que ha sido diagnosticado y que conoce a alguien diagnosticado con COVID-19 (2021)'}
+
+elsoc_long_2016_2021 %>% 
+  dplyr::filter(ola == 5, tipo_atricion == 1 & !is_nsnr(s31) & !is_nsnr(r03_09)) %>%
+  prop_list(s31 == 1, r03_09 > 1, na.rm = TRUE) %>% 
+  mutate(name = factor(name, levels = c('s31 == 1', 'r03_09 > 1'),
+                       labels = c('Fue diagnosticado con COVID-19',
+                                  'Tiene al menos un conocido/a que\nfue diagnosticado con COVID-19'))) %>% 
+  ggplot(aes(y = prop, x = name, fill = name,
+             label = scales::percent(prop, accuracy = .1))) +
+  theme_bw() + 
+  geom_col(position = 'dodge2') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
+  geom_text(vjust = -0.5,
+            position = position_dodge(width = .9),
+            size = 3)  + 
+  theme(legend.position = 'none') + 
+  ggtitle(NULL, 'Porcentaje que...')
+
+```
+Mayor porcentaje de diagnóstico en Q5 puede estar dando cuenta de mayor acceso a exámenes, no necesariamente mayor prevalencia de COVID en ese grupo (comunas de estrato socioeconómico bajo han tenido mayor incidencia del virus y mayor tasa de mortalidad). 
+
+
+```{r covid-diagnostico-educ, fig.cap = 'Porcentaje que ha sido diagnosticado y que conoce a alguien diagnosticado con COVID-19, según nivel educacional (2021)'}
+
+elsoc_long_2016_2021 %>% 
+  dplyr::filter(ola == 5, tipo_atricion == 1 & !is_nsnr(s31, r03_09, m02)) %>%
+  mutate(educ = factor(car::recode(m01, recodes = "1:3 = 1; 4:5 = 2; 6:7 = 3; 8:10 = 4"),
+                       levels = 1:4,
+                       labels = c("Basica", "Media", "Tecnica", "Universitaria"))) %>% 
+  prop_list(s31 == 1, r03_09 > 1, by = educ, na.rm = TRUE) %>% 
+  mutate(name = factor(name, levels = c('s31 == 1', 'r03_09 > 1'),
+                       labels = c('Fue diagnosticado con COVID-19',
+                                  'Tiene al menos un conocido/a que\nfue diagnosticado con COVID-19'))) %>% 
+  ggplot(aes(y = prop, x = name, fill = educ,
+             label = scales::percent(prop, accuracy = .1))) +
+  theme_bw() + 
+  geom_col(position = 'dodge2') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(end = .85, direction = -1, option = 'viridis') +
+  geom_text(vjust = -0.5,
+            position = position_dodge(width = .9),
+            size = 3)  + 
+  theme(legend.position = 'top', legend.title = element_blank()) + 
+  ggtitle(NULL, 'Porcentaje que...')
+
+```
+
+Los resultados muestran que 79,2% indica estar De acuerdo o Muy de acuerdo con la frase “las cuarentenas estrictas son muy necesarias para resguardar la salud de la población”, y solo un 13,8% con “es más importante darle prioridad a la actividad económica que a la salud de la población”. Revelando que, a pesar de la larga duración de las cuarentenas implementadas en el país, y de las dificultades económicas que estas pueden haber generado, las personas señalan un alto grado de acuerdo con tomar medidas sanitarias estrictas, y de priorizarlas por sobre potenciales efectos económicos negativo.
+
+```{r temas-covid, fig.cap = 'Porcentaje De acuerdo o Muy de acuerdo con medidas sanitarias (2021)'}
+
+elsoc_long_2016_2021 %>% 
+  filter(ola == 5, tipo_atricion == 1, !is_nsnr(c37_09, c37_10)) %>% 
+  prop_list(c37_09 %in% 4:5, c37_10 %in% 4:5, na.rm = TRUE) %>% 
+  mutate(name = factor(name, 
+                       levels = c('c37_09 %in% 4:5', 'c37_10 %in% 4:5'),
+                       labels = c('Es más importante darle prioridad a la actividad\neconómica que a la salud de la población', 
+                                  'Las cuarentenas estrictas son muy necesarias\npara resguardar la salud de la poblacion'))) %>% 
+  ggplot(aes(y = prop, x = name, fill = name,
+             label = scales::percent(prop, accuracy = .1))) +
+  theme_bw() + 
+  geom_col(position = 'dodge2') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
+  geom_text(vjust = -0.5,
+            position = position_dodge(width = .9),
+            size = 3)  + 
+  theme(legend.position = 'none') + 
+  ggtitle(NULL, 'En el contexto actual de la pandemia del coronavirus...')
+
+```
+
+Las personas de menor nivel educacional tienden a estar más de acuerdo con dar prioridad a la actividad económica por sobre la salud de la población (21,1% entre quienes tienen educación básica versus 8,3% entre quienes tienen educación universitaria), lo cual podría reflejar una mayor preocupación por las consecuencias de la pandemia sobre la economía personal o del hogar. Sin embargo, las personas con menor nivel educacional tienden también a estar más de acuerdo con las cuarentenas estrictas (83,3% de aquellas con educación básica) que las personas con educación superior (75,2% de aquellas con educación universitaria), lo cual podría reflejar que las personas con mayor nivel educacional valoran más sus libertades personales.     
+
+
+```{r temas-covid-educ, fig.cap = 'Porcentaje De acuerdo o Muy de acuerdo con medidas sanitarias, según nivel educacional (2021)'}
+
+elsoc_long_2016_2021 %>% 
+  filter(ola == 5, tipo_atricion == 1, !is_nsnr(m01, c37_09, c37_10)) %>% 
+  mutate(educ = factor(car::recode(m01, recodes = "1:3 = 1; 4:5 = 2; 6:7 = 3; 8:10 = 4"),
+                       levels = 1:4,
+                       labels = c("Basica", "Media", "Tecnica", "Universitaria"))) %>% 
+  prop_list(c37_09 %in% 4:5, c37_10 %in% 4:5, by = educ, na.rm = TRUE) %>% 
+  mutate(name = factor(name, 
+                       levels = c('c37_09 %in% 4:5', 'c37_10 %in% 4:5'),
+                       labels = c('Es más importante darle prioridad a\nla actividad económica que a la\nsalud de la población', 
+                                  'Las cuarentenas estrictas son\nmuy necesarias para resguardar la\nsalud de la poblacion'))) %>% 
+  ggplot(aes(y = prop, x = name, fill = educ,
+             label = scales::percent(prop, accuracy = .1))) +
+  theme_bw() + 
+  geom_col(position = 'dodge2') +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) + 
+  scale_fill_viridis_d(end = .85, direction = -1, option = 'viridis') +
+  geom_text(vjust = -0.5,
+            position = position_dodge(width = .9),
+            size = 3)  + 
+  theme(legend.position = 'top', legend.title = element_blank()) + 
+  ggtitle(NULL, 'En el contexto actual de la pandemia del coronavirus...')
+
+
+```
+
+Las personas reportan en general un alto apego a las medidas sanitarias: 78,7% indica seguir Frecuente o Muy Frecuentemente la recomendación de quedarse en su hogar, manteniendo el aislamiento social. Se trata de resultados similares a lo encontrado en otras encuestas nacionales durante la pandemia (Termómetro social, MOVID-19). 
+
+A pesar de que el grado de cumplimiento de las medidas sanitarias es alto para todos los niveles educacionales, las medidas de aislamiento social son seguidas en mayor medida por las personas con mayor nivel educacional. Entre quienes han alcanzado un nivel de educación universitaria, 91% declara haber respetado las medidas de aislamiento versus 76,7% entre quienes sólo han cursado educación básica
+
+
+```{r dist-total, fig.cap='¿En qué medida usted ha seguido la recomendación de quedarse en su hogar, manteniendo el aislamiento social? (2021).'}
+
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & ola == 5,
+         !is_nsnr(c48)) %>% 
+  mutate(c48 = factor(car::recode(c48, "1:2 = 1; 3 = 2; 4:5 = 3"),
+                               levels = 1:3,
+                               labels= c("Nunca o casi nunca", "A veces",
+                                         "Frecuentemente o\nmuy frecuentemente"))) %>%
+  prop(c48, na.rm = TRUE) %>% 
+  ggplot(aes(y = prop, x = c48, 
+             label = scales::percent(prop, accuracy = .1))) +
+  theme_bw() + 
+  geom_col(position = 'dodge2', fill = viridis(1, begin = .5)) +
+  scale_y_continuous(labels = scales::percent,
+                      limits = 0:1) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75)
+
+```
+
+
+```{r dist-educ, fig.cap = 'Porcentaje que sigue aislamiento social Frecuente o Muy frecuentemente, según nivel educacional (2021)'}
+
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & ola == 5,
+         !is_nsnr(c48, m01)) %>% 
+  mutate(educ = factor(car::recode(m01, recodes = "1:3 = 1; 4:5 = 2; 6:7 = 3; 8:10 = 4"),
+                       levels = 1:4,
+                       labels = c("Basica", "Media", "Tecnica", "Universitaria"))) %>% 
+  prop(c48 %in% 4:5, educ, na.rm = TRUE) %>% 
+  ggplot(aes(y = prop, x = educ, 
+             label = scales::percent(prop, accuracy = .1))) +
+  theme_bw() + 
+  geom_col(position = 'dodge2', fill = viridis(1, begin = .5)) +
+  scale_y_continuous(labels = scales::percent,
+                      limits = 0:1) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  geom_text(vjust = -0.8,
+            position = position_dodge(width = .9),
+            size= 2.75)
+
+```
+
+Las personas que reportan un mayor cumplimiento de las medidas de aislamiento social son quienes presentan menores niveles de diagnóstico de COVID-19. [Descripción cifras]
+
+
+```{r covid-dist, fig.cap = 'Porcentaje que ha sido diagnosticado con COVID, según cumplimiento de aislamiento social (2021)'}
+
+elsoc_long_2016_2021 %>% 
+  left_join(elsoc_clase) %>% 
+  dplyr::filter(ola == 5, tipo_atricion == 1, !is_nsnr(c48),
+                !is_nsnr(s31, r03_09, d01_01) & !is.na(quintil)) %>%
+  mutate(c48 = factor(car::recode(c48, "1:2 = 1; 3 = 2; 4:5 = 3"),
+                               levels = 1:3,
+                               labels= c("Nunca o casi nunca", "A veces",
+                                         "Frecuentemente o\nmuy frecuentemente"))) %>%
+  prop(s31 == 1, by = c48, na.rm = TRUE) %>% 
+  ggplot(aes(y = prop, x = c48, label = scales::percent(prop, accuracy = .1))) +
+  theme_bw() + 
+  geom_col(position = 'dodge2', fill = viridis(1, begin = .5)) +
+  scale_y_continuous(labels = scales::percent,
+                     limits = c(0, 1)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  geom_text(vjust = -0.5,
+            position = position_dodge(width = .9),
+            size = 3) 
+
+```
