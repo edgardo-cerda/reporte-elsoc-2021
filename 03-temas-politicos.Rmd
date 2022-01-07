@@ -337,106 +337,98 @@ Un 24,34% son los llamados Institucionales, que participan reiteradamente de pro
 Finalmente, un 16,16% son los Reactivos, sujetos con bajos niveles de participación electoral y en protestas, aunque fueron altamente reclutados en las movilizaciones de 2019. Si bien estos individuos tienen niveles bajos de participación electoral, su inactividad se acentuó para el plebiscito.
 
 
-```{r tip-participacion, fig.cap = 'Perfiles de participación política: 4 clases'}
+```{r tip-participacion5, fig.cap = 'Perfiles de participación política: 5 clases'}
 
-tip_par <- read.csv(file.path('inputs', 'participacion_tipos3.csv'), sep=",", encoding="UTF-8")
-
-tip_par <- tip_par[c("idencuesta", "class_part_4", "par_mov_w01", "par_mov_w02", "par_mov_w03", "par_mov_w04", "par_mov_w05", 'c11_w01', 'c11_w03', 'c43_w05')]
+load(file.path('inputs', 'participacion_tipos5.RData'))
 
 tip_par <- tip_par %>% 
+  select(idencuesta, class_part_5, par_mov_w01, par_mov_w02, par_mov_w03, par_mov_w04, par_mov_w05, c11_w01, c11_w03, c43_w05) %>% 
   left_join(elsoc_wide_2016_2021 %>% 
               select(-starts_with(c('c11_', 'c43_'))), 
-            by = 'idencuesta') %>%
-  survey_design_elsoc(weights = 'ponderador02_w05')
+            by = 'idencuesta')
 
 tab1 <- tip_par %>% 
-  group_by(class_part_4, c11_w01) %>%
+  group_by(class_part_5, c11_w01) %>%
   summarise(n = n()) %>% 
   mutate(freq = n / sum(n)) %>% 
   mutate(var = 1) %>% 
-  rename(Clase = class_part_4, 
+  rename(Clase = class_part_5, 
          Participa = c11_w01)
 
 tab2 <- tip_par %>% 
-  group_by(class_part_4, c11_w03) %>%
+  group_by(class_part_5, c11_w03) %>%
   summarise(n = n()) %>% 
   mutate(freq = n / sum(n)) %>% 
   mutate(var = 2) %>% 
-  rename(Clase = class_part_4, 
+  rename(Clase = class_part_5, 
          Participa = c11_w03)
 
 tab3 <- tip_par %>% 
-  group_by(class_part_4, c43_w05) %>%
+  group_by(class_part_5, c43_w05) %>%
   summarise(n = n()) %>% 
   mutate(freq = n / sum(n)) %>% 
   mutate(var = 3) %>% 
-  rename(Clase = class_part_4, 
+  rename(Clase = class_part_5, 
          Participa = c43_w05)
 
 tab4 <- tip_par %>% 
-  group_by(class_part_4, par_mov_w01) %>%
+  group_by(class_part_5, par_mov_w01) %>%
   summarise(n = n()) %>% 
   mutate(freq = n / sum(n)) %>% 
   mutate(var = 4) %>% 
-  rename(Clase = class_part_4, 
+  rename(Clase = class_part_5, 
          Participa = par_mov_w01)
 
 tab5 <- tip_par %>% 
-  group_by(class_part_4, par_mov_w02) %>%
+  group_by(class_part_5, par_mov_w02) %>%
   summarise(n = n()) %>% 
   mutate(freq = n / sum(n)) %>% 
   mutate(var = 5) %>% 
-  rename(Clase = class_part_4, 
+  rename(Clase = class_part_5, 
          Participa = par_mov_w02)
 
 tab6 <- tip_par %>% 
-  group_by(class_part_4, par_mov_w03) %>%
+  group_by(class_part_5, par_mov_w03) %>%
   summarise(n = n()) %>% 
   mutate(freq = n / sum(n)) %>% 
   mutate(var = 6) %>% 
-  rename(Clase = class_part_4, 
+  rename(Clase = class_part_5, 
          Participa = par_mov_w03)
 
 tab7 <- tip_par %>% 
-  group_by(class_part_4, par_mov_w04) %>%
+  group_by(class_part_5, par_mov_w04) %>%
   summarise(n = n()) %>% 
   mutate(freq = n / sum(n)) %>% 
   mutate(var = 7) %>% 
-  rename(Clase = class_part_4, 
+  rename(Clase = class_part_5, 
          Participa = par_mov_w04)
 
 tab8 <- tip_par %>% 
-  group_by(class_part_4, par_mov_w05) %>%
+  group_by(class_part_5, par_mov_w05) %>%
   summarise(n = n()) %>% 
   mutate(freq = n / sum(n)) %>% 
   mutate(var = 8) %>% 
-  rename(Clase = class_part_4, 
+  rename(Clase = class_part_5, 
          Participa = par_mov_w05)
 
-tab_4 <- rbind(tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8)
+tab_5 <- rbind(tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8)
 
 rm(tab1, tab2, tab3, tab4, tab5, tab6, tab7, tab8)
 
-tab_4$Clase  <- factor(tab_4$Clase, 
-                       levels = 1:4,
-                       labels = c("Desafectados\n(56.51%)", "Manifestantes puros\n(3%)", 
-                                  "Institucionales\n(24.34%)", "Reactivos\n(16.16%)"))
-
-tab_4$Participa  <- factor(tab_4$Participa, levels = 1:2, 
+tab_5$Participa  <- factor(tab_5$Participa, levels = 1:2, 
                            labels = c("No participa", "Participa"))
 
-tab_4$var  <- factor(tab_4$var, levels = 1:8, 
+tab_5$var  <- factor(tab_5$var, levels = 1:8, 
                      labels = c("Elección 2013", "Elección 2017", "Plebiscito 2020", 
                                 "Marcha 2016", "Marcha 2017", "Marcha 2018", "Marcha 2019", "Marcha 2021"))
 
-tab_4 %>% 
+tab_5 %>% 
   ggplot(aes(x = freq, y = var, fill = Participa)) + 
   geom_bar(stat = 'identity', position = 'stack') + 
   facet_grid(~ Clase) +
   labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
   scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
   theme_bw() + 
-  scale_fill_viridis_d(end = .5) +
   theme(axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
         legend.title = element_blank()) + 
@@ -450,119 +442,65 @@ La Figura \@ref(fig:tipos-posicion-politica2) muestra cómo se distribuyen estos
 
 
 ```{r tipos-posicion-politica2, fig.cap = 'Posición política según perfil de participación'}
-tip_par <- read.csv(file.path('inputs', 'participacion_tipos3.csv'), sep=",", encoding="UTF-8")
-tip_par <- tip_par[c("idencuesta", "class_part_4")]
-tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
-tip_par$class_part_4  <- factor(tip_par$class_part_4, 
-                                levels = 1:4, 
-                                labels = c("Desafectados", "Manifestantes puros", "Institucionales", "Reactivos"))
 
-tip_par %>%   
-  filter(!is_nsnr(class_part_4, c15_w05))  %>%
-  drop_na(c("class_part_4", "c15_w05")) %>%
-  filter(tipo_atricion == 1) %>%
-  mutate(pos_id = factor(car::recode(c15_w05, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
-                         levels = 1:4,
-                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
-  group_by(class_part_4, pos_id) %>% 
-  summarise (n = n()) %>% 
-  mutate(freq = n / sum(n)) %>%
-  filter(!is.na(pos_id)) %>% 
-  ggplot(aes(x = freq, y = class_part_4, fill = pos_id, label = scales::percent(freq, .1))) + 
-  geom_bar(stat = 'identity', position = 'stack') +
-  labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
-  scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
-  guides(fill = guide_legend(reverse = TRUE)) +
-  geom_text(position = position_stack(vjust = .5), size = 3,
-            color = rep(c('white', 'white', 'black', 'black'), 4)) +
-  theme_bw() + scale_fill_viridis_d(end = .85, option = 'viridis') +
-  theme(axis.text.x = element_text(size = rel(.9)),
-        legend.position = 'top',
-        legend.title = element_blank())
-```
+# load(file.path('inputs', 'participacion_tipos5.RData'))
 
-
-```{r}
-
-tip_par %>%   
-  filter(!is_nsnr(class_part_4, c15_w05))  %>%
-  drop_na(c("class_part_4", "c15_w05")) %>%
+tip_par %>% 
+  select(idencuesta, class_part_5, par_mov_w01, par_mov_w02, par_mov_w03, par_mov_w04, par_mov_w05, c11_w01, c11_w03, c43_w05) %>% 
+  left_join(elsoc_wide_2016_2021 %>% 
+              select(-starts_with(c('c11_', 'c43_'))), 
+            by = 'idencuesta') %>% 
+  filter(!is_nsnr(class_part_5, c15_w05))  %>%
+  drop_na(c("class_part_5", "c15_w05")) %>%
   filter(tipo_atricion == 1) %>%
   mutate(pos_id = factor(car::recode(c15_w05, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
                          levels = 1:4,
                          labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
   survey_design_elsoc(weights = 'ponderador02_w05') %>% 
-  prop(pos_id, by = class_part_4, na.rm = TRUE) %>% 
-  ggplot(aes(x = prop, y = class_part_4, 
-             fill = pos_id, label = scales::percent(prop, .1))) + 
+  prop(pos_id, by = class_part_5, na.rm = TRUE) %>% 
+  ggplot(aes(x = prop, y = class_part_5, fill = fct_rev(pos_id), 
+             label = scales::percent(ifelse(prop < .01, NA, prop), .1))) + 
   geom_bar(stat = 'identity', position = 'stack') +
   labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
   scale_x_continuous(labels = scales::percent) +
   guides(fill = guide_legend(reverse = TRUE)) +
-  geom_text(position = position_stack(vjust = .5), size = 3,
-            color = rep(c('white', 'white', 'black', 'black'), 4)) +
-  theme_bw() + scale_fill_viridis_d(end = .85, option = 'viridis') +
+  geom_text(position = position_stack(vjust = .5), 
+            size = 3, na.rm = TRUE,
+            color = rep(c('white', 'white', 'black', 'black'), 5)) +
+  theme_bw() + 
+  scale_fill_viridis_d(end = .85, direction = -1) +
   theme(axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
         legend.title = element_blank())
 
 ```
+
 
 La Figura \@ref(fig:tipos-sexo2) muestra que los grupos de participación tienen similar composición por sexo, aunque los Reactivos tienen una leve mayor concentración de hombres. En contraste, en la Figura \@ref(fig:tipos-edad2) se observan marcadas variaciones en términos de edad. Los Reactivos y manifestantes puros son los grupos con mayor concentración juvenil, con un 19,4% y 15,9% respectivamente. Los desafectados, en cambio, obtienen la más alta proporción de adultos mayores con un 29,2%.
 
 
 ```{r tipos-sexo2, fig.cap = 'Sexo según perfil de participación'}
-tip_par <- read.csv(file.path('inputs', 'participacion_tipos3.csv'), sep=",", encoding="UTF-8")
-tip_par <- tip_par[c("idencuesta", "class_part_4")]
-tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
-tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Desafectados", "Manifestantes puros", "Institucionales", "Reactivos"))
 
-tip_par %>%   
-  filter(!is_nsnr(class_part_4, m0_sexo_w01))  %>%
-  drop_na(c("class_part_4", "m0_sexo_w01")) %>%
-  filter(tipo_atricion==1) %>%
-  mutate(m0_sexo_w01 = factor(car::recode(m0_sexo_w01, recodes = "1 = 1; 2 = 2"),
-                         levels = 1:2,
-                         labels = c("Hombre", "Mujer"))) %>%
-  group_by(class_part_4, m0_sexo_w01) %>% 
-  summarise(n = n()) %>% 
-  mutate(freq = n / sum(n)) %>%
-  ggplot(aes(x = freq, y = class_part_4, fill = m0_sexo_w01, 
-             label = scales::percent(freq, .1))) + 
-  geom_bar(stat = 'identity', position = 'stack') +
-  labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
-  scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
-  guides(fill = guide_legend(reverse = TRUE)) +
-  geom_text(position = position_stack(vjust = .5), 
-            size = 3,
-            color = rep(c('white', 'black'), 4)) +
-  theme_bw() + 
-  scale_fill_viridis_d(begin = .33, end = .66) +
-  theme(axis.text.x = element_text(size = rel(.9)),
-        legend.position = 'top',
-        legend.title = element_blank())
-```
+# load(file.path('inputs', 'participacion_tipos5.RData'))
 
-
-```{r}
-tip_par %>%   
-  filter(!is_nsnr(class_part_4, m0_sexo_w01))  %>%
-  drop_na(c("class_part_4", "m0_sexo_w01")) %>%
-  filter(tipo_atricion==1) %>%
-  mutate(m0_sexo_w01 = factor(car::recode(m0_sexo_w01, recodes = "1 = 1; 2 = 2"),
-                         levels = 1:2,
-                         labels = c("Hombre", "Mujer"))) %>%
+tip_par %>% 
+  select(idencuesta, class_part_5, par_mov_w01, par_mov_w02, par_mov_w03, par_mov_w04, par_mov_w05, c11_w01, c11_w03, c43_w05) %>% 
+  left_join(elsoc_wide_2016_2021 %>% 
+              select(-starts_with(c('c11_', 'c43_'))), 
+            by = 'idencuesta') %>% 
+  filter(!is_nsnr(class_part_5, m0_sexo_w01))  %>%
   survey_design_elsoc(weights = 'ponderador02_w05') %>% 
-  prop(m0_sexo_w01, by = class_part_4, na.rm = TRUE) %>% 
-  ggplot(aes(x = prop, y = class_part_4, fill = m0_sexo_w01, 
+  prop(m0_sexo_w01, by = class_part_5, na.rm = TRUE) %>% 
+  as_label(m0_sexo_w01) %>% 
+  ggplot(aes(x = prop, y = fct_rev(class_part_5), fill = fct_rev(m0_sexo_w01), 
              label = scales::percent(prop, .1))) + 
   geom_bar(stat = 'identity', position = 'stack') +
   labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
-  scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
+  scale_x_continuous(labels = scales::percent) +
   guides(fill = guide_legend(reverse = TRUE)) +
   geom_text(position = position_stack(vjust = .5), 
             size = 3,
-            color = rep(c('white', 'black'), 4)) +
+            color = rep(c('black', 'white'), 5)) +
   theme_bw() + 
   scale_fill_viridis_d(begin = .33, end = .66) +
   theme(axis.text.x = element_text(size = rel(.9)),
@@ -573,58 +511,27 @@ tip_par %>%
 
 ```{r tipos-edad2, fig.cap = 'Edad según perfil de participación'}
 
-tip_par <- read.csv(file.path('inputs', 'participacion_tipos3.csv'), sep=",", encoding="UTF-8")
-tip_par <- tip_par[c("idencuesta", "class_part_4")]
-tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
-tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Desafectados", "Manifestantes\npuros", "Institucionales", "Reactivos"))
+# load(file.path('inputs', 'participacion_tipos5.RData'))
 
-tip_par %>%   
-  filter(!is_nsnr(class_part_4, m0_edad_w05))  %>%
-  drop_na(c("class_part_4", "m0_edad_w05")) %>%
-  filter(tipo_atricion==1) %>%
-  mutate(pos_id = factor(car::recode(m0_edad_w05, "18:29 = 1; 30:49 = 2; 50:64 = 3; 65:150 = 4"),
-                        levels = 1:4,
-                        labels = c('18-29', '30-49', '50-64', '65 o más'))) %>%
-  group_by(class_part_4, pos_id) %>% 
-  summarise(n = n()) %>% 
-  mutate(freq = n / sum(n)) %>%
-  ggplot(aes(x = freq, y = class_part_4, fill = pos_id, label = scales::percent(freq, .1))) + 
-  geom_bar(stat = 'identity', position = 'stack') +
-  labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
-  scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
-  guides(fill = guide_legend(reverse = TRUE)) +
-  geom_text(position = position_stack(vjust = .5), 
-            size = 3,
-            color = rep(c('white', 'white', 'black', 'black'), 4)) +
-  theme_bw() + 
-  scale_fill_viridis_d(end = .85) +
-  theme(axis.text.x = element_text(size = rel(.9)),
-        legend.position = 'top',
-        legend.title = element_blank())
-
-```
-
-
-```{r}
-
-tip_par %>%   
-  filter(!is_nsnr(class_part_4, m0_edad_w05))  %>%
-  drop_na(c("class_part_4", "m0_edad_w05")) %>%
-  filter(tipo_atricion==1) %>%
-  mutate(pos_id = factor(car::recode(m0_edad_w05, "18:29 = 1; 30:49 = 2; 50:64 = 3; 65:150 = 4"),
+tip_par %>% 
+  select(idencuesta, class_part_5, par_mov_w01, par_mov_w02, par_mov_w03, par_mov_w04, par_mov_w05, c11_w01, c11_w03, c43_w05) %>% 
+  left_join(elsoc_wide_2016_2021 %>% 
+              select(-starts_with(c('c11_', 'c43_'))), 
+            by = 'idencuesta') %>% 
+  filter(!is_nsnr(class_part_5, m0_edad_w05))  %>%
+  mutate(edadt = factor(car::recode(m0_edad_w05, "18:29 = 1; 30:49 = 2; 50:64 = 3; 65:150 = 4"),
                         levels = 1:4,
                         labels = c('18-29', '30-49', '50-64', '65 o más'))) %>%
   survey_design_elsoc(weights = 'ponderador02_w05') %>% 
-  prop(pos_id, by = class_part_4, na.rm = TRUE) %>% 
-  ggplot(aes(x = prop, y = class_part_4, fill = pos_id, 
+  prop(edadt, by = class_part_5, na.rm = TRUE) %>% 
+  ggplot(aes(x = prop, y = fct_rev(class_part_5), fill = fct_rev(edadt), 
              label = scales::percent(prop, .1))) + 
   geom_bar(stat = 'identity', position = 'stack') +
   labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
   scale_x_continuous(labels = scales::percent) +
   guides(fill = guide_legend(reverse = TRUE)) +
   geom_text(position = position_stack(vjust = .5), 
-            size = 3,
-            color = rep(c('white', 'white', 'black', 'black'), 4)) +
+            size = 3) +
   theme_bw() + 
   scale_fill_viridis_d(end = .85) +
   theme(axis.text.x = element_text(size = rel(.9)),
@@ -637,53 +544,22 @@ tip_par %>%
 La Figura \@ref(fig:tipos-interes2) indica que los grupos con menor interés en la política son los institucionales y desafectados, con un 80,3% y 72,1% de personas con nada o poco interés. A ello le siguen los reactivos, con un 44,3%. El grupo de manifestantes puros es el que alcanza mayores niveles de interés, con un 63,6% de individuos muy o bastante interesados, seguido de los reactivos con un 27,4%. Este patrón resulta del todo relevante ya que confirma que en Chile las personas más politizadas expresan sus demandas y preocupaciones por los canales no institucionales, al tiempo que los menos politizados abiertamente no participan de ninguna instancia o si lo hacen emplean los canales formales.
 
 
-
 ```{r tipos-interes2, fig.cap = 'Interés en la política según perfil de participación'}
 
-tip_par <- read.csv(file.path('inputs', 'participacion_tipos3.csv'), sep=",", encoding="UTF-8")
-tip_par <- tip_par[c("idencuesta", "class_part_4")]
-tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
-tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Desafectados", "Manifestantes\npuros", "Institucionales", "Reactivos"))
+# load(file.path('inputs', 'participacion_tipos5.RData'))
 
-tip_par %>%   
-  filter(!is_nsnr(class_part_4, c13_w05))  %>%
-  drop_na(c("class_part_4", "c13_w05")) %>%
-  filter(tipo_atricion == 1) %>%
-  mutate(pos_id = factor(car::recode(c13_w05, "1:2 = 1; 3 = 2; 4:5 = 3"),
-                        levels = 1:3,
-                        labels = c('Nada o poco interesado', 'Algo interesado', 'Bastante o muy interesado'))) %>%
-  group_by(class_part_4, pos_id) %>% 
-  summarise(n = n()) %>% 
-  mutate(freq = n / sum(n)) %>%
-  ggplot(aes(x = freq, y = class_part_4, fill = pos_id, label = scales::percent(freq, .1))) + 
-  geom_bar(stat = 'identity', position = 'stack') +
-  labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
-  scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
-  guides(fill = guide_legend(reverse = TRUE)) +
-  geom_text(position = position_stack(vjust = .5), 
-            size = 3,
-            color = rep(c('white', 'white', 'black'), 4)) +
-  theme_bw() + 
-  scale_fill_viridis_d(end = .85, option = 'viridis') +
-  theme(axis.text.x = element_text(size = rel(.9)),
-        legend.position = 'top',
-        legend.title = element_blank())
-
-```
-
-
-```{r}
-
-tip_par %>%   
-  filter(!is_nsnr(class_part_4, c13_w05))  %>%
-  drop_na(c("class_part_4", "c13_w05")) %>%
-  filter(tipo_atricion == 1) %>%
-  mutate(pos_id = factor(car::recode(c13_w05, "1:2 = 1; 3 = 2; 4:5 = 3"),
+tip_par %>% 
+  select(idencuesta, class_part_5, par_mov_w01, par_mov_w02, par_mov_w03, par_mov_w04, par_mov_w05, c11_w01, c11_w03, c43_w05) %>% 
+  left_join(elsoc_wide_2016_2021 %>% 
+              select(-starts_with(c('c11_', 'c43_'))), 
+            by = 'idencuesta') %>% 
+  filter(!is_nsnr(class_part_5, m0_edad_w05))  %>%
+  mutate(interes = factor(car::recode(c13_w05, "1:2 = 1; 3 = 2; 4:5 = 3"),
                         levels = 1:3,
                         labels = c('Nada o poco interesado', 'Algo interesado', 'Bastante o muy interesado'))) %>%
   survey_design_elsoc(weights = 'ponderador02_w05') %>% 
-  prop(pos_id, by = class_part_4, na.rm = TRUE) %>% 
-  ggplot(aes(x = prop, y = class_part_4, fill = pos_id, 
+  prop(interes, by = class_part_5, na.rm = TRUE) %>% 
+  ggplot(aes(x = prop, y = fct_rev(class_part_5), fill = fct_rev(interes), 
              label = scales::percent(prop, .1))) + 
   geom_bar(stat = 'identity', position = 'stack') +
   labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
@@ -691,9 +567,9 @@ tip_par %>%
   guides(fill = guide_legend(reverse = TRUE)) +
   geom_text(position = position_stack(vjust = .5), 
             size = 3,
-            color = rep(c('white', 'white', 'black'), 4)) +
+            color = rep(c('black', 'white', 'white'), 5)) +
   theme_bw() + 
-  scale_fill_viridis_d(end = .85, option = 'viridis') +
+  scale_fill_viridis_d(end = .8, option = 'viridis') +
   theme(axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
         legend.title = element_blank())
@@ -705,56 +581,28 @@ La Figura \@ref(fig:tipos-satisfaccion2) muestra una alta insatisfacción con la
 
 ```{r tipos-satisfaccion2, fig.cap = 'Satisfacción con la democracia según perfil de participación'}
 
-tip_par <- read.csv(file.path('inputs', 'participacion_tipos3.csv'), sep=",", encoding="UTF-8")
-tip_par <- tip_par[c("idencuesta", "class_part_4")]
-tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
-tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), labels = c("Desafectados", "Manifestantes puros", "Institucionales", "Reactivos"))
+# load(file.path('inputs', 'participacion_tipos5.RData'))
 
-tip_par %>%   
-  filter(!is_nsnr(class_part_4, c01_w05))  %>%
-  drop_na(c("class_part_4", "c01_w05")) %>%
-  filter(tipo_atricion==1) %>%
-  mutate(pos_id = factor(car::recode(c01_w05, "1:2 = 1; 3 = 2; 4:5 = 3"),
-                        levels = 1:3,
-                        labels = c('Nada o poco satisfecho', 'Algo satisfecho', 'Bastante o muy satisfecho'))) %>%
-  group_by(class_part_4, pos_id) %>% 
-  summarise(n = n()) %>% 
-  mutate(freq = n / sum(n)) %>%
-  filter(!is.na(pos_id)) %>%
-  ggplot(aes(x = freq, y = class_part_4, 
-           fill = pos_id, label = scales::percent(freq, .1))) + 
-  geom_bar(stat = 'identity', position = 'stack') +
-  labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
-  scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
-  guides(fill = guide_legend(reverse = TRUE)) +
-  geom_text(position = position_stack(vjust = .5), size = 3,
-            color = rep(c('white', 'white', 'black'), 4)) +
-  theme_bw() + 
-  scale_fill_viridis_d(end = .85, option = 'viridis') +
-  theme(axis.text.x = element_text(size = rel(.9)),
-        legend.position = 'top',
-        legend.title = element_blank())
-```
-
-
-```{r}
-tip_par %>%   
-  filter(!is_nsnr(class_part_4, c01_w05))  %>%
-  drop_na(c("class_part_4", "c01_w05")) %>%
-  filter(tipo_atricion==1) %>%
-  mutate(pos_id = factor(car::recode(c01_w05, "1:2 = 1; 3 = 2; 4:5 = 3"),
+tip_par %>% 
+  select(idencuesta, class_part_5, par_mov_w01, par_mov_w02, par_mov_w03, par_mov_w04, par_mov_w05, c11_w01, c11_w03, c43_w05) %>% 
+  left_join(elsoc_wide_2016_2021 %>% 
+              select(-starts_with(c('c11_', 'c43_'))), 
+            by = 'idencuesta') %>% 
+  filter(!is_nsnr(class_part_5, c01_w05))  %>%
+  mutate(satisf_dem = factor(car::recode(c01_w05, "1:2 = 1; 3 = 2; 4:5 = 3"),
                         levels = 1:3,
                         labels = c('Nada o poco satisfecho', 'Algo satisfecho', 'Bastante o muy satisfecho'))) %>%
   survey_design_elsoc(weights = 'ponderador02_w05') %>% 
-  prop(pos_id, by = class_part_4, na.rm = TRUE) %>% 
-  ggplot(aes(x = prop, y = class_part_4, 
-           fill = pos_id, label = scales::percent(prop, .1))) + 
+  prop(satisf_dem, by = class_part_5, na.rm = TRUE) %>% 
+  
+  ggplot(aes(x = prop, y = fct_rev(class_part_5), fill = fct_rev(satisf_dem), 
+             label = scales::percent(prop, .1))) + 
   geom_bar(stat = 'identity', position = 'stack') +
   labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
   scale_x_continuous(labels = scales::percent) +
   guides(fill = guide_legend(reverse = TRUE)) +
   geom_text(position = position_stack(vjust = .5), size = 3,
-            color = rep(c('white', 'white', 'black'), 4)) +
+            color = rep(c('black', 'white', 'white'), 5)) +
   theme_bw() + 
   scale_fill_viridis_d(end = .85, option = 'viridis') +
   theme(axis.text.x = element_text(size = rel(.9)),
@@ -765,65 +613,33 @@ tip_par %>%
 
 ```{r tipos-legitimidad2, fig.cap = 'Legitimidad democrática según perfil de participación'}
 
-tip_par <- read.csv(file.path('inputs', 'participacion_tipos3.csv'), sep=",", encoding="UTF-8")
-tip_par <- tip_par[c("idencuesta", "class_part_4")]
-tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
-tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = 1:4,
-                                labels = c("Desafectados", "Manifestantes\npuros", "Institucionales", "Reactivos"))
+# load(file.path('inputs', 'participacion_tipos5.RData'))
 
-tip_par %>%   
-  filter(!is_nsnr(class_part_4, c25_w05))  %>%
-  drop_na(c("class_part_4", "c25_w05")) %>%
-  filter(tipo_atricion==1) %>%
-  mutate(pos_id = factor(car::recode(c25_w05, "1 = 1; 2 = 2; 3 = 3; 4=4"),
-                        levels = 1:4,
-                        labels = c('La democracia\nes preferible', 
-                                   'Un gobierno autoritario\npuede ser preferible',
-                                   'Da lo mismo',
-                                   'Ninguna'))) %>%
-  group_by(class_part_4, pos_id) %>% 
-  summarise(n = n()) %>% 
-  mutate(prop = n / sum(n)) %>%
-  filter(!is.na(pos_id)) %>%
-  ggplot(aes(x = prop, y = class_part_4, 
-             fill = fct_rev(pos_id), label = scales::percent(prop, .1))) + 
-  geom_bar(stat = 'identity', position = 'stack') +
-  labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
-  scale_x_continuous(labels = scales::percent) +
-  guides(fill = guide_legend(reverse = TRUE)) +
-  geom_text(position = position_stack(vjust = .5), size = 3,
-            color = rep(c('white', 'white', 'black', 'black'), 4)) +
-  theme_bw() + 
-  scale_fill_viridis_d(end = .85, direction = -1, option = 'viridis') +
-  theme(axis.text.x = element_text(size = rel(.9)),
-        legend.position = 'top',
-        legend.title = element_blank())
-
-```
-
-
-```{r}
-
-tip_par %>%   
-  filter(!is_nsnr(class_part_4, c25_w05))  %>%
-  drop_na(c("class_part_4", "c25_w05")) %>%
-  filter(tipo_atricion==1) %>%
-  mutate(pos_id = factor(car::recode(c25_w05, "1 = 1; 2 = 2; 3 = 3; 4=4"),
+tip_par %>% 
+  select(idencuesta, class_part_5, par_mov_w01, par_mov_w02, par_mov_w03, par_mov_w04, par_mov_w05, c11_w01, c11_w03, c43_w05) %>% 
+  left_join(elsoc_wide_2016_2021 %>% 
+              select(-starts_with(c('c11_', 'c43_'))), 
+            by = 'idencuesta') %>% 
+  filter(!is_nsnr(class_part_5, c25_w05))  %>%
+  mutate(legit = factor(car::recode(c25_w05, "1 = 1; 2 = 2; 3 = 3; 4=4"),
                         levels = 1:4,
                         labels = c('La democracia\nes preferible', 
                                    'Un gobierno autoritario\npuede ser preferible',
                                    'Da lo mismo',
                                    'Ninguna'))) %>%
   survey_design_elsoc(weights = 'ponderador02_w05') %>% 
-  prop(pos_id, by = class_part_4, na.rm = TRUE) %>% 
-  ggplot(aes(x = prop, y = class_part_4, 
-             fill = fct_rev(pos_id), label = scales::percent(prop, .1))) + 
+  prop(legit, by = class_part_5, na.rm = TRUE) %>% 
+  
+  ggplot(aes(x = prop, y = fct_rev(class_part_5), 
+             fill = fct_rev(legit), 
+             label = scales::percent(ifelse(prop < .015, NA, prop), .1))) + 
   geom_bar(stat = 'identity', position = 'stack') +
   labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
   scale_x_continuous(labels = scales::percent) +
   guides(fill = guide_legend(reverse = TRUE)) +
-  geom_text(position = position_stack(vjust = .5), size = 3,
-            color = rep(c('white', 'white', 'black', 'black'), 4)) +
+  geom_text(position = position_stack(vjust = .5), 
+            size = 3, na.rm = TRUE,
+            color = rep(c('white', 'white', 'black', 'black'), 5)) +
   theme_bw() + 
   scale_fill_viridis_d(end = .85, direction = -1, option = 'viridis') +
   theme(axis.text.x = element_text(size = rel(.9)),
@@ -836,65 +652,32 @@ tip_par %>%
 Respecto al actual proceso constituyente, la Figura \@ref(fig:tipos-optimismo2) muestra los niveles de optimismo constitucional. Se observan los mayores niveles de optimismo entre Manifestantes puros y Reactivos, con alrededor de un 75% de optimismo entre ambos grupos, mientras que los desafectados e institucionales alcanzan un optimismo que bordea el 61%. Esto implica que entre todos los grupos prevalece una sensación positiva acerca del proceso constitucional, sin desmedro de encontrar diferencias inter grupales relevantes. 
 
 
-
 ```{r tipos-optimismo2, fig.cap = 'Optimismo constitucional según perfil de participación'}
 
-tip_par <- read.csv(file.path('inputs', 'participacion_tipos3.csv'), sep=",", encoding="UTF-8")
-tip_par <- tip_par[c("idencuesta", "class_part_4")]
-tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
-tip_par$class_part_4  <- factor(tip_par$class_part_4, levels = c(1,2,3,4), 
-                                labels = c("Desafectados", "Manifestantes\npuros", "Institucionales", "Reactivos"))
+# load(file.path('inputs', 'participacion_tipos5.RData'))
 
-tip_par %>%   
-  filter(!is_nsnr(class_part_4, c46_01_w05, c46_02_w05, c46_03_w05, c46_04_w05))  %>%
-  drop_na(c("class_part_4", "c46_01_w05", "c46_02_w05", "c46_03_w05", "c46_04_w05")) %>%
-  filter(tipo_atricion==1) %>%
+tip_par %>% 
+  select(idencuesta, class_part_5, par_mov_w01, par_mov_w02, par_mov_w03, par_mov_w04, par_mov_w05, c11_w01, c11_w03, c43_w05) %>% 
+  left_join(elsoc_wide_2016_2021 %>% 
+              select(-starts_with(c('c11_', 'c43_'))), 
+            by = 'idencuesta') %>% 
+  filter(!is_nsnr(class_part_5, c46_01_w05, c46_02_w05, c46_03_w05, c46_04_w05))  %>%
   rowwise() %>%
   mutate(optimismo = mean(c46_01_w05, c46_02_w05, c46_03_w05, c46_04_w05, na.rm = TRUE),
-         pos_id = factor(optimismo >= 4,
-                        levels = c(TRUE, FALSE),
-                        labels = c('Optimista', 'No optimista'))) %>%
-  group_by(class_part_4, pos_id) %>% 
-  summarise (n = n()) %>% 
-  mutate(freq = n / sum(n)) %>%
-  filter(!is.na(pos_id)) %>%
-  ggplot(aes(x = freq, y = class_part_4, fill = pos_id, label = scales::percent(freq, .1))) + 
-  geom_bar(stat = 'identity', position = 'stack') +
-  labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
-  scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
-  guides(fill = guide_legend(reverse = TRUE)) +
-  geom_text(position = position_stack(vjust = .5), size = 3,
-            color = rep(c('white', 'black'), 4)) +
-  theme_bw() + 
-  scale_fill_viridis_d(begin = .33, end = .66) +
-  theme(axis.text.x = element_text(size = rel(.9)),
-        legend.position = 'top',
-        legend.title = element_blank())
-
-```
-
-
-```{r}
-
-tip_par %>%   
-  filter(!is_nsnr(class_part_4, c46_01_w05, c46_02_w05, c46_03_w05, c46_04_w05))  %>%
-  drop_na(c("class_part_4", "c46_01_w05", "c46_02_w05", "c46_03_w05", "c46_04_w05")) %>%
-  filter(tipo_atricion==1) %>%
-  rowwise() %>%
-  mutate(optimismo = mean(c46_01_w05, c46_02_w05, c46_03_w05, c46_04_w05, na.rm = TRUE),
-         pos_id = factor(optimismo >= 4,
+         optimismo = factor(optimismo >= 4,
                         levels = c(TRUE, FALSE),
                         labels = c('Optimista', 'No optimista'))) %>%
   survey_design_elsoc(weights = 'ponderador02_w05') %>% 
-  prop(pos_id, by = class_part_4, na.rm = TRUE) %>% 
-  ggplot(aes(x = prop, y = class_part_4, fill = pos_id, 
+  prop(optimismo, by = class_part_5, na.rm = TRUE) %>% 
+  
+  ggplot(aes(x = prop, y = fct_rev(class_part_5), fill = optimismo, 
              label = scales::percent(prop, .1))) + 
   geom_bar(stat = 'identity', position = 'stack') +
   labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
   scale_x_continuous(labels = scales::percent) +
   guides(fill = guide_legend(reverse = TRUE)) +
   geom_text(position = position_stack(vjust = .5), size = 3,
-            color = rep(c('white', 'black'), 4)) +
+            color = rep(c('white', 'black'), 5)) +
   theme_bw() + 
   scale_fill_viridis_d(begin = .33, end = .66) +
   theme(axis.text.x = element_text(size = rel(.9)),
@@ -909,6 +692,7 @@ Desde hace varios años en Chile se han desarrollado múltiples movimientos soci
 
 
 ```{r graf-movsocial, fig.cap = '¿Cuál de los siguientes movimientos sociales más valora? (2019-2021)'}
+
 elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1 & ola %in% c(4,5) & !c20 %in% c(-888, -999)) %>%
   mutate(c20 = factor(c20, levels = 1:12,

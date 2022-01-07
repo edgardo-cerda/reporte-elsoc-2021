@@ -31,7 +31,7 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-A su vez, en la Figura \@ref(fig:confli-cambio) podemos observar que, aunque los porcentajes de personas que reportan distintos niveles de conflicto no cambian considerablemente entre 2019 y 2021, si existen personas que cambian sus percepciones individuales de conflicto con sus vecinos en distintas direcciones, sea esto para menores niveles de conflicto pero también para niveles de conflicto más elevados. Por ejemplo, algunas personas que antes reportaban haber tenido “pocos o algunos” conflictos con vecinos, el año 2021 reportan “nunca” haberlos tenido, mientras que bastantes personas que habían reportado “nunca” haber tenido conflictos, en 2021 si reportan haberse sentido molestos o incomodados por problemas con sus vecinos “pocas o algunas veces”. Finalmente, del 10.3% de las personas que en 2019 reportaron tener problemas “muchas veces o siempre” con sus vecinos, cerca de la mitad reportan en 2021 una disminución de estos para “pocas o algunas veces''.
+A su vez, en la Figura \@ref(fig:confli-cambio) podemos observar que, aunque los porcentajes de personas que reportan distintos niveles de conflicto no cambian considerablemente entre 2019 y 2021, si existen personas que cambian sus percepciones individuales de conflicto con sus vecinos en distintas direcciones, sea esto para menores niveles de conflicto pero también para niveles de conflicto más elevados. Por ejemplo, algunas personas que antes reportaban haber tenido “pocos o algunos” conflictos con vecinos, el año 2021 reportan “nunca” haberlos tenido, mientras que bastantes personas que habían reportado “nunca” haber tenido conflictos, en 2021 si reportan haberse sentido molestos o incomodados por problemas con sus vecinos “pocas o algunas veces”. Finalmente, del 10.3% de las personas que en 2019 reportaron tener problemas “muchas veces o siempre” con sus vecinos, cerca de la mitad reportan en 2021 una disminución de estos para "pocas o algunas veces".
 
 ```{r confli-cambio, fig.align='center', fig.cap='Cambios en frecuencia de conflictos barriales'}
 
@@ -77,6 +77,10 @@ datos %>%
             color = rep(c('black', 'white', 'white'),2))
 ```
 
+
+En relación a la frecuencia de conflictos barriales, según la Figura \@ref(fig:confli-zona), se puede observar que la Región Metropolitana concentra el porcentaje más elevado de conflictos, aunque haya una disminución de estos de un 15.8% durante el año 2019 para un 13.1% el año 2021. La Zona Sur es donde se reportan menos conflictos barriales, con un 2.7% el año 2019 y un 0.8% para el año 2021.
+
+
 ```{r confli-zona, fig.cap='Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona geográfica. Porcentaje con conflictos barriales "Siempre" o "Muchas veces"'}
 
 elsoc_long_2016_2021 %>% 
@@ -105,6 +109,8 @@ elsoc_long_2016_2021 %>%
             size= 2.75)
 
 ```
+
+Por otro lado, según la Figura \@ref(fig:confli-estrato), el porcentaje de personas que reporta tener conflictos barriales “muchas veces o siempre”, baja de un 17.5% a un 14% en la Región Metropolitana, un patrón similar al Gran Valparaíso donde el porcentaje también baja de un 9.0% a un 7.2% entre el año 2019 y el año 2021. Por otro lado, en el Gran Concepción, se registra un aumento de conflictos barriales frecuentes de un 4.1% a 6.5% , mientras en Ciudades Medianas,también hay un aumento de conflictos barriales de un 8.1% a 13.8% entre 2019 y 2021. 
 
 
 ```{r confli-estrato, fig.align='center', fig.cap='Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona de residencia. Porcentaje con conflictos barriales "Siempre" o "Muchas veces".'}
@@ -137,6 +143,8 @@ elsoc_long_2016_2021 %>%
             size= 2.75)
 
 ```
+
+Finalmente, en la Figura \@ref(fig:confli-quintil) se puede observar que el porcentaje de conflictos barriales es superior en el Quintil 1 de ingresos en comparación con los demás quintiles, siendo que un 17.1% de este Quintil reporta tener conflictos “muchas veces o siempre” en 2019 y un 15.6% en 2021. Además, entre el año 2019 y 2021, existe un decrecimiento de conflictos barriales en los primeros tres quintiles de ingresos, mientras en el Quintil 4 el patrón se mantiene más estable (5.7% y 6.0% respectivamente en 2019 y 2021). El Quintil 5 de ingresos es el único donde se registra un aumento en la frecuencia de conflictos barriales, pasando de un 3.5% en 2019 a un 6.7% en 2021.
 
 
 ```{r confli-quintil, fig.align='center', fig.cap='Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y quintil de ingreso. Porcentaje con conflictos barriales "Siempre" o "Muchas veces".'}
@@ -175,80 +183,6 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-### Cartografía del conflicto barrial {-}
-
-```{r confli-comuna, fig.align='center', fig.cap='Frecuencia promedio de problemas con vecinos, según comuna de residencia en la región metropolitana (2021).'}
-
-elsoc_comuna_rm <- elsoc_long_2016_2021 %>% 
-  filter(tipo_atricion == 1 & muestra == 1 & ola == 5 & region_cod == 13 & !t11_01 %in% c(-888, -999) &
-           !t11_02 %in% c(-888, -999) & !t11_03 %in% c(-888, -999) & !t11_04 %in% c(-888, -999)) %>% 
-  mutate(barrio_confli = (t11_01 + t11_02 + t11_03 + t11_04)/4) %>%
-  sjlabelled::as_label(ola) %>% 
-  group_by(comuna, comuna_cod) %>% 
-  summarise(m_confli = weighted.mean(barrio_confli, ponderador02, na.rm = T)) %>% 
-  ungroup() 
-
-comunas_rm <- chilemapas::mapa_zonas %>%   
-  dplyr::filter(codigo_region == '13' & codigo_provincia == '131') %>% 
-  st_as_sf(.) %>% 
-  group_by(codigo_comuna) %>% 
-  summarise() %>% 
-  ungroup() %>% 
-  mutate(comuna_cod = as.numeric(codigo_comuna)) %>% 
-  left_join(elsoc_comuna_rm, by = 'comuna_cod')
-
-g.confli.rm <- comunas_rm %>%
-  ggplot() + 
-  geom_sf(aes(fill = m_confli, geometry = geometry)) +
-  labs(y = NULL, x = NULL, fill = "Conflictividad barrial\npromedio por comuna") +
-  scale_fill_viridis_c(begin = .11, end = .88, direction = -1, option = 'viridis') +
-  theme_bw()
-g.confli.rm
-
-```
-
-```{r confli-region2, fig.align='center', fig.cap='Frecuencia promedio de problemas con vecinos, según región de Chile (2021)', message=FALSE, warning=FALSE}
-
-elsoc_region <- elsoc_long_2016_2021 %>% 
-  filter(tipo_atricion == 1 & muestra == 1 & ola == 5 & !t11_01 %in% c(-888, -999) &
-           !t11_02 %in% c(-888, -999) & !t11_03 %in% c(-888, -999) & !t11_04 %in% c(-888, -999)) %>% 
-  mutate(barrio_confli = (t11_01 + t11_02 + t11_03 + t11_04)/4) %>%
-  sjlabelled::as_label(ola) %>% 
-  group_by(region, region_cod) %>% 
-  summarise(m_confli = weighted.mean(barrio_confli, ponderador02, na.rm = T),
-            sd_confli = sd(barrio_confli, na.rm = T),
-            n = n())
-
-elsoc_region$region_cod <- factor(elsoc_region$region_cod,
-                                  labels = c('01','02','03','04','05','06','07','08',
-                                            '09','10','11','13','14','15','16'))
-
-regiones <- chilemapas::generar_regiones()
-regiones <- merge(regiones,elsoc_region, by.x="codigo_region",by.y="region_cod",all.x=TRUE,sort=F)
-
-#para intentar hacer facet_wrap
-#regiones$mitad <- c('1','1','1','1','1','1','1','2','2','2','2','1','2','1','2','2')
-
-regiones$region[is.na(regiones$region)] <- 'Magallanes\n(Sin datos)'
-regiones$region[regiones$region == 'Metropolitana de santiago'] <- 'Metropolitana'
-regiones$region[regiones$region == 'Libertador general bernardo ohiggins'] <- 'Ohiggins'
-regiones$region[regiones$region == 'Aysen del general carlos ibannez del campo'] <- 'Aysen'
-regiones$region[regiones$region == 'Arica y parinacota'] <- 'Arica'
-
-g.confli.region <- regiones %>% 
-  ggplot(aes(fill = m_confli, geometry = geometry, label = region)) + 
-  geom_sf() +
-  coord_sf(xlim = c(-100, -65)) +
-  labs(y = NULL, x = NULL, fill = "Conflictividad barrial\npromedio por región") +
-  scale_fill_viridis_c(begin = .11, end = .88, direction = -1, option = 'viridis', na.value = 'white') +
-  ggrepel::geom_text_repel(stat = "sf_coordinates", min.segment.length = 0,
-                           colour = "black", segment.colour = "black",
-                           direction = "y", hjust = 2.5, size = 3) +
-  ggspatial::annotation_north_arrow(aes(which_north = "true", location = "bl"), pad_y = unit(0.8, "cm")) +
-  ggspatial::annotation_scale(aes(location = "bl", style = "bar")) +
-  theme_bw()
-g.confli.region
-```
 
 ### Confianza en vecinos {-}
 
@@ -483,6 +417,7 @@ Con el objetivo de enriquecer las variables de contexto territorial de los encue
 Son indicadores territoriales que abordan dimensiones sociodemográficas, características de los hogares, migración, y vivienda, provenientes de distintas fuentes de información nacional, tales como, el Centro de Inteligencia Territorial (CIT), censo 2017 del Instituto Nacional de Estadísticas (INE) y variables sobre vivienda y edificación del INE y Ministerio de Vivienda y Urbanismo (MINVU). Con esta base de datos, única en su tipo en Chile y Latinoamérica, es posible abordar temas sociales y territoriales complejos, integrando ambos aspectos en modelos comprensivos de la realidad social chilena.
 
 Los análisis que se presentan a continuación consideran indicadores territoriales construidos a partir de la información a nivel individual del censo 2017, agregada a nivel de zonas censales y vinculada a los encuestados de ELSOC según su lugar de residencia reportado en cada ronda. Dado que esta información territorial no varía en el tiempo, se realiza un análisis estático para el año 2021, analizando su relación con variables territoriales del 2017.
+
 Según estudios empíricos, los factores más relevantes que afectarían a la cohesión social a nivel de barrio son la composición racial, educación, etnicidad y desigualdad económica (Abascal y Baldassarri, 2015; Neal, 2017). Con datos del censo 2017, se analiza si la escolaridad promedio del barrio y la tasa de inmigración están asociadas a los niveles de confianza con los vecinos en ELSOC.
 
 Utilizando la información sobre la escolaridad promedio que exhibía en 2017 el barrio o zona censal de residencia de los encuestados, es posible generar quintiles de escolaridad promedio en el barrio. Entonces, Q1 representa el grupo de encuestados ELSOC que reside en los barrios de más baja escolaridad promedio, mientras que Q5 agrupa a los encuestados residentes en los barrios de más alta escolaridad promedio.
@@ -1250,87 +1185,6 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-### Cartografía de la criminalidad barrial {-}
-
-```{r crimi-comuna, fig.align='center', fig.cap='Frecuencia promedio de percepción de crímenes (riñas, robos y tráfico de drogas) en el barrio, según comuna de residencia en la región metropolitana (2021).'}
-
-elsoc_comuna_rm <- elsoc_long_2016_2021 %>% 
-  filter(tipo_atricion == 1 & muestra == 1 & ola == 5 & region_cod == 13 & !t09_01 %in% c(-888, -999) &
-           !t09_02 %in% c(-888, -999) & !t09_03 %in% c(-888, -999)) %>% 
-  mutate(barrio_crim = (t09_01 + t09_02 + t09_03)/3) %>%
-  sjlabelled::as_label(ola) %>% 
-  group_by(comuna, comuna_cod) %>% 
-  summarise(m_crim = weighted.mean(barrio_crim, ponderador02, na.rm = T),
-            sd_crim = sd(barrio_crim, na.rm = T),
-            n = n())
-
-comunas_rm <- chilemapas::mapa_zonas %>% 
-  filter(codigo_region==13 & codigo_provincia == '131') %>% 
-  st_as_sf(.) %>% 
-  group_by(codigo_comuna) %>% 
-  summarise()
-
-comunas_rm <- merge(comunas_rm, 
-                    elsoc_comuna_rm, 
-                    by.x = "codigo_comuna", by.y = "comuna_cod",
-                    all.x = TRUE,
-                    sort=F)
-
-#comunas_rm <- comunas_rm %>% drop_na() #en caso de quitar comunas con NA
-
-g.crimi.rm <- 
-  ggplot(comunas_rm) + 
-  geom_sf(aes(fill = m_crim, geometry = geometry)) +
-  labs(y = NULL, x = NULL, fill = "Criminalidad barrial\npromedio por comuna") +
-  scale_fill_viridis_c(begin = .11, end = .88, direction = -1, option = 'viridis') +
-  theme_bw() 
-g.crimi.rm
-```
-
-```{r confli-region, fig.align='center', fig.cap='Frecuencia promedio de percepción de crímenes (riñas, robos y tráfico de drogas) en el barrio, según región de Chile (2021)', message=FALSE, warning=FALSE}
-
-elsoc_region <- elsoc_long_2016_2021 %>% 
-  filter(tipo_atricion == 1 & muestra == 1 & ola == 5 & !t09_01 %in% c(-888, -999) &
-           !t09_02 %in% c(-888, -999) & !t09_03 %in% c(-888, -999)) %>% 
-  mutate(barrio_crim = (t09_01 + t09_02 + t09_03)/3) %>%
-  sjlabelled::as_label(ola) %>% 
-  group_by(region, region_cod) %>% 
-  summarise(m_crim = weighted.mean(barrio_crim, ponderador02, na.rm = T),
-            sd_crim = sd(barrio_crim, na.rm = T),
-            n = n())
-
-elsoc_region$region_cod <- factor(elsoc_region$region_cod,
-                                  labels = c('01','02','03','04','05','06','07','08',
-                                            '09','10','11','13','14','15','16'))
-
-regiones <- generar_regiones()
-regiones <- merge(regiones,elsoc_region, by.x="codigo_region",by.y="region_cod",all.x=TRUE,sort=F)
-
-#para intentar hacer facet_wrap
-#regiones$mitad <- c('1','1','1','1','1','1','1','2','2','2','2','1','2','1','2','2')
-
-regiones$region[is.na(regiones$region)] <- 'Magallanes\n(Sin datos)'
-regiones$region[regiones$region == 'Metropolitana de santiago'] <- 'Metropolitana'
-regiones$region[regiones$region == 'Libertador general bernardo ohiggins'] <- 'Ohiggins'
-regiones$region[regiones$region == 'Aysen del general carlos ibannez del campo'] <- 'Aysen'
-regiones$region[regiones$region == 'Arica y parinacota'] <- 'Arica'
-
-g.crim.region <- regiones %>% 
-  ggplot(aes(fill = m_crim, geometry = geometry, label = region)) + 
-  geom_sf() +
-  coord_sf(xlim = c(-100, -65)) +
-  labs(y = NULL, x = NULL, fill = "Criminalidad barrial\npromedio por región") +
-  scale_fill_viridis_c(begin = .11, end = .88, direction = -1, option = 'viridis', na.value = 'white') +
-  ggrepel::geom_text_repel(stat = "sf_coordinates", min.segment.length = 0,
-                           colour = "black", segment.colour = "black",
-                           direction = "y", hjust = 2.5, size = 3) +
-  ggspatial::annotation_north_arrow(aes(which_north = "true", location = "bl"), pad_y = unit(0.8, "cm")) +
-  ggspatial::annotation_scale(aes(location = "bl", style = "bar")) +
-  theme_bw()
-g.crim.region
-```
-
-
 
 ## Migración
  
@@ -1929,7 +1783,7 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-El ideal meritocrático, entendido como la creencia de que las personas son recompensadas por el esfuerzo, ha sido un tema de alto interés en los años recientes. Como se observa en la figura \@ref(fig:mov-soc), los chilenos consideran que para surgir en la vida son altamente relevantes aspectos como el trabajo duro y la educación. En contraste, los chilenos consideran que las recompensas que reciben al esfuerzo y por su inteligencia son más bien bajas. Es interesante constatar lo estable de este patrón a lo largo del tiempo, en donde se observan pequeñas fluctuaciones en los distintos años de ELSOC. Esto revela una alta adherencia al ideal meritocrático, reflejado en la idea de que las personas deberían ser recompensadas por su trabajo duro, en contraste con una menor percepción de que esto ocurre.
+El ideal meritocrático, entendido como la creencia de que las personas son recompensadas por el esfuerzo, ha sido un tema de alto interés en los años recientes. Como se observa en la figura \@ref(fig:mov-soc), los chilenos consideran que para surgir en la vida sones altamente relevantes aspectos como el trabajo duro y la educación, lo que se considera como adherencia al ideal meritocrático (Maldonado, et al., 2019).. En contraste, los chilenos consideran que las recompensas que reciben al por su esfuerzo y por su inteligencia son más bien bajas. Es interesante constatar lo estable de este patrón a lo largo del tiempo, en donde se observan pequeñas fluctuaciones en los distintos años de ELSOC. Esto revela una alta adherencia al ideal meritocrático, reflejado en la idea de que las personas deberían ser recompensadas por su trabajo duro, en contraste con una menor percepción de que esto ocurre.
 
 
 ```{r merit-wave, fig.align='center',fig.cap='Percepción de importancia y recompensas del mérito, según ola de estudio. Porcentaje de Respuestas "De acuerdo" y ”Totalmente de acuerdo".'}

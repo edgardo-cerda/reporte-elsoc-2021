@@ -398,7 +398,7 @@ Un 12,5% se clasifica en una carga media-alta de síntomas de depresión, al pre
 
 ```{r perfiles-depr, fig.cap = 'Perfiles de sintomatología depresiva: 4 clases (2016-2021)'}
 
-load(file = file.path('inputs', 'elsoc_depr_lca.RData'))
+# load(file = file.path('inputs', 'elsoc_depr_lca.RData'))
 
 elsoc_depr_lca %>% 
   survey_design_elsoc(weights = 'ponderador02_w05') %>% 
@@ -439,7 +439,7 @@ Al analizar cómo se distribuye la población entre las distintas trayectorias d
 
 ```{r perfiles-depr-sexo, fig.cap = 'Cargas de sintomatología depresiva, según sexo'}
 
-load(file = file.path('inputs', 'elsoc_depr_lca.RData'))
+# load(file = file.path('inputs', 'elsoc_depr_lca.RData'))
 
 elsoc_depr_lca %>% 
   filter(tipo_atricion == 1) %>% 
@@ -470,7 +470,7 @@ elsoc_depr_lca %>%
 
 ```{r perfiles-depr-edad, fig.cap = 'Cargas de sintomatología depresiva, según tramo de edad (en 2016)'}
 
-load(file = file.path('inputs', 'elsoc_depr_lca.RData'))
+# load(file = file.path('inputs', 'elsoc_depr_lca.RData'))
 
 elsoc_depr_lca %>% 
   filter(tipo_atricion == 1) %>% 
@@ -500,7 +500,6 @@ elsoc_depr_lca %>%
 Estudios previos han mostrado que el estatus socioeconómico bajo, medido por ingresos o nivel educacional, está asociado a una mayor persistencia y recurrencia de los síntomas depresivos a lo largo del tiempo (Musliner et al 2016). De hecho, algunos estudios sugieren que las desventajas socioeconómicas parecen ser más importantes en la persistencia de los síntomas depresivos que en su desencadenamiento (Lorant et al. 2003).
 
 [Descripción resultado + interpretación]
-
 
 Estos resultados podrían también sugerir que la persistencia de problemas de salud mental a lo largo del tiempo pueden agravar las desventajas asociadas a la posición socioeconómica, produciendo un círculo vicioso difícil de romper (Lund et al, 2018).
 
@@ -547,7 +546,6 @@ Estos resultados podrían también sugerir que la persistencia de problemas de s
 #   guides(fill = guide_legend(reverse = TRUE))
 
 ```
-
 
 
 ## Economía y bienestar

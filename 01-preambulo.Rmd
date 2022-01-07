@@ -22,6 +22,27 @@ library(statar)
 
 ```
 
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache=FALSE, warning=FALSE, message=FALSE, echo=FALSE, fig.topcaption = TRUE, fig.align = 'center')
+
+Sys.setlocale("LC_ALL","ES_ES.UTF-8")
+```
+
+```{r formats, include=FALSE }
+table_format = if (is_html_output()) {
+  "html"
+} else if (is_latex_output()) {
+  "latex" 
+}
+
+fullw = if (is_html_output()) {TRUE} else if (is_latex_output()) {FALSE}
+fsize = if (is_html_output()) {14} else if(is_latex_output()) {8}
+
+ggplot2::theme_set(new = theme_test(base_family = "serif"))
+options(knitr.kable.NA = '')
+
+```
+
 ```{r datos-elsoc, message=FALSE, warning=FALSE, include=FALSE}
 
 # bases de datos ELSOC
@@ -31,6 +52,12 @@ elsoc::load_elsoc('territorial-2017')
 
 # Datos generados de cuarentenas:
 load(file.path('inputs', 'cuarentenas_acum.RData'))
+
+# Datos asociados a modelo de clase latente de participación política 
+load(file.path('inputs', 'participacion_tipos5.RData'))
+
+# Datos asociados a modelo de clase latente de sintomatología depresiva
+load(file = file.path('inputs', 'elsoc_depr_lca.RData'))
 
 ```
 
