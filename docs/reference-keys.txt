@@ -115,7 +115,6 @@ fig:conf-wave
 fig:conf-zona
 fig:sexismo-sexo
 fig:sexismo-educ
-fig:ocup-sexo
 fig:ess-ola
 fig:ess-cambio
 fig:ess-quintil

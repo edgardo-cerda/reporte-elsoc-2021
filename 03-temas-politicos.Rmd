@@ -18,8 +18,8 @@ elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1 & ola == 5) %>%
   mutate(pos_id = factor(car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4; c(-888, -999) = 5"),
                          levels = 1:5,
-                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica", "NS/NR"))) %>%
-  prop(x = pos_id, na.rm = TRUE) %>% 
+                         labels = c('Izquierda', "Centro", "Derecha", "No se identifica", "NS/NR"))) %>% 
+  prop(x = pos_id, na.rm = TRUE) %>%
   ggplot(aes(y = prop, fill = pos_id, x = pos_id, 
              label = scales::percent(prop, accuracy = .1))) +
   theme_bw() + 
@@ -32,7 +32,11 @@ elsoc_long_2016_2021 %>%
             position = position_dodge2(width = .9),
             size = 3) + 
   theme(legend.position = 'top',
-        legend.title = element_blank())
+        legend.title = element_blank(),
+        plot.caption = element_text(hjust = 0)) 
+  # labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2021.\nNota: Se consideran observaciones con datos completos entre 2016 y 2021 (N=1.513)')
+
+
 ```
 
 
@@ -59,8 +63,11 @@ elsoc_long_2016_2021 %>%
             size = 3,
             color = rep(c(rep('white', 3), rep('black', 2)), 5)) +
   theme(legend.position = 'top',
-        legend.title = element_blank()) + 
+        legend.title = element_blank(),
+        plot.caption = element_text(hjust = 0)) + 
   guides(fill = guide_legend(reverse = TRUE)) 
+  # labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas (N=7.565)')
+
 
 ```
 
@@ -352,7 +359,7 @@ La Figura \@ref(fig:tip-participacion5) muestra los perfiles de participación i
 
 Consistente con el diagnóstico de un elevado nivel de desconfianza política en la sociedad chilena, un 28,9% compone el grupo de Desafectados. Estos se caracterizan por sus virtualmente nulos niveles de participación política, ya sea convencional (votar) o no convencional (participar en marchas). No obstante, se observan niveles de participación  más elevados en las elecciones de 2013 y el plebiscito, aunque muy distantes de los promedios nacionales.
 
-Un 17,3% compone el grupo de Politizados, individuos con -relativamente hablando- elevados niveles de participación electoral y participación en protestas. Los integrantes      de este grupo fueron particularmente activos en las movilizaciones de 2019, año en que su participación no convencional triplicó la de años anteriores.
+Un 17,3% compone el grupo de Politizados, individuos con -relativamente hablando- elevados niveles de participación electoral y participación en protestas. Los integrantes de este grupo fueron particularmente activos en las movilizaciones de 2019, año en que su participación no convencional triplicó la de años anteriores.
 
 Un 3,9% son los Reactivos, quienes suelen tener bajos niveles de participación electoral y en manifestaciones, aunque se involucraron sustantivamente en el plebiscito de 2020 y en las movilizaciones de 2019. Así, estos individuos requieren de eventos de participación ampliamente mediatizados y debatidos en la opinión pública para involucrarse en la vida cívica.
 

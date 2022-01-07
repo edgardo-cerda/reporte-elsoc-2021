@@ -48,7 +48,10 @@ options(knitr.kable.NA = '')
 # bases de datos ELSOC
 elsoc::load_elsoc('long')
 elsoc::load_elsoc('wide')
+
+# Datos territoriales ELSOC
 elsoc::load_elsoc('territorial-2017')
+territorial <- merge(elsoc_wide_2016_2021, elsoc_terr_2017, by="idencuesta")
 
 # Datos generados de cuarentenas:
 load(file.path('inputs', 'cuarentenas_acum.RData'))

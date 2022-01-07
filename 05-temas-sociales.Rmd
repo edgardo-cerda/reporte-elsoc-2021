@@ -8,7 +8,7 @@ Chile es un país marcado por altos niveles de segregación espacial (Link, Vale
 En este sentido, en la Figura \@ref(fig:confli-olas) podemos ver los cambios en la frecuencia con la que los/as chilenos/as se han molestado o incomodado por problemas con sus vecinos a lo largo del tiempo. Por ejemplo, mientras en 2016, un 27.7% de los/as chilenos/as reporta nunca haber tenido problemas con sus vecinos, este valor se reduce a 23.5% el año de 2021. Por otro lado, también podemos ver un decrecimiento de personas que reportan haberse molestado o incomodado por problemas con sus vecinos “muchas veces o siempre” entre 2016 y 2021, años en los cuales estos porcentajes alcanzan 12.2% y 9.2% respectivamente. Así, la gran mayoría de personas reporta haberse incomodado o molestado “pocas o algunas veces” con sus vecinos a lo largo del tiempo, una cifra que alcanza su máximo valor el año 2021 con 67.3% de personas reportando problemas vecinales.
 
 
-```{r confli-olas, fig.cap = '¿Con qué frecuencia usted/alguien de su hogar se ha molestado o incomodado por problemas con sus vecinos? según ola de estudio '}
+```{r confli-olas, fig.cap = 'Porcentaje que presenta Molestia o incomodidad por problemas con sus vecinos, según ola de estudio '}
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & !t11_01 %in% c(-888, -999) &
@@ -24,9 +24,9 @@ elsoc_long_2016_2021 %>%
   geom_col(position = 'Stack') +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = .11, end = .88, direction = -1, option = 'viridis') +
+  scale_fill_viridis_d(end = .85, direction = -1) +
   geom_text(position = position_stack(vjust = .5),
-            size= 2.75, color = rep(c('black', 'white', 'white'), 5)) + 
+            size = 3, color = rep(c('black', 'white', 'white'), 5)) + 
   theme(legend.position = 'top', legend.title = element_blank())
 
 ```
@@ -68,12 +68,12 @@ datos %>%
   xlab(label = NULL) + 
   theme(legend.position = 'top',
         legend.title = element_blank()) +
-  scale_fill_viridis_d(begin = .11, end = .88, direction = -1, option = 'viridis') +
+  scale_fill_viridis_d(begin = .11, end = .88, direction = -1) +
   geom_text(data = etiquetas, 
             aes(label = ifelse(prop > 0.03 , scales::percent(prop, accuracy = .1),"")),
             position = position_stack(vjust = .5),
             show.legend = FALSE,
-            size = 2.75,
+            size = 3,
             color = rep(c('black', 'white', 'white'),2))
 ```
 
@@ -81,7 +81,7 @@ datos %>%
 En relación a la frecuencia de conflictos barriales, según la Figura \@ref(fig:confli-zona), se puede observar que la Región Metropolitana concentra el porcentaje más elevado de conflictos, aunque haya una disminución de estos de un 15.8% durante el año 2019 para un 13.1% el año 2021. La Zona Sur es donde se reportan menos conflictos barriales, con un 2.7% el año 2019 y un 0.8% para el año 2021.
 
 
-```{r confli-zona, fig.cap = 'Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona geográfica. Porcentaje con conflictos barriales "Siempre" o "Muchas veces"'}
+```{r confli-zona, fig.cap = 'Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona geográfica'}
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & ola %in% c(4,5) & !t11_01 %in% c(-888, -999) &
@@ -101,19 +101,21 @@ elsoc_long_2016_2021 %>%
                      limits = c(0, .3)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  scale_fill_viridis_d(begin = .33, end = .66, direction = -1) +
   theme(legend.position = 'top',
         legend.title = element_blank()) +
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
-            size= 2.75)
+            size = 3) + 
+  ggtitle(label = NULL,
+          subtitle = 'Porcentaje con conflictos barriales "Siempre" o "Muchas veces"')
 
 ```
 
 Por otro lado, según la Figura \@ref(fig:confli-estrato), el porcentaje de personas que reporta tener conflictos barriales “muchas veces o siempre”, baja de un 17.5% a un 14% en la Región Metropolitana, un patrón similar al Gran Valparaíso donde el porcentaje también baja de un 9.0% a un 7.2% entre el año 2019 y el año 2021. Por otro lado, en el Gran Concepción, se registra un aumento de conflictos barriales frecuentes de un 4.1% a 6.5% , mientras en Ciudades Medianas,también hay un aumento de conflictos barriales de un 8.1% a 13.8% entre 2019 y 2021. 
 
 
-```{r confli-estrato, fig.cap = 'Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona de residencia. Porcentaje con conflictos barriales "Siempre" o "Muchas veces".'}
+```{r confli-estrato, fig.cap = 'Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona de residencia'}
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & ola %in% c(4,5) & !t11_01 %in% c(-888, -999) &
@@ -135,18 +137,20 @@ elsoc_long_2016_2021 %>%
                      limits = c(0, .3)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  scale_fill_viridis_d(begin = .33, end = .66, direction = -1) +
   theme(legend.position = 'top',
         legend.title = element_blank()) +
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
-            size= 2.75)
+            size = 3) + 
+  ggtitle(NULL,
+          subtitle = 'Porcentaje con conflictos barriales "Siempre" o "Muchas veces"')
 
 ```
 
 Finalmente, en la Figura \@ref(fig:confli-quintil) se puede observar que el porcentaje de conflictos barriales es superior en el Quintil 1 de ingresos en comparación con los demás quintiles, siendo que un 16,7% de este Quintil reporta tener conflictos “muchas veces o siempre” en 2019 y un 17,0% en 2021. Es, además, el que se mantiene más estable. Entre 2019 y 2021 existe un decrecimiento de conflictos barriales en los Quintiles 2 y 3 de ingresos, al pasar de 13,3% y 12,4%, a 7,1% y 8,1%, respectivamente. En contraposición, los Quintiles 4 y 5 aumentan su  frecuencia de conflictos barriales.
 
-```{r confli-quintil, fig.cap = 'Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y quintil de ingreso. Porcentaje con conflictos barriales "Siempre" o "Muchas veces".'}
+```{r confli-quintil, fig.cap = 'Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y quintil de ingreso'}
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & ola %in% 4:5,
@@ -185,7 +189,10 @@ elsoc_long_2016_2021 %>%
         legend.title = element_blank()) +
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
-            size= 2.75)
+            size = 3) + 
+  ggtitle(NULL,
+          subtitle = 'Porcentaje con conflictos barriales "Siempre" o "Muchas veces"')
+
 
 ```
 
@@ -194,11 +201,11 @@ elsoc_long_2016_2021 %>%
 
 La confianza entre vecinos es un prerrequisito indispensable para la sustentabilidad y revitalización de los barrios (Downs, 1981, Varady,1986). La confianza entre residentes, está  vinculada a la estabilidad residencial y mantenimiento de las infraestructuras del barrio, haciendo de este fenómeno un aspecto clave para pensar en programas de revitalización de barrios.
 
-En esta línea, en la Figura \@ref(fig:vecinos-ola) se puede observar una progresiva evolución de bastante o mucha confianza entre 2016 y 2018, para descender el 2019, y mantenerse relativamente estable el 2021 al 47% de bastante o mucha confianza. Por otro lado, no se observan diferencias sistemáticas a nivel temporal de la confianza en vecinos por género (ver Figura \@ref(fig:confvecinos-sexo)). A nivel macrozonal se puede apreciar en el norte, el sur y en la zona metropolitana un descenso de la confianza entre 2019 y 2021, no obstante en la zona centro se aprecia un leve aumento de la confianza (ver Figura \@ref(fig:vecinos-zona)). 
+En esta línea, en la Figura \@ref(fig:vecinos-ola) se puede observar una progresiva evolución de bastante o mucha confianza entre 2016 y 2018, para descender el 2019, y mantenerse relativamente estable el 2021 al 44,7% de bastante o mucha confianza. Por otro lado, no se observan diferencias sistemáticas a nivel temporal de la confianza en vecinos por género (ver Figura \@ref(fig:confvecinos-sexo)). A nivel macrozonal se puede apreciar en el norte, el sur y en la zona metropolitana un descenso de la confianza entre 2019 y 2021, no obstante en la zona centro se aprecia un leve aumento de la confianza (ver Figura \@ref(fig:vecinos-zona)). 
 
-Un elemento importante a resaltar es como la confianza entre vecinos se va diferenciando temporalmente por quintiles de ingreso (Ver Figura \@ref(fig:vecinos-quintil)). Si bien, el 2016 el quintil de más altos ingresos (Q5) con el de más bajos ingresos (Q1) obtienen porcentajes similares de confianza en los vecinos, en la medida de que avanza el tiempo. Por un lado los sectores de mayores ingresos van aumentando su confianza desde el 49,5% el 2016 hasta llegar al 61,4% para el 2021. Por otro lado los sectores de menores ingresos si bien entre 2016 y 2019 tienden a mantenerse relativamente estable alrededor del 48%, para el 2021 este porcentaje desciende al 43.9%. Estos resultados, como veremos más adelante, estarían indicando de un proceso de desigualdad que se va acumulando en la sociabilidad barrial (Mendez, et al: 2021).
+Un elemento importante a resaltar es como la confianza entre vecinos se va diferenciando temporalmente por quintiles de ingreso (Ver Figura \@ref(fig:vecinos-quintil)). Si bien, el 2016 el quintil de más altos ingresos (Q5) con el de más bajos ingresos (Q1) obtienen porcentajes similares de confianza en los vecinos, en la medida de que avanza el tiempo. Por un lado los sectores de mayores ingresos van aumentando su confianza desde el 50,4% el 2016 hasta llegar al 59,1% para el 2021. Por otro lado los sectores de menores ingresos si bien entre 2016 y 2019 tienden a mantenerse relativamente estable alrededor del 42%, para el 2021 este porcentaje desciende al 37,2%. Estos resultados, como veremos más adelante, estarían indicando de un proceso de desigualdad que se va acumulando en la sociabilidad barrial (Mendez, et al. 2021).
 
-```{r vecinos-ola, fig.cap = 'En términos generales, ¿cuánto confía usted en sus vecinos? según ola de estudio.'}
+```{r vecinos-ola, fig.cap = 'Confianza en vecinos, según ola de estudio.'}
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & !t01 %in% c(-888, -999)) %>% 
@@ -213,108 +220,48 @@ elsoc_long_2016_2021 %>%
   geom_col(position = 'Stack') +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = .11, end = .88, direction = 1, option = 'viridis') +
+  scale_fill_viridis_d(begin = .11, end = .88, direction = 1) +
   geom_text(position = position_stack(vjust = .5),
-            size= 2.75, color = rep(c('white', 'white', 'black'), 5)) + 
+            size = 3, color = rep(c('white', 'white', 'black'), 5)) + 
   theme(legend.position = 'top',
         legend.title = element_blank())
 
 ```
 
-```{r confvecinos-sexo, fig.cap = 'En términos generales, ¿cuánto confía usted en sus vecinos? según sexo.'}
+```{r confvecinos-sexo, fig.cap = 'Confianza en vecinos, según sexo y ola del estudios'}
 
-# elsoc::load_elsoc('territorial-2017')
-# elsoc::load_elsoc('wide')
+# elsoc::load_elsoc('long')
 
-territorial <- merge(elsoc_wide_2016_2021, elsoc_terr_2017, by="idencuesta")
-
-tab<-territorial %>%   
-  filter(!is_nsnr(m0_sexo_w01, t01_w01, t01_w02, t01_w03, t01_w04, t01_w05))  %>%
-  drop_na(c("m0_sexo_w01", "t01_w01", "t01_w02", "t01_w03", "t01_w04", "t01_w05")) %>%
-  filter(tipo_atricion==1) %>%
-  mutate(t01_w01 = factor(car::recode(t01_w01, recodes = "4:5 = 1; 1:3 = 0"))) %>%
-  mutate(t01_w02 = factor(car::recode(t01_w02, recodes = "4:5 = 1; 1:3 = 0"))) %>%
-  mutate(t01_w03 = factor(car::recode(t01_w03, recodes = "4:5 = 1; 1:3 = 0"))) %>%
-  mutate(t01_w04 = factor(car::recode(t01_w04, recodes = "4:5 = 1; 1:3 = 0"))) %>%
-  mutate(t01_w05 = factor(car::recode(t01_w05, recodes = "4:5 = 1; 1:3 = 0"))) %>%
-  survey_design_elsoc(weights = 'ponderador02_w05') %>%
-  mutate(m0_sexo_w01 = factor(car::recode(m0_sexo_w01, recodes = "1 = 1; 2 = 2"),
-                              levels = 1:2,
-                              labels = c('Hombre', "Mujer")))
-
-tab1<- tab %>% group_by(m0_sexo_w01, t01_w01) %>%
-  summarise (n = n()) %>%
-  mutate(freq = n / sum(n)) %>%
-  mutate(var = 1) %>%
-  rename(Confía=t01_w01) %>% 
-  filter(!is.na(Confía)) %>%
-  filter(!is.na(m0_sexo_w01)) %>% 
-  filter(Confía==1)
-
-tab2<-tab %>% 
-  group_by(m0_sexo_w01, t01_w02) %>%
-  summarise (n = n()) %>%
-  mutate(freq = n / sum(n)) %>%
-  mutate(var = 2) %>%
-  rename(Confía=t01_w02) %>%
-  filter(!is.na(Confía)) %>%
-  filter(!is.na(m0_sexo_w01)) %>%
-  filter(Confía==1)
-
-
-tab3<-tab %>% group_by(m0_sexo_w01, t01_w03) %>%
-  summarise (n = n()) %>% 
-  mutate(freq = n / sum(n)) %>%
-  mutate(var = 3) %>%
-  rename(Confía=t01_w03) %>%
-  filter(!is.na(Confía)) %>%
-  filter(!is.na(m0_sexo_w01)) %>%
-  filter(Confía==1)
-
-tab4<-tab %>% group_by(m0_sexo_w01, t01_w04) %>%
-  summarise (n = n()) %>%
-  mutate(freq = n / sum(n)) %>%
-  mutate(var = 4) %>% 
-  rename(Confía=t01_w04) %>%
-  filter(!is.na(Confía)) %>%
-  filter(!is.na(m0_sexo_w01)) %>%
-  filter(Confía==1)
-
-tab5<-tab %>% group_by(m0_sexo_w01, t01_w05) %>%
-  summarise (n = n()) %>%
-  mutate(freq = n / sum(n)) %>%
-  mutate(var = 5) %>% 
-  rename(Confía=t01_w05) %>% 
-  filter(!is.na(Confía)) %>%
-  filter(!is.na(m0_sexo_w01)) %>% 
-  filter(Confía==1)
-
-tab<- rbind(tab1, tab2, tab3, tab4, tab5)
-
-ggplot(data= tab, aes(x=var, y=freq, color=m0_sexo_w01)) +
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1, !is_nsnr(t01, m0_sexo)) %>% 
+  prop(t01 %in% 4:5, by = c(m0_sexo, ola), na.rm = TRUE) %>% 
+  as_label(m0_sexo, ola) %>% 
+  ggplot(aes(y = prop, x = ola, color = m0_sexo, group = m0_sexo,
+             label = scales::percent(prop, .1))) +
   geom_point(size = 1.75) + 
   geom_line() +
   theme_bw() +   
-  scale_color_viridis_d(begin = 0, end = .66, direction = 1, option = 'viridis') +
+  scale_color_viridis_d(begin = 0, end = .66, direction = 1) +
   labs(y = NULL, x = NULL, title = NULL) +
   scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
-  scale_x_continuous(breaks = c(1,2,3,4,5), labels=c("2016", "2017", "2018", "2019", "2021")) +
-  geom_text_repel(data=tab, aes(label=paste0(round((freq*100),1),"%"),  y=freq),
-                  size = 3.5,  inherit.aes = TRUE)+
+  geom_text_repel(size = 3)+
   theme(legend.position = 'top',
-        legend.title = element_blank())
+        legend.title = element_blank()) + 
+  ggtitle(NULL,
+          'Porcentaje que confía Bastante o Mucho en sus vecinos')
+
 ```
 
-```{r vecinos-zona, fig.cap = 'En términos generales, ¿cuánto confía usted en sus vecinos? Según ola del estudio y zona geográfica. Suma de Respuestas “Bastante” y “Mucho”.'}
+```{r vecinos-zona, fig.cap = 'Confianza en vecinos, según zona geográfica y ola del estudios'}
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & ola %in% c(4,5) & !t01 %in% c(-888, -999)) %>% 
   mutate(zona1 = factor(car::recode(region_cod, 
                                     "c(1,2,3,4,15)=1; c(5,6,7,8,16)=2; c(9,10,11,12,14)=3; 13=4"),
-                        levels = c(1,2,3,4), 
+                        levels = 1:4,
                         labels = c("Norte","Centro","Sur","Metropolitana")))%>%
   sjlabelled::as_label(ola) %>%
-  prop(x = t01 %in% c(4, 5), by = c(ola, zona1), na.rm = TRUE) %>% 
+  prop(x = t01 %in% 4:5, by = c(ola, zona1), na.rm = TRUE) %>% 
   ggplot(aes(y = prop, x = zona1, fill = ola, 
              label = scales::percent(prop, accuracy = .1))) + 
   theme_bw() + 
@@ -323,102 +270,58 @@ elsoc_long_2016_2021 %>%
                      limits = c(0, 1)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  scale_fill_viridis_d(begin = .33, end = .66, direction = -1) +
   theme(legend.position = 'top',
         legend.title = element_blank()) +
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
-            size= 2.75)
+            size = 3) +
+    ggtitle(NULL,
+          'Porcentaje que confía Bastante o Mucho en sus vecinos')
+
 
 ```
 
-```{r vecinos-quintil, fig.cap = 'En términos generales, ¿cuánto confía usted en sus vecinos? Según ola del estudio y quintil de ingreso. Suma de Respuestas “Bastante” y “Mucho”.'}
+```{r vecinos-quintil, fig.cap = 'Confianza en vecinos, según quintil de ingresos y ola del estudio'}
 
-# elsoc::load_elsoc('territorial-2017')
-# elsoc::load_elsoc('wide')
+# elsoc::load_elsoc('long')
 
-territorial <- merge(elsoc_wide_2016_2021, elsoc_terr_2017, by="idencuesta")
-
-territorial$quintil <- quantcut(territorial$m29_w05, q=5, na.rm=T, 
-                                labels=c("Q1", "Q2", "Q3", "Q4", "Q5"))
-
-tab<-territorial %>%   
-  filter(!is_nsnr(quintil, t01_w01, t01_w02, t01_w03, t01_w04, t01_w05))  %>%
-  drop_na(c("quintil", "t01_w01", "t01_w02", "t01_w03", "t01_w04", "t01_w05")) %>%
-  filter(tipo_atricion==1) %>%
-  survey_design_elsoc(weights = 'ponderador02_w05') %>%
-  mutate(t01_w01 = factor(car::recode(t01_w01, recodes = "4:5 = 1; 1:3 = 0"))) %>%
-  mutate(t01_w02 = factor(car::recode(t01_w02, recodes = "4:5 = 1; 1:3 = 0"))) %>%
-  mutate(t01_w03 = factor(car::recode(t01_w03, recodes = "4:5 = 1; 1:3 = 0"))) %>%
-  mutate(t01_w04 = factor(car::recode(t01_w04, recodes = "4:5 = 1; 1:3 = 0"))) %>%
-  mutate(t01_w05 = factor(car::recode(t01_w05, recodes = "4:5 = 1; 1:3 = 0")))
-
-tab1<-tab %>% group_by(quintil, t01_w01) %>% 
-  summarise (n = n()) %>% 
-  mutate(freq = n / sum(n)) %>%
-  mutate(var = 1) %>% 
-  rename(Confía=t01_w01) %>%
-  filter(!is.na(Confía)) %>%
-  filter(!is.na(quintil)) %>% 
-  filter(Confía==1) %>%
-  filter(quintil=="Q1" | quintil=="Q5")
-
-tab2<-tab %>% group_by(quintil, t01_w02) %>% 
-  summarise (n = n()) %>% 
-  mutate(freq = n / sum(n)) %>%
-  mutate(var = 2) %>% 
-  rename(Confía=t01_w02) %>% 
-  filter(!is.na(Confía)) %>%
-  filter(!is.na(quintil)) %>% 
-  filter(Confía==1) %>%
-  filter(quintil=="Q1" | quintil=="Q5")
-
-tab3<-tab %>% group_by(quintil, t01_w03) %>%
-  summarise (n = n()) %>% 
-  mutate(freq = n / sum(n)) %>%
-  mutate(var = 3) %>%
-  rename(Confía=t01_w03) %>% 
-  filter(!is.na(Confía)) %>%
-  filter(!is.na(quintil)) %>% 
-  filter(Confía==1) %>%
-  filter(quintil=="Q1" | quintil=="Q5")
-
-tab4<-tab %>% group_by(quintil, t01_w04) %>% 
-  summarise (n = n()) %>%
-  mutate(freq = n / sum(n)) %>%
-  mutate(var = 4) %>% 
-  rename(Confía=t01_w04) %>% 
-  filter(!is.na(Confía)) %>%
-  filter(!is.na(quintil)) %>% 
-  filter(Confía==1) %>%
-  filter(quintil=="Q1" | quintil=="Q5")
-
-tab5<-tab %>% group_by(quintil, t01_w05) %>%
-  summarise (n = n()) %>%
-  mutate(freq = n / sum(n)) %>%
-  mutate(var = 5) %>% 
-  rename(Confía=t01_w05) %>%
-  filter(!is.na(Confía)) %>%
-  filter(!is.na(quintil)) %>%
-  filter(Confía==1) %>%
-  filter(quintil=="Q1" | quintil=="Q5")
-
-tab<- rbind(tab1, tab2, tab3, tab4, tab5)
-
-
-tab %>%
-  ggplot(aes(x=var, y=freq, color=quintil)) +
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1 & !is_nsnr(t01),
+         !is_nsnr(m30, m30b, nhogar1, m46_nhogar, m54)) %>% 
+  mutate(m30 = as.numeric(car::recode(m30, "1 = 110000; 2 = 251000; 
+  3 = 305000; 4 = 355000; 5 = 400000; 
+  6 = 445000; 7 = 490000; 8 = 535000; 9 = 585000; 10 = 640000; 
+  11 = 700000; 12 = 765000; 13 = 845000; 14 = 935000; 15 = 1040000;
+  16 = 1180000; 17 = 1375000; 18 = 1670000; 19 = 2275000; 20 = 2700000; NA = NA")),
+  m30b = as.numeric(car::recode(m30b, "1 = 170000; 2 = 300000; 3 = 400000; 4 = 600000; 5 = 1200000; NA = NA")),
+  m29_imp = ifelse(!is_nsnr(m29), m29, ifelse(ola == 5, m30b, m30)),
+  nhogar = case_when(ola == 1 ~ nhogar1,
+                     ola == 2 ~ m46_nhogar,
+                     TRUE ~ m54),
+  ypc = m29_imp / nhogar) %>% 
+  group_by(ola) %>% 
+  mutate(quintil = xtile(ypc, n = 5, wt = ponderador02),
+         quintil = factor(quintil, levels = 1:5, labels = glue::glue('Quintil {1:5}'))
+         ) %>%
+  ungroup() %>% 
+  prop(t01 %in% 4:5, by = c(quintil, ola), na.rm = TRUE) %>% 
+  as_label(m0_sexo, ola) %>% 
+  filter(quintil %in% c('Quintil 1', 'Quintil 5')) %>% 
+  ggplot(aes(y = prop, x = ola, color = quintil, group = quintil,
+             label = scales::percent(prop, .1))) +
   geom_point(size = 1.75) + 
   geom_line() +
   theme_bw() +   
-  scale_color_viridis_d(begin = 0, end = .66, direction = 1, option = 'viridis') +
+  scale_color_viridis_d(begin = 0, end = .66, direction = 1) +
   labs(y = NULL, x = NULL, title = NULL) +
   scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
-  scale_x_continuous(breaks = c(1,2,3,4,5), labels=c("2016", "2017", "2018", "2019", "2021")) +
-  geom_text_repel(data=tab, aes(label=paste0(round((freq*100),1),"%"),  y=freq),
-                  size = 3.5,  inherit.aes = TRUE)+
+  geom_text_repel(size = 3, nudge_y = .01)+
   theme(legend.position = 'top',
-        legend.title = element_blank())
+        legend.title = element_blank()) + 
+  ggtitle(NULL,
+          'Porcentaje que confía Bastante o Mucho en sus vecinos')
+
 
 ```
 
@@ -440,7 +343,10 @@ La Figura \@ref(fig:confianzaveci-quintilesc) muestra el porcentaje de encuestad
 Este resultado es consistente con estudios previos que muestran que la cohesión social a nivel de barrio podría ser un privilegio de los niveles socioeconómicos más altos, especialmente en zonas con altos índices de segregación espacial por ingresos, como son las ciudades de Chile (Méndez et al., 2021).
 
 
-```{r confianzaveci-quintilesc, fig.align='center',fig.cap = 'Confianza en los vecinos según quintil de  escolaridad'}
+```{r confianzaveci-quintilesc, fig.align='center',fig.cap = 'Confianza en los vecinos, según quintil de  escolaridad'}
+
+# elsoc::load_elsoc('territorial-2017')
+# territorial <- merge(elsoc_wide_2016_2021, elsoc_terr_2017, by="idencuesta")
 
 territorial$escolaridad[territorial$escolaridad < 0] <- NA
 
@@ -470,7 +376,7 @@ tab %>% ggplot(aes(y = freq, x = quintil, label = scales::percent(freq, accuracy
                      limits = c(0,1)) +
   labs(y = NULL, x = NULL,
        title = "Confianza en los vecinos según quintil de escolaridad en zona censal") +
-  scale_color_viridis_d(end = .66, direction = 1, option = 'viridis') +
+  scale_color_viridis_d(end = .66, direction = 1) +
   theme(legend.position = 'top',
         legend.title = element_blank())
 
@@ -481,7 +387,10 @@ Cuando se analiza a los encuestados ELSOC según la proporción de inmigrantes e
 Este resultado sugiere analizar los mecanismos de integración social de inmigrantes a nivel local, considerando las características específicas de cada barrio, en cuanto a su capacidad de acoger nuevas demandas por bienes y servicios sociales, así como también, las diferencias culturales y/o de lenguaje, para promover la cohesión social (McCue y Norris‐Tirrell, 2002). 
 
 
-```{r confianzaveci-quintilinm, fig.cap = 'Confianza en los vecinos según quintil de inmigrantes'}
+```{r confianzaveci-quintilinm, fig.cap = 'Confianza en los vecinos, según quintil de proporción de inmigrantes'}
+
+# elsoc::load_elsoc('territorial-2017')
+# territorial <- merge(elsoc_wide_2016_2021, elsoc_terr_2017, by="idencuesta")
 
 territorial$inmigrante[territorial$inmigrante < 0] <- NA
 territorial$p_inmigracion <- territorial$inmigrante/territorial$hbtes
@@ -513,7 +422,7 @@ tab %>% ggplot(aes(y = freq, x = quintil, label = scales::percent(freq, accuracy
                      limits = c(0,1)) +
   labs(y = NULL, x = NULL,
        title = "Confianza en los vecinos según quintil de proporción de inmigrantes en zona censal") +
-  scale_color_viridis_d(end = .66, direction = 1, option = 'viridis') +
+  scale_color_viridis_d(end = .66, direction = 1) +
   theme(legend.position = 'top',
         legend.title = element_blank())
 
@@ -527,7 +436,10 @@ Por lo tanto, resulta relevante analizar también la frecuencia de las interacci
 
 La Figura \@ref(fig:frecvisitavecinos-ola) presenta la dinámica en la frecuencia de visitas a vecinos a través de las cinco rondas de la encuesta. Se observa un aumento importante en el porcentaje de encuestados que nunca ha visitado a sus vecinos en 2021. Este porcentaje se había mantenido relativamente constante en torno al 30% entre 2016 y 2019, pero alcanzó un 39.1% en 2021. Este aumento proviene de la disminución de quienes visitaban a sus vecinos una o dos veces al año, ya que, el porcentaje de encuestados que visitaba más de dos veces se redujo muy levemente durante el periodo analizado, desde 37.5% en 2016 a 35.8% en 2021. Lo anterior respondería a las medidas de distanciamiento social impuestas por las autoridades sanitarias para enfrentar la pandemia por covid19.
 
-```{r frecvisitavecinos-ola, fig.cap = 'Frecuencia de visita a vecinos según ola de estudio.'}
+```{r frecvisitavecinos-ola, fig.cap = 'Frecuencia de visita a vecinos, según ola de estudio'}
+
+# elsoc::load_elsoc('long')
+
 tab <- elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & !c07_01 %in% c(-888, -999)) %>% 
   mutate(barrio_conf = factor(car::recode(c07_01, "1 = 1; 2 = 2; 3 = 3"),
@@ -543,9 +455,9 @@ tab %>%
   geom_col(position = 'Stack') +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = .11, end = .88, direction = 1, option = 'viridis') +
+  scale_fill_viridis_d(begin = .11, end = .88, direction = 1) +
   geom_text(position = position_stack(vjust = .5),
-            size= 2.75, color = rep(c('white', 'white', 'black'), 5)) + 
+            size = 3, color = rep(c('white', 'white', 'black'), 5)) + 
   theme(legend.position = 'top',
         legend.title = element_blank())
 
@@ -555,7 +467,10 @@ Respecto a diferencias de género en interacciones sociales barriales, la Figura
 
 Por su parte, los hombres también disminuyeron el porcentaje que realiza visitas a sus vecinos, pero en menor medida que las mujeres, exhibiendo un 67% en 2016 y 61.4% en 2021. Este resultado indicaría que la pandemia también habría afectado más fuerte a las mujeres en términos de sus relaciones en el vecindario. 
 
-```{r frecvisita-sexo, fig.align='center',fig.cap = 'Frecuencia de visita vecinos según sexo'}
+```{r frecvisita-sexo, fig.align='center',fig.cap = 'Frecuencia de visita vecinos, según sexo'}
+
+# elsoc::load_elsoc('territorial-2017')
+# territorial <- merge(elsoc_wide_2016_2021, elsoc_terr_2017, by="idencuesta")
 
 tab<-territorial %>%   
   filter(!is_nsnr(m0_sexo_w01, c07_01_w01, c07_01_w02, c07_01_w03, c07_01_w04, c07_01_w05))  %>%
@@ -624,7 +539,7 @@ ggplot(data= tab, aes(x=var, y=freq, color=m0_sexo_w01)) +
   geom_point(size = 1.75) + 
   geom_line() +
   theme_bw() +   
-  scale_color_viridis_d(begin = 0, end = .66, direction = 1, option = 'viridis') +
+  scale_color_viridis_d(begin = 0, end = .66, direction = 1) +
   labs(y = NULL, x = NULL, title = NULL) +
   scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
   scale_x_continuous(breaks = c(1,2,3,4,5), labels=c("2016", "2017", "2018", "2019", "2021")) +
@@ -640,7 +555,10 @@ El análisis territorial sobre la frecuencia de las interacciones sociales barri
 En efecto, en ciudades pequeñas el porcentaje que visita a sus vecinos disminuyó de 67.1% a 52.3% entre 2019 y 2021. En contraste, en el Gran Santiago, la caída fue desde 72.1% a 60.7% entre ambos periodos (Figura \@ref(fig:frecvisita-zona)).
 
 
-```{r frecvisita-zona, fig.cap = 'Frecuencia de visita vecinos por zona'}
+```{r frecvisita-zona, fig.cap = 'Frecuencia de visita vecinos, según estrato'}
+
+# elsoc::load_elsoc('territorial-2017')
+# territorial <- merge(elsoc_wide_2016_2021, elsoc_terr_2017, by="idencuesta")
 
 tab<-territorial %>%   
   filter(!is_nsnr(estrato_w05, c07_01_w01, c07_01_w02, c07_01_w03, c07_01_w04, c07_01_w05))  %>%
@@ -715,7 +633,7 @@ tab %>%
   geom_point(size = 1.75) + 
   geom_line() +
   theme_bw() +   
-  scale_color_viridis_d(begin = 0, end = .66, direction = 1, option = 'viridis') +
+  scale_color_viridis_d(begin = 0, end = .66, direction = 1) +
   labs(y = NULL, x = NULL, title = NULL) +
   scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
   scale_x_continuous(breaks = c(1,2,3,4,5), labels=c("2016", "2017", "2018", "2019", "2021")) +
@@ -733,6 +651,9 @@ No obstante, se debe señalar que, las interacciones sociales a nivel de barrio 
 
 
 ```{r frecvisita-quintil, fig.align='center',fig.cap = 'Frecuencia de visita vecinos por quintil'}
+
+# elsoc::load_elsoc('territorial-2017')
+# territorial <- merge(elsoc_wide_2016_2021, elsoc_terr_2017, by="idencuesta")
 
 territorial$quintil <- quantcut(territorial$m29_w05, q=5, na.rm=T, 
                                 labels=c("Q1", "Q2", "Q3", "Q4", "Q5"))
@@ -805,7 +726,7 @@ tab %>%
   geom_point(size = 1.75) + 
   geom_line() +
   theme_bw() +   
-  scale_color_viridis_d(begin = 0, end = .66, direction = 1, option = 'viridis') +
+  scale_color_viridis_d(begin = 0, end = .66, direction = 1) +
   labs(y = NULL, x = NULL, title = NULL) +
   scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
   scale_x_continuous(breaks = c(1,2,3,4,5), 
@@ -822,7 +743,10 @@ La Figura \@ref(fig:frecvisita-quintilesc) muestra el porcentaje de encuestados 
 El grupo clasificado en el primer quintil de escolaridad promedio del barrio de residencia exhibe el menor porcentaje de encuestados que visita a sus vecinos (65.6%), seguido por el quinto quintil o de mayor escolaridad promedio del barrio de residencia (66.9%). Los quintiles intermedios, por su parte, rodean el 70% de encuestados que reporta visitar a sus vecinos.
 
 
-```{r frecvisita-quintilesc, fig.align='center',fig.cap = 'Frecuencia de visita vecinos según quintil de  escolaridad'}
+```{r frecvisita-quintilesc, fig.cap = 'Frecuencia de visita vecinos según quintil de  escolaridad'}
+
+# elsoc::load_elsoc('territorial-2017')
+# territorial <- merge(elsoc_wide_2016_2021, elsoc_terr_2017, by="idencuesta")
 
 territorial$escolaridad[territorial$escolaridad < 0] <- NA
 
@@ -852,7 +776,7 @@ tab %>% ggplot(aes(y = freq, x = quintil, label = scales::percent(freq, accuracy
                      limits = c(0,1)) +
   labs(y = NULL, x = NULL,
        title = "Frecuencia de visita a vecinos según quintil de escolaridad en zona censal") +
-  scale_color_viridis_d(end = .66, direction = 1, option = 'viridis') +
+  scale_color_viridis_d(end = .66, direction = 1) +
   theme(legend.position = 'top',
         legend.title = element_blank())
 
@@ -862,6 +786,9 @@ Adicionalmente, al vincular la tasa de inmigración en el barrio de residencia d
 
 
 ```{r frecvisita-quintilinm, fig.align='center',fig.cap = 'Frecuencia de visita a vecinos según quintil de inmigrantes'}
+
+# elsoc::load_elsoc('territorial-2017')
+# territorial <- merge(elsoc_wide_2016_2021, elsoc_terr_2017, by="idencuesta")
 
 territorial$inmigrante[territorial$inmigrante < 0] <- NA
 territorial$p_inmigracion <- territorial$inmigrante/territorial$hbtes
@@ -893,7 +820,7 @@ tab %>% ggplot(aes(y = freq, x = quintil, label = scales::percent(freq, accuracy
                      limits = c(0,1)) +
   labs(y = NULL, x = NULL,
        title = "Frecuencia de visita a vecinos según quintil de proporción de inmigrantes en zona censal") +
-  scale_color_viridis_d(end = .66, direction = 1, option = 'viridis') +
+  scale_color_viridis_d(end = .66, direction = 1) +
   theme(legend.position = 'top',
         legend.title = element_blank())
 
@@ -905,7 +832,9 @@ tab %>% ggplot(aes(y = freq, x = quintil, label = scales::percent(freq, accuracy
 La seguridad barrial tiene una importancia sustantiva en la medida de que permite comprender la evolución del bienestar social y económico, la calidad de vida en los barrios y su sustentabilidad en el tiempo (Brown, Brown y Perkins, 2004). Asimismo, empíricamente se ha demostrado que la seguridad barrial es un importante predictor del capital social (Curley, 2010). 
 La Figura \@ref(fig:seguri-ola) muestra una tendencia decreciente en el porcentaje de encuestados que percibe a su barrio inseguro o muy inseguro hasta el año 2019. Luego, la tendencia se revierte con un porcentaje que aumenta desde 16.5% el 2019 a 19.4% el 2021. La crisis sanitaria y su consecuente crisis económica podría explicar este fenómeno. 
 
-```{r seguri-ola, fig.cap = '¿Qué tan seguro o inseguro se siente en el barrio o vecindario donde usted vive? Según ola del estudio.'}
+```{r seguri-ola, fig.cap = 'Sensación de seguridad del barrio o vecindario, según ola del estudio.'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & !t10 %in% c(-888, -999)) %>% 
@@ -920,11 +849,11 @@ elsoc_long_2016_2021 %>%
   geom_col(position = 'Stack') +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = .11, end = .88, direction = 1, option = 'viridis') +
+  scale_fill_viridis_d(begin = .11, end = .88, direction = 1) +
   geom_text(position = position_stack(vjust = .5),
-            size= 2.75, color = rep(c('white', 'white', 'black'), 5)) + 
+            size = 3, color = rep(c('white', 'white', 'black'), 5)) + 
   theme(legend.position = 'top',
-        legend.title = element_blank())
+        legend.title = element_blank()) 
 
 ```
 
@@ -936,7 +865,9 @@ La zona Norte exhibe una tendencia decreciente en el porcentaje de encuestados i
 En las zonas Centro y Sur también se observa una tendencia decreciente en el porcentaje de encuestados inseguros o muy inseguros en su barrio. No obstante, este porcentaje aumenta levemente en el Sur considerando las últimas dos rondas (7.8% a 10.2%) y se mantiene constante en la zona Centro (Figura \@ref(fig:seguri-zona)). 
 
 
-```{r seguri-zona, fig.align='center',fig.cap = '¿Qué tan seguro o inseguro se siente en el barrio o vecindario donde usted vive? Según ola del estudio y zona geográfica. Suma de Respuestas "Inseguro" o ”Muy Inseguro".'}
+```{r seguri-zona, fig.cap = 'Sensación de inseguridad del barrio o vecindario de residencia, según ola del estudio y zona geográfica'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & !t10 %in% c(-888, -999)) %>% 
@@ -955,17 +886,21 @@ elsoc_long_2016_2021 %>%
                      limits = c(0,.5)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_color_viridis_d(begin = 0, end = .77, direction = -1, option = 'viridis') +
+  scale_color_viridis_d(begin = 0, end = .77, direction = -1) +
   ggrepel::geom_text_repel(size = 3) +
   theme(legend.position = 'top',
-        legend.title = element_blank())
+        legend.title = element_blank()) +
+  ggtitle(NULL,
+          'Porcentaje que se siente Inseguro o Muy inseguro')
 
 ```
 
 En cuanto a la seguridad percibida en el barrio según educación, en la Figura \@ref(fig:seguri-educ) se observa que son los encuestados con educación Universitaria quienes más reducen su porcentaje de quienes se sienten inseguros o muy inseguros a lo largo del periodo, desde 21.4% en 2016 a 8.1% en 2021. Otros grupos, con menores niveles educativos se mantuvieron o aumentaron este porcentaje entre estallido social (2019) y pandemia por covid19 (2021). Este resultado es consistente con la teoría y estudios empíricos que señalan a la educación superior como factor protector, ya que, permite hacer frente a shocks negativos, como la pandemia por covid19 y su consecuente crisis económica (Delaney y Devereux, 2019)
 
 
-```{r seguri-educ, fig.align='center',fig.cap = '¿Qué tan seguro o inseguro se siente en el barrio o vecindario donde usted vive? Según ola del estudio y nivel educacional. Suma de Respuestas "Inseguro" o ”Muy Inseguro".'}
+```{r seguri-educ, fig.cap = 'Sensación de inseguridad del barrio o vecindario de residencia, según ola del estudio y nivel educacional'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & !t10 %in% c(-888, -999) & !m01 %in% c(-888, -999)) %>% 
@@ -984,16 +919,20 @@ elsoc_long_2016_2021 %>%
                      limits = c(0,.5)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_color_viridis_d(begin = 0, end = .77, direction = -1, option = 'viridis') +
+  scale_color_viridis_d(begin = 0, end = .77, direction = -1) +
   ggrepel::geom_text_repel(size = 3) +
   theme(legend.position = 'top',
-        legend.title = element_blank())
+        legend.title = element_blank()) +
+  ggtitle(NULL,
+          'Porcentaje que se siente Inseguro o Muy inseguro')
 
 ```
 
 La seguridad subjetiva en el barrio también varía según grupos de edad. Desde 2017, los adultos mayores con 65 años o más presentan el menor porcentaje de encuestados que se siente inseguro o muy inseguro en su barrio, respecto a grupos de menor edad. Además, es el único grupo etario que mantiene la tendencia decreciente durante todo el periodo, desde 21.6% en 2016 a 12.1% en 2021 (Figura \@ref(fig:seguri-edad)).
 
-```{r seguri-edad, fig.align='center',fig.cap = '¿Qué tan seguro o inseguro se siente en el barrio o vecindario donde usted vive? Según ola del estudio y tramos de edad. Suma de Respuestas "Inseguro" o ”Muy Inseguro".'}
+```{r seguri-edad, fig.cap = 'Sensación de inseguridad del barrio o vecindario de residencia, según ola del estudio y tramo de edad'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & !t10 %in% c(-888, -999)) %>% 
@@ -1012,16 +951,20 @@ elsoc_long_2016_2021 %>%
                      limits = c(0,.5)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_color_viridis_d(begin = 0, end = .77, direction = -1, option = 'viridis') +
+  scale_color_viridis_d(begin = 0, end = .77, direction = -1) +
   ggrepel::geom_text_repel(size = 3) +
   theme(legend.position = 'top',
-        legend.title = element_blank())
+        legend.title = element_blank()) +
+  ggtitle(NULL,
+          'Porcentaje que se siente Inseguro o Muy inseguro')
 
 ```
 
 Al analizar la seguridad subjetiva que reportan los encuestados respecto a su barrio de residencia, según quintiles de ingreso, la Figura \@ref(fig:seguri-quintil) muestra una tendencia decreciente en el porcentaje que señala sentirse inseguro o muy inseguro 
 
-```{r seguri-quintil, fig.align='center',fig.cap = '¿Qué tan seguro o inseguro se siente en el barrio o vecindario donde usted vive? Según ola del estudio y quintil de ingreso per capita. Suma de Respuestas "Seguro" o ”Muy Seguro".'}
+```{r seguri-quintil, fig.cap = 'Sensación de inseguridad del barrio o vecindario de residencia, según ola del estudio y quintil de ingreso del hogar'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & !t10 %in% c(-888, -999)) %>% 
@@ -1052,11 +995,13 @@ elsoc_long_2016_2021 %>%
                      limits = c(0,.5)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_color_viridis_d(begin = .0, end = .55, direction = -1, option = 'viridis') +
+  scale_color_viridis_d(begin = .0, end = .55, direction = -1) +
   geom_text(vjust = -0.8,
-            size= 2.75) +
+            size = 3) +
   theme(legend.position = 'top',
-        legend.title = element_blank())
+        legend.title = element_blank()) +
+  ggtitle(NULL,
+          'Porcentaje que se siente Inseguro o Muy inseguro')
 
 ```
 
@@ -1065,6 +1010,8 @@ elsoc_long_2016_2021 %>%
 El porcentaje que declara que ocurren crímenes muchas veces o siempre en el barrio de residencia se ha mantenido relativamente estable a través del tiempo, fluctuando entre 30.3% en 2016 y 28.6% en 2021, con leves aumentos o disminuciones entre dichos años (Figura \@ref(fig:crim-olas))
 
 ```{r crim-olas, fig.cap = '¿Con qué frecuencia se han producido crímenes (riñas, robos y tráfico de drogas) en su barrio?, según ola de estudio.'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 &
@@ -1080,9 +1027,9 @@ elsoc_long_2016_2021 %>%
   geom_col(position = 'Stack') +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = .11, end = .88, direction = -1, option = 'viridis') +
+  scale_fill_viridis_d(begin = .11, end = .88, direction = -1) +
   geom_text(position = position_stack(vjust = .5),
-            size= 2.75, color = rep(c('black', 'white', 'white'), 5)) + 
+            size = 3, color = rep(c('black', 'white', 'white'), 5)) + 
   theme(legend.position = 'top', legend.title = element_blank())
 
 ```
@@ -1090,6 +1037,8 @@ elsoc_long_2016_2021 %>%
 Al desagregar la frecuencia de ocurrencia de crímenes en el barrio según zonas del territorio nacional se observa un significativo aumento del porcentaje que declara que los crímenes en su barrio ocurren siempre o muchas veces en la zona Sur, esto es, un incremento desde 6.4% a 31.0% entre 2019 y 2021. En contraste, en las zonas Norte, Centro y Metropolitana, este porcentaje disminuyó (Figura \@ref(fig:crim-zona)).
 
 ```{r crim-zona, fig.cap = '¿Con qué frecuencia se han producido crímenes (riñas, robos y tráfico de drogas) en su barrio?, según ola del estudio y zona geográfica. Porcentaje de experiencias de criminalidad "Siempre" o "Muchas veces".'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & ola %in% c(4,5) &
@@ -1110,12 +1059,12 @@ elsoc_long_2016_2021 %>%
                      limits = c(0, .5)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1) +
   theme(legend.position = 'top',
         legend.title = element_blank()) +
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
-            size= 2.75)
+            size = 3)
 
 ```
 
@@ -1124,6 +1073,8 @@ El análisis territorial por grandes ciudades indica que el porcentaje de encues
 En otros territorios del país, tales como, ciudades grandes, medianas y pequeñas, los porcentajes de experiencias de criminalidad barrial que ocurren siempre o muchas veces han aumentado significativamente durante el periodo analizado. Destaca el incremento de más de 10 puntos porcentuales en ciudades pequeñas (Figura \@ref(fig:crim-estrato)).  
 
 ```{r crim-estrato, fig.cap = '¿Con qué frecuencia se han producido crímenes (riñas, robos y tráfico de drogas) en su barrio?, según ola del estudio y tipo de ciudad. Porcentaje de experiencias de criminalidad "Siempre" o "Muchas veces".'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & ola %in% c(4,5) &
@@ -1145,12 +1096,12 @@ elsoc_long_2016_2021 %>%
                      limits = c(0, .5)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1) +
   theme(legend.position = 'top',
         legend.title = element_blank()) +
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
-            size= 2.75)
+            size = 3)
 
 ```
 
@@ -1160,6 +1111,8 @@ Los resultados de ELSOC sugieren que, efectivamente, el quintil de ingresos de l
 
 
 ```{r crim-quintil, fig.cap = '¿Con qué frecuencia se han producido crímenes (riñas, robos y tráfico de drogas) en su barrio?, según ola del estudio y quintil de ingreso. Porcentaje de experiencias de criminalidad "Siempre" o "Muchas veces".'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 &
@@ -1190,9 +1143,9 @@ elsoc_long_2016_2021 %>%
                      limits = c(0,.6)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_color_viridis_d(begin = .0, end = .55, direction = -1, option = 'viridis') +
+  scale_color_viridis_d(begin = .0, end = .55, direction = -1) +
   geom_text(vjust = -0.8,
-            size= 2.75) +
+            size = 3) +
   theme(legend.position = 'top',
         legend.title = element_blank())
 
@@ -1210,6 +1163,8 @@ Tal como se observa en la figura \@ref(fig:amen1-wave), primero llama la atenci�
 
 ```{r amen1-wave, fig.align='center',fig.cap = 'Con la llegada de migrantes a Chile, está aumentando el desempleo", según ola y origen de migrantes. Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
 
+# elsoc::load_elsoc('long')
+
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion %in% c(1, 17) & !r12_04 %in% c(-888, -999)) %>% 
   elsoc::prop(r12_04 %in% c(4,5), by = c(ola, cuestion_mig)) %>% 
@@ -1223,8 +1178,8 @@ elsoc_long_2016_2021 %>%
                      limits = c(0, 1)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_color_viridis_d(begin = 0, end = .66, direction = -1, option = 'viridis') +
-  ggrepel::geom_text_repel(size= 2.75) +
+  scale_color_viridis_d(begin = 0, end = .66, direction = -1) +
+  ggrepel::geom_text_repel(size = 3) +
   theme(legend.position = 'top',
         legend.title = element_blank())
 
@@ -1234,6 +1189,8 @@ Al analizar los niveles de amenaza realista a lo largo del tiempo en distintas z
 
 
 ```{r amen1-zona, fig.align='center',fig.cap = 'Con la llegada de migrantes a Chile, está aumentando el desempleo", según ola, zona y origen de migrantes. Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   mutate(macrozona = factor(case_when(region_cod %in% c(15, 1, 2, 3) ~ 1,
@@ -1254,8 +1211,8 @@ elsoc_long_2016_2021 %>%
                      limits = c(0, 1)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_color_viridis_d(begin = 0, end = .66, direction = -1, option = 'viridis') +
-  ggrepel::geom_text_repel(size= 2.75) +
+  scale_color_viridis_d(begin = 0, end = .66, direction = -1) +
+  ggrepel::geom_text_repel(size = 3) +
   theme(legend.position = 'top',
         legend.title = element_blank())
 
@@ -1265,6 +1222,8 @@ Respecto de los niveles de amenaza simbólica, en primer lugar llama la atenció
 
 
 ```{r amen2-wave, fig.align='center',fig.cap = '"Con la llegada de migrantes, Chile está perdiendo su identidad", según ola y origen de migrantes. Porcentaje de personas que responden "De acuerdo" o "Totalmente de acuerdo".'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion %in% c(1, 17) & !r12_03 %in% c(-888, -999)) %>% 
@@ -1279,8 +1238,8 @@ elsoc_long_2016_2021 %>%
                      limits = c(0, 1)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_color_viridis_d(begin = 0, end = .66, direction = -1, option = 'viridis') +
-  ggrepel::geom_text_repel(size= 2.75) +
+  scale_color_viridis_d(begin = 0, end = .66, direction = -1) +
+  ggrepel::geom_text_repel(size = 3) +
   theme(legend.position = 'top',
         legend.title = element_blank())
 ```
@@ -1290,6 +1249,8 @@ Al analizar los niveles de amenaza simbólica a lo largo del tiempo en distintas
 
 
 ```{r amen2-zona, fig.align='center',fig.cap = '"Con la llegada de migrantes, Chile está perdiendo su identidad", según ola, zona y origen de migrantes. Porcentaje de personas que responden "De acuerdo" o "Totalmente de acuerdo".'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   mutate(macrozona = factor(case_when(region_cod %in% c(15, 1, 2, 3) ~ 1,
@@ -1310,8 +1271,8 @@ elsoc_long_2016_2021 %>%
                      limits = c(0, 1)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_color_viridis_d(begin = 0, end = .66, direction = -1, option = 'viridis') +
-  ggrepel::geom_text_repel(size= 2.75) +
+  scale_color_viridis_d(begin = 0, end = .66, direction = -1) +
+  ggrepel::geom_text_repel(size = 3) +
   theme(legend.position = 'top',
         legend.title = element_blank())
 
@@ -1322,6 +1283,8 @@ Al analizar, los niveles de amenaza realista y simbólica para la quinta ola (a�
 
 
 ```{r amen-2021, fig.align='center',fig.cap = 'Percepción de amenaza realista y simbólica, según grupo de migrantes (2021). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>%
   filter(tipo_atricion %in% c(1, 17) & ola == 5) %>% 
@@ -1340,12 +1303,12 @@ elsoc_long_2016_2021 %>%
                      limits = c(0, .8)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1) +
   theme(legend.position = 'top',
         legend.title = element_blank()) +
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
-            size= 2.75)
+            size = 3)
 
 ```
 
@@ -1353,6 +1316,8 @@ Al analizar los niveles de amenaza en función de la escolaridad de los particip
 
 
 ```{r amen-educ, fig.align='center',fig.cap = 'Percepción de amenaza realista y simbólica respecto a inmigrantes, según nivel educacional (2021). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>%
   filter(tipo_atricion %in% c(1, 17) & ola == 5) %>% 
@@ -1371,12 +1336,12 @@ elsoc_long_2016_2021 %>%
                      limits = c(0, .8)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1) +
   theme(legend.position = 'top',
         legend.title = element_blank()) +
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
-            size= 2.75)
+            size = 3)
 
 ```
 
@@ -1385,6 +1350,8 @@ Finalmente, al comparar los niveles de amenaza en función de la edad de los par
 
 
 ```{r amen-edad, fig.align='center',fig.cap = 'Percepción de amenaza realista y simbólica, según tramo de edad (2021). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>%
   filter(tipo_atricion %in% c(1, 17) & ola == 5) %>% 
@@ -1404,12 +1371,12 @@ elsoc_long_2016_2021 %>%
                      limits = c(0, .8)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  scale_fill_viridis_d(begin = 0, end = .85, direction = -1) +
   theme(legend.position = 'top',
         legend.title = element_blank()) +
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
-            size= 2.75)
+            size = 3)
 ```
 
 
@@ -1417,6 +1384,8 @@ Junto con evaluar los niveles de amenaza percibida realista y simbólica, ELSOC 
 
 
 ```{r conf-wave, fig.align='center',fig.cap = 'Confianza en migrantes, según ola y origen de migrantes. Porcentaje de personas que responden “Bastante” o “Mucha confianza”'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   mutate(confianza = ifelse(ola %in% c(1,3), c06_06, r16)) %>% 
@@ -1432,8 +1401,8 @@ elsoc_long_2016_2021 %>%
                      limits = c(0,1)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_color_viridis_d(begin = 0, end = .66, direction = -1, option = 'viridis') +
-  ggrepel::geom_text_repel(size= 2.75) +
+  scale_color_viridis_d(begin = 0, end = .66, direction = -1) +
+  ggrepel::geom_text_repel(size = 3) +
   theme(legend.position = 'top',
         legend.title = element_blank())
 
@@ -1442,6 +1411,8 @@ elsoc_long_2016_2021 %>%
 Al desagregar los niveles de confianza según zona geográfica (Figura \@ref(fig:conf-zona)), se constata en primer lugar que en las zonas centro/región metropolitana y centro /sur se exhiben niveles establemente más bajos de confianza hacia todos los grupos migrantes, con una tendencia a una mayor caída especialmente en la RM. Contrario a este patrón, en la zona norte y austral se observan importantes variaciones a lo largo de los años y entre los grupos migrantes. Por ejemplo, es en la zona norte y austral donde se observan los niveles de mayor confianza en el caso de los peruanos pero con muchas fluctuaciones a lo largo de los años. 
 
 ```{r conf-zona, fig.align='center',fig.cap = 'Confianza en migrantes, según ola, zona y origen de migrantes. Porcentaje de personas que responden “Bastante” o “Mucha confianza”'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   mutate(macrozona = factor(case_when(region_cod %in% c(15, 1, 2, 3) ~ 1,
@@ -1463,8 +1434,8 @@ elsoc_long_2016_2021 %>%
                      limits = c(0, 1)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_color_viridis_d(begin = 0, end = .66, direction = -1, option = 'viridis') +
-  ggrepel::geom_text_repel(size= 2.75) +
+  scale_color_viridis_d(begin = 0, end = .66, direction = -1) +
+  ggrepel::geom_text_repel(size = 3) +
   theme(legend.position = 'top',
         legend.title = element_blank())
 
@@ -1480,6 +1451,8 @@ Tal como lo muestra la figura \@ref(fig:sexismo-sexo) en general existen niveles
 Al analizar los niveles de sexismo en función de la escolaridad de los participantes del estudio (ver Figura \@ref(fig:sexismo-educ)), se constataron diferencias muy sustantivas entre los niveles más bajos de escolaridad y los más altos. En los cuatro ítems evaluados, las personas con menor escolaridad exhiben mayores niveles de sexismo (hostil y benevolente) que las personas con niveles de escolaridad universitaria o más.  
 
 ```{r sexismo-sexo, fig.cap = 'Sexismo benévolo y hostil, según sexo (2021). Porcentaje que responde "De acuerdo" o "Totalmente de acuerdo".'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & ola == 5 & !g01_01 %in% c(-888, -999) & !g01_02 %in% c(-888, -999) & !g01_03 %in% c(-888, -999) & !g01_04 %in% c(-888, -999)) %>% 
@@ -1501,16 +1474,18 @@ elsoc_long_2016_2021 %>%
                      limits = c(0, 1)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') + 
+  scale_fill_viridis_d(begin= .33, end = .66, direction = -1) + 
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
-            size= 2.75)  +
+            size = 3)  +
   theme(legend.position = 'top',
         legend.title = element_blank())  
 
 ```
 
 ```{r sexismo-educ, fig.align='center',fig.cap = 'Sexismo benévolo y hostil, según nivel educacional (2021). Porcentaje que responde "De acuerdo" o "Totalmente de acuerdo".'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & ola == 5 & !g01_01 %in% c(-888, -999) & !g01_02 %in% c(-888, -999) & !g01_03 %in% c(-888, -999) & !g01_04 %in% c(-888, -999) & !m01 %in% c(-888, -999)) %>% 
@@ -1535,43 +1510,16 @@ elsoc_long_2016_2021 %>%
                      limits = c(0, 1)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') + 
+  scale_fill_viridis_d(end = .85, direction = -1) + 
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
-            size= 2.75)  +
+            size = 3)  +
   theme(legend.position = 'top',
         legend.title = element_blank())  
 
 
 ```
 
-```{r ocup-sexo, fig.align='center',fig.cap = 'Porcentaje de trabajadores y trabajadoras por situación ocupacional (2021), según sexo del entrevistado'}
-elsoc_long_2016_2021 %>% 
-    dplyr::filter(tipo_atricion == 1 
-                & ola %in% c(3, 5) & !m01 %in% c(-888, -999)) %>% 
-  mutate(sit_ocup = factor(car::recode(m02, "1:3 = 1; 7 = 2; 6 = 3; 5 = 4; c(4, 8, 9) = 5"), 
-                           levels = c(1:5),
-                           labels = c("Trabajo\nremunerado", "Trabajo doméstico\nno remunerado", "Desempleado/a", "Jubilado/a o\npensionado/a", "Otras\ncategorías"))) %>%
-  prop(sit_ocup, by = c(ola, m0_sexo), na.rm = TRUE) %>% 
-  sjlabelled::as_label(m0_sexo, ola, sit_ocup) %>% 
-  ggplot(aes(y = prop, x = m0_sexo, fill = sit_ocup, 
-             label = scales::percent(prop, accuracy = .1))) + 
-  theme_bw() + 
-  geom_col(position = 'Stack') +
-  scale_y_continuous(labels = scales::percent) +
-  ylab(label = NULL) +
-  xlab(label = NULL) +
-  facet_wrap(.~ola)+
-  scale_fill_viridis_d(begin = .13, end = .85, direction = -1, option = 'viridis') +
-  #cambiar geom_text tal que: Stack y cambio colores
-  geom_text(aes(label = ifelse(prop> 0.03 , scales::percent(prop, accuracy = .1),"")), position = position_stack(vjust = .5),
-            show.legend = FALSE,
-            size = 2.75,
-            color = rep.int(c('black', 'black', 'black','white', 'white'), 4)) + 
-  theme(legend.position = 'top',
-        legend.title = element_blank())
-
-```
 
 ```{r m17, eval=FALSE, fig.cap = 'Horas de Cuidado'}
 #PENDIENTE
@@ -1606,12 +1554,12 @@ g16.11 <- ggplot(subset.grafico, aes(x = ola, fill = m17_rec, stratum = m17_rec,
   xlab(label = NULL) +
   theme(legend.position = 'top',
         legend.title = element_blank()) +
-  scale_fill_viridis_d(begin = 0, end = .9, direction = -1, option = 'viridis') +
+  scale_fill_viridis_d(begin = 0, end = .9, direction = -1) +
   geom_text(data = etiquetas.grafico, 
             aes(label = ifelse(porcentaje > 0.05 , scales::percent(porcentaje, accuracy = .1),"")),
             position = position_stack(vjust = .5),
             show.legend = FALSE,
-            size= 2.75)
+            size = 3)
 
 g16.11
 ```
@@ -1625,7 +1573,9 @@ Estudios previos han mostrado que las personas tienen una visión acerca del est
 
 Como se puede observar en la figura \@ref(fig:ess-ola), que resume el resultado del estatus subjetivo de los chilenos durante las cinco olas de ELSOC, en todas ellas los participantes tienden a considerarse de clase media, fluctuando entre un 57,1% en 2016 a un 63,8% en 2021. El autoposicionamiento en la parte baja o media baja de la escala social presenta sin embargo fluctuaciones. El 2016 y el 2019 fue de 25% aproximado, mientras que en los otros años (2017, 2018 y 2021) estuvo por debajo del 20%, siendo el año 2021 cuando una menor proporción de chilenos se ubica en esa posición (14,9%). Finalmente, el autoposicionamiento en la parte alta de la escala social tiende a ser estable entre los años 2016 y 2018 en torno al 19%, y muestra una fluctuación más marcada en los años 2019 y 2021, bajando a un 11,9% y luego subiendo a un 21,5%, respectivamente.
 
-```{r ess-ola, fig.cap = 'En nuestra sociedad, hay grupos que tienden a ubicarse en los niveles más altos y grupos que tienden a ubicarse en los niveles más bajos de la sociedad ¿Dónde se ubicaría usted?, según ola de estudio.'}
+```{r ess-ola, fig.cap = 'Clase social subjetiva, según ola de estudio'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & !d01_01 %in% c(-888, -999)) %>% 
@@ -1640,10 +1590,10 @@ elsoc_long_2016_2021 %>%
   geom_col(position = 'Stack') +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = .11, end = .88, direction = 1, option = 'viridis') +
+  scale_fill_viridis_d(begin = .11, end = .88, direction = 1) +
   scale_y_continuous(labels = scales::percent) + 
   geom_text(position = position_stack(vjust = .5),
-            size= 2.75, color = rep(c('white', 'white', 'black'), 5)) + 
+            size = 3, color = rep(c('white', 'white', 'black'), 5)) + 
   theme(legend.position = 'top',
         legend.title = element_blank())
 
@@ -1652,6 +1602,8 @@ elsoc_long_2016_2021 %>%
 Al analizar los cambios del estatus social subjetivo entre olas, primero se constata que la mayoría de las personas que consideran pertenecer a la clase social media, tienden a mantenerse en la misma posición a lo largo de los años. Segundo, entre 2016 y 2019 se observa un importante flujo de cambio en el estatus subjetivo hacia abajo (de posición social alto hacia media y de posición social media hacía posición social baja), mientras que entre 2019 y 2021 el flujo de cambios en el estatus subjetivo se produce hacia arriba (de posición social baja hacia media y de posición social media hacía posición social alta). Tercero, es importante constatar que los cambios en el estatus subjetivo ocurren entre las posiciones cercanas, es decir, son muy pocos los casos en que se observan cambios entre extremos de la posición social subjetiva. Finalmente, es importante destacar que el grupo de personas que más experimenta cambios a lo largo del tiempo, y de manera ascendente, son aquellas que declaran pertenecer a clases sociales bajas y media baja.
 
 ```{r ess-cambio, fig.align='center',fig.cap = 'Cambios de Clase social subjetiva entre 2016, 2019 y 2021'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_panel_m1 <- elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1, 
@@ -1686,12 +1638,12 @@ g11.2 <-
   xlab(label = NULL) + 
   theme(legend.position = 'top',
         legend.title = element_blank()) +
-  scale_fill_viridis_d(begin = .11, end = .88, direction = 1, option = 'viridis') +
+  scale_fill_viridis_d(begin = .11, end = .88, direction = 1) +
   geom_text(data = etiquetas.11.2, 
             aes(label = ifelse(prop > 0.03 , scales::percent(prop, accuracy = .1),"")),
             position = position_stack(vjust = .5),
             show.legend = FALSE,
-            size = 2.75,
+            size = 3,
             color = rep(c('white', 'white', 'black'),3))
 g11.2
 ```
@@ -1700,6 +1652,8 @@ Al analizar la percepción de estatus subjetivo en función de los niveles de in
 
 
 ```{r ess-quintil, fig.align='center',fig.cap = 'Clase social subjetiva, según quintiles de ingreso (2021)'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   filter(ola == 5, !is_nsnr(m30b, m54)) %>% 
@@ -1736,7 +1690,9 @@ elsoc_long_2016_2021 %>%
 
 Al analizar la expectativa de movilidad social que los participantes de ELSOC tienen respecto de sus hijos en el futuro (ver Figura \@ref(fig:esshijos-ess)), se constata una fuerte relación entre la percepción de clase social subjetiva declarada por los chilenos/as y la que proyectan para sus hijos/as. De esta manera, las personas que en la quinta ola perciben pertenecer a una clase social baja o media baja, piensan que un 44,1% de sus hijos pertenecerán en el futuro a una clase social media alta y alta. Este porcentaje aumenta muy sustantivamente llegando a un 68,4 % en el caso de quienes se perciben como de clase media y se empina a un 95,4% en el caso de las personas que piensan que ellas pertenecen a las clase social media alta y alta.
 
-```{r esshijos-ess, fig.align='center',fig.cap = 'Si usted tiene actualmente hijos o si los tuviera en el futuro, ¿dónde cree usted que se ubicarían ellos?, según Clase social subjetiva (2021)'}
+```{r esshijos-ess, fig.cap = 'Si usted tiene actualmente hijos o si los tuviera en el futuro, ¿dónde cree usted que se ubicarían ellos?, según Clase social subjetiva (2021)'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & ola == 5,
@@ -1755,10 +1711,10 @@ elsoc_long_2016_2021 %>%
   geom_col(position = 'Stack') +
   ylab(label = NULL) +
   xlab(label = 'Clase social subjetiva propia') +
-  scale_fill_viridis_d(begin = .11, end = .88, direction = 1, option = 'viridis') +
+  scale_fill_viridis_d(end = .85, direction = 1) +
   scale_y_continuous(labels = scales::percent) + 
   geom_text(position = position_stack(vjust = .5),
-            size= 2.75, color = rep(c('white', 'white', 'black'), 3)) + 
+            size = 3, color = rep(c('white', 'white', 'black'), 3)) + 
   theme(legend.position = 'top',
         legend.title = element_blank())
 
@@ -1766,7 +1722,9 @@ elsoc_long_2016_2021 %>%
 
 Al analizar la perspectiva de movilidad social medida como la diferencia entre el estatus social esperado para los hijos/as en el futuro y el que perciben los encuestas de sí mismos (ver Figura \@ref(fig:mov-soc-rec)), se puede observar de manera sistemática a lo largo de las 5 olas del estudio que existe consensualmente una alta perspectiva de movilidad social ascendente en los chilenos/as (fluctuando entre un 78,5% en 2016 y un 74,8% en el 2021). En torno a un 20% de los participantes percibe inmovilidad social y un porcentaje menor de toda la muestra percibe movilidad descendente. Los resultados revelan en su conjunto las altas expectativas de movilidad social que la población chilena tiene de las futuras generaciones.
 
-```{r mov-soc-rec, fig.align='center',fig.cap = 'Perspectiva de movilidad social, según ola.\nNota: la perspectiva de movilidad social corresponde a la resta entre el estatus social esperado del hijo y el estatus social actual del encuestado.'}
+```{r mov-soc-rec, fig.cap = 'Perspectiva de movilidad social, según ola'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1, !is_nsnr(d01_01, d01_03)) %>% 
@@ -1783,21 +1741,25 @@ elsoc_long_2016_2021 %>%
   geom_col(position = 'Stack') +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(end = .8, direction = -1, option = 'viridis') +
+  scale_fill_viridis_d(end = .8, direction = -1) +
   scale_y_continuous(labels = scales::percent) + 
   guides(fill = guide_legend(reverse = TRUE)) +
   geom_text(position = position_stack(vjust = .5),
             size = 3, 
             color = rep(c('white', 'white', 'black'), 5)) + 
   theme(legend.position = 'top',
-        legend.title = element_blank())
+        legend.title = element_blank(),
+        plot.caption = element_text(hjust = 0)) +
+  labs(caption = 'Nota: la perspectiva de movilidad social corresponde a la diferencia entre el estatus social esperado del hijo\ny el estatus social subjetivo del encuestado')
 
 ```
 
 El ideal meritocrático, entendido como la creencia de que las personas son recompensadas por el esfuerzo, ha sido un tema de alto interés en los años recientes. Como se observa en la figura \@ref(fig:mov-soc), los chilenos consideran que para surgir en la vida sones altamente relevantes aspectos como el trabajo duro y la educación, lo que se considera como adherencia al ideal meritocrático (Maldonado, et al., 2019).. En contraste, los chilenos consideran que las recompensas que reciben al por su esfuerzo y por su inteligencia son más bien bajas. Es interesante constatar lo estable de este patrón a lo largo del tiempo, en donde se observan pequeñas fluctuaciones en los distintos años de ELSOC. Esto revela una alta adherencia al ideal meritocrático, reflejado en la idea de que las personas deberían ser recompensadas por su trabajo duro, en contraste con una menor percepción de que esto ocurre.
 
 
-```{r merit-wave, fig.align='center',fig.cap = 'Percepción de importancia y recompensas del mérito, según ola de estudio. Porcentaje de Respuestas "De acuerdo" y ”Totalmente de acuerdo".'}
+```{r merit-wave, fig.align='center',fig.cap = 'Percepción de importancia y recompensas del mérito, según ola de estudio'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1) %>%  
@@ -1808,8 +1770,8 @@ elsoc_long_2016_2021 %>%
   as_label(ola) %>% 
   mutate(name = factor(name,
                        levels = c('c18_09', 'd05_04'),
-                       labels = c('Personas son\nrecompensadas\npor su esfuerzo',
-                               'Trabajo duro\nes importante para\nsurgir en la vida'))) %>% 
+                       labels = c('En Chile, las personas son\nrecompensadas por su esfuerzo',
+                               'El trabajo duro es importante\npara surgir en la vida'))) %>% 
   ggplot(aes(y = prop, x = ola, color = name, group = name,
              label = scales::percent(prop, accuracy = .1))) +
   theme_bw() +   
@@ -1820,11 +1782,13 @@ elsoc_long_2016_2021 %>%
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_color_viridis_d(begin = .33, end = .66, 
-                        direction = 1, option = 'viridis') +
+                        direction = 1) +
   geom_text(vjust = -0.8, color = 'black',
             size = 3) +
   theme(legend.position = 'top',
-        legend.title = element_blank())
+        legend.title = element_blank()) +
+  ggtitle(NULL,
+          subtitle = 'Porcentaje de respuestas "De acuerdo" o ”Totalmente de acuerdo"')
 
 ```
 
