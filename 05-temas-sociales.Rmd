@@ -1787,7 +1787,8 @@ Al analizar los cambios del estatus social subjetivo entre olas, primero se cons
 ```{r ess-cambio, fig.align='center',fig.cap='Cambios de Clase social subjetiva entre 2016, 2019 y 2021'}
 
 elsoc_panel_m1 <- elsoc_long_2016_2021 %>% 
-  filter(tipo_atricion == 1 & ola %in% c(1, 4, 5)) %>% 
+  filter(tipo_atricion == 1, 
+         ola %in% c(1, 4, 5)) %>% 
   group_by(idencuesta) %>% 
   mutate(missing = any(d01_01 %in% c(-888, -999))) %>% 
   filter(!missing) %>% 
@@ -1828,7 +1829,7 @@ g11.2 <-
 g11.2
 ```
 
-Al analizar la percepción de estatus subjetivo en función de los niveles de ingresos de los chilenos (medidos en quintiles), primero se constata que existe un patrón similar de respuestas en los primeros dos quintiles o grupos de menores ingresos, con una predominio en torno al 68% de las personas que se perciben de estatus social subjetivo medio (ver Figura \@ref(fig:quintil)). A partir del tercer quintil de ingresos y hasta llegar al más alto (Q5) se constata un aumento progresivo de la proporción de personas que se percibe como miembros de una clase social media alta y alta, siendo el grupo de mayores ingresos -quinto quintil- donde este alcanza un 42%. De hecho es este último grupo el que mayor diferenciación presenta en su patrón de respuesta comparados con todos los otros grupos socioeconómicos. El patrón general muestra que hay cierta correspondencia entre la posición social objetiva (obtenida a partir de los ingresos) y la posición social subjetiva. 
+Al analizar la percepción de estatus subjetivo en función de los niveles de ingresos de los chilenos (medidos en quintiles), primero se constata que existe un patrón similar de respuestas en los primeros dos quintiles o grupos de menores ingresos, con una predominio en torno al 68% de las personas que se perciben de estatus social subjetivo medio (ver Figura \@ref(fig:ess-quintil)). A partir del tercer quintil de ingresos y hasta llegar al más alto (Q5) se constata un aumento progresivo de la proporción de personas que se percibe como miembros de una clase social media alta y alta, siendo el grupo de mayores ingresos -quinto quintil- donde este alcanza un 42%. De hecho es este último grupo el que mayor diferenciación presenta en su patrón de respuesta comparados con todos los otros grupos socioeconómicos. El patrón general muestra que hay cierta correspondencia entre la posición social objetiva (obtenida a partir de los ingresos) y la posición social subjetiva. 
 
 ```{r ess-quintil, fig.align='center',fig.cap='Clase social subjetiva, según quintiles de ingreso (2021)'}
 
@@ -1929,46 +1930,6 @@ elsoc_long_2016_2021 %>%
 ```
 
 El ideal meritocrático, entendido como la creencia de que las personas son recompensadas por el esfuerzo, ha sido un tema de alto interés en los años recientes. Como se observa en la figura \@ref(fig:mov-soc), los chilenos consideran que para surgir en la vida son altamente relevantes aspectos como el trabajo duro y la educación. En contraste, los chilenos consideran que las recompensas que reciben al esfuerzo y por su inteligencia son más bien bajas. Es interesante constatar lo estable de este patrón a lo largo del tiempo, en donde se observan pequeñas fluctuaciones en los distintos años de ELSOC. Esto revela una alta adherencia al ideal meritocrático, reflejado en la idea de que las personas deberían ser recompensadas por su trabajo duro, en contraste con una menor percepción de que esto ocurre.
-
-```{r mov-soc, fig.align='center',fig.cap='Estatus subjetivo y tipo de movilidad social, nivel promedio según ola.\nNota: perspectiva de movilidad social corresponde a la resta entre el estatus social esperado del hijo y el estatus social actual del encuestado. En cambio movilidad social relativa corresponde a la resta entre el estatus social actual y el estatus social de la familia donde creció.'}
-
-datos.11.6 <- elsoc_long_2016_2021 %>% 
-  filter(tipo_atricion == 1,
-         !is_nsnr(d01_01, d01_02, d01_03)) %>% 
-  sjlabelled::as_label(ola) %>% 
-  mutate(mov_interg = d01_03 - d01_01,
-         mov_relativa = d01_01 - d01_02) %>% 
-  group_by(ola) %>% 
-  summarise(m_interg = weighted.mean(mov_interg, ponderador02 ,na.rm = T),
-            m_relativa = weighted.mean(mov_relativa, ponderador02 ,na.rm = T),
-            m_estatus = weighted.mean(d01_01, ponderador02 ,na.rm = T),
-            n = n()) %>% 
-  mutate(var_interg = 'Perspectiva de\nmovilidad social',
-         var_relativa = 'Movilidad social\nrelativa',
-         var_estatus = 'Estatus social\nactual') %>% 
-  pivot_longer(cols = starts_with('var_'))  %>%
-  mutate(m_mov_social = case_when(
-    value == 'Perspectiva de\nmovilidad social' ~ m_interg,
-    value == 'Movilidad social\nrelativa' ~ m_relativa,
-    value == 'Estatus social\nactual' ~ m_estatus)) 
-
-datos.11.6$m_mov_social <- round(datos.11.6$m_mov_social, digits = 2) 
-
-datos.11.6 %>% 
-  ggplot(aes(y = m_mov_social, x = ola, group = value, color = value,
-             label = m_mov_social)) +
-  theme_bw() +
-  geom_point(size = 1.75) + 
-  geom_line() +
-  scale_y_continuous(limits = c(0,10)) +
-  ylab(label = NULL) +
-  xlab(label = NULL) +
-  scale_color_viridis_d(begin = .11, end = .55, direction = 1, option = 'viridis') +
-  theme(legend.position = 'top',
-        legend.title = element_blank()) +
-  geom_text(vjust = -0.8,  size= 3.5)
-
-```
 
 
 ```{r merit-wave, fig.align='center',fig.cap='Percepción de importancia y recompensas del mérito, según ola de estudio. Porcentaje de Respuestas "De acuerdo" y ”Totalmente de acuerdo".'}
