@@ -525,45 +525,36 @@ Estos resultados podrían también sugerir que la persistencia de problemas de s
 
 
 ```{r perfiles-depr-quintil, fig.cap = 'Cargas de sintomatología depresiva, según quintiles de ingreso (en 2021)'}
-# 
+
 # load(file = file.path('inputs', 'elsoc_depr_lca.RData'))
-# 
-# elsoc_depr_lca %>% 
-#   filter(!is_nsnr(m30, m30b, nhogar1, m46_nhogar, m54)) %>% 
-#   mutate(m30 = as.numeric(car::recode(m30, "1 = 110000; 2 = 251000; 
-#   3 = 305000; 4 = 355000; 5 = 400000; 
-#   6 = 445000; 7 = 490000; 8 = 535000; 9 = 585000; 10 = 640000; 
-#   11 = 700000; 12 = 765000; 13 = 845000; 14 = 935000; 15 = 1040000;
-#   16 = 1180000; 17 = 1375000; 18 = 1670000; 19 = 2275000; 20 = 2700000; NA = NA")),
-#   m30b = as.numeric(car::recode(m30b, "1 = 170000; 2 = 300000; 3 = 400000; 4 = 600000; 5 = 1200000; NA = NA")),
-#   m29_imp = ifelse(!is.na(m29), m29, ifelse(ola == 5, m30b, m30)),
-#   nhogar = case_when(ola == 1 ~ nhogar1,
-#                      ola == 2 ~ m46_nhogar,
-#                      TRUE ~ m54),
-#   ypc = m29_imp / nhogar) %>%  
-#   group_by(ola) %>% 
-#   mutate(quintil = xtile(ypc, n = 5, wt = ponderador02),
-#          quintil = factor(quintil, levels = 1:5, labels = glue::glue('Quintil {1:5}'))
-#          ) %>%
-#   ungroup() %>% 
-#   filter(tipo_atricion == 1, !is.na(quintil)) %>% 
-#   survey_design_elsoc(weights = 'ponderador02_w05') %>% 
-#   prop(class_depr, by = quintil, na.rm = TRUE) %>% 
-#   sjlabelled::as_label(class_depr, quintil) %>%
-#   ggplot(aes(x = prop, y = quintil, 
-#                    fill = fct_rev(class_depr),
-#               label = scales::percent(prop, accuracy = .1))) +
-#   theme_bw() +   
-#   geom_col() +
-#   geom_text(position = position_stack(vjust = .5), size = 3,
-#             color = rep(c('black', 'black', 'white', 'white'), 5)) +
-#   ylab(label = NULL) +
-#   xlab(label = NULL) +
-#   scale_x_continuous(labels = scales::percent) +
-#   scale_fill_viridis_d(begin = .1, end = .8, direction = 1, option = 'viridis') +
-#   theme(legend.position = 'top',
-#         legend.title = element_blank())  + 
-#   guides(fill = guide_legend(reverse = TRUE))
+
+elsoc_depr_lca %>%
+  filter(tipo_atricion == 1, !is_nsnr(m30b_w05, m54_w05)) %>%
+  mutate(m30b_w05 = as.numeric(car::recode(m30b_w05, "1 = 170000; 2 = 300000; 3 = 400000; 4 = 600000; 5 = 1200000; NA = NA")),
+         m29_imp_w05 = ifelse(!is_nsnr(m29_w05), m29_w05, m30b_w05),
+         nhogar_w05 = m54_w05,
+         ypc = m29_imp_w05 / nhogar_w05,
+         quintil = xtile(ypc, n = 5, wt = ponderador02_w05),
+         quintil = factor(quintil, levels = 1:5, labels = glue::glue('Quintil {1:5}'))
+         ) %>%
+  filter(!is.na(quintil)) %>%
+  survey_design_elsoc(weights = 'ponderador02_w05') %>%
+  prop(class_depr, by = quintil, na.rm = TRUE) %>%
+  sjlabelled::as_label(class_depr, quintil) %>%
+  ggplot(aes(x = prop, y = quintil,
+                   fill = fct_rev(class_depr),
+              label = scales::percent(prop, accuracy = .1))) +
+  theme_bw() +
+  geom_col() +
+  geom_text(position = position_stack(vjust = .5), size = 3,
+            color = rep(c('black', 'black', 'white', 'white'), 5)) +
+  ylab(label = NULL) +
+  xlab(label = NULL) +
+  scale_x_continuous(labels = scales::percent) +
+  scale_fill_viridis_d(begin = .1, end = .8, direction = 1, option = 'viridis') +
+  theme(legend.position = 'top',
+        legend.title = element_blank())  +
+  guides(fill = guide_legend(reverse = TRUE))
 
 ```
 
@@ -572,7 +563,7 @@ Estos resultados podrían también sugerir que la persistencia de problemas de s
 
 El estatus socioeconómico, generalmente medido en términos de ingresos, nivel educacional o empleo, ha demostrado ser un poderoso predictor de las condiciones de salud mental de las personas a lo largo de sus trayectorias de vida (Lund et al 2018).
 
-La presencia de síntomas depresivos se encuentra altamente correlacionada con la situación económica de los individuos. La Figura \@ref(fig:depre-quintil) nos muestra cómo en 2021, a medida que aumentan los ingresos per cápita del hogar, disminuye de forma sostenida la presencia de síntomas de depresión moderados a severos: un 26,7% del Quintil 1 de ingresos muestra síntomas moderados a severos, mientras que solo un 10,3% del 5to quintil presenta estos síntomas.
+La presencia de síntomas depresivos se encuentra altamente correlacionada con la situación económica de los individuos. La Figura \@ref(fig:depre-quintil) nos muestra cómo en 2021, a medida que aumentan los ingresos per cápita del hogar, disminuye de forma sostenida la presencia de síntomas de depresión moderados a severos: un 27,7% del Quintil 1 de ingresos muestra síntomas moderados a severos, mientras que solo un 10,2% del 5to quintil presenta estos síntomas.
 
 Ahora bien, no es fácil estimar si los menores niveles de ingreso son la causa o el efecto de los problemas de salud mental; es decir, si los menores recursos económicos se asocian a mayores factores de estrés y, en última instancia, peor salud mental (“causalidad social”), o si más bien los problemas de salud mental preceden al lugar desfavorecido de las personas (“selección social”) (Lund et al, 2018).  
 
@@ -581,18 +572,12 @@ Ahora bien, no es fácil estimar si los menores niveles de ingreso son la causa 
 # elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
-  filter(ola == 5, !is_nsnr(m30, m30b, nhogar1, m46_nhogar, m54)) %>% 
-  mutate(m30 = as.numeric(car::recode(m30, "1 = 110000; 2 = 251000; 
-  3 = 305000; 4 = 355000; 5 = 400000; 
-  6 = 445000; 7 = 490000; 8 = 535000; 9 = 585000; 10 = 640000; 
-  11 = 700000; 12 = 765000; 13 = 845000; 14 = 935000; 15 = 1040000;
-  16 = 1180000; 17 = 1375000; 18 = 1670000; 19 = 2275000; 20 = 2700000; NA = NA")),
-  m30b = as.numeric(car::recode(m30b, "1 = 170000; 2 = 300000; 3 = 400000; 4 = 600000; 5 = 1200000; NA = NA")),
-  m29_imp = ifelse(!is.na(m29), m29, ifelse(ola == 5, m30b, m30)),
-  nhogar = case_when(ola == 1 ~ nhogar1,
-                     ola == 2 ~ m46_nhogar,
-                     TRUE ~ m54),
-  ypc = m29_imp / nhogar) %>%  
+  filter(ola == 5, !is_nsnr(m30b, m54)) %>% 
+  mutate(
+    m30b = as.numeric(car::recode(m30b, "1 = 170000; 2 = 300000; 3 = 400000; 4 = 600000; 5 = 1200000; NA = NA")),
+    m29_imp = ifelse(!is_nsnr(m29), m29, m30b),
+    nhogar = m54,
+    ypc = m29_imp / nhogar) %>%  
   group_by(ola) %>% 
   mutate(quintil = xtile(ypc, n = 5, wt = ponderador02),
          quintil = factor(quintil, levels = 1:5, labels = glue::glue('Quintil {1:5}'))
