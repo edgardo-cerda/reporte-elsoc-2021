@@ -119,7 +119,7 @@ elsoc_long_2016_2021 %>%
 ```
 
 
-### Atrición acumulada según Sexo, Grupo etáreo, Nivel educacional y Estrato
+### Atrición acumulada según Sexo, Grupo etáreo, Nivel educacional y Estrato {-}
 
 Para el cálculo de atrición acumulada se considera el período 2016-2021 para la muestra original, y el período 2018-2021 para la muestra refresco
 
@@ -245,7 +245,7 @@ elsoc_long_2016_2021 %>%
 ```
 
 
-### Foco en el cambio longitudinal
+## Foco en el cambio longitudinal
 
 Radiografía del Cambio Social tiene como objetivo fundamental caracterizar la estabilidad y el cambio en opiniones, actitudes y conductas de los participantes a lo largo del tiempo, enfocándose en distintas dimensiones de la cohesión y conflicto en Chile. 
 
@@ -263,14 +263,16 @@ elsoc_long_2016_2021 %>%
   as_label(m0_sexo) %>% 
   mutate(edadt = factor(car::recode(m0_edad, "18:29 = 1; 30:49 = 2; 50:64 = 3; 65:150 = 4"),
                       levels = 1:4,
-                      labels = c('18-29', '30-49', '50-64', '65 o más'))) %>%
-  mutate(educ = factor(car::recode(m01, recodes = "1:3 = 1; 4:5 = 2; 6:7 = 3; 8:10 = 4"),
+                      labels = c('18-29', '30-49', '50-64', '65 o más')),
+         educ = factor(car::recode(m01, recodes = "1:3 = 1; 4:5 = 2; 6:7 = 3; 8:10 = 4"),
                        levels = 1:4,
-                       labels = c("Basica", "Media", "Tecnica", "Universitaria"))) %>%
-  mutate(estrato = factor(car::recode(estrato, recodes = "5:6=5"),
+                       labels = c("Basica", "Media", "Tecnica", "Universitaria")),
+         estrato = factor(car::recode(estrato, recodes = "5:6=5"),
                        levels = 1:5,
                        labels = c("Santiago", "Valparaíso", "Concepción",
-                                  "Ciudades\ngrandes", "Medianas o\npequeñas"))) %>%
+                                  "Ciudades\ngrandes", "Medianas o\npequeñas")),
+         ponderador0 = 1) %>%
+  survey_design_elsoc(weights = ponderador0) %>% 
   prop_list(m0_sexo, edadt, educ, estrato, na.rm = TRUE) %>% 
   mutate(name = factor(name, levels = c('m0_sexo', 'edadt', 'educ', 'estrato'),
                        labels = c('Sexo', 'Tramo de edad', 'Nivel educacional', 'Estrato'))) %>% 
@@ -293,11 +295,40 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-### Levantamiento durante período de pandemia
+##  ELSOC en pandemia
 
-Dado las condiciones especiales de 2021 (pandemia), el levantamiento se hizo en formato telefónico. Explicar esto en más detalle.
+La crisis sanitaria a raíz del COVID-19 ha planteado una serie de desafíos importantes a los sistemas estadísticos a nivel general, y a las encuestas de opinión pública en particular. A partir de los planteado por la Organización Internacional del Trabajo (OIT, 2020) la mayoría de las oficinas nacionales de estadística ha informado un impacto significativo en sus operaciones, particularmente en aquellas que se llevan a cabo de manera presencial. Para sobrellevar estos problemas, varias organizaciones han tenido que transformar sus operaciones presenciales a levantamientos por teléfono o encuestas web.
 
-Aproximadamente un 75% de los encuestados fue entrevistado entre febrero y marzo de 2021
+Con el objetivo de asegurar la factibilidad del proceso de producción de datos de la encuesta ELSOC 2021, el equipo ejecutivo de ELSOC en conjunto con los profesionales del Centro de Microdatos de la Universidad de Chile, se decidió adoptar una serie de medidas que implicaron transitar de una modalidad presencial de producción de datos (formato CAPI) a una modalidad de producción de datos de manera remota en base a teléfono (formato CATI). En las siguientes secciones de este informe se reportan los principales cambios en ELSOC y sus implicancias.
+
+### Diseño de cuestionario y cambios de medición {-}
+
+Durante el año 2020, se acordó con el Centro de Microdatos (CMD) que, por este año, la aplicación del cuestionario será en formato de llamada telefónica (modo CATI). Esta aplicación del cuestionario se dividió en dos llamadas de 30 minutos cada uno, para reducir el tiempo de aplicación de la entrevista, y así evitar la fatiga de los encuestados y los encuestadores.
+
+Para evaluar los desafíos y el cambio metodológico de la aplicación, durante el 2 y 21 de diciembre de 2020 se realizó una encuesta piloto, actividad que resultó relevante para evaluar tanto los aspectos técnicos como metodológicos asociados al cambio de aplicación. En este proceso se constató la necesidad de cambiar el formato de algunas mediciones y reducir el tamaño de los cuestionarios. 
+
+En relación a la reducción de la cantidad de ítems a preguntar en el cuestionario se adoptaron los siguientes criterios:
+
+1. Reducir dimensiones que se han visto muy constreñidas por las cuarentenas, tales como participación política e interacción social
+2. Evaluar ítems en función de la consistencia técnica y/o alineación con los objetivos de COES
+3. Priorizar ítems que tienen menos de tres mediciones a lo largo del estudio
+4. Mantener ítems críticos a nivel socioeconómico y de salud, que permitan realizar una buena pesquisa del impacto de la pandemia y las cuarentenas
+
+Por otro lado, el cambio de formato de CAPI a CATI tuvo implicancias en cómo se implementa la encuesta para los entrevistados. En esta línea se hicieron tres grandes modificaciones:
+
+En primer lugar, y por motivos de que los encuestados ahora no disponen de un tarjetero que les permita identificar los valores de respuesta de las preguntas, es que la instrucción a los encuestadores fue que leyeran cada una de las alternativas de respuesta, de cada una de las preguntas. Esto establece un aumento sustantivo en el tiempo de respuesta del instrumento, lo que implica que un minuto de entrevista en formato CAPI no es equivalente a un minuto de respuesta de formato CATI, y por esto que se tuvo que realizar además de una separación de cuestionarios. Cabe destacar que, durante este proceso, se buscó mantener la calidad de flujo de la encuesta, resguardando variados elementos como el tiempo-eficacia de baterías de variables que compartieran un mismo encabezado inicial.
+
+En segundo lugar, y encadenado con lo anterior, se ajustaron las variables que teniendo más de 5 categorías de respuesta generaban mayores complicaciones para preguntar en las pruebas pilotos de esta encuesta. A continuación, se presentan los ítems que fueron reducidos en sus alternativas de respuesta y el criterio que se adoptó para cada caso.
+
+- *Batería de Redes Lejanas [r01, r02 y r04]*: Esta batería consulta por la cantidad de personas en distintas ocupaciones y grupos sociales que el entrevistado conoce. Originalmente esta batería de preguntas tiene 7 valores (1. Ninguno; 2. Uno; 3. Entre 2 y 4; 4. Entre 5 y 7; 5. Entre 8 y 10; 6. Entre 11 y 15; 7. 16 o más). Debido a que los rangos de respuesta no son obedecen a un patrón claro, se tomo la decisión de preguntarles a los encuestados por el número puntual de conocidos.
+
+- *Peso del entrevistado [s07]*: Esta variable presenta 9 tramos de respuesta, los cuales fueron establecidos en 5 tramos, tomando como referencia los quintiles de peso reportados por ELSOC en la ola 2018 en la variable s06
+
+- *Variables de Ingreso en tramos [m14 y m30]*: La variable m14 tiene 16 tramos de respuesta, mientras que la variable m30 tiene 30 tramos de respuesta. Ambas variables fueron establecidas en 5 tramos, tomando como referencia los quintiles de ingreso presentados por la encuesta Casen 2017.
+
+En tercer lugar, el cambio a modalidad CATI implicó que no fuera posible realizar preguntas con respuestas auto reportadas. En el caso de la ola 5, esto afectó a la batería de preguntas sobre presencia de síntomas asociados a depresión (s11_01 a s11_s11_09) 
+
+Adicionalmente, cabe destacar que aproximadamente un 75% de los encuestados fue entrevistado entre febrero y marzo de 2021
 
 ```{r hist-fecha-2021, fig.align='center'}
 elsoc_long_2016_2021 %>% 
@@ -321,7 +352,7 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-Más del 50% de los encuestados tuvieron 0 días de cuarentena en la comuna de residencia el mes en previo a la entrevista
+Más del 50% de los encuestados tuvieron 0 días de cuarentena en la comuna de residencia el mes en previo a la entrevista^[Estimaciones propias basadas en fecha de respuesta y en fases de cuarentena el mes previo a la entrevista, obtenidas de github.com/MinCiencia/Datos-COVID19]
 
 ```{r}
 elsoc_long_2016_2021 %>% 

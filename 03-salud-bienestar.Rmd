@@ -103,9 +103,9 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-#### Sintomatología depresiva
+### Sintomatología depresiva {-}
 
-En cuanto a sintomatología depresiva, ELSOC utiliza la escala PHQ-9 (Patient Health Questionnaire), un cuestionario de autorreporte que permite establecer la presencia y severidad de los síntomas. Si bien no es un instrumento de diagnóstico, ha demostrado una buena precisión diagnóstica (Kroenke et al, 2001; Levis et al, 2019) y ha sido validado para la población chilena (Baader et al, 2012). [nota al pie: Debido al contexto de pandemia, en 2021 la escala PHQ-9 no fue utilizada como un cuestionario de autoreporte).
+En cuanto a sintomatología depresiva, ELSOC utiliza la escala PHQ-9 (Patient Health Questionnaire), un cuestionario de autorreporte que permite establecer la presencia y severidad de los síntomas^[Debido al contexto de pandemia, en 2021 la escala PHQ-9 no fue aplicada como un cuestionario de auto reporte]. Si bien no es un instrumento de diagnóstico, ha demostrado una buena precisión diagnóstica (Kroenke et al, 2001; Levis et al, 2019) y ha sido validado para la población chilena (Baader et al, 2012).
 
 Los resultados de la escala PHQ-9 son clasificados en 4 categorías, según la presencia y habitualidad de síntomas depresivos: de 0-9 se considera “Sin síntomas o con síntomas depresivos mínimos”, de 10-14 “Sintomatología depresiva media”; de 15-19 “Sintomatología depresiva moderada” y de 20-27 “Sintomatología depresiva moderada-severa o severa”.
 
@@ -418,7 +418,7 @@ elsoc_wide_2016_2021 %>%
 
 ```
 
-#### Trayectorias de síntomas depresivos
+### Trayectorias de síntomas depresivos {-}
 
 Para analizar las potenciales trayectorias en sintomatología depresiva de los sujetos del estudio se realiza un análisis de clases latentes considerando las 5 olas del estudio. El resultado obtenido nos indica la presencia de 4 “clases” o perfiles de individuos según su carga de síntomas depresivos en el tiempo.
 
@@ -571,7 +571,7 @@ elsoc_depr_lca %>%
 
 El estatus socioeconómico, generalmente medido en términos de ingresos, nivel educacional o empleo, ha demostrado ser un poderoso predictor de las condiciones de salud mental de las personas a lo largo de sus trayectorias de vida (Lund et al 2018).
 
-La presencia de síntomas depresivos se encuentra altamente correlacionada con la situación económica de los individuos. La Figura 3.16 nos muestra cómo en 2021, a medida que aumentan los ingresos per cápita del hogar, disminuye de forma sostenida la presencia de síntomas de depresión moderados a severos: un 26,7% del Quintil 1 de ingresos muestra síntomas moderados a severos, mientras que solo un 10,3% del 5to quintil presenta estos síntomas.
+La presencia de síntomas depresivos se encuentra altamente correlacionada con la situación económica de los individuos. La Figura \@ref(fig:depre-quintil) nos muestra cómo en 2021, a medida que aumentan los ingresos per cápita del hogar, disminuye de forma sostenida la presencia de síntomas de depresión moderados a severos: un 26,7% del Quintil 1 de ingresos muestra síntomas moderados a severos, mientras que solo un 10,3% del 5to quintil presenta estos síntomas.
 
 Ahora bien, no es fácil estimar si los menores niveles de ingreso son la causa o el efecto de los problemas de salud mental; es decir, si los menores recursos económicos se asocian a mayores factores de estrés y, en última instancia, peor salud mental (“causalidad social”), o si más bien los problemas de salud mental preceden al lugar desfavorecido de las personas (“selección social”) (Lund et al, 2018).  
 
@@ -598,6 +598,8 @@ elsoc_long_2016_2021 %>%
             size = 3) 
 
 ```
+
+De igual forma, a medida que aumenta el nivel educacional alcanzado por los encuestados, es menor la presencia de síntomas moderados a severos de depresión: 26,0% de quienes  alcanzaron educación básica presentan síntomas de depresión moderada a severa, mientras que este porcentaje es de 16,0% para aquellos y aquellas con educación universitaria.
 
 ```{r depre-educ, fig.cap = 'Porcentaje que presenta síntomas de depresión moderados a severos, según nivel educacional (2021)'}
 
@@ -629,8 +631,7 @@ De igual forma, la situación laboral se encuentra altamente correlacionada con 
 
 Diversos estudios han mostrado que el trabajo remunerado estable es un factor protector de la salud mental, mientras que el trabajo informal, el subempleo, la desocupación o las trayectorias laborales interrumpidas constituyen un factor de riesgo (Kessler et al, 2003; Rosenthal et al, 2012).
 
-Uno de los grupos con mayor presencia de síntomas depresivos moderados a severos es el de quienes se dedican a trabajos domésticos no remunerados (33,2%). Es importante destacar que este grupo está compuesto completamente por mujeres, representando la situación laboral de un 22,4% de las mujeres (Figura 3.17). Existe evidencia que muestra que las mujeres que realizan trabajos no remunerados (como tareas domésticas o cuidado de ancianos o niños) suelen estar sometidas a factores ambientales desfavorables, como la sobrecarga de trabajo y la desigualdad de poder y estatus, lo que podría provocar sentimientos de baja autoestima y síntomas depresivos (Hammarström et al 2009, Magaña et al 2020).
-
+Uno de los grupos con mayor presencia de síntomas depresivos moderados a severos es el de quienes se dedican a trabajos domésticos no remunerados (33,2%). Es importante destacar que este grupo está compuesto completamente por mujeres, representando la situación laboral de un 22,4% de las mujeres (Figura \@ref(fig:depre-sitlab)). Existe evidencia que muestra que las mujeres que realizan trabajos no remunerados (como tareas domésticas o cuidado de ancianos o niños) suelen estar sometidas a factores ambientales desfavorables, como la sobrecarga de trabajo y la desigualdad de poder y estatus, lo que podría provocar sentimientos de baja autoestima y síntomas depresivos (Hammarström et al 2009, Magaña et al 2020).
 
 ```{r depre-sitlab, fig.cap = 'Porcentaje que presenta síntomas de depresión moderados a severos, según situación laboral y sexo (2021)'}
 

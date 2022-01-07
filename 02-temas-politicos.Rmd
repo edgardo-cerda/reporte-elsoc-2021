@@ -3,14 +3,15 @@
 
 ## Identificación política
 
-### ¿Cómo se posicionan políticamente los chilenos?
+### ¿Cómo se posicionan políticamente los chilenos? {-}
 
 La emergencia y consolidación en el poder de nuevas coaliciones políticas, así como la intensificación de los ciclos de protesta, hacen preguntarse por cómo ha evolucionado la identidad política de los chilenos. 
 
 La Figura \@ref(fig:graf-idpolitica) muestra la foto más reciente de ELSOC acerca de cómo se distribuyen las preferencias ideológicas de la población adulta chilena, mientras que el Figura \@ref(fig:graf-idpolitica-ola) muestra el cambio en las preferencias entre los años 2016 y 2021. Este último indica que la no identificación con posiciones ideológicas ha dejado de ser la respuesta mayoritaria, reafirmando al centro como la posición política con que más sujetos se identifican. Así, en 2021, por primera vez se observa que menos de un 20% afirma no identificarse con ninguna posición del espectro izquierda-derecha, al tiempo que el centro obtiene más de un 35% de identificación. 
 
 
-```{r graf-idpolitica, fig.cap='Identificación política (2021)'}
+```{r graf-idpolitica, fig.cap = 'Identificación política (2021)'}
+
 elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1 & ola == 5) %>%
   mutate(pos_id = factor(car::recode(c15, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4; c(-888, -999) = 5"),
@@ -62,7 +63,7 @@ elsoc_long_2016_2021 %>%
 Las Figura \@ref(fig:graf-alluvial-idpolitica-ola) es un gráfico aluvial que muestra cómo las personas mantienen o cambian sus posiciones ideológicas en cada ola del estudio. Se evidencia como trás los muy estables números agregados de cada año se esconde una proporción importante de personas transitan entre categorías ideológicas, aunque mayoritariamente entre grupos adyacentes.  La Figura \@ref(fig:graf-cambios-idpolitica-ola) muestra el porcentaje que en cada ola del estudio respondió otra categoría ideológica que había mencionado el año anterior. Como se puede observar casi la mitad de las personas cambia de posición política consistentemente año a año. Estos patrones hablan a favor de dos segmentos de la población (numéricamente similares); uno con perfiles ideológicos altamente cristalizados y estables, y otro más bien volátil y fluctuante.
 
 
-```{r graf-alluvial-idpolitica-ola, fig.cap = 'Cambios en la identificación política, según ola del estudio'}
+```{r graf-alluvial-idpolitica-ola, fig.cap = 'Cambios en identificación política, según ola del estudio'}
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & ola %in% 1:5) %>% 
@@ -101,7 +102,8 @@ elsoc_long_2016_2021 %>%
 ```
 
 
-```{r graf-cambios-idpolitica-ola, fig.cap = 'Cambios en identificación política, según ola'}
+```{r graf-cambios-idpolitica-ola, fig.cap = 'Porcentaje que cambia su identificación política entre olas del estudio, según ola'}
+
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & !is_nsnr(c15)) %>%
   mutate(c15 = factor(car::recode(c15, "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4; c(-888, -999) = 5"),
@@ -122,16 +124,14 @@ elsoc_long_2016_2021 %>%
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = .33, end = .66, option = 'viridis') +
-  theme(legend.position = 'top') +
-  ggtitle(label = NULL,
-          subtitle = 'Porcentaje que cambia su posición política en cada ola' )
+  theme(legend.position = 'top')
 
 ```
 
 La Figura \@ref(fig:graf-cambios-idpol-idpol) muestra el cambio entre posiciones ideológicas entre 2016 y 2021 según la posición mencionada en 2016. Destaca que las personas identificadas con el centro son las más estables, con cerca de un 54% que se mantuvo en la misma posición. Las personas de  izquierda y derecha tienen un comportamiento espejo, donde cerca de un 47% de cada grupo mantiene su identidad 5 años después de la primera entrevista, mientras que el resto migra mayoritariamente al centro y en una menor proporción a la no identificación. La ausencia de identidad ideológica se asocia a mayor volatilidad, donde sólo un 31% mantuvo su posición, obteniendo elevada migración al centro (32%) y la izquierda (21%). La Figura \@ref(fig:graf-cambios-idpolitica-edad) denota que los cambios inter-ola de posición ideológica se concentran mayormente en población jóven (70% entre 18-29 años), mientras que entre los grupos mayores los niveles de cambio son menores y más similares entre grupos etarios (57% entre 30-49 años y 50% entre mayores de 65). Este patrón es enteramente consistente con la hipótesis de los años impresionables según la cual las actitudes de las personas son más inestables durante la adolescencia tardía y la adultez temprana, pero que se solidifican rápidamente y permanecen estables durante el resto del ciclo de vida (Krosnick y Alwin, 1989) .
 
 
-```{r graf-cambios-idpol-idpol, fig.cap = 'Cambios en identificación política entre 2016 y 2021'}
+```{r graf-cambios-idpol-idpol, fig.cap = 'Posición política en 2021, según posición política en 2016'}
 
 elsoc_wide_2016_2021 %>% 
   filter(tipo_atricion == 1) %>% 
@@ -163,7 +163,8 @@ elsoc_wide_2016_2021 %>%
 ```
 
 
-```{r graf-cambios-idpolitica-edad, fig.cap = 'Cambios en identificación política, según grupo etáreo'}
+```{r graf-cambios-idpolitica-edad, fig.cap = 'Porcentaje que cambia su identificación política entre 2016 y 2021, según grupo etáreo'}
+
 elsoc_wide_2016_2021 %>% 
   filter(tipo_atricion == 1 & !is_nsnr(c15_w01, c15_w04)) %>% 
   mutate(pos_id_w01 = factor(car::recode(c15_w01, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4; c(-888, -999) = 5"),
@@ -185,9 +186,7 @@ elsoc_wide_2016_2021 %>%
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = .33, end = .66, option = 'viridis') +
-  theme(legend.position = 'top') +
-  ggtitle(label = NULL,
-          subtitle = 'Porcentaje que cambia su posición política entre 2016 y 2021' )
+  theme(legend.position = 'top')
 
 ```
 
@@ -198,7 +197,7 @@ Un antecedente actitudinal fundamental de nivel de participación política de l
 La Figura \@ref(fig:graf-interespolitica-ola) muestra que el 2019 se produjo un alza importante en las personas bastante o muy interesadas en la política, pasando de 12,2% a 21,9%. Así mismo, la Figura \@ref(fig:graf-participciudadana-ola) indica cambios similares en el porcentaje de personas que mencionan hablar de política con familiares (de 16% a 26%) o que usan redes sociales para opinar sobre temas políticos (10% a 20%). Estas alzas coinciden con las masivas, y en ocasiones altamente disruptivas, marchas ocurridas en el marco del llamado estallido social (la medición del 2019 se inició el 20 de noviembre). En contraste, el incremento en los niveles de politización observados entre 2018 y 2019 se revierten en buena medida en la última ola del estudio, donde el nivel de interés en política cae a un 15,2%, el hablar de política con familiares a un 21%, y el uso de redes sociales para opinar sobre temas políticos a un 14.5%. 
 
 
-```{r graf-interespolitica-ola, fig.cap = 'Interés en política, según ola del estudio'}
+```{r graf-interespolitica-ola, fig.cap = 'Porcentaje Bastante o Muy interesado en política, según ola del estudio'}
 
 elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1 & !is_nsnr(c13)) %>% 
@@ -215,9 +214,7 @@ elsoc_long_2016_2021 %>%
   ylab(label = NULL) +
   xlab(label = NULL) +
   theme(legend.position = 'top',
-        legend.title = element_blank()) + 
-  ggtitle(label = NULL,
-          'Porcentaje Bastante o Muy interesado en la política')
+        legend.title = element_blank())
   
 ```
 
@@ -325,11 +322,11 @@ elsoc_long_2016_2021 %>%
 
 El proceso de cambio constitucional, las recientes elecciones presidenciales y el estallido social han implicado transformaciones en materia de participación política en el país. El plebiscito superó por primera vez el 50% de participación desde la instauración del voto voluntario e inscripción automática, mientras que la segunda vuelta presidencial incorporó a cerca de 1.300.000 votantes más que la misma elección de 2017. Asimismo, el estallido social supuso un incremento nunca antes visto de eventos de protesta (Observatorio de Conflictos, 2020). Ante este panorama, cabe preguntarse cómo es la estructura longitudinal de participación política de los chilenos y chilenas, tanto en el ámbito electoral como en manifestaciones. 
 
-#### Perfiles de participación: aproximación empírica
+### Perfiles de participación: aproximación empírica {-}
 
 Con el objetivo de determinar patrones de participación política en el tiempo, se efectuó un análisis de clases latentes que permitió categorizar a los individuos según sus patrones de participación en el plebiscito constituyente, las elecciones presidenciales de 2013 y 2017, y en eventos de protesta (consideramos si declararon participar -a veces, frecuentemente o muy frecuentemente- en marchas o manifestaciones pacíficas en cada una de las cinco olas del estudio). El análisis arrojó cuatro categorías de participación política: (1) Desafectados, (2) Manifestantes puros, (3) Institucionales y (4) Reactivos. 
 
-#### Perfiles de participación: principales resultados
+### Perfiles de participación: principales resultados {-}
 
 La Figura \@ref(fig:tip-participacion) muestra los perfiles de participación identificados y su caracterización según las variables que compusieron el análisis de clases latentes. Consistente con el diagnóstico de un elevado nivel de desconfianza política en la sociedad chilena, el grupo más numeroso, con un 56,51% de los individuos, corresponde justamente al grupo de Desafectados. Estos se caracterizan por sus virtualmente nulos niveles de participación política, ya sea convencional (votar) o no convencional (participar en marchas). No obstante, se observan niveles de participación levemente más elevados en las elecciones de 2013 y el plebiscito, aunque muy distantes de los promedios nacionales.
 
@@ -402,13 +399,12 @@ tab_4 %>%
 
 ```
 
-#### Caracterización de perfiles de participación
+### Caracterización de perfiles de participación {-}
 
 La Figura \@ref(fig:tipos-posicion-politica2) muestra cómo se distribuyen estos grupos según posiciones ideológicas. Destacan los Manifestantes puros, que a pesar de ser un grupo pequeño, son muy homogéneos en términos ideológicos con una fuerte concentración de individuos auto posicionados como de izquierda (69,8%). Aunque en forma más matizada, las personas de izquierda también se encuentran concentrados entre los Reactivos con un 38%, seguidos por las personas de centro con un 35%. En contraste, los Institucionales están mayoritariamente compuestos por individuos sin preferencias ideológicas (34%), de centro (36.4%) y de derecha (14.6%). El grupo con mayor presencia de derecha es el grupo de los Desafectados (19%), que también cuenta con una fuerte presencia de encuestados que se identifican con el centro político (38%) y que no se identifican (22.6%). Este último patrón es consistente con la distribución del nivel de interés en política según grupos ideológicos vistos más arriba. 
 
 
 ```{r tipos-posicion-politica2, fig.cap = 'Posición política según perfil de participación'}
-
 tip_par <- read.csv(file.path('inputs', 'participacion_tipos3.csv'), sep=",", encoding="UTF-8")
 tip_par <- tip_par[c("idencuesta", "class_part_4")]
 tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
@@ -438,6 +434,10 @@ tip_par %>%
   theme(axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
         legend.title = element_blank())
+```
+
+
+```{r}
 
 tip_par %>%   
   filter(!is_nsnr(class_part_4, c15_w05))  %>%
@@ -467,7 +467,6 @@ La Figura \@ref(fig:tipos-sexo2) muestra que los grupos de participación tienen
 
 
 ```{r tipos-sexo2, fig.cap = 'Sexo según perfil de participación'}
-
 tip_par <- read.csv(file.path('inputs', 'participacion_tipos3.csv'), sep=",", encoding="UTF-8")
 tip_par <- tip_par[c("idencuesta", "class_part_4")]
 tip_par <- merge(tip_par, elsoc_wide_2016_2021, by="idencuesta")
@@ -497,7 +496,10 @@ tip_par %>%
   theme(axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
         legend.title = element_blank())
+```
 
+
+```{r}
 tip_par %>%   
   filter(!is_nsnr(class_part_4, m0_sexo_w01))  %>%
   drop_na(c("class_part_4", "m0_sexo_w01")) %>%
@@ -554,6 +556,11 @@ tip_par %>%
   theme(axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
         legend.title = element_blank())
+
+```
+
+
+```{r}
 
 tip_par %>%   
   filter(!is_nsnr(class_part_4, m0_edad_w05))  %>%
@@ -617,6 +624,11 @@ tip_par %>%
         legend.position = 'top',
         legend.title = element_blank())
 
+```
+
+
+```{r}
+
 tip_par %>%   
   filter(!is_nsnr(class_part_4, c13_w05))  %>%
   drop_na(c("class_part_4", "c13_w05")) %>%
@@ -677,7 +689,10 @@ tip_par %>%
   theme(axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
         legend.title = element_blank())
+```
 
+
+```{r}
 tip_par %>%   
   filter(!is_nsnr(class_part_4, c01_w05))  %>%
   drop_na(c("class_part_4", "c01_w05")) %>%
@@ -738,6 +753,11 @@ tip_par %>%
   theme(axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
         legend.title = element_blank())
+
+```
+
+
+```{r}
 
 tip_par %>%   
   filter(!is_nsnr(class_part_4, c25_w05))  %>%
@@ -805,6 +825,11 @@ tip_par %>%
   theme(axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
         legend.title = element_blank())
+
+```
+
+
+```{r}
 
 tip_par %>%   
   filter(!is_nsnr(class_part_4, c46_01_w05, c46_02_w05, c46_03_w05, c46_04_w05))  %>%
@@ -1052,7 +1077,7 @@ elsoc_long_2016_2021 %>%
 
 ## Confianza interpersonal y en instituciones
 
-### Confianza interpersonal
+### Confianza interpersonal {-}
 
 Durante las últimas décadas, las ciencias sociales han acumulado mucha evidencia que muestra que la confianza social es un atributo social de mucha importancia y cin múltiples consecuencias. Entre otras cosas, se ha asociado con comportamientos prosociales y menor criminalidad (Uslaner, 2000), mayor crecimiento económico (Dincer & Uslaner, 2010; Whiteley, 2000; Zak y Knack, 2001), mercados más eficientes (Fukuyama, 1996), democracias más robustas, y con mayor confianza en las instituciones (Newton & Zmerli, 2011, Putnam et al., 1994). En este contexto, el registro longitudinal de ELSOC de la confianza social de la población adulta chilena resulta de mucha importancia.
 
@@ -1118,7 +1143,7 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-### Confianza en las instituciones
+### Confianza en las instituciones {-}
 
 Las instituciones conforman los pilares organizacionales básicos de una sociedad, por lo que la estabilidad política está condicionada por la confianza que tienen los ciudadanos en las instituciones (Newton & Norris, 1999). Por ello, parte de las explicaciones al estallido social de 2019 se fundan en la elevada desafección que existe con las instituciones políticas (Sehnbruch & Donoso, 2020). Así, en el gráfico \@ref(fig:graf-confinstituciones1-ola) y \@ref(fig:graf-confinstituciones2-ola), se observan dos patrones altamente relevantes. En primer lugar, el nivel de confianza en las instituciones, y las políticas en particular, son extremadamente bajas. Año tras año, el porcentaje de personas encuestadas que mencionan confiar ‘Mucho’ o ‘Bastante’ en el Congreso y Partidos Políticos no alcanza siquiera el 5% de la población. Asimismo, el Poder Judicial y Presidente de la República registran durante sus mejores años niveles que apenas sobrepasan el 10%. La única institución, que logra alcanzar niveles más elevados, sin desmedro de una pronunciada baja durante el periodo de observación, son Carabineros de Chile con un mínimo de confianza de 20,6% en 2019 y 24,7% en 2021. 
 
