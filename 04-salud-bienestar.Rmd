@@ -14,6 +14,8 @@ Por otra parte, y en contraste, solo un 15,8% indicó en 2021 que su salud es mu
 
 ```{r salud-bienestar-2021, fig.cap = 'Satisfacción con la vida, ideal de vida y salud subjetiva (ola 2021)'}
 
+# elsoc::load_elsoc('long')
+
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & ola == 5 & !is_nsnr(s01, s02, s03)) %>% 
   prop_list(s01 %in% 4:5, s02 %in% 4:5, s03 %in% 4:5, na.rm = TRUE) %>% 
@@ -45,6 +47,8 @@ El 2019 el porcentaje que reporta estar satisfecho o muy satisfecho con su vida 
 Por otra parte, el 2021 se aprecia un marcado aumento en la satisfacción y acercamiento al ideal de vida, llegando a porcentajes superiores a niveles previos a 2019: 83,7% y 63,5%, respectivamente. Estos resultados resultan particularmente contraintuitivos, ya que existe evidencia que muestra un deterioro en la calidad de vida de la población y una percepción de mayor vulnerabilidad durante la pandemia (DESOC-COES, 2020). Sin embargo, es posible que este resultado se encuentre asociado a la mejoría en la situación sanitaria del país al momento en que fue realizada la encuesta (a partir de febrero de 2021), pero también a fenómenos de resiliencia o aumento de la solidaridad social ante situaciones adversas, como ha reportado literatura internacional durante la pandemia (Bavel et al, 2020).
 
 ```{r salud-bienestar-olas, fig.cap = 'Satisfacción con la vida, ideal de vida y salud subjetiva, según ola'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & !is_nsnr(s01, s02, s03)) %>% 
@@ -83,6 +87,8 @@ Los resultados de 2021 muestran que, si bien un 48,6% de la población no presen
 
 ```{r depre-2021, fig.cap = 'Porcentaje que presenta síntomas de depresión (2021)'}
 
+# elsoc::load_elsoc('long')
+
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1, ola == 5) %>% 
   purrr::map_at(.at = vars(starts_with('s11_0')), 
@@ -114,6 +120,8 @@ elsoc_long_2016_2021 %>%
 Como es de esperar, la existencia de síntomas depresivos se encuentra altamente correlacionada con la satisfacción con la vida y con el porcentaje que considera que su vida se acerca a su ideal: un 93,2% de aquellos y aquellas que no presentan síntomas depresivos se encuentran satisfechos o muy satisfechos con su vida, mientras que este porcentaje se reduce a 53,8% entre aquellos que presentan sintomatología depresiva moderada-severa a severa. Ahora bien, este último resultado podría parecer paradojal, puesto que se trata de un grupo de personas que se encuentran satisfechas con sus vidas pero al mismo tiempo sufren un estado depresivo, caracterizado por intensa tristeza. Esta aparente paradoja podría explicarse a partir del modelo de “dos continuos” (Westerhof & Keyes, 2010; Kinderman et al, 2015), en el cual los trastornos mentales (como la depresión) y la salud mental y bienestar están relacionados, pero son dimensiones diferentes (un continuo indica la presencia o ausencia de salud mental y bienestar subjetivo, mientras que el otro indica la presencia o ausencia de psicopatología). Esto permite entender que personas con un mismo nivel de severidad de síntomas puedan tener diferentes niveles de adaptación psicosocial, y un impacto diferente en la calidad de vida y satisfacción con la misma.
 
 ```{r depre-bienestar, fig.cap = 'Satisfacción con la vida, ideal de vida y salud subjetiva (ola 2021), según Sintomas de depresión'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   purrr::map_at(.at = vars(starts_with('s11_0')), 
@@ -162,6 +170,8 @@ La menor prevalencia de síntomas depresivos moderados a severos en 2021 podría
 
 ```{r depre-olas, fig.cap = 'Porcentaje que presenta síntomas de depresión, según ola'}
 
+# elsoc::load_elsoc('long')
+
 elsoc_long_2016_2021 %>% 
   purrr::map_at(.at = vars(starts_with('s11_0')), 
                 .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
@@ -201,6 +211,8 @@ Es bien sabido que las mujeres están más expuestas a desventajas sociales, tie
 
 ```{r depre-olas-sexo, fig.cap = 'Porcentaje que presenta síntomas de depresión moderados a severos, según sexo y ola'}
 
+# elsoc::load_elsoc('long')
+
 elsoc_long_2016_2021 %>% 
   purrr::map_at(.at = vars(starts_with('s11_0')), 
                 .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
@@ -229,6 +241,8 @@ Por otra parte, los datos muestran que existen brechas de género significativas
 
 
 ```{r salud-bienestar-sexo, fig.cap = 'Satisfacción con la vida, ideal de vida y salud subjetiva, según sexo (2021)'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & ola == 5 & !is_nsnr(s01, s02, s03)) %>% 
@@ -262,6 +276,8 @@ Una de las ventajas que posee ELSOC sobre otras encuestas y estudios transversal
 Uno de los primeros resultados que se obtienen es que la presencia de síntomas depresivos oscila considerablemente a lo largo del tiempo. 
 
 ```{r depre-alluvial, fig.cap = 'Cambios en síntomas depresivos entre 2016 y 2021'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   purrr::map_at(.at = vars(starts_with('s11_0')), 
@@ -314,6 +330,8 @@ Distintas dimensiones demográficas o socioeconómicas pueden aumentar indirecta
 
 ```{r ndepr, fig.cap = 'Porcentaje que presenta síntomas de depresión moderada a severa de forma reiterada, según número de ocurrencias' }
 
+# elsoc::load_elsoc('wide')
+
 elsoc_wide_2016_2021 %>% 
   dplyr::filter(tipo_atricion == 1) %>% 
   purrr::map_at(.at = vars(starts_with('s11_0')), 
@@ -351,6 +369,8 @@ En este sentido, nuevamente se observa una marcada brecha de género en término
 
 
 ```{r ndepr-sexo, fig.cap = 'Porcentaje que presenta síntomas de depresión moderada a severa de forma reiterada, según número de ocurrencias y sexo' }
+
+# elsoc::load_elsoc('wide')
 
 elsoc_wide_2016_2021 %>% 
   dplyr::filter(tipo_atricion == 1) %>% 
@@ -558,6 +578,8 @@ Ahora bien, no es fácil estimar si los menores niveles de ingreso son la causa 
 
 ```{r depre-quintil, fig.cap = 'Porcentaje que presenta síntomas de depresión moderados a severos, según quintiles de ingreso del hogar (2021)'}
 
+# elsoc::load_elsoc('long')
+
 elsoc_long_2016_2021 %>% 
   filter(ola == 5, !is_nsnr(m30, m30b, nhogar1, m46_nhogar, m54)) %>% 
   mutate(m30 = as.numeric(car::recode(m30, "1 = 110000; 2 = 251000; 
@@ -599,6 +621,8 @@ De igual forma, a medida que aumenta el nivel educacional alcanzado por los encu
 
 ```{r depre-educ, fig.cap = 'Porcentaje que presenta síntomas de depresión moderados a severos, según nivel educacional (2021)'}
 
+# elsoc::load_elsoc('long')
+
 elsoc_long_2016_2021 %>% 
   filter(ola == 5) %>% 
   purrr::map_at(.at = vars(starts_with('s11_0')), 
@@ -631,6 +655,8 @@ Uno de los grupos con mayor presencia de síntomas depresivos moderados a severo
 
 ```{r depre-sitlab, fig.cap = 'Porcentaje que presenta síntomas de depresión moderados a severos, según situación laboral y sexo (2021)'}
 
+# elsoc::load_elsoc('long')
+
 elsoc_long_2016_2021 %>% 
   filter(ola == 5, tipo_atricion == 1 & !is_nsnr(m02)) %>% 
   mutate(sit_ocup = factor(car::recode(m02, "1:3 = 1; 7 = 2; 6 = 3; 5 = 4; c(4, 8, 9) = 5"), 
@@ -658,6 +684,8 @@ elsoc_long_2016_2021 %>%
 ```
 
 ```{r sitlab-sexo, fig.cap = 'Situación laboral, según sexo (2021)'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>%
   filter(ola == 5, tipo_atricion == 1 & !is_nsnr(m02)) %>% 
@@ -688,6 +716,8 @@ La pandemia de COVID-19 generó una ruptura en la vida cotidiana y laboral de la
 
 ```{r trabremoto, fig.cap = 'Porcentaje que trabaja en modalidad remota (2021)'}
 
+# elsoc::load_elsoc('long')
+
 elsoc_long_2016_2021 %>% 
   filter(ola == 5 & tipo_atricion == 1, !is_nsnr(m60)) %>% 
   prop(m60, na.rm = TRUE) %>% 
@@ -716,6 +746,8 @@ En concordancia con resultados comentados previamente, el grupo de personas que 
 Aquellos que trabajaron de forma completa desde el hogar presentaron mayor presencia de síntomas depresivos moderados a severos que quienes trabajaron de forma presencial (16,7% versus 15,5%, respectivamente), sin embargo, esta diferencia no es estadísticamente significativa. Ahora bien, quienes trabajan de manera parcial en el hogar constituyen el grupo que presenta una menor prevalencia de síntomas (11,2%). Este último resultado podría estar sugiriendo que modalidades de trabajo híbrido permiten combinar lo mejor de ambos mundos, por ejemplo, mayor autonomía en el uso del tiempo y un mejor equilibrio entre la vida familiar y laboral, reduciendo los tiempos de desplazamiento, sin perder las ventajas de la socialización presencial con pares (como el apoyo social). De este modo, podría representar una modalidad de trabajo que permite sostener condiciones favorables para la calidad de vida. Por cierto, es probable que una gran cantidad de personas que pueden desarrollar modalidades híbridas de trabajo tienen trabajos flexibles y se encuentran en las categoría de mayor nivel educacional. 
 
 ```{r depre-trabremoto, fig.cap = 'Porcentaje que presenta síntomas de depresión moderados a severos, según trabajo remoto (2021)'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   filter(ola == 5 & tipo_atricion == 1, !is_nsnr(m02, m60)) %>% 
@@ -748,6 +780,8 @@ Distintos estudios nacionales han reportado que los hogares chilenos se caracter
 
 ```{r deudas, fig.cap = 'Porcentaje que posee deudas con..., según ola'}
 
+# elsoc::load_elsoc('long')
+
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & ola %in% c(1, 3, 5),
          !is_nsnr(m42_01, m42_02, m42_03, m42_04)) %>% 
@@ -779,6 +813,8 @@ Las medidas de protección financiera, el acceso a beneficios económicos y los 
 
 
 ```{r sobrecarga-depr, fig.cap = 'Porcentaje que presenta síntomas moderados a severos de depresión, según sobrecarga de deudas'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & ola %in% c(1, 3, 5),
@@ -813,6 +849,8 @@ elsoc_long_2016_2021 %>%
 ```
 
 ```{r depr-retiros, fig.cap = 'Porcentaje que presenta síntomas moderados a severos de depresión, según retiro de fondos de AFP en 2021'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   left_join(elsoc_wide_2016_2021 %>% 
@@ -858,6 +896,8 @@ Por otra parte, 69,2% reporta tener al menos un conocido o conocida que ha sido 
 
 ```{r covid-diagnostico, fig.cap = 'Porcentaje que ha sido diagnosticado y que conoce a alguien diagnosticado con COVID-19 (2021)'}
 
+# elsoc::load_elsoc('long')
+
 elsoc_long_2016_2021 %>% 
   dplyr::filter(ola == 5, tipo_atricion == 1 & !is_nsnr(s31) & !is_nsnr(r03_09)) %>%
   prop_list(s31 == 1, r03_09 > 1, na.rm = TRUE) %>% 
@@ -884,6 +924,8 @@ Mayor porcentaje de diagnóstico en Q5 puede estar dando cuenta de mayor acceso 
 
 
 ```{r covid-diagnostico-educ, fig.cap = 'Porcentaje que ha sido diagnosticado y que conoce a alguien diagnosticado con COVID-19, según nivel educacional (2021)'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   dplyr::filter(ola == 5, tipo_atricion == 1 & !is_nsnr(s31, r03_09, m02)) %>%
@@ -915,6 +957,8 @@ Los resultados muestran que 79,2% indica estar De acuerdo o Muy de acuerdo con l
 
 ```{r temas-covid, fig.cap = 'Porcentaje De acuerdo o Muy de acuerdo con medidas sanitarias (2021)'}
 
+# elsoc::load_elsoc('long')
+
 elsoc_long_2016_2021 %>% 
   filter(ola == 5, tipo_atricion == 1, !is_nsnr(c37_09, c37_10)) %>% 
   prop_list(c37_09 %in% 4:5, c37_10 %in% 4:5, na.rm = TRUE) %>% 
@@ -943,6 +987,8 @@ Las personas de menor nivel educacional tienden a estar más de acuerdo con dar 
 
 
 ```{r temas-covid-educ, fig.cap = 'Porcentaje De acuerdo o Muy de acuerdo con medidas sanitarias, según nivel educacional (2021)'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   filter(ola == 5, tipo_atricion == 1, !is_nsnr(m01, c37_09, c37_10)) %>% 
@@ -979,6 +1025,8 @@ A pesar de que el grado de cumplimiento de las medidas sanitarias es alto para t
 
 ```{r dist-total, fig.cap='¿En qué medida usted ha seguido la recomendación de quedarse en su hogar, manteniendo el aislamiento social? (2021).'}
 
+# elsoc::load_elsoc('long')
+
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & ola == 5,
          !is_nsnr(c48)) %>% 
@@ -1004,6 +1052,8 @@ elsoc_long_2016_2021 %>%
 
 
 ```{r dist-educ, fig.cap = 'Porcentaje que sigue aislamiento social Frecuente o Muy frecuentemente, según nivel educacional (2021)'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & ola == 5,
@@ -1031,6 +1081,8 @@ Las personas que reportan un mayor cumplimiento de las medidas de aislamiento so
 
 
 ```{r covid-dist, fig.cap = 'Porcentaje que ha sido diagnosticado con COVID, según cumplimiento de aislamiento social (2021)'}
+
+# elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
   dplyr::filter(ola == 5, tipo_atricion == 1, !is_nsnr(s31, c48)) %>%
