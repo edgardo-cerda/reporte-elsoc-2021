@@ -1,26 +1,4 @@
 
-<!-- **Autores:** -->
-
-<!-- - Roberto González -->
-<!-- - Matías Bargsted -->
-<!-- - Daniel Miranda -->
-<!-- - Ana Figuereido -->
-<!-- - Alejandro Plaza -->
-<!-- - Edgardo Cerda -->
-<!-- - Rocío Salas -->
-
-<!-- **Agradecemos la colaboración y participación de:** -->
-
-<!-- - Fabián Duarte -->
-<!-- - Álvaro Jiménez -->
-<!-- - Barbara Flores -->
-<!-- - Natalia Riquelme -->
-<!-- - Elisa Salas -->
-<!-- - Cristobal Ortíz -->
-<!-- - Isidora Didier -->
-
-
-VERSION PRELIMINAR. NO COMPARTIR NI DIFUNDIR.
 
 ## Sobre COES {-}
 
