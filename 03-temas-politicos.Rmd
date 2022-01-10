@@ -31,10 +31,10 @@ elsoc_long_2016_2021 %>%
   geom_text(vjust = -0.5,
             position = position_dodge2(width = .9),
             size = 3) + 
-  theme(legend.position = 'top',
-        legend.title = element_blank(),
-        plot.caption = element_text(hjust = 0)) 
-  # labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2021.\nNota: Se consideran observaciones con datos completos entre 2016 y 2021 (N=1.513)')
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
+        legend.title = element_blank()) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2021.\nNota: Se consideran observaciones con datos completos entre 2016 y 2021. N=1.513 (1.513 individuos)')
 
 
 ```
@@ -62,11 +62,11 @@ elsoc_long_2016_2021 %>%
   geom_text(position = position_stack(vjust = .5),
             size = 3,
             color = rep(c(rep('white', 3), rep('black', 2)), 5)) +
-  theme(legend.position = 'top',
-        legend.title = element_blank(),
-        plot.caption = element_text(hjust = 0)) + 
-  guides(fill = guide_legend(reverse = TRUE)) 
-  # labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas (N=7.565)')
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
+        legend.title = element_blank()) +
+  guides(fill = guide_legend(reverse = TRUE))  +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.565 (1.513 individuos)')
 
 
 ```
@@ -89,7 +89,7 @@ elsoc_long_2016_2021 %>%
   as.data.frame() %>% 
   group_by(ola) %>% 
   mutate(prop = Freq/sum(Freq)) %>%
-  filter(Freq > 0) %>% 
+  filter(Freq > 0) %>%
   ggplot(aes(y = prop, x = ola, fill = fct_rev(pos_id), 
              stratum = fct_rev(pos_id), alluvium = idencuesta)) +
   theme_bw() +
@@ -98,7 +98,8 @@ elsoc_long_2016_2021 %>%
   scale_y_continuous(labels = scales::percent) + 
   ylab(label = NULL) +
   xlab(label = NULL) + 
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank()) +
   scale_fill_viridis_d(direction = -1) +
   geom_text(data = function(x) { group_by(.data = x, ola, pos_id) %>% 
@@ -109,7 +110,8 @@ elsoc_long_2016_2021 %>%
             show.legend = FALSE,
             size = 3,
             color = rep(c('white', 'white', 'white', 'black', 'black'), 5)) + 
-  guides(fill = guide_legend(reverse = TRUE)) 
+  guides(fill = guide_legend(reverse = TRUE)) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.565 (1.513 individuos)')
 
 
 ```
@@ -139,7 +141,10 @@ elsoc_long_2016_2021 %>%
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = .33, end = .66, option = 'viridis') +
-  theme(legend.position = 'top')
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top') +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.443 (1.513 individuos)')
+
 
 ```
 
@@ -172,9 +177,11 @@ elsoc_wide_2016_2021 %>%
   geom_text(position = position_stack(vjust = .5),
             size = 3,
             color = rep(c(rep('white', 3), rep('black', 2)), 4)) +
-  theme(legend.position = 'right') +
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'right') +
   labs(fill = 'Posición política\nen 2021') + 
-  guides(fill = guide_legend(reverse = TRUE))  
+  guides(fill = guide_legend(reverse = TRUE)) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=3.026 (1.513 individuos)')
 
   
 ```
@@ -205,7 +212,9 @@ elsoc_wide_2016_2021 %>%
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = .33, end = .66, option = 'viridis') +
-  theme(legend.position = 'top')
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top') +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=3.026 (1.513 individuos)')
 
 ```
 
@@ -234,8 +243,10 @@ elsoc_long_2016_2021 %>%
   scale_color_viridis_d(end = .75, option = 'viridis') +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  theme(legend.position = 'top',
-        legend.title = element_blank())
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
+        legend.title = element_blank()) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.553 (1.513 individuos)')
   
 ```
 
@@ -264,11 +275,13 @@ elsoc_long_2016_2021 %>%
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_color_viridis_d(begin = 0, end = .7, direction = -1, option = 'viridis') +
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank()) + 
   guides(color = guide_legend(reverse = TRUE)) +
   ggtitle(label = NULL,
-          subtitle = 'Portaje que responde Frecuente o Muy frecuentemente')
+          subtitle = 'Portaje que responde Frecuente o Muy frecuentemente') +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.558 (1.513 individuos)')
 
 ```
 
@@ -299,10 +312,12 @@ elsoc_long_2016_2021 %>%
   geom_text(position = position_stack(vjust = .5),
             size = 3,
             color = rep(c('white', 'white', 'white', 'black', 'black'), 3)) + 
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank()) + 
   guides(fill = guide_legend(reverse = TRUE)) + 
-  ggtitle(label = NULL)
+  ggtitle(label = NULL) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.512 (1.512 individuos)')
 
 ```
 
@@ -338,10 +353,12 @@ elsoc_long_2016_2021 %>%
   ylab(label = NULL) +
   xlab(label = NULL) + 
   scale_color_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank()) +
   ggtitle(NULL,
-          subtitle = 'Porcentaje que responde de acuerdo o muy de acuerdo') 
+          subtitle = 'Porcentaje que responde de acuerdo o muy de acuerdo')  +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.931 (1.510 individuos)')
 
 ```
 
@@ -369,8 +386,7 @@ En suma, los resultados indican que los grupos que menos expresan su voz políti
 
 
 ```{r tip-participacion5, fig.cap = 'Perfiles de participación política: 5 clases'}
-
-# load(file.path('inputs', 'participacion_tipos5.RData'))
+load(file.path('inputs', 'participacion_tipos5.RData'))
 
 tip_par <- tip_par %>% 
   select(idencuesta, class_part_5, par_mov_w01, par_mov_w02, par_mov_w03, par_mov_w04, par_mov_w05, c11_w01, c11_w03, c43_w05) %>% 
@@ -460,10 +476,12 @@ tab_5 %>%
   labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
   scale_x_continuous(labels = scales::percent, limits = c(0, 1)) +
   theme_bw() + 
-  theme(axis.text.x = element_text(size = rel(.9)),
+  theme(plot.caption = element_text(hjust = 0),
+        axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
         legend.title = element_blank()) + 
-  scale_fill_viridis_d(begin = .2, end = .7)
+  scale_fill_viridis_d(begin = .2, end = .7) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.335 (1.467 individuos)')
 
 ```
 
@@ -488,6 +506,7 @@ tip_par %>%
   mutate(pos_id = factor(car::recode(c15_w05, recodes = "0:4 = 1; 5 = 2; 6:10 = 3; 11:12 = 4"),
                          levels = 1:4,
                          labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>%
+  filter(!is.na(pos_id)) %>% 
   survey_design_elsoc(weights = 'ponderador02_w05') %>% 
   prop(pos_id, by = class_part_5, na.rm = TRUE) %>% 
   ggplot(aes(x = prop, y = fct_rev(class_part_5), fill = fct_rev(pos_id), 
@@ -501,9 +520,11 @@ tip_par %>%
             color = rep(c('white', 'white', 'black', 'black'), 5)) +
   theme_bw() + 
   scale_fill_viridis_d(end = .85, direction = -1) +
-  theme(axis.text.x = element_text(size = rel(.9)),
+  theme(plot.caption = element_text(hjust = 0),
+        axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
-        legend.title = element_blank())
+        legend.title = element_blank()) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.175 (1.435 individuos)')
 
 ```
 
@@ -536,9 +557,11 @@ tip_par %>%
             color = rep(c('black', 'white'), 5)) +
   theme_bw() + 
   scale_fill_viridis_d(begin = .33, end = .66) +
-  theme(axis.text.x = element_text(size = rel(.9)),
+  theme(plot.caption = element_text(hjust = 0),
+        axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
-        legend.title = element_blank())
+        legend.title = element_blank()) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.335 (1.467 individuos)')
 
 ```
 
@@ -568,9 +591,11 @@ tip_par %>%
             size = 3) +
   theme_bw() + 
   scale_fill_viridis_d(end = .85) +
-  theme(axis.text.x = element_text(size = rel(.9)),
+  theme(plot.caption = element_text(hjust = 0),
+        axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
-        legend.title = element_blank())
+        legend.title = element_blank()) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.335 (1.467 individuos)')
 
 ```
 
@@ -605,9 +630,11 @@ tip_par %>%
             color = rep(c('black', 'white', 'white'), 5)) +
   theme_bw() + 
   scale_fill_viridis_d(end = .8, option = 'viridis') +
-  theme(axis.text.x = element_text(size = rel(.9)),
+  theme(plot.caption = element_text(hjust = 0),
+        axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
-        legend.title = element_blank())
+        legend.title = element_blank()) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.335 (1.467 individuos)')
 
 ```
 
@@ -642,9 +669,11 @@ tip_par %>%
             color = rep(c('black', 'white', 'white'), 5)) +
   theme_bw() + 
   scale_fill_viridis_d(end = .85, option = 'viridis') +
-  theme(axis.text.x = element_text(size = rel(.9)),
+  theme(plot.caption = element_text(hjust = 0),
+        axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
-        legend.title = element_blank())
+        legend.title = element_blank()) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.235 (1.447 individuos)')
 
 ```
 
@@ -684,9 +713,11 @@ tip_par %>%
             color = rep(c('white', 'white', 'black', 'black'), 5)) +
   theme_bw() + 
   scale_fill_viridis_d(end = .85, direction = -1, option = 'viridis') +
-  theme(axis.text.x = element_text(size = rel(.9)),
+  theme(plot.caption = element_text(hjust = 0),
+        axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
-        legend.title = element_blank())
+        legend.title = element_blank()) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.225 (1.445 individuos)')
 
 ```
 
@@ -723,9 +754,11 @@ tip_par %>%
             color = rep(c('white', 'black'), 5)) +
   theme_bw() + 
   scale_fill_viridis_d(begin = .33, end = .66) +
-  theme(axis.text.x = element_text(size = rel(.9)),
+  theme(plot.caption = element_text(hjust = 0),
+        axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
-        legend.title = element_blank())
+        legend.title = element_blank()) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=6.820 (1.364 individuos)')
 
 ```
 
@@ -761,11 +794,13 @@ elsoc_long_2016_2021 %>%
   ylab(label = NULL) +
   xlab(label = NULL) + 
   scale_color_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
-  theme(legend.position = 'right',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'right',
         legend.title = element_blank()) + 
   coord_flip() + 
   guides(color = guide_legend(reverse = TRUE)) +
-  ggtitle(label = NULL)
+  ggtitle(label = NULL) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=3.003 (1.513 individuos)')
 
 ```
 
@@ -795,10 +830,12 @@ elsoc_long_2016_2021 %>%
   xlab(label = NULL) +
   scale_color_viridis_d(begin = 0, end = .5, direction = -1, option = 'viridis') +
   geom_text_repel(nudge_y = .025) +
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank()) + 
     ggtitle(label = NULL,
-          subtitle = 'Movimientos sociales agrupados en 3 categorías')
+          subtitle = 'Movimientos sociales agrupados en 3 categorías') +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.482 (1.513 individuos)')
 
 ```
 
@@ -824,10 +861,12 @@ elsoc_long_2016_2021 %>%
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
   geom_text_repel(color = viridis(1), size = 3, nudge_y = .01) + 
-  theme(legend.position = 'none',   
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'none',   
         legend.title = element_blank()) + 
   ggtitle(label = NULL,
-          subtitle = 'Porcentaje que participa Frecuentemente o Muy frecuentemente')
+          subtitle = 'Porcentaje que participa Frecuentemente o Muy frecuentemente') +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.556 (1.513 individuos)')
 
 ```
 
@@ -861,10 +900,12 @@ elsoc_long_2016_2021 %>%
   xlab(label = NULL) +
   scale_color_viridis_d(begin = 0, end = .7, direction = -1, option = 'viridis') +
   geom_text_repel(color = viridis(1), size = 3) + 
-  theme(legend.position = 'top',   
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',   
         legend.title = element_blank()) + 
   ggtitle(label = NULL,
-          subtitle = 'Porcentaje que participa Frecuentemente o Muy frecuentemente')
+          subtitle = 'Porcentaje que participa Frecuentemente o Muy frecuentemente') +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.473 (1.513 individuos)')
 
 ```
 
@@ -909,10 +950,12 @@ sjlabelled::as_label(ola) %>%
   xlab(label = NULL) +
   scale_color_viridis_d(begin = .33, end = .66, option = 'viridis') + 
   geom_text_repel(size = 3, nudge_y = .02) +
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank()) +
   ggtitle(NULL,
-          subtitle = 'Porcentaje que responde que Muchas veces o Siempre se justifica' )
+          subtitle = 'Porcentaje que responde que Muchas veces o Siempre se justifica' ) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=6.026 (1.513 individuos)')
 
 
 ```
@@ -931,7 +974,8 @@ Resumidamente, en comparación con años anteriores, el año de 2019 existen men
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & 
-           !f05_03 %in% c(-888, -999) & !f05_04 %in% c(-888, -999) & !f05_07 %in% c(-888, -999)) %>%  
+           !f05_03 %in% c(-888, -999) & !f05_04 %in% c(-888, -999) & !f05_07 %in% c(-888, -999)) %>% 
+
   select(f05_03, f05_04, f05_07, ola, ponderador02, segmento_disenno, estrato_disenno) %>% 
   pivot_longer(cols = c(f05_03, f05_04, f05_07)) %>% 
   prop(value %in% 4:5, by = c(ola, name), na.rm = TRUE) %>% 
@@ -952,10 +996,12 @@ elsoc_long_2016_2021 %>%
   xlab(label = NULL) +
   scale_color_viridis_d(begin = 0, end = .7, option = 'viridis') + 
   ggrepel::geom_text_repel(size = 3, nudge_y = .02) +
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank()) +
   ggtitle(NULL,
-        subtitle = 'Porcentaje que responde que Muchas veces o Siempre se justifica' )
+        subtitle = 'Porcentaje que responde que Muchas veces o Siempre se justifica' ) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.507 (1.513 individuos)')
 
 ```
 
@@ -990,10 +1036,12 @@ elsoc_long_2016_2021 %>%
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_color_viridis_d(begin = .33, end = .66, option = 'viridis') +
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank()) + 
   ggtitle(NULL,
-          subtitle = 'Porcentaje que responde que...')
+          subtitle = 'Porcentaje que responde que...') +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.442 (1.513 individuos)')
 
 ```
 
@@ -1008,6 +1056,7 @@ elsoc_long_2016_2021 %>%
   mutate(educ = factor(car::recode(m01, recodes = "1:3 = 1; 4:5 = 2; 6:7 = 3; 8:10 = 4"),
                        levels = 1:4,
                        labels = c("Basica", "Media", "Tecnica", "Universitaria"))) %>% 
+
   prop_list(c02 == 1, c04 == 2, by = educ, na.rm = TRUE) %>% 
   mutate(name = factor(name, 
                        levels = c('c02 == 1', 'c04 == 2'),
@@ -1024,10 +1073,12 @@ elsoc_long_2016_2021 %>%
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(end = .85, option = 'viridis') +
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank()) + 
   ggtitle(NULL,
-          subtitle = 'Porcentaje que responde que...')
+          subtitle = 'Porcentaje que responde que...') +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.507 (1.507 individuos)')
 
 ```
 
@@ -1045,6 +1096,7 @@ Segundo, varias instituciones como el Congreso, Gobierno y Carabineros experimen
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & !is_nsnr(c05_01, c05_07, c05_08)) %>% 
   as_label(ola) %>% 
+
   prop_list(c05_01 %in% 4:5, c05_07 %in% 4:5, c05_08 %in% 4:5, by = ola, na.rm = TRUE) %>% 
   mutate(name = factor(name, 
                        levels = c('c05_01 %in% 4:5', 'c05_07 %in% 4:5', 'c05_08 %in% 4:5'),
@@ -1060,10 +1112,12 @@ elsoc_long_2016_2021 %>%
     xlab(label = NULL) +
     scale_color_viridis_d(begin = .1, end = .66, option = 'viridis') +
     geom_text_repel(size = 3, nudge_y = .02, color = 'black') +
-    theme(legend.position = 'top',
+    theme(plot.caption = element_text(hjust = 0),
+          legend.position = 'top',
           legend.title = element_blank())  + 
   ggtitle(NULL,
-          subtitle = 'Porcentaje que Confía Bastante o Mucho')
+          subtitle = 'Porcentaje que Confía Bastante o Mucho') +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.462 (1.513 individuos)')
 
 ```
 
@@ -1074,6 +1128,7 @@ elsoc_long_2016_2021 %>%
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & !is_nsnr(c05_02, c05_03, c05_05)) %>% 
   as_label(ola) %>% 
+
   prop_list(c05_02 %in% 4:5, c05_03 %in% 4:5, c05_05 %in% 4:5, by = ola, na.rm = TRUE) %>% 
   mutate(name = factor(name, 
                        levels = c('c05_02 %in% 4:5', 'c05_03 %in% 4:5', 'c05_05 %in% 4:5'),
@@ -1091,10 +1146,12 @@ elsoc_long_2016_2021 %>%
     xlab(label = NULL) +
     scale_color_viridis_d(begin = .1, end = .66, option = 'viridis') +
     geom_text_repel(size = 3, nudge_y = .02, color = 'black') +
-    theme(legend.position = 'top',
+    theme(plot.caption = element_text(hjust = 0),
+          legend.position = 'top',
           legend.title = element_blank()) + 
     ggtitle(NULL,
-          subtitle = 'Porcentaje que Confía Bastante o Mucho')
+          subtitle = 'Porcentaje que Confía Bastante o Mucho') +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.456 (1.513 individuos)')
 
 
 ```
@@ -1108,6 +1165,7 @@ elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1 & !is_nsnr(c05_01, c05_02, c05_03, c05_05, c05_07, c05_08),
          ola %in% c(1, 5)) %>% 
   as_label(ola) %>% 
+
   prop_list(c05_01 %in% 4:5, c05_02 %in% 4:5, c05_03 %in% 4:5, c05_05 %in% 4:5, c05_07 %in% 4:5, c05_08 %in% 4:5, by = ola, na.rm = TRUE) %>%
   mutate(name = factor(name, 
                        levels = c('c05_01 %in% 4:5', 'c05_02 %in% 4:5', 
@@ -1131,11 +1189,13 @@ elsoc_long_2016_2021 %>%
   ylab(label = NULL) +
   xlab(label = NULL) + 
   scale_color_viridis_d(begin = .33, end = .66, direction = -1, option = 'viridis') +
-  theme(legend.position = 'right',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'right',
         legend.title = element_blank()) + 
   guides(color = guide_legend(reverse = TRUE)) +
   ggtitle(NULL,
-          subtitle = 'Porcentaje que Confía Bastante o Mucho')
+          subtitle = 'Porcentaje que Confía Bastante o Mucho') +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.954 (1.509 individuos)')
 
 ```
 
@@ -1152,6 +1212,7 @@ La literatura ha distinguido entre el apoyo a los principios del régimen democr
 elsoc_long_2016_2021 %>%
   filter(tipo_atricion == 1 & !is_nsnr(c01, c25)) %>% 
   as_label(ola) %>% 
+
   prop_list(c01 %in% 4:5, c25 == 1, by  = ola, na.rm = TRUE) %>% 
   mutate(name = factor(name,
                        levels = c('c25 == 1', 'c01 %in% 4:5'),
@@ -1167,10 +1228,12 @@ elsoc_long_2016_2021 %>%
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_color_viridis_d(begin = 0, end = .66, direction = 1, option = 'viridis') +
-  theme(legend.position = 'top',   
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',   
         legend.title = element_blank()) +
   ggtitle(NULL,
-          subtitle = 'Porcentaje que responde...')
+          subtitle = 'Porcentaje que responde...') +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.208 (1.513 individuos)')
 
 ```
 
@@ -1187,6 +1250,7 @@ elsoc_long_2016_2021 %>%
                          levels = c(1, 2, 3, 4),
                          labels = c('Izquierda', "Centro", "Derecha", "No se identifica"))) %>% 
   as_label(ola) %>% 
+
   prop_list(c01 %in% 4:5, c25 == 1, by  = pos_id, na.rm = TRUE) %>% 
   mutate(name = factor(name,
                        levels = c('c25 == 1', 'c01 %in% 4:5'),
@@ -1202,9 +1266,11 @@ elsoc_long_2016_2021 %>%
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = .33, end = .66, direction = 1, option = 'viridis') +
-  theme(legend.position = 'none') +
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'none') +
   ggtitle(NULL,
-        subtitle = 'Porcentaje que responde...')
+        subtitle = 'Porcentaje que responde...') +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.443 (1.443 individuos)')
 
 ```
 
@@ -1223,6 +1289,7 @@ elsoc_long_2016_2021 %>%
                                  'En algunos casos, un\ngobierno autoritario\npuede ser preferible',
                                  'Da lo mismo régimen\ndemocrático o autoritario', 
                                  'Ninguna'))) %>%
+
   prop(x = c25, by = pos_id, na.rm = TRUE) %>% 
   ggplot(aes(y = prop, x = pos_id, fill = fct_rev(c25), 
              label = scales::percent(ifelse(prop < .01, NA, prop), accuracy = .1))) + 
@@ -1235,11 +1302,13 @@ elsoc_long_2016_2021 %>%
   geom_text(position = position_stack(vjust = .5),
             size = 3, na.rm = TRUE,
             color = rep(c('black', 'black', 'white', 'white'), 4)) + 
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank()) + 
   guides(fill = guide_legend(reverse = TRUE)) +
   ggtitle(NULL,
-        subtitle = 'Porcentaje que responde...')
+        subtitle = 'Porcentaje que responde...') +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.458 (1.458 individuos)')
 
 ```
 
@@ -1256,6 +1325,7 @@ Con el inicio del proceso constituyente, durante 2020 y 2021 se realizaron proce
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & ola %in% c(1,3,5) & !is_nsnr(c15, c11, c43, values = c(3, -888, -999))) %>% 
   mutate(particip_electoral = ifelse(ola == 5, c43, c11)) %>% 
+
   prop(particip_electoral == 1, by = ola, na.rm = TRUE) %>%
   mutate(ola = factor(ola, 
                       levels = c(1,3,5), 
@@ -1271,10 +1341,12 @@ elsoc_long_2016_2021 %>%
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_color_viridis_d(end = .66, direction = 1, option = 'viridis') +
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank()) +
   ggtitle(NULL,
-          subtitle = 'Porcentaje que votó en...')
+          subtitle = 'Porcentaje que votó en...') +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=4.179 (1.511 individuos)')
 
 ```
 
@@ -1284,7 +1356,8 @@ elsoc_long_2016_2021 %>%
 # elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
-  dplyr::filter(ola == 5 & tipo_atricion == 1 & !c44 %in% c(3, 4, -888, -999)& !is.na(c44)) %>% 
+  dplyr::filter(ola == 5 & tipo_atricion == 1 & !c44 %in% c(3, 4, -888, -999) & !is.na(c44)) %>%
+
   prop(c44, na.rm = TRUE) %>% 
   sjlabelled::as_label(c44) %>%
   mutate(datos = 'Datos ELSOC') %>%
@@ -1303,8 +1376,10 @@ elsoc_long_2016_2021 %>%
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
             size= 2.75)  + 
-  theme(legend.position = 'top',
-        legend.title = element_blank())
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
+        legend.title = element_blank()) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=954 (954 individuos)')
 
 ```
 
@@ -1321,6 +1396,7 @@ elsoc_long_2016_2021 %>%
          edadt = factor(car::recode(m0_edad, "18:29 = 1; 30:49 = 2; 50:64 = 3; 65:150 = 4"),
                         levels = 1:4,
                         labels = c('18-29', '30-49', '50-64', '65 o más'))) %>% 
+
   prop(particip_electoral == 1, by = c(ola, edadt), na.rm = TRUE) %>%
   mutate(ola = factor(ola, 
                       levels = c(1,3,5), 
@@ -1338,10 +1414,12 @@ elsoc_long_2016_2021 %>%
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_color_viridis_d(end = .66, direction = 1, option = 'viridis') +
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank()) +
   ggtitle(NULL,
-          subtitle = 'Porcentaje que votó en...')
+          subtitle = 'Porcentaje que votó en...') +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=4.179 (1.511 individuos)')
 
 ```
 
@@ -1363,6 +1441,7 @@ elsoc_long_2016_2021 %>%
          voto2020 = factor(car::recode(voto2020, '3:4 = 5'),
                           levels = c(1:2, 5),
                           labels = c('Apruebo', 'Rechazo', 'No votó o votó\nBlanco o Nulo'))) %>% 
+
   prop(voto2020, by = pos_id, na.rm = TRUE) %>%
   ggplot(aes(y = prop, x = pos_id, fill = fct_rev(voto2020),
              label = scales::percent(ifelse(prop < .02, NA, prop), accuracy = .1))) + 
@@ -1376,10 +1455,12 @@ elsoc_long_2016_2021 %>%
             size = 3, na.rm = TRUE,
             color = rep(c('black', 'white', 'white'), 4)) +
   guides(fill = guide_legend(reverse = TRUE)) +
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank()) +
   ggtitle(NULL,
-          subtitle = 'Porcentaje que voto...')
+          subtitle = 'Porcentaje que voto...') +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.414 (1.513 individuos)')
 
 ```
 
@@ -1403,6 +1484,7 @@ elsoc_wide_2016_2021 %>%
                           levels = c(1:2, 5),
                           labels = c('Apruebo', 'Rechazo', 'No votó o votó\nBlanco o Nulo'))) %>% 
   survey_design_elsoc(weights = 'ponderador02_w05') %>% 
+
   prop(voto2020, by = votos, na.rm = TRUE) %>%
   ggplot(aes(y = prop, x = votos, fill = fct_rev(voto2020),
              label = scales::percent(ifelse(prop < .02, NA, prop), accuracy = .1))) + 
@@ -1416,8 +1498,10 @@ elsoc_wide_2016_2021 %>%
             size = 3, na.rm = TRUE,
             color = rep(c('black', 'white', 'white'), 4)) +
   guides(fill = guide_legend(reverse = TRUE)) +
-  theme(legend.position = 'top',
-        legend.title = element_blank())
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
+        legend.title = element_blank()) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=4.401 (1.467 individuos)')
 
 ```
 
@@ -1438,6 +1522,7 @@ elsoc_wide_2016_2021 %>%
          voto2020 = factor(car::recode(voto2020, '3:4 = 3'),
                           levels = c(1:3, 5),
                           labels = c('Apruebo', 'Rechazo', 'Blanco\no Nulo', 'No votó'))) %>%
+
   survey_design_elsoc(weights = 'ponderador02_w05') %>% 
   prop(voto2020, by = voto2017, na.rm = TRUE) %>%
   dplyr::right_join(tidyr::expand(., voto2020, voto2017)) %>% 
@@ -1457,8 +1542,10 @@ elsoc_wide_2016_2021 %>%
             size = 3, na.rm = TRUE,
             color = rep(c('black', 'white', 'white', 'white'), 10)) + 
   guides(fill = guide_legend(reverse = TRUE)) +
-  theme(legend.position = 'top',
-        legend.title = element_blank())
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
+        legend.title = element_blank()) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.792 (1.396 individuos)')
 
 ```
 
@@ -1474,6 +1561,7 @@ El plebiscito de 2020 dió inicio al proceso constituyente con un resultado del 
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1, ola == 5, !is_nsnr(c46_01, c46_02, c46_03, c46_04)) %>% 
+
   prop_list(c46_01 %in% 4:5, c46_02 %in% 4:5, c46_03 %in% 4:5, c46_04 %in% 4:5, na.rm = TRUE) %>% 
   mutate(name  =factor(name,
                      levels = c('c46_01 %in% 4:5', 'c46_03 %in% 4:5', 'c46_04 %in% 4:5', 'c46_02 %in% 4:5'),
@@ -1486,14 +1574,15 @@ elsoc_long_2016_2021 %>%
   theme_bw() +
   geom_col(fill = viridis::viridis(1, begin = .33)) +
   geom_text(position = position_dodge(.9), vjust = -.5, size = 3) +
-  theme_bw()+
   scale_y_continuous(labels = scales::percent,
                      limits = c(0, 1)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
+  theme(plot.caption = element_text(hjust = 0)) +
+    scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
   ggtitle(NULL,
-        subtitle = 'Porcentaje De acuerdo o Muy de acuerdo con: "La nueva constitución..."')
+        subtitle = 'Porcentaje De acuerdo o Muy de acuerdo con: "La nueva constitución..."') +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.405 (1.405 individuos)')
 
 ```
 
@@ -1515,21 +1604,23 @@ elsoc_long_2016_2021 %>%
   rowwise() %>% 
   mutate(optimismo = mean(c46_01 , c46_02, c46_03, c46_04, na.rm = TRUE)) %>% 
   ungroup() %>% 
+
   prop(optimismo >= 4, by = voto2020, na.rm = TRUE) %>% 
   ggplot(aes(x = voto2020, y = prop,
              label = scales::percent(ifelse(prop>.01, prop, NA), accuracy = .1))) +
   theme_bw() +
   geom_col(position = 'dodge2', fill = viridis(1, begin = .33)) +
   geom_text(position = position_dodge(.9), vjust = -.5, size = 3) +
-  theme_bw()+
   scale_y_continuous(labels = scales::percent,
                      limits = c(0, 1)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank()) + 
   ggtitle(NULL,
-        subtitle = 'Porcentaje de acuerdo o muy de acuerdo en promedio con atributos positivos')
+        subtitle = 'Porcentaje de acuerdo o muy de acuerdo en promedio con atributos positivos') +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.377 (1.377 individuos)')
 
 ```
 
@@ -1549,21 +1640,23 @@ elsoc_long_2016_2021 %>%
   rowwise() %>% 
   mutate(optimismo = mean(c46_01 , c46_02, c46_03, c46_04, na.rm = TRUE)) %>% 
   ungroup() %>% 
+
   prop(optimismo >= 4, by = educ, na.rm = TRUE) %>% 
   ggplot(aes(x = educ, y = prop,
              label = scales::percent(ifelse(prop>.01, prop, NA), accuracy = .1))) +
   theme_bw() +
   geom_col(position = 'dodge2', fill = viridis(1, begin = .33)) +
   geom_text(position = position_dodge(.9), vjust = -.5, size = 3) +
-  theme_bw()+
   scale_y_continuous(labels = scales::percent,
                      limits = c(0, 1)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank()) + 
   ggtitle(NULL,
-        subtitle = 'Porcentaje de acuerdo o muy de acuerdo en promedio con atributos positivos')
+        subtitle = 'Porcentaje de acuerdo o muy de acuerdo en promedio con atributos positivos') +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.405 (1.405 individuos)')
 
 
 ```
@@ -1585,20 +1678,22 @@ elsoc_long_2016_2021 %>%
   rowwise() %>% 
   mutate(optimismo = mean(c46_01 , c46_02, c46_03, c46_04, na.rm = TRUE)) %>% 
   ungroup() %>% 
+
   prop(optimismo >= 4, by = pos_id, na.rm = TRUE) %>% 
   ggplot(aes(x = pos_id, y = prop,
              label = scales::percent(ifelse(prop>.01, prop, NA), accuracy = .1))) +
   theme_bw() +
   geom_col(position = 'dodge2', fill = viridis(1, begin = .33)) +
   geom_text(position = position_dodge(.9), vjust = -.5, size = 3) +
-  theme_bw()+
   scale_y_continuous(labels = scales::percent,
                      limits = c(0, 1)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank()) + 
   ggtitle(NULL,
-        subtitle = 'Porcentaje de acuerdo o muy de acuerdo en promedio con atributos positivos')
+        subtitle = 'Porcentaje de acuerdo o muy de acuerdo en promedio con atributos positivos') +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.382 (1.382 individuos)')
 
 ```
