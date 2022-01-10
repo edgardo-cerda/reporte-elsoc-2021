@@ -73,7 +73,8 @@ elsoc_long_2016_2021 %>%
   ylab(label = NULL) +
   xlab(label = NULL) +  
   scale_color_viridis_d(end = .75, option = 'viridis') +
-    theme(plot.caption = element_text(hjust = 0),legend.position = 'top',
+    theme(plot.caption = element_text(hjust = 0),
+          legend.position = 'top',
         legend.title = element_blank()) +
   ggtitle(NULL, 'Porcentaje que responde que...') +
   labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.508 (1.513 individuos)')
@@ -1001,7 +1002,7 @@ elsoc_long_2016_2021 %>%
             size = 3)  + 
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top', 
-        legend.title = element_blanklank()) + 
+        legend.title = element_blank()) + 
   ggtitle(NULL, 'Porcentaje que...') +
   labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.508 (1.508 individuos)')
 
