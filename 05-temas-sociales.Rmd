@@ -27,7 +27,10 @@ elsoc_long_2016_2021 %>%
   scale_fill_viridis_d(end = .85, direction = -1) +
   geom_text(position = position_stack(vjust = .5),
             size = 3, color = rep(c('black', 'white', 'white'), 5)) + 
-  theme(legend.position = 'top', legend.title = element_blank())
+  theme(plot.caption = element_text(hjust = 0),           legend.position = 'top', 
+        legend.title = element_blank()) +
+  
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=4.536 (1.513 individuos)')
 
 ```
 
@@ -36,11 +39,10 @@ A su vez, en la Figura \@ref(fig:confli-cambio) podemos observar que, aunque los
 ```{r confli-cambio, fig.cap = 'Cambios en frecuencia de conflictos barriales'}
 
 elsoc_diseno <- elsoc_long_2016_2021 %>% 
-  filter(tipo_atricion == 1 & muestra == 1 & ola %in% c(4,5) & !t11_01 %in% c(-888, -999) &
-           !t11_02 %in% c(-888, -999) & !t11_03 %in% c(-888, -999) & !t11_04 %in% c(-888, -999)) %>% 
-  mutate(barrio_confli = (t11_01 + t11_02 + t11_03 + t11_04)/4) %>%
-  mutate(barrio_confli_rec = factor(cut(barrio_confli, breaks = c(0,1, 2.75, 5)),
-         labels = c("Nunca","Pocas o algunas veces","Muchas veces o siempre"))) %>%
+  filter(tipo_atricion == 1 & ola %in% 4:5, !is_nsnr(t11_01, t11_02, t11_03, t11_04)) %>% 
+  mutate(barrio_confli = (t11_01 + t11_02 + t11_03 + t11_04)/4,
+         barrio_confli_rec = factor(cut(barrio_confli, breaks = c(0, 1, 2.75, 5)),
+         labels = c("Nunca", "Pocas o algunas veces", "Muchas veces o siempre"))) %>%
   sjlabelled::as_label(ola) %>% 
   survey_design_elsoc()
 
@@ -66,7 +68,8 @@ datos %>%
   scale_y_continuous(labels = scales::percent) + 
   ylab(label = NULL) +
   xlab(label = NULL) + 
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank()) +
   scale_fill_viridis_d(begin = .11, end = .88, direction = -1) +
   geom_text(data = etiquetas, 
@@ -74,7 +77,9 @@ datos %>%
             position = position_stack(vjust = .5),
             show.legend = FALSE,
             size = 3,
-            color = rep(c('black', 'white', 'white'),2))
+            color = rep(c('black', 'white', 'white'),2)) +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=3.013 (1.513 individuos)')
+
 ```
 
 
@@ -84,31 +89,31 @@ En relación a la frecuencia de conflictos barriales, según la Figura \@ref(fig
 ```{r confli-zona, fig.cap = 'Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona geográfica'}
 
 elsoc_long_2016_2021 %>% 
-  filter(tipo_atricion == 1 & muestra == 1 & ola %in% c(4,5) & !t11_01 %in% c(-888, -999) &
-           !t11_02 %in% c(-888, -999) & !t11_03 %in% c(-888, -999) & !t11_04 %in% c(-888, -999)) %>% 
-  mutate(barrio_confli = (t11_01 + t11_02 + t11_03 + t11_04)/4) %>%
-  mutate( zona1 = factor(car::recode(region_cod, 
+  filter(tipo_atricion == 1 & ola %in% 4:5, !is_nsnr(t11_01, t11_02, t11_03, t11_04)) %>% 
+  mutate(barrio_confli = (t11_01 + t11_02 + t11_03 + t11_04)/4,
+         zona1 = factor(car::recode(region_cod, 
                                      "c(1,2,3,4,15)=1; c(5,6,7,8,16)=2; c(9,10,11,12,14)=3; 13=4"),
                         levels = c(1,2,3,4), 
                         labels = c("Norte","Centro","Sur","Metropolitana"))) %>%
   sjlabelled::as_label(ola) %>%
-  prop(x = barrio_confli >= 2.76, by = c(ola, zona1), na.rm = TRUE) %>% 
+  prop(x = barrio_confli > 2.75, by = c(ola, zona1), na.rm = TRUE) %>% 
   ggplot(aes(y = prop, x = zona1, fill = ola, 
              label = scales::percent(prop, accuracy = .1))) + 
   theme_bw() + 
-  geom_col(position = 'Dodge') +
+  geom_col(position = 'dodge2') +
   scale_y_continuous(labels = scales::percent,
                      limits = c(0, .3)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = .33, end = .66, direction = -1) +
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),           legend.position = 'top',
         legend.title = element_blank()) +
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
             size = 3) + 
   ggtitle(label = NULL,
-          subtitle = 'Porcentaje con conflictos barriales "Siempre" o "Muchas veces"')
+          subtitle = 'Porcentaje con conflictos barriales "Siempre" o "Muchas veces"') +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=3.013 (1.513 individuos)')
 
 ```
 
@@ -118,33 +123,31 @@ Por otro lado, según la Figura \@ref(fig:confli-estrato), el porcentaje de pers
 ```{r confli-estrato, fig.cap = 'Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona de residencia'}
 
 elsoc_long_2016_2021 %>% 
-  filter(tipo_atricion == 1 & muestra == 1 & ola %in% c(4,5) & !t11_01 %in% c(-888, -999) &
-           !t11_02 %in% c(-888, -999) & !t11_03 %in% c(-888, -999) & !t11_04 %in% c(-888, -999)) %>% 
-  mutate(barrio_confli = (t11_01 + t11_02 + t11_03 + t11_04)/4) %>%
-  mutate(barrio_confli_rec = factor(cut(barrio_confli, breaks = c(0,1,2.75,5)),
-         labels = c("Nunca","Pocas o algunas veces","Muchas veces o siempre")),
+  filter(tipo_atricion == 1 & ola %in% 4:5, !is_nsnr(t11_01, t11_02, t11_03, t11_04)) %>% 
+  mutate(barrio_confli = (t11_01 + t11_02 + t11_03 + t11_04)/4,
          estrato = factor(estrato, levels = c(1,2,3,4,5,6),
-         labels = c('Gran\nSantiago', 'Gran\nValparaíso', 'Gran\nConcepción', 
-                    'Ciudades\ngrandes', 'Ciudades\nmedianas', 'Ciudades\npequeñas'))) %>%
+                          labels = c('Gran\nSantiago', 'Gran\nValparaíso', 'Gran\nConcepción', 
+                                     'Ciudades\ngrandes', 'Ciudades\nmedianas', 'Ciudades\npequeñas'))) %>%
   sjlabelled::as_label(ola) %>% 
-  prop(x = barrio_confli_rec, by = c(ola, estrato), na.rm = TRUE) %>% 
-  filter(barrio_confli_rec == 'Muchas veces o siempre') %>% 
+  prop(x = barrio_confli > 2.75, by = c(ola, estrato), na.rm = TRUE) %>% 
   ggplot(aes(y = prop, x = estrato, fill = ola, 
              label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
-  geom_col(position = 'Dodge') +
+  geom_col(position = 'dodge2') +
   scale_y_continuous(labels = scales::percent,
                      limits = c(0, .3)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = .33, end = .66, direction = -1) +
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank()) +
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
             size = 3) + 
   ggtitle(NULL,
-          subtitle = 'Porcentaje con conflictos barriales "Siempre" o "Muchas veces"')
+          subtitle = 'Porcentaje con conflictos barriales "Siempre" o "Muchas veces"') +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=3.013 (1.513 individuos)')
 
 ```
 
@@ -173,25 +176,27 @@ elsoc_long_2016_2021 %>%
          quintil = factor(quintil, levels = 1:5, labels = glue::glue('Quintil {1:5}'))
          ) %>%
   ungroup() %>% 
-  prop(x = barrio_confli >= 2.76, by = c(ola, quintil), na.rm = TRUE) %>% 
+  prop(x = barrio_confli > 2.75, by = c(ola, quintil), na.rm = TRUE) %>% 
   as_label(ola) %>% 
   
   ggplot(aes(y = prop, x = quintil, fill = ola, 
              label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
-  geom_col(position = 'Dodge') +
+  geom_col(position = 'dodge2') +
   scale_y_continuous(labels = scales::percent,
                      limits = c(0, .3)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = .33, end = .66, direction = -1) +
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank()) +
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
             size = 3) + 
   ggtitle(NULL,
-          subtitle = 'Porcentaje con conflictos barriales "Siempre" o "Muchas veces"')
+          subtitle = 'Porcentaje con conflictos barriales "Siempre" o "Muchas veces"') +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.978 (1.511 individuos)')
 
 
 ```
@@ -213,6 +218,7 @@ elsoc_long_2016_2021 %>%
                                levels = c(1,2,3),
                                labels = c('Muy poco o poco', 'Algo', 'Bastante o mucho'))) %>%
   sjlabelled::as_label(ola) %>%
+
   prop(x = barrio_conf, by = ola, na.rm = TRUE) %>% 
   ggplot(aes(y = prop, x = ola, fill = barrio_conf, 
              label = as.character(scales::percent(prop, accuracy = .1)))) + 
@@ -220,11 +226,13 @@ elsoc_long_2016_2021 %>%
   geom_col(position = 'Stack') +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = .11, end = .88, direction = 1) +
+  scale_fill_viridis_d(end = .85, direction = 1) +
   geom_text(position = position_stack(vjust = .5),
             size = 3, color = rep(c('white', 'white', 'black'), 5)) + 
-  theme(legend.position = 'top',
-        legend.title = element_blank())
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
+        legend.title = element_blank()) +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.529 (1.513 individuos)')
 
 ```
 
@@ -234,6 +242,7 @@ elsoc_long_2016_2021 %>%
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1, !is_nsnr(t01, m0_sexo)) %>% 
+
   prop(t01 %in% 4:5, by = c(m0_sexo, ola), na.rm = TRUE) %>% 
   as_label(m0_sexo, ola) %>% 
   ggplot(aes(y = prop, x = ola, color = m0_sexo, group = m0_sexo,
@@ -241,14 +250,16 @@ elsoc_long_2016_2021 %>%
   geom_point(size = 1.75) + 
   geom_line() +
   theme_bw() +   
-  scale_color_viridis_d(begin = 0, end = .66, direction = 1) +
+  scale_color_viridis_d(begin = .33, end = .66, direction = 1) +
   labs(y = NULL, x = NULL, title = NULL) +
   scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
   geom_text_repel(size = 3)+
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank()) + 
   ggtitle(NULL,
-          'Porcentaje que confía Bastante o Mucho en sus vecinos')
+          'Porcentaje que confía Bastante o Mucho en sus vecinos') +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.529 (1.513 individuos)')
 
 ```
 
@@ -261,23 +272,25 @@ elsoc_long_2016_2021 %>%
                         levels = 1:4,
                         labels = c("Norte","Centro","Sur","Metropolitana")))%>%
   sjlabelled::as_label(ola) %>%
+
   prop(x = t01 %in% 4:5, by = c(ola, zona1), na.rm = TRUE) %>% 
   ggplot(aes(y = prop, x = zona1, fill = ola, 
              label = scales::percent(prop, accuracy = .1))) + 
   theme_bw() + 
-  geom_col(position = 'Dodge') +
+  geom_col(position = 'dodge2') +
   scale_y_continuous(labels = scales::percent,
                      limits = c(0, 1)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = .33, end = .66, direction = -1) +
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),           legend.position = 'top',
         legend.title = element_blank()) +
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
             size = 3) +
     ggtitle(NULL,
-          'Porcentaje que confía Bastante o Mucho en sus vecinos')
+          'Porcentaje que confía Bastante o Mucho en sus vecinos') +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=3.011 (1.513 individuos)')
 
 
 ```
@@ -305,8 +318,9 @@ elsoc_long_2016_2021 %>%
          quintil = factor(quintil, levels = 1:5, labels = glue::glue('Quintil {1:5}'))
          ) %>%
   ungroup() %>% 
+
   prop(t01 %in% 4:5, by = c(quintil, ola), na.rm = TRUE) %>% 
-  as_label(m0_sexo, ola) %>% 
+  as_label(ola) %>% 
   filter(quintil %in% c('Quintil 1', 'Quintil 5')) %>% 
   ggplot(aes(y = prop, x = ola, color = quintil, group = quintil,
              label = scales::percent(prop, .1))) +
@@ -317,10 +331,12 @@ elsoc_long_2016_2021 %>%
   labs(y = NULL, x = NULL, title = NULL) +
   scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
   geom_text_repel(size = 3, nudge_y = .01)+
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank()) + 
   ggtitle(NULL,
-          'Porcentaje que confía Bastante o Mucho en sus vecinos')
+          'Porcentaje que confía Bastante o Mucho en sus vecinos') +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.308 (1.513 individuos)')
 
 
 ```
@@ -348,37 +364,34 @@ Este resultado es consistente con estudios previos que muestran que la cohesión
 # elsoc::load_elsoc('territorial-2017')
 # territorial <- merge(elsoc_wide_2016_2021, elsoc_terr_2017, by="idencuesta")
 
-territorial$escolaridad[territorial$escolaridad < 0] <- NA
-
-tab<-territorial %>%   
-  filter(!is_nsnr(t01_w01, t01_w02, t01_w03, t01_w04, t01_w05))  %>%
-  drop_na(c("t01_w01", "t01_w02", "t01_w03", "t01_w04", "t01_w05")) %>%
-  filter(tipo_atricion==1)  %>%
-  mutate(quintil = xtile(escolaridad, n = 5, wt = ponderador02_w05)) %>%
-         mutate(quintil = factor(quintil, levels = 1:5, labels = glue::glue('Q{1:5}')))  %>%
+territorial %>%   
+  filter(tipo_atricion == 1, 
+         !is_nsnr(t01_w01, t01_w02, t01_w03, t01_w04, t01_w05, escolaridad))  %>%
+  drop_na(escolaridad, starts_with('t01_w0')) %>% 
+  mutate(quintil = xtile(escolaridad, n = 5, wt = ponderador02_w05),
+         quintil = factor(quintil, levels = 1:5, 
+                          labels = glue::glue('Q{1:5}')))  %>%
   rowwise() %>%
-          mutate(confianza = mean(t01_w01, t01_w02, t01_w03, t01_w04, t01_w05, na.rm = TRUE)) %>%
-          mutate(Confía= factor(confianza >= 4,
-                                        levels = c(TRUE, FALSE),
-                                        labels = c('Confía', 'No confía'))) %>%
-  filter(!is_nsnr(quintil))  %>%
-  drop_na(c("quintil")) %>%
+  mutate(confianza = mean(t01_w01, t01_w02, t01_w03, t01_w04, t01_w05, na.rm = TRUE)) %>% 
+  ungroup() %>% 
   survey_design_elsoc(weights = 'ponderador02_w05') %>%
-  group_by(quintil, Confía) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
-  filter(!is.na(Confía)) %>%
-  filter(!is.na(quintil)) %>% filter(Confía=="Confía")
-  
-tab %>% ggplot(aes(y = freq, x = quintil, label = scales::percent(freq, accuracy = .1))) +
+  prop(confianza >= 4, by = c(quintil), na.rm = TRUE) %>% 
+  ggplot(aes(y = prop, x = quintil, 
+             label = scales::percent(prop, accuracy = .1))) +
   theme_bw() +   
   geom_col(fill = viridis(1, begin = .5)) +
-  geom_text(position = position_dodge(.9), vjust = -.5, size = 3) +
+  geom_text(position = position_dodge(.9), 
+            vjust = -.5, size = 3) +
   scale_y_continuous(labels = scales::percent,
                      limits = c(0,1)) +
-  labs(y = NULL, x = NULL,
-       title = "Confianza en los vecinos según quintil de escolaridad en zona censal") +
+  labs(y = NULL, x = NULL) +
+  ggtitle(NULL,
+          "Confianza en los vecinos según quintil de escolaridad en zona censal") +
   scale_color_viridis_d(end = .66, direction = 1) +
-  theme(legend.position = 'top',
-        legend.title = element_blank())
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
+        legend.title = element_blank()) +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021 y Datos territoriales ELSOC 2017.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.360 (1.472 individuos)')
 
 ```
 
@@ -392,39 +405,32 @@ Este resultado sugiere analizar los mecanismos de integración social de inmigra
 # elsoc::load_elsoc('territorial-2017')
 # territorial <- merge(elsoc_wide_2016_2021, elsoc_terr_2017, by="idencuesta")
 
-territorial$inmigrante[territorial$inmigrante < 0] <- NA
-territorial$p_inmigracion <- territorial$inmigrante/territorial$hbtes
-
-tab<-territorial %>%   
-  filter(!is_nsnr(t01_w01, t01_w02, t01_w03, t01_w04, t01_w05))  %>%
-  drop_na(c("t01_w01", "t01_w02", "t01_w03", "t01_w04", "t01_w05")) %>%
-  filter(tipo_atricion==1)  %>%
-  mutate(quintil = xtile(p_inmigracion, n = 5, wt = ponderador02_w05)) %>%
-         mutate(quintil = factor(quintil, levels = 1:5, labels = glue::glue('Q{1:5}')))  %>%
+territorial %>%   
+  filter(!is_nsnr(tipo_atricion == 1,
+                  t01_w01, t01_w02, t01_w03, t01_w04, t01_w05, inmigrante))  %>%
+  drop_na(inmigrante, starts_with('t01_')) %>% 
+  mutate(p_inmigracion = inmigrante/hbtes,
+         quintil = xtile(p_inmigracion, n = 5, wt = ponderador02_w05),
+         quintil = factor(quintil, levels = 1:5, labels = glue::glue('Q{1:5}')))  %>%
   rowwise() %>%
-          mutate(confianza = mean(t01_w01, t01_w02, t01_w03, t01_w04, t01_w05, na.rm = TRUE)) %>%
-          mutate(Confía= factor(confianza >= 4,
-                                        levels = c(TRUE, FALSE),
-                                        labels = c('Confía', 'No confía'))) %>%
-  filter(!is_nsnr(quintil))  %>%
-  drop_na(c("quintil")) %>%
-  survey_design_elsoc(weights = 'ponderador02_w05') %>%
-  group_by(quintil, Confía) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
-  filter(!is.na(Confía)) %>%
-  filter(!is.na(quintil)) %>% filter(Confía=="Confía")
-  
-  
-tab %>% ggplot(aes(y = freq, x = quintil, label = scales::percent(freq, accuracy = .1))) +
+  mutate(confianza = mean(t01_w01, t01_w02, t01_w03, t01_w04, t01_w05, na.rm = TRUE)) %>%
+  survey_design_elsoc(weights = 'ponderador02_w05') %>% 
+  prop(confianza >= 4, by = c(quintil), na.rm = TRUE) %>% 
+  ggplot(aes(y = prop, x = quintil, 
+             label = scales::percent(prop, accuracy = .1))) +
   theme_bw() +   
   geom_col(fill = viridis(1, begin = .5)) +
-  geom_text(position = position_dodge(.9), vjust = -.5, size = 3) +
+  geom_text(position = position_dodge(.9), 
+            vjust = -.5, size = 3) +
   scale_y_continuous(labels = scales::percent,
                      limits = c(0,1)) +
-  labs(y = NULL, x = NULL,
-       title = "Confianza en los vecinos según quintil de proporción de inmigrantes en zona censal") +
+  labs(y = NULL, x = NULL) +
+  ggtitle(NULL, subtitle = "Confianza en los vecinos según quintil de proporción de inmigrantes en zona censal") +
   scale_color_viridis_d(end = .66, direction = 1) +
-  theme(legend.position = 'top',
-        legend.title = element_blank())
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
+        legend.title = element_blank()) +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021 y Datos territoriales ELSOC 2017.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.360 (1.472 individuos)')
 
 ```
 
@@ -440,26 +446,26 @@ La Figura \@ref(fig:frecvisitavecinos-ola) presenta la dinámica en la frecuenci
 
 # elsoc::load_elsoc('long')
 
-tab <- elsoc_long_2016_2021 %>% 
+elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & !c07_01 %in% c(-888, -999)) %>% 
   mutate(barrio_conf = factor(car::recode(c07_01, "1 = 1; 2 = 2; 3 = 3"),
                                levels = c(1,2,3),
                                labels = c('Nunca', 'Una o dos veces', 'Mas de dos veces'))) %>%
   sjlabelled::as_label(ola) %>%
-  prop(x = barrio_conf, by = ola, na.rm = TRUE)
-
-tab %>% 
+  prop(x = barrio_conf, by = ola, na.rm = TRUE) %>% 
   ggplot(aes(y = prop, x = ola, fill = barrio_conf, 
              label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = 'Stack') +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = .11, end = .88, direction = 1) +
+  scale_fill_viridis_d(end = .85, direction = 1) +
   geom_text(position = position_stack(vjust = .5),
             size = 3, color = rep(c('white', 'white', 'black'), 5)) + 
-  theme(legend.position = 'top',
-        legend.title = element_blank())
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
+        legend.title = element_blank()) +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.557 (1.513 individuos)')
 
 ```
 
@@ -469,84 +475,25 @@ Por su parte, los hombres también disminuyeron el porcentaje que realiza visita
 
 ```{r frecvisita-sexo, fig.align='center',fig.cap = 'Frecuencia de visita vecinos, según sexo'}
 
-# elsoc::load_elsoc('territorial-2017')
-# territorial <- merge(elsoc_wide_2016_2021, elsoc_terr_2017, by="idencuesta")
+# elsoc::load_elsoc('long')
 
-tab<-territorial %>%   
-  filter(!is_nsnr(m0_sexo_w01, c07_01_w01, c07_01_w02, c07_01_w03, c07_01_w04, c07_01_w05))  %>%
-  drop_na(c("m0_sexo_w01", "c07_01_w01", "c07_01_w02", "c07_01_w03", "c07_01_w04", "c07_01_w05")) %>%
-  filter(tipo_atricion==1) %>%
-  mutate(c07_01_w01 = factor(car::recode(c07_01_w01, recodes = "2:3 = 1; 1 = 0"))) %>%
-  mutate(c07_01_w02 = factor(car::recode(c07_01_w02, recodes = "2:3 = 1; 1 = 0"))) %>%
-  mutate(c07_01_w03 = factor(car::recode(c07_01_w03, recodes = "2:3 = 1; 1 = 0"))) %>%
-  mutate(c07_01_w04 = factor(car::recode(c07_01_w04, recodes = "2:3 = 1; 1 = 0"))) %>%
-  mutate(c07_01_w05 = factor(car::recode(c07_01_w05, recodes = "2:3 = 1; 1 = 0"))) %>%
-  survey_design_elsoc(weights = 'ponderador02_w05') %>%
-  mutate(m0_sexo_w01 = factor(car::recode(m0_sexo_w01, recodes = "1 = 1; 2 = 2"),
-                              levels = 1:2,
-                              labels = c('Hombre', "Mujer")))
-
-tab1<- tab %>% group_by(m0_sexo_w01, c07_01_w01) %>%
-  summarise (n = n()) %>%
-  mutate(freq = n / sum(n)) %>%
-  mutate(var = 1) %>%
-  rename(Visita=c07_01_w01) %>% 
-  filter(!is.na(Visita)) %>%
-  filter(!is.na(m0_sexo_w01)) %>% 
-  filter(Visita==1)
-
-tab2<-tab %>% 
-  group_by(m0_sexo_w01, c07_01_w02) %>%
-  summarise (n = n()) %>%
-  mutate(freq = n / sum(n)) %>%
-  mutate(var = 2) %>%
-  rename(Visita=c07_01_w02) %>%
-  filter(!is.na(Visita)) %>%
-  filter(!is.na(m0_sexo_w01)) %>%
-  filter(Visita==1)
-
-
-tab3<-tab %>% group_by(m0_sexo_w01, c07_01_w03) %>%
-  summarise (n = n()) %>% 
-  mutate(freq = n / sum(n)) %>%
-  mutate(var = 3) %>%
-  rename(Visita=c07_01_w03) %>%
-  filter(!is.na(Visita)) %>%
-  filter(!is.na(m0_sexo_w01)) %>%
-  filter(Visita==1)
-
-tab4<-tab %>% group_by(m0_sexo_w01, c07_01_w04) %>%
-  summarise (n = n()) %>%
-  mutate(freq = n / sum(n)) %>%
-  mutate(var = 4) %>% 
-  rename(Visita=c07_01_w04) %>%
-  filter(!is.na(Visita)) %>%
-  filter(!is.na(m0_sexo_w01)) %>%
-  filter(Visita==1)
-
-tab5<-tab %>% group_by(m0_sexo_w01, c07_01_w05) %>%
-  summarise (n = n()) %>%
-  mutate(freq = n / sum(n)) %>%
-  mutate(var = 5) %>% 
-  rename(Visita=c07_01_w05) %>% 
-  filter(!is.na(Visita)) %>%
-  filter(!is.na(m0_sexo_w01)) %>% 
-  filter(Visita==1)
-
-tab<- rbind(tab1, tab2, tab3, tab4, tab5)
-
-ggplot(data= tab, aes(x=var, y=freq, color=m0_sexo_w01)) +
+elsoc_long_2016_2021 %>% 
+  filter(tipo_atricion == 1, !is_nsnr(m0_sexo, c07_01)) %>% 
+  prop(c07_01 %in% 2:3, by = c(ola, m0_sexo), na.rm = TRUE) %>% 
+  as_label(ola, m0_sexo) %>%
+  ggplot(aes(y = prop, x = ola, color = m0_sexo, group = m0_sexo,
+             label = scales::percent(prop, .1))) +
   geom_point(size = 1.75) + 
   geom_line() +
   theme_bw() +   
-  scale_color_viridis_d(begin = 0, end = .66, direction = 1) +
+  scale_color_viridis_d(begin = .33, end = .66, direction = 1) +
   labs(y = NULL, x = NULL, title = NULL) +
   scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
-  scale_x_continuous(breaks = c(1,2,3,4,5), labels=c("2016", "2017", "2018", "2019", "2021")) +
-  geom_text_repel(data=tab, aes(label=paste0(round((freq*100),1),"%"),  y=freq),
-                  size = 3.5,  inherit.aes = TRUE)+
-  theme(legend.position = 'top',
-        legend.title = element_blank())
+  geom_text_repel(size = 3 )+
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
+        legend.title = element_blank()) +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.557 (1.513 individuos)')
 
 ```
 
@@ -627,20 +574,28 @@ tab5<-tab %>% group_by(estrato_w05, c07_01_w05) %>%
 
 tab<- rbind(tab1, tab2, tab3, tab4, tab5)
 
+# elsoc::load_elsoc('long')
 
-tab %>%
-  ggplot(aes(x=var, y=freq, color=estrato_w05)) +
+tab %>% 
+  mutate(ola = factor(var,
+                      levels = 1:5,
+                      labels = glue::glue('{c(2016:2019, 2021)}')),
+         prop = freq,
+         estrato = estrato_w05) %>% 
+  # filter(estrato %in% c('Gran Santiago', 'Gran Concepción', 'Ciudades pequeñas')) %>% 
+  ggplot(aes(y = prop, x = ola, color = estrato, group = estrato,
+             label = scales::percent(prop, .1))) +
   geom_point(size = 1.75) + 
   geom_line() +
   theme_bw() +   
-  scale_color_viridis_d(begin = 0, end = .66, direction = 1) +
+  scale_color_viridis_d(end = .6, direction = 1) +
   labs(y = NULL, x = NULL, title = NULL) +
   scale_y_continuous(labels = scales::percent, limits = c(0, 1)) +
-  scale_x_continuous(breaks = c(1,2,3,4,5), labels=c("2016", "2017", "2018", "2019", "2021")) +
-  geom_text_repel(data=tab, aes(label=paste0(round((freq*100),1),"%"),  y=freq),
-                  size = 3.5,  inherit.aes = TRUE)+
-  theme(legend.position = 'top',
-        legend.title = element_blank())
+  geom_text_repel(size = 3 )+
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
+        legend.title = element_blank()) +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.557 (1.513 individuos)')
 
 ```
 
@@ -651,7 +606,6 @@ No obstante, se debe señalar que, las interacciones sociales a nivel de barrio 
 
 
 ```{r frecvisita-quintil, fig.align='center',fig.cap = 'Frecuencia de visita vecinos por quintil'}
-
 # elsoc::load_elsoc('territorial-2017')
 # territorial <- merge(elsoc_wide_2016_2021, elsoc_terr_2017, by="idencuesta")
 
@@ -733,8 +687,10 @@ tab %>%
                      labels = c("2016", "2017", "2018", "2019", "2021")) +
   geom_text_repel(data=tab, aes(label=paste0(round((freq*100),1),"%"),  y=freq),
                   size = 3.5,  inherit.aes = TRUE)+
-  theme(legend.position = 'top',
-        legend.title = element_blank())
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
+        legend.title = element_blank()) +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.832 (548 individuos)')
 
 ```
 
@@ -746,39 +702,35 @@ El grupo clasificado en el primer quintil de escolaridad promedio del barrio de 
 ```{r frecvisita-quintilesc, fig.cap = 'Frecuencia de visita vecinos según quintil de  escolaridad'}
 
 # elsoc::load_elsoc('territorial-2017')
-# territorial <- merge(elsoc_wide_2016_2021, elsoc_terr_2017, by="idencuesta")
 
-territorial$escolaridad[territorial$escolaridad < 0] <- NA
-
-tab<-territorial %>%   
-  filter(!is_nsnr(c07_01_w01, c07_01_w02, c07_01_w03, c07_01_w04, c07_01_w05))  %>%
-  drop_na(c("c07_01_w01", "c07_01_w02", "c07_01_w03", "c07_01_w04", "c07_01_w05")) %>%
-  filter(tipo_atricion==1)  %>%
-  mutate(quintil = xtile(escolaridad, n = 5, wt = ponderador02_w05)) %>%
-         mutate(quintil = factor(quintil, levels = 1:5, labels = glue::glue('Q{1:5}')))  %>%
+territorial %>%   
+  filter(tipo_atricion == 1, 
+         !is_nsnr(c07_01_w01, c07_01_w02, c07_01_w03, c07_01_w04, c07_01_w05, escolaridad))  %>%
+  drop_na(escolaridad, starts_with('c07_01')) %>% 
+  mutate(quintil = xtile(escolaridad, n = 5, wt = ponderador02_w05),
+         quintil = factor(quintil, levels = 1:5, 
+                          labels = glue::glue('Q{1:5}')))  %>%
   rowwise() %>%
-          mutate(confianza = mean(c07_01_w01, c07_01_w02, c07_01_w03, c07_01_w04, c07_01_w05, na.rm = TRUE)) %>%
-          mutate(Confía= factor(confianza > 1,
-                                        levels = c(TRUE, FALSE),
-                                        labels = c('Visita', 'No visita'))) %>%
-  filter(!is_nsnr(quintil))  %>%
-  drop_na(c("quintil")) %>%
+  mutate(freq_visita = mean(c07_01_w01, c07_01_w02, c07_01_w03, c07_01_w04, c07_01_w05, na.rm = TRUE)) %>% 
   survey_design_elsoc(weights = 'ponderador02_w05') %>%
-  group_by(quintil, Confía) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
-  filter(!is.na(Confía)) %>%
-  filter(!is.na(quintil)) %>% filter(Confía=="Visita")
-  
-tab %>% ggplot(aes(y = freq, x = quintil, label = scales::percent(freq, accuracy = .1))) +
+  prop(freq_visita > 1, by = c(quintil), na.rm = TRUE) %>% 
+  ggplot(aes(y = prop, x = quintil, 
+             label = scales::percent(prop, accuracy = .1))) +
   theme_bw() +   
   geom_col(fill = viridis(1, begin = .5)) +
-  geom_text(position = position_dodge(.9), vjust = -.5, size = 3) +
+  geom_text(position = position_dodge(.9), 
+            vjust = -.5, size = 3) +
   scale_y_continuous(labels = scales::percent,
                      limits = c(0,1)) +
-  labs(y = NULL, x = NULL,
-       title = "Frecuencia de visita a vecinos según quintil de escolaridad en zona censal") +
+  labs(y = NULL, x = NULL) +
+  ggtitle(NULL,
+          "Frecuencia de visita a vecinos según quintil de escolaridad en zona censal") +
   scale_color_viridis_d(end = .66, direction = 1) +
-  theme(legend.position = 'top',
-        legend.title = element_blank())
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
+        legend.title = element_blank()) +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021 y Datos territoriales ELSOC 2017.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.515 (1.503 individuos)')
+
 
 ```
 
@@ -805,24 +757,27 @@ tab<-territorial %>%
                                         levels = c(TRUE, FALSE),
                                         labels = c('Visita', 'No visita'))) %>%
   filter(!is_nsnr(quintil))  %>%
-  drop_na(c("quintil")) %>%
+  drop_na(c("quintil")) %>% 
   survey_design_elsoc(weights = 'ponderador02_w05') %>%
   group_by(quintil, Confía) %>% summarise (n = n()) %>% mutate(freq = n / sum(n)) %>%
   filter(!is.na(Confía)) %>%
-  filter(!is.na(quintil)) %>% filter(Confía=="Visita")
+  filter(!is.na(quintil)) %>% 
+  filter(Confía=="Visita")
   
-  
-tab %>% ggplot(aes(y = freq, x = quintil, label = scales::percent(freq, accuracy = .1))) +
+tab %>% 
+  ggplot(aes(y = freq, x = quintil, label = scales::percent(freq, accuracy = .1))) +
   theme_bw() +   
   geom_col(fill = viridis(1, begin = .5)) +
   geom_text(position = position_dodge(.9), vjust = -.5, size = 3) +
   scale_y_continuous(labels = scales::percent,
                      limits = c(0,1)) +
-  labs(y = NULL, x = NULL,
-       title = "Frecuencia de visita a vecinos según quintil de proporción de inmigrantes en zona censal") +
+  labs(y = NULL, x = NULL) + 
+  ggtitle(NULL, 'Frecuencia de visita a vecinos según quintil de proporción de inmigrantes en zona censal') +
   scale_color_viridis_d(end = .66, direction = 1) +
-  theme(legend.position = 'top',
-        legend.title = element_blank())
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
+        legend.title = element_blank()) +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021 y Datos territoriales ELSOC 2017.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.485 (1.497 individuos)')
 
 ```
 
@@ -838,7 +793,8 @@ La Figura \@ref(fig:seguri-ola) muestra una tendencia decreciente en el porcenta
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & !t10 %in% c(-888, -999)) %>% 
-  mutate(barrio_segur = factor(car::recode(t10, "c(1,2)=1; c(3)=2; c(4,5)=3"), levels = c(1,2,3),
+  mutate(barrio_segur = factor(car::recode(t10, "1:2 = 1; 3 = 2; 4:5 = 3"), 
+                               levels = c(1,2,3),
                                labels = c('Muy inseguro o inseguro', 'Ni seguro ni inseguro',
                                           'Seguro o Muy seguro'))) %>%
   sjlabelled::as_label(ola) %>%
@@ -849,11 +805,14 @@ elsoc_long_2016_2021 %>%
   geom_col(position = 'Stack') +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = .11, end = .88, direction = 1) +
+  scale_fill_viridis_d(end = .85, direction = 1) +
   geom_text(position = position_stack(vjust = .5),
-            size = 3, color = rep(c('white', 'white', 'black'), 5)) + 
-  theme(legend.position = 'top',
-        legend.title = element_blank()) 
+            size = 3, 
+            color = rep(c('white', 'white', 'black'), 5)) + 
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
+        legend.title = element_blank())  +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.560 (1.513 individuos)')
 
 ```
 
@@ -888,10 +847,13 @@ elsoc_long_2016_2021 %>%
   xlab(label = NULL) +
   scale_color_viridis_d(begin = 0, end = .77, direction = -1) +
   ggrepel::geom_text_repel(size = 3) +
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank()) +
   ggtitle(NULL,
-          'Porcentaje que se siente Inseguro o Muy inseguro')
+          'Porcentaje que se siente Inseguro o Muy inseguro') +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.560 (1.513 individuos)')
+
 
 ```
 
@@ -921,10 +883,12 @@ elsoc_long_2016_2021 %>%
   xlab(label = NULL) +
   scale_color_viridis_d(begin = 0, end = .77, direction = -1) +
   ggrepel::geom_text_repel(size = 3) +
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),           legend.position = 'top',
         legend.title = element_blank()) +
   ggtitle(NULL,
-          'Porcentaje que se siente Inseguro o Muy inseguro')
+          'Porcentaje que se siente Inseguro o Muy inseguro') +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.558 (1.513 individuos)')
+
 
 ```
 
@@ -941,6 +905,7 @@ elsoc_long_2016_2021 %>%
                         levels = c(1,2,3,4), 
                         labels = c('18-29', '30-49', '50-64', '65 o más'))) %>%
   sjlabelled::as_label(ola) %>%
+
   prop(x = t10 %in% c(1,2), by = c(ola, edadt), na.rm = TRUE) %>% 
   ggplot(aes(y = prop, x = ola, color = edadt, group = edadt,
              label = as.character(scales::percent(prop, accuracy = .1)))) +
@@ -953,10 +918,11 @@ elsoc_long_2016_2021 %>%
   xlab(label = NULL) +
   scale_color_viridis_d(begin = 0, end = .77, direction = -1) +
   ggrepel::geom_text_repel(size = 3) +
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),           legend.position = 'top',
         legend.title = element_blank()) +
   ggtitle(NULL,
-          'Porcentaje que se siente Inseguro o Muy inseguro')
+          'Porcentaje que se siente Inseguro o Muy inseguro') +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.560 (1.513 individuos)')
 
 ```
 
@@ -968,40 +934,40 @@ Al analizar la seguridad subjetiva que reportan los encuestados respecto a su ba
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & muestra == 1 & !t10 %in% c(-888, -999)) %>% 
-  mutate(barrio_segur = factor(car::recode(t10, "c(1,2)=1; c(3)=2; c(4,5)=3"), levels = c(1,2,3),
-                               labels = c('Muy inseguro o inseguro', 'Ni seguro ni inseguro',
-                                          'Seguro o Muy seguro')),
-         m30 = as.numeric(car::recode(m30,"1=110000;2=251000;3=305000;4=355000;5=400000;
+  mutate(m30 = as.numeric(car::recode(m30, "1=110000;2=251000;3=305000;4=355000;5=400000;
                                            6=445000;7=490000;8=535000;9=585000;10=640000;11=700000;12=765000;
                                            13=845000;14=935000;15=1040000;16=1180000;17=1375000;18=1670000;
                                            19=2275000;20=2700000;NA=NA")),
-         m29_imp = ifelse(!is.na(m29),m29, m30),
-         n_hogar = case_when(ola == 1 ~ nhogar1, ola == 2 ~ m46_nhogar,
-                             ola == 3 ~ m54, ola == 4 ~ m54, ola == 5 ~ m54)) %>%
+         m29_imp = ifelse(!is_nsnr(m29), m29, m30),
+         n_hogar = case_when(ola == 1 ~ nhogar1, 
+                             ola == 2 ~ m46_nhogar,
+                             ola %in% 3:5 ~ m54)) %>%
   mutate(ing_pc = (m29_imp/n_hogar)) %>%
   sjlabelled::as_label(ola) %>% 
   group_by(ola) %>% 
   mutate(quintil = factor(ntile(-desc(ing_pc), 5), levels = c(1,2,3,4,5),
          labels = c('Q1', 'Q2', 'Q3', 'Q4', 'Q5'))) %>% 
-  prop(x = barrio_segur, by = c(ola, quintil), na.rm = TRUE) %>% 
-  filter(barrio_segur == 'Muy inseguro o inseguro', quintil == "Q1" | quintil == "Q5") %>% 
-  drop_na() %>% 
+  filter(quintil %in% c('Q1', 'Q5')) %>% 
+  prop(x = t10 %in% 1:2, by = c(ola, quintil), na.rm = TRUE) %>% 
   ggplot(aes(y = prop, x = ola, color = quintil, group = quintil,
              label = as.character(scales::percent(prop, accuracy = .1)))) +
   theme_bw() +   
   geom_point(size = 1.75) + 
   geom_line() +
   scale_y_continuous(labels = scales::percent,
-                     limits = c(0,.5)) +
+                     limits = 0:1) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_color_viridis_d(begin = .0, end = .55, direction = -1) +
   geom_text(vjust = -0.8,
             size = 3) +
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank()) +
   ggtitle(NULL,
-          'Porcentaje que se siente Inseguro o Muy inseguro')
+          'Porcentaje que se siente Inseguro o Muy inseguro') +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.901 (1.198 individuos)')
+
 
 ```
 
@@ -1014,10 +980,9 @@ El porcentaje que declara que ocurren crímenes muchas veces o siempre en el bar
 # elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
-  filter(tipo_atricion == 1 & muestra == 1 &
-           !t09_01 %in% c(-888, -999) & !t09_02 %in% c(-888, -999) & !t09_03 %in% c(-888, -999)) %>% 
-  mutate(barrio_crim = (t09_01 + t09_02 + t09_03)/3) %>% 
-  mutate(barrio_crim_rec = factor(cut(barrio_crim, breaks = c(0,1,2.67,5)),
+  filter(tipo_atricion == 1, !is_nsnr(t09_01, t09_02, t09_03)) %>% 
+  mutate(barrio_crim = (t09_01 + t09_02 + t09_03)/3,
+         barrio_crim_rec = factor(cut(barrio_crim, breaks = c(0,1,2.67,5)),
                                   labels = c("Nunca","Pocas o algunas veces","Muchas veces o siempre"))) %>%
   sjlabelled::as_label(ola) %>% 
   prop(x = barrio_crim_rec, by = ola, na.rm = TRUE) %>% 
@@ -1029,8 +994,13 @@ elsoc_long_2016_2021 %>%
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = .11, end = .88, direction = -1) +
   geom_text(position = position_stack(vjust = .5),
-            size = 3, color = rep(c('black', 'white', 'white'), 5)) + 
-  theme(legend.position = 'top', legend.title = element_blank())
+            size = 3, 
+            color = rep(c('black', 'white', 'white'), 5)) + 
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top', 
+        legend.title = element_blank()) +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.169 (1.513 individuos)')
+
 
 ```
 
@@ -1041,10 +1011,9 @@ Al desagregar la frecuencia de ocurrencia de crímenes en el barrio según zonas
 # elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
-  filter(tipo_atricion == 1 & muestra == 1 & ola %in% c(4,5) &
-           !t09_01 %in% c(-888, -999) & !t09_02 %in% c(-888, -999) & !t09_03 %in% c(-888, -999)) %>% 
-  mutate(barrio_crim = (t09_01 + t09_02 + t09_03)/3) %>% 
-  mutate(barrio_crim_rec = factor(cut(barrio_crim, breaks = c(0,1,2.67,5)),
+  filter(tipo_atricion == 1 & ola %in% 4:5, !is_nsnr(t09_01, t09_02, t09_03)) %>% 
+  mutate(barrio_crim = (t09_01 + t09_02 + t09_03)/3,
+         barrio_crim_rec = factor(cut(barrio_crim, breaks = c(0,1,2.67,5)),
                                   labels = c("Nunca","Pocas o algunas veces","Muchas veces o siempre")),
          zona1 = factor(car::recode(region_cod, "c(1,2,3,4,15)=1; c(5,6,7,8,16)=2; c(9,10,11,12,14)=3; 13=4"),
                         levels = c(1,2,3,4), labels = c("Norte","Centro","Sur","Metropolitana"))) %>%
@@ -1054,17 +1023,20 @@ elsoc_long_2016_2021 %>%
   ggplot(aes(y = prop, x = zona1, fill = ola, 
              label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
-  geom_col(position = 'Dodge') +
+  geom_col(position = 'dodge2') +
   scale_y_continuous(labels = scales::percent,
                      limits = c(0, .5)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = 0, end = .85, direction = -1) +
-  theme(legend.position = 'top',
+  scale_fill_viridis_d(begin = .33, end = .66, direction = -1) +
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank()) +
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
-            size = 3)
+            size = 3) +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.868 (1.503 individuos)')
+
 
 ```
 
@@ -1077,31 +1049,33 @@ En otros territorios del país, tales como, ciudades grandes, medianas y pequeñ
 # elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
-  filter(tipo_atricion == 1 & muestra == 1 & ola %in% c(4,5) &
-           !t09_01 %in% c(-888, -999) & !t09_02 %in% c(-888, -999) & !t09_03 %in% c(-888, -999)) %>% 
-  mutate(barrio_crim = (t09_01 + t09_02 + t09_03)/3) %>% 
-  mutate(barrio_crim_rec = factor(cut(barrio_crim, breaks = c(0,1,2.67,5)),
+  filter(tipo_atricion == 1 & ola %in% 4:5, !is_nsnr(t09_01, t09_02, t09_03)) %>% 
+  mutate(barrio_crim = (t09_01 + t09_02 + t09_03)/3,
+         barrio_crim_rec = factor(cut(barrio_crim, breaks = c(0,1,2.67,5)),
                                   labels = c("Nunca","Pocas o algunas veces","Muchas veces o siempre")),
          estrato = factor(estrato, levels = c(1,2,3,4,5,6),
                           labels = c('Gran\nSantiago', 'Gran\nValparaíso', 'Gran\nConcepción',
                                      'Ciudades\ngrandes', 'Ciudades\nmedianas', 'Ciudades\npequeñas'))) %>%
-  sjlabelled::as_label(ola) %>% 
   prop(x = barrio_crim_rec, by = c(ola, estrato), na.rm = TRUE) %>% 
+  as_label(ola) %>% 
   filter(barrio_crim_rec == 'Muchas veces o siempre') %>% 
   ggplot(aes(y = prop, x = estrato, fill = ola, 
              label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
-  geom_col(position = 'Dodge') +
+  geom_col(position = 'dodge2') +
   scale_y_continuous(labels = scales::percent,
                      limits = c(0, .5)) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(begin = 0, end = .85, direction = -1) +
-  theme(legend.position = 'top',
+  scale_fill_viridis_d(begin = .33, end = .66, direction = -1) +
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank()) +
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
-            size = 3)
+            size = 3) +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.868 (1.503 individuos)')
+
 
 ```
 
@@ -1115,16 +1089,16 @@ Los resultados de ELSOC sugieren que, efectivamente, el quintil de ingresos de l
 # elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
-  filter(tipo_atricion == 1 & muestra == 1 &
-           !t09_01 %in% c(-888, -999) & !t09_02 %in% c(-888, -999) & !t09_03 %in% c(-888, -999)) %>% 
-  mutate(barrio_crim = (t09_01 + t09_02 + t09_03)/3) %>% 
-  mutate(barrio_crim_rec = factor(cut(barrio_crim, breaks = c(0,1,2.67,5)),
+  filter(tipo_atricion == 1,
+         !is_nsnr(t09_01, t09_02, t09_03)) %>% 
+  mutate(barrio_crim = (t09_01 + t09_02 + t09_03)/3,
+         barrio_crim_rec = factor(cut(barrio_crim, breaks = c(0,1,2.67,5)),
                                   labels = c("Nunca","Pocas o algunas veces","Muchas veces o siempre")),
          m30 = as.numeric(car::recode(m30,"1=110000;2=251000;3=305000;4=355000;5=400000;
                                            6=445000;7=490000;8=535000;9=585000;10=640000;11=700000;12=765000;
                                            13=845000;14=935000;15=1040000;16=1180000;17=1375000;18=1670000;
                                            19=2275000;20=2700000;NA=NA")),
-         m29_imp = ifelse(!is.na(m29),m29, m30),
+         m29_imp = ifelse(!is_nsnr(m29),m29, m30),
          n_hogar = case_when(ola == 1 ~ nhogar1, ola == 2 ~ m46_nhogar,
                              ola == 3 ~ m54, ola == 4 ~ m54, ola == 5 ~ m54)) %>%
   mutate(ing_pc = (m29_imp/n_hogar)) %>%
@@ -1132,22 +1106,26 @@ elsoc_long_2016_2021 %>%
   group_by(ola) %>% 
   mutate(quintil = factor(ntile(-desc(ing_pc), 5), levels = c(1,2,3,4,5),
          labels = c('Q1', 'Q2', 'Q3', 'Q4', 'Q5'))) %>% 
-  prop(x = barrio_crim_rec, by = c(ola, quintil), na.rm = TRUE) %>% 
-  filter(barrio_crim_rec == 'Muchas veces o siempre', quintil == "Q1" | quintil == "Q5") %>% 
+  ungroup() %>% 
+  filter(quintil == "Q1" | quintil == "Q5") %>% 
+  prop(x = barrio_crim_rec == 'Muchas veces o siempre', 
+       by = c(ola, quintil), na.rm = TRUE) %>% 
   ggplot(aes(y = prop, x = ola, color = quintil, group = quintil,
              label = as.character(scales::percent(prop, accuracy = .1)))) +
   theme_bw() +   
   geom_point(size = 1.75) + 
   geom_line() +
   scale_y_continuous(labels = scales::percent,
-                     limits = c(0,.6)) +
+                     limits = 0:1) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_color_viridis_d(begin = .0, end = .55, direction = -1) +
   geom_text(vjust = -0.8,
             size = 3) +
-  theme(legend.position = 'top',
-        legend.title = element_blank())
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
+        legend.title = element_blank()) +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.795 (1.201 individuos)')
 
 ```
 
@@ -1166,8 +1144,8 @@ Tal como se observa en la figura \@ref(fig:amen1-wave), primero llama la atenci�
 # elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
-  filter(tipo_atricion %in% c(1, 17) & !r12_04 %in% c(-888, -999)) %>% 
-  elsoc::prop(r12_04 %in% c(4,5), by = c(ola, cuestion_mig)) %>% 
+  filter(tipo_atricion %in% c(1, 17) & !is_nsnr(r12_04)) %>% 
+  elsoc::prop(r12_04 %in% 4:5, by = c(ola, cuestion_mig)) %>% 
   sjlabelled::as_label(ola, cuestion_mig) %>% 
   ggplot(aes(y = prop, x = ola, color = cuestion_mig, group = cuestion_mig,
              label = scales::percent(prop, accuracy = .1))) +
@@ -1180,8 +1158,11 @@ elsoc_long_2016_2021 %>%
   xlab(label = NULL) +
   scale_color_viridis_d(begin = 0, end = .66, direction = -1) +
   ggrepel::geom_text_repel(size = 3) +
-  theme(legend.position = 'top',
-        legend.title = element_blank())
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
+        legend.title = element_blank()) +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=10.229 (2.446 individuos)')
+
 
 ```
 
@@ -1213,8 +1194,11 @@ elsoc_long_2016_2021 %>%
   xlab(label = NULL) +
   scale_color_viridis_d(begin = 0, end = .66, direction = -1) +
   ggrepel::geom_text_repel(size = 3) +
-  theme(legend.position = 'top',
-        legend.title = element_blank())
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
+        legend.title = element_blank()) +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=10.229 (2.446 individuos)')
+
 
 ```
 
@@ -1240,8 +1224,12 @@ elsoc_long_2016_2021 %>%
   xlab(label = NULL) +
   scale_color_viridis_d(begin = 0, end = .66, direction = -1) +
   ggrepel::geom_text_repel(size = 3) +
-  theme(legend.position = 'top',
-        legend.title = element_blank())
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
+        legend.title = element_blank()) +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=10.208 (2.446 individuos)')
+
+
 ```
 
 
@@ -1273,8 +1261,11 @@ elsoc_long_2016_2021 %>%
   xlab(label = NULL) +
   scale_color_viridis_d(begin = 0, end = .66, direction = -1) +
   ggrepel::geom_text_repel(size = 3) +
-  theme(legend.position = 'top',
-        legend.title = element_blank())
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
+        legend.title = element_blank()) +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=10.208 (2.446 individuos)')
+
 
 ```
 
@@ -1287,10 +1278,10 @@ Al analizar, los niveles de amenaza realista y simbólica para la quinta ola (a�
 # elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>%
-  filter(tipo_atricion %in% c(1, 17) & ola == 5) %>% 
+  filter(tipo_atricion %in% c(1, 17) & ola == 5,
+         !is_nsnr(r12_03, r12_04)) %>% 
   select(r12_03, r12_04, estrato_disenno, segmento_disenno, ponderador02, cuestion_mig) %>%
-  pivot_longer(cols = c(r12_03, r12_04)) %>% 
-  filter(!value %in% c(-888,-999)) %>% 
+  pivot_longer(cols = c(r12_03, r12_04)) %>%
   prop(value %in% c(4,5), by = c(name, cuestion_mig), na.rm = TRUE) %>% 
   mutate(name = factor(name, levels = c('r12_04', 'r12_03'), 
                        labels = c('Aumenta desempleo', 'Chile pierde su identidad'))) %>% 
@@ -1304,11 +1295,14 @@ elsoc_long_2016_2021 %>%
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = 0, end = .85, direction = -1) +
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank()) +
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
-            size = 3)
+            size = 3) +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.416 (2.416 individuos)')
+
 
 ```
 
@@ -1320,11 +1314,11 @@ Al analizar los niveles de amenaza en función de la escolaridad de los particip
 # elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>%
-  filter(tipo_atricion %in% c(1, 17) & ola == 5) %>% 
+  filter(tipo_atricion %in% c(1, 17) & ola == 5,
+         !is_nsnr(r12_03, r12_04)) %>% 
   mutate(educ = factor(car::recode(m01, "c(1,2,3) = 'Basica'; c(4,5) = 'Media'; c(6,7) = 'Tecnica'; c(8,9,10) = 'Universitaria'"))) %>% 
   select(r12_03, r12_04, estrato_disenno, segmento_disenno, ponderador02, educ) %>%
   pivot_longer(cols = c(r12_03, r12_04)) %>% 
-  filter(!value %in% c(-888,-999)) %>% 
   prop(value %in% c(4,5), by = c(name, educ), na.rm = TRUE) %>% 
   mutate(name = factor(name, levels = c('r12_04', 'r12_03'), 
                        labels = c('Aumenta desempleo', 'Chile pierde su identidad'))) %>% 
@@ -1333,15 +1327,18 @@ elsoc_long_2016_2021 %>%
   theme_bw() + 
   geom_col(position = 'dodge2') +
   scale_y_continuous(labels = scales::percent,
-                     limits = c(0, .8)) +
+                     limits = 0:1) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = 0, end = .85, direction = -1) +
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank()) +
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
-            size = 3)
+            size = 3) +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.416 (2.416 individuos)')
+
 
 ```
 
@@ -1354,12 +1351,12 @@ Finalmente, al comparar los niveles de amenaza en función de la edad de los par
 # elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>%
-  filter(tipo_atricion %in% c(1, 17) & ola == 5) %>% 
+  filter(tipo_atricion %in% c(1, 17) & ola == 5,
+                  !is_nsnr(r12_03, r12_04)) %>% 
   mutate(edadt = factor(car::recode(m0_edad, "18:29 = 1; 30:49 = 2; 50:64 = 3; 65:150 = 4"),
                            labels = c('18-29', '30-49', '50-64', '65 o más'))) %>% 
   select(r12_03, r12_04, estrato_disenno, segmento_disenno, ponderador02, edadt) %>%
   pivot_longer(cols = c(r12_03, r12_04)) %>% 
-  filter(!value %in% c(-888,-999)) %>% 
   prop(value %in% c(4,5), by = c(name, edadt), na.rm = TRUE) %>% 
   mutate(name = factor(name, levels = c('r12_04', 'r12_03'), 
                        labels = c('Aumenta desempleo', 'Chile pierde su identidad'))) %>% 
@@ -1368,15 +1365,19 @@ elsoc_long_2016_2021 %>%
   theme_bw() + 
   geom_col(position = 'dodge2') +
   scale_y_continuous(labels = scales::percent,
-                     limits = c(0, .8)) +
+                     limits = 0:1) +
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(begin = 0, end = .85, direction = -1) +
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank()) +
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
-            size = 3)
+            size = 3) +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.416 (2.416 individuos)')
+
+
 ```
 
 
@@ -1403,8 +1404,11 @@ elsoc_long_2016_2021 %>%
   xlab(label = NULL) +
   scale_color_viridis_d(begin = 0, end = .66, direction = -1) +
   ggrepel::geom_text_repel(size = 3) +
-  theme(legend.position = 'top',
-        legend.title = element_blank())
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
+        legend.title = element_blank()) +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=9.831 (2.444 individuos)')
+
 
 ```
 
@@ -1436,8 +1440,11 @@ elsoc_long_2016_2021 %>%
   xlab(label = NULL) +
   scale_color_viridis_d(begin = 0, end = .66, direction = -1) +
   ggrepel::geom_text_repel(size = 3) +
-  theme(legend.position = 'top',
-        legend.title = element_blank())
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
+        legend.title = element_blank()) +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=9.381 (2.444 individuos)')
+
 
 ```
 
@@ -1455,7 +1462,7 @@ Al analizar los niveles de sexismo en función de la escolaridad de los particip
 # elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
-  filter(tipo_atricion == 1 & ola == 5 & !g01_01 %in% c(-888, -999) & !g01_02 %in% c(-888, -999) & !g01_03 %in% c(-888, -999) & !g01_04 %in% c(-888, -999)) %>% 
+  filter(tipo_atricion == 1 & ola == 5 & !is_nsnr(g01_01, g01_02, g01_03, g01_04)) %>% 
   select(g01_01, g01_02, g01_03, g01_04, segmento_disenno, estrato_disenno, ponderador02, m0_sexo) %>% 
   pivot_longer(cols = c(g01_01, g01_02, g01_03, g01_04)) %>% 
   prop(value %in% 4:5, by = c(name, m0_sexo), na.rm = TRUE) %>% 
@@ -1478,8 +1485,11 @@ elsoc_long_2016_2021 %>%
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
             size = 3)  +
-  theme(legend.position = 'top',
-        legend.title = element_blank())  
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
+        legend.title = element_blank())   +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.473 (1.473 individuos)')
+
 
 ```
 
@@ -1488,7 +1498,7 @@ elsoc_long_2016_2021 %>%
 # elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
-  filter(tipo_atricion == 1 & ola == 5 & !g01_01 %in% c(-888, -999) & !g01_02 %in% c(-888, -999) & !g01_03 %in% c(-888, -999) & !g01_04 %in% c(-888, -999) & !m01 %in% c(-888, -999)) %>% 
+  filter(tipo_atricion == 1 & ola == 5 & !is_nsnr(g01_01, g01_02, g01_03, g01_04, m01)) %>% 
   select(g01_01, g01_02, g01_03, g01_04, segmento_disenno, estrato_disenno, ponderador02, m01) %>% 
   pivot_longer(cols = c(g01_01, g01_02, g01_03, g01_04)) %>%
   mutate(educ = factor(car::recode(m01, "1:3 = 1; 4:5 = 2; 6:7 = 3; 8:10 = 4"),
@@ -1514,54 +1524,12 @@ elsoc_long_2016_2021 %>%
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
             size = 3)  +
-  theme(legend.position = 'top',
-        legend.title = element_blank())  
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
+        legend.title = element_blank())   +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.473 (1.473 individuos)')
 
 
-```
-
-
-```{r m17, eval=FALSE, fig.cap = 'Horas de Cuidado'}
-#PENDIENTE
-#1
-datos.grafico <- data.frame((svytable(~m17_rec + ola + idencuesta, 
-                                      elsoc_diseno, round = F))) %>% 
-  dplyr::filter(Freq>0)  %>% 
-  group_by(ola) %>% 
-  mutate(porcentaje=Freq/sum(Freq))
-
-#1.1
-subset.grafico <- droplevels(subset(datos.grafico, datos.grafico$ola == '2018' | datos.grafico$ola == '2021'))
-
-#2
-etiquetas.grafico <- data.frame((svytable(~m17_rec + ola, 
-                                          elsoc_diseno, round = F))) %>% 
-  group_by(ola) %>% 
-  mutate(porcentaje=Freq/sum(Freq)) %>% 
-  na.omit() %>% 
-  mutate(idencuesta = 1)
-
-#Paso 2.2: crear un subset sólo para los años
-etiquetas.grafico <- droplevels(subset(etiquetas.grafico, etiquetas.grafico$ola == '2018' | etiquetas.grafico$ola == '2021'))
-
-g16.11 <- ggplot(subset.grafico, aes(x = ola, fill = m17_rec, stratum = m17_rec, 
-                              alluvium = idencuesta, y = porcentaje)) +
-  theme_bw() +
-  ggalluvial::geom_flow(alpha = .66) + 
-  ggalluvial::geom_stratum(linetype = 0) +
-  scale_y_continuous(labels = scales::percent) +
-  ylab(label = NULL) +
-  xlab(label = NULL) +
-  theme(legend.position = 'top',
-        legend.title = element_blank()) +
-  scale_fill_viridis_d(begin = 0, end = .9, direction = -1) +
-  geom_text(data = etiquetas.grafico, 
-            aes(label = ifelse(porcentaje > 0.05 , scales::percent(porcentaje, accuracy = .1),"")),
-            position = position_stack(vjust = .5),
-            show.legend = FALSE,
-            size = 3)
-
-g16.11
 ```
 
 
@@ -1594,8 +1562,11 @@ elsoc_long_2016_2021 %>%
   scale_y_continuous(labels = scales::percent) + 
   geom_text(position = position_stack(vjust = .5),
             size = 3, color = rep(c('white', 'white', 'black'), 5)) + 
-  theme(legend.position = 'top',
-        legend.title = element_blank())
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
+        legend.title = element_blank()) +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.537 (1.513 individuos)')
+
 
 ```
 
@@ -1636,7 +1607,8 @@ g11.2 <-
   scale_y_continuous(labels = scales::percent) + 
   ylab(label = NULL) +
   xlab(label = NULL) + 
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank()) +
   scale_fill_viridis_d(begin = .11, end = .88, direction = 1) +
   geom_text(data = etiquetas.11.2, 
@@ -1644,7 +1616,9 @@ g11.2 <-
             position = position_stack(vjust = .5),
             show.legend = FALSE,
             size = 3,
-            color = rep(c('white', 'white', 'black'),3))
+            color = rep(c('white', 'white', 'black'),3)) +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=4.491 (1.499 individuos)')
+
 g11.2
 ```
 
@@ -1656,7 +1630,7 @@ Al analizar la percepción de estatus subjetivo en función de los niveles de in
 # elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
-  filter(ola == 5, !is_nsnr(m30b, m54)) %>% 
+  filter(ola == 5, tipo_atricion == 1, !is_nsnr(m30b, m54)) %>% 
   mutate(
     m30b = as.numeric(car::recode(m30b, "1 = 170000; 2 = 300000; 3 = 400000; 4 = 600000; 5 = 1200000; NA = NA")),
     m29_imp = ifelse(!is_nsnr(m29), m29, m30b),
@@ -1683,8 +1657,11 @@ elsoc_long_2016_2021 %>%
   geom_text(position = position_stack(vjust = .5),
             size = 3, 
             color = rep(c( 'black', 'white', 'white'), 5)) + 
-  theme(legend.position = 'top',
-        legend.title = element_blank())
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
+        legend.title = element_blank()) +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.490 (1.490 individuos)')
+
 
 ```
 
@@ -1704,6 +1681,7 @@ elsoc_long_2016_2021 %>%
                                  levels = 1:3,
                                  labels = c("Baja y media baja", "Media", "Alta y media alta"))) %>% 
   sjlabelled::as_label(ola) %>% 
+
   prop(x = clase_sub_hijo, by = c(ola, clase_sub), na.rm = TRUE) %>% 
   ggplot(aes(y = prop, x = clase_sub, fill = clase_sub_hijo, 
              label = as.character(scales::percent(prop, accuracy = .1)))) + 
@@ -1715,8 +1693,11 @@ elsoc_long_2016_2021 %>%
   scale_y_continuous(labels = scales::percent) + 
   geom_text(position = position_stack(vjust = .5),
             size = 3, color = rep(c('white', 'white', 'black'), 3)) + 
-  theme(legend.position = 'top',
-        legend.title = element_blank())
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
+        legend.title = element_blank()) +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.484 (1.484 individuos)')
+
 
 ```
 
@@ -1734,6 +1715,7 @@ elsoc_long_2016_2021 %>%
                             labels = c("Perpectiva de\nmovilidad descendente", "Perspectiva de\ninmovilidad social",
                                        "Perspectiva de\nmovilidad ascendente"))) %>% 
   sjlabelled::as_label(ola) %>% 
+
   prop(x = mov_interg_rec, by = ola, na.rm = T) %>% 
   ggplot(aes(y = prop, x = ola, fill = fct_rev(mov_interg_rec), 
              label = as.character(scales::percent(prop, accuracy = .1)))) + 
@@ -1750,7 +1732,8 @@ elsoc_long_2016_2021 %>%
   theme(legend.position = 'top',
         legend.title = element_blank(),
         plot.caption = element_text(hjust = 0)) +
-  labs(caption = 'Nota: la perspectiva de movilidad social corresponde a la diferencia entre el estatus social esperado del hijo\ny el estatus social subjetivo del encuestado')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.410 (1.513 individuos).\nLa perspectiva de movilidad social corresponde a la diferencia entre el estatus social esperado del hijo\ny el estatus social subjetivo del encuestado')
+
 
 ```
 
@@ -1762,10 +1745,10 @@ El ideal meritocrático, entendido como la creencia de que las personas son reco
 # elsoc::load_elsoc('long')
 
 elsoc_long_2016_2021 %>% 
-  filter(tipo_atricion == 1) %>%  
+  filter(tipo_atricion == 1, !is_nsnr(c18_09, d05_04)) %>%  
   select(c18_09, d05_04, ola, ponderador02, segmento_disenno, estrato_disenno) %>% 
   pivot_longer(cols = c(c18_09, d05_04)) %>% 
-  filter(!value %in% c(-888, -999)) %>% 
+
   prop(value %in% c(4,5), by = c(ola, name), na.rm = TRUE) %>% 
   as_label(ola) %>% 
   mutate(name = factor(name,
@@ -1785,10 +1768,13 @@ elsoc_long_2016_2021 %>%
                         direction = 1) +
   geom_text(vjust = -0.8, color = 'black',
             size = 3) +
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank()) +
   ggtitle(NULL,
-          subtitle = 'Porcentaje de respuestas "De acuerdo" o ”Totalmente de acuerdo"')
+          subtitle = 'Porcentaje de respuestas "De acuerdo" o ”Totalmente de acuerdo"') +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.490 (1.513 individuos)')
+
 
 ```
 
