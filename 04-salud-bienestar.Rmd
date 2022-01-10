@@ -18,6 +18,7 @@ Por otra parte, y en contraste, solo un 15,8% indicó en 2021 que su salud es mu
 
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & ola == 5 & !is_nsnr(s01, s02, s03)) %>% 
+
   prop_list(s01 %in% 4:5, s02 %in% 4:5, s03 %in% 4:5, na.rm = TRUE) %>% 
   mutate(name = factor(name,
                        levels = c('s01 %in% 4:5', 's02 %in% 4:5', 's03 %in% 4:5'),
@@ -34,8 +35,10 @@ elsoc_long_2016_2021 %>%
   ylab(label = NULL) +
   xlab(label = NULL) +  
   scale_fill_viridis_d(end = .75, option = 'viridis') +
-  theme(legend.position = 'none') +
-  ggtitle(NULL, 'Porcentaje que responde que...')
+  theme(plot.caption = element_text(hjust = 0),
+          legend.position = 'none') +
+  ggtitle(NULL, 'Porcentaje que responde que...') +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.498 (1.498 individuos)')
 
 ```
 
@@ -53,6 +56,7 @@ Por otra parte, el 2021 se aprecia un marcado aumento en la satisfacción y acer
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & !is_nsnr(s01, s02, s03)) %>% 
   sjlabelled::as_label(ola) %>%
+
   prop_list(s01 %in% 4:5, s02 %in% 4:5, s03 %in% 4:5, by = ola, na.rm = TRUE) %>% 
   mutate(name = factor(name,
                        levels = c('s01 %in% 4:5', 's02 %in% 4:5', 's03 %in% 4:5'),
@@ -69,9 +73,10 @@ elsoc_long_2016_2021 %>%
   ylab(label = NULL) +
   xlab(label = NULL) +  
   scale_color_viridis_d(end = .75, option = 'viridis') +
-  theme(legend.position = 'top',
+    theme(plot.caption = element_text(hjust = 0),legend.position = 'top',
         legend.title = element_blank()) +
-  ggtitle(NULL, 'Porcentaje que responde que...')
+  ggtitle(NULL, 'Porcentaje que responde que...') +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.508 (1.513 individuos)')
 
 
 ```
@@ -101,6 +106,7 @@ elsoc_long_2016_2021 %>%
                                   'Síntomas de\ndepresion media', 
                                   'Síntomas de\ndepresion moderada', 
                                   'Síntomas de depresion\nmoderada-severa o severa'))) %>%
+
   prop(depr, na.rm = TRUE) %>% 
   ggplot(aes(y = prop, x = depr, fill = depr, 
              label = scales::percent(prop, accuracy = .1))) + 
@@ -113,7 +119,9 @@ elsoc_long_2016_2021 %>%
   geom_text(position = position_dodge2(.9),
             size = 3, 
             vjust = -.5) +
-  theme(legend.position = 'none')
+    theme(plot.caption = element_text(hjust = 0),
+          legend.position = 'none') +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.513 (1.513 individuos)')
 
 ```
 
@@ -135,6 +143,7 @@ elsoc_long_2016_2021 %>%
                                   'Síntomas de\ndepresion moderada', 
                                   'Síntomas de depresion\nmoderada-severa o severa'))) %>%
   filter(tipo_atricion == 1 & ola == 5, !is_nsnr(s01, s02, s03) & !is.na(depr)) %>%  
+
   prop_list(s01 %in% 4:5, s02 %in% 4:5, s03 %in% 4:5, by = depr, na.rm = TRUE) %>% 
   mutate(name = factor(name,
                        levels = c('s01 %in% 4:5', 's02 %in% 4:5', 's03 %in% 4:5'),
@@ -151,8 +160,10 @@ elsoc_long_2016_2021 %>%
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_color_viridis_d(begin = 0, end = .8, direction = -1) +
-  theme(legend.position = 'top',
-        legend.title = element_blank())
+    theme(plot.caption = element_text(hjust = 0),
+          legend.position = 'top',
+        legend.title = element_blank()) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.489 (1.489 individuos)')
 
 ```
 
@@ -184,6 +195,7 @@ elsoc_long_2016_2021 %>%
                                   'Síntomas de\ndepresion moderada', 
                                   'Síntomas de depresion\nmoderada-severa\no severa'))) %>%
   dplyr::filter(tipo_atricion == 1) %>% 
+
   prop(depr, by = c(ola), na.rm = TRUE) %>% 
   sjlabelled::as_label(depr, ola) %>% 
   ggplot(aes(y = prop, x = ola, fill = fct_rev(depr), 
@@ -197,9 +209,11 @@ elsoc_long_2016_2021 %>%
   geom_text(position = position_stack(vjust = .5),
             size = 3, 
             color = rep(rep(c('black', 'white'), each = 2), 5)) + 
-  theme(legend.position = 'top',
+    theme(plot.caption = element_text(hjust = 0),
+          legend.position = 'top',
         legend.title = element_blank()) + 
-  guides(fill = guide_legend(reverse = TRUE))
+  guides(fill = guide_legend(reverse = TRUE)) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.565 (1.513 individuos)')
 
 ```
 
@@ -219,6 +233,7 @@ elsoc_long_2016_2021 %>%
   as.data.frame() %>%  
   mutate(phq9 = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09)) %>% 
   dplyr::filter(tipo_atricion == 1) %>% 
+
   prop(phq9 >= 10 , by = c(ola, m0_sexo), na.rm = TRUE) %>% 
   sjlabelled::as_label(ola, m0_sexo) %>% 
   ggplot(aes(y = prop, x = ola, color = m0_sexo, group = m0_sexo,
@@ -231,8 +246,10 @@ elsoc_long_2016_2021 %>%
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_color_viridis_d(begin = .33, end = .66) +
-  theme(legend.position = 'top',
-        legend.title = element_blank())
+    theme(plot.caption = element_text(hjust = 0),
+          legend.position = 'top',
+        legend.title = element_blank()) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.565 (1.513 individuos)')
 
 
 ```
@@ -247,6 +264,7 @@ Por otra parte, los datos muestran que existen brechas de género significativas
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & ola == 5 & !is_nsnr(s01, s02, s03)) %>% 
   as_label(m0_sexo) %>% 
+
   prop_list(s01 %in% 4:5, s02 %in% 4:5, s03 %in% 4:5, by = m0_sexo, na.rm = TRUE) %>% 
   mutate(name = factor(name,
                        levels = c('s01 %in% 4:5', 's02 %in% 4:5', 's03 %in% 4:5'),
@@ -263,8 +281,10 @@ elsoc_long_2016_2021 %>%
   ylab(label = NULL) +
   xlab(label = NULL) +  
   scale_fill_viridis_d(begin = .33, end = .66) +
-  theme(legend.position = 'top', legend.title = element_blank()) +
-  ggtitle(NULL, 'Porcentaje que responde que...')
+    theme(plot.caption = element_text(hjust = 0),
+          legend.position = 'top', legend.title = element_blank()) +
+  ggtitle(NULL, 'Porcentaje que responde que...') +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.498 (1.498 individuos)')
 
 
 ```
@@ -298,6 +318,8 @@ elsoc_long_2016_2021 %>%
   group_by(ola) %>% 
   mutate(prop = Freq/sum(Freq)) %>%
   filter(Freq > 0) %>% 
+  ungroup() %>% 
+
   ggplot(aes(y = prop, x = ola, fill = fct_rev(depr), 
              stratum = fct_rev(depr), alluvium = idencuesta)) +
   theme_bw() +
@@ -306,7 +328,8 @@ elsoc_long_2016_2021 %>%
   scale_y_continuous(labels = scales::percent) + 
   ylab(label = NULL) +
   xlab(label = NULL) + 
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank()) +
   scale_fill_viridis_d(end = .85) +
   geom_text(data = function(x) { group_by(.data = x, ola, depr) %>%
@@ -317,7 +340,8 @@ elsoc_long_2016_2021 %>%
       show.legend = FALSE,
       color = rep(c('black', 'black', 'white', 'white'), 5),
             size = 3) + 
-  guides(fill = guide_legend(reverse = TRUE))
+  guides(fill = guide_legend(reverse = TRUE)) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.451 (1.513 individuos)')
 
 ```
 
@@ -350,6 +374,7 @@ elsoc_wide_2016_2021 %>%
                                     glue::glue('Presentó en\n{1:4} de 5 olas'),
                                     'Presentó síntomas\nen todas las olas'))) %>% 
   survey_design_elsoc(weights = 'ponderador02_w05') %>% 
+
   prop(n_depr, na.rm = TRUE) %>% 
   as_factor(n_depr) %>% 
   ggplot(aes(y = prop, x = n_depr, 
@@ -360,7 +385,9 @@ elsoc_wide_2016_2021 %>%
   ylab(label = NULL) +
   xlab(label = NULL) +
   geom_text(position = position_dodge(.9), vjust = -.5,
-            size = 3) 
+            size = 3)  +
+  theme(plot.caption = element_text(hjust = 0)) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.565 (1.513 individuos)')
 
 ```
 
@@ -402,8 +429,10 @@ elsoc_wide_2016_2021 %>%
   scale_fill_viridis_d(begin = .33, end = .66) +
   geom_text(position = position_dodge(.9), vjust = -.5,
             size = 3) +
-  theme(legend.position = 'top',
-        legend.title = element_blank())
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
+        legend.title = element_blank()) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.565 (1.513 individuos)')
 
 ```
 
@@ -438,6 +467,7 @@ elsoc_depr_lca %>%
                                     prop(class_depr, na.rm = TRUE) %>%
                                     pull(prop), .1)})"))
            ) %>% 
+  
     ggplot(aes(x = prop, y = fct_rev(name), fill = fct_rev(sintomas))) + 
     geom_col(position = 'stack') + 
     facet_grid(~ class_depr) +
@@ -448,10 +478,12 @@ elsoc_depr_lca %>%
                        labels = scales::percent) +
     guides(fill = guide_legend(reverse = TRUE)) +
     theme_bw() + 
-    theme(legend.position = "top", 
+    theme(plot.caption = element_text(hjust = 0),
+          legend.position = "top", 
           plot.title = element_text(size = 14),
           axis.text.x = element_text(size = 8)) + 
-    scale_fill_viridis_d(end = .85)
+    scale_fill_viridis_d(end = .85) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.045 (1.409 individuos)')
 
 ```
 
@@ -477,9 +509,11 @@ elsoc_depr_lca %>%
   xlab(label = NULL) +
   scale_x_continuous(labels = scales::percent) +
   scale_fill_viridis_d(begin = .1, end = .8, direction = 1, option = 'viridis') +
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank())  + 
-  guides(fill = guide_legend(reverse = TRUE))
+  guides(fill = guide_legend(reverse = TRUE)) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.045 (1.409 individuos)')
 
 
 ```
@@ -491,10 +525,10 @@ elsoc_depr_lca %>%
 
 elsoc_depr_lca %>% 
   filter(tipo_atricion == 1) %>% 
-  survey_design_elsoc(weights = 'ponderador02_w05') %>% 
   mutate(edadt = factor(car::recode(m0_edad_w01, "18:29 = 1; 30:49 = 2; 50:64 = 3; 65:150 = 4"),
                         levels = 1:4,
                         labels = c('18-29', '30-49', '50-64', '65 o más'))) %>% 
+  survey_design_elsoc(weights = 'ponderador02_w05') %>% 
   prop(class_depr, by = edadt, na.rm = TRUE) %>% 
   sjlabelled::as_label(class_depr, edadt) %>%
   ggplot(aes(x = prop, y = edadt, 
@@ -508,9 +542,11 @@ elsoc_depr_lca %>%
   xlab(label = NULL) +
   scale_x_continuous(labels = scales::percent) +
   scale_fill_viridis_d(begin = .1, end = .8, direction = 1, option = 'viridis') +
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank())  + 
-  guides(fill = guide_legend(reverse = TRUE))
+  guides(fill = guide_legend(reverse = TRUE)) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.045 (1.409 individuos)')
 
 ```
 
@@ -535,6 +571,7 @@ elsoc_depr_lca %>%
          quintil = factor(quintil, levels = 1:5, labels = glue::glue('Quintil {1:5}'))
          ) %>%
   filter(!is.na(quintil)) %>%
+
   survey_design_elsoc(weights = 'ponderador02_w05') %>%
   prop(class_depr, by = quintil, na.rm = TRUE) %>%
   sjlabelled::as_label(class_depr, quintil) %>%
@@ -549,9 +586,11 @@ elsoc_depr_lca %>%
   xlab(label = NULL) +
   scale_x_continuous(labels = scales::percent) +
   scale_fill_viridis_d(begin = .1, end = .8, direction = 1, option = 'viridis') +
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank())  +
-  guides(fill = guide_legend(reverse = TRUE))
+  guides(fill = guide_legend(reverse = TRUE)) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=6.950 (1.390 individuos)')
 
 ```
 
@@ -585,6 +624,7 @@ elsoc_long_2016_2021 %>%
   as.data.frame() %>%  
   mutate(phq9 = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09)) %>% 
   dplyr::filter(tipo_atricion == 1, !is_nsnr(quintil), !is.na(quintil)) %>% 
+
   prop(phq9 >= 10 , by = c(quintil), na.rm = TRUE) %>% 
   sjlabelled::as_label(quintil) %>% 
   ggplot(aes(y = prop, x = quintil, 
@@ -595,7 +635,9 @@ elsoc_long_2016_2021 %>%
   ylab(label = NULL) +
   xlab(label = NULL) +
   geom_text(position = position_dodge(.9), vjust = -.5,
-            size = 3) 
+            size = 3)  +
+  theme(plot.caption = element_text(hjust = 0)) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.490 (1.490 individuos)')
 
 ```
 
@@ -615,6 +657,7 @@ elsoc_long_2016_2021 %>%
                        levels = 1:4,
                        labels = c("Basica", "Media", "Tecnica", "Universitaria"))) %>% 
   dplyr::filter(tipo_atricion == 1, !is_nsnr(m01)) %>% 
+
   prop(phq9 >= 10 , by = educ, na.rm = TRUE) %>% 
   sjlabelled::as_label(educ) %>% 
   ggplot(aes(y = prop, x = educ, 
@@ -625,7 +668,9 @@ elsoc_long_2016_2021 %>%
   ylab(label = NULL) +
   xlab(label = NULL) +
   geom_text(position = position_dodge(.9), vjust = -.5,
-            size = 3) 
+            size = 3) +
+  theme(plot.caption = element_text(hjust = 0)) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.513 (1.513 individuos)')
 
 ```
 
@@ -649,6 +694,7 @@ elsoc_long_2016_2021 %>%
                 .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
   as.data.frame() %>%  
   mutate(phq9 = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09)) %>% 
+
   prop(phq9 >= 10 , by = c(sit_ocup, m0_sexo), na.rm = TRUE) %>% 
   sjlabelled::as_label(sit_ocup, m0_sexo) %>% 
   ggplot(aes(y = prop, x = sit_ocup, fill = m0_sexo,
@@ -661,7 +707,11 @@ elsoc_long_2016_2021 %>%
   scale_fill_viridis_d(begin = .33, end = .66, direction = -1) +
   geom_text(position = position_dodge(.9), vjust = -.5,
             size = 3, na.rm = TRUE) +
-  theme(legend.position = 'top', legend.title = element_blank())
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top', 
+        legend.title = element_blank()) + 
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.553 (1.513 individuos)')
+
 
 ```
 
@@ -675,6 +725,7 @@ elsoc_long_2016_2021 %>%
                            levels = c(1, 2, 3, 4, 5),
                            labels = c("Trabajo remunerado", "Trabajo doméstico\nno remunerado", "Desempleado/a", "Jubilado/a o\npensionado/a", "Otros (inactivos)"))
          ) %>% 
+  
   prop(sit_ocup, by = m0_sexo, na.rm = TRUE) %>% 
   as_label(m0_sexo) %>% 
   ggplot(aes(y = prop, x = m0_sexo, fill = fct_rev(sit_ocup),
@@ -686,10 +737,12 @@ elsoc_long_2016_2021 %>%
   scale_y_continuous(labels = scales::percent) +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         legend.title = element_blank()) +
     guides(fill = guide_legend(reverse = TRUE))+
-  scale_fill_viridis_d(end = .85, direction = -1)
+  scale_fill_viridis_d(end = .85, direction = -1) + 
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.513 (1.513 individuos)')
 
 ```
 
@@ -719,7 +772,9 @@ elsoc_long_2016_2021 %>%
   geom_text(vjust = -0.5,
             position = position_dodge(width = .9),
             size = 3)  + 
-  theme(legend.position = 'top', legend.title = element_blank())
+    theme(plot.caption = element_text(hjust = 0),
+          legend.position = 'top', legend.title = element_blank()) + 
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.511 (1.511 individuos)')
 
 ```
 
@@ -743,6 +798,7 @@ elsoc_long_2016_2021 %>%
                 .f = function(s) car::recode(s, "1 = 0; 2 = 1; 3 = 2; c(4, 5) = 3; c(-888, -999) = NA")) %>%
   as.data.frame() %>% 
   mutate(phq9 = (s11_01 + s11_02 + s11_03 + s11_04 + s11_05 + s11_06 + s11_07 + s11_08 + s11_09)) %>% 
+
   prop(phq9 >= 10 , by = m60, na.rm = TRUE) %>% 
   sjlabelled::as_label(m60) %>% 
   ggplot(aes(y = prop, x = m60,
@@ -753,7 +809,9 @@ elsoc_long_2016_2021 %>%
   ylab(label = NULL) +
   xlab(label = NULL) +
   geom_text(position = position_dodge(.9), vjust = -.5,
-            size = 3, na.rm = TRUE)
+            size = 3, na.rm = TRUE) + 
+  theme(plot.caption = element_text(hjust = 0)) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.511 (1.511 individuos)')
 
 ```
 
@@ -786,8 +844,10 @@ elsoc_long_2016_2021 %>%
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
             size= 2.75)  +
-  theme(legend.position = 'top',
-        legend.title = element_blank())
+  theme(plot.caption = element_text(hjust = 0),
+          legend.position = 'top',
+        legend.title = element_blank()) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=4.354 (1.513 individuos)')
 
 ```
 
@@ -811,6 +871,7 @@ elsoc_long_2016_2021 %>%
                                  'Algo sobrecargado',
                                  'Bastante\nsobrecargado',
                                  'Muy sobrecargado'))) %>% 
+
   prop(phq9 >= 10 , by = c(m43, ola), na.rm = TRUE, vartype = 'cv') %>% 
   filter(!is.na(m43)) %>% 
   as_label(ola, m43) %>% 
@@ -825,8 +886,10 @@ elsoc_long_2016_2021 %>%
   ylab(label = NULL) +
   xlab(label = NULL) +
   scale_fill_viridis_d(end = .85, direction = -1, option = 'viridis') + 
-  theme(legend.position = 'top',
-        legend.title = element_blank())
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
+        legend.title = element_blank()) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=4.536 (1.513 individuos)')
 
 ```
 
@@ -849,6 +912,7 @@ elsoc_long_2016_2021 %>%
                                                    'Realizó el primer\n retiro',
                                                    'Realizó el primer\ny segundo retiro')
                                     )) %>% 
+
   prop(phq9 > 10, by = c(ola, retiros), na.rm = TRUE) %>% 
   as_label(ola, retiros) %>%
   ggplot(aes(y = prop, x = retiros,
@@ -863,10 +927,12 @@ elsoc_long_2016_2021 %>%
   ylab(label = NULL) +
   xlab(label = NULL) + 
   scale_color_viridis_d(begin = .33, end = .66, direction = -1) +
-  theme(legend.position = 'top',
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top',
         axis.text.x = element_text(size = 10),
         legend.title = element_blank()) + 
-  ggtitle(label = NULL)
+  ggtitle(label = NULL) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=3.018 (1.509 individuos)')
 
 ```
 
@@ -898,8 +964,10 @@ elsoc_long_2016_2021 %>%
   geom_text(vjust = -0.5,
             position = position_dodge(width = .9),
             size = 3)  + 
-  theme(legend.position = 'none') + 
-  ggtitle(NULL, 'Porcentaje que...')
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'none') + 
+  ggtitle(NULL, 'Porcentaje que...') +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.508 (1.508 individuos)')
 
 ```
 
@@ -914,6 +982,7 @@ elsoc_long_2016_2021 %>%
   mutate(educ = factor(car::recode(m01, recodes = "1:3 = 1; 4:5 = 2; 6:7 = 3; 8:10 = 4"),
                        levels = 1:4,
                        labels = c("Basica", "Media", "Tecnica", "Universitaria"))) %>% 
+
   prop_list(s31 == 1, r03_09 > 1, by = educ, na.rm = TRUE) %>% 
   mutate(name = factor(name, levels = c('s31 == 1', 'r03_09 > 1'),
                        labels = c('Fue diagnosticado con COVID-19',
@@ -930,8 +999,11 @@ elsoc_long_2016_2021 %>%
   geom_text(vjust = -0.5,
             position = position_dodge(width = .9),
             size = 3)  + 
-  theme(legend.position = 'top', legend.title = element_blank()) + 
-  ggtitle(NULL, 'Porcentaje que...')
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top', 
+        legend.title = element_blanklank()) + 
+  ggtitle(NULL, 'Porcentaje que...') +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.508 (1.508 individuos)')
 
 ```
 
@@ -960,8 +1032,10 @@ elsoc_long_2016_2021 %>%
   geom_text(vjust = -0.5,
             position = position_dodge(width = .9),
             size = 3)  + 
-  theme(legend.position = 'none') + 
-  ggtitle(NULL, 'En el contexto actual de la pandemia del coronavirus...')
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'none') + 
+  ggtitle(NULL, 'En el contexto actual de la pandemia del coronavirus...') +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.505 (1.505 individuos)')
 
 ```
 
@@ -977,6 +1051,7 @@ elsoc_long_2016_2021 %>%
   mutate(educ = factor(car::recode(m01, recodes = "1:3 = 1; 4:5 = 2; 6:7 = 3; 8:10 = 4"),
                        levels = 1:4,
                        labels = c("Basica", "Media", "Tecnica", "Universitaria"))) %>% 
+
   prop_list(c37_09 %in% 4:5, c37_10 %in% 4:5, by = educ, na.rm = TRUE) %>% 
   mutate(name = factor(name, 
                        levels = c('c37_09 %in% 4:5', 'c37_10 %in% 4:5'),
@@ -994,8 +1069,10 @@ elsoc_long_2016_2021 %>%
   geom_text(vjust = -0.5,
             position = position_dodge(width = .9),
             size = 3)  + 
-  theme(legend.position = 'top', legend.title = element_blank()) + 
-  ggtitle(NULL, 'En el contexto actual de la pandemia del coronavirus...')
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top', legend.title = element_blank()) + 
+  ggtitle(NULL, 'En el contexto actual de la pandemia del coronavirus...') +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.505 (1.505 individuos)')
 
 
 ```
@@ -1016,6 +1093,7 @@ elsoc_long_2016_2021 %>%
                                levels = 1:3,
                                labels= c("Nunca o casi nunca", "A veces",
                                          "Frecuentemente o\nmuy frecuentemente"))) %>%
+
   prop(c48, na.rm = TRUE) %>% 
   ggplot(aes(y = prop, x = c48, 
              label = scales::percent(prop, accuracy = .1))) +
@@ -1028,7 +1106,9 @@ elsoc_long_2016_2021 %>%
   scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
-            size= 2.75)
+            size = 3) +
+  theme(plot.caption = element_text(hjust = 0)) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.512 (1.512 individuos)')
 
 ```
 
@@ -1043,6 +1123,7 @@ elsoc_long_2016_2021 %>%
   mutate(educ = factor(car::recode(m01, recodes = "1:3 = 1; 4:5 = 2; 6:7 = 3; 8:10 = 4"),
                        levels = 1:4,
                        labels = c("Basica", "Media", "Tecnica", "Universitaria"))) %>% 
+
   prop(c48 %in% 4:5, educ, na.rm = TRUE) %>% 
   ggplot(aes(y = prop, x = educ, 
              label = scales::percent(prop, accuracy = .1))) +
@@ -1055,7 +1136,9 @@ elsoc_long_2016_2021 %>%
   scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
-            size= 2.75)
+            size = 3) +
+  theme(plot.caption = element_text(hjust = 0)) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.512 (1.512 individuos)')
 
 ```
 
@@ -1072,6 +1155,7 @@ elsoc_long_2016_2021 %>%
                                levels = 1:3,
                                labels= c("Nunca o casi nunca", "A veces",
                                          "Frecuentemente o\nmuy frecuentemente"))) %>%
+
   prop(s31 == 1, by = c48, na.rm = TRUE) %>% 
   ggplot(aes(y = prop, x = c48, label = scales::percent(prop, accuracy = .1))) +
   theme_bw() + 
@@ -1082,6 +1166,8 @@ elsoc_long_2016_2021 %>%
   xlab(label = NULL) +
   geom_text(vjust = -0.5,
             position = position_dodge(width = .9),
-            size = 3) 
+            size = 3)  +
+  theme(plot.caption = element_text(hjust = 0)) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.510 (1.510 individuos)')
 
 ```
