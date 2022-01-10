@@ -22,9 +22,33 @@ editor_options:
     wrap: 72
 ---
 
+
+VERSION PRELIMINAR. NO COMPARTIR NI DIFUNDIR.
+
 # Presentacion {-}
 
 <div style="text-align: justify">
+
+## Autores {-}
+
+- Roberto González. *Profesor Titular Escuela de Psicología PUC. Investigador Principal COES. Coordinador estudio ELSOC*
+- Matías Bargsted. *Profesor Asociado Instituto de Sociología PUC. Investigador Asociado COES*
+- Ana Figuereido. *Profesora titular Escuela de Psicología PUC. Investigadora Asociada COES*
+- Daniel Miranda. *Investigador Centro Medición MIDE UC. Investigador Asociado COES*
+- Edgardo Cerda. *Asistente Técnico ELSOC*
+- Alejandro Plaza. *Coordinador Técnico ELSOC*
+- Rocío Salas. *Asistente de investigación ELSOC*
+
+### Investigadores colaboradores: {-}
+
+- Fabián Duarte. *Profesor Asociado, Escuela de Economía UCH*
+- Barbara Flores. *Investigadora postdoctoral COES y DESOC*
+- Álvaro Jiménez. *Profesor adjunto, Escuela de Psicología UDP*
+- Natalia Riquelme. *Coordinadora COES*
+- Elisa Salas. *Practicante Economía PUC*
+- Isidora Didier. *Practicante Sociología UCH*
+- Cristobal Ortíz. *Practicante Sociologia UCH*
+
 
 El Centro de Estudios de Conflicto y Cohesión Social ([COES](https://coes.cl/)) tiene el agrado de publicar el informe “Radiografía del Cambio Social”, el cual consolida los principales hallazgos longitudinales de cinco mediciones anuales del Estudio Longitudinal Social de Chile ([ELSOC](https://coes.cl/encuesta-panel/)).
 
