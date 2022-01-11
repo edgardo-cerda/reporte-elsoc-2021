@@ -66,7 +66,7 @@ elsoc_long_2016_2021 %>%
         legend.position = 'top',
         legend.title = element_blank()) +
   guides(fill = guide_legend(reverse = TRUE))  +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.565 (1.513 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.565 (1.513 individuos)')
 
 
 ```
@@ -111,7 +111,7 @@ elsoc_long_2016_2021 %>%
             size = 3,
             color = rep(c('white', 'white', 'white', 'black', 'black'), 5)) + 
   guides(fill = guide_legend(reverse = TRUE)) +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.565 (1.513 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.565 (1.513 individuos)')
 
 
 ```
@@ -143,7 +143,7 @@ elsoc_long_2016_2021 %>%
   scale_fill_viridis_d(begin = .33, end = .66, option = 'viridis') +
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top') +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.443 (1.513 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.443 (1.513 individuos)')
 
 
 ```
@@ -181,7 +181,7 @@ elsoc_wide_2016_2021 %>%
         legend.position = 'right') +
   labs(fill = 'Posición política\nen 2021') + 
   guides(fill = guide_legend(reverse = TRUE)) +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=3.026 (1.513 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=3.026 (1.513 individuos)')
 
   
 ```
@@ -214,7 +214,7 @@ elsoc_wide_2016_2021 %>%
   scale_fill_viridis_d(begin = .33, end = .66, option = 'viridis') +
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top') +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=3.026 (1.513 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=3.026 (1.513 individuos)')
 
 ```
 
@@ -246,7 +246,7 @@ elsoc_long_2016_2021 %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank()) +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.553 (1.513 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.553 (1.513 individuos)')
   
 ```
 
@@ -281,7 +281,7 @@ elsoc_long_2016_2021 %>%
   guides(color = guide_legend(reverse = TRUE)) +
   ggtitle(label = NULL,
           subtitle = 'Portaje que responde Frecuente o Muy frecuentemente') +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.558 (1.513 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.558 (1.513 individuos)')
 
 ```
 
@@ -317,7 +317,7 @@ elsoc_long_2016_2021 %>%
         legend.title = element_blank()) + 
   guides(fill = guide_legend(reverse = TRUE)) + 
   ggtitle(label = NULL) +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.512 (1.512 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=1.512 (1.512 individuos)')
 
 ```
 
@@ -358,7 +358,7 @@ elsoc_long_2016_2021 %>%
         legend.title = element_blank()) +
   ggtitle(NULL,
           subtitle = 'Porcentaje que responde de acuerdo o muy de acuerdo')  +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.931 (1.510 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=2.931 (1.510 individuos)')
 
 ```
 
@@ -481,7 +481,7 @@ tab_5 %>%
         legend.position = 'top',
         legend.title = element_blank()) + 
   scale_fill_viridis_d(begin = .2, end = .7) +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.335 (1.467 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.335 (1.467 individuos)')
 
 ```
 
@@ -524,7 +524,7 @@ tip_par %>%
         axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
         legend.title = element_blank()) +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.175 (1.435 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.175 (1.435 individuos)')
 
 ```
 
@@ -561,7 +561,7 @@ tip_par %>%
         axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
         legend.title = element_blank()) +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.335 (1.467 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.335 (1.467 individuos)')
 
 ```
 
@@ -600,7 +600,7 @@ tip_par %>%
         axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
         legend.title = element_blank()) +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.335 (1.467 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.335 (1.467 individuos)')
 
 ```
 
@@ -639,7 +639,7 @@ tip_par %>%
         axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
         legend.title = element_blank()) +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.335 (1.467 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.335 (1.467 individuos)')
 
 ```
 
@@ -678,7 +678,7 @@ tip_par %>%
         axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
         legend.title = element_blank()) +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.235 (1.447 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.235 (1.447 individuos)')
 
 ```
 
@@ -722,7 +722,7 @@ tip_par %>%
         axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
         legend.title = element_blank()) +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.225 (1.445 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.225 (1.445 individuos)')
 
 ```
 
@@ -763,7 +763,7 @@ tip_par %>%
         axis.text.x = element_text(size = rel(.9)),
         legend.position = 'top',
         legend.title = element_blank()) +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=6.820 (1.364 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=6.820 (1.364 individuos)')
 
 ```
 
@@ -805,7 +805,7 @@ elsoc_long_2016_2021 %>%
   coord_flip() + 
   guides(color = guide_legend(reverse = TRUE)) +
   ggtitle(label = NULL) +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=3.003 (1.513 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=3.003 (1.513 individuos)')
 
 ```
 
@@ -840,7 +840,7 @@ elsoc_long_2016_2021 %>%
         legend.title = element_blank()) + 
     ggtitle(label = NULL,
           subtitle = 'Movimientos sociales agrupados en 3 categorías') +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.482 (1.513 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.482 (1.513 individuos)')
 
 ```
 
@@ -871,7 +871,7 @@ elsoc_long_2016_2021 %>%
         legend.title = element_blank()) + 
   ggtitle(label = NULL,
           subtitle = 'Porcentaje que participa Frecuentemente o Muy frecuentemente') +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.556 (1.513 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.556 (1.513 individuos)')
 
 ```
 
@@ -910,7 +910,7 @@ elsoc_long_2016_2021 %>%
         legend.title = element_blank()) + 
   ggtitle(label = NULL,
           subtitle = 'Porcentaje que participa Frecuentemente o Muy frecuentemente') +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.473 (1.513 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.473 (1.513 individuos)')
 
 ```
 
@@ -960,7 +960,7 @@ sjlabelled::as_label(ola) %>%
         legend.title = element_blank()) +
   ggtitle(NULL,
           subtitle = 'Porcentaje que responde que Muchas veces o Siempre se justifica' ) +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=6.026 (1.513 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=6.026 (1.513 individuos)')
 
 
 ```
@@ -1006,7 +1006,7 @@ elsoc_long_2016_2021 %>%
         legend.title = element_blank()) +
   ggtitle(NULL,
         subtitle = 'Porcentaje que responde que Muchas veces o Siempre se justifica' ) +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.507 (1.513 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.507 (1.513 individuos)')
 
 ```
 
@@ -1046,7 +1046,7 @@ elsoc_long_2016_2021 %>%
         legend.title = element_blank()) + 
   ggtitle(NULL,
           subtitle = 'Porcentaje que responde que...') +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.442 (1.513 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.442 (1.513 individuos)')
 
 ```
 
@@ -1083,7 +1083,7 @@ elsoc_long_2016_2021 %>%
         legend.title = element_blank()) + 
   ggtitle(NULL,
           subtitle = 'Porcentaje que responde que...') +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.507 (1.507 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=1.507 (1.507 individuos)')
 
 ```
 
@@ -1122,7 +1122,7 @@ elsoc_long_2016_2021 %>%
           legend.title = element_blank())  + 
   ggtitle(NULL,
           subtitle = 'Porcentaje que Confía Bastante o Mucho') +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.462 (1.513 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.462 (1.513 individuos)')
 
 ```
 
@@ -1156,7 +1156,7 @@ elsoc_long_2016_2021 %>%
           legend.title = element_blank()) + 
     ggtitle(NULL,
           subtitle = 'Porcentaje que Confía Bastante o Mucho') +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.456 (1.513 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.456 (1.513 individuos)')
 
 
 ```
@@ -1200,7 +1200,7 @@ elsoc_long_2016_2021 %>%
   guides(color = guide_legend(reverse = TRUE)) +
   ggtitle(NULL,
           subtitle = 'Porcentaje que Confía Bastante o Mucho') +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.954 (1.509 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=2.954 (1.509 individuos)')
 
 ```
 
@@ -1238,7 +1238,7 @@ elsoc_long_2016_2021 %>%
         legend.title = element_blank()) +
   ggtitle(NULL,
           subtitle = 'Porcentaje que responde...') +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.208 (1.513 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.208 (1.513 individuos)')
 
 ```
 
@@ -1275,7 +1275,7 @@ elsoc_long_2016_2021 %>%
         legend.position = 'none') +
   ggtitle(NULL,
         subtitle = 'Porcentaje que responde...') +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.443 (1.443 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=1.443 (1.443 individuos)')
 
 ```
 
@@ -1313,7 +1313,7 @@ elsoc_long_2016_2021 %>%
   guides(fill = guide_legend(reverse = TRUE)) +
   ggtitle(NULL,
         subtitle = 'Porcentaje que responde...') +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.458 (1.458 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=1.458 (1.458 individuos)')
 
 ```
 
@@ -1351,7 +1351,7 @@ elsoc_long_2016_2021 %>%
         legend.title = element_blank()) +
   ggtitle(NULL,
           subtitle = 'Porcentaje que votó en...') +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=4.179 (1.511 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=4.179 (1.511 individuos)')
 
 ```
 
@@ -1384,7 +1384,7 @@ elsoc_long_2016_2021 %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank()) +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=954 (954 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=954 (954 individuos)')
 
 ```
 
@@ -1424,7 +1424,7 @@ elsoc_long_2016_2021 %>%
         legend.title = element_blank()) +
   ggtitle(NULL,
           subtitle = 'Porcentaje que votó en...') +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=4.179 (1.511 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=4.179 (1.511 individuos)')
 
 ```
 
@@ -1465,7 +1465,7 @@ elsoc_long_2016_2021 %>%
         legend.title = element_blank()) +
   ggtitle(NULL,
           subtitle = 'Porcentaje que voto...') +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.414 (1.513 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.414 (1.513 individuos)')
 
 ```
 
@@ -1506,7 +1506,7 @@ elsoc_wide_2016_2021 %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank()) +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=4.401 (1.467 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=4.401 (1.467 individuos)')
 
 ```
 
@@ -1550,7 +1550,7 @@ elsoc_wide_2016_2021 %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank()) +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.792 (1.396 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=2.792 (1.396 individuos)')
 
 ```
 
@@ -1587,7 +1587,7 @@ elsoc_long_2016_2021 %>%
     scale_fill_viridis_d(begin = 0, end = .85, direction = -1, option = 'viridis') +
   ggtitle(NULL,
         subtitle = 'Porcentaje De acuerdo o Muy de acuerdo con: "La nueva constitución..."') +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.405 (1.405 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=1.405 (1.405 individuos)')
 
 ```
 
@@ -1625,7 +1625,7 @@ elsoc_long_2016_2021 %>%
         legend.title = element_blank()) + 
   ggtitle(NULL,
         subtitle = 'Porcentaje de acuerdo o muy de acuerdo en promedio con atributos positivos') +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.377 (1.377 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=1.377 (1.377 individuos)')
 
 ```
 
@@ -1661,7 +1661,7 @@ elsoc_long_2016_2021 %>%
         legend.title = element_blank()) + 
   ggtitle(NULL,
         subtitle = 'Porcentaje de acuerdo o muy de acuerdo en promedio con atributos positivos') +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.405 (1.405 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=1.405 (1.405 individuos)')
 
 
 ```
@@ -1699,6 +1699,6 @@ elsoc_long_2016_2021 %>%
         legend.title = element_blank()) + 
   ggtitle(NULL,
         subtitle = 'Porcentaje de acuerdo o muy de acuerdo en promedio con atributos positivos') +
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.382 (1.382 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=1.382 (1.382 individuos)')
 
 ```

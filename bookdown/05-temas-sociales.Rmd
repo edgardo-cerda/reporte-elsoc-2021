@@ -33,7 +33,7 @@ elsoc_long_2016_2021 %>%
         legend.position = 'top', 
         legend.title = element_blank()) +
   
-  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=4.536 (1.513 individuos)')
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=4.536 (1.513 individuos)')
 
 ```
 
@@ -82,7 +82,7 @@ datos %>%
             show.legend = FALSE,
             size = 3,
             color = rep(c('black', 'white', 'white'),2)) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=3.013 (1.513 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=3.013 (1.513 individuos)')
 
 ```
 
@@ -117,7 +117,7 @@ elsoc_long_2016_2021 %>%
             size = 3) + 
   ggtitle(label = NULL,
           subtitle = 'Porcentaje con conflictos barriales "Siempre" o "Muchas veces"') +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=3.013 (1.513 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=3.013 (1.513 individuos)')
 
 ```
 
@@ -151,7 +151,7 @@ elsoc_long_2016_2021 %>%
             size = 3) + 
   ggtitle(NULL,
           subtitle = 'Porcentaje con conflictos barriales "Siempre" o "Muchas veces"') +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=3.013 (1.513 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=3.013 (1.513 individuos)')
 
 ```
 
@@ -200,7 +200,7 @@ elsoc_long_2016_2021 %>%
             size = 3) + 
   ggtitle(NULL,
           subtitle = 'Porcentaje con conflictos barriales "Siempre" o "Muchas veces"') +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.978 (1.511 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=2.978 (1.511 individuos)')
 
 
 ```
@@ -235,7 +235,7 @@ elsoc_long_2016_2021 %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank()) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.529 (1.513 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.529 (1.513 individuos)')
 
 ```
 
@@ -262,7 +262,7 @@ elsoc_long_2016_2021 %>%
         legend.title = element_blank()) + 
   ggtitle(NULL,
           'Porcentaje que confía Bastante o Mucho en sus vecinos') +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.529 (1.513 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.529 (1.513 individuos)')
 
 ```
 
@@ -293,7 +293,7 @@ elsoc_long_2016_2021 %>%
             size = 3) +
     ggtitle(NULL,
           'Porcentaje que confía Bastante o Mucho en sus vecinos') +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=3.011 (1.513 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=3.011 (1.513 individuos)')
 
 ```
 
@@ -341,7 +341,7 @@ elsoc_long_2016_2021 %>%
         legend.title = element_blank()) + 
   ggtitle(NULL,
           'Porcentaje que confía Bastante o Mucho en sus vecinos') +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.308 (1.513 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.308 (1.513 individuos)')
 
 
 ```
@@ -396,7 +396,7 @@ territorial %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank()) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021 y Datos territoriales ELSOC 2017.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.360 (1.472 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021 y Datos territoriales ELSOC 2017.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.360 (1.472 individuos)')
 
 ```
 
@@ -435,7 +435,7 @@ territorial %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank()) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021 y Datos territoriales ELSOC 2017.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.360 (1.472 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021 y Datos territoriales ELSOC 2017.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.360 (1.472 individuos)')
 
 ```
 
@@ -470,7 +470,7 @@ elsoc_long_2016_2021 %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank()) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.557 (1.513 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.557 (1.513 individuos)')
 
 ```
 
@@ -498,7 +498,7 @@ elsoc_long_2016_2021 %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank()) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.557 (1.513 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.557 (1.513 individuos)')
 
 ```
 
@@ -600,7 +600,7 @@ tab %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank()) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.557 (1.513 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.557 (1.513 individuos)')
 
 ```
 
@@ -695,7 +695,7 @@ tab %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank()) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.832 (548 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=1.832 (548 individuos)')
 
 ```
 
@@ -734,7 +734,7 @@ territorial %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank()) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021 y Datos territoriales ELSOC 2017.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.515 (1.503 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021 y Datos territoriales ELSOC 2017.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.515 (1.503 individuos)')
 
 
 ```
@@ -782,7 +782,7 @@ tab %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank()) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021 y Datos territoriales ELSOC 2017.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.485 (1.497 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021 y Datos territoriales ELSOC 2017.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.485 (1.497 individuos)')
 
 ```
 
@@ -817,7 +817,7 @@ elsoc_long_2016_2021 %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank())  +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.560 (1.513 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.560 (1.513 individuos)')
 
 ```
 
@@ -857,7 +857,7 @@ elsoc_long_2016_2021 %>%
         legend.title = element_blank()) +
   ggtitle(NULL,
           'Porcentaje que se siente Inseguro o Muy inseguro') +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.560 (1.513 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.560 (1.513 individuos)')
 
 
 ```
@@ -892,7 +892,7 @@ elsoc_long_2016_2021 %>%
         legend.title = element_blank()) +
   ggtitle(NULL,
           'Porcentaje que se siente Inseguro o Muy inseguro') +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.558 (1.513 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.558 (1.513 individuos)')
 
 
 ```
@@ -927,7 +927,7 @@ elsoc_long_2016_2021 %>%
         legend.title = element_blank()) +
   ggtitle(NULL,
           'Porcentaje que se siente Inseguro o Muy inseguro') +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.560 (1.513 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.560 (1.513 individuos)')
 
 ```
 
@@ -971,7 +971,7 @@ elsoc_long_2016_2021 %>%
         legend.title = element_blank()) +
   ggtitle(NULL,
           'Porcentaje que se siente Inseguro o Muy inseguro') +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.901 (1.198 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=2.901 (1.198 individuos)')
 
 
 ```
@@ -1004,7 +1004,7 @@ elsoc_long_2016_2021 %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top', 
         legend.title = element_blank()) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.169 (1.513 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.169 (1.513 individuos)')
 
 
 ```
@@ -1040,7 +1040,7 @@ elsoc_long_2016_2021 %>%
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
             size = 3) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.868 (1.503 individuos)') + 
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=2.868 (1.503 individuos)') + 
   ggtitle(NULL, 'Porcentaje de experiencias de criminalidad "Siempre" o "Muchas veces"')
 
 
@@ -1080,7 +1080,7 @@ elsoc_long_2016_2021 %>%
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
             size = 3) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.868 (1.503 individuos)') + 
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=2.868 (1.503 individuos)') + 
   ggtitle(NULL, 'Porcentaje de experiencias de criminalidad "Siempre" o "Muchas veces"')
 
 
@@ -1132,7 +1132,7 @@ elsoc_long_2016_2021 %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank()) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.795 (1.201 individuos)') + 
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=2.795 (1.201 individuos)') + 
   ggtitle(NULL, 'Porcentaje de experiencias de criminalidad "Siempre" o "Muchas veces"')
 
 ```
@@ -1169,7 +1169,7 @@ elsoc_long_2016_2021 %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank()) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=10.229 (2.446 individuos)') +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=10.229 (2.446 individuos)') +
   ggtitle(NULL, 'Porcentaje de personas "De acuerdo" o "Totalmente de acuerdo"')
 
 
@@ -1206,7 +1206,7 @@ elsoc_long_2016_2021 %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank()) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=10.229 (2.446 individuos)') +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=10.229 (2.446 individuos)') +
   ggtitle(NULL, 'Porcentaje de personas "De acuerdo" o "Totalmente de acuerdo"')
 
 
@@ -1237,7 +1237,7 @@ elsoc_long_2016_2021 %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank()) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=10.208 (2.446 individuos)') +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=10.208 (2.446 individuos)') +
   ggtitle(NULL, 'Porcentaje de personas "De acuerdo" o "Totalmente de acuerdo"')
 
 
@@ -1275,7 +1275,7 @@ elsoc_long_2016_2021 %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank()) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=10.208 (2.446 individuos)') +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=10.208 (2.446 individuos)') +
   ggtitle(NULL, 'Porcentaje de personas "De acuerdo" o "Totalmente de acuerdo"')
 
 
@@ -1313,7 +1313,7 @@ elsoc_long_2016_2021 %>%
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
             size = 3) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.416 (2.416 individuos)') +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=2.416 (2.416 individuos)') +
   ggtitle(NULL, 'Porcentaje de personas "De acuerdo" o "Totalmente de acuerdo"')
 
 
@@ -1350,7 +1350,7 @@ elsoc_long_2016_2021 %>%
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
             size = 3) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.416 (2.416 individuos)') +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=2.416 (2.416 individuos)') +
   ggtitle(NULL, 'Porcentaje de personas "De acuerdo" o "Totalmente de acuerdo"')
 
 
@@ -1389,7 +1389,7 @@ elsoc_long_2016_2021 %>%
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
             size = 3) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.416 (2.416 individuos)') +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=2.416 (2.416 individuos)') +
   ggtitle(NULL, 'Porcentaje de personas "De acuerdo" o "Totalmente de acuerdo"')
 
 
@@ -1422,7 +1422,7 @@ elsoc_long_2016_2021 %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank()) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=9.831 (2.444 individuos)') +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=9.831 (2.444 individuos)') +
   ggtitle(NULL, 'Porcentaje de personas que responden “Bastante” o “Mucha confianza"')
 
 
@@ -1459,7 +1459,7 @@ elsoc_long_2016_2021 %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank()) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=9.381 (2.444 individuos)') +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=9.381 (2.444 individuos)') +
   ggtitle(NULL, 'Porcentaje de personas que responden “Bastante” o “Mucha confianza"')
 
 
@@ -1505,7 +1505,7 @@ elsoc_long_2016_2021 %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank())   +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.473 (1.473 individuos)') +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=1.473 (1.473 individuos)') +
   ggtitle(NULL, 'Porcentaje de personas “De acuerdo” o “Totalmente de acuerdo"')
 
 
@@ -1545,7 +1545,7 @@ elsoc_long_2016_2021 %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank())   +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.473 (1.473 individuos)') +
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=1.473 (1.473 individuos)') +
   ggtitle(NULL, 'Porcentaje de personas “De acuerdo” o “Totalmente de acuerdo"')
 
 
@@ -1584,7 +1584,7 @@ elsoc_long_2016_2021 %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank()) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.537 (1.513 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.537 (1.513 individuos)')
 
 
 ```
@@ -1636,12 +1636,12 @@ g11.2 <-
             show.legend = FALSE,
             size = 3,
             color = rep(c('white', 'white', 'black'),3)) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=4.491 (1.499 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=4.491 (1.499 individuos)')
 
 g11.2
 ```
 
-Al analizar la percepción de estatus subjetivo en función de los niveles de ingresos de los chilenos (medidos en quintiles), primero se constata que existe un patrón similar de respuestas en los primeros dos quintiles o grupos de menores ingresos, con una predominio en torno al 66% de las personas que se perciben de estatus social subjetivo medio (ver Figura \@ref(fig:ess-quintil)). A partir del cuarto quintil de ingresos y hasta llegar al más alto (Q5) se constata un aumento progresivo de la proporción de personas que se percibe como miembros de una clase social media alta y alta, siendo el grupo de mayores ingresos -quinto quintil- donde este alcanza un 41,1%. De hecho es este último grupo el que mayor diferenciación presenta en su patrón de respuesta comparados con todos los otros grupos socioeconómicos. El patrón general muestra que hay cierta correspondencia entre la posición social objetiva (obtenida a partir de los ingresos per cápita del hogar) y la posición social subjetiva. 
+Al analizar la percepción de estatus subjetivo en función de los niveles de ingresos de los chilenos (medidos en quintiles), primero se constata que existe un patrón similar de respuestas en los primeros dos quintiles o grupos de menores ingresos, con una predominio en torno al 67% de las personas que se perciben de estatus social subjetivo medio (ver Figura \@ref(fig:ess-quintil)). A partir del tercer quintil de ingresos y hasta llegar al más alto (Q5) se constata un aumento progresivo de la proporción de personas que se percibe como miembros de una clase social media alta y alta, siendo el grupo de mayores ingresos -quinto quintil- donde este alcanza un 42,0%. De hecho, es este último grupo el que mayor diferenciación presenta en su patrón de respuesta comparados con todos los otros grupos socioeconómicos. El patrón general muestra que hay cierta correspondencia entre la posición social objetiva (obtenida a partir de los ingresos per cápita del hogar) y la posición social subjetiva. 
 
 
 ```{r ess-quintil, fig.cap = 'Clase social subjetiva, según quintiles de ingreso (2021)'}
@@ -1679,7 +1679,7 @@ elsoc_long_2016_2021 %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank()) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.490 (1.490 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=1.490 (1.490 individuos)')
 
 
 ```
@@ -1715,7 +1715,7 @@ elsoc_long_2016_2021 %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank()) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.484 (1.484 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=1.484 (1.484 individuos)')
 
 
 ```
@@ -1751,7 +1751,7 @@ elsoc_long_2016_2021 %>%
   theme(legend.position = 'top',
         legend.title = element_blank(),
         plot.caption = element_text(hjust = 0)) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.410 (1.513 individuos).\nLa perspectiva de movilidad social corresponde a la diferencia entre el estatus social esperado del hijo\ny el estatus social subjetivo del encuestado')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.410 (1.513 individuos).\nLa perspectiva de movilidad social corresponde a la diferencia entre el estatus social esperado del hijo\ny el estatus social subjetivo del encuestado')
 
 
 ```
@@ -1792,7 +1792,7 @@ elsoc_long_2016_2021 %>%
         legend.title = element_blank()) +
   ggtitle(NULL,
           subtitle = 'Porcentaje de respuestas "De acuerdo" o ”Totalmente de acuerdo"') +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=7.490 (1.513 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N=7.490 (1.513 individuos)')
 
 
 ```
