@@ -11,6 +11,7 @@ Angst J, Gamma A, Rossler W, Ajdacic V, Klein DN. (2009) Long-term depression ve
 Bavel JJ Van, Baicker K, Boggio PS, Capraro V, Cichocka A, Cikara M, et al. (2020) Using social and behavioural science to support COVID-19 pandemic response. Nature Human Behaviour, 4(5):460–471.
 
 Brunoni A, Santosa I, Passosd I, Goulartc A, Koyanagi A, Carvalho A, Barreto S, Viana M, Lotufo P, Benseñor I (2020) Socio-demographic and psychiatric risk factors in incident and persistent depression: An analysis in the occupational cohort of ELSA-Brasil. Journal of Affective Disorders, 263: 252-257.
+
 Curley, A. M. (2010). Relocating the poor: Social capital and neighborhood resources. Journal of urban affairs, 32(1), 79-103.
 
 Delaney, J. M., & Devereux, P. J. (2019). More education, less volatility? The effect of education on earnings volatility over the life cycle. Journal of Labor Economics, 37(1), 101-137.
@@ -28,6 +29,7 @@ Downs, A. (1981). Neighborhoods and urban development. Washington, DC: Brookings
 Duarte F, Jiménez-Molina A (2021) Psychological distress during the COVID-19 epidemic in Chile: the role of economic uncertainty. PLoS ONE, 16(11): e0251683.
 
 Duarte F. and Jiménez A (en evaluación) Psychosocial and economic dimensions related to mental health during the COVID-19 pandemic in Chile: Challenges for social policy.
+
 Easton, D. (1975). A Re-Assessment of the Concept of Political Support. British Journal of Political Science, 5(4), 435-457.
 
 Ettman C, Abdalla S, Cohen G, Sampson L, Vivier P, Galea S (2020) Prevalence of depression symptoms in US adults before and during the COVID-19 pandemic. JAMA 3(9): e2019686.
@@ -50,9 +52,7 @@ Hardeveld F, Spijker J, De Graaf R, Nolen W, Beekman A (2010) Prevalence and pre
 
 Hojman D, Miranda A, Ruiz-Tagle J (2016) Debt trajectories and mental health. Social Science & Medicine, 167: 54-62.
 
-Hyland P, Shevlin M, Murphy J et al. (2021) A longitudinal assessment of depression and anxiety in the Republic of 
-
-Ireland during the COVID-19 pandemic. Psychiatry Research 300: 113905.
+Hyland P, Shevlin M, Murphy J et al. (2021) A longitudinal assessment of depression and anxiety in the Republic of  Ireland during the COVID-19 pandemic. Psychiatry Research 300: 113905.
 
 Jiménez A, Reyes P, Rojas G (2021) Determinantes socioeconómicos y brechas de género de la sintomatología depresiva en Chile. Revista Médica de Chile, 149: 533-542.
 
@@ -66,7 +66,7 @@ Kroenke K, Spitzer R, Williams J. (2001) The PHQ-9: Validity of a brief depressi
 
 Krosnick, J. A., & Alwin, D. F. (1989). Aging and susceptibility to attitude change. Journal of personality and social psychology, 57(3), 416.
 
-Levis B, Benedetti A, Thombs B, and DEPRESSD Collaboration (2019) Accuracy of Patient Health Questionnaire-9 (PHQ-9) for screening to detect major depression: individual participant data meta-analysis. BMJ, 365: 1476.
+Levis B, Benedetti A, Thombs B, and DEPRESSD Collaboration (2019) Accuracy of Patient Health Questionnaire-9 (PHQ-9) for screening to detect major depression: individual participant data meta-analysis. BMJ, 365:1476.
 
 Link, F, Valenzuela, F, & Fuentes, L. (2015). Segregación, estructura y composición social del territorio metropolitano en Santiago de Chile: Complejidades metodológicas en el análisis de la diferenciación social en el espacio. Revista de geografía Norte Grande, (62), 151-168. https://dx.doi.org/10.4067/S0718-34022015000300009
 
@@ -104,7 +104,7 @@ Ni MY, Kim Y, McDowell I, Wong S, Qiu H, Wong IO, Galea S, Leung GM. (2020) Ment
 
 Norris, P. (1999). Introduction: The Growth of Critical Citizens?. In P. Norris (Ed.), Critical Citizens: Global Support for Democratic Government. Oxford University Press.
 
-Nübe J, Guhn A, Müllender S, Le H-D, Cohrdes C and Köhle S (2020) Persistent depressive disorder across the adult lifespan: results from clinical and population-based surveys in Germany. BMC Psychiatry, 20: 58.
+Nübe J, Guhn A, Müllender S, Le H-D, Cohrdes C and Köhle S (2020) Persistent depressive disorder across the adult lifespan: results from clinical and population-based surveys in Germany. BMC Psychiatru, 20:58
 
 O’Connor R, Wetherall K, Cleare S et al. (2020) Mental health and well-being during the COVID-19 pandemic: longitudinal analyses of adults in the UK COVID-19 Mental Health & Wellbeing study. British Journal of Psychiatry: 1-8.
 
