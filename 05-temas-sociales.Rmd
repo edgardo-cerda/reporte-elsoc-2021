@@ -364,7 +364,7 @@ La Figura \@ref(fig:confianzaveci-quintilesc) muestra el porcentaje de encuestad
 Este resultado es consistente con estudios previos que muestran que la cohesión social a nivel de barrio podría ser un privilegio de los niveles socioeconómicos más altos, especialmente en zonas con altos índices de segregación espacial por ingresos, como son las ciudades de Chile (Méndez et al., 2021).
 
 
-```{r confianzaveci-quintilesc, fig.align='center',fig.cap = 'Confianza en los vecinos, según quintil de  escolaridad'}
+```{r confianzaveci-quintilesc, fig.cap = 'Confianza en los vecinos, según quintil de  escolaridad'}
 
 # elsoc::load_elsoc('territorial-2017')
 # territorial <- merge(elsoc_wide_2016_2021, elsoc_terr_2017, by="idencuesta")
@@ -478,7 +478,7 @@ Respecto a diferencias de género en interacciones sociales barriales, la Figura
 
 Por su parte, los hombres también disminuyeron el porcentaje que realiza visitas a sus vecinos, pero en menor medida que las mujeres, exhibiendo un 67% en 2016 y 61.4% en 2021. Este resultado indicaría que la pandemia también habría afectado más fuerte a las mujeres en términos de sus relaciones en el vecindario. 
 
-```{r frecvisita-sexo, fig.align='center',fig.cap = 'Frecuencia de visita vecinos, según sexo'}
+```{r frecvisita-sexo, fig.cap = 'Frecuencia de visita vecinos, según sexo'}
 
 # elsoc::load_elsoc('long')
 
@@ -610,7 +610,7 @@ Al desagregar la frecuencia de visitas a vecinos según quintiles de ingreso, se
 No obstante, se debe señalar que, las interacciones sociales a nivel de barrio no necesariamente emergen en la vivienda de éstos. Es probable que en sectores vulnerables las interacciones  se realicen en otros espacios, lo que no es capturado por este indicador.
 
 
-```{r frecvisita-quintil, fig.align='center',fig.cap = 'Frecuencia de visita vecinos por quintil'}
+```{r frecvisita-quintil, fig.cap = 'Frecuencia de visita vecinos por quintil'}
 # elsoc::load_elsoc('territorial-2017')
 # territorial <- merge(elsoc_wide_2016_2021, elsoc_terr_2017, by="idencuesta")
 
@@ -742,7 +742,7 @@ labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021 y Da
 Adicionalmente, al vincular la tasa de inmigración en el barrio de residencia desde el censo 2017 del INE y construir quintiles según esta variable, se observa que aquellos encuestados con la mayor tasa de inmigración (Q5) presentan el menor porcentaje que visita a sus vecinos (65.7%). Este porcentaje es menor a los exhibidos por encuestados que residen en zonas con menores tasas de inmigrantes, como el Q3 y el Q1 que presentan un 70.3% y 68.6%, respectivamente.
 
 
-```{r frecvisita-quintilinm, fig.align='center',fig.cap = 'Frecuencia de visita a vecinos según quintil de inmigrantes'}
+```{r frecvisita-quintilinm, fig.cap = 'Frecuencia de visita a vecinos según quintil de inmigrantes'}
 
 # elsoc::load_elsoc('territorial-2017')
 # territorial <- merge(elsoc_wide_2016_2021, elsoc_terr_2017, by="idencuesta")
@@ -1011,7 +1011,7 @@ labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNo
 
 Al desagregar la frecuencia de ocurrencia de crímenes en el barrio según zonas del territorio nacional se observa un significativo aumento del porcentaje que declara que los crímenes en su barrio ocurren siempre o muchas veces en la zona Sur, esto es, un incremento desde 6.4% a 31.0% entre 2019 y 2021. En contraste, en las zonas Norte, Centro y Metropolitana, este porcentaje disminuyó (Figura \@ref(fig:crim-zona)).
 
-```{r crim-zona, fig.cap = '¿Con qué frecuencia se han producido crímenes (riñas, robos y tráfico de drogas) en su barrio?, según ola del estudio y zona geográfica. Porcentaje de experiencias de criminalidad "Siempre" o "Muchas veces".'}
+```{r crim-zona, fig.cap = '¿Con qué frecuencia se han producido crímenes (riñas, robos y tráfico de drogas) en su barrio?, según ola del estudio y zona geográfica'}
 
 # elsoc::load_elsoc('long')
 
@@ -1040,7 +1040,8 @@ elsoc_long_2016_2021 %>%
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
             size = 3) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.868 (1.503 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.868 (1.503 individuos)') + 
+  ggtitle(NULL, 'Porcentaje de experiencias de criminalidad "Siempre" o "Muchas veces"')
 
 
 ```
@@ -1049,7 +1050,7 @@ El análisis territorial por grandes ciudades indica que el porcentaje de encues
 
 En otros territorios del país, tales como, ciudades grandes, medianas y pequeñas, los porcentajes de experiencias de criminalidad barrial que ocurren siempre o muchas veces han aumentado significativamente durante el periodo analizado. Destaca el incremento de más de 10 puntos porcentuales en ciudades pequeñas (Figura \@ref(fig:crim-estrato)).  
 
-```{r crim-estrato, fig.cap = '¿Con qué frecuencia se han producido crímenes (riñas, robos y tráfico de drogas) en su barrio?, según ola del estudio y tipo de ciudad. Porcentaje de experiencias de criminalidad "Siempre" o "Muchas veces".'}
+```{r crim-estrato, fig.cap = '¿Con qué frecuencia se han producido crímenes (riñas, robos y tráfico de drogas) en su barrio?, según ola del estudio y tipo de ciudad'}
 
 # elsoc::load_elsoc('long')
 
@@ -1079,7 +1080,8 @@ elsoc_long_2016_2021 %>%
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
             size = 3) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.868 (1.503 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.868 (1.503 individuos)') + 
+  ggtitle(NULL, 'Porcentaje de experiencias de criminalidad "Siempre" o "Muchas veces"')
 
 
 ```
@@ -1089,7 +1091,7 @@ El nivel de ingresos está asociado al nivel de seguridad en el barrio, ya que, 
 Los resultados de ELSOC sugieren que, efectivamente, el quintil de ingresos de los encuestados está relacionado con la frecuencia de crímenes en el barrio. Sistemáticamente, quienes pertenecen al quintil de menores ingresos (Q1) exhiben un mayor porcentaje que declara una alta ocurrencia de crímenes (siempre o muchas veces) que aquellos que pertenecen al quintil de mayores ingresos (Q5). Adicionalmente, la brecha ha ido aumentando a través del tiempo. Hacia el año 2016, mientras el 17.9% del Q5 reportaba alta frecuencia de crímenes en su barrio, este porcentaje era 24.5% para el Q1. Luego, las tendencias divergen y en el año 2021, el Q1 presenta un 39.7% y el Q5 un 16.5%. Esto es, a lo largo del periodo analizado, se observa una disminución de la frecuencia de crímenes para los más ricos y un aumento para los más pobres de la población.
 
 
-```{r crim-quintil, fig.cap = '¿Con qué frecuencia se han producido crímenes (riñas, robos y tráfico de drogas) en su barrio?, según ola del estudio y quintil de ingreso. Porcentaje de experiencias de criminalidad "Siempre" o "Muchas veces".'}
+```{r crim-quintil, fig.cap = '¿Con qué frecuencia se han producido crímenes (riñas, robos y tráfico de drogas) en su barrio?, según ola del estudio y quintil de ingreso'}
 
 # elsoc::load_elsoc('long')
 
@@ -1130,7 +1132,8 @@ elsoc_long_2016_2021 %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank()) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.795 (1.201 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.795 (1.201 individuos)') + 
+  ggtitle(NULL, 'Porcentaje de experiencias de criminalidad "Siempre" o "Muchas veces"')
 
 ```
 
@@ -1144,7 +1147,7 @@ Como se ha descrito en la literatura, es muy común observar en distintos paíse
 Tal como se observa en la figura \@ref(fig:amen1-wave), primero llama la atención que en general existen niveles relativamente altos de amenaza realista respecto de todos los grupos evaluados (peruanos, venezolanos y haitianos). En segundo lugar, estos niveles de amenaza son relativamente estables en el tiempo, exceptuando el caso de los peruanos que experimentó un aumento sustantivo desde el año 2019 al 2021 y una caída sustantiva, en torno a 10%, en el caso de los venezolanos en igual periodo.
 
 
-```{r amen1-wave, fig.align='center',fig.cap = 'Con la llegada de migrantes a Chile, está aumentando el desempleo", según ola y origen de migrantes. Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
+```{r amen1-wave, fig.cap = 'Con la llegada de migrantes a Chile, está aumentando el desempleo", según ola y origen de migrantes'}
 
 # elsoc::load_elsoc('long')
 
@@ -1166,7 +1169,8 @@ elsoc_long_2016_2021 %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank()) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=10.229 (2.446 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=10.229 (2.446 individuos)') +
+  ggtitle(NULL, 'Porcentaje de personas "De acuerdo" o "Totalmente de acuerdo"')
 
 
 ```
@@ -1174,7 +1178,7 @@ labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNo
 Al analizar los niveles de amenaza realista a lo largo del tiempo en distintas zonas geográficas del país (ver figura \@ref(fig:amen1-zona)), se constata que el efecto del incremento en el caso de los migrantes peruanos fue particularmente pronunciado en las regiones del centro y metropolitana, y en la región sur-austral. De igual manera la mayor caída de los niveles de amenaza, en el caso de los venezolanos, en la zona sur-austral pasando de 71.1% un a un 38.2%
 
 
-```{r amen1-zona, fig.align='center',fig.cap = 'Con la llegada de migrantes a Chile, está aumentando el desempleo", según ola, zona y origen de migrantes. Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
+```{r amen1-zona, fig.cap = 'Con la llegada de migrantes a Chile, está aumentando el desempleo", según ola, zona y origen de migrantes'}
 
 # elsoc::load_elsoc('long')
 
@@ -1202,7 +1206,8 @@ elsoc_long_2016_2021 %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank()) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=10.229 (2.446 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=10.229 (2.446 individuos)') +
+  ggtitle(NULL, 'Porcentaje de personas "De acuerdo" o "Totalmente de acuerdo"')
 
 
 ```
@@ -1210,7 +1215,7 @@ labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNo
 Respecto de los niveles de amenaza simbólica, en primer lugar llama la atención, que en términos absolutos ésta es más baja que los niveles de amenaza realista. Con excepción del año 2021, en que los niveles aumentan para el caso de los migrantes haitianos y peruanos, en general los niveles de amenaza simbólica han tendido a la baja. Por último, al igual que en el caso de la amenaza realista, los chilenos exhiben menores niveles de amenaza simbólica hacia los venezolanos. 
 
 
-```{r amen2-wave, fig.align='center',fig.cap = '"Con la llegada de migrantes, Chile está perdiendo su identidad", según ola y origen de migrantes. Porcentaje de personas que responden "De acuerdo" o "Totalmente de acuerdo".'}
+```{r amen2-wave, fig.cap = '"Con la llegada de migrantes, Chile está perdiendo su identidad", según ola y origen de migrantes'}
 
 # elsoc::load_elsoc('long')
 
@@ -1232,7 +1237,8 @@ elsoc_long_2016_2021 %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank()) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=10.208 (2.446 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=10.208 (2.446 individuos)') +
+  ggtitle(NULL, 'Porcentaje de personas "De acuerdo" o "Totalmente de acuerdo"')
 
 
 ```
@@ -1241,7 +1247,7 @@ labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNo
 Al analizar los niveles de amenaza simbólica a lo largo del tiempo en distintas zonas geográficas del país (ver figura \@ref(fig:amen2-zona)), se constata una caída muy sustantiva de los niveles de amenaza entre el 2016 y el 2019 hacia los peruanos en el caso de la zona norte y centro sur. Aún así, este patrón se revierte en el caso de los peruano (en todas las zonas) y en menor medida en el caso de los haitianos en todas las zonas del país excepto en la zona sur/austral.
 
 
-```{r amen2-zona, fig.align='center',fig.cap = '"Con la llegada de migrantes, Chile está perdiendo su identidad", según ola, zona y origen de migrantes. Porcentaje de personas que responden "De acuerdo" o "Totalmente de acuerdo".'}
+```{r amen2-zona, fig.cap = '"Con la llegada de migrantes, Chile está perdiendo su identidad", según ola, zona y origen de migrantes'}
 
 # elsoc::load_elsoc('long')
 
@@ -1269,7 +1275,8 @@ elsoc_long_2016_2021 %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank()) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=10.208 (2.446 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=10.208 (2.446 individuos)') +
+  ggtitle(NULL, 'Porcentaje de personas "De acuerdo" o "Totalmente de acuerdo"')
 
 
 ```
@@ -1278,7 +1285,7 @@ labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNo
 Al analizar, los niveles de amenaza realista y simbólica para la quinta ola (año 2021) se observa que en general son los migrantes venezolanos quienes despiertan menores niveles de amenaza en la población chilena, en comparación a los migrantes haitianos y peruanos (ver Figura \@ref(fig:amen-2021)). 
 
 
-```{r amen-2021, fig.align='center',fig.cap = 'Percepción de amenaza realista y simbólica, según grupo de migrantes (2021). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
+```{r amen-2021, fig.cap = 'Percepción de amenaza realista y simbólica, según grupo de migrantes (2021)'}
 
 # elsoc::load_elsoc('long')
 
@@ -1306,7 +1313,8 @@ elsoc_long_2016_2021 %>%
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
             size = 3) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.416 (2.416 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.416 (2.416 individuos)') +
+  ggtitle(NULL, 'Porcentaje de personas "De acuerdo" o "Totalmente de acuerdo"')
 
 
 ```
@@ -1314,7 +1322,7 @@ labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNo
 Al analizar los niveles de amenaza en función de la escolaridad de los participantes del estudio (ver Figura \@ref(fig:amen-educ)), se constataron diferencias muy sustantivas entre los niveles más bajos de escolaridad y los más altos, llegando en torno a un 60,6% y 71,3% de amenaza simbólica y realista respectivamente en los grupos con menor escolaridad (educación básica) en comparación a los niveles observados en las personas que lograron educación universitaria completa o más, con un 19,1% y 25,6% amenaza simbólica y realista respectivamente. 
 
 
-```{r amen-educ, fig.align='center',fig.cap = 'Percepción de amenaza realista y simbólica respecto a inmigrantes, según nivel educacional (2021). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
+```{r amen-educ, fig.cap = 'Percepción de amenaza realista y simbólica respecto a inmigrantes, según nivel educacional (2021)'}
 
 # elsoc::load_elsoc('long')
 
@@ -1342,7 +1350,8 @@ elsoc_long_2016_2021 %>%
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
             size = 3) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.416 (2.416 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.416 (2.416 individuos)') +
+  ggtitle(NULL, 'Porcentaje de personas "De acuerdo" o "Totalmente de acuerdo"')
 
 
 ```
@@ -1351,7 +1360,7 @@ labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNo
 Finalmente, al comparar los niveles de amenaza en función de la edad de los participantes, se puede observar que a medida que aumenta la edad también aumentan de manera sustantiva los niveles de amenaza tanto realista como simbólica  (ver Figura \@ref(fig:amen-edad)). Personas entre 18 y 29 años exhiben un 33,9% de amenaza realista, mientras que las personas mayores de 65 años exhiben un 63% de este tipo de amenaza. Un patrón similar se observa para el caso de la amenaza simbólica (temor a perder la identidad nacional), donde personas entre 18 y 29 años exhiben un 25,9% de amenaza simbólica, mientras que las persona mayores de 65 años exhiben un 53% de este tipo de amenaza. 
 
 
-```{r amen-edad, fig.align='center',fig.cap = 'Percepción de amenaza realista y simbólica, según tramo de edad (2021). Porcentaje de personas que responden "De acuerdo" o Totalmente de acuerdo".'}
+```{r amen-edad, fig.cap = 'Percepción de amenaza realista y simbólica, según tramo de edad (2021)'}
 
 # elsoc::load_elsoc('long')
 
@@ -1380,7 +1389,8 @@ elsoc_long_2016_2021 %>%
   geom_text(vjust = -0.8,
             position = position_dodge(width = .9),
             size = 3) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.416 (2.416 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=2.416 (2.416 individuos)') +
+  ggtitle(NULL, 'Porcentaje de personas "De acuerdo" o "Totalmente de acuerdo"')
 
 
 ```
@@ -1389,7 +1399,7 @@ labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNo
 Junto con evaluar los niveles de amenaza percibida realista y simbólica, ELSOC evaluó los niveles de confianza que despiertan en la población chilena los grupos migrantes evaluados. Tal como se puede apreciar en la Figura \@ref(fig:conf-wave), los chilenos exhiben en general niveles relativamente bajos de confianza hacia los peruanos, venezolanos y haitianos (en torno al 25%) no observándose mayores variaciones entre los distintos grupos a lo largo del tiempo excepto en la última ola donde la confianza cae para todos los grupos (mayor desconfianza).
 
 
-```{r conf-wave, fig.align='center',fig.cap = 'Confianza en migrantes, según ola y origen de migrantes. Porcentaje de personas que responden “Bastante” o “Mucha confianza”'}
+```{r conf-wave, fig.cap = 'Confianza en migrantes, según ola y origen de migrantes'}
 
 # elsoc::load_elsoc('long')
 
@@ -1412,14 +1422,15 @@ elsoc_long_2016_2021 %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank()) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=9.831 (2.444 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=9.831 (2.444 individuos)') +
+  ggtitle(NULL, 'Porcentaje de personas que responden “Bastante” o “Mucha confianza"')
 
 
 ```
 
 Al desagregar los niveles de confianza según zona geográfica (Figura \@ref(fig:conf-zona)), se constata en primer lugar que en las zonas centro/región metropolitana y centro /sur se exhiben niveles establemente más bajos de confianza hacia todos los grupos migrantes, con una tendencia a una mayor caída especialmente en la RM. Contrario a este patrón, en la zona norte y austral se observan importantes variaciones a lo largo de los años y entre los grupos migrantes. Por ejemplo, es en la zona norte y austral donde se observan los niveles de mayor confianza en el caso de los peruanos pero con muchas fluctuaciones a lo largo de los años. 
 
-```{r conf-zona, fig.align='center',fig.cap = 'Confianza en migrantes, según ola, zona y origen de migrantes. Porcentaje de personas que responden “Bastante” o “Mucha confianza”'}
+```{r conf-zona, fig.cap = 'Confianza en migrantes, según ola, zona y origen de migrantes'}
 
 # elsoc::load_elsoc('long')
 
@@ -1448,7 +1459,8 @@ elsoc_long_2016_2021 %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank()) +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=9.381 (2.444 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=9.381 (2.444 individuos)') +
+  ggtitle(NULL, 'Porcentaje de personas que responden “Bastante” o “Mucha confianza"')
 
 
 ```
@@ -1462,7 +1474,7 @@ Tal como lo muestra la figura \@ref(fig:sexismo-sexo) en general existen niveles
 
 Al analizar los niveles de sexismo en función de la escolaridad de los participantes del estudio (ver Figura \@ref(fig:sexismo-educ)), se constataron diferencias muy sustantivas entre los niveles más bajos de escolaridad y los más altos. En los cuatro ítems evaluados, las personas con menor escolaridad exhiben mayores niveles de sexismo (hostil y benevolente) que las personas con niveles de escolaridad universitaria o más.  
 
-```{r sexismo-sexo, fig.cap = 'Sexismo benévolo y hostil, según sexo (2021). Porcentaje que responde "De acuerdo" o "Totalmente de acuerdo".'}
+```{r sexismo-sexo, fig.cap = 'Sexismo benévolo y hostil, según sexo (2021).'}
 
 # elsoc::load_elsoc('long')
 
@@ -1493,12 +1505,13 @@ elsoc_long_2016_2021 %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank())   +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.473 (1.473 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.473 (1.473 individuos)') +
+  ggtitle(NULL, 'Porcentaje de personas “De acuerdo” o “Totalmente de acuerdo"')
 
 
 ```
 
-```{r sexismo-educ, fig.align='center',fig.cap = 'Sexismo benévolo y hostil, según nivel educacional (2021). Porcentaje que responde "De acuerdo" o "Totalmente de acuerdo".'}
+```{r sexismo-educ, fig.cap = 'Sexismo benévolo y hostil, según nivel educacional (2021)'}
 
 # elsoc::load_elsoc('long')
 
@@ -1532,7 +1545,8 @@ elsoc_long_2016_2021 %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank())   +
-labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.473 (1.473 individuos)')
+labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=1.473 (1.473 individuos)') +
+  ggtitle(NULL, 'Porcentaje de personas “De acuerdo” o “Totalmente de acuerdo"')
 
 
 ```
@@ -1577,7 +1591,7 @@ labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNo
 
 Al analizar los cambios del estatus social subjetivo entre olas, primero se constata que la mayoría de las personas que consideran pertenecer a la clase social media, tienden a mantenerse en la misma posición a lo largo de los años. Segundo, entre 2016 y 2019 se observa un importante flujo de cambio en el estatus subjetivo hacia abajo (de posición social alto hacia media y de posición social media hacía posición social baja), mientras que entre 2019 y 2021 el flujo de cambios en el estatus subjetivo se produce hacia arriba (de posición social baja hacia media y de posición social media hacía posición social alta). Tercero, es importante constatar que los cambios en el estatus subjetivo ocurren entre las posiciones cercanas, es decir, son muy pocos los casos en que se observan cambios entre extremos de la posición social subjetiva. Finalmente, es importante destacar que el grupo de personas que más experimenta cambios a lo largo del tiempo, y de manera ascendente, son aquellas que declaran pertenecer a clases sociales bajas y media baja.
 
-```{r ess-cambio, fig.align='center',fig.cap = 'Cambios de Clase social subjetiva entre 2016, 2019 y 2021'}
+```{r ess-cambio, fig.cap = 'Cambios de Clase social subjetiva entre 2016, 2019 y 2021'}
 
 # elsoc::load_elsoc('long')
 
@@ -1630,7 +1644,7 @@ g11.2
 Al analizar la percepción de estatus subjetivo en función de los niveles de ingresos de los chilenos (medidos en quintiles), primero se constata que existe un patrón similar de respuestas en los primeros dos quintiles o grupos de menores ingresos, con una predominio en torno al 66% de las personas que se perciben de estatus social subjetivo medio (ver Figura \@ref(fig:ess-quintil)). A partir del cuarto quintil de ingresos y hasta llegar al más alto (Q5) se constata un aumento progresivo de la proporción de personas que se percibe como miembros de una clase social media alta y alta, siendo el grupo de mayores ingresos -quinto quintil- donde este alcanza un 41,1%. De hecho es este último grupo el que mayor diferenciación presenta en su patrón de respuesta comparados con todos los otros grupos socioeconómicos. El patrón general muestra que hay cierta correspondencia entre la posición social objetiva (obtenida a partir de los ingresos per cápita del hogar) y la posición social subjetiva. 
 
 
-```{r ess-quintil, fig.align='center',fig.cap = 'Clase social subjetiva, según quintiles de ingreso (2021)'}
+```{r ess-quintil, fig.cap = 'Clase social subjetiva, según quintiles de ingreso (2021)'}
 
 # elsoc::load_elsoc('long')
 
@@ -1745,7 +1759,7 @@ labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNo
 El ideal meritocrático, entendido como la creencia de que las personas son recompensadas por el esfuerzo, ha sido un tema de alto interés en los años recientes. Como se observa en la figura \@ref(fig:mov-soc), los chilenos consideran que para surgir en la vida sones altamente relevantes aspectos como el trabajo duro y la educación, lo que se considera como adherencia al ideal meritocrático (Maldonado, et al., 2019).. En contraste, los chilenos consideran que las recompensas que reciben al por su esfuerzo y por su inteligencia son más bien bajas. Es interesante constatar lo estable de este patrón a lo largo del tiempo, en donde se observan pequeñas fluctuaciones en los distintos años de ELSOC. Esto revela una alta adherencia al ideal meritocrático, reflejado en la idea de que las personas deberían ser recompensadas por su trabajo duro, en contraste con una menor percepción de que esto ocurre.
 
 
-```{r merit-wave, fig.align='center',fig.cap = 'Percepción de importancia y recompensas del mérito, según ola de estudio'}
+```{r merit-wave, fig.cap = 'Percepción de importancia y recompensas del mérito, según ola de estudio'}
 
 # elsoc::load_elsoc('long')
 
