@@ -7,11 +7,11 @@
 \contentsline {subsection}{Descripción del estudio}{15}{section*.9}%
 \contentsline {subsection}{Acceso a Bases de Datos ELSOC}{15}{section*.10}%
 \contentsline {subsection}{Características del diseño muestral}{16}{section*.11}%
-\contentsline {subsection}{Características del levantamiento de datos}{16}{section*.14}%
-\contentsline {section}{Atrición de la muestra}{19}{section*.15}%
-\contentsline {subsection}{Atrición acumulada según Sexo, Grupo etáreo, Nivel educacional y Estrato}{19}{section*.17}%
-\contentsline {section}{Foco en el cambio longitudinal}{20}{section*.22}%
-\contentsline {section}{ELSOC en pandemia}{22}{section*.24}%
+\contentsline {subsection}{Características del levantamiento de datos}{17}{section*.14}%
+\contentsline {section}{Atrición de la muestra}{18}{section*.15}%
+\contentsline {subsection}{Atrición acumulada según Sexo, Grupo etáreo, Nivel educacional y Estrato}{18}{section*.17}%
+\contentsline {section}{Foco en el cambio longitudinal}{19}{section*.22}%
+\contentsline {section}{ELSOC en pandemia}{20}{section*.24}%
 \contentsline {subsection}{Diseño de cuestionario y cambios de medición}{22}{section*.25}%
 \contentsline {chapter}{\numberline {1}Temas políticos}{27}{chapter.1}%
 \contentsline {section}{\numberline {1.1}Identificación política}{27}{section.1.1}%

@@ -46,13 +46,13 @@ ELSOC tiene un compromiso con los más altos estándares científicos en términ
 
 **Organismo Ejecutor**: Consultora Stephanie Eckman y Centro de Inteligencia Territorial (CIT) de la Universidad Adolfo Ibáñez
 
-```{r ilust-olas-elsoc, echo=FALSE, fig.cap = "Mediciones de ELSOC"}
+```{r ilust-olas-elsoc, echo=FALSE, fig.cap = "Mediciones de ELSOC", out.width='100%', out.height='100%'}
 
 knitr::include_graphics(file.path('..', 'inputs', 'imagenes', 'olas_elsoc.png'))
 
 ```
 
-```{r ilust-etapas-seleccion, echo=FALSE, fig.cap = "Muestreo de ELSOC"}
+```{r ilust-etapas-seleccion, echo=FALSE, fig.cap = "Muestreo de ELSOC", out.width='100%',out.height='100%'}
 
 knitr::include_graphics(file.path('..', 'inputs', 'imagenes', 'etapas_seleccion.jpg'))
 
@@ -98,6 +98,7 @@ elsoc_long_2016_2021 %>%
          atricion_2 = scales::percent(atricion_2)) %>% 
   select(ola, n_1, atricion_1, n_2, atricion_2) %>% 
   kbl(align = c('c', 'c', 'c', 'c', 'c'),
+      format = table_format,
       col.name = c('Medición', rep(c('Muestra lograda', 'Atrición'), 2)),
       caption = 'Atrición de las muestras de ELSOC entre olas') %>% 
   kable_styling(full_width = F) %>% 
@@ -130,6 +131,7 @@ elsoc_long_2016_2021 %>%
          atricion_2 = scales::percent(atricion_2)) %>% 
   select(m0_sexo, n_1, n_2, atricion_1, atricion_2) %>% 
   kbl(align = c('l', 'c', 'c', 'c', 'c'),
+      format = table_format,
       col.name = c('Sexo', rep(c('Muestra original', 'Muestra refresco'), 2)),
       caption = 'Atrición acumulada de ELSOC, según sexo') %>% 
   kable_styling(full_width = F) %>% 
@@ -160,6 +162,7 @@ elsoc_long_2016_2021 %>%
          atricion_2 = scales::percent(atricion_2)) %>% 
   select(edadt, n_1, n_2, atricion_1, atricion_2) %>% 
   kbl(align = c('l', 'c', 'c', 'c', 'c'),
+      format = table_format,
       col.name = c('Grupo etáreo', rep(c('Muestra original', 'Muestra refresco'), 2)),
       caption = 'Atrición acumulada de ELSOC, según grupo etáreo') %>% 
   kable_styling(full_width = F) %>% 
@@ -190,7 +193,8 @@ elsoc_long_2016_2021 %>%
          atricion_1 = scales::percent(atricion_1),
          atricion_2 = scales::percent(atricion_2)) %>% 
   select(educ, n_1, n_2, atricion_1, atricion_2) %>% 
-  kbl(align = c('l', 'c', 'c', 'c', 'c'),
+  kbl(align = c('l', 'c', 'c', 'c', 'c'), 
+      format = table_format,  
       col.name = c('Nivel educacional', rep(c('Muestra original', 'Muestra refresco'), 2)),
       caption = 'Atrición acumulada de ELSOC, según nivel educacional') %>% 
   kable_styling(full_width = F) %>% 
@@ -222,7 +226,8 @@ elsoc_long_2016_2021 %>%
          atricion_1 = scales::percent(atricion_1),
          atricion_2 = scales::percent(atricion_2)) %>% 
   select(estrato, n_1, n_2, atricion_1, atricion_2) %>% 
-  kbl(align = c('l', 'c', 'c', 'c', 'c'),
+  kbl(align = c('l', 'c', 'c', 'c', 'c'), 
+      format = table_format,
       col.name = c('Estrato', rep(c('Muestra original', 'Muestra refresco'), 2)),
       caption = 'Atrición acumulada de ELSOC, según estrato') %>% 
   kable_styling(full_width = F) %>% 

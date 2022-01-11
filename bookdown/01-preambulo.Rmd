@@ -28,14 +28,14 @@ Sys.setlocale("LC_ALL","ES_ES.UTF-8")
 ```
 
 ```{r formats, include=FALSE }
-table_format = if (is_html_output()) {
+table_format <- if (is_html_output()) {
   "html"
 } else if (is_latex_output()) {
   "latex" 
 }
 
-fullw = if (is_html_output()) {TRUE} else if (is_latex_output()) {FALSE}
-fsize = if (is_html_output()) {14} else if(is_latex_output()) {8}
+fullw <- if (is_html_output()) {TRUE} else if (is_latex_output()) {FALSE}
+fsize <- if (is_html_output()) {14} else if(is_latex_output()) {8}
 
 ggplot2::theme_set(new = theme_test(base_family = "serif"))
 options(knitr.kable.NA = '')

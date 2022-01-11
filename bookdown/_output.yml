@@ -31,4 +31,3 @@ bookdown::pdf_book:
   latex_engine: pdflatex
   keep_tex: yes
   citation_package: default
-  
