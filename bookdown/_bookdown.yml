@@ -1,0 +1,21 @@
+book_filename: "reporte-elsoc"
+delete_merged_file: true
+language:
+  ui:
+    chapter_name: "Capítulo "
+  label:
+    fig: 'Figura '
+    tab: 'Tabla '
+    eq: 'Ecuacion '
+    thm: 'Teorema '
+    lem: 'Lema '
+    cor: 'Corolario '
+    prp: 'Proposicion '
+    cnj: 'Conjectura '
+    def: 'Definicion '
+    exm: 'Ejemplo '
+    exr: 'Ejercicio '
+    proof: 'Demostracion. '
+    remark: 'Remark. '
+    solution: 'Solution. '  
+output_dir: "../docs"
