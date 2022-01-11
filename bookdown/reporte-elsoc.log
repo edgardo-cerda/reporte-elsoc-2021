@@ -1,0 +1,2428 @@
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.1.11)  11 JAN 2022 13:53
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**reporte-elsoc.tex
+(./reporte-elsoc.tex
+LaTeX2e <2021-11-15> patch level 1
+L3 programming layer <2021-11-22> (c:/Users/edgar/AppData/Roaming/TinyTeX/texmf
+-dist/tex/latex/base/book.cls
+Document Class: book 2021/10/04 v1.4n Standard LaTeX document class
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/bk12.clo
+File: bk12.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
+)
+\c@part=\count183
+\c@chapter=\count184
+\c@section=\count185
+\c@subsection=\count186
+\c@subsubsection=\count187
+\c@paragraph=\count188
+\c@subparagraph=\count189
+\c@figure=\count190
+\c@table=\count191
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen138
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsmath.st
+y
+Package: amsmath 2021/10/15 v2.17l AMS math features
+\@mathmargin=\skip49
+For additional information on amsmath, use the `?' option.
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amstext.st
+y
+Package: amstext 2021/08/26 v2.01 AMS text
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsgen.sty
+File: amsgen.sty 1999/11/30 v2.0 generic functions
+\@emptytoks=\toks16
+\ex@=\dimen139
+))
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsbsy.sty
+Package: amsbsy 1999/11/29 v1.2d Bold Symbols
+\pmbraise@=\dimen140
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty
+Package: amsopn 2021/08/26 v2.02 operator names
+)
+\inf@bad=\count192
+LaTeX Info: Redefining \frac on input line 234.
+\uproot@=\count193
+\leftroot@=\count194
+LaTeX Info: Redefining \overline on input line 399.
+\classnum@=\count195
+\DOTSCASE@=\count196
+LaTeX Info: Redefining \ldots on input line 496.
+LaTeX Info: Redefining \dots on input line 499.
+LaTeX Info: Redefining \cdots on input line 620.
+\Mathstrutbox@=\box50
+\strutbox@=\box51
+\big@size=\dimen141
+LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
+LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
+\macc@depth=\count197
+\c@MaxMatrixCols=\count198
+\dotsspace@=\muskip16
+\c@parentequation=\count199
+\dspbrk@lvl=\count266
+\tag@help=\toks17
+\row@=\count267
+\column@=\count268
+\maxfields@=\count269
+\andhelp@=\toks18
+\eqnshift@=\dimen142
+\alignsep@=\dimen143
+\tagshift@=\dimen144
+\tagwidth@=\dimen145
+\totwidth@=\dimen146
+\lineht@=\dimen147
+\@envbody=\toks19
+\multlinegap=\skip50
+\multlinetaggap=\skip51
+\mathdisplay@stack=\toks20
+LaTeX Info: Redefining \[ on input line 2938.
+LaTeX Info: Redefining \] on input line 2939.
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/amssymb.s
+ty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/amsfonts.
+sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+)) (c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/lmodern.sty
+Package: lmodern 2015/05/01 v1.6.1 Latin Modern Fonts
+LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
+(Font)                  OT1/cmr/m/n --> OT1/lmr/m/n on input line 22.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `normal'
+(Font)                  OML/cmm/m/it --> OML/lmm/m/it on input line 23.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `normal'
+(Font)                  OMS/cmsy/m/n --> OMS/lmsy/m/n on input line 24.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `normal'
+(Font)                  OMX/cmex/m/n --> OMX/lmex/m/n on input line 25.
+LaTeX Font Info:    Overwriting symbol font `operators' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 26.
+LaTeX Font Info:    Overwriting symbol font `letters' in version `bold'
+(Font)                  OML/cmm/b/it --> OML/lmm/b/it on input line 27.
+LaTeX Font Info:    Overwriting symbol font `symbols' in version `bold'
+(Font)                  OMS/cmsy/b/n --> OMS/lmsy/b/n on input line 28.
+LaTeX Font Info:    Overwriting symbol font `largesymbols' in version `bold'
+(Font)                  OMX/cmex/m/n --> OMX/lmex/m/n on input line 29.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `normal'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 31.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `normal'
+(Font)                  OT1/cmss/m/n --> OT1/lmss/m/n on input line 32.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `normal'
+(Font)                  OT1/cmr/m/it --> OT1/lmr/m/it on input line 33.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `normal'
+(Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 34.
+LaTeX Font Info:    Overwriting math alphabet `\mathbf' in version `bold'
+(Font)                  OT1/cmr/bx/n --> OT1/lmr/bx/n on input line 35.
+LaTeX Font Info:    Overwriting math alphabet `\mathsf' in version `bold'
+(Font)                  OT1/cmss/bx/n --> OT1/lmss/bx/n on input line 36.
+LaTeX Font Info:    Overwriting math alphabet `\mathit' in version `bold'
+(Font)                  OT1/cmr/bx/it --> OT1/lmr/bx/it on input line 37.
+LaTeX Font Info:    Overwriting math alphabet `\mathtt' in version `bold'
+(Font)                  OT1/cmtt/m/n --> OT1/lmtt/m/n on input line 38.
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/setspace/setspace.
+sty
+Package: setspace 2011/12/19 v6.7a set line spacing
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/ifxetex.st
+y
+Package: ifxetex 2019/10/25 v0.7 ifxetex legacy package. Use iftex instead.
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2020/03/06 v1.0d TeX engine tests
+))
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/ifluatex.s
+ty
+Package: ifluatex 2019/10/25 v1.5 ifluatex legacy package. Use iftex instead.
+) (c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty
+Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 11
+2.
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/t1lmr.fd
+File: t1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)) (c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/inputenc.s
+ty
+Package: inputenc 2021/02/14 v1.3d Input encoding file
+\inpenc@prehook=\toks21
+\inpenc@posthook=\toks22
+) (c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/textcomp.st
+y
+Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
+) (c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/xcolor/xcolor.st
+y
+Package: xcolor 2021/10/31 v2.13 LaTeX color extensions (UK)
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color
+.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: pdftex.def on input line 227.
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-def/pdfte
+x.def
+File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
+)
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1352.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1356.
+Package xcolor Info: Model `RGB' extended on input line 1368.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1370.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1371.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1372.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1373.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1374.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1375.
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/dvipsnam.
+def
+File: dvipsnam.def 2016/06/17 v3.0m Driver-dependent file (DPC,SPQR)
+) (c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/xcolor/svgnam.de
+f
+File: svgnam.def 2021/10/31 v2.13 Predefined colors according to SVG 1.1 (UK)
+) (c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/xcolor/x11nam.de
+f
+File: x11nam.def 2021/10/31 v2.13 Predefined colors according to Unix/X11 (UK)
+))
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref.
+sty
+Package: hyperref 2021-06-07 v7.00m Hypertext links for LaTeX
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds.
+sty
+Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdfte
+xcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/infwarerr/infwar
+err.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/keyval.st
+y
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks23
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/kvsetkeys/kvsetk
+eys.sty
+Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/kvdefinekeys/kvd
+efinekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdfescape/pdfesc
+ape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hycolor/hycolor.st
+y
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/letltxmacro/letltx
+macro.sty
+Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/auxhook/auxhook.st
+y
+Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoption
+s.sty
+Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
+)
+\@linkdim=\dimen148
+\Hy@linkcounter=\count270
+\Hy@pagecounter=\count271
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.de
+f
+File: pd1enc.def 2021-06-07 v7.00m Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref-
+langpatches.def
+File: hyperref-langpatches.def 2021-06-07 v7.00m Hyperref: patches for babel la
+nguages
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.
+sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/etexcmds/etexcmd
+s.sty
+Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
+)
+\Hy@SavedSpaceFactor=\count272
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
+File: puenc.def 2021-06-07 v7.00m Hyperref: PDF Unicode definition (HO)
+Now handling font encoding PU ...
+... no UTF-8 mapping file for font encoding PU
+)
+Package hyperref Info: Option `unicode' set `true' on input line 4073.
+Package hyperref Info: Hyper figures OFF on input line 4192.
+Package hyperref Info: Link nesting OFF on input line 4197.
+Package hyperref Info: Hyper index ON on input line 4200.
+Package hyperref Info: Plain pages OFF on input line 4207.
+Package hyperref Info: Backreferencing OFF on input line 4212.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4445.
+\c@Hy@tempcnt=\count273
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip17
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 4804.
+\XeTeXLinkMargin=\dimen149
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bitset/bitset.st
+y
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigin
+tcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
+)
+))
+\Fld@menulength=\count274
+\Field@Width=\dimen150
+\Fld@charsize=\dimen151
+Package hyperref Info: Hyper figures OFF on input line 6076.
+Package hyperref Info: Link nesting OFF on input line 6081.
+Package hyperref Info: Hyper index ON on input line 6084.
+Package hyperref Info: backreferencing OFF on input line 6091.
+Package hyperref Info: Link coloring OFF on input line 6096.
+Package hyperref Info: Link coloring with OCG OFF on input line 6101.
+Package hyperref Info: PDF/A mode OFF on input line 6106.
+LaTeX Info: Redefining \ref on input line 6146.
+LaTeX Info: Redefining \pageref on input line 6150.
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atbegshi-ltx.
+sty
+Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
+package with kernel methods
+)
+\Hy@abspage=\count275
+\c@Item=\count276
+\c@Hfootnote=\count277
+)
+Package hyperref Info: Driver (autodetected): hpdftex.
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.d
+ef
+File: hpdftex.def 2021-06-07 v7.00m Hyperref driver for pdfTeX
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atveryend-ltx
+.sty
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend pac
+kage
+with kernel methods
+)
+\Fld@listcount=\count278
+\c@bookmark@seq@number=\count279
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rer
+unfilecheck.sty
+Package: rerunfilecheck 2019/12/05 v1.9 Rerun checks for auxiliary files (HO)
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/uniquecounter/un
+iquecounter.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+86.
+)
+\Hy@SectionHShift=\skip52
+)
+Package hyperref Info: Option `colorlinks' set `true' on input line 48.
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/geometry/geometry.
+sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+)
+\Gm@cnth=\count280
+\Gm@cntv=\count281
+\c@Gm@tempcnt=\count282
+\Gm@bindingoffset=\dimen152
+\Gm@wd@mp=\dimen153
+\Gm@odd@mp=\dimen154
+\Gm@even@mp=\dimen155
+\Gm@layoutwidth=\dimen156
+\Gm@layoutheight=\dimen157
+\Gm@layouthoffset=\dimen158
+\Gm@layoutvoffset=\dimen159
+\Gm@dimlist=\toks24
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/fancyvrb/fancyvrb.
+sty
+Package: fancyvrb 2021/12/21 4.1b verbatim text (tvz,hv)
+\FV@CodeLineNo=\count283
+\FV@InFile=\read2
+\FV@TabBox=\box52
+\c@FancyVerbLine=\count284
+\FV@StepNumber=\count285
+\FV@OutFile=\write3
+) (c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/framed/framed.st
+y
+Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
+\OuterFrameSep=\skip53
+\fb@frw=\dimen160
+\fb@frh=\dimen161
+\FrameRule=\dimen162
+\FrameSep=\dimen163
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/longtable.st
+y
+Package: longtable 2021-09-01 v4.17 Multi-page Table package (DPC)
+\LTleft=\skip54
+\LTright=\skip55
+\LTpre=\skip56
+\LTpost=\skip57
+\LTchunksize=\count286
+\LTcapwidth=\dimen164
+\LT@head=\box53
+\LT@firsthead=\box54
+\LT@foot=\box55
+\LT@lastfoot=\box56
+\LT@gbox=\box57
+\LT@cols=\count287
+\LT@rows=\count288
+\c@LT@tables=\count289
+\c@LT@chunks=\count290
+\LT@p@ftn=\toks25
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/booktabs/booktabs.
+sty
+Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
+\heavyrulewidth=\dimen165
+\lightrulewidth=\dimen166
+\cmidrulewidth=\dimen167
+\belowrulesep=\dimen168
+\belowbottomsep=\dimen169
+\aboverulesep=\dimen170
+\abovetopsep=\dimen171
+\cmidrulesep=\dimen172
+\cmidrulekern=\dimen173
+\defaultaddspace=\dimen174
+\@cmidla=\count291
+\@cmidlb=\count292
+\@aboverulesep=\dimen175
+\@belowrulesep=\dimen176
+\@thisruleclass=\count293
+\@lastruleclass=\count294
+\@thisrulewidth=\dimen177
+) (c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/array.sty
+Package: array 2021/10/04 v2.5f Tabular extension package (FMi)
+\col@sep=\dimen178
+\ar@mcellbox=\box58
+\extrarowheight=\dimen179
+\NC@list=\toks26
+\extratabsurround=\skip58
+\backup@length=\skip59
+\ar@cellbox=\box59
+) (c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count295
+\calc@Bcount=\count296
+\calc@Adimen=\dimen180
+\calc@Bdimen=\dimen181
+\calc@Askip=\skip60
+\calc@Bskip=\skip61
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count297
+\calc@Cskip=\skip62
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbox.
+sty
+Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count298
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/mdwtools/footnote.
+sty
+Package: footnote 1997/01/28 1.13 Save footnotes around boxes
+\fn@notes=\box60
+\fn@width=\dimen182
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphicx.
+sty
+Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/graphics.
+sty
+Package: graphics 2021/03/04 v1.4d Standard LaTeX Graphics (DPC,SPQR)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-cfg/graph
+ics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: pdftex.def on input line 107.
+)
+\Gin@req@height=\dimen183
+\Gin@req@width=\dimen184
+) (c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/babel/babel.st
+y
+Package: babel 2021/12/30 3.69 The Babel package
+\babel@savecnt=\count299
+\U@D=\dimen185
+\l@unhyphenated=\language3
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/babel/txtbabel.d
+ef)
+\bbl@readstream=\read3
+\bbl@dirlevel=\count300
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/babel-spanish/sp
+anish.ldf
+Language: spanish.ldf 2021/05/27 v5.0q Spanish support from the babel system
+
+Package babel Warning: No hyphenation patterns were preloaded for
+(babel)                the language 'Spanish' into the format.
+(babel)                Please, configure your TeX system to add them and
+(babel)                rebuild the format. Now I will use the patterns
+(babel)                preloaded for \language=0 instead on input line 51.
+
+Package babel Info: Hyphen rules for 'spanish' set to \l@english
+(babel)             (\language0). Reported on input line 52.
+\es@quottoks=\toks27
+\es@quotdepth=\count301
+Package babel Info: Making " an active character on input line 570.
+Package babel Info: Making . an active character on input line 675.
+Package babel Info: Making < an active character on input line 722.
+Package babel Info: Making > an active character on input line 722.
+))
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/babelbib/babelbib.
+sty
+Package: babelbib 2021/01/06 v1.34 babelbib: multilingual bibliographies
+\c@btxromaniannumeral=\count302
+) (c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/times.sty
+Package: times 2020/03/25 PSNFSS-v9.3 (SPQR) 
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/caption/caption.st
+y
+Package: caption 2020/10/26 v3.5g Customizing captions (AR)
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/caption/caption3.s
+ty
+Package: caption3 2020/10/21 v2.2e caption3 kernel (AR)
+\captionmargin=\dimen186
+\captionmargin@=\dimen187
+\captionwidth=\dimen188
+\caption@tempdima=\dimen189
+\caption@indent=\dimen190
+\caption@parindent=\dimen191
+\caption@hangindent=\dimen192
+Package caption Info: Standard document class detected.
+)
+\c@caption@flags=\count303
+\c@continuedfloat=\count304
+Package caption Info: hyperref package is loaded.
+Package caption Info: longtable package is loaded.
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/caption/ltcaption.
+sty
+Package: ltcaption 2020/05/30 v1.4b longtable captions (AR)
+)) (c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count305
+\float@exts=\toks28
+\float@box=\box61
+\@float@everytoks=\toks29
+\@floatcapt=\box62
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/multirow/multirow.
+sty
+Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
+\multirow@colwidth=\skip63
+\multirow@cntb=\count306
+\multirow@dima=\skip64
+\bigstrutjot=\dimen193
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/wrapfig/wrapfig.st
+y
+\wrapoverhang=\dimen194
+\WF@size=\dimen195
+\c@WF@wrappedlines=\count307
+\WF@box=\box63
+\WF@everypar=\toks30
+Package: wrapfig 2003/01/31  v 3.6
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/colortbl/colortbl.
+sty
+Package: colortbl 2020/01/04 v1.0e Color table columns (DPC)
+\everycr=\toks31
+\minrowclearance=\skip65
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pdflscape/pdflscap
+e.sty
+Package: pdflscape 2019/12/05 v0.12 Display of landscape pages in PDF (HO)
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/lscape.st
+y
+Package: lscape 2020/05/28 v3.02 Landscape Pages (DPC)
+)
+Package pdflscape Info: Auto-detected driver: pdftex on input line 81.
+) (c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tabu/tabu.sty
+Package: tabu 2019/01/11 v2.9 - flexible LaTeX tabulars (FC+tabu-fixed)
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/varwidth/varwidth.
+sty
+Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
+\@vwid@box=\box64
+\sift@deathcycles=\count308
+\@vwid@loff=\dimen196
+\@vwid@roff=\dimen197
+)
+\c@taburow=\count309
+\tabu@nbcols=\count310
+\tabu@cnt=\count311
+\tabu@Xcol=\count312
+\tabu@alloc=\count313
+\tabu@nested=\count314
+\tabu@target=\dimen198
+\tabu@spreadtarget=\dimen199
+\tabu@naturalX=\dimen256
+\tabucolX=\dimen257
+\tabu@Xsum=\dimen258
+\extrarowdepth=\dimen259
+\abovetabulinesep=\dimen260
+\belowtabulinesep=\dimen261
+\tabustrutrule=\dimen262
+\tabu@thebody=\toks32
+\tabu@footnotes=\toks33
+\tabu@box=\box65
+\tabu@arstrutbox=\box66
+\tabu@hleads=\box67
+\tabu@vleads=\box68
+\tabu@cellskip=\skip66
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/threeparttable/thr
+eeparttable.sty
+Package: threeparttable 2003/06/13  v 3.0
+\@tempboxb=\box69
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pdfpages/pdfpages.
+sty
+Package: pdfpages 2021/03/06 v0.5t Insert pages of external PDF documents (AM)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2020/11/24 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/eso-pic/eso-pic.st
+y
+Package: eso-pic 2020/10/14 v3.0a eso-pic (RN)
+\ESO@tempdima=\dimen263
+\ESO@tempdimb=\dimen264
+)
+\AM@pagewidth=\dimen265
+\AM@pageheight=\dimen266
+\AM@fboxrule=\dimen267
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/pdfpages/pppdftex.
+def
+File: pppdftex.def 2021/03/06 v0.5t Pdfpages driver for pdfTeX (AM)
+)
+\pdfpages@includegraphics@status=\count315
+\AM@pagebox=\box70
+\AM@global@opts=\toks34
+\AM@pagecnt=\count316
+\AM@toc@title=\toks35
+\c@AM@survey=\count317
+\AM@templatesizebox=\box71
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/threeparttablex/th
+reeparttablex.sty
+Package: threeparttablex 2013/07/23 v0.3 by daleif
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/environ/environ.st
+y
+Package: environ 2014/05/04 v0.3 A new way to define environments
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/trimspaces/trimspa
+ces.sty
+Package: trimspaces 2009/09/17 v1.1 Trim spaces around a token list
+))
+\TPTL@width=\skip67
+) (c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/ulem/ulem.sty
+\UL@box=\box72
+\UL@hyphenbox=\box73
+\UL@skip=\skip68
+\UL@hook=\toks36
+\UL@height=\dimen268
+\UL@pe=\count318
+\UL@pixel=\dimen269
+\ULC@box=\box74
+Package: ulem 2019/11/18
+\ULdepth=\dimen270
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/makecell/makecell.
+sty
+Package: makecell 2009/08/03 V0.1e Managing of Tab Column Heads and Cells
+\rotheadsize=\dimen271
+\c@nlinenum=\count319
+\TeXr@lab=\toks37
+)
+LaTeX Font Info:    Trying to load font information for T1+ptm on input line 16
+9.
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/t1ptm.fd
+File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backen
+d-pdftex.def
+File: l3backend-pdftex.def 2021-12-14 L3 backend support: PDF output (pdfTeX)
+\l__color_backend_stack_int=\count320
+\l__pdf_internal_box=\box75
+) (./reporte-elsoc.aux
+LaTeX Info: Redefining \. on input line 25.
+LaTeX Info: Redefining \% on input line 25.
+)
+\openout1 = `reporte-elsoc.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 169.
+LaTeX Font Info:    ... okay on input line 169.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 169.
+LaTeX Font Info:    ... okay on input line 169.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 169.
+LaTeX Font Info:    ... okay on input line 169.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 169.
+LaTeX Font Info:    ... okay on input line 169.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 169.
+LaTeX Font Info:    ... okay on input line 169.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 169.
+LaTeX Font Info:    ... okay on input line 169.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 169.
+LaTeX Font Info:    ... okay on input line 169.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 169.
+LaTeX Font Info:    ... okay on input line 169.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 169.
+LaTeX Font Info:    ... okay on input line 169.
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/epstopdf-pkg/epsto
+pdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/latexconfig/epstop
+df-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+Package hyperref Info: Link coloring ON on input line 169.
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.s
+ty
+Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/refcount/refcount.
+sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+)
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/gettitlestring/g
+ettitlestring.sty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+)
+\c@section@level=\count321
+)
+LaTeX Info: Redefining \ref on input line 169.
+LaTeX Info: Redefining \pageref on input line 169.
+LaTeX Info: Redefining \nameref on input line 169.
+(./reporte-elsoc.out) (./reporte-elsoc.out)
+\@outlinefile=\write4
+\openout4 = `reporte-elsoc.out'.
+
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: letterpaper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: twoside 
+* h-part:(L,W,R)=(56.9055pt, 500.484pt, 56.9055pt)
+* v-part:(T,H,B)=(56.9055pt, 666.9326pt, 71.13188pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=500.484pt
+* \textheight=666.9326pt
+* \oddsidemargin=-15.36449pt
+* \evensidemargin=-15.36449pt
+* \topmargin=-47.23828pt
+* \headheight=12.0pt
+* \headsep=19.8738pt
+* \topskip=12.0pt
+* \footskip=30.0pt
+* \marginparwidth=98.0pt
+* \marginparsep=7.0pt
+* \columnsep=10.0pt
+* \skip\footins=10.8pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidetrue
+* \@mparswitchtrue
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+LaTeX Info: Redefining \. on input line 169.
+LaTeX Info: Redefining \% on input line 169.
+babelbib: Set bibliography fall-back language to spanish
+babelbib: spanish.bdf loaded because language spanish defined.
+
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/babelbib/spanish.b
+df
+File: spanish.bdf 2021/01/06 v1.34 babelbib: multilingual bibliographies
+babelbib extension \btxifchangecaseoff added to \extrasspanish
+)
+babelbib: Load BibTeX extensions \bibsspanish for spanish
+babelbib: Set language for keywords in the bibliography fixed to spanish
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: float package is loaded.
+Package caption Info: threeparttable package is loaded.
+Package caption Info: wrapfig package is loaded.
+Package caption Info: End \AtBeginDocument code.
+LaTeX Font Info:    Trying to load font information for OT1+lmr on input line 1
+71.
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/ot1lmr.fd
+File: ot1lmr.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OML+lmm on input line 1
+71.
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omllmm.fd
+File: omllmm.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OMS+lmsy on input line 
+171.
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omslmsy.fd
+File: omslmsy.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    Trying to load font information for OMX+lmex on input line 
+171.
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/lm/omxlmex.fd
+File: omxlmex.fd 2015/05/01 v1.6.1 Font defs for Latin Modern
+)
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <14.4> on input line 171.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <10> on input line 171.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <7> on input line 171.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 171
+.
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 171
+.
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+) [1
+
+
+{c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdfte
+x.map}] [2
+
+] (./reporte-elsoc.toc
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <12> on input line 3.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <8> on input line 3.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <6> on input line 3.
+[3])
+\tf@toc=\write5
+\openout5 = `reporte-elsoc.toc'.
+
+LaTeX Info: Redefining \. on input line 177.
+LaTeX Info: Redefining \% on input line 177.
+[4] (./reporte-elsoc.lot
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
+)
+\tf@lot=\write6
+\openout6 = `reporte-elsoc.lot'.
+
+[5
+
+]
+LaTeX Info: Redefining \. on input line 178.
+LaTeX Info: Redefining \% on input line 178.
+[6
+
+] (./reporte-elsoc.lof
+LaTeX Info: Redefining \. on input line 1.
+LaTeX Info: Redefining \% on input line 1.
+[7]
+LaTeX Info: Redefining \. on input line 61.
+LaTeX Info: Redefining \% on input line 61.
+[8]
+LaTeX Info: Redefining \. on input line 84.
+LaTeX Info: Redefining \% on input line 84.
+[9]
+LaTeX Info: Redefining \. on input line 109.
+LaTeX Info: Redefining \% on input line 109.
+[10])
+\tf@lof=\write7
+\openout7 = `reporte-elsoc.lof'.
+
+LaTeX Info: Redefining \. on input line 183.
+LaTeX Info: Redefining \% on input line 183.
+[11]
+LaTeX Info: Redefining \. on input line 183.
+LaTeX Info: Redefining \% on input line 183.
+[12
+
+] [13]
+LaTeX Info: Redefining \. on input line 255.
+LaTeX Info: Redefining \% on input line 255.
+[14]
+LaTeX Info: Redefining \. on input line 280.
+LaTeX Info: Redefining \% on input line 280.
+[15]
+<../inputs/imagenes/olas_elsoc.png, id=515, 766.5438pt x 264.99pt>
+File: ../inputs/imagenes/olas_elsoc.png Graphic file (type png)
+<use ../inputs/imagenes/olas_elsoc.png>
+Package pdftex.def Info: ../inputs/imagenes/olas_elsoc.png  used on input line 
+297.
+(pdftex.def)             Requested size: 766.60039pt x 265.00955pt.
+
+Overfull \hbox (266.1164pt too wide) in paragraph at lines 297--298
+ [][] 
+ []
+
+<../inputs/imagenes/etapas_seleccion.jpg, id=516, 875.4306pt x 375.804pt>
+File: ../inputs/imagenes/etapas_seleccion.jpg Graphic file (type jpg)
+<use ../inputs/imagenes/etapas_seleccion.jpg>
+Package pdftex.def Info: ../inputs/imagenes/etapas_seleccion.jpg  used on input
+ line 306.
+(pdftex.def)             Requested size: 875.46854pt x 375.82028pt.
+
+Overfull \hbox (374.98454pt too wide) in paragraph at lines 306--307
+ [][] 
+ []
+
+LaTeX Info: Redefining \. on input line 327.
+LaTeX Info: Redefining \% on input line 327.
+[16]
+LaTeX Info: Redefining \. on input line 332.
+LaTeX Info: Redefining \% on input line 332.
+[17 <../inputs/imagenes/olas_elsoc.png>]
+LaTeX Info: Redefining \. on input line 332.
+LaTeX Info: Redefining \% on input line 332.
+[18 <../inputs/imagenes/etapas_seleccion.jpg>]
+LaTeX Info: Redefining \. on input line 427.
+LaTeX Info: Redefining \% on input line 427.
+[19]
+Overfull \hbox (31.9904pt too wide) in paragraph at lines 460--479
+ [][] 
+ []
+
+LaTeX Info: Redefining \. on input line 490.
+LaTeX Info: Redefining \% on input line 490.
+[20]
+<reporte-elsoc_files/figure-latex/graf-composicion-muestra-1.pdf, id=546, 469.7
+55pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-composicion-muestra-1.pdf Graphic f
+ile (type pdf)
+<use reporte-elsoc_files/figure-latex/graf-composicion-muestra-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-composicion-mues
+tra-1.pdf  used on input line 495.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+
+Underfull \vbox (badness 5832) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 507.
+LaTeX Info: Redefining \% on input line 507.
+[21 <./reporte-elsoc_files/figure-latex/graf-composicion-muestra-1.pdf>]
+LaTeX Info: Redefining \. on input line 530.
+LaTeX Info: Redefining \% on input line 530.
+[22]
+LaTeX Info: Redefining \. on input line 546.
+LaTeX Info: Redefining \% on input line 546.
+[23]
+<reporte-elsoc_files/figure-latex/hist-fecha-2021-1.pdf, id=571, 469.755pt x 32
+5.215pt>
+File: reporte-elsoc_files/figure-latex/hist-fecha-2021-1.pdf Graphic file (type
+ pdf)
+<use reporte-elsoc_files/figure-latex/hist-fecha-2021-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/hist-fecha-2021-1.pdf
+  used on input line 552.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Font Info:    External font `lmex10' loaded for size
+(Font)              <5> on input line 554.
+<reporte-elsoc_files/figure-latex/unnamed-chunk-1-1.pdf, id=574, 469.755pt x 32
+5.215pt>
+File: reporte-elsoc_files/figure-latex/unnamed-chunk-1-1.pdf Graphic file (type
+ pdf)
+<use reporte-elsoc_files/figure-latex/unnamed-chunk-1-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/unnamed-chunk-1-1.pdf
+  used on input line 556.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+
+Underfull \vbox (badness 1694) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 556.
+LaTeX Info: Redefining \% on input line 556.
+[24 <./reporte-elsoc_files/figure-latex/hist-fecha-2021-1.pdf>]
+LaTeX Info: Redefining \. on input line 559.
+LaTeX Info: Redefining \% on input line 559.
+[25 <./reporte-elsoc_files/figure-latex/unnamed-chunk-1-1.pdf>]
+LaTeX Info: Redefining \. on input line 559.
+LaTeX Info: Redefining \% on input line 559.
+[26
+
+]
+Cap\'{\i }tulo 1.
+<reporte-elsoc_files/figure-latex/graf-idpolitica-1.pdf, id=602, 469.755pt x 32
+5.215pt>
+File: reporte-elsoc_files/figure-latex/graf-idpolitica-1.pdf Graphic file (type
+ pdf)
+<use reporte-elsoc_files/figure-latex/graf-idpolitica-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-idpolitica-1.pdf
+  used on input line 574.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/graf-idpolitica-ola-1.pdf, id=603, 469.755pt 
+x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-idpolitica-ola-1.pdf Graphic file (
+type pdf)
+<use reporte-elsoc_files/figure-latex/graf-idpolitica-ola-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-idpolitica-ola-1
+.pdf  used on input line 583.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[27]
+LaTeX Info: Redefining \. on input line 591.
+LaTeX Info: Redefining \% on input line 591.
+[28 <./reporte-elsoc_files/figure-latex/graf-idpolitica-1.pdf>]
+LaTeX Info: Redefining \. on input line 591.
+LaTeX Info: Redefining \% on input line 591.
+[29 <./reporte-elsoc_files/figure-latex/graf-idpolitica-ola-1.pdf>]
+<reporte-elsoc_files/figure-latex/graf-alluvial-idpolitica-ola-1.pdf, id=632, 4
+69.755pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-alluvial-idpolitica-ola-1.pdf Graph
+ic file (type pdf)
+<use reporte-elsoc_files/figure-latex/graf-alluvial-idpolitica-ola-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-alluvial-idpolit
+ica-ola-1.pdf  used on input line 594.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/graf-cambios-idpolitica-ola-1.pdf, id=633, 46
+9.755pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-cambios-idpolitica-ola-1.pdf Graphi
+c file (type pdf)
+<use reporte-elsoc_files/figure-latex/graf-cambios-idpolitica-ola-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-cambios-idpoliti
+ca-ola-1.pdf  used on input line 603.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/graf-cambios-idpol-idpol-1.pdf, id=636, 469.7
+55pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-cambios-idpol-idpol-1.pdf Graphic f
+ile (type pdf)
+<use reporte-elsoc_files/figure-latex/graf-cambios-idpol-idpol-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-cambios-idpol-id
+pol-1.pdf  used on input line 614.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 619.
+LaTeX Info: Redefining \% on input line 619.
+[30 <./reporte-elsoc_files/figure-latex/graf-alluvial-idpolitica-ola-1.pdf>]
+LaTeX Info: Redefining \. on input line 619.
+LaTeX Info: Redefining \% on input line 619.
+[31 <./reporte-elsoc_files/figure-latex/graf-cambios-idpolitica-ola-1.pdf>]
+<reporte-elsoc_files/figure-latex/graf-cambios-idpolitica-edad-1.pdf, id=659, 4
+69.755pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-cambios-idpolitica-edad-1.pdf Graph
+ic file (type pdf)
+<use reporte-elsoc_files/figure-latex/graf-cambios-idpolitica-edad-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-cambios-idpoliti
+ca-edad-1.pdf  used on input line 623.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 636.
+LaTeX Info: Redefining \% on input line 636.
+[32 <./reporte-elsoc_files/figure-latex/graf-cambios-idpol-idpol-1.pdf>]
+LaTeX Info: Redefining \. on input line 636.
+LaTeX Info: Redefining \% on input line 636.
+[33 <./reporte-elsoc_files/figure-latex/graf-cambios-idpolitica-edad-1.pdf>]
+<reporte-elsoc_files/figure-latex/graf-interespolitica-ola-1.pdf, id=681, 469.7
+55pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-interespolitica-ola-1.pdf Graphic f
+ile (type pdf)
+<use reporte-elsoc_files/figure-latex/graf-interespolitica-ola-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-interespolitica-
+ola-1.pdf  used on input line 639.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/graf-participciudadana-ola-1.pdf, id=682, 469
+.755pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-participciudadana-ola-1.pdf Graphic
+ file (type pdf)
+<use reporte-elsoc_files/figure-latex/graf-participciudadana-ola-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-participciudadan
+a-ola-1.pdf  used on input line 648.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/graf-idpolitica-interespolitica-1.pdf, id=684
+, 469.755pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-idpolitica-interespolitica-1.pdf Gr
+aphic file (type pdf)
+<use reporte-elsoc_files/figure-latex/graf-idpolitica-interespolitica-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-idpolitica-inter
+espolitica-1.pdf  used on input line 659.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 667.
+LaTeX Info: Redefining \% on input line 667.
+[34 <./reporte-elsoc_files/figure-latex/graf-interespolitica-ola-1.pdf>]
+LaTeX Info: Redefining \. on input line 667.
+LaTeX Info: Redefining \% on input line 667.
+[35 <./reporte-elsoc_files/figure-latex/graf-participciudadana-ola-1.pdf>]
+LaTeX Info: Redefining \. on input line 667.
+LaTeX Info: Redefining \% on input line 667.
+[36 <./reporte-elsoc_files/figure-latex/graf-idpolitica-interespolitica-1.pdf>]
+<reporte-elsoc_files/figure-latex/graf-temaspublicos-idpolitica-1.pdf, id=717, 
+469.755pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-temaspublicos-idpolitica-1.pdf Grap
+hic file (type pdf)
+<use reporte-elsoc_files/figure-latex/graf-temaspublicos-idpolitica-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-temaspublicos-id
+politica-1.pdf  used on input line 670.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 681.
+LaTeX Info: Redefining \% on input line 681.
+[37 <./reporte-elsoc_files/figure-latex/graf-temaspublicos-idpolitica-1.pdf>]
+LaTeX Info: Redefining \. on input line 699.
+LaTeX Info: Redefining \% on input line 699.
+[38]
+<reporte-elsoc_files/figure-latex/tip-participacion5-1.pdf, id=739, 469.755pt x
+ 325.215pt>
+File: reporte-elsoc_files/figure-latex/tip-participacion5-1.pdf Graphic file (t
+ype pdf)
+<use reporte-elsoc_files/figure-latex/tip-participacion5-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/tip-participacion5-1.
+pdf  used on input line 706.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 718.
+LaTeX Info: Redefining \% on input line 718.
+[39 <./reporte-elsoc_files/figure-latex/tip-participacion5-1.pdf>]
+<reporte-elsoc_files/figure-latex/tipos-posicion-politica2-1.pdf, id=751, 469.7
+55pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/tipos-posicion-politica2-1.pdf Graphic f
+ile (type pdf)
+<use reporte-elsoc_files/figure-latex/tipos-posicion-politica2-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/tipos-posicion-politi
+ca2-1.pdf  used on input line 721.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 729.
+LaTeX Info: Redefining \% on input line 729.
+[40 <./reporte-elsoc_files/figure-latex/tipos-posicion-politica2-1.pdf>]
+<reporte-elsoc_files/figure-latex/tipos-sexo2-1.pdf, id=764, 469.755pt x 325.21
+5pt>
+File: reporte-elsoc_files/figure-latex/tipos-sexo2-1.pdf Graphic file (type pdf
+)
+<use reporte-elsoc_files/figure-latex/tipos-sexo2-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/tipos-sexo2-1.pdf  us
+ed on input line 732.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/tipos-edad2-1.pdf, id=765, 469.755pt x 325.21
+5pt>
+File: reporte-elsoc_files/figure-latex/tipos-edad2-1.pdf Graphic file (type pdf
+)
+<use reporte-elsoc_files/figure-latex/tipos-edad2-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/tipos-edad2-1.pdf  us
+ed on input line 741.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/tipos-interes2-1.pdf, id=767, 469.755pt x 325
+.215pt>
+File: reporte-elsoc_files/figure-latex/tipos-interes2-1.pdf Graphic file (type 
+pdf)
+<use reporte-elsoc_files/figure-latex/tipos-interes2-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/tipos-interes2-1.pdf 
+ used on input line 752.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 757.
+LaTeX Info: Redefining \% on input line 757.
+[41 <./reporte-elsoc_files/figure-latex/tipos-sexo2-1.pdf>]
+LaTeX Info: Redefining \. on input line 757.
+LaTeX Info: Redefining \% on input line 757.
+[42 <./reporte-elsoc_files/figure-latex/tipos-edad2-1.pdf>]
+<reporte-elsoc_files/figure-latex/tipos-satisfaccion2-1.pdf, id=787, 469.755pt 
+x 325.215pt>
+File: reporte-elsoc_files/figure-latex/tipos-satisfaccion2-1.pdf Graphic file (
+type pdf)
+<use reporte-elsoc_files/figure-latex/tipos-satisfaccion2-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/tipos-satisfaccion2-1
+.pdf  used on input line 763.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/tipos-legitimidad2-1.pdf, id=789, 469.755pt x
+ 325.215pt>
+File: reporte-elsoc_files/figure-latex/tipos-legitimidad2-1.pdf Graphic file (t
+ype pdf)
+<use reporte-elsoc_files/figure-latex/tipos-legitimidad2-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/tipos-legitimidad2-1.
+pdf  used on input line 774.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 782.
+LaTeX Info: Redefining \% on input line 782.
+[43 <./reporte-elsoc_files/figure-latex/tipos-interes2-1.pdf>]
+LaTeX Info: Redefining \. on input line 782.
+LaTeX Info: Redefining \% on input line 782.
+[44 <./reporte-elsoc_files/figure-latex/tipos-satisfaccion2-1.pdf>]
+LaTeX Info: Redefining \. on input line 782.
+LaTeX Info: Redefining \% on input line 782.
+[45 <./reporte-elsoc_files/figure-latex/tipos-legitimidad2-1.pdf>]
+<reporte-elsoc_files/figure-latex/tipos-optimismo2-1.pdf, id=819, 469.755pt x 3
+25.215pt>
+File: reporte-elsoc_files/figure-latex/tipos-optimismo2-1.pdf Graphic file (typ
+e pdf)
+<use reporte-elsoc_files/figure-latex/tipos-optimismo2-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/tipos-optimismo2-1.pd
+f  used on input line 785.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 796.
+LaTeX Info: Redefining \% on input line 796.
+[46 <./reporte-elsoc_files/figure-latex/tipos-optimismo2-1.pdf>]
+<reporte-elsoc_files/figure-latex/graf-movsocial-1.pdf, id=831, 469.755pt x 325
+.215pt>
+File: reporte-elsoc_files/figure-latex/graf-movsocial-1.pdf Graphic file (type 
+pdf)
+<use reporte-elsoc_files/figure-latex/graf-movsocial-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-movsocial-1.pdf 
+ used on input line 799.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/graf-movsociales-movsocial-olas-1.pdf, id=833
+, 469.755pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-movsociales-movsocial-olas-1.pdf Gr
+aphic file (type pdf)
+<use reporte-elsoc_files/figure-latex/graf-movsociales-movsocial-olas-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-movsociales-movs
+ocial-olas-1.pdf  used on input line 810.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 818.
+LaTeX Info: Redefining \% on input line 818.
+[47 <./reporte-elsoc_files/figure-latex/graf-movsocial-1.pdf>]
+LaTeX Info: Redefining \. on input line 818.
+LaTeX Info: Redefining \% on input line 818.
+[48 <./reporte-elsoc_files/figure-latex/graf-movsociales-movsocial-olas-1.pdf>]
+<reporte-elsoc_files/figure-latex/graf-participmovsocial-olas-1.pdf, id=852, 46
+9.755pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-participmovsocial-olas-1.pdf Graphi
+c file (type pdf)
+<use reporte-elsoc_files/figure-latex/graf-participmovsocial-olas-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-participmovsocia
+l-olas-1.pdf  used on input line 821.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 829.
+LaTeX Info: Redefining \% on input line 829.
+[49 <./reporte-elsoc_files/figure-latex/graf-participmovsocial-olas-1.pdf>]
+<reporte-elsoc_files/figure-latex/graf-participmovsociales2-ola-1.pdf, id=864, 
+469.755pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-participmovsociales2-ola-1.pdf Grap
+hic file (type pdf)
+<use reporte-elsoc_files/figure-latex/graf-participmovsociales2-ola-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-participmovsocia
+les2-ola-1.pdf  used on input line 836.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 847.
+LaTeX Info: Redefining \% on input line 847.
+[50 <./reporte-elsoc_files/figure-latex/graf-participmovsociales2-ola-1.pdf>]
+<reporte-elsoc_files/figure-latex/graf-justviolencia1-ola-1.pdf, id=876, 469.75
+5pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-justviolencia1-ola-1.pdf Graphic fi
+le (type pdf)
+<use reporte-elsoc_files/figure-latex/graf-justviolencia1-ola-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-justviolencia1-o
+la-1.pdf  used on input line 860.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 868.
+LaTeX Info: Redefining \% on input line 868.
+[51]
+LaTeX Info: Redefining \. on input line 868.
+LaTeX Info: Redefining \% on input line 868.
+[52 <./reporte-elsoc_files/figure-latex/graf-justviolencia1-ola-1.pdf>]
+<reporte-elsoc_files/figure-latex/graf-justviolencia2-ola-1.pdf, id=891, 469.75
+5pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-justviolencia2-ola-1.pdf Graphic fi
+le (type pdf)
+<use reporte-elsoc_files/figure-latex/graf-justviolencia2-ola-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-justviolencia2-o
+la-1.pdf  used on input line 877.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 894.
+LaTeX Info: Redefining \% on input line 894.
+[53]
+LaTeX Info: Redefining \. on input line 894.
+LaTeX Info: Redefining \% on input line 894.
+[54 <./reporte-elsoc_files/figure-latex/graf-justviolencia2-ola-1.pdf>]
+<reporte-elsoc_files/figure-latex/graf-confianzainterpersonal-ola-1.pdf, id=909
+, 469.755pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-confianzainterpersonal-ola-1.pdf Gr
+aphic file (type pdf)
+<use reporte-elsoc_files/figure-latex/graf-confianzainterpersonal-ola-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-confianzainterpe
+rsonal-ola-1.pdf  used on input line 897.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/graf-confianzainterpersonal-educ-1.pdf, id=91
+1, 469.755pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-confianzainterpersonal-educ-1.pdf G
+raphic file (type pdf)
+<use reporte-elsoc_files/figure-latex/graf-confianzainterpersonal-educ-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-confianzainterpe
+rsonal-educ-1.pdf  used on input line 908.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 920.
+LaTeX Info: Redefining \% on input line 920.
+[55 <./reporte-elsoc_files/figure-latex/graf-confianzainterpersonal-ola-1.pdf>]
+LaTeX Info: Redefining \. on input line 920.
+LaTeX Info: Redefining \% on input line 920.
+[56 <./reporte-elsoc_files/figure-latex/graf-confianzainterpersonal-educ-1.pdf>
+]
+<reporte-elsoc_files/figure-latex/graf-confinstituciones1-ola-1.pdf, id=934, 46
+9.755pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-confinstituciones1-ola-1.pdf Graphi
+c file (type pdf)
+<use reporte-elsoc_files/figure-latex/graf-confinstituciones1-ola-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-confinstitucione
+s1-ola-1.pdf  used on input line 925.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/graf-confinstituciones2-ola-1.pdf, id=935, 46
+9.755pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-confinstituciones2-ola-1.pdf Graphi
+c file (type pdf)
+<use reporte-elsoc_files/figure-latex/graf-confinstituciones2-ola-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-confinstitucione
+s2-ola-1.pdf  used on input line 934.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/graf-cambio-confianzainstituciones-ola-1.pdf,
+ id=936, 469.755pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-cambio-confianzainstituciones-ola-1
+.pdf Graphic file (type pdf)
+<use reporte-elsoc_files/figure-latex/graf-cambio-confianzainstituciones-ola-1.
+pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-cambio-confianza
+instituciones-ola-1.pdf  used on input line 943.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/graf-preferenciademocracia-ola-1.pdf, id=938,
+ 469.755pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-preferenciademocracia-ola-1.pdf Gra
+phic file (type pdf)
+<use reporte-elsoc_files/figure-latex/graf-preferenciademocracia-ola-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-preferenciademoc
+racia-ola-1.pdf  used on input line 957.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 962.
+LaTeX Info: Redefining \% on input line 962.
+[57]
+LaTeX Info: Redefining \. on input line 962.
+LaTeX Info: Redefining \% on input line 962.
+[58 <./reporte-elsoc_files/figure-latex/graf-confinstituciones1-ola-1.pdf>]
+LaTeX Info: Redefining \. on input line 962.
+LaTeX Info: Redefining \% on input line 962.
+[59 <./reporte-elsoc_files/figure-latex/graf-confinstituciones2-ola-1.pdf>]
+LaTeX Info: Redefining \. on input line 962.
+LaTeX Info: Redefining \% on input line 962.
+[60 <./reporte-elsoc_files/figure-latex/graf-cambio-confianzainstituciones-ola-
+1.pdf>]
+<reporte-elsoc_files/figure-latex/graf-preferenciademocracia-idpolitica-1.pdf, 
+id=975, 469.755pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-preferenciademocracia-idpolitica-1.
+pdf Graphic file (type pdf)
+<use reporte-elsoc_files/figure-latex/graf-preferenciademocracia-idpolitica-1.p
+df>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-preferenciademoc
+racia-idpolitica-1.pdf  used on input line 968.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/graf-preferenciademocracia2-idpolitica-1.pdf,
+ id=976, 469.755pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-preferenciademocracia2-idpolitica-1
+.pdf Graphic file (type pdf)
+<use reporte-elsoc_files/figure-latex/graf-preferenciademocracia2-idpolitica-1.
+pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-preferenciademoc
+racia2-idpolitica-1.pdf  used on input line 977.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 988.
+LaTeX Info: Redefining \% on input line 988.
+[61 <./reporte-elsoc_files/figure-latex/graf-preferenciademocracia-ola-1.pdf>]
+LaTeX Info: Redefining \. on input line 988.
+LaTeX Info: Redefining \% on input line 988.
+[62 <./reporte-elsoc_files/figure-latex/graf-preferenciademocracia-idpolitica-1
+.pdf>]
+LaTeX Info: Redefining \. on input line 988.
+LaTeX Info: Redefining \% on input line 988.
+[63 <./reporte-elsoc_files/figure-latex/graf-preferenciademocracia2-idpolitica-
+1.pdf>]
+<reporte-elsoc_files/figure-latex/graf-participelect-ola-1.pdf, id=1009, 469.75
+5pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-participelect-ola-1.pdf Graphic fil
+e (type pdf)
+<use reporte-elsoc_files/figure-latex/graf-participelect-ola-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-participelect-ol
+a-1.pdf  used on input line 991.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/graf-servel-apruebo-1.pdf, id=1010, 469.755pt
+ x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-servel-apruebo-1.pdf Graphic file (
+type pdf)
+<use reporte-elsoc_files/figure-latex/graf-servel-apruebo-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-servel-apruebo-1
+.pdf  used on input line 1000.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/graf-participelect-olas-edad-1.pdf, id=1012, 
+469.755pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-participelect-olas-edad-1.pdf Graph
+ic file (type pdf)
+<use reporte-elsoc_files/figure-latex/graf-participelect-olas-edad-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-participelect-ol
+as-edad-1.pdf  used on input line 1011.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1019.
+LaTeX Info: Redefining \% on input line 1019.
+[64 <./reporte-elsoc_files/figure-latex/graf-participelect-ola-1.pdf>]
+LaTeX Info: Redefining \. on input line 1019.
+LaTeX Info: Redefining \% on input line 1019.
+[65 <./reporte-elsoc_files/figure-latex/graf-servel-apruebo-1.pdf>]
+LaTeX Info: Redefining \. on input line 1019.
+LaTeX Info: Redefining \% on input line 1019.
+[66 <./reporte-elsoc_files/figure-latex/graf-participelect-olas-edad-1.pdf>]
+<reporte-elsoc_files/figure-latex/graf-votoplebiscito-idpolitica-1.pdf, id=1044
+, 469.755pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-votoplebiscito-idpolitica-1.pdf Gra
+phic file (type pdf)
+<use reporte-elsoc_files/figure-latex/graf-votoplebiscito-idpolitica-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-votoplebiscito-i
+dpolitica-1.pdf  used on input line 1022.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/graf-voto-votoprevio-1.pdf, id=1045, 469.755p
+t x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-voto-votoprevio-1.pdf Graphic file 
+(type pdf)
+<use reporte-elsoc_files/figure-latex/graf-voto-votoprevio-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-voto-votoprevio-
+1.pdf  used on input line 1031.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/graf-voto-votopresi-1.pdf, id=1046, 469.755pt
+ x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-voto-votopresi-1.pdf Graphic file (
+type pdf)
+<use reporte-elsoc_files/figure-latex/graf-voto-votopresi-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-voto-votopresi-1
+.pdf  used on input line 1040.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 1051.
+LaTeX Info: Redefining \% on input line 1051.
+[67 <./reporte-elsoc_files/figure-latex/graf-votoplebiscito-idpolitica-1.pdf>]
+LaTeX Info: Redefining \. on input line 1051.
+LaTeX Info: Redefining \% on input line 1051.
+[68 <./reporte-elsoc_files/figure-latex/graf-voto-votoprevio-1.pdf>]
+LaTeX Info: Redefining \. on input line 1051.
+LaTeX Info: Redefining \% on input line 1051.
+[69 <./reporte-elsoc_files/figure-latex/graf-voto-votopresi-1.pdf>]
+<reporte-elsoc_files/figure-latex/graf-optimismoconstitucional-1.pdf, id=1080, 
+469.755pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-optimismoconstitucional-1.pdf Graph
+ic file (type pdf)
+<use reporte-elsoc_files/figure-latex/graf-optimismoconstitucional-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-optimismoconstit
+ucional-1.pdf  used on input line 1054.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/graf-optimismoconstitucional-votoplebiscito-1
+.pdf, id=1081, 469.755pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-optimismoconstitucional-votoplebisc
+ito-1.pdf Graphic file (type pdf)
+<use reporte-elsoc_files/figure-latex/graf-optimismoconstitucional-votoplebisci
+to-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-optimismoconstit
+ucional-votoplebiscito-1.pdf  used on input line 1063.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/graf-optimismoconstitucional-educ-1.pdf, id=1
+082, 469.755pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-optimismoconstitucional-educ-1.pdf 
+Graphic file (type pdf)
+<use reporte-elsoc_files/figure-latex/graf-optimismoconstitucional-educ-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-optimismoconstit
+ucional-educ-1.pdf  used on input line 1072.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/graf-optimismoconstitucional-idpolitica-1.pdf
+, id=1083, 469.755pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/graf-optimismoconstitucional-idpolitica-
+1.pdf Graphic file (type pdf)
+<use reporte-elsoc_files/figure-latex/graf-optimismoconstitucional-idpolitica-1
+.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/graf-optimismoconstit
+ucional-idpolitica-1.pdf  used on input line 1081.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1089.
+LaTeX Info: Redefining \% on input line 1089.
+[70]
+LaTeX Info: Redefining \. on input line 1089.
+LaTeX Info: Redefining \% on input line 1089.
+[71 <./reporte-elsoc_files/figure-latex/graf-optimismoconstitucional-1.pdf>]
+LaTeX Info: Redefining \. on input line 1089.
+LaTeX Info: Redefining \% on input line 1089.
+[72 <./reporte-elsoc_files/figure-latex/graf-optimismoconstitucional-votoplebis
+cito-1.pdf>]
+LaTeX Info: Redefining \. on input line 1089.
+LaTeX Info: Redefining \% on input line 1089.
+[73 <./reporte-elsoc_files/figure-latex/graf-optimismoconstitucional-educ-1.pdf
+>]
+LaTeX Info: Redefining \. on input line 1089.
+LaTeX Info: Redefining \% on input line 1089.
+[74 <./reporte-elsoc_files/figure-latex/graf-optimismoconstitucional-idpolitica
+-1.pdf>]
+Cap\'{\i }tulo 2.
+<reporte-elsoc_files/figure-latex/salud-bienestar-2021-1.pdf, id=1128, 469.755p
+t x 325.215pt>
+File: reporte-elsoc_files/figure-latex/salud-bienestar-2021-1.pdf Graphic file 
+(type pdf)
+<use reporte-elsoc_files/figure-latex/salud-bienestar-2021-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/salud-bienestar-2021-
+1.pdf  used on input line 1104.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[75
+
+]
+LaTeX Info: Redefining \. on input line 1112.
+LaTeX Info: Redefining \% on input line 1112.
+[76 <./reporte-elsoc_files/figure-latex/salud-bienestar-2021-1.pdf>]
+<reporte-elsoc_files/figure-latex/salud-bienestar-olas-1.pdf, id=1143, 469.755p
+t x 325.215pt>
+File: reporte-elsoc_files/figure-latex/salud-bienestar-olas-1.pdf Graphic file 
+(type pdf)
+<use reporte-elsoc_files/figure-latex/salud-bienestar-olas-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/salud-bienestar-olas-
+1.pdf  used on input line 1119.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+
+LaTeX Warning: Reference `(' on page 77 undefined on input line 1134.
+
+LaTeX Info: Redefining \. on input line 1135.
+LaTeX Info: Redefining \% on input line 1135.
+[77]
+LaTeX Info: Redefining \. on input line 1135.
+LaTeX Info: Redefining \% on input line 1135.
+[78 <./reporte-elsoc_files/figure-latex/salud-bienestar-olas-1.pdf>]
+<reporte-elsoc_files/figure-latex/depre-2021-1.pdf, id=1162, 469.755pt x 325.21
+5pt>
+File: reporte-elsoc_files/figure-latex/depre-2021-1.pdf Graphic file (type pdf)
+
+<use reporte-elsoc_files/figure-latex/depre-2021-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/depre-2021-1.pdf  use
+d on input line 1138.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/depre-bienestar-1.pdf, id=1163, 469.755pt x 3
+25.215pt>
+File: reporte-elsoc_files/figure-latex/depre-bienestar-1.pdf Graphic file (type
+ pdf)
+<use reporte-elsoc_files/figure-latex/depre-bienestar-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/depre-bienestar-1.pdf
+  used on input line 1149.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1154.
+LaTeX Info: Redefining \% on input line 1154.
+[79 <./reporte-elsoc_files/figure-latex/depre-2021-1.pdf>]
+LaTeX Info: Redefining \. on input line 1159.
+LaTeX Info: Redefining \% on input line 1159.
+[80 <./reporte-elsoc_files/figure-latex/depre-bienestar-1.pdf>]
+<reporte-elsoc_files/figure-latex/depre-olas-1.pdf, id=1183, 469.755pt x 325.21
+5pt>
+File: reporte-elsoc_files/figure-latex/depre-olas-1.pdf Graphic file (type pdf)
+
+<use reporte-elsoc_files/figure-latex/depre-olas-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/depre-olas-1.pdf  use
+d on input line 1168.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1178.
+LaTeX Info: Redefining \% on input line 1178.
+[81]
+LaTeX Info: Redefining \. on input line 1178.
+LaTeX Info: Redefining \% on input line 1178.
+[82 <./reporte-elsoc_files/figure-latex/depre-olas-1.pdf>]
+<reporte-elsoc_files/figure-latex/depre-olas-sexo-1.pdf, id=1197, 469.755pt x 3
+25.215pt>
+File: reporte-elsoc_files/figure-latex/depre-olas-sexo-1.pdf Graphic file (type
+ pdf)
+<use reporte-elsoc_files/figure-latex/depre-olas-sexo-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/depre-olas-sexo-1.pdf
+  used on input line 1181.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/salud-bienestar-sexo-1.pdf, id=1198, 469.755p
+t x 325.215pt>
+File: reporte-elsoc_files/figure-latex/salud-bienestar-sexo-1.pdf Graphic file 
+(type pdf)
+<use reporte-elsoc_files/figure-latex/salud-bienestar-sexo-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/salud-bienestar-sexo-
+1.pdf  used on input line 1192.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1202.
+LaTeX Info: Redefining \% on input line 1202.
+[83 <./reporte-elsoc_files/figure-latex/depre-olas-sexo-1.pdf>]
+LaTeX Info: Redefining \. on input line 1202.
+LaTeX Info: Redefining \% on input line 1202.
+[84 <./reporte-elsoc_files/figure-latex/salud-bienestar-sexo-1.pdf>]
+<reporte-elsoc_files/figure-latex/depre-alluvial-1.pdf, id=1217, 469.755pt x 32
+5.215pt>
+File: reporte-elsoc_files/figure-latex/depre-alluvial-1.pdf Graphic file (type 
+pdf)
+<use reporte-elsoc_files/figure-latex/depre-alluvial-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/depre-alluvial-1.pdf 
+ used on input line 1207.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1215.
+LaTeX Info: Redefining \% on input line 1215.
+[85 <./reporte-elsoc_files/figure-latex/depre-alluvial-1.pdf>]
+<reporte-elsoc_files/figure-latex/ndepr-1.pdf, id=1232, 469.755pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/ndepr-1.pdf Graphic file (type pdf)
+<use reporte-elsoc_files/figure-latex/ndepr-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/ndepr-1.pdf  used on 
+input line 1222.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/ndepr-sexo-1.pdf, id=1233, 469.755pt x 325.21
+5pt>
+File: reporte-elsoc_files/figure-latex/ndepr-sexo-1.pdf Graphic file (type pdf)
+
+<use reporte-elsoc_files/figure-latex/ndepr-sexo-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/ndepr-sexo-1.pdf  use
+d on input line 1233.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1249.
+LaTeX Info: Redefining \% on input line 1249.
+[86]
+LaTeX Info: Redefining \. on input line 1249.
+LaTeX Info: Redefining \% on input line 1249.
+[87 <./reporte-elsoc_files/figure-latex/ndepr-1.pdf>]
+LaTeX Info: Redefining \. on input line 1249.
+LaTeX Info: Redefining \% on input line 1249.
+[88 <./reporte-elsoc_files/figure-latex/ndepr-sexo-1.pdf>]
+<reporte-elsoc_files/figure-latex/perfiles-depr-1.pdf, id=1258, 469.755pt x 325
+.215pt>
+File: reporte-elsoc_files/figure-latex/perfiles-depr-1.pdf Graphic file (type p
+df)
+<use reporte-elsoc_files/figure-latex/perfiles-depr-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/perfiles-depr-1.pdf  
+used on input line 1252.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1260.
+LaTeX Info: Redefining \% on input line 1260.
+[89 <./reporte-elsoc_files/figure-latex/perfiles-depr-1.pdf>]
+<reporte-elsoc_files/figure-latex/perfiles-depr-sexo-1.pdf, id=1268, 469.755pt 
+x 325.215pt>
+File: reporte-elsoc_files/figure-latex/perfiles-depr-sexo-1.pdf Graphic file (t
+ype pdf)
+<use reporte-elsoc_files/figure-latex/perfiles-depr-sexo-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/perfiles-depr-sexo-1.
+pdf  used on input line 1263.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/perfiles-depr-edad-1.pdf, id=1269, 469.755pt 
+x 325.215pt>
+File: reporte-elsoc_files/figure-latex/perfiles-depr-edad-1.pdf Graphic file (t
+ype pdf)
+<use reporte-elsoc_files/figure-latex/perfiles-depr-edad-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/perfiles-depr-edad-1.
+pdf  used on input line 1272.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/perfiles-depr-quintil-1.pdf, id=1270, 469.755
+pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/perfiles-depr-quintil-1.pdf Graphic file
+ (type pdf)
+<use reporte-elsoc_files/figure-latex/perfiles-depr-quintil-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/perfiles-depr-quintil
+-1.pdf  used on input line 1287.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1292.
+LaTeX Info: Redefining \% on input line 1292.
+[90 <./reporte-elsoc_files/figure-latex/perfiles-depr-sexo-1.pdf>]
+LaTeX Info: Redefining \. on input line 1292.
+LaTeX Info: Redefining \% on input line 1292.
+[91 <./reporte-elsoc_files/figure-latex/perfiles-depr-edad-1.pdf>]
+LaTeX Info: Redefining \. on input line 1302.
+LaTeX Info: Redefining \% on input line 1302.
+[92 <./reporte-elsoc_files/figure-latex/perfiles-depr-quintil-1.pdf>]
+<reporte-elsoc_files/figure-latex/depre-quintil-1.pdf, id=1301, 469.755pt x 325
+.215pt>
+File: reporte-elsoc_files/figure-latex/depre-quintil-1.pdf Graphic file (type p
+df)
+<use reporte-elsoc_files/figure-latex/depre-quintil-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/depre-quintil-1.pdf  
+used on input line 1305.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/depre-educ-1.pdf, id=1302, 469.755pt x 325.21
+5pt>
+File: reporte-elsoc_files/figure-latex/depre-educ-1.pdf Graphic file (type pdf)
+
+<use reporte-elsoc_files/figure-latex/depre-educ-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/depre-educ-1.pdf  use
+d on input line 1316.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1326.
+LaTeX Info: Redefining \% on input line 1326.
+[93 <./reporte-elsoc_files/figure-latex/depre-quintil-1.pdf>]
+LaTeX Info: Redefining \. on input line 1326.
+LaTeX Info: Redefining \% on input line 1326.
+[94 <./reporte-elsoc_files/figure-latex/depre-educ-1.pdf>]
+<reporte-elsoc_files/figure-latex/depre-sitlab-1.pdf, id=1322, 469.755pt x 325.
+215pt>
+File: reporte-elsoc_files/figure-latex/depre-sitlab-1.pdf Graphic file (type pd
+f)
+<use reporte-elsoc_files/figure-latex/depre-sitlab-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/depre-sitlab-1.pdf  u
+sed on input line 1331.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/sitlab-sexo-1.pdf, id=1323, 469.755pt x 325.2
+15pt>
+File: reporte-elsoc_files/figure-latex/sitlab-sexo-1.pdf Graphic file (type pdf
+)
+<use reporte-elsoc_files/figure-latex/sitlab-sexo-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/sitlab-sexo-1.pdf  us
+ed on input line 1340.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1348.
+LaTeX Info: Redefining \% on input line 1348.
+[95 <./reporte-elsoc_files/figure-latex/depre-sitlab-1.pdf>]
+LaTeX Info: Redefining \. on input line 1348.
+LaTeX Info: Redefining \% on input line 1348.
+[96 <./reporte-elsoc_files/figure-latex/sitlab-sexo-1.pdf>]
+<reporte-elsoc_files/figure-latex/trabremoto-1.pdf, id=1342, 469.755pt x 325.21
+5pt>
+File: reporte-elsoc_files/figure-latex/trabremoto-1.pdf Graphic file (type pdf)
+
+<use reporte-elsoc_files/figure-latex/trabremoto-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/trabremoto-1.pdf  use
+d on input line 1351.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1361.
+LaTeX Info: Redefining \% on input line 1361.
+[97 <./reporte-elsoc_files/figure-latex/trabremoto-1.pdf>]
+<reporte-elsoc_files/figure-latex/depre-trabremoto-1.pdf, id=1354, 469.755pt x 
+325.215pt>
+File: reporte-elsoc_files/figure-latex/depre-trabremoto-1.pdf Graphic file (typ
+e pdf)
+<use reporte-elsoc_files/figure-latex/depre-trabremoto-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/depre-trabremoto-1.pd
+f  used on input line 1364.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/deudas-1.pdf, id=1355, 469.755pt x 325.215pt>
+
+File: reporte-elsoc_files/figure-latex/deudas-1.pdf Graphic file (type pdf)
+<use reporte-elsoc_files/figure-latex/deudas-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/deudas-1.pdf  used on
+ input line 1375.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1383.
+LaTeX Info: Redefining \% on input line 1383.
+[98 <./reporte-elsoc_files/figure-latex/depre-trabremoto-1.pdf>]
+LaTeX Info: Redefining \. on input line 1383.
+LaTeX Info: Redefining \% on input line 1383.
+[99 <./reporte-elsoc_files/figure-latex/deudas-1.pdf>]
+<reporte-elsoc_files/figure-latex/sobrecarga-depr-1.pdf, id=1374, 469.755pt x 3
+25.215pt>
+File: reporte-elsoc_files/figure-latex/sobrecarga-depr-1.pdf Graphic file (type
+ pdf)
+<use reporte-elsoc_files/figure-latex/sobrecarga-depr-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/sobrecarga-depr-1.pdf
+  used on input line 1386.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/depr-retiros-1.pdf, id=1375, 469.755pt x 325.
+215pt>
+File: reporte-elsoc_files/figure-latex/depr-retiros-1.pdf Graphic file (type pd
+f)
+<use reporte-elsoc_files/figure-latex/depr-retiros-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/depr-retiros-1.pdf  u
+sed on input line 1395.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/covid-diagnostico-1.pdf, id=1376, 469.755pt x
+ 325.215pt>
+File: reporte-elsoc_files/figure-latex/covid-diagnostico-1.pdf Graphic file (ty
+pe pdf)
+<use reporte-elsoc_files/figure-latex/covid-diagnostico-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/covid-diagnostico-1.p
+df  used on input line 1411.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1419.
+LaTeX Info: Redefining \% on input line 1419.
+[100 <./reporte-elsoc_files/figure-latex/sobrecarga-depr-1.pdf>]
+LaTeX Info: Redefining \. on input line 1419.
+LaTeX Info: Redefining \% on input line 1419.
+[101 <./reporte-elsoc_files/figure-latex/depr-retiros-1.pdf>]
+LaTeX Info: Redefining \. on input line 1419.
+LaTeX Info: Redefining \% on input line 1419.
+[102 <./reporte-elsoc_files/figure-latex/covid-diagnostico-1.pdf>]
+<reporte-elsoc_files/figure-latex/covid-diagnostico-educ-1.pdf, id=1405, 469.75
+5pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/covid-diagnostico-educ-1.pdf Graphic fil
+e (type pdf)
+<use reporte-elsoc_files/figure-latex/covid-diagnostico-educ-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/covid-diagnostico-edu
+c-1.pdf  used on input line 1422.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/temas-covid-1.pdf, id=1406, 469.755pt x 325.2
+15pt>
+File: reporte-elsoc_files/figure-latex/temas-covid-1.pdf Graphic file (type pdf
+)
+<use reporte-elsoc_files/figure-latex/temas-covid-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/temas-covid-1.pdf  us
+ed on input line 1433.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1441.
+LaTeX Info: Redefining \% on input line 1441.
+[103 <./reporte-elsoc_files/figure-latex/covid-diagnostico-educ-1.pdf>]
+LaTeX Info: Redefining \. on input line 1441.
+LaTeX Info: Redefining \% on input line 1441.
+[104 <./reporte-elsoc_files/figure-latex/temas-covid-1.pdf>]
+<reporte-elsoc_files/figure-latex/temas-covid-educ-1.pdf, id=1426, 469.755pt x 
+325.215pt>
+File: reporte-elsoc_files/figure-latex/temas-covid-educ-1.pdf Graphic file (typ
+e pdf)
+<use reporte-elsoc_files/figure-latex/temas-covid-educ-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/temas-covid-educ-1.pd
+f  used on input line 1444.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/dist-total-1.pdf, id=1427, 469.755pt x 325.21
+5pt>
+File: reporte-elsoc_files/figure-latex/dist-total-1.pdf Graphic file (type pdf)
+
+<use reporte-elsoc_files/figure-latex/dist-total-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/dist-total-1.pdf  use
+d on input line 1457.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/dist-educ-1.pdf, id=1428, 469.755pt x 325.215
+pt>
+File: reporte-elsoc_files/figure-latex/dist-educ-1.pdf Graphic file (type pdf)
+<use reporte-elsoc_files/figure-latex/dist-educ-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/dist-educ-1.pdf  used
+ on input line 1466.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1474.
+LaTeX Info: Redefining \% on input line 1474.
+[105 <./reporte-elsoc_files/figure-latex/temas-covid-educ-1.pdf>]
+LaTeX Info: Redefining \. on input line 1474.
+LaTeX Info: Redefining \% on input line 1474.
+[106 <./reporte-elsoc_files/figure-latex/dist-total-1.pdf>]
+LaTeX Info: Redefining \. on input line 1474.
+LaTeX Info: Redefining \% on input line 1474.
+[107 <./reporte-elsoc_files/figure-latex/dist-educ-1.pdf>]
+<reporte-elsoc_files/figure-latex/covid-dist-1.pdf, id=1456, 469.755pt x 325.21
+5pt>
+File: reporte-elsoc_files/figure-latex/covid-dist-1.pdf Graphic file (type pdf)
+
+<use reporte-elsoc_files/figure-latex/covid-dist-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/covid-dist-1.pdf  use
+d on input line 1477.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1485.
+LaTeX Info: Redefining \% on input line 1485.
+[108 <./reporte-elsoc_files/figure-latex/covid-dist-1.pdf>]
+Cap\'{\i }tulo 3.
+<reporte-elsoc_files/figure-latex/confli-olas-1.pdf, id=1468, 469.755pt x 325.2
+15pt>
+File: reporte-elsoc_files/figure-latex/confli-olas-1.pdf Graphic file (type pdf
+)
+<use reporte-elsoc_files/figure-latex/confli-olas-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/confli-olas-1.pdf  us
+ed on input line 1496.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+[109
+
+]
+LaTeX Info: Redefining \. on input line 1504.
+LaTeX Info: Redefining \% on input line 1504.
+[110 <./reporte-elsoc_files/figure-latex/confli-olas-1.pdf>]
+<reporte-elsoc_files/figure-latex/confli-cambio-1.pdf, id=1486, 469.755pt x 325
+.215pt>
+File: reporte-elsoc_files/figure-latex/confli-cambio-1.pdf Graphic file (type p
+df)
+<use reporte-elsoc_files/figure-latex/confli-cambio-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/confli-cambio-1.pdf  
+used on input line 1507.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/confli-zona-1.pdf, id=1488, 469.755pt x 325.2
+15pt>
+File: reporte-elsoc_files/figure-latex/confli-zona-1.pdf Graphic file (type pdf
+)
+<use reporte-elsoc_files/figure-latex/confli-zona-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/confli-zona-1.pdf  us
+ed on input line 1518.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1526.
+LaTeX Info: Redefining \% on input line 1526.
+[111 <./reporte-elsoc_files/figure-latex/confli-cambio-1.pdf>]
+LaTeX Info: Redefining \. on input line 1526.
+LaTeX Info: Redefining \% on input line 1526.
+[112 <./reporte-elsoc_files/figure-latex/confli-zona-1.pdf>]
+<reporte-elsoc_files/figure-latex/confli-estrato-1.pdf, id=1511, 469.755pt x 32
+5.215pt>
+File: reporte-elsoc_files/figure-latex/confli-estrato-1.pdf Graphic file (type 
+pdf)
+<use reporte-elsoc_files/figure-latex/confli-estrato-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/confli-estrato-1.pdf 
+ used on input line 1529.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/confli-quintil-1.pdf, id=1513, 469.755pt x 32
+5.215pt>
+File: reporte-elsoc_files/figure-latex/confli-quintil-1.pdf Graphic file (type 
+pdf)
+<use reporte-elsoc_files/figure-latex/confli-quintil-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/confli-quintil-1.pdf 
+ used on input line 1540.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 1552.
+LaTeX Info: Redefining \% on input line 1552.
+[113 <./reporte-elsoc_files/figure-latex/confli-estrato-1.pdf>]
+LaTeX Info: Redefining \. on input line 1552.
+LaTeX Info: Redefining \% on input line 1552.
+[114 <./reporte-elsoc_files/figure-latex/confli-quintil-1.pdf>]
+<reporte-elsoc_files/figure-latex/vecinos-ola-1.pdf, id=1536, 469.755pt x 325.2
+15pt>
+File: reporte-elsoc_files/figure-latex/vecinos-ola-1.pdf Graphic file (type pdf
+)
+<use reporte-elsoc_files/figure-latex/vecinos-ola-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/vecinos-ola-1.pdf  us
+ed on input line 1557.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/confvecinos-sexo-1.pdf, id=1537, 469.755pt x 
+325.215pt>
+File: reporte-elsoc_files/figure-latex/confvecinos-sexo-1.pdf Graphic file (typ
+e pdf)
+<use reporte-elsoc_files/figure-latex/confvecinos-sexo-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/confvecinos-sexo-1.pd
+f  used on input line 1566.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/vecinos-zona-1.pdf, id=1538, 469.755pt x 325.
+215pt>
+File: reporte-elsoc_files/figure-latex/vecinos-zona-1.pdf Graphic file (type pd
+f)
+<use reporte-elsoc_files/figure-latex/vecinos-zona-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/vecinos-zona-1.pdf  u
+sed on input line 1575.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1583.
+LaTeX Info: Redefining \% on input line 1583.
+[115 <./reporte-elsoc_files/figure-latex/vecinos-ola-1.pdf>]
+LaTeX Info: Redefining \. on input line 1583.
+LaTeX Info: Redefining \% on input line 1583.
+[116 <./reporte-elsoc_files/figure-latex/confvecinos-sexo-1.pdf>]
+LaTeX Info: Redefining \. on input line 1583.
+LaTeX Info: Redefining \% on input line 1583.
+[117 <./reporte-elsoc_files/figure-latex/vecinos-zona-1.pdf>]
+<reporte-elsoc_files/figure-latex/vecinos-quintil-1.pdf, id=1569, 469.755pt x 3
+25.215pt>
+File: reporte-elsoc_files/figure-latex/vecinos-quintil-1.pdf Graphic file (type
+ pdf)
+<use reporte-elsoc_files/figure-latex/vecinos-quintil-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/vecinos-quintil-1.pdf
+  used on input line 1586.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1598.
+LaTeX Info: Redefining \% on input line 1598.
+[118 <./reporte-elsoc_files/figure-latex/vecinos-quintil-1.pdf>]
+<reporte-elsoc_files/figure-latex/confianzaveci-quintilesc-1.pdf, id=1582, 469.
+755pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/confianzaveci-quintilesc-1.pdf Graphic f
+ile (type pdf)
+<use reporte-elsoc_files/figure-latex/confianzaveci-quintilesc-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/confianzaveci-quintil
+esc-1.pdf  used on input line 1613.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1618.
+LaTeX Info: Redefining \% on input line 1618.
+[119]
+<reporte-elsoc_files/figure-latex/confianzaveci-quintilinm-1.pdf, id=1587, 469.
+755pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/confianzaveci-quintilinm-1.pdf Graphic f
+ile (type pdf)
+<use reporte-elsoc_files/figure-latex/confianzaveci-quintilinm-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/confianzaveci-quintil
+inm-1.pdf  used on input line 1626.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 1638.
+LaTeX Info: Redefining \% on input line 1638.
+[120 <./reporte-elsoc_files/figure-latex/confianzaveci-quintilesc-1.pdf>]
+LaTeX Info: Redefining \. on input line 1638.
+LaTeX Info: Redefining \% on input line 1638.
+[121 <./reporte-elsoc_files/figure-latex/confianzaveci-quintilinm-1.pdf>]
+<reporte-elsoc_files/figure-latex/frecvisitavecinos-ola-1.pdf, id=1610, 469.755
+pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/frecvisitavecinos-ola-1.pdf Graphic file
+ (type pdf)
+<use reporte-elsoc_files/figure-latex/frecvisitavecinos-ola-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/frecvisitavecinos-ola
+-1.pdf  used on input line 1645.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/frecvisita-sexo-1.pdf, id=1612, 469.755pt x 3
+25.215pt>
+File: reporte-elsoc_files/figure-latex/frecvisita-sexo-1.pdf Graphic file (type
+ pdf)
+<use reporte-elsoc_files/figure-latex/frecvisita-sexo-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/frecvisita-sexo-1.pdf
+  used on input line 1658.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1667.
+LaTeX Info: Redefining \% on input line 1667.
+[122]
+LaTeX Info: Redefining \. on input line 1667.
+LaTeX Info: Redefining \% on input line 1667.
+[123 <./reporte-elsoc_files/figure-latex/frecvisitavecinos-ola-1.pdf>]
+LaTeX Info: Redefining \. on input line 1667.
+LaTeX Info: Redefining \% on input line 1667.
+[124 <./reporte-elsoc_files/figure-latex/frecvisita-sexo-1.pdf>]
+<reporte-elsoc_files/figure-latex/frecvisita-zona-1.pdf, id=1637, 469.755pt x 3
+25.215pt>
+File: reporte-elsoc_files/figure-latex/frecvisita-zona-1.pdf Graphic file (type
+ pdf)
+<use reporte-elsoc_files/figure-latex/frecvisita-zona-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/frecvisita-zona-1.pdf
+  used on input line 1671.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/frecvisita-quintil-1.pdf, id=1639, 469.755pt 
+x 325.215pt>
+File: reporte-elsoc_files/figure-latex/frecvisita-quintil-1.pdf Graphic file (t
+ype pdf)
+<use reporte-elsoc_files/figure-latex/frecvisita-quintil-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/frecvisita-quintil-1.
+pdf  used on input line 1684.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1692.
+LaTeX Info: Redefining \% on input line 1692.
+[125 <./reporte-elsoc_files/figure-latex/frecvisita-zona-1.pdf>]
+LaTeX Info: Redefining \. on input line 1692.
+LaTeX Info: Redefining \% on input line 1692.
+[126 <./reporte-elsoc_files/figure-latex/frecvisita-quintil-1.pdf>]
+<reporte-elsoc_files/figure-latex/frecvisita-quintilesc-1.pdf, id=1659, 469.755
+pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/frecvisita-quintilesc-1.pdf Graphic file
+ (type pdf)
+<use reporte-elsoc_files/figure-latex/frecvisita-quintilesc-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/frecvisita-quintilesc
+-1.pdf  used on input line 1697.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/frecvisita-quintilinm-1.pdf, id=1660, 469.755
+pt x 325.215pt>
+File: reporte-elsoc_files/figure-latex/frecvisita-quintilinm-1.pdf Graphic file
+ (type pdf)
+<use reporte-elsoc_files/figure-latex/frecvisita-quintilinm-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/frecvisita-quintilinm
+-1.pdf  used on input line 1708.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1721.
+LaTeX Info: Redefining \% on input line 1721.
+[127 <./reporte-elsoc_files/figure-latex/frecvisita-quintilesc-1.pdf>]
+LaTeX Info: Redefining \. on input line 1721.
+LaTeX Info: Redefining \% on input line 1721.
+[128 <./reporte-elsoc_files/figure-latex/frecvisita-quintilinm-1.pdf>]
+<reporte-elsoc_files/figure-latex/seguri-ola-1.pdf, id=1682, 469.755pt x 325.21
+5pt>
+File: reporte-elsoc_files/figure-latex/seguri-ola-1.pdf Graphic file (type pdf)
+
+<use reporte-elsoc_files/figure-latex/seguri-ola-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/seguri-ola-1.pdf  use
+d on input line 1724.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1734.
+LaTeX Info: Redefining \% on input line 1734.
+[129 <./reporte-elsoc_files/figure-latex/seguri-ola-1.pdf>]
+<reporte-elsoc_files/figure-latex/seguri-zona-1.pdf, id=1694, 469.755pt x 325.2
+15pt>
+File: reporte-elsoc_files/figure-latex/seguri-zona-1.pdf Graphic file (type pdf
+)
+<use reporte-elsoc_files/figure-latex/seguri-zona-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/seguri-zona-1.pdf  us
+ed on input line 1739.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/seguri-educ-1.pdf, id=1696, 469.755pt x 325.2
+15pt>
+File: reporte-elsoc_files/figure-latex/seguri-educ-1.pdf Graphic file (type pdf
+)
+<use reporte-elsoc_files/figure-latex/seguri-educ-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/seguri-educ-1.pdf  us
+ed on input line 1750.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1755.
+LaTeX Info: Redefining \% on input line 1755.
+[130 <./reporte-elsoc_files/figure-latex/seguri-zona-1.pdf>]
+<reporte-elsoc_files/figure-latex/seguri-edad-1.pdf, id=1707, 469.755pt x 325.2
+15pt>
+File: reporte-elsoc_files/figure-latex/seguri-edad-1.pdf Graphic file (type pdf
+)
+<use reporte-elsoc_files/figure-latex/seguri-edad-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/seguri-edad-1.pdf  us
+ed on input line 1761.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/seguri-quintil-1.pdf, id=1709, 469.755pt x 32
+5.215pt>
+File: reporte-elsoc_files/figure-latex/seguri-quintil-1.pdf Graphic file (type 
+pdf)
+<use reporte-elsoc_files/figure-latex/seguri-quintil-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/seguri-quintil-1.pdf 
+ used on input line 1772.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/crim-olas-1.pdf, id=1711, 469.755pt x 325.215
+pt>
+File: reporte-elsoc_files/figure-latex/crim-olas-1.pdf Graphic file (type pdf)
+<use reporte-elsoc_files/figure-latex/crim-olas-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/crim-olas-1.pdf  used
+ on input line 1787.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1792.
+LaTeX Info: Redefining \% on input line 1792.
+[131 <./reporte-elsoc_files/figure-latex/seguri-educ-1.pdf>]
+LaTeX Info: Redefining \. on input line 1792.
+LaTeX Info: Redefining \% on input line 1792.
+[132 <./reporte-elsoc_files/figure-latex/seguri-edad-1.pdf>]
+LaTeX Info: Redefining \. on input line 1792.
+LaTeX Info: Redefining \% on input line 1792.
+[133 <./reporte-elsoc_files/figure-latex/seguri-quintil-1.pdf>]
+<reporte-elsoc_files/figure-latex/crim-zona-1.pdf, id=1744, 469.755pt x 325.215
+pt>
+File: reporte-elsoc_files/figure-latex/crim-zona-1.pdf Graphic file (type pdf)
+<use reporte-elsoc_files/figure-latex/crim-zona-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/crim-zona-1.pdf  used
+ on input line 1798.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1808.
+LaTeX Info: Redefining \% on input line 1808.
+[134 <./reporte-elsoc_files/figure-latex/crim-olas-1.pdf>]
+LaTeX Info: Redefining \. on input line 1808.
+LaTeX Info: Redefining \% on input line 1808.
+[135 <./reporte-elsoc_files/figure-latex/crim-zona-1.pdf>]
+<reporte-elsoc_files/figure-latex/crim-estrato-1.pdf, id=1764, 469.755pt x 325.
+215pt>
+File: reporte-elsoc_files/figure-latex/crim-estrato-1.pdf Graphic file (type pd
+f)
+<use reporte-elsoc_files/figure-latex/crim-estrato-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/crim-estrato-1.pdf  u
+sed on input line 1811.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/crim-quintil-1.pdf, id=1765, 469.755pt x 325.
+215pt>
+File: reporte-elsoc_files/figure-latex/crim-quintil-1.pdf Graphic file (type pd
+f)
+<use reporte-elsoc_files/figure-latex/crim-quintil-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/crim-quintil-1.pdf  u
+sed on input line 1824.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1829.
+LaTeX Info: Redefining \% on input line 1829.
+[136 <./reporte-elsoc_files/figure-latex/crim-estrato-1.pdf>]
+LaTeX Info: Redefining \. on input line 1839.
+LaTeX Info: Redefining \% on input line 1839.
+[137 <./reporte-elsoc_files/figure-latex/crim-quintil-1.pdf>]
+<reporte-elsoc_files/figure-latex/amen1-wave-1.pdf, id=1788, 469.755pt x 325.21
+5pt>
+File: reporte-elsoc_files/figure-latex/amen1-wave-1.pdf Graphic file (type pdf)
+
+<use reporte-elsoc_files/figure-latex/amen1-wave-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/amen1-wave-1.pdf  use
+d on input line 1844.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/amen1-zona-1.pdf, id=1790, 469.755pt x 325.21
+5pt>
+File: reporte-elsoc_files/figure-latex/amen1-zona-1.pdf Graphic file (type pdf)
+
+<use reporte-elsoc_files/figure-latex/amen1-zona-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/amen1-zona-1.pdf  use
+d on input line 1855.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1863.
+LaTeX Info: Redefining \% on input line 1863.
+[138 <./reporte-elsoc_files/figure-latex/amen1-wave-1.pdf>]
+LaTeX Info: Redefining \. on input line 1863.
+LaTeX Info: Redefining \% on input line 1863.
+[139 <./reporte-elsoc_files/figure-latex/amen1-zona-1.pdf>]
+<reporte-elsoc_files/figure-latex/amen2-wave-1.pdf, id=1810, 469.755pt x 325.21
+5pt>
+File: reporte-elsoc_files/figure-latex/amen2-wave-1.pdf Graphic file (type pdf)
+
+<use reporte-elsoc_files/figure-latex/amen2-wave-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/amen2-wave-1.pdf  use
+d on input line 1866.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/amen2-zona-1.pdf, id=1812, 469.755pt x 325.21
+5pt>
+File: reporte-elsoc_files/figure-latex/amen2-zona-1.pdf Graphic file (type pdf)
+
+<use reporte-elsoc_files/figure-latex/amen2-zona-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/amen2-zona-1.pdf  use
+d on input line 1877.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/amen-2021-1.pdf, id=1814, 469.755pt x 325.215
+pt>
+File: reporte-elsoc_files/figure-latex/amen-2021-1.pdf Graphic file (type pdf)
+<use reporte-elsoc_files/figure-latex/amen-2021-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/amen-2021-1.pdf  used
+ on input line 1888.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1896.
+LaTeX Info: Redefining \% on input line 1896.
+[140 <./reporte-elsoc_files/figure-latex/amen2-wave-1.pdf>]
+LaTeX Info: Redefining \. on input line 1896.
+LaTeX Info: Redefining \% on input line 1896.
+[141 <./reporte-elsoc_files/figure-latex/amen2-zona-1.pdf>]
+LaTeX Info: Redefining \. on input line 1896.
+LaTeX Info: Redefining \% on input line 1896.
+[142 <./reporte-elsoc_files/figure-latex/amen-2021-1.pdf>]
+<reporte-elsoc_files/figure-latex/amen-educ-1.pdf, id=1843, 469.755pt x 325.215
+pt>
+File: reporte-elsoc_files/figure-latex/amen-educ-1.pdf Graphic file (type pdf)
+<use reporte-elsoc_files/figure-latex/amen-educ-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/amen-educ-1.pdf  used
+ on input line 1899.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/amen-edad-1.pdf, id=1845, 469.755pt x 325.215
+pt>
+File: reporte-elsoc_files/figure-latex/amen-edad-1.pdf Graphic file (type pdf)
+<use reporte-elsoc_files/figure-latex/amen-edad-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/amen-edad-1.pdf  used
+ on input line 1910.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1918.
+LaTeX Info: Redefining \% on input line 1918.
+[143 <./reporte-elsoc_files/figure-latex/amen-educ-1.pdf>]
+LaTeX Info: Redefining \. on input line 1918.
+LaTeX Info: Redefining \% on input line 1918.
+[144 <./reporte-elsoc_files/figure-latex/amen-edad-1.pdf>]
+<reporte-elsoc_files/figure-latex/conf-wave-1.pdf, id=1866, 469.755pt x 325.215
+pt>
+File: reporte-elsoc_files/figure-latex/conf-wave-1.pdf Graphic file (type pdf)
+<use reporte-elsoc_files/figure-latex/conf-wave-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/conf-wave-1.pdf  used
+ on input line 1921.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/conf-zona-1.pdf, id=1868, 469.755pt x 325.215
+pt>
+File: reporte-elsoc_files/figure-latex/conf-zona-1.pdf Graphic file (type pdf)
+<use reporte-elsoc_files/figure-latex/conf-zona-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/conf-zona-1.pdf  used
+ on input line 1932.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1943.
+LaTeX Info: Redefining \% on input line 1943.
+[145 <./reporte-elsoc_files/figure-latex/conf-wave-1.pdf>]
+LaTeX Info: Redefining \. on input line 1943.
+LaTeX Info: Redefining \% on input line 1943.
+[146 <./reporte-elsoc_files/figure-latex/conf-zona-1.pdf>]
+<reporte-elsoc_files/figure-latex/sexismo-sexo-1.pdf, id=1891, 469.755pt x 325.
+215pt>
+File: reporte-elsoc_files/figure-latex/sexismo-sexo-1.pdf Graphic file (type pd
+f)
+<use reporte-elsoc_files/figure-latex/sexismo-sexo-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/sexismo-sexo-1.pdf  u
+sed on input line 1950.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/sexismo-educ-1.pdf, id=1892, 469.755pt x 325.
+215pt>
+File: reporte-elsoc_files/figure-latex/sexismo-educ-1.pdf Graphic file (type pd
+f)
+<use reporte-elsoc_files/figure-latex/sexismo-educ-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/sexismo-educ-1.pdf  u
+sed on input line 1959.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+LaTeX Info: Redefining \. on input line 1974.
+LaTeX Info: Redefining \% on input line 1974.
+[147]
+LaTeX Info: Redefining \. on input line 1974.
+LaTeX Info: Redefining \% on input line 1974.
+[148 <./reporte-elsoc_files/figure-latex/sexismo-sexo-1.pdf>]
+LaTeX Info: Redefining \. on input line 1974.
+LaTeX Info: Redefining \% on input line 1974.
+[149 <./reporte-elsoc_files/figure-latex/sexismo-educ-1.pdf>]
+<reporte-elsoc_files/figure-latex/ess-ola-1.pdf, id=1917, 469.755pt x 325.215pt
+>
+File: reporte-elsoc_files/figure-latex/ess-ola-1.pdf Graphic file (type pdf)
+<use reporte-elsoc_files/figure-latex/ess-ola-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/ess-ola-1.pdf  used o
+n input line 1979.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 1987.
+LaTeX Info: Redefining \% on input line 1987.
+[150]
+LaTeX Info: Redefining \. on input line 1987.
+LaTeX Info: Redefining \% on input line 1987.
+[151 <./reporte-elsoc_files/figure-latex/ess-ola-1.pdf>]
+<reporte-elsoc_files/figure-latex/ess-cambio-1.pdf, id=1934, 469.755pt x 325.21
+5pt>
+File: reporte-elsoc_files/figure-latex/ess-cambio-1.pdf Graphic file (type pdf)
+
+<use reporte-elsoc_files/figure-latex/ess-cambio-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/ess-cambio-1.pdf  use
+d on input line 1990.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/ess-quintil-1.pdf, id=1936, 469.755pt x 325.2
+15pt>
+File: reporte-elsoc_files/figure-latex/ess-quintil-1.pdf Graphic file (type pdf
+)
+<use reporte-elsoc_files/figure-latex/ess-quintil-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/ess-quintil-1.pdf  us
+ed on input line 2001.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 2009.
+LaTeX Info: Redefining \% on input line 2009.
+[152 <./reporte-elsoc_files/figure-latex/ess-cambio-1.pdf>]
+LaTeX Info: Redefining \. on input line 2009.
+LaTeX Info: Redefining \% on input line 2009.
+[153 <./reporte-elsoc_files/figure-latex/ess-quintil-1.pdf>]
+<reporte-elsoc_files/figure-latex/esshijos-ess-1.pdf, id=1960, 469.755pt x 325.
+215pt>
+File: reporte-elsoc_files/figure-latex/esshijos-ess-1.pdf Graphic file (type pd
+f)
+<use reporte-elsoc_files/figure-latex/esshijos-ess-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/esshijos-ess-1.pdf  u
+sed on input line 2012.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+<reporte-elsoc_files/figure-latex/mov-soc-rec-1.pdf, id=1962, 469.755pt x 325.2
+15pt>
+File: reporte-elsoc_files/figure-latex/mov-soc-rec-1.pdf Graphic file (type pdf
+)
+<use reporte-elsoc_files/figure-latex/mov-soc-rec-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/mov-soc-rec-1.pdf  us
+ed on input line 2023.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 2028.
+LaTeX Info: Redefining \% on input line 2028.
+[154 <./reporte-elsoc_files/figure-latex/esshijos-ess-1.pdf>]
+
+LaTeX Warning: Reference `fig:mov-soc' on page 155 undefined on input line 2030
+.
+
+<reporte-elsoc_files/figure-latex/merit-wave-1.pdf, id=1973, 469.755pt x 325.21
+5pt>
+File: reporte-elsoc_files/figure-latex/merit-wave-1.pdf Graphic file (type pdf)
+
+<use reporte-elsoc_files/figure-latex/merit-wave-1.pdf>
+Package pdftex.def Info: reporte-elsoc_files/figure-latex/merit-wave-1.pdf  use
+d on input line 2034.
+(pdftex.def)             Requested size: 469.75386pt x 325.2142pt.
+LaTeX Info: Redefining \. on input line 2042.
+LaTeX Info: Redefining \% on input line 2042.
+[155 <./reporte-elsoc_files/figure-latex/mov-soc-rec-1.pdf>]
+LaTeX Info: Redefining \. on input line 2042.
+LaTeX Info: Redefining \% on input line 2042.
+[156 <./reporte-elsoc_files/figure-latex/merit-wave-1.pdf>] [157
+
+]
+LaTeX Info: Redefining \. on input line 2095.
+LaTeX Info: Redefining \% on input line 2095.
+[158]
+LaTeX Font Info:    Trying to load font information for TS1+ptm on input line 2
+115.
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/ts1ptm.fd
+File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
+)
+LaTeX Info: Redefining \. on input line 2117.
+LaTeX Info: Redefining \% on input line 2117.
+[159]
+LaTeX Info: Redefining \. on input line 2143.
+LaTeX Info: Redefining \% on input line 2143.
+[160]
+LaTeX Info: Redefining \. on input line 2166.
+LaTeX Info: Redefining \% on input line 2166.
+[161]
+Underfull \hbox (badness 10000) in paragraph at lines 2179--2180
+\T1/ptm/m/n/12 / / www . un . org / sexualviolenceincon^^]ict / wp -[] content 
+/ uploads / 2020 / 06 / report / policy -[] brief -[] the -[] impact -[] of -[]
+
+ []
+
+LaTeX Info: Redefining \. on input line 2193.
+LaTeX Info: Redefining \% on input line 2193.
+[162]
+LaTeX Info: Redefining \. on input line 2200.
+LaTeX Info: Redefining \% on input line 2200.
+[163]
+LaTeX Info: Redefining \. on input line 2200.
+LaTeX Info: Redefining \% on input line 2200.
+[164
+
+]
+LaTeX Font Info:    Trying to load font information for T1+pcr on input line 22
+10.
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/t1pcr.fd
+File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
+)
+LaTeX Font Info:    Trying to load font information for TS1+pcr on input line 2
+212.
+(c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/ts1pcr.fd
+File: ts1pcr.fd 2001/06/04 font definitions for TS1/pcr.
+)
+
+Package caption Warning: Unused \captionsetup[figure] on input line \caption@op
+t@figure@lineno .
+See the caption package documentation for explanation.
+
+
+Package caption Warning: Unused \captionsetup[ table] on input line \caption@op
+t@ table@lineno .
+See the caption package documentation for explanation.
+
+[165] (./reporte-elsoc.aux
+LaTeX Info: Redefining \. on input line 25.
+LaTeX Info: Redefining \% on input line 25.
+)
+
+LaTeX Warning: There were undefined references.
+
+Package rerunfilecheck Info: File `reporte-elsoc.out' has not changed.
+(rerunfilecheck)             Checksum: CD47A1C387D0C9FF5FB99FFACAC35670;4857.
+ ) 
+Here is how much of TeX's memory you used:
+ 18744 strings out of 480313
+ 353243 string characters out of 5895780
+ 630901 words of memory out of 5000000
+ 35748 multiletter control sequences out of 15000+600000
+ 472836 words of font info for 96 fonts, out of 8000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 60i,10n,63p,1558b,660s stack positions out of 5000i,500n,10000p,200000b,80000s
+pdfTeX warning (dest): name{ref-ref} has been referenced but does not exist, 
+replaced by a fixed one
+
+{c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc}
+<c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/courier/ucrr
+8a.pfb><c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times
+/utmb8a.pfb><c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/
+times/utmr8a.pfb><c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1
+/urw/times/utmr8a.pfb><c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/fonts/
+type1/urw/times/utmri8a.pfb>
+Output written on reporte-elsoc.pdf (165 pages, 1056871 bytes).
+PDF statistics:
+ 2162 PDF objects out of 2487 (max. 8388607)
+ 1728 compressed objects within 18 object streams
+ 399 named destinations out of 1000 (max. 500000)
+ 817 words of extra memory for PDF output out of 10000 (max. 10000000)
+
