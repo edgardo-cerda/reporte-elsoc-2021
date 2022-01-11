@@ -15,19 +15,22 @@ elsoc_long_2016_2021 %>%
            !t11_02 %in% c(-888, -999) & !t11_03 %in% c(-888, -999) & !t11_04 %in% c(-888, -999)) %>% 
   mutate(barrio_confli = (t11_01 + t11_02 + t11_03 + t11_04)/4) %>%
   mutate(barrio_confli_rec = factor(cut(barrio_confli, breaks = c(0, 1, 2.75, 5)),
-         labels = c("Nunca","Pocas o algunas veces","Muchas veces o siempre"))) %>%
+         labels = c("Nunca", "Pocas o algunas veces", "Muchas veces o siempre"))) %>%
   sjlabelled::as_label(ola) %>% 
   prop(x = barrio_confli_rec, by = ola, na.rm = TRUE) %>% 
-  ggplot(aes(y = prop, x = ola, fill = barrio_confli_rec, 
+  ggplot(aes(y = prop, x = ola, fill = fct_rev(barrio_confli_rec), 
              label = as.character(scales::percent(prop, accuracy = .1)))) + 
   theme_bw() + 
   geom_col(position = 'Stack') +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(end = .85, direction = -1) +
+  scale_fill_viridis_d(end = .85) +
+  guides(fill = guide_legend(reverse = TRUE)) +
   geom_text(position = position_stack(vjust = .5),
-            size = 3, color = rep(c('black', 'white', 'white'), 5)) + 
-  theme(plot.caption = element_text(hjust = 0),           legend.position = 'top', 
+            size = 3, 
+            color = rep(c('black', 'white', 'white'), 5)) + 
+  theme(plot.caption = element_text(hjust = 0),
+        legend.position = 'top', 
         legend.title = element_blank()) +
   
   labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=4.536 (1.513 individuos)')
@@ -59,8 +62,8 @@ etiquetas <- data.frame((svytable(~barrio_confli_rec + ola, elsoc_diseno, round 
   drop_na()
 
 datos %>% 
-  ggplot(aes(y = prop, x = ola, fill = barrio_confli_rec, 
-             stratum = barrio_confli_rec,
+  ggplot(aes(y = prop, x = ola, fill = fct_rev(barrio_confli_rec), 
+             stratum = fct_rev(barrio_confli_rec),
              alluvium = idencuesta)) +
   theme_bw() +
   ggalluvial::geom_flow(alpha = .66) + 
@@ -71,7 +74,8 @@ datos %>%
   theme(plot.caption = element_text(hjust = 0),
         legend.position = 'top',
         legend.title = element_blank()) +
-  scale_fill_viridis_d(begin = .11, end = .88, direction = -1) +
+  guides(fill = guide_legend(reverse = TRUE)) +
+  scale_fill_viridis_d(end = .85) +
   geom_text(data = etiquetas, 
             aes(label = ifelse(prop > 0.03 , scales::percent(prop, accuracy = .1),"")),
             position = position_stack(vjust = .5),
@@ -117,7 +121,7 @@ labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNo
 
 ```
 
-Por otro lado, según la Figura \@ref(fig:confli-estrato), el porcentaje de personas que reporta tener conflictos barriales “muchas veces o siempre”, baja de un 17.5% a un 14% en la Región Metropolitana, un patrón similar al Gran Valparaíso donde el porcentaje también baja de un 9.0% a un 7.2% entre el año 2019 y el año 2021. Por otro lado, en el Gran Concepción, se registra un aumento de conflictos barriales frecuentes de un 4.1% a 6.5% , mientras en Ciudades Medianas,también hay un aumento de conflictos barriales de un 8.1% a 13.8% entre 2019 y 2021. 
+Por otro lado, según la Figura \@ref(fig:confli-estrato), el porcentaje de personas que reporta tener conflictos barriales “muchas veces o siempre”, baja de un 17.5% a un 14,0% en la Región Metropolitana, un patrón similar al Gran Valparaíso donde el porcentaje también baja de un 9.0% a un 7.2% entre el año 2019 y el año 2021. Por otro lado, en el Gran Concepción, se registra un aumento de conflictos barriales frecuentes de un 4.1% a 6.5% , mientras en Ciudades Medianas,también hay un aumento de conflictos barriales de un 8.1% a 13.8% entre 2019 y 2021. 
 
 
 ```{r confli-estrato, fig.cap = 'Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona de residencia'}
@@ -151,7 +155,7 @@ labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNo
 
 ```
 
-Finalmente, en la Figura \@ref(fig:confli-quintil) se puede observar que el porcentaje de conflictos barriales es superior en el Quintil 1 de ingresos en comparación con los demás quintiles, siendo que un 16,7% de este Quintil reporta tener conflictos “muchas veces o siempre” en 2019 y un 17,0% en 2021. Es, además, el que se mantiene más estable. Entre 2019 y 2021 existe un decrecimiento de conflictos barriales en los Quintiles 2 y 3 de ingresos, al pasar de 13,3% y 12,4%, a 7,1% y 8,1%, respectivamente. En contraposición, los Quintiles 4 y 5 aumentan su  frecuencia de conflictos barriales.
+Finalmente, en la Figura \@ref(fig:confli-quintil) se puede observar que el porcentaje de conflictos barriales es superior en el Quintil 1 de ingresos en comparación con los demás quintiles, siendo que un 17,0% de este Quintil reporta tener conflictos “muchas veces o siempre” en 2019 y un 16,7% en 2021. Es, además, el que se mantiene más estable. Entre 2019 y 2021 existe un decrecimiento de conflictos barriales en los Quintiles 2 y 3 de ingresos, al pasar de 13,3% y 12,4%, a 7,1% y 8,1%, respectivamente. En contraposición, los Quintiles 4 y 5 aumentan su  frecuencia de conflictos barriales.
 
 ```{r confli-quintil, fig.cap = 'Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y quintil de ingreso'}
 
@@ -208,14 +212,13 @@ La confianza entre vecinos es un prerrequisito indispensable para la sustentabil
 
 En esta línea, en la Figura \@ref(fig:vecinos-ola) se puede observar una progresiva evolución de bastante o mucha confianza entre 2016 y 2018, para descender el 2019, y mantenerse relativamente estable el 2021 al 44,7% de bastante o mucha confianza. Por otro lado, no se observan diferencias sistemáticas a nivel temporal de la confianza en vecinos por género (ver Figura \@ref(fig:confvecinos-sexo)). A nivel macrozonal se puede apreciar en el norte, el sur y en la zona metropolitana un descenso de la confianza entre 2019 y 2021, no obstante en la zona centro se aprecia un leve aumento de la confianza (ver Figura \@ref(fig:vecinos-zona)). 
 
-Un elemento importante a resaltar es como la confianza entre vecinos se va diferenciando temporalmente por quintiles de ingreso (Ver Figura \@ref(fig:vecinos-quintil)). Si bien, el 2016 el quintil de más altos ingresos (Q5) con el de más bajos ingresos (Q1) obtienen porcentajes similares de confianza en los vecinos, en la medida de que avanza el tiempo. Por un lado los sectores de mayores ingresos van aumentando su confianza desde el 50,4% el 2016 hasta llegar al 59,1% para el 2021. Por otro lado los sectores de menores ingresos si bien entre 2016 y 2019 tienden a mantenerse relativamente estable alrededor del 42%, para el 2021 este porcentaje desciende al 37,2%. Estos resultados, como veremos más adelante, estarían indicando de un proceso de desigualdad que se va acumulando en la sociabilidad barrial (Mendez, et al. 2021).
 
 ```{r vecinos-ola, fig.cap = 'Confianza en vecinos, según ola de estudio.'}
 
 elsoc_long_2016_2021 %>% 
-  filter(tipo_atricion == 1 & muestra == 1 & !t01 %in% c(-888, -999)) %>% 
-  mutate(barrio_conf = factor(car::recode(t01, "c(1,2) = 1; c(3) = 2; c(4,5) = 3"),
-                               levels = c(1,2,3),
+  filter(tipo_atricion == 1 & muestra == 1 & !is_nsnr(t01)) %>% 
+  mutate(barrio_conf = factor(car::recode(t01, "1:2 = 1; 3 = 2; 4:5 = 3"),
+                               levels = 1:3,
                                labels = c('Muy poco o poco', 'Algo', 'Bastante o mucho'))) %>%
   sjlabelled::as_label(ola) %>%
 
@@ -226,7 +229,7 @@ elsoc_long_2016_2021 %>%
   geom_col(position = 'Stack') +
   ylab(label = NULL) +
   xlab(label = NULL) +
-  scale_fill_viridis_d(end = .85, direction = 1) +
+  scale_fill_viridis_d(end = .85) +
   geom_text(position = position_stack(vjust = .5),
             size = 3, color = rep(c('white', 'white', 'black'), 5)) + 
   theme(plot.caption = element_text(hjust = 0),
@@ -292,8 +295,10 @@ elsoc_long_2016_2021 %>%
           'Porcentaje que confía Bastante o Mucho en sus vecinos') +
 labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Solo se consideran observaciones de individuos sin atrición entre olas. N=3.011 (1.513 individuos)')
 
-
 ```
+
+Un elemento importante a resaltar es como la confianza entre vecinos se va diferenciando temporalmente por quintiles de ingreso (Ver Figura \@ref(fig:vecinos-quintil)). Si bien, el 2016 el quintil de más altos ingresos (Q5) con el de más bajos ingresos (Q1) obtienen porcentajes cercanos de confianza en los vecinos, se van distanciando en la medida de que avanza el tiempo. Por un lado los sectores de mayores ingresos van aumentando su confianza desde el 50,4% el 2016 hasta llegar al 59,1% para el 2021. Por otro lado los sectores de menores ingresos si bien entre 2016 y 2019 tienden a mantenerse relativamente estable alrededor del 42%, para el 2021 este porcentaje desciende al 37,2%. Estos resultados, como veremos más adelante, estarían indicando de un proceso de desigualdad que se va acumulando en la sociabilidad barrial (Mendez, et al. 2021).
+
 
 ```{r vecinos-quintil, fig.cap = 'Confianza en vecinos, según quintil de ingresos y ola del estudio'}
 
@@ -354,7 +359,7 @@ Según estudios empíricos, los factores más relevantes que afectarían a la co
 
 Utilizando la información sobre la escolaridad promedio que exhibía en 2017 el barrio o zona censal de residencia de los encuestados, es posible generar quintiles de escolaridad promedio en el barrio. Entonces, Q1 representa el grupo de encuestados ELSOC que reside en los barrios de más baja escolaridad promedio, mientras que Q5 agrupa a los encuestados residentes en los barrios de más alta escolaridad promedio.
 
-La Figura \@ref(fig:confianzaveci-quintilesc) muestra el porcentaje de encuestados que confía bastante o mucho en sus vecinos según quintiles de escolaridad promedio del barrio de residencia. Destaca el mayor porcentaje de encuestados en los barrios de más alta escolaridad promedio (Q5) que señala confiar bastante o mucho en sus vecinos. En efecto, éste alcanza un 57.0% frente a un 44.6% de encuestados residentes en los barrios de menor escolaridad promedio (Q1). 
+La Figura \@ref(fig:confianzaveci-quintilesc) muestra el porcentaje de encuestados que confía bastante o mucho en sus vecinos según quintiles de escolaridad promedio del barrio de residencia. Destaca el mayor porcentaje de encuestados en los barrios de más alta escolaridad promedio (Q5) que señala confiar bastante o mucho en sus vecinos. En efecto, éste alcanza un 50,0% frente a un 38,8% de encuestados residentes en los barrios de menor escolaridad promedio (Q1). 
 
 Este resultado es consistente con estudios previos que muestran que la cohesión social a nivel de barrio podría ser un privilegio de los niveles socioeconómicos más altos, especialmente en zonas con altos índices de segregación espacial por ingresos, como son las ciudades de Chile (Méndez et al., 2021).
 
@@ -395,7 +400,7 @@ labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021 y Da
 
 ```
 
-Cuando se analiza a los encuestados ELSOC según la proporción de inmigrantes en la zona censal de residencia, se observa que una menor tasa de inmigración en el barrio se asocia a niveles más altos de confianza con los vecinos. Aquellos que residen en zonas con la menor tasa de inmigracción (Q1) exhiben un 49.2% de encuestados que confía bastante o mucho. En contraste, aquellos residentes en barrios con las más altas tasas de inmigración (Q5) exhiben un 39.3% de personas que confía bastante o mucho en sus vecinos. 
+Cuando se analiza a los encuestados ELSOC según la proporción de inmigrantes en la zona censal de residencia, se observa que una mayor tasa de inmigración en el barrio se asocia a niveles más bajos de confianza con los vecinos. Aquellos que residen en zonas con la menor tasa de inmigracción (Q1) exhiben un 38,5% de encuestados que confía bastante o mucho. En contraste, aquellos residentes en barrios con las más altas tasas de inmigración (Q5) exhiben un 32,9% de personas que confía bastante o mucho en sus vecinos. 
 
 Este resultado sugiere analizar los mecanismos de integración social de inmigrantes a nivel local, considerando las características específicas de cada barrio, en cuanto a su capacidad de acoger nuevas demandas por bienes y servicios sociales, así como también, las diferencias culturales y/o de lenguaje, para promover la cohesión social (McCue y Norris‐Tirrell, 2002). 
 

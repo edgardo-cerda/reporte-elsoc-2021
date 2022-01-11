@@ -71,7 +71,7 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-Las Figura \@ref(fig:graf-alluvial-idpolitica-ola) es un gráfico aluvial que muestra cómo las personas mantienen o cambian sus posiciones ideológicas en cada ola del estudio. Se evidencia como trás los muy estables números agregados de cada año se esconde una proporción importante de personas transitan entre categorías ideológicas, aunque mayoritariamente entre grupos adyacentes.  La Figura \@ref(fig:graf-cambios-idpolitica-ola) muestra el porcentaje que en cada ola del estudio respondió otra categoría ideológica que había mencionado el año anterior. Como se puede observar casi la mitad de las personas cambia de posición política consistentemente año a año. Estos patrones hablan a favor de dos segmentos de la población (numéricamente similares); uno con perfiles ideológicos altamente cristalizados y estables, y otro más bien volátil y fluctuante.
+Las Figura \@ref(fig:graf-alluvial-idpolitica-ola) es un gráfico aluvial que muestra cómo las personas mantienen o cambian sus posiciones ideológicas en cada ola del estudio. Se evidencia como tras los muy estables números agregados de cada año se esconde una proporción importante de personas transitan entre categorías ideológicas, aunque mayoritariamente entre grupos adyacentes.  La Figura \@ref(fig:graf-cambios-idpolitica-ola) muestra el porcentaje que en cada ola del estudio respondió otra categoría ideológica que había mencionado el año anterior. Como se puede observar casi la mitad de las personas cambia de posición política consistentemente año a año. Estos patrones hablan a favor de dos segmentos de la población (numéricamente similares); uno con perfiles ideológicos altamente cristalizados y estables, y otro más bien volátil y fluctuante.
 
 
 ```{r graf-alluvial-idpolitica-ola, fig.cap = 'Cambios en identificación política, según ola del estudio'}
@@ -581,14 +581,19 @@ tip_par %>%
                         labels = c('18-29', '30-49', '50-64', '65 o más'))) %>%
   survey_design_elsoc(weights = 'ponderador02_w05') %>% 
   prop(edadt, by = class_part_5, na.rm = TRUE) %>% 
+  add_row(class_part_5 = factor('Reactivos\n(3.9%)'), 
+          edadt = factor('65 o más'), 
+          prop = 0) %>% 
+  arrange(class_part_5, edadt) %>% 
   ggplot(aes(x = prop, y = fct_rev(class_part_5), fill = fct_rev(edadt), 
-             label = scales::percent(prop, .1))) + 
+             label = scales::percent(ifelse(prop < .01, NA, prop), .1))) + 
   geom_bar(stat = 'identity', position = 'stack') +
   labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
   scale_x_continuous(labels = scales::percent) +
   guides(fill = guide_legend(reverse = TRUE)) +
   geom_text(position = position_stack(vjust = .5), 
-            size = 3) +
+            size = 3, na.rm = TRUE,
+            color = rep(c('black', 'black', 'white', 'white'), 5)) +
   theme_bw() + 
   scale_fill_viridis_d(end = .85) +
   theme(plot.caption = element_text(hjust = 0),
@@ -694,10 +699,10 @@ tip_par %>%
   filter(!is_nsnr(class_part_5, c25_w05))  %>%
   mutate(legit = factor(car::recode(c25_w05, "1 = 1; 2 = 2; 3 = 3; 4=4"),
                         levels = 1:4,
-                        labels = c('La democracia\nes preferible', 
-                                   'Un gobierno autoritario\npuede ser preferible',
-                                   'Da lo mismo',
-                                   'Ninguna'))) %>%
+                        labels = c('Democracia es preferible\na cualquier otra forma\nde gobierno', 
+                                 'En algunos casos, un\ngobierno autoritario\npuede ser preferible',
+                                 'Da lo mismo\nrégimen democrá-\ntico o autoritario', 
+                                 'Ninguna'))) %>%
   survey_design_elsoc(weights = 'ponderador02_w05') %>% 
   prop(legit, by = class_part_5, na.rm = TRUE) %>% 
   
