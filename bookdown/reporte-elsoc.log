@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.1.11)  12 JAN 2022 15:12
+This is pdfTeX, Version 3.141592653-2.6-1.40.23 (TeX Live 2021/W32TeX) (preloaded format=pdflatex 2022.1.11)  12 JAN 2022 15:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -885,7 +885,12 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 175
 .
 (c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
-) [1
+)
+Overfull \hbox (249.89653pt too wide) in paragraph at lines 175--175
+ [][] 
+ []
+
+[1
 
 
 {c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdfte
@@ -2421,7 +2426,7 @@ Package rerunfilecheck Info: File `reporte-elsoc.out' has not changed.
 Here is how much of TeX's memory you used:
  19291 strings out of 480313
  362038 string characters out of 5895780
- 648302 words of memory out of 5000000
+ 648675 words of memory out of 5000000
  36285 multiletter control sequences out of 15000+600000
  472836 words of font info for 96 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
@@ -2433,7 +2438,7 @@ es/utmb8a.pfb><c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/ur
 w/times/utmr8a.pfb><c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/fonts/typ
 e1/urw/times/utmr8a.pfb><c:/Users/edgar/AppData/Roaming/TinyTeX/texmf-dist/font
 s/type1/urw/times/utmri8a.pfb>
-Output written on reporte-elsoc.pdf (165 pages, 982849 bytes).
+Output written on reporte-elsoc.pdf (165 pages, 983144 bytes).
 PDF statistics:
  2176 PDF objects out of 2487 (max. 8388607)
  1743 compressed objects within 18 object streams
