@@ -80,7 +80,7 @@ knitr::include_graphics(file.path('..', 'inputs', 'imagenes', 'etapas_seleccion.
 
 ## Atrición de la muestra {-}
 
-El diseño de ELSOC contempló entrevistar a 3.000 personas en su muestra original y 1.500 en la muestra refresco. Sin embargo, es habitual que en encuestas panel se reduce el número de participantes, dado que algunos optan voluntariamente por dejar de participar y otras personas no pueden ser recontactadas. Este fenómeno es conocido como atrición, y pueden tener efectos nocivos sobre la utilidad de los datos longitudinales. En el caso de ELSOC, la tasa de atrición es comparativamente baja en comparación a otros estudios similares, por lo que no se considera al momento un problema significativo. A pesar de esto, el año 2018 se introduce una muestra refresco para contraarrestar el efecto de la atrición. 
+El diseño de ELSOC contempló entrevistar a 3.000 personas en su muestra original y 1.500 en la muestra refresco. Sin embargo, es habitual que en encuestas panel se reduce el número de participantes, dado que algunos optan voluntariamente por dejar de participar y otras personas no pueden ser recontactadas. Este fenómeno es conocido como atrición, y pueden tener efectos nocivos sobre la utilidad de los datos longitudinales. En el caso de ELSOC, la tasa de atrición es comparativamente baja en comparación a otros estudios similares, por lo que no se considera al momento un problema significativo. A pesar de esto, el año 2018 se introduce una muestra refresco para contrarrestar el efecto de la atrición. 
 
 El año 2021, la atrición presenta un alza importante debido a la mayor dificultad que implica el levantamiento durante la pandemia de COVID-19 y al cambio de modalidad.
 
@@ -297,7 +297,7 @@ Con el objetivo de asegurar la factibilidad del proceso de producción de datos 
 
 ### Diseño de cuestionario y cambios de medición {-}
 
-Durante el año 2020, se acordó con el Centro de Microdatos (CMD) que, por este año, la aplicación del cuestionario será en formato de llamada telefónica (modo CATI). Esta aplicación del cuestionario se dividió en dos llamadas de 30 minutos cada uno, para reducir el tiempo de aplicación de la entrevista, y así evitar la fatiga de los encuestados y los encuestadores.
+Durante el año 2020, se acordó con el Centro de Microdatos (CMD) que, por la medición 2021, la aplicación del cuestionario será en formato de llamada telefónica (modo CATI). Esta aplicación del cuestionario se dividió en dos llamadas de 30 minutos cada uno, para reducir el tiempo de aplicación de la entrevista, y así evitar la fatiga de los encuestados y los encuestadores.
 
 Para evaluar los desafíos y el cambio metodológico de la aplicación, durante el 2 y 21 de diciembre de 2020 se realizó una encuesta piloto, actividad que resultó relevante para evaluar tanto los aspectos técnicos como metodológicos asociados al cambio de aplicación. En este proceso se constató la necesidad de cambiar el formato de algunas mediciones y reducir el tamaño de los cuestionarios. 
 
@@ -320,7 +320,7 @@ En segundo lugar, y encadenado con lo anterior, se ajustaron las variables que t
 
 - *Variables de Ingreso en tramos [m14 y m30]*: La variable m14 tiene 16 tramos de respuesta, mientras que la variable m30 tiene 30 tramos de respuesta. Ambas variables fueron establecidas en 5 tramos, tomando como referencia los quintiles de ingreso presentados por la encuesta Casen 2017.
 
-En tercer lugar, el cambio a modalidad CATI implicó que no fuera posible realizar preguntas con respuestas auto reportadas. En el caso de la ola 5, esto afectó a la batería de preguntas sobre presencia de síntomas asociados a depresión (s11_01 a s11_s11_09) 
+En tercer lugar, el cambio a modalidad CATI implicó que no fuera posible realizar preguntas con respuestas auto reportadas. En el caso de la ola 5, esto afectó a la batería de preguntas sobre presencia de síntomas asociados a depresión (s11_01 a s11_09).
 
 Adicionalmente, cabe destacar que aproximadamente un 75% de los encuestados fue entrevistado entre febrero y marzo de 2021
 
