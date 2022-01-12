@@ -297,7 +297,7 @@ Con el objetivo de asegurar la factibilidad del proceso de producción de datos 
 
 ### Diseño de cuestionario y cambios de medición {-}
 
-Durante el año 2020, se acordó con el Centro de Microdatos (CMD) que, por la medición 2021, la aplicación del cuestionario será en formato de llamada telefónica (modo CATI). Esta aplicación del cuestionario se dividió en dos llamadas de 30 minutos cada uno, para reducir el tiempo de aplicación de la entrevista, y así evitar la fatiga de los encuestados y los encuestadores.
+Durante el año 2020, se acordó con el Centro de Microdatos (CMD) que, por la medición 2021, la aplicación del cuestionario será en formato de llamada telefónica (modo CATI). Esta aplicación del cuestionario se dividió en dos llamadas de 30 minutos cada uno, para reducir el tiempo de aplicación de la entrevista, y así evitar la fatiga de los encuestados y los encuestadores (OIT, 2020).
 
 Para evaluar los desafíos y el cambio metodológico de la aplicación, durante el 2 y 21 de diciembre de 2020 se realizó una encuesta piloto, actividad que resultó relevante para evaluar tanto los aspectos técnicos como metodológicos asociados al cambio de aplicación. En este proceso se constató la necesidad de cambiar el formato de algunas mediciones y reducir el tamaño de los cuestionarios. 
 
@@ -317,7 +317,7 @@ En segundo lugar, y encadenado con lo anterior, se ajustaron las variables que t
 - *Batería de Redes Lejanas [r01, r02 y r04]*: Esta batería consulta por la cantidad de personas en distintas ocupaciones y grupos sociales que el entrevistado conoce. Originalmente esta batería de preguntas tiene 7 valores (1. Ninguno; 2. Uno; 3. Entre 2 y 4; 4. Entre 5 y 7; 5. Entre 8 y 10; 6. Entre 11 y 15; 7. 16 o más). Debido a que los rangos de respuesta no son obedecen a un patrón claro, se tomo la decisión de preguntarles a los encuestados por el número puntual de conocidos.
 
 - *Peso del entrevistado [s07]*: Esta variable presenta 9 tramos de respuesta, los cuales fueron establecidos en 5 tramos, tomando como referencia los quintiles de peso reportados por ELSOC en la ola 2018 en la variable s06
-
+  
 - *Variables de Ingreso en tramos [m14 y m30]*: La variable m14 tiene 16 tramos de respuesta, mientras que la variable m30 tiene 30 tramos de respuesta. Ambas variables fueron establecidas en 5 tramos, tomando como referencia los quintiles de ingreso presentados por la encuesta Casen 2017.
 
 En tercer lugar, el cambio a modalidad CATI implicó que no fuera posible realizar preguntas con respuestas auto reportadas. En el caso de la ola 5, esto afectó a la batería de preguntas sobre presencia de síntomas asociados a depresión (s11_01 a s11_09).
