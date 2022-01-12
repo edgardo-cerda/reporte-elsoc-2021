@@ -6,7 +6,7 @@ bookdown::gitbook:
       before: |
         <li><a href="./">Radiografía del Cambio Social en Chile 2016-2021 </a></li>
       after: |
-        <li><a href="https://github.com/edgardo-cerda/reporte-elsoc-2021" target="blank"> Repositorio github <i class="fa fa-github"></i></a></li>
+        <li><a href="https://github.com/edgardo-cerda/reporte-elsoc-2021" target="blank"> Ver fuente <i class="fa fa-github"></i></a></li>
     fontsettings:
       theme: white
       family: sans

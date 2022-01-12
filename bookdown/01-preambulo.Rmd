@@ -18,6 +18,7 @@ library(lubridate)
 library(viridis)
 library(treemapify)
 library(statar)
+library(metathis)
 
 ```
 
@@ -39,6 +40,19 @@ fsize <- if (is_html_output()) {14} else if(is_latex_output()) {8}
 
 ggplot2::theme_set(new = theme_test(base_family = "serif"))
 options(knitr.kable.NA = '')
+
+```
+
+```{r og-meta}
+
+meta() %>%
+  meta_viewport() %>% 
+  meta_social(
+    title = "Radiografía del Cambio Social 2016-2021",
+    url = "https://radiografia-cambio-social-2021.netlify.app/",
+    image = "../inputs/imagenes/prueba.png",
+    og_type = "book"
+  )
 
 ```
 
