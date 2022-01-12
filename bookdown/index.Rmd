@@ -25,8 +25,6 @@ editor_options:
 
 # Introducción {-}
 
-VERSION PRELIMINAR. NO COMPARTIR NI DIFUNDIR.
-
 <div style="text-align: justify">
 
 El Centro de Estudios de Conflicto y Cohesión Social ([COES](https://coes.cl/)) tiene el agrado de publicar el informe “Radiografía del Cambio Social”, el cual consolida los principales hallazgos longitudinales de cinco mediciones anuales del Estudio Longitudinal Social de Chile ([ELSOC](https://coes.cl/encuesta-panel/)).
