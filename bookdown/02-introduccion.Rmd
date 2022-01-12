@@ -1,14 +1,14 @@
 
 # Presentación del estudio
 
-## Sobre COES {-}
+## Sobre COES
 
 El Centro de Estudios de Conflicto y Cohesión Social ([COES](https://coes.cl/)) desarrolla investigación colaborativa en temas relacionados al conflicto social y la cohesión (convivencia) en Chile, por medio de un equipo multidisciplinario proveniente de las ciencias sociales y humanidades. COES centra sus actividades académicas y de difusión en el análisis de las múltiples manifestaciones del conflicto y cohesión social en Chile, sus causas, así como también su contexto cultural e histórico.
 
 COES está patrocinado por la Universidad de Chile y la Pontificia Universidad Católica de Chile, y como instituciones asociadas se encuentran la Universidad Diego Portales y la Universidad Adolfo Ibáñez. COES cuenta con el apoyo del Fondo de Financiamiento de Centros de Investigación en Áreas Prioritarias ([FONDAP](https://www.conicyt.cl/fondap/sobre-fondap/que-es-fondap/), dependiente de la Agencia Nacional de Investigación y Desarrollo ([ANID](https://www.anid.cl/)) del Ministerio de Ciencia, Tecnología, Conocimiento e Innovación ([MinCiencia](https://www.minciencia.gob.cl/)). ELSOC además cuenta como socio al Instituto Milenio para la Investigación en Depresión y Personalidad ([MIDAP](https://midap.org/)).
 
 
-## Sobre ELSOC {-}
+## Sobre ELSOC
 
 ### Descripción del estudio {-}
 
@@ -78,7 +78,7 @@ knitr::include_graphics(file.path('imagenes', 'etapas_seleccion.png'))
 **Organismo Ejecutor**: Levantamiento a cargo de Centro Micro Datos (CMD) de la Universidad de Chile
 
 
-## Atrición de la muestra {-}
+## Atrición de la muestra
 
 El diseño de ELSOC contempló entrevistar a 3.000 personas en su muestra original y 1.500 en la muestra refresco. Sin embargo, es habitual que en encuestas panel se reduce el número de participantes, dado que algunos optan voluntariamente por dejar de participar y otras personas no pueden ser recontactadas. Este fenómeno es conocido como atrición, y pueden tener efectos nocivos sobre la utilidad de los datos longitudinales. En el caso de ELSOC, la tasa de atrición es comparativamente baja en comparación a otros estudios similares, por lo que no se considera al momento un problema significativo. A pesar de esto, el año 2018 se introduce una muestra refresco para contrarrestar el efecto de la atrición. 
 
@@ -239,7 +239,7 @@ elsoc_long_2016_2021 %>%
 ```
 
 
-## Foco en el cambio longitudinal {-}
+## Foco en el cambio longitudinal
 
 Radiografía del Cambio Social tiene como objetivo fundamental caracterizar la estabilidad y el cambio en opiniones, actitudes y conductas de los participantes a lo largo del tiempo, enfocándose en distintas dimensiones de la cohesión y conflicto en Chile. 
 
@@ -289,7 +289,7 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-##  ELSOC en pandemia {-}
+##  ELSOC en pandemia
 
 La crisis sanitaria a raíz del COVID-19 ha planteado una serie de desafíos importantes a los sistemas estadísticos a nivel general, y a las encuestas de opinión pública en particular. A partir de los planteado por la Organización Internacional del Trabajo (OIT, 2020) la mayoría de las oficinas nacionales de estadística ha informado un impacto significativo en sus operaciones, particularmente en aquellas que se llevan a cabo de manera presencial. Para sobrellevar estos problemas, varias organizaciones han tenido que transformar sus operaciones presenciales a levantamientos por teléfono o encuestas web.
 
@@ -322,9 +322,10 @@ En segundo lugar, y encadenado con lo anterior, se ajustaron las variables que t
 
 En tercer lugar, el cambio a modalidad CATI implicó que no fuera posible realizar preguntas con respuestas auto reportadas. En el caso de la ola 5, esto afectó a la batería de preguntas sobre presencia de síntomas asociados a depresión (s11_01 a s11_09).
 
-Adicionalmente, cabe destacar que aproximadamente un 75% de los encuestados fue entrevistado entre febrero y marzo de 2021
+Adicionalmente, cabe destacar que aproximadamente un 75% de los encuestados fue entrevistado entre febrero y marzo de 2021 (ver Figura \@ref(fig:hist-fecha-2021)), y que más del 50% de los encuestados tuvieron 0 días de cuarentena en la comuna de residencia el mes en previo a la entrevista^[Estimaciones propias basadas en fecha de respuesta y en fases de cuarentena el mes previo a la entrevista, obtenidas de [github.com/MinCiencia/Datos-COVID19](https://github.com/MinCiencia/Datos-COVID19)] (ver \@ref(fig:dias-cuarentena)).
 
-```{r hist-fecha-2021, fig.align='center'}
+
+```{r hist-fecha-2021, fig.cap = 'Fecha en que fueron realizadas las encuestas de la ola 2021'}
 elsoc_long_2016_2021 %>% 
   filter(tipo_atricion == 1 & ola == 5) %>% 
   mutate(fecha = make_date(year = annio_entr, month = mes_entr, day = dia_entr),
@@ -341,14 +342,13 @@ elsoc_long_2016_2021 %>%
   scale_x_date(date_labels = "%d-%m",
                date_breaks = '2 weeks') +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
-  ggtitle('¿Cuándo fueron encuestados los entrevistado? (2021)',
-          'Frecuencia de encuestas, según fecha')
+  ggtitle(NULL,
+          'Distribución de observaciones, según fecha de entrevista')
 
 ```
 
-Más del 50% de los encuestados tuvieron 0 días de cuarentena en la comuna de residencia el mes en previo a la entrevista^[Estimaciones propias basadas en fecha de respuesta y en fases de cuarentena el mes previo a la entrevista, obtenidas de [github.com/MinCiencia/Datos-COVID19](https://github.com/MinCiencia/Datos-COVID19) ]
 
-```{r}
+```{r dias-cuarentena, fig.cap = 'Días acumulados en cuarentena, 30 días previo a la fecha de entrevista'}
 elsoc_long_2016_2021 %>% 
   filter(ola == 5 & tipo_atricion == 1) %>% 
   left_join(elsoc_long_cuarentenas, by = c('idencuesta', 'ola')) %>% 
@@ -369,8 +369,8 @@ elsoc_long_2016_2021 %>%
             position = position_dodge(width = .9),
             size = 3)  + 
   theme(legend.position = 'none') + 
-  ggtitle('Días acumulados en cuarentena, el mes previo a la encuesta',
-          'Distribución de los encuestados, según días en cuarentena')
+  ggtitle(NULL,
+          'Distribución de los encuestados, según número de días en cuarentena')
 
 ```
 

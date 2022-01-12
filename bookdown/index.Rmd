@@ -1,6 +1,6 @@
 --- 
-title: "Estudio Longitudinal Social de Chile"
-subtitle: "Resultados longitudinales 2016-2021"
+title: "Radiografía del cambio social 2016-2021"
+subtitle: "Estudio Longitudinal Social de Chile"
 site: bookdown::bookdown_site
 documentclass: book
 bibliography: ["bib/book.bib"]
@@ -14,8 +14,11 @@ linestretch: 1.5
 toc-depth: 1
 lof: True
 lot: True
-github-repo: "edgardo-cerda/reporte-elsoc-2021"
-url: "https://edgardo-cerda.github.io/reporte-elsoc-2021/"
+author: "González, R; Bargsted, M; Figuereido, A; Miranda, D; Cerda, E; Plaza, A; Salas, R"
+description: "Resultados ELSOC 2016-2021"
+og:image: "imagenes/prueba.png"
+github-repo: "https://github.com/edgardo-cerda/reporte-elsoc-2021"
+url: 'https://radiografia-cambio-social-2016-2021.netlify.app/'
 always_allow_html: true
 editor_options: 
   markdown: 
