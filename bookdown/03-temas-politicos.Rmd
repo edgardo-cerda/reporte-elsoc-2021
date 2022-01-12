@@ -71,8 +71,7 @@ elsoc_long_2016_2021 %>%
 
 ```
 
-Las Figura \@ref(fig:graf-alluvial-idpolitica-ola) es un gráfico aluvial que muestra cómo las personas mantienen o cambian sus posiciones ideológicas en cada ola del estudio. Se evidencia como tras los muy estables números agregados de cada año se esconde una proporción importante de personas transitan entre categorías ideológicas, aunque mayoritariamente entre grupos adyacentes.  La Figura \@ref(fig:graf-cambios-idpolitica-ola) muestra el porcentaje que en cada ola del estudio respondió otra categoría ideológica que había mencionado el año anterior. Como se puede observar casi la mitad de las personas cambia de posición política consistentemente año a año. Estos patrones hablan a favor de dos segmentos de la población (numéricamente similares); uno con perfiles ideológicos altamente cristalizados y estables, y otro más bien volátil y fluctuante.
-
+Las Figura \@ref(fig:graf-alluvial-idpolitica-ola) es un gráfico aluvial que muestra cómo las personas mantienen o cambian sus posiciones ideológicas en cada ola del estudio. Se evidencia como tras los muy estables números agregados de cada año se esconde una proporción importante de personas transitan entre categorías ideológicas, aunque mayoritariamente entre grupos adyacentes.
 
 ```{r graf-alluvial-idpolitica-ola, fig.cap = 'Cambios en identificación política, según ola del estudio'}
 
@@ -116,6 +115,7 @@ elsoc_long_2016_2021 %>%
 
 ```
 
+La Figura \@ref(fig:graf-cambios-idpolitica-ola) muestra el porcentaje que en cada ola del estudio respondió otra categoría ideológica que había mencionado el año anterior. Como se puede observar casi la mitad de las personas cambia de posición política consistentemente año a año. Estos patrones hablan a favor de dos segmentos de la población (numéricamente similares); uno con perfiles ideológicos altamente cristalizados y estables, y otro más bien volátil y fluctuante.
 
 ```{r graf-cambios-idpolitica-ola, fig.cap = 'Porcentaje que cambia su identificación política entre olas del estudio, según ola'}
 
