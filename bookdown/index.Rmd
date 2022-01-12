@@ -1,5 +1,5 @@
 --- 
-title: "Radiografía del cambio social 2016-2021"
+title: "Radiografía del Cambio Social en Chile 2016-2021"
 subtitle: "Estudio Longitudinal Social de Chile"
 site: bookdown::bookdown_site
 documentclass: book
@@ -14,7 +14,7 @@ linestretch: 1.5
 toc-depth: 1
 lof: True
 lot: True
-author: "González, R; Bargsted, M; Figuereido, A; Miranda, D; Cerda, E; Plaza, A; Salas, R"
+author: "González, Roberto; Bargsted, Matías; Figuereido, Ana; Miranda, Daniel; Cerda, Edgardo; Plaza, Alejandro; Salas-Lewin, Rocío"
 description: "Resultados ELSOC 2016-2021"
 og:image: "imagenes/prueba.png"
 github-repo: "https://github.com/edgardo-cerda/reporte-elsoc-2021"
@@ -49,7 +49,7 @@ Este informe se centra en tres aspectos claves de la sociedad chilena que se han
 - Daniel Miranda. *Investigador Centro Medición MIDE UC. Investigador Asociado COES*
 - Edgardo Cerda. *Asistente Técnico ELSOC*
 - Alejandro Plaza. *Coordinador Técnico ELSOC*
-- Rocío Salas. *Asistente de investigación ELSOC*
+- Rocío Salas-Lewin. *Asistente de investigación ELSOC*
 
 ### Investigadores colaboradores: {-}
 
