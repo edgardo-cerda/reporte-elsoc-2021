@@ -1,4 +1,4 @@
-# Referencias {-}
+# Referencias
 
 Abascal M, Baldassarri D. Love Thy Neighbor? Ethnoracial Diversity and Trust Reexamined. AJS. 2015 Nov;121(3):722-82. doi: 10.1086/683144. PMID: 26900618.
 
@@ -158,17 +158,17 @@ Xiong J, Lipsitzc O, Nasric F, Luic L, Gillc H, Phanc L, Chen-Lic D, Iacobuccic 
 # Como citar este informe {-}
 
 :::{.blue-box}
-> COES (2021) Radiografía del Cambio Social: Análisis de Resultados Longitudinales ELSOC 2016-2021. Presentación de Resultados COES. Septiembre, Santiago de Chile.
+> COES (2022) Radiografía del Cambio Social: Análisis de Resultados Longitudinales ELSOC 2016-2021. Presentación de Resultados COES. Enero, Santiago de Chile.
 :::
 
 **Entrada Bibtex:**
 
-```{r,echo=TRUE,eval=FALSE}
+```{r, echo = TRUE, eval = FALSE}
 @techreport{coes_Radiografia_2021,
   title = {Radiograf\'ia Del {{Cambio Social}}: {{An\'alisis}} de {{Resultados Longitudinales ELSOC}} 2016-2021.},
   author = {COES},
-  year = {2021},
-  month = sep,
+  year = {2022},
+  month = jan,
   address = {{Santiago de Chile, Chile}},
   institution = {{Centro de Estudios de Conflicto y Cohesi\'on Social}}
 }

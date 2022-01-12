@@ -23,20 +23,21 @@ editor_options:
 ---
 
 
-VERSION PRELIMINAR. NO COMPARTIR NI DIFUNDIR.
+# Introducción {-}
 
-# Presentacion {-}
+VERSION PRELIMINAR. NO COMPARTIR NI DIFUNDIR.
 
 <div style="text-align: justify">
 
-
 El Centro de Estudios de Conflicto y Cohesión Social ([COES](https://coes.cl/)) tiene el agrado de publicar el informe “Radiografía del Cambio Social”, el cual consolida los principales hallazgos longitudinales de cinco mediciones anuales del Estudio Longitudinal Social de Chile ([ELSOC](https://coes.cl/encuesta-panel/)).
 
-ELSOC es una encuesta desarrollada para analizar longitudinalmente, en un estudio panel, la evolución del conflicto y cohesión social en la sociedad chilena, basándose en modelos conceptuales descritos en la literatura nacional e internacional de las disciplinas del ámbito de la Economía, Sociología, Psicología, Ciencia Política y Estudios Urbanos. De este modo, se orienta a examinar los principales antecedentes, factores moderadores y mediadores, así como las principales consecuencias asociadas al desarrollo de distintas formas de sociabilidad en Chile.
+ELSOC es una encuesta desarrollada para analizar longitudinalmente, en un estudio panel, la evolución del conflicto y cohesión social en la sociedad chilena, basándose en modelos conceptuales descritos en la literatura nacional e internacional de las disciplinas del ámbito de la Economía, Sociología, Psicología, Ciencia Política y Estudios Urbanos. Se orienta a examinar los principales antecedentes, factores moderadores y mediadores, así como las principales consecuencias asociadas al desarrollo de distintas formas de sociabilidad en Chile.
 
-Desde 2019 y hasta la fecha, Chile se ha visto remecido por importantes eventos que han alterado aspectos sociales, políticos y económicos de la vida nacional: la pandemia asociada al COVID-19, y las consecuencias del estallido social más grande de las últimas décadas, ocurrido a partir de octubre de 2019, el que ha desencadenado un proceso constituyente inédito en la historia de Chile.
+Durante los últimos años, Chile se ha visto remecido por importantes eventos que han alterado aspectos sociales, políticos y económicos de la vida nacional: la pandemia asociada al COVID-19, y las consecuencias del estallido social más grande de las últimas décadas, ocurrido a partir de octubre de 2019, el que ha desencadenado un proceso constituyente inédito en la historia de Chile.
 
-Ambos fenómenos han significado un desafío para ELSOC, ya que afecta tanto la forma en que son levantados los datos, como las preguntas que el estudio debe abordar. Sin embargo, ELSOC presente una gran oportunidad única: la posibilidad de observar el efecto que éstos fenómenos tienen sobre la población chilena desde una perspectiva longitudinal.
+Ambos fenómenos han significado un desafío para ELSOC y para la comunidad académica, ya que afecta tanto la forma en que son levantados los datos, como las temáticas que el estudio debe abordar. Sin embargo, ELSOC presenta una oportunidad única: la posibilidad de observar el efecto que éstos fenómenos tienen sobre la población chilena desde una perspectiva longitudinal, analizando el cambio y persistencia de comportamientos, creencias y percepciones presentes en la sociedad.
+
+Este informe se centra en tres aspectos claves de la sociedad chilena que se han visto remecidos en el último tiempo: Política y ciudadanía, donde se exploran temáticas de identificación y participación política, cambios en la relación de la ciudadanía con la política institucional y la justificación de la violencia, entre otros; Salud mental y bienestar, abarcando aspectos de salud mental y bienestar, su relación con la economía y cómo se han visto afectados a raíz de la pandemia; y Cohesión Social, donde se analiza el cambio y estabilidad del conflicto y la cohesión desde una perspectiva territorial, las actitudes y creencias de la ciudadanía en torno a los fenómenos de la migración, del sexismo y la meritocracia; entre otros.
 
 
 ## Autores {-}
