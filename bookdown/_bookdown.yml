@@ -19,3 +19,12 @@ language:
     remark: 'Remark. '
     solution: 'Solution. '  
 output_dir: "../docs"
+og:title: "Radiografía del Cambio Social en Chile 2016-2021"
+og:type: "book"
+og:url: "https://radiografia-cambio-social-2016-2021.netlify.app/"
+og:image: "imagenes/logo.png"
+og:description: "Resultados ELSOC 2016-2021"
+twitter:card: "summary"
+twitter:title: "Radiografía del Cambio Social en Chile 2016-2021"
+twitter:description: "Resultados ELSOC 2016-2021"
+twitter:image: "imagenes/logo.png"

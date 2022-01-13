@@ -14,10 +14,9 @@ linestretch: 1.5
 toc-depth: 1
 lof: True
 lot: True
-author: "González, Roberto; Bargsted, Matías; Figuereido, Ana; Miranda, Daniel; Cerda, Edgardo; Plaza, Alejandro; Salas-Lewin, Rocío"
+# author: "González, Roberto; Bargsted, Matías; Figuereido, Ana; Miranda, Daniel; Cerda, Edgardo; Plaza, Alejandro; Salas-Lewin, Rocío"
 description: "Resultados ELSOC 2016-2021"
-og:image: "imagenes/prueba.png"
-github-repo: "https://github.com/edgardo-cerda/reporte-elsoc-2021"
+github-repo: "edgardo-cerda/reporte-elsoc-2021"
 url: 'https://radiografia-cambio-social-2016-2021.netlify.app/'
 always_allow_html: true
 editor_options: 
