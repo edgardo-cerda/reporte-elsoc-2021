@@ -490,7 +490,7 @@ tab_5 %>%
 La Figura \@ref(fig:tipos-posicion-politica2) muestra cómo se distribuyen estos grupos según posiciones ideológicas. Destacan los Hiper-politizados por su elevado nivel de homogeneidad ideológica con una fuerte concentración de individuos auto posicionados como de izquierda (65,7%). Aunque en forma más matizada, las personas de izquierda también se encuentran concentrados entre los Politizados con un 40%, seguidos por las personas de centro con un 35,9%. En contraste, los Desafectados están mayoritariamente compuestos por individuos de centro (35,3%) o sin identificación política (32%). El grupo con mayor presencia de derecha es el de Institucionales (21,8%), aunque tienen una proporción similar de individuos de izquierda (20,8%) y también cuentan con una fuerte presencia de encuestados que se identifican con el centro político (38,8%). El grupo de los Reactivos es el que concentra un mayor porcentaje de sujetos de centro (43,2%), seguidos de un 29,2% de individuos de izquierda.
 
 
-```{r tipos-posicion-politica2, fig.cap = 'Posición política según perfil de participación'}
+```{r tipos-posicion-politica2, fig.cap = 'Perfil de participación según posición política'}
 
 # load(file.path('inputs', 'participacion_tipos5.RData'))
 # elsoc::load_elsoc('wide')
@@ -532,7 +532,7 @@ tip_par %>%
 La Figura \@ref(fig:tipos-sexo2) muestra que el grupo de Politizados es el único en que predominan los hombres (59,9%), mientras que en los Hiper-politizados y Reactivos son marcadamente mayoritarias las mujeres, con un 68,9% y 56,9% respectivamente. Los Institucionales y Desafectados parecen tener una distribución por sexo más equilibrada con alrededor de un 54% de mujeres y 46% de hombres. La Figura \@ref(fig:tipos-edad2) indica marcadas variaciones en términos de edad. Los Reactivos, Desafectados e Hiper-politizados son los grupos con mayor concentración de adultos jóvenes, con un 57,6%, 55,9% y 51,8% respectivamente. Se presentan también altos porcentajes de población juvenil en los Reactivos (33,5%) y Politizados (23,4%). Los Institucionales, en cambio, obtienen la más alta proporción de adultos mayores y mediana edad, con un 26,3% y 40,6%, respectivamente.
 
 
-```{r tipos-sexo2, fig.cap = 'Sexo según perfil de participación'}
+```{r tipos-sexo2, fig.cap = 'Perfil de participación según sexo'}
 
 # load(file.path('inputs', 'participacion_tipos5.RData'))
 # elsoc::load_elsoc('wide')
@@ -565,7 +565,7 @@ tip_par %>%
 
 ```
 
-```{r tipos-edad2, fig.cap = 'Edad según perfil de participación'}
+```{r tipos-edad2, fig.cap = 'Perfil de participación según edad'}
 
 # load(file.path('inputs', 'participacion_tipos5.RData'))
 # elsoc::load_elsoc('wide')
@@ -604,7 +604,7 @@ tip_par %>%
 
 ```
 
-```{r tipos-educ2, fig.cap = 'Educación según perfil de participación'}
+```{r tipos-educ2, fig.cap = 'Perfil de participación según educación'}
 
 # load(file.path('inputs', 'participacion_tipos5.RData'))
 # elsoc::load_elsoc('wide')
@@ -646,7 +646,7 @@ tip_par %>%
 La Figura \@ref(fig:tipos-interes2) indica que los grupos con menor interés en la política son los Desafectados e Institucionales, con un 79,1% y 70,1% de personas con nada o poco interés. A ello le siguen los Politizados y Reactivos, con un 45,1% y 44,4%, respectivamente. El grupo de Hiper-politizados es el que alcanza mayores niveles de interés, con un 62,8% de individuos muy o bastante interesados, seguido de los Reactivos y Politizados con un 27,3% y 25,6%. Este patrón resulta del todo relevante ya que confirma que en Chile las personas más politizadas expresan sus demandas y preocupaciones por los canales no institucionales, al tiempo que los menos politizados abiertamente no participan de ninguna instancia o si lo hacen emplean los canales formales.
 
 
-```{r tipos-interes2, fig.cap = 'Interés en la política según perfil de participación'}
+```{r tipos-interes2, fig.cap = 'Perfil de participación según interés en la política'}
 
 # load(file.path('inputs', 'participacion_tipos5.RData'))
 # elsoc::load_elsoc('wide')
@@ -685,7 +685,7 @@ tip_par %>%
 La Figura \@ref(fig:tipos-satisfaccion2) muestra una alta insatisfacción con la democracia de parte de todos los grupos, aunque esta es aún más pronunciada en el grupo de los Hiper-politizados (83,6%) y Reactivos (79%). Si sumamos los porcentajes de personas altamente satisfechas y algo satisfechas, los niveles de satisfacción con la democracia son más altos entre los Politizados, Desafectados e Institucionales. Es decir, hay una marcada distancia de toda forma de acción política y la focalización en canales institucionales parecen ser indicativos de mayores niveles de satisfacción política.
 
 
-```{r tipos-satisfaccion2, fig.cap = 'Satisfacción con la democracia según perfil de participación'}
+```{r tipos-satisfaccion2, fig.cap = 'Perfil de participación según satisfacción con la democracia'}
 
 # load(file.path('inputs', 'participacion_tipos5.RData'))
 # elsoc::load_elsoc('wide')
@@ -724,7 +724,7 @@ tip_par %>%
 La Figura \@ref(fig:tipos-legitimidad2) muestra que los Hiper-politizados y Politizados tienen una mayor preferencia por la democracia como régimen de gobierno, con un 88,1% y 81,3% respectivamente, versus sólo un 49,8%, 49,2% y 47,1% de apoyo democrático entre los Reactivos, Institucionales y Desafectados. Esto implica, no sin bastante ironía, que el grupo que más vota en elecciones políticas nacionales es, junto al que jamás participa políticamente, el que menos explícitamente apoya la democracia como régimen político.
 
 
-```{r tipos-legitimidad2, fig.cap = 'Legitimidad democrática según perfil de participación'}
+```{r tipos-legitimidad2, fig.cap = 'Perfil de participación según legitimidad democrática'}
 
 # load(file.path('inputs', 'participacion_tipos5.RData'))
 # elsoc::load_elsoc('wide')
@@ -768,7 +768,7 @@ tip_par %>%
 Respecto al actual proceso constituyente, la Figura \@ref(fig:tipos-optimismo2) muestra los niveles de optimismo constitucional. Se observan los mayores niveles de optimismo entre Hiper-politizados y Politizados, con más de un 70% de optimismo en ambos grupos. Los Reactivos están justo por debajo con un 69,3%, mientras que los Institucionales y Desafectados alcanzan un optimismo del 60,3% y 56%. Esto implica que entre todos los grupos prevalece una sensación positiva acerca del proceso constitucional, pese a existir diferencias inter-grupales relevantes en otras materias.
 
 
-```{r tipos-optimismo2, fig.cap = 'Optimismo constitucional según perfil de participación'}
+```{r tipos-optimismo2, fig.cap = 'Perfil de participación según optimismo constitucional'}
 
 # load(file.path('inputs', 'participacion_tipos5.RData'))
 # elsoc::load_elsoc('wide')
