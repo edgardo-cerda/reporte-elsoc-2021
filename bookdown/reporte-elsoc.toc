@@ -1,4 +1,4 @@
-\babel@toc {spanish}{}
+\babel@toc {spanish}{}\relax 
 \contentsline {chapter}{Introducción}{13}{chapter*.4}%
 \contentsline {section}{Autores}{14}{section*.5}%
 \contentsline {subsection}{Investigadores colaboradores:}{14}{section*.6}%
@@ -10,7 +10,7 @@
 \contentsline {subsection}{Características del diseño muestral}{17}{section*.9}%
 \contentsline {subsection}{Características del levantamiento de datos}{18}{section*.12}%
 \contentsline {section}{\numberline {1.3}Atrición de la muestra}{19}{section.1.3}%
-\contentsline {subsection}{Atrición acumulada según Sexo, Grupo etáreo, Nivel educacional y Estrato}{20}{section*.14}%
+\contentsline {subsection}{Atrición acumulada según Sexo, Grupo etáreo, Nivel educacional y Estrato}{19}{section*.14}%
 \contentsline {section}{\numberline {1.4}Foco en el cambio longitudinal}{20}{section.1.4}%
 \contentsline {section}{\numberline {1.5}ELSOC en pandemia}{21}{section.1.5}%
 \contentsline {subsection}{Diseño de cuestionario y cambios de medición}{23}{section*.20}%
@@ -21,32 +21,32 @@
 \contentsline {section}{\numberline {2.3}Análisis de Clases Latentes: Participación política}{37}{section.2.3}%
 \contentsline {subsection}{Perfiles de participación: aproximación empírica}{38}{section*.34}%
 \contentsline {subsection}{Perfiles de participación: principales resultados}{38}{section*.35}%
-\contentsline {subsection}{Caracterización de perfiles de participación}{39}{section*.37}%
-\contentsline {section}{\numberline {2.4}Ciclo de movilización política y estallido social}{48}{section.2.4}%
-\contentsline {section}{\numberline {2.5}Justificación de la Violencia}{51}{section.2.5}%
+\contentsline {subsection}{Caracterización de perfiles de participación}{40}{section*.37}%
+\contentsline {section}{\numberline {2.4}Ciclo de movilización política y estallido social}{47}{section.2.4}%
+\contentsline {section}{\numberline {2.5}Justificación de la Violencia}{52}{section.2.5}%
 \contentsline {section}{\numberline {2.6}Confianza interpersonal y en instituciones}{54}{section.2.6}%
 \contentsline {subsection}{Confianza interpersonal}{54}{section*.52}%
-\contentsline {subsection}{Confianza en las instituciones}{56}{section*.55}%
-\contentsline {subsection}{\numberline {2.6.1}Actitudes hacia la democracia}{60}{subsection.2.6.1}%
-\contentsline {section}{\numberline {2.7}Participación electoral}{63}{section.2.7}%
-\contentsline {section}{\numberline {2.8}Proceso Constituyente}{69}{section.2.8}%
-\contentsline {chapter}{\numberline {3}Salud mental y bienestar}{73}{chapter.3}%
-\contentsline {section}{\numberline {3.1}Salud mental y bienestar}{73}{section.3.1}%
-\contentsline {subsection}{Sintomatología depresiva}{76}{section*.74}%
-\contentsline {subsection}{Trayectorias de síntomas depresivos}{85}{section*.83}%
-\contentsline {section}{\numberline {3.2}Economía y bienestar}{90}{section.3.2}%
-\contentsline {section}{\numberline {3.3}COVID - 19}{100}{section.3.3}%
-\contentsline {chapter}{\numberline {4}Cohesión social}{107}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Conflicto y cohesión territorial}{107}{section.4.1}%
-\contentsline {subsection}{Confianza en vecinos}{111}{section*.109}%
-\contentsline {subsection}{Vinculación de ELSOC a indicadores territoriales}{116}{section*.114}%
-\contentsline {subsection}{Frecuencia de visita a vecinos}{119}{section*.117}%
-\contentsline {subsection}{Seguridad barrial}{123}{section*.124}%
-\contentsline {subsection}{Criminalidad barrial}{130}{section*.130}%
-\contentsline {section}{\numberline {4.2}Migración}{134}{section.4.2}%
-\contentsline {subsection}{Amenaza realista y amenaza simbólica respecto a inmigrantes}{134}{section*.135}%
-\contentsline {section}{\numberline {4.3}Sexismo hostil y benevolente}{143}{section.4.3}%
-\contentsline {section}{\numberline {4.4}Estatus subjetivo y Percepción de Mérito}{144}{section.4.4}%
-\contentsline {subsection}{Estatus subjetivo}{144}{section*.147}%
-\contentsline {chapter}{\numberline {5}Referencias}{153}{chapter.5}%
-\contentsline {chapter}{Como citar este informe}{161}{chapter*.154}%
+\contentsline {subsection}{Confianza en las instituciones}{58}{section*.55}%
+\contentsline {subsection}{\numberline {2.6.1}Actitudes hacia la democracia}{58}{subsection.2.6.1}%
+\contentsline {section}{\numberline {2.7}Participación electoral}{62}{section.2.7}%
+\contentsline {section}{\numberline {2.8}Proceso Constituyente}{71}{section.2.8}%
+\contentsline {chapter}{\numberline {3}Salud mental y bienestar}{77}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Salud mental y bienestar}{77}{section.3.1}%
+\contentsline {subsection}{Sintomatología depresiva}{79}{section*.74}%
+\contentsline {subsection}{Trayectorias de síntomas depresivos}{88}{section*.83}%
+\contentsline {section}{\numberline {3.2}Economía y bienestar}{94}{section.3.2}%
+\contentsline {section}{\numberline {3.3}COVID - 19}{102}{section.3.3}%
+\contentsline {chapter}{\numberline {4}Cohesión social}{111}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Conflicto y cohesión territorial}{111}{section.4.1}%
+\contentsline {subsection}{Confianza en vecinos}{117}{section*.109}%
+\contentsline {subsection}{Vinculación de ELSOC a indicadores territoriales}{120}{section*.114}%
+\contentsline {subsection}{Frecuencia de visita a vecinos}{124}{section*.117}%
+\contentsline {subsection}{Seguridad barrial}{131}{section*.124}%
+\contentsline {subsection}{Criminalidad barrial}{133}{section*.130}%
+\contentsline {section}{\numberline {4.2}Migración}{139}{section.4.2}%
+\contentsline {subsection}{Amenaza realista y amenaza simbólica respecto a inmigrantes}{139}{section*.135}%
+\contentsline {section}{\numberline {4.3}Sexismo hostil y benevolente}{149}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Estatus subjetivo y Percepción de Mérito}{152}{section.4.4}%
+\contentsline {subsection}{Estatus subjetivo}{152}{section*.147}%
+\contentsline {chapter}{\numberline {5}Referencias}{159}{chapter.5}%
+\contentsline {chapter}{Como citar este informe}{167}{chapter*.154}%

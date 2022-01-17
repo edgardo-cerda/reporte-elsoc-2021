@@ -1,27 +1,16 @@
 % Options for packages loaded elsewhere
 \PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
-\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+\PassOptionsToPackage{dvipsnames,svgnames*,x11names*}{xcolor}
 %
 \documentclass[
   12pt,
 ]{book}
-\title{Radiografía del Cambio Social en Chile 2016-2021}
-\usepackage{etoolbox}
-\makeatletter
-\providecommand{\subtitle}[1]{% add subtitle to \maketitle
-  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
-}
-\makeatother
-\subtitle{Estudio Longitudinal Social de Chile}
-\author{}
-\date{\vspace{-2.5em}}
-
 \usepackage{amsmath,amssymb}
 \usepackage{lmodern}
 \usepackage{setspace}
-\usepackage{iftex}
-\ifPDFTeX
+\usepackage{ifxetex,ifluatex}
+\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
   \usepackage{textcomp} % provide euro and other symbols
@@ -52,10 +41,10 @@
 \hypersetup{
   pdftitle={Radiografía del Cambio Social en Chile 2016-2021},
   colorlinks=true,
-  linkcolor={blue},
-  filecolor={Maroon},
-  citecolor={Blue},
-  urlcolor={Blue},
+  linkcolor=blue,
+  filecolor=Maroon,
+  citecolor=Blue,
+  urlcolor=Blue,
   pdfcreator={LaTeX via pandoc}}
 \urlstyle{same} % disable monospaced font for URLs
 \usepackage[left=4cm, right=3cm, top=2.5cm, bottom=2.5cm]{geometry}
@@ -165,9 +154,20 @@
 \usepackage[normalem]{ulem}
 \usepackage{makecell}
 \usepackage{xcolor}
-\ifLuaTeX
+\ifluatex
   \usepackage{selnolig}  % disable illegal ligatures
 \fi
+
+\title{Radiografía del Cambio Social en Chile 2016-2021}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{Estudio Longitudinal Social de Chile}
+\author{}
+\date{\vspace{-2.5em}}
 
 \begin{document}
 \maketitle
@@ -177,8 +177,8 @@
 \setcounter{tocdepth}{1}
 \tableofcontents
 }
-\listoffigures
 \listoftables
+\listoffigures
 \setstretch{1.5}
 \hypertarget{introducciuxf3n}{%
 \chapter*{Introducción}\label{introducciuxf3n}}
@@ -498,7 +498,7 @@ Los resultados presentados a continuación incorporan el diseño muestral comple
 
 }
 
-\caption{Composici<U+00F3>n de muestra longitudinal}\label{fig:graf-composicion-muestra}
+\caption{Composición de muestra longitudinal}\label{fig:graf-composicion-muestra}
 \end{figure}
 
 \hypertarget{elsoc-en-pandemia}{%
@@ -565,7 +565,7 @@ Adicionalmente, cabe destacar que aproximadamente un 75\% de los encuestados fue
 
 }
 
-\caption{D<U+00ED>as acumulados en cuarentena, 30 d<U+00ED>as previo a la fecha de entrevista}\label{fig:dias-cuarentena}
+\caption{Días acumulados en cuarentena, 30 días previo a la fecha de entrevista}\label{fig:dias-cuarentena}
 \end{figure}
 
 \hypertarget{poluxedtica-y-ciudadanuxeda}{%
@@ -588,7 +588,7 @@ La Figura \ref{fig:graf-idpolitica} muestra la foto más reciente de ELSOC acerc
 
 }
 
-\caption{Identificaci<U+00F3>n pol<U+00ED>tica (2021)}\label{fig:graf-idpolitica}
+\caption{Identificación política (2021)}\label{fig:graf-idpolitica}
 \end{figure}
 
 \begin{figure}
@@ -597,7 +597,7 @@ La Figura \ref{fig:graf-idpolitica} muestra la foto más reciente de ELSOC acerc
 
 }
 
-\caption{Identificaci<U+00F3>n pol<U+00ED>tica, seg<U+00FA>n ola del estudio}\label{fig:graf-idpolitica-ola}
+\caption{Identificación política, según ola del estudio}\label{fig:graf-idpolitica-ola}
 \end{figure}
 
 Las Figura \ref{fig:graf-alluvial-idpolitica-ola} es un gráfico aluvial que muestra cómo las personas mantienen o cambian sus posiciones ideológicas en cada ola del estudio. Se evidencia como tras los muy estables números agregados de cada año se esconde una proporción importante de personas transitan entre categorías ideológicas, aunque mayoritariamente entre grupos adyacentes.
@@ -608,7 +608,7 @@ Las Figura \ref{fig:graf-alluvial-idpolitica-ola} es un gráfico aluvial que mue
 
 }
 
-\caption{Cambios en identificaci<U+00F3>n pol<U+00ED>tica, seg<U+00FA>n ola del estudio}\label{fig:graf-alluvial-idpolitica-ola}
+\caption{Cambios en identificación política, según ola del estudio}\label{fig:graf-alluvial-idpolitica-ola}
 \end{figure}
 
 La Figura \ref{fig:graf-cambios-idpolitica-ola} muestra el porcentaje que en cada ola del estudio respondió otra categoría ideológica que había mencionado el año anterior. Como se puede observar casi la mitad de las personas cambia de posición política consistentemente año a año. Estos patrones hablan a favor de dos segmentos de la población (numéricamente similares); uno con perfiles ideológicos altamente cristalizados y estables, y otro más bien volátil y fluctuante.
@@ -619,7 +619,7 @@ La Figura \ref{fig:graf-cambios-idpolitica-ola} muestra el porcentaje que en cad
 
 }
 
-\caption{Porcentaje que cambia su identificaci<U+00F3>n pol<U+00ED>tica entre olas del estudio, seg<U+00FA>n ola}\label{fig:graf-cambios-idpolitica-ola}
+\caption{Porcentaje que cambia su identificación política entre olas del estudio, según ola}\label{fig:graf-cambios-idpolitica-ola}
 \end{figure}
 
 La Figura \ref{fig:graf-cambios-idpol-idpol} muestra el cambio entre posiciones ideológicas entre 2016 y 2021 según la posición mencionada en 2016. Destaca que las personas identificadas con el centro son las más estables, con cerca de un 54\% que se mantuvo en la misma posición. Las personas de izquierda y derecha tienen un comportamiento espejo, donde cerca de un 47\% de cada grupo mantiene su identidad 5 años después de la primera entrevista, mientras que el resto migra mayoritariamente al centro y en una menor proporción a la no identificación. La ausencia de identidad ideológica se asocia a mayor volatilidad, donde sólo un 31\% mantuvo su posición, obteniendo elevada migración al centro (32\%) y la izquierda (21\%). La Figura \ref{fig:graf-cambios-idpolitica-edad} denota que los cambios inter-ola de posición ideológica se concentran mayormente en población jóven (70\% entre 18-29 años), mientras que entre los grupos mayores los niveles de cambio son menores y más similares entre grupos etarios (57\% entre 30-49 años y 50\% entre mayores de 65). Este patrón es enteramente consistente con la hipótesis de los años impresionables según la cual las actitudes de las personas son más inestables durante la adolescencia tardía y la adultez temprana, pero que se solidifican rápidamente y permanecen estables durante el resto del ciclo de vida (Krosnick y Alwin, 1989) .
@@ -630,7 +630,7 @@ La Figura \ref{fig:graf-cambios-idpol-idpol} muestra el cambio entre posiciones 
 
 }
 
-\caption{Posici<U+00F3>n pol<U+00ED>tica en 2021, seg<U+00FA>n posici<U+00F3>n pol<U+00ED>tica en 2016}\label{fig:graf-cambios-idpol-idpol}
+\caption{Posición política en 2021, según posición política en 2016}\label{fig:graf-cambios-idpol-idpol}
 \end{figure}
 
 \begin{figure}
@@ -639,7 +639,7 @@ La Figura \ref{fig:graf-cambios-idpol-idpol} muestra el cambio entre posiciones 
 
 }
 
-\caption{Porcentaje que cambia su identificaci<U+00F3>n pol<U+00ED>tica entre 2016 y 2021, seg<U+00FA>n grupo et<U+00E1>reo}\label{fig:graf-cambios-idpolitica-edad}
+\caption{Porcentaje que cambia su identificación política entre 2016 y 2021, según grupo etáreo}\label{fig:graf-cambios-idpolitica-edad}
 \end{figure}
 
 \hypertarget{interuxe9s-en-la-poluxedtica-y-opiniuxf3n-puxfablica}{%
@@ -655,7 +655,7 @@ La Figura \ref{fig:graf-interespolitica-ola} muestra que el 2019 se produjo un a
 
 }
 
-\caption{Porcentaje Bastante o Muy interesado en pol<U+00ED>tica, seg<U+00FA>n ola del estudio}\label{fig:graf-interespolitica-ola}
+\caption{Porcentaje Bastante o Muy interesado en política, según ola del estudio}\label{fig:graf-interespolitica-ola}
 \end{figure}
 
 \begin{figure}
@@ -664,7 +664,7 @@ La Figura \ref{fig:graf-interespolitica-ola} muestra que el 2019 se produjo un a
 
 }
 
-\caption{Participaci<U+00F3>n ciudadana, seg<U+00FA>n ola del estudio}\label{fig:graf-participciudadana-ola}
+\caption{Participación ciudadana, según ola del estudio}\label{fig:graf-participciudadana-ola}
 \end{figure}
 
 La Figura \ref{fig:graf-idpolitica-interespolitica} muestra una fuerte asociación estadística entre interés en política y preferencias ideológicas en el año 2021. La proporción de personas de izquierda crece en categorías de mayor interés, mientras que los individuos de derecha alcanzan proporciones similares sin importar el nivel de interés político. Los sujetos de centro se concentran en mayor medida en niveles de interés bajos, mientras que los sujetos que no se identifican tienden a coincidir con ausencia de interés en la política.
@@ -675,7 +675,7 @@ La Figura \ref{fig:graf-idpolitica-interespolitica} muestra una fuerte asociaci�
 
 }
 
-\caption{Identificaci<U+00F3>n pol<U+00ED>tica, seg<U+00FA>n grado de interes en la pol<U+00ED>tica (2021)}\label{fig:graf-idpolitica-interespolitica}
+\caption{Identificación política, según grado de interes en la política (2021)}\label{fig:graf-idpolitica-interespolitica}
 \end{figure}
 
 ELSOC también ha registrado durante múltiples años la opinión de las personas encuestadas respecto a diversos temas de discusión pública. Aquí pueden volver a verse patrones de cambio y estabilidad entre los años 2019 y 2021. La Figura \ref{fig:graf-temaspublicos-idpolitica} muestra, por un lado, que todos los grupos ideológicos han mantenido su posición frente al tema del aborto libre, pero por otra parte, se observa un incrementado acentuado, que fluctua entre los 12 y 17 puntos porcentuales, en el nivel de acuerdo con tomar medidas más drásticas para evitar mayor inmigración. Las alzas se pueden incluso notar en grupos menos proclives a estar de acuerdo con mayores restricciones como las personas que se identifican con la izquierda. En materia de pensiones, las personas de izquierda y centro han mantenido sus posiciones similares, mientras que las de derecha y que no se identifican han incrementado su acuerdo con que las personas deben ser responsables de su propia pensión, cuestión que puede deberse a la mediatización de los retiros de las AFP como derecho de propiedad individual sobre los fondos de pensiones.
@@ -686,7 +686,7 @@ ELSOC también ha registrado durante múltiples años la opinión de las persona
 
 }
 
-\caption{Acuerdo con temas de discusi<U+00F3>n p<U+00FA>blica, seg<U+00FA>n posici<U+00F3>n pol<U+00ED>tica (2019-2021)}\label{fig:graf-temaspublicos-idpolitica}
+\caption{Acuerdo con temas de discusión pública, según posición política (2019-2021)}\label{fig:graf-temaspublicos-idpolitica}
 \end{figure}
 
 \hypertarget{anuxe1lisis-de-clases-latentes-participaciuxf3n-poluxedtica}{%
@@ -722,7 +722,7 @@ En suma, los resultados indican que los grupos que menos expresan su voz políti
 
 }
 
-\caption{Perfiles de participaci<U+00F3>n pol<U+00ED>tica: 5 clases}\label{fig:tip-participacion5}
+\caption{Perfiles de participación política: 5 clases}\label{fig:tip-participacion5}
 \end{figure}
 
 \hypertarget{caracterizaciuxf3n-de-perfiles-de-participaciuxf3n}{%
@@ -737,7 +737,7 @@ La Figura \ref{fig:tipos-posicion-politica2} muestra cómo se distribuyen estos 
 
 }
 
-\caption{Posici<U+00F3>n pol<U+00ED>tica seg<U+00FA>n perfil de participaci<U+00F3>n}\label{fig:tipos-posicion-politica2}
+\caption{Posición política según perfil de participación}\label{fig:tipos-posicion-politica2}
 \end{figure}
 
 La Figura \ref{fig:tipos-sexo2} muestra que el grupo de Politizados es el único en que predominan los hombres (59,9\%), mientras que en los Hiper-politizados y Reactivos son marcadamente mayoritarias las mujeres, con un 68,9\% y 56,9\% respectivamente. Los Institucionales y Desafectados parecen tener una distribución por sexo más equilibrada con alrededor de un 54\% de mujeres y 46\% de hombres. La Figura \ref{fig:tipos-edad2} indica marcadas variaciones en términos de edad. Los Reactivos, Desafectados e Hiper-politizados son los grupos con mayor concentración de adultos jóvenes, con un 57,6\%, 55,9\% y 51,8\% respectivamente. Se presentan también altos porcentajes de población juvenil en los Reactivos (33,5\%) y Politizados (23,4\%). Los Institucionales, en cambio, obtienen la más alta proporción de adultos mayores y mediana edad, con un 26,3\% y 40,6\%, respectivamente.
@@ -748,7 +748,7 @@ La Figura \ref{fig:tipos-sexo2} muestra que el grupo de Politizados es el único
 
 }
 
-\caption{Sexo seg<U+00FA>n perfil de participaci<U+00F3>n}\label{fig:tipos-sexo2}
+\caption{Sexo según perfil de participación}\label{fig:tipos-sexo2}
 \end{figure}
 
 \begin{figure}
@@ -757,7 +757,7 @@ La Figura \ref{fig:tipos-sexo2} muestra que el grupo de Politizados es el único
 
 }
 
-\caption{Edad seg<U+00FA>n perfil de participaci<U+00F3>n}\label{fig:tipos-edad2}
+\caption{Edad según perfil de participación}\label{fig:tipos-edad2}
 \end{figure}
 
 \begin{figure}
@@ -766,7 +766,7 @@ La Figura \ref{fig:tipos-sexo2} muestra que el grupo de Politizados es el único
 
 }
 
-\caption{Educaci<U+00F3>n seg<U+00FA>n perfil de participaci<U+00F3>n}\label{fig:tipos-educ2}
+\caption{Educación según perfil de participación}\label{fig:tipos-educ2}
 \end{figure}
 
 La Figura \ref{fig:tipos-interes2} indica que los grupos con menor interés en la política son los Desafectados e Institucionales, con un 79,1\% y 70,1\% de personas con nada o poco interés. A ello le siguen los Politizados y Reactivos, con un 45,1\% y 44,4\%, respectivamente. El grupo de Hiper-politizados es el que alcanza mayores niveles de interés, con un 62,8\% de individuos muy o bastante interesados, seguido de los Reactivos y Politizados con un 27,3\% y 25,6\%. Este patrón resulta del todo relevante ya que confirma que en Chile las personas más politizadas expresan sus demandas y preocupaciones por los canales no institucionales, al tiempo que los menos politizados abiertamente no participan de ninguna instancia o si lo hacen emplean los canales formales.
@@ -777,7 +777,7 @@ La Figura \ref{fig:tipos-interes2} indica que los grupos con menor interés en l
 
 }
 
-\caption{Inter<U+00E9>s en la pol<U+00ED>tica seg<U+00FA>n perfil de participaci<U+00F3>n}\label{fig:tipos-interes2}
+\caption{Interés en la política según perfil de participación}\label{fig:tipos-interes2}
 \end{figure}
 
 La Figura \ref{fig:tipos-satisfaccion2} muestra una alta insatisfacción con la democracia de parte de todos los grupos, aunque esta es aún más pronunciada en el grupo de los Hiper-politizados (83,6\%) y Reactivos (79\%). Si sumamos los porcentajes de personas altamente satisfechas y algo satisfechas, los niveles de satisfacción con la democracia son más altos entre los Politizados, Desafectados e Institucionales. Es decir, hay una marcada distancia de toda forma de acción política y la focalización en canales institucionales parecen ser indicativos de mayores niveles de satisfacción política.
@@ -788,7 +788,7 @@ La Figura \ref{fig:tipos-satisfaccion2} muestra una alta insatisfacción con la 
 
 }
 
-\caption{Satisfacci<U+00F3>n con la democracia seg<U+00FA>n perfil de participaci<U+00F3>n}\label{fig:tipos-satisfaccion2}
+\caption{Satisfacción con la democracia según perfil de participación}\label{fig:tipos-satisfaccion2}
 \end{figure}
 
 La Figura \ref{fig:tipos-legitimidad2} muestra que los Hiper-politizados y Politizados tienen una mayor preferencia por la democracia como régimen de gobierno, con un 88,1\% y 81,3\% respectivamente, versus sólo un 49,8\%, 49,2\% y 47,1\% de apoyo democrático entre los Reactivos, Institucionales y Desafectados. Esto implica, no sin bastante ironía, que el grupo que más vota en elecciones políticas nacionales es, junto al que jamás participa políticamente, el que menos explícitamente apoya la democracia como régimen político.
@@ -799,7 +799,7 @@ La Figura \ref{fig:tipos-legitimidad2} muestra que los Hiper-politizados y Polit
 
 }
 
-\caption{Legitimidad democr<U+00E1>tica seg<U+00FA>n perfil de participaci<U+00F3>n}\label{fig:tipos-legitimidad2}
+\caption{Legitimidad democrática según perfil de participación}\label{fig:tipos-legitimidad2}
 \end{figure}
 
 Respecto al actual proceso constituyente, la Figura \ref{fig:tipos-optimismo2} muestra los niveles de optimismo constitucional. Se observan los mayores niveles de optimismo entre Hiper-politizados y Politizados, con más de un 70\% de optimismo en ambos grupos. Los Reactivos están justo por debajo con un 69,3\%, mientras que los Institucionales y Desafectados alcanzan un optimismo del 60,3\% y 56\%. Esto implica que entre todos los grupos prevalece una sensación positiva acerca del proceso constitucional, pese a existir diferencias inter-grupales relevantes en otras materias.
@@ -810,7 +810,7 @@ Respecto al actual proceso constituyente, la Figura \ref{fig:tipos-optimismo2} m
 
 }
 
-\caption{Optimismo constitucional seg<U+00FA>n perfil de participaci<U+00F3>n}\label{fig:tipos-optimismo2}
+\caption{Optimismo constitucional según perfil de participación}\label{fig:tipos-optimismo2}
 \end{figure}
 
 \hypertarget{ciclo-de-movilizaciuxf3n-poluxedtica-y-estallido-social}{%
@@ -824,7 +824,7 @@ Desde hace varios años en Chile se han desarrollado múltiples movimientos soci
 
 }
 
-\caption{<U+00BF>Cu<U+00E1>l de los siguientes movimientos sociales m<U+00E1>s valora? (2019-2021)}\label{fig:graf-movsocial}
+\caption{¿Cuál de los siguientes movimientos sociales más valora? (2019-2021)}\label{fig:graf-movsocial}
 \end{figure}
 
 Al analizar cómo ha evolucionado la valoración de los movimientos progresistas y conservadores a lo largo de los años (ver Figura \ref{fig:graf-movsociales-movsocial-olas}), se puede constatar un aumento sustantivo de la valoración de los movimientos progresistas que alcanzan un nivel muy alto el año del estallido social (2019) y el año en que se llevó a cabo el plebiscito para la convención constituyente (2021). Esta alta valoración de los movimientos progresistas revela en parte el nivel de politización que alcanzó la población, particularmente durante los dos últimos años al valorar aquellos movimientos que se orientan particularmente al cambio social. Un patrón opuesto se observa en el caso de los movimientos conservadores donde se constata una caída gradual a lo largo de los años de su valoración, aunque se registra una importante recuperación entre el 2019 y 2021 donde pasa de un 6.5\% a 14.7\%.
@@ -835,7 +835,7 @@ Al analizar cómo ha evolucionado la valoración de los movimientos progresistas
 
 }
 
-\caption{Movimiento social que m<U+00E1>s valora, Seg<U+00FA>n ola}\label{fig:graf-movsociales-movsocial-olas}
+\caption{Movimiento social que más valora, Según ola}\label{fig:graf-movsociales-movsocial-olas}
 \end{figure}
 
 Cuando analizamos la participación política según el movimiento social más valorado a lo largo del tiempo, verificamos que los/as chilenos/as reportan bajos niveles de participación entre los años 2016 y 2018, puesto que solo 5.2\% y 4.0\% respectivamente reportan participar ``frecuentemente o muy frecuentemente'' en el movimiento social que más valoran. Ya el año 2019, el año en que ocurre el estallido social, la participación sube considerablemente alcanzando un 11.2\% de personas que participan ``frecuentemente o muy frecuentemente.'' Si bien es cierto durante el 2021 se observa una caída respecto del año anterior, los niveles de participación fluctúan en torno a un 10.1\%. Estos resultados apuntan a que, por lo general, la participación regular en movimientos sociales es baja en Chile pero que, en el contexto del Estallido Social y el año siguiente, los niveles de participación suben y se mantienen relativamente elevados en comparación con años anteriores.
@@ -846,7 +846,7 @@ Cuando analizamos la participación política según el movimiento social más v
 
 }
 
-\caption{Participaci<U+00F3>n en movimientos sociales valorados, seg<U+00FA>n ola}\label{fig:graf-participmovsocial-olas}
+\caption{Participación en movimientos sociales valorados, según ola}\label{fig:graf-participmovsocial-olas}
 \end{figure}
 
 Cuando nos enfocamos en la evolución de la participación en movimientos progresistas y conservadores a lo largo de los años, se constata un aumento de la participación en los movimientos progresistas durante 2019, año en que 14.5\% de los/as chilenos/as reportan participar ``frecuentemente o muy frecuentemente'' en este tipo de movimientos sociales. No obstante, la participación regular en movimientos progresistas disminuye un poco el año de 2021 (con 11.8\% de personas reportando participar ``frecuentemente o muy frecuentemente'').
@@ -861,7 +861,7 @@ En su conjunto, estos resultados revelan mayores niveles de movilización social
 
 }
 
-\caption{Participaci<U+00F3>n en tipos de movimientos sociales, seg<U+00FA>n ola}\label{fig:graf-participmovsociales2-ola}
+\caption{Participación en tipos de movimientos sociales, según ola}\label{fig:graf-participmovsociales2-ola}
 \end{figure}
 
 \hypertarget{justificaciuxf3n-de-la-violencia}{%
@@ -885,7 +885,7 @@ Por otro lado, cuando se pregunta cuán justificable es que las personas amarren
 
 }
 
-\caption{Justificaci<U+00F3>n de la violencia a manos de ciudadanos, seg<U+00FA>n ola}\label{fig:graf-justviolencia1-ola}
+\caption{Justificación de la violencia a manos de ciudadanos, según ola}\label{fig:graf-justviolencia1-ola}
 \end{figure}
 
 Tal como lo revela la Figura \ref{fig:graf-justviolencia2-ola}, por lo general, existe una baja justificación de la violencia policial en distintos contextos a lo largo del tiempo. Más concretamente, cuando se trata del uso de violencia para reprimir una marcha pacífica, durante el año de 2016, el 7\% de los encuestados reporta justificarse ``muchas veces o siempre'' el uso de la violencia. Esta justificación cae considerablemente el año 2019 (3.6\%) periodo en el cual ocurre el estallido social, sin embargo, registra una nueva alza llegando a un 6.1\% el año 2021.
@@ -902,7 +902,7 @@ Resumidamente, en comparación con años anteriores, el año de 2019 existen men
 
 }
 
-\caption{Justificaci<U+00F3>n de la violencia, seg<U+00FA>n ola}\label{fig:graf-justviolencia2-ola}
+\caption{Justificación de la violencia, según ola}\label{fig:graf-justviolencia2-ola}
 \end{figure}
 
 \hypertarget{confianza-interpersonal-y-en-instituciones}{%
@@ -922,7 +922,7 @@ El gráfico \ref{fig:graf-confianzainterpersonal-ola} muestra la evolución de d
 
 }
 
-\caption{Confianza interpersonal, seg<U+00FA>n ola}\label{fig:graf-confianzainterpersonal-ola}
+\caption{Confianza interpersonal, según ola}\label{fig:graf-confianzainterpersonal-ola}
 \end{figure}
 
 Detrás de la estabilidad temporal yace un gran nivel de diferenciación transversal en la confianza según distintos grupos socioeconómicos, particularmente educacionales. El gráfico \ref{fig:graf-confianzainterpersonal-educ} caracteriza la marcada desconfianza interpersonal en 2021, mostrando diferencias muy pronunciadas entre individuos con menor nivel educativo, que confían mucho menos y son más recelosos de cuán justos serán los demás,, e individuos con alto registro educacional registran mayor confianza en el otro y mayor percepción de comportamiento justo.
@@ -933,7 +933,7 @@ Detrás de la estabilidad temporal yace un gran nivel de diferenciación transve
 
 }
 
-\caption{Confianza interpersonal (2021), seg<U+00FA>n nivel educacional}\label{fig:graf-confianzainterpersonal-educ}
+\caption{Confianza interpersonal (2021), según nivel educacional}\label{fig:graf-confianzainterpersonal-educ}
 \end{figure}
 
 \hypertarget{confianza-en-las-instituciones}{%
@@ -950,7 +950,7 @@ Segundo, varias instituciones como el Congreso, Gobierno y Carabineros experimen
 
 }
 
-\caption{Grado de confianza en instituciones, seg<U+00FA>n ola}\label{fig:graf-confinstituciones1-ola}
+\caption{Grado de confianza en instituciones, según ola}\label{fig:graf-confinstituciones1-ola}
 \end{figure}
 
 \begin{figure}
@@ -959,7 +959,7 @@ Segundo, varias instituciones como el Congreso, Gobierno y Carabineros experimen
 
 }
 
-\caption{Grado de confianza en instituciones, seg<U+00FA>n ola}\label{fig:graf-confinstituciones2-ola}
+\caption{Grado de confianza en instituciones, según ola}\label{fig:graf-confinstituciones2-ola}
 \end{figure}
 
 \begin{figure}
@@ -982,7 +982,7 @@ La literatura ha distinguido entre el apoyo a los principios del régimen democr
 
 }
 
-\caption{Preferencia por y satisfacci<U+00F3>n con la democracia, seg<U+00FA>n ola}\label{fig:graf-preferenciademocracia-ola}
+\caption{Preferencia por y satisfacción con la democracia, según ola}\label{fig:graf-preferenciademocracia-ola}
 \end{figure}
 
 El gráfico \ref{fig:graf-preferenciademocracia-idpolitica} y \ref{fig:graf-preferenciademocracia2-idpolitica} indican que el fenómeno del ciudadano crítico es transversal a la identificación en el espectro izquierda-derecha, aunque se presenta más marcadamente en sujetos identificados con la izquierda que legitiman en un 74,8\% la democracia y solo un 4,1\% está satisfecho o muy satisfecho con su funcionamiento. En contraste, los individuos de derecha tienen una menor legitimidad democrática, del 38,7\%, al tiempo que un 8,9\% está satisfecho o muy satisfecho con su funcionamiento.
@@ -993,7 +993,7 @@ El gráfico \ref{fig:graf-preferenciademocracia-idpolitica} y \ref{fig:graf-pref
 
 }
 
-\caption{Preferencia por y satisfacci<U+00F3>n con la democracia (2021), seg<U+00FA>n posici<U+00F3>n ideol<U+00F3>gica}\label{fig:graf-preferenciademocracia-idpolitica}
+\caption{Preferencia por y satisfacción con la democracia (2021), según posición ideológica}\label{fig:graf-preferenciademocracia-idpolitica}
 \end{figure}
 
 \begin{figure}
@@ -1002,7 +1002,7 @@ El gráfico \ref{fig:graf-preferenciademocracia-idpolitica} y \ref{fig:graf-pref
 
 }
 
-\caption{Preferencia por la democracia (2021), seg<U+00FA>n posici<U+00F3>n ideol<U+00F3>gica}\label{fig:graf-preferenciademocracia2-idpolitica}
+\caption{Preferencia por la democracia (2021), según posición ideológica}\label{fig:graf-preferenciademocracia2-idpolitica}
 \end{figure}
 
 \hypertarget{participaciuxf3n-electoral}{%
@@ -1016,7 +1016,7 @@ Con el inicio del proceso constituyente, durante 2020 y 2021 se realizaron proce
 
 }
 
-\caption{Participaci<U+00F3>n electoral, seg<U+00FA>n elecci<U+00F3>n}\label{fig:graf-participelect-ola}
+\caption{Participación electoral, según elección}\label{fig:graf-participelect-ola}
 \end{figure}
 
 \begin{figure}
@@ -1036,7 +1036,7 @@ El gráfico \ref{fig:graf-participelect-olas-edad} muestra que los patrones de p
 
 }
 
-\caption{Participaci<U+00F3>n electoral, seg<U+00FA>n tramo de edad}\label{fig:graf-participelect-olas-edad}
+\caption{Participación electoral, según tramo de edad}\label{fig:graf-participelect-olas-edad}
 \end{figure}
 
 En términos de preferencias ideológicas, el gráfico \ref{fig:graf-votoplebiscito-idpolitica} muestra que la opción por el apruebo fue más votada entre los sujetos identificados con la izquierda, con un 80,2\% comparado con un 46,7\% entre quienes se identifican con la derecha. También se producen diferencias importantes en los niveles de abstención entre grupos ideológicos, donde un 18\% de las personas que se identifican con la izquierda no votaron, cifra que asciende a un 36\% y 32\% entre las personas de centro y derecha, respectivamente. Esto es consistente con la idea de que la promesa de una transformación institucional se convirtió en fuerte motivante de participación. Los niveles de apoyo a la opción del Apruebo según tendencia ideológica se reiteran en el gráfico \ref{fig:graf-voto-votoprevio} que muestra que quienes votaron por candidatos de izquierda en elecciones pasadas también tendieron a votar de sobremanera por el apruebo. Por otro lado, el gráfico \ref{fig:graf-voto-votopresi} robustece la idea del voto como hábito, pues quienes votaron en elecciones anteriores participaron del plebiscito en mayor proporción.
@@ -1047,7 +1047,7 @@ En términos de preferencias ideológicas, el gráfico \ref{fig:graf-votoplebisc
 
 }
 
-\caption{Voto en plebiscito de 2020, seg<U+00FA>n identificaci<U+00F3>n pol<U+00ED>tica}\label{fig:graf-votoplebiscito-idpolitica}
+\caption{Voto en plebiscito de 2020, según identificación política}\label{fig:graf-votoplebiscito-idpolitica}
 \end{figure}
 
 \begin{figure}
@@ -1056,7 +1056,7 @@ En términos de preferencias ideológicas, el gráfico \ref{fig:graf-votoplebisc
 
 }
 
-\caption{Voto en plebiscito de 2020, seg<U+00FA>n voto en elecciones previas}\label{fig:graf-voto-votoprevio}
+\caption{Voto en plebiscito de 2020, según voto en elecciones previas}\label{fig:graf-voto-votoprevio}
 \end{figure}
 
 \begin{figure}
@@ -1065,7 +1065,7 @@ En términos de preferencias ideológicas, el gráfico \ref{fig:graf-votoplebisc
 
 }
 
-\caption{Voto en plebiscito de 2020, seg<U+00FA>n voto en elecci<U+00F3>n presidencial de 2017}\label{fig:graf-voto-votopresi}
+\caption{Voto en plebiscito de 2020, según voto en elección presidencial de 2017}\label{fig:graf-voto-votopresi}
 \end{figure}
 
 \hypertarget{proceso-constituyente}{%
@@ -1088,7 +1088,7 @@ El plebiscito de 2020 dió inicio al proceso constituyente con un resultado del 
 
 }
 
-\caption{Optimismo constitucional, seg<U+00FA>n voto en plebiscito de 2020}\label{fig:graf-optimismoconstitucional-votoplebiscito}
+\caption{Optimismo constitucional, según voto en plebiscito de 2020}\label{fig:graf-optimismoconstitucional-votoplebiscito}
 \end{figure}
 
 \begin{figure}
@@ -1097,7 +1097,7 @@ El plebiscito de 2020 dió inicio al proceso constituyente con un resultado del 
 
 }
 
-\caption{Optimismo constitucional, seg<U+00FA>n nivel educacional}\label{fig:graf-optimismoconstitucional-educ}
+\caption{Optimismo constitucional, según nivel educacional}\label{fig:graf-optimismoconstitucional-educ}
 \end{figure}
 
 \begin{figure}
@@ -1106,7 +1106,7 @@ El plebiscito de 2020 dió inicio al proceso constituyente con un resultado del 
 
 }
 
-\caption{Optimismo constitucional, seg<U+00FA>n identificaci<U+00F3>n pol<U+00ED>tica}\label{fig:graf-optimismoconstitucional-idpolitica}
+\caption{Optimismo constitucional, según identificación política}\label{fig:graf-optimismoconstitucional-idpolitica}
 \end{figure}
 
 \hypertarget{salud-mental-y-bienestar}{%
@@ -1129,7 +1129,7 @@ Por otra parte, y en contraste, solo un 15,8\% indicó en 2021 que su salud es m
 
 }
 
-\caption{Satisfacci<U+00F3>n con la vida, ideal de vida y salud subjetiva (ola 2021)}\label{fig:salud-bienestar-2021}
+\caption{Satisfacción con la vida, ideal de vida y salud subjetiva (ola 2021)}\label{fig:salud-bienestar-2021}
 \end{figure}
 
 Al analizar la evolución de estos indicadores, encontramos dos fenómenos que destacan: una fuerte caída en términos de salud subjetiva y satisfacción con la vida durante 2019; y una más fuerte y, quizás contraintuitiva, recuperación a partir de 2021.
@@ -1144,7 +1144,7 @@ Por otra parte, el 2021 se aprecia un marcado aumento en la satisfacción y acer
 
 }
 
-\caption{Satisfacci<U+00F3>n con la vida, ideal de vida y salud subjetiva, seg<U+00FA>n ola}\label{fig:salud-bienestar-olas}
+\caption{Satisfacción con la vida, ideal de vida y salud subjetiva, según ola}\label{fig:salud-bienestar-olas}
 \end{figure}
 
 \hypertarget{sintomatologuxeda-depresiva}{%
@@ -1163,7 +1163,7 @@ Los resultados de 2021 muestran que, si bien un 48,6\% de la población no prese
 
 }
 
-\caption{Porcentaje que presenta s<U+00ED>ntomas de depresi<U+00F3>n (2021)}\label{fig:depre-2021}
+\caption{Porcentaje que presenta síntomas de depresión (2021)}\label{fig:depre-2021}
 \end{figure}
 
 Como es de esperar, la existencia de síntomas depresivos se encuentra altamente correlacionada con la satisfacción con la vida y con el porcentaje que considera que su vida se acerca a su ideal: un 93,2\% de aquellos y aquellas que no presentan síntomas depresivos se encuentran satisfechos o muy satisfechos con su vida, mientras que este porcentaje se reduce a 53,8\% entre aquellos que presentan sintomatología depresiva moderada-severa a severa. Ahora bien, este último resultado podría parecer paradojal, puesto que se trata de un grupo de personas que se encuentran satisfechas con sus vidas pero al mismo tiempo sufren un estado depresivo, caracterizado por intensa tristeza. Esta aparente paradoja podría explicarse a partir del modelo de ``dos continuos'' (Westerhof \& Keyes, 2010; Kinderman et al, 2015), en el cual los trastornos mentales (como la depresión) y la salud mental y bienestar están relacionados, pero son dimensiones diferentes (un continuo indica la presencia o ausencia de salud mental y bienestar subjetivo, mientras que el otro indica la presencia o ausencia de psicopatología). Esto permite entender que personas con un mismo nivel de severidad de síntomas puedan tener diferentes niveles de adaptación psicosocial, y un impacto diferente en la calidad de vida y satisfacción con la misma.
@@ -1174,7 +1174,7 @@ Como es de esperar, la existencia de síntomas depresivos se encuentra altamente
 
 }
 
-\caption{Satisfacci<U+00F3>n con la vida, ideal de vida y salud subjetiva (ola 2021), seg<U+00FA>n Sintomas de depresi<U+00F3>n}\label{fig:depre-bienestar}
+\caption{Satisfacción con la vida, ideal de vida y salud subjetiva (ola 2021), según Sintomas de depresión}\label{fig:depre-bienestar}
 \end{figure}
 
 Al igual que en términos de satisfacción con la vida, la prevalencia de síntomas depresivos aumentó el año 2019, en particular la prevalencia de sintomatología depresiva media, al pasar de 33,0\% a 40,9\% entre 2018 y 2019. Asimismo, la relativamente alta prevalencia de síntomas depresivos moderados a severos en 2019 (25,1\%) parece mostrar un efecto importante y negativo del contexto de estallido social sobre la salud mental de la población. Este resultado se encuentra en sintonía con la literatura internacional. De hecho, se estima que después de grandes protestas sociales la prevalencia de depresión aumenta en torno a 7\% (Ni et al, 2020), lo cual refleja un impacto comparable a los de los desastres naturales o conflictos armados. Un estudio longitudinal realizado en Hong Kong mostró que la depresión y los síntomas de estrés postraumático aumentaron significativamente luego del estallido social ocurrido a principios de 2019 en dicho país (Ni et al, 2020).
@@ -1193,7 +1193,7 @@ La menor prevalencia de síntomas depresivos moderados a severos en 2021 podría
 
 }
 
-\caption{Porcentaje que presenta s<U+00ED>ntomas de depresi<U+00F3>n, seg<U+00FA>n ola}\label{fig:depre-olas}
+\caption{Porcentaje que presenta síntomas de depresión, según ola}\label{fig:depre-olas}
 \end{figure}
 
 Uno de los hallazgos más consistentes en epidemiología psiquiátrica es que la depresión afecta principalmente a las mujeres, con prevalencias que tienden a ser dos veces más altas que en hombres (Salk et al, 2017; Jiménez et al, 2021). Consistente con ello, ELSOC muestra una importante brecha de género en términos de prevalencia de síntomas depresivos. En 2021, 27,0\% de las mujeres presentaron síntomas depresivos moderados a severos, mientras que en hombres este porcentaje fue de 9,6\%. Se observa además que las mayores brechas de género en la prevalencia de síntomas depresivos se produjeron en 2019 y 2021, lo que podría sugerir que las condiciones de mayor conflictividad social durante 2019 y las condiciones de pandemia durante 2020-2021 podrían haber afectado particularmente la salud mental de las mujeres.
@@ -1206,7 +1206,7 @@ Es bien sabido que las mujeres están más expuestas a desventajas sociales, tie
 
 }
 
-\caption{Porcentaje que presenta s<U+00ED>ntomas de depresi<U+00F3>n moderados a severos, seg<U+00FA>n sexo y ola}\label{fig:depre-olas-sexo}
+\caption{Porcentaje que presenta síntomas de depresión moderados a severos, según sexo y ola}\label{fig:depre-olas-sexo}
 \end{figure}
 
 Por otra parte, los datos muestran que existen brechas de género significativas en términos de estado de salud general percibido, pero no en términos de satisfacción con la vida entre los años de estudio.
@@ -1217,7 +1217,7 @@ Por otra parte, los datos muestran que existen brechas de género significativas
 
 }
 
-\caption{Satisfacci<U+00F3>n con la vida, ideal de vida y salud subjetiva, seg<U+00FA>n sexo (2021)}\label{fig:salud-bienestar-sexo}
+\caption{Satisfacción con la vida, ideal de vida y salud subjetiva, según sexo (2021)}\label{fig:salud-bienestar-sexo}
 \end{figure}
 
 Diversos estudios muestran que la depresión y los síntomas depresivos son más frecuentes entre las personas pertenecientes a grupos socioeconómicos bajos (Jiménez et al, 2021). De hecho, la última Encuesta Nacional de Salud muestra que la prevalencia de síntomas depresivos es tres veces mayor en el primer quintil que en el quinto quintil de ingresos (MINSAL, 2018).
@@ -1232,7 +1232,7 @@ Uno de los primeros resultados que se obtienen es que la presencia de síntomas 
 
 }
 
-\caption{Cambios en s<U+00ED>ntomas depresivos entre 2016 y 2021}\label{fig:depre-alluvial}
+\caption{Cambios en síntomas depresivos entre 2016 y 2021}\label{fig:depre-alluvial}
 \end{figure}
 
 Las trayectorias de los síntomas depresivos en la población general son heterogéneas, ya que la mayoría de los individuos no muestran síntomas o muestran síntomas leves, mientras que una minoría experimenta una alta carga de síntomas recurrentes o persistentes. Al considerar el período completo de análisis, observamos que 56,0\% de la población en estudio no presentó síntomas moderados a severos de depresión en las 5 olas del estudio, mientras que un 2,1\% presentó esta carga de síntomas en todas las olas. Éste último grupo es particularmente relevante, ya que la literatura muestra que muchos de los efectos negativos de la depresión se ven potenciados por su persistencia. La persistencia o recurrencia de los síntomas depresivos afecta negativamente a diferentes áreas de la calidad de vida relacionada con la salud (Rubio et al.~2011) y se asocia con un deterioro del funcionamiento y una carga personal y social en la vida de las personas (García-Toro et al 2013, Schramm et al 2020). Algunos estudios sugieren que el impacto económico de la depresión en la sociedad está relacionado con su duración en el tiempo más que con su severidad (Angst et al 2009, Nübe et al 2020).
@@ -1247,7 +1247,7 @@ Distintas dimensiones demográficas o socioeconómicas pueden aumentar indirecta
 
 }
 
-\caption{Porcentaje que presenta s<U+00ED>ntomas de depresi<U+00F3>n moderada a severa de forma reiterada, seg<U+00FA>n n<U+00FA>mero de ocurrencias}\label{fig:ndepr}
+\caption{Porcentaje que presenta síntomas de depresión moderada a severa de forma reiterada, según número de ocurrencias}\label{fig:ndepr}
 \end{figure}
 
 En este sentido, nuevamente se observa una marcada brecha de género en términos de la presencia reiterada de síntomas depresivos moderados a severos: en hombres, el porcentaje que no ha presentado síntomas moderados a severos en ninguna ola del estudio es de 68,5\%; mientras que este porcentaje es de 45,2\% en mujeres. De igual forma, solo 0,7\% de los hombres presentaron síntomas moderados a severos en todas las olas, versus 3,4\% entre las mujeres.
@@ -1258,7 +1258,7 @@ En este sentido, nuevamente se observa una marcada brecha de género en término
 
 }
 
-\caption{Porcentaje que presenta s<U+00ED>ntomas de depresi<U+00F3>n moderada a severa de forma reiterada, seg<U+00FA>n n<U+00FA>mero de ocurrencias y sexo}\label{fig:ndepr-sexo}
+\caption{Porcentaje que presenta síntomas de depresión moderada a severa de forma reiterada, según número de ocurrencias y sexo}\label{fig:ndepr-sexo}
 \end{figure}
 
 \hypertarget{trayectorias-de-suxedntomas-depresivos}{%
@@ -1277,7 +1277,7 @@ Un 12,5\% se clasifica en una carga media-alta de síntomas de depresión, al pr
 
 }
 
-\caption{Perfiles de sintomatolog<U+00ED>a depresiva: 4 clases (2016-2021)}\label{fig:perfiles-depr}
+\caption{Perfiles de sintomatología depresiva: 4 clases (2016-2021)}\label{fig:perfiles-depr}
 \end{figure}
 
 Al analizar cómo se distribuye la población entre las distintas trayectorias de síntomas depresivos, encontramos que en torno a un 14,4\% de las mujeres, versus un 4,5\% de los hombres, presenta una carga alta de síntomas depresivos a lo largo del tiempo. Esto confirma que las mujeres no sólo presentan una mayor prevalencia de síntomas depresivos, sino que además sufren una mayor persistencia y recurrencia de los síntomas a lo largo del tiempo. Dicho de otro modo, a las mujeres les cuesta más recuperarse de un episodio depresivo que a los hombres, lo cual es consistente con otros estudios (Brunoni et al, 2020; Schramm et al 2020). Es posible interpretar este hallazgo en relación con el hecho de que las mujeres están expuestas con mayor frecuencia a desventajas sociales (niveles de educación e ingresos más bajos, ocupaciones menos calificadas, desigualdades de poder y estatus) y a factores de estrés a lo largo de la vida (inseguridad económica, sobrecarga de trabajo) (Hammarström et al, 2009). Las mujeres, sobre todo aquellas que pertenecen al estrato socioeconómico bajo, tienden a tener menos control sobre áreas importantes de sus vidas en comparación con los hombres, lo que puede aumentar el riesgo de sufrir síntomas depresivos a lo largo del tiempo (Hammarström et al, 2009).
@@ -1288,7 +1288,7 @@ Al analizar cómo se distribuye la población entre las distintas trayectorias d
 
 }
 
-\caption{Cargas de sintomatolog<U+00ED>a depresiva, seg<U+00FA>n sexo}\label{fig:perfiles-depr-sexo}
+\caption{Cargas de sintomatología depresiva, según sexo}\label{fig:perfiles-depr-sexo}
 \end{figure}
 
 \begin{figure}
@@ -1297,7 +1297,7 @@ Al analizar cómo se distribuye la población entre las distintas trayectorias d
 
 }
 
-\caption{Cargas de sintomatolog<U+00ED>a depresiva, seg<U+00FA>n tramo de edad (en 2016)}\label{fig:perfiles-depr-edad}
+\caption{Cargas de sintomatología depresiva, según tramo de edad (en 2016)}\label{fig:perfiles-depr-edad}
 \end{figure}
 
 Estudios previos han mostrado que el estatus socioeconómico bajo, medido por ingresos o nivel educacional, está asociado a una mayor persistencia y recurrencia de los síntomas depresivos a lo largo del tiempo (Musliner et al 2016). De hecho, algunos estudios sugieren que las desventajas socioeconómicas parecen ser más importantes en la persistencia de los síntomas depresivos que en su desencadenamiento (Lorant et al.~2003).
@@ -1312,7 +1312,7 @@ Estos resultados podrían también sugerir que la persistencia de problemas de s
 
 }
 
-\caption{Cargas de sintomatolog<U+00ED>a depresiva, seg<U+00FA>n quintiles de ingreso (en 2021)}\label{fig:perfiles-depr-quintil}
+\caption{Cargas de sintomatología depresiva, según quintiles de ingreso (en 2021)}\label{fig:perfiles-depr-quintil}
 \end{figure}
 
 \hypertarget{economuxeda-y-bienestar}{%
@@ -1330,7 +1330,7 @@ Ahora bien, no es fácil estimar si los menores niveles de ingreso son la causa 
 
 }
 
-\caption{Porcentaje que presenta s<U+00ED>ntomas de depresi<U+00F3>n moderados a severos, seg<U+00FA>n quintiles de ingreso del hogar (2021)}\label{fig:depre-quintil}
+\caption{Porcentaje que presenta síntomas de depresión moderados a severos, según quintiles de ingreso del hogar (2021)}\label{fig:depre-quintil}
 \end{figure}
 
 De igual forma, a medida que aumenta el nivel educacional alcanzado por los encuestados, es menor la presencia de síntomas moderados a severos de depresión: 26,0\% de quienes alcanzaron educación básica presentan síntomas de depresión moderada a severa, mientras que este porcentaje es de 16,0\% para aquellos y aquellas con educación universitaria.
@@ -1341,7 +1341,7 @@ De igual forma, a medida que aumenta el nivel educacional alcanzado por los encu
 
 }
 
-\caption{Porcentaje que presenta s<U+00ED>ntomas de depresi<U+00F3>n moderados a severos, seg<U+00FA>n nivel educacional (2021)}\label{fig:depre-educ}
+\caption{Porcentaje que presenta síntomas de depresión moderados a severos, según nivel educacional (2021)}\label{fig:depre-educ}
 \end{figure}
 
 De igual forma, la situación laboral se encuentra altamente correlacionada con la presencia de síntomas moderados a severos de depresión. El grupo con menor presencia de dichos síntomas en 2021 es el de aquellos y aquellas con trabajo remunerado (15,3\%), seguido de jubilados(as) o pensionados(as) (17,8\%).
@@ -1356,7 +1356,7 @@ Uno de los grupos con mayor presencia de síntomas depresivos moderados a severo
 
 }
 
-\caption{Porcentaje que presenta s<U+00ED>ntomas de depresi<U+00F3>n moderados a severos, seg<U+00FA>n situaci<U+00F3>n laboral y sexo (2021)}\label{fig:depre-sitlab}
+\caption{Porcentaje que presenta síntomas de depresión moderados a severos, según situación laboral y sexo (2021)}\label{fig:depre-sitlab}
 \end{figure}
 
 \begin{figure}
@@ -1365,7 +1365,7 @@ Uno de los grupos con mayor presencia de síntomas depresivos moderados a severo
 
 }
 
-\caption{Situaci<U+00F3>n laboral, seg<U+00FA>n sexo (2021)}\label{fig:sitlab-sexo}
+\caption{Situación laboral, según sexo (2021)}\label{fig:sitlab-sexo}
 \end{figure}
 
 La pandemia de COVID-19 generó una ruptura en la vida cotidiana y laboral de las personas. Desde mediados de marzo de 2020, el gobierno introdujo medidas de distanciamiento físico y severas restricciones de movimiento, forzando a un grupo importante de la población a trabajar de forma remota, ya sea de forma completa desde su hogar o con distintas modalidades híbridas de trabajo presencial y remoto. Los resultados de la encuesta nos señalan que un 19,2\% de los trabajadores y trabajadoras remunerados trabajaba de manera completa desde el hogar al momento de ser encuestados, y un 9,4\% de manera híbrida. La modalidad de trabajo presencial, sin embargo, continuó siendo la forma más habitual de trabajo, con 71,4\%.
@@ -1389,7 +1389,7 @@ Aquellos que trabajaron de forma completa desde el hogar presentaron mayor prese
 
 }
 
-\caption{Porcentaje que presenta s<U+00ED>ntomas de depresi<U+00F3>n moderados a severos, seg<U+00FA>n trabajo remoto (2021)}\label{fig:depre-trabremoto}
+\caption{Porcentaje que presenta síntomas de depresión moderados a severos, según trabajo remoto (2021)}\label{fig:depre-trabremoto}
 \end{figure}
 
 Distintos estudios nacionales han reportado que los hogares chilenos se caracterizan por altos niveles de endeudamiento (Pérez-Roa 2020). Los resultados de la encuesta muestran que las personas que se sienten ``bastante'' o ``muy sobrecargados'' por deudas presentan consistentemente mayores niveles de síntomas depresivos moderados a severos. {[}Introducir valores{]}. Estudios previos han encontrado un efecto negativo del endeudamiento en la salud de las personas asociado a mayores niveles de ansiedad, estrés y estigmatización social (Sweet et al, 2013). Un estudio nacional mostró una mayor presencia de síntomas depresivos en personas con estados de deuda persistentes (Hojman et al, 2016).
@@ -1400,7 +1400,7 @@ Distintos estudios nacionales han reportado que los hogares chilenos se caracter
 
 }
 
-\caption{Porcentaje que posee deudas con..., seg<U+00FA>n ola}\label{fig:deudas}
+\caption{Porcentaje que posee deudas con..., según ola}\label{fig:deudas}
 \end{figure}
 
 Las medidas de protección financiera, el acceso a beneficios económicos y los programas de transferencia monetaria reducen la inseguridad económica y de este modo pueden contribuir a mitigar los impactos de la crisis económicas en el bienestar psicológico de la población (Stuckler \& Basu, 2013; Donnelly \& Farina, 2021; Wahlbeck \& McDaid, 2012). En efecto, los datos ELSOC nos muestran que que la prevalencia de síntomas depresivos moderados a severos se redujo en mayor medida entre quienes hicieron uso de ambos retiros (al momento del levantamiento se habían realizado solo 2 retiros), seguido por quienes hicieron sólo un retiro y, finalmente, de quienes no hicieron uso de ninguno de estos beneficios.
@@ -1411,7 +1411,7 @@ Las medidas de protección financiera, el acceso a beneficios económicos y los 
 
 }
 
-\caption{Porcentaje que presenta s<U+00ED>ntomas moderados a severos de depresi<U+00F3>n, seg<U+00FA>n sobrecarga de deudas}\label{fig:sobrecarga-depr}
+\caption{Porcentaje que presenta síntomas moderados a severos de depresión, según sobrecarga de deudas}\label{fig:sobrecarga-depr}
 \end{figure}
 
 \begin{figure}
@@ -1420,7 +1420,7 @@ Las medidas de protección financiera, el acceso a beneficios económicos y los 
 
 }
 
-\caption{Porcentaje que presenta s<U+00ED>ntomas moderados a severos de depresi<U+00F3>n, seg<U+00FA>n retiro de fondos de AFP en 2021}\label{fig:depr-retiros}
+\caption{Porcentaje que presenta síntomas moderados a severos de depresión, según retiro de fondos de AFP en 2021}\label{fig:depr-retiros}
 \end{figure}
 
 \hypertarget{covid---19}{%
@@ -1447,7 +1447,7 @@ La población que cuenta con nivel de educación universitaria es la que present
 
 }
 
-\caption{Porcentaje que ha sido diagnosticado y que conoce a alguien diagnosticado con COVID-19, seg<U+00FA>n nivel educacional (2021)}\label{fig:covid-diagnostico-educ}
+\caption{Porcentaje que ha sido diagnosticado y que conoce a alguien diagnosticado con COVID-19, según nivel educacional (2021)}\label{fig:covid-diagnostico-educ}
 \end{figure}
 
 Los resultados muestran que 79,2\% indica estar De acuerdo o Muy de acuerdo con la frase ``las cuarentenas estrictas son muy necesarias para resguardar la salud de la población,'' y solo un 13,8\% con ``es más importante darle prioridad a la actividad económica que a la salud de la población.'' Revelando que, a pesar de la larga duración de las cuarentenas implementadas en el país, y de las dificultades económicas que estas pueden haber generado, las personas señalan un alto grado de acuerdo con tomar medidas sanitarias estrictas, y de priorizarlas por sobre potenciales efectos económicos negativo.
@@ -1469,7 +1469,7 @@ Las personas de menor nivel educacional tienden a estar más de acuerdo con dar 
 
 }
 
-\caption{Porcentaje De acuerdo o Muy de acuerdo con medidas sanitarias, seg<U+00FA>n nivel educacional (2021)}\label{fig:temas-covid-educ}
+\caption{Porcentaje De acuerdo o Muy de acuerdo con medidas sanitarias, según nivel educacional (2021)}\label{fig:temas-covid-educ}
 \end{figure}
 
 Las personas reportan en general un alto apego a las medidas sanitarias: 78,7\% indica seguir Frecuente o Muy Frecuentemente la recomendación de quedarse en su hogar, manteniendo el aislamiento social. Se trata de resultados similares a lo encontrado en otras encuestas nacionales durante la pandemia (Termómetro social, MOVID-19).
@@ -1482,7 +1482,7 @@ A pesar de que el grado de cumplimiento de las medidas sanitarias es alto para t
 
 }
 
-\caption{<U+00BF>En qu<U+00E9> medida usted ha seguido la recomendaci<U+00F3>n de quedarse en su hogar, manteniendo el aislamiento social? (2021).}\label{fig:dist-total}
+\caption{¿En qué medida usted ha seguido la recomendación de quedarse en su hogar, manteniendo el aislamiento social? (2021).}\label{fig:dist-total}
 \end{figure}
 
 \begin{figure}
@@ -1491,7 +1491,7 @@ A pesar de que el grado de cumplimiento de las medidas sanitarias es alto para t
 
 }
 
-\caption{Porcentaje que sigue aislamiento social Frecuente o Muy frecuentemente, seg<U+00FA>n nivel educacional (2021)}\label{fig:dist-educ}
+\caption{Porcentaje que sigue aislamiento social Frecuente o Muy frecuentemente, según nivel educacional (2021)}\label{fig:dist-educ}
 \end{figure}
 
 Las personas que reportan un mayor cumplimiento de las medidas de aislamiento social son quienes presentan menores niveles de diagnóstico de COVID-19.
@@ -1502,7 +1502,7 @@ Las personas que reportan un mayor cumplimiento de las medidas de aislamiento so
 
 }
 
-\caption{Porcentaje que ha sido diagnosticado con COVID, seg<U+00FA>n cumplimiento de aislamiento social (2021)}\label{fig:covid-dist}
+\caption{Porcentaje que ha sido diagnosticado con COVID, según cumplimiento de aislamiento social (2021)}\label{fig:covid-dist}
 \end{figure}
 
 \hypertarget{cohesiuxf3n-social}{%
@@ -1521,7 +1521,7 @@ En este sentido, en la Figura \ref{fig:confli-olas} podemos ver los cambios en l
 
 }
 
-\caption{Porcentaje que presenta Molestia o incomodidad por problemas con sus vecinos, seg<U+00FA>n ola de estudio }\label{fig:confli-olas}
+\caption{Porcentaje que presenta Molestia o incomodidad por problemas con sus vecinos, según ola de estudio }\label{fig:confli-olas}
 \end{figure}
 
 A su vez, en la Figura \ref{fig:confli-cambio} podemos observar que, aunque los porcentajes de personas que reportan distintos niveles de conflicto no cambian considerablemente entre 2019 y 2021, si existen personas que cambian sus percepciones individuales de conflicto con sus vecinos en distintas direcciones, sea esto para menores niveles de conflicto pero también para niveles de conflicto más elevados. Por ejemplo, algunas personas que antes reportaban haber tenido ``pocos o algunos'' conflictos con vecinos, el año 2021 reportan ``nunca'' haberlos tenido, mientras que bastantes personas que habían reportado ``nunca'' haber tenido conflictos, en 2021 si reportan haberse sentido molestos o incomodados por problemas con sus vecinos ``pocas o algunas veces.'' Finalmente, del 10.3\% de las personas que en 2019 reportaron tener problemas ``muchas veces o siempre'' con sus vecinos, cerca de la mitad reportan en 2021 una disminución de estos para ``pocas o algunas veces.''
@@ -1543,7 +1543,7 @@ En relación a la frecuencia de conflictos barriales, según la Figura \ref{fig:
 
 }
 
-\caption{Porcentaje con alta frecuencia de conflictos barriales, seg<U+00FA>n ola del estudio y zona geogr<U+00E1>fica}\label{fig:confli-zona}
+\caption{Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona geográfica}\label{fig:confli-zona}
 \end{figure}
 
 Por otro lado, según la Figura \ref{fig:confli-estrato}, el porcentaje de personas que reporta tener conflictos barriales ``muchas veces o siempre,'' baja de un 17.5\% a un 14,0\% en la Región Metropolitana, un patrón similar al Gran Valparaíso donde el porcentaje también baja de un 9.0\% a un 7.2\% entre el año 2019 y el año 2021. Por otro lado, en el Gran Concepción, se registra un aumento de conflictos barriales frecuentes de un 4.1\% a 6.5\% , mientras en Ciudades Medianas,también hay un aumento de conflictos barriales de un 8.1\% a 13.8\% entre 2019 y 2021.
@@ -1554,7 +1554,7 @@ Por otro lado, según la Figura \ref{fig:confli-estrato}, el porcentaje de perso
 
 }
 
-\caption{Porcentaje con alta frecuencia de conflictos barriales, seg<U+00FA>n ola del estudio y zona de residencia}\label{fig:confli-estrato}
+\caption{Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y zona de residencia}\label{fig:confli-estrato}
 \end{figure}
 
 Finalmente, en la Figura \ref{fig:confli-quintil} se puede observar que el porcentaje de conflictos barriales es superior en el Quintil 1 de ingresos en comparación con los demás quintiles, siendo que un 17,0\% de este Quintil reporta tener conflictos ``muchas veces o siempre'' en 2019 y un 16,7\% en 2021. Es, además, el que se mantiene más estable. Entre 2019 y 2021 existe un decrecimiento de conflictos barriales en los Quintiles 2 y 3 de ingresos, al pasar de 13,3\% y 12,4\%, a 7,1\% y 8,1\%, respectivamente. En contraposición, los Quintiles 4 y 5 aumentan su frecuencia de conflictos barriales.
@@ -1565,7 +1565,7 @@ Finalmente, en la Figura \ref{fig:confli-quintil} se puede observar que el porce
 
 }
 
-\caption{Porcentaje con alta frecuencia de conflictos barriales, seg<U+00FA>n ola del estudio y quintil de ingreso}\label{fig:confli-quintil}
+\caption{Porcentaje con alta frecuencia de conflictos barriales, según ola del estudio y quintil de ingreso}\label{fig:confli-quintil}
 \end{figure}
 
 \hypertarget{confianza-en-vecinos}{%
@@ -1582,7 +1582,7 @@ En esta línea, en la Figura \ref{fig:vecinos-ola} se puede observar una progres
 
 }
 
-\caption{Confianza en vecinos, seg<U+00FA>n ola de estudio.}\label{fig:vecinos-ola}
+\caption{Confianza en vecinos, según ola de estudio.}\label{fig:vecinos-ola}
 \end{figure}
 
 \begin{figure}
@@ -1591,7 +1591,7 @@ En esta línea, en la Figura \ref{fig:vecinos-ola} se puede observar una progres
 
 }
 
-\caption{Confianza en vecinos, seg<U+00FA>n sexo y ola del estudios}\label{fig:confvecinos-sexo}
+\caption{Confianza en vecinos, según sexo y ola del estudios}\label{fig:confvecinos-sexo}
 \end{figure}
 
 \begin{figure}
@@ -1600,7 +1600,7 @@ En esta línea, en la Figura \ref{fig:vecinos-ola} se puede observar una progres
 
 }
 
-\caption{Confianza en vecinos, seg<U+00FA>n zona geogr<U+00E1>fica y ola del estudios}\label{fig:vecinos-zona}
+\caption{Confianza en vecinos, según zona geográfica y ola del estudios}\label{fig:vecinos-zona}
 \end{figure}
 
 Un elemento importante a resaltar es como la confianza entre vecinos se va diferenciando temporalmente por quintiles de ingreso (Ver Figura \ref{fig:vecinos-quintil}). Si bien, el 2016 el quintil de más altos ingresos (Q5) con el de más bajos ingresos (Q1) obtienen porcentajes cercanos de confianza en los vecinos, se van distanciando en la medida de que avanza el tiempo. Por un lado los sectores de mayores ingresos van aumentando su confianza desde el 50,4\% el 2016 hasta llegar al 59,1\% para el 2021. Por otro lado los sectores de menores ingresos si bien entre 2016 y 2019 tienden a mantenerse relativamente estable alrededor del 42\%, para el 2021 este porcentaje desciende al 37,2\%. Estos resultados, como veremos más adelante, estarían indicando de un proceso de desigualdad que se va acumulando en la sociabilidad barrial (Mendez, et al.~2021).
@@ -1611,7 +1611,7 @@ Un elemento importante a resaltar es como la confianza entre vecinos se va difer
 
 }
 
-\caption{Confianza en vecinos, seg<U+00FA>n quintil de ingresos y ola del estudio}\label{fig:vecinos-quintil}
+\caption{Confianza en vecinos, según quintil de ingresos y ola del estudio}\label{fig:vecinos-quintil}
 \end{figure}
 
 \hypertarget{vinculaciuxf3n-de-elsoc-a-indicadores-territoriales}{%
@@ -1638,7 +1638,7 @@ Este resultado es consistente con estudios previos que muestran que la cohesión
 
 }
 
-\caption{Confianza en los vecinos, seg<U+00FA>n quintil de  escolaridad}\label{fig:confianzaveci-quintilesc}
+\caption{Confianza en los vecinos, según quintil de  escolaridad}\label{fig:confianzaveci-quintilesc}
 \end{figure}
 
 Cuando se analiza a los encuestados ELSOC según la proporción de inmigrantes en la zona censal de residencia, se observa que una mayor tasa de inmigración en el barrio se asocia a niveles más bajos de confianza con los vecinos. Aquellos que residen en zonas con la menor tasa de inmigracción (Q1) exhiben un 38,5\% de encuestados que confía bastante o mucho. En contraste, aquellos residentes en barrios con las más altas tasas de inmigración (Q5) exhiben un 32,9\% de personas que confía bastante o mucho en sus vecinos.
@@ -1651,7 +1651,7 @@ Este resultado sugiere analizar los mecanismos de integración social de inmigra
 
 }
 
-\caption{Confianza en los vecinos, seg<U+00FA>n quintil de proporci<U+00F3>n de inmigrantes}\label{fig:confianzaveci-quintilinm}
+\caption{Confianza en los vecinos, según quintil de proporción de inmigrantes}\label{fig:confianzaveci-quintilinm}
 \end{figure}
 
 \hypertarget{frecuencia-de-visita-a-vecinos}{%
@@ -1670,7 +1670,7 @@ La Figura \ref{fig:frecvisitavecinos-ola} presenta la dinámica en la frecuencia
 
 }
 
-\caption{Frecuencia de visita a vecinos, seg<U+00FA>n ola de estudio}\label{fig:frecvisitavecinos-ola}
+\caption{Frecuencia de visita a vecinos, según ola de estudio}\label{fig:frecvisitavecinos-ola}
 \end{figure}
 
 Respecto a diferencias de género en interacciones sociales barriales, la Figura \ref{fig:frecvisita-sexo} muestra que, en todos los periodos previos a la pandemia por covid19 las mujeres exhiben un mayor porcentaje que visita a sus vecinos al menos una vez, respecto a los hombres. Para ellas, el porcentaje se mantuvo estable alrededor del 70\% previo al 2020. Sin embargo, se redujo significativamente en 2021, alcanzando un 53\%.
@@ -1683,7 +1683,7 @@ Por su parte, los hombres también disminuyeron el porcentaje que realiza visita
 
 }
 
-\caption{Frecuencia de visita vecinos, seg<U+00FA>n sexo}\label{fig:frecvisita-sexo}
+\caption{Frecuencia de visita vecinos, según sexo}\label{fig:frecvisita-sexo}
 \end{figure}
 
 El análisis territorial sobre la frecuencia de las interacciones sociales barriales según zonas del país, da cuenta de porcentajes similares de encuestados que visitan a sus vecinos al menos una vez al año, en el Gran Santiago, Gran Concepción y ciudades pequeñas. Solo desde 2019 en adelante las tendencias de las distintas zonas comienzan a mostrar diferencias entre sí, además de una disminución general de personas que visita a sus vecinos.
@@ -1696,7 +1696,7 @@ En efecto, en ciudades pequeñas el porcentaje que visita a sus vecinos disminuy
 
 }
 
-\caption{Frecuencia de visita vecinos, seg<U+00FA>n estrato}\label{fig:frecvisita-zona}
+\caption{Frecuencia de visita vecinos, según estrato}\label{fig:frecvisita-zona}
 \end{figure}
 
 Al desagregar la frecuencia de visitas a vecinos según quintiles de ingreso, se observa que, sistemáticamente, el quintil de mayores ingresos (Q5) presenta un mayor porcentaje de personas que visita a sus vecinos el menos una vez al año respecto al quintil de menores ingresos (Q1). Asimismo, se observa que la brecha entre ambos grupos se incrementó a partir de 2019. Se extrae de la Figura \ref{fig:frecvisita-quintil} una brecha de 6 puntos porcentuales a favor de Q5 en 2016, la cual aumenta a 10.4 puntos porcentuales en 2021.
@@ -1722,7 +1722,7 @@ El grupo clasificado en el primer quintil de escolaridad promedio del barrio de 
 
 }
 
-\caption{Frecuencia de visita vecinos seg<U+00FA>n quintil de  escolaridad}\label{fig:frecvisita-quintilesc}
+\caption{Frecuencia de visita vecinos según quintil de  escolaridad}\label{fig:frecvisita-quintilesc}
 \end{figure}
 
 Adicionalmente, al vincular la tasa de inmigración en el barrio de residencia desde el censo 2017 del INE y construir quintiles según esta variable, se observa que aquellos encuestados con la mayor tasa de inmigración (Q5) presentan el menor porcentaje que visita a sus vecinos (65.7\%). Este porcentaje es menor a los exhibidos por encuestados que residen en zonas con menores tasas de inmigrantes, como el Q3 y el Q1 que presentan un 70.3\% y 68.6\%, respectivamente.
@@ -1733,7 +1733,7 @@ Adicionalmente, al vincular la tasa de inmigración en el barrio de residencia d
 
 }
 
-\caption{Frecuencia de visita a vecinos seg<U+00FA>n quintil de inmigrantes}\label{fig:frecvisita-quintilinm}
+\caption{Frecuencia de visita a vecinos según quintil de inmigrantes}\label{fig:frecvisita-quintilinm}
 \end{figure}
 
 \hypertarget{seguridad-barrial}{%
@@ -1749,7 +1749,7 @@ La Figura \ref{fig:seguri-ola} muestra una tendencia decreciente en el porcentaj
 
 }
 
-\caption{Sensaci<U+00F3>n de seguridad del barrio o vecindario, seg<U+00FA>n ola del estudio.}\label{fig:seguri-ola}
+\caption{Sensación de seguridad del barrio o vecindario, según ola del estudio.}\label{fig:seguri-ola}
 \end{figure}
 
 Desde una perspectiva territorial, a lo largo de todo el periodo analizado es la Región Metropolitana la zona que sistemáticamente mantiene los mayores porcentajes de encuestados que se sienten inseguros o muy inseguros en su barrio. En la última ronda se observa un aumento de este porcentaje de 24.1\% en 2019 a 28.3\% en 2021.
@@ -1764,7 +1764,7 @@ En las zonas Centro y Sur también se observa una tendencia decreciente en el po
 
 }
 
-\caption{Sensaci<U+00F3>n de inseguridad del barrio o vecindario de residencia, seg<U+00FA>n ola del estudio y zona geogr<U+00E1>fica}\label{fig:seguri-zona}
+\caption{Sensación de inseguridad del barrio o vecindario de residencia, según ola del estudio y zona geográfica}\label{fig:seguri-zona}
 \end{figure}
 
 En cuanto a la seguridad percibida en el barrio según educación, en la Figura \ref{fig:seguri-educ} se observa que son los encuestados con educación Universitaria quienes más reducen su porcentaje de quienes se sienten inseguros o muy inseguros a lo largo del periodo, desde 21.4\% en 2016 a 8.1\% en 2021. Otros grupos, con menores niveles educativos se mantuvieron o aumentaron este porcentaje entre estallido social (2019) y pandemia por covid19 (2021). Este resultado es consistente con la teoría y estudios empíricos que señalan a la educación superior como factor protector, ya que, permite hacer frente a shocks negativos, como la pandemia por covid19 y su consecuente crisis económica (Delaney y Devereux, 2019)
@@ -1775,7 +1775,7 @@ En cuanto a la seguridad percibida en el barrio según educación, en la Figura 
 
 }
 
-\caption{Sensaci<U+00F3>n de inseguridad del barrio o vecindario de residencia, seg<U+00FA>n ola del estudio y nivel educacional}\label{fig:seguri-educ}
+\caption{Sensación de inseguridad del barrio o vecindario de residencia, según ola del estudio y nivel educacional}\label{fig:seguri-educ}
 \end{figure}
 
 La seguridad subjetiva en el barrio también varía según grupos de edad. Desde 2017, los adultos mayores con 65 años o más presentan el menor porcentaje de encuestados que se siente inseguro o muy inseguro en su barrio, respecto a grupos de menor edad. Además, es el único grupo etario que mantiene la tendencia decreciente durante todo el periodo, desde 21.6\% en 2016 a 12.1\% en 2021 (Figura \ref{fig:seguri-edad}).
@@ -1786,7 +1786,7 @@ La seguridad subjetiva en el barrio también varía según grupos de edad. Desde
 
 }
 
-\caption{Sensaci<U+00F3>n de inseguridad del barrio o vecindario de residencia, seg<U+00FA>n ola del estudio y tramo de edad}\label{fig:seguri-edad}
+\caption{Sensación de inseguridad del barrio o vecindario de residencia, según ola del estudio y tramo de edad}\label{fig:seguri-edad}
 \end{figure}
 
 Al analizar la seguridad subjetiva que reportan los encuestados respecto a su barrio de residencia, según quintiles de ingreso, la Figura \ref{fig:seguri-quintil} muestra una tendencia decreciente en el porcentaje que señala sentirse inseguro o muy inseguro
@@ -1797,7 +1797,7 @@ Al analizar la seguridad subjetiva que reportan los encuestados respecto a su ba
 
 }
 
-\caption{Sensaci<U+00F3>n de inseguridad del barrio o vecindario de residencia, seg<U+00FA>n ola del estudio y quintil de ingreso del hogar}\label{fig:seguri-quintil}
+\caption{Sensación de inseguridad del barrio o vecindario de residencia, según ola del estudio y quintil de ingreso del hogar}\label{fig:seguri-quintil}
 \end{figure}
 
 \hypertarget{criminalidad-barrial}{%
@@ -1812,7 +1812,7 @@ El porcentaje que declara que ocurren crímenes muchas veces o siempre en el bar
 
 }
 
-\caption{<U+00BF>Con qu<U+00E9> frecuencia se han producido cr<U+00ED>menes (ri<U+00F1>as, robos y tr<U+00E1>fico de drogas) en su barrio?, seg<U+00FA>n ola de estudio.}\label{fig:crim-olas}
+\caption{¿Con qué frecuencia se han producido crímenes (riñas, robos y tráfico de drogas) en su barrio?, según ola de estudio.}\label{fig:crim-olas}
 \end{figure}
 
 Al desagregar la frecuencia de ocurrencia de crímenes en el barrio según zonas del territorio nacional se observa un significativo aumento del porcentaje que declara que los crímenes en su barrio ocurren siempre o muchas veces en la zona Sur, esto es, un incremento desde 6.4\% a 31.0\% entre 2019 y 2021. En contraste, en las zonas Norte, Centro y Metropolitana, este porcentaje disminuyó (Figura \ref{fig:crim-zona}).
@@ -1823,7 +1823,7 @@ Al desagregar la frecuencia de ocurrencia de crímenes en el barrio según zonas
 
 }
 
-\caption{<U+00BF>Con qu<U+00E9> frecuencia se han producido cr<U+00ED>menes (ri<U+00F1>as, robos y tr<U+00E1>fico de drogas) en su barrio?, seg<U+00FA>n ola del estudio y zona geogr<U+00E1>fica}\label{fig:crim-zona}
+\caption{¿Con qué frecuencia se han producido crímenes (riñas, robos y tráfico de drogas) en su barrio?, según ola del estudio y zona geográfica}\label{fig:crim-zona}
 \end{figure}
 
 El análisis territorial por grandes ciudades indica que el porcentaje de encuestados declarando que los crímenes en su barrio ocurren siempre o muchas veces ha disminuido en el Gran Santiago, Gran Valparaíso y Gran Concepción entre el 2019 y 2021. Sin embargo, el Gran Santiago sigue siendo el territorio con el mayor porcentaje de personas que declaran esta alta frecuencia de crímenes barriales, alcanzando un 36.6\% en 2021.
@@ -1836,7 +1836,7 @@ En otros territorios del país, tales como, ciudades grandes, medianas y pequeñ
 
 }
 
-\caption{<U+00BF>Con qu<U+00E9> frecuencia se han producido cr<U+00ED>menes (ri<U+00F1>as, robos y tr<U+00E1>fico de drogas) en su barrio?, seg<U+00FA>n ola del estudio y tipo de ciudad}\label{fig:crim-estrato}
+\caption{¿Con qué frecuencia se han producido crímenes (riñas, robos y tráfico de drogas) en su barrio?, según ola del estudio y tipo de ciudad}\label{fig:crim-estrato}
 \end{figure}
 
 El nivel de ingresos está asociado al nivel de seguridad en el barrio, ya que, zonas con más recursos posibilitan una mejor coordinación entre vecinos y la instalación de más y mejores elementos preventivos que disminuyen la victimización (Di Tella, Galiani y Schargrodsky, 2010).
@@ -1849,7 +1849,7 @@ Los resultados de ELSOC sugieren que, efectivamente, el quintil de ingresos de l
 
 }
 
-\caption{<U+00BF>Con qu<U+00E9> frecuencia se han producido cr<U+00ED>menes (ri<U+00F1>as, robos y tr<U+00E1>fico de drogas) en su barrio?, seg<U+00FA>n ola del estudio y quintil de ingreso}\label{fig:crim-quintil}
+\caption{¿Con qué frecuencia se han producido crímenes (riñas, robos y tráfico de drogas) en su barrio?, según ola del estudio y quintil de ingreso}\label{fig:crim-quintil}
 \end{figure}
 
 \hypertarget{migraciuxf3n}{%
@@ -1869,7 +1869,7 @@ Tal como se observa en la figura \ref{fig:amen1-wave}, primero llama la atenció
 
 }
 
-\caption{Con la llegada de migrantes a Chile, est<U+00E1> aumentando el desempleo", seg<U+00FA>n ola y origen de migrantes}\label{fig:amen1-wave}
+\caption{Con la llegada de migrantes a Chile, está aumentando el desempleo", según ola y origen de migrantes}\label{fig:amen1-wave}
 \end{figure}
 
 Al analizar los niveles de amenaza realista a lo largo del tiempo en distintas zonas geográficas del país (ver figura \ref{fig:amen1-zona}), se constata que el efecto del incremento en el caso de los migrantes peruanos fue particularmente pronunciado en las regiones del centro y metropolitana, y en la región sur-austral. De igual manera la mayor caída de los niveles de amenaza, en el caso de los venezolanos, en la zona sur-austral pasando de 71.1\% un a un 38.2\%
@@ -1880,7 +1880,7 @@ Al analizar los niveles de amenaza realista a lo largo del tiempo en distintas z
 
 }
 
-\caption{Con la llegada de migrantes a Chile, est<U+00E1> aumentando el desempleo", seg<U+00FA>n ola, zona y origen de migrantes}\label{fig:amen1-zona}
+\caption{Con la llegada de migrantes a Chile, está aumentando el desempleo", según ola, zona y origen de migrantes}\label{fig:amen1-zona}
 \end{figure}
 
 Respecto de los niveles de amenaza simbólica, en primer lugar llama la atención, que en términos absolutos ésta es más baja que los niveles de amenaza realista. Con excepción del año 2021, en que los niveles aumentan para el caso de los migrantes haitianos y peruanos, en general los niveles de amenaza simbólica han tendido a la baja. Por último, al igual que en el caso de la amenaza realista, los chilenos exhiben menores niveles de amenaza simbólica hacia los venezolanos.
@@ -1891,7 +1891,7 @@ Respecto de los niveles de amenaza simbólica, en primer lugar llama la atenció
 
 }
 
-\caption{"Con la llegada de migrantes, Chile est<U+00E1> perdiendo su identidad", seg<U+00FA>n ola y origen de migrantes}\label{fig:amen2-wave}
+\caption{"Con la llegada de migrantes, Chile está perdiendo su identidad", según ola y origen de migrantes}\label{fig:amen2-wave}
 \end{figure}
 
 Al analizar los niveles de amenaza simbólica a lo largo del tiempo en distintas zonas geográficas del país (ver figura \ref{fig:amen2-zona}), se constata una caída muy sustantiva de los niveles de amenaza entre el 2016 y el 2019 hacia los peruanos en el caso de la zona norte y centro sur. Aún así, este patrón se revierte en el caso de los peruano (en todas las zonas) y en menor medida en el caso de los haitianos en todas las zonas del país excepto en la zona sur/austral.
@@ -1902,7 +1902,7 @@ Al analizar los niveles de amenaza simbólica a lo largo del tiempo en distintas
 
 }
 
-\caption{"Con la llegada de migrantes, Chile est<U+00E1> perdiendo su identidad", seg<U+00FA>n ola, zona y origen de migrantes}\label{fig:amen2-zona}
+\caption{"Con la llegada de migrantes, Chile está perdiendo su identidad", según ola, zona y origen de migrantes}\label{fig:amen2-zona}
 \end{figure}
 
 Al analizar, los niveles de amenaza realista y simbólica para la quinta ola (año 2021) se observa que en general son los migrantes venezolanos quienes despiertan menores niveles de amenaza en la población chilena, en comparación a los migrantes haitianos y peruanos (ver Figura \ref{fig:amen-2021}).
@@ -1913,7 +1913,7 @@ Al analizar, los niveles de amenaza realista y simbólica para la quinta ola (a�
 
 }
 
-\caption{Percepci<U+00F3>n de amenaza realista y simb<U+00F3>lica, seg<U+00FA>n grupo de migrantes (2021)}\label{fig:amen-2021}
+\caption{Percepción de amenaza realista y simbólica, según grupo de migrantes (2021)}\label{fig:amen-2021}
 \end{figure}
 
 Al analizar los niveles de amenaza en función de la escolaridad de los participantes del estudio (ver Figura \ref{fig:amen-educ}), se constataron diferencias muy sustantivas entre los niveles más bajos de escolaridad y los más altos, llegando en torno a un 60,6\% y 71,3\% de amenaza simbólica y realista respectivamente en los grupos con menor escolaridad (educación básica) en comparación a los niveles observados en las personas que lograron educación universitaria completa o más, con un 19,1\% y 25,6\% amenaza simbólica y realista respectivamente.
@@ -1924,7 +1924,7 @@ Al analizar los niveles de amenaza en función de la escolaridad de los particip
 
 }
 
-\caption{Percepci<U+00F3>n de amenaza realista y simb<U+00F3>lica respecto a inmigrantes, seg<U+00FA>n nivel educacional (2021)}\label{fig:amen-educ}
+\caption{Percepción de amenaza realista y simbólica respecto a inmigrantes, según nivel educacional (2021)}\label{fig:amen-educ}
 \end{figure}
 
 Finalmente, al comparar los niveles de amenaza en función de la edad de los participantes, se puede observar que a medida que aumenta la edad también aumentan de manera sustantiva los niveles de amenaza tanto realista como simbólica (ver Figura \ref{fig:amen-edad}). Personas entre 18 y 29 años exhiben un 33,9\% de amenaza realista, mientras que las personas mayores de 65 años exhiben un 63\% de este tipo de amenaza. Un patrón similar se observa para el caso de la amenaza simbólica (temor a perder la identidad nacional), donde personas entre 18 y 29 años exhiben un 25,9\% de amenaza simbólica, mientras que las persona mayores de 65 años exhiben un 53\% de este tipo de amenaza.
@@ -1935,7 +1935,7 @@ Finalmente, al comparar los niveles de amenaza en función de la edad de los par
 
 }
 
-\caption{Percepci<U+00F3>n de amenaza realista y simb<U+00F3>lica, seg<U+00FA>n tramo de edad (2021)}\label{fig:amen-edad}
+\caption{Percepción de amenaza realista y simbólica, según tramo de edad (2021)}\label{fig:amen-edad}
 \end{figure}
 
 Junto con evaluar los niveles de amenaza percibida realista y simbólica, ELSOC evaluó los niveles de confianza que despiertan en la población chilena los grupos migrantes evaluados. Tal como se puede apreciar en la Figura \ref{fig:conf-wave}, los chilenos exhiben en general niveles relativamente bajos de confianza hacia los peruanos, venezolanos y haitianos (en torno al 25\%) no observándose mayores variaciones entre los distintos grupos a lo largo del tiempo excepto en la última ola donde la confianza cae para todos los grupos (mayor desconfianza).
@@ -1946,7 +1946,7 @@ Junto con evaluar los niveles de amenaza percibida realista y simbólica, ELSOC 
 
 }
 
-\caption{Confianza en migrantes, seg<U+00FA>n ola y origen de migrantes}\label{fig:conf-wave}
+\caption{Confianza en migrantes, según ola y origen de migrantes}\label{fig:conf-wave}
 \end{figure}
 
 Al desagregar los niveles de confianza según zona geográfica (Figura \ref{fig:conf-zona}), se constata en primer lugar que en las zonas centro/región metropolitana y centro /sur se exhiben niveles establemente más bajos de confianza hacia todos los grupos migrantes, con una tendencia a una mayor caída especialmente en la RM. Contrario a este patrón, en la zona norte y austral se observan importantes variaciones a lo largo de los años y entre los grupos migrantes. Por ejemplo, es en la zona norte y austral donde se observan los niveles de mayor confianza en el caso de los peruanos pero con muchas fluctuaciones a lo largo de los años.
@@ -1957,7 +1957,7 @@ Al desagregar los niveles de confianza según zona geográfica (Figura \ref{fig:
 
 }
 
-\caption{Confianza en migrantes, seg<U+00FA>n ola, zona y origen de migrantes}\label{fig:conf-zona}
+\caption{Confianza en migrantes, según ola, zona y origen de migrantes}\label{fig:conf-zona}
 \end{figure}
 
 \hypertarget{sexismo-hostil-y-benevolente}{%
@@ -1975,7 +1975,7 @@ Al analizar los niveles de sexismo en función de la escolaridad de los particip
 
 }
 
-\caption{Sexismo ben<U+00E9>volo y hostil, seg<U+00FA>n sexo (2021).}\label{fig:sexismo-sexo}
+\caption{Sexismo benévolo y hostil, según sexo (2021).}\label{fig:sexismo-sexo}
 \end{figure}
 
 \begin{figure}
@@ -1984,7 +1984,7 @@ Al analizar los niveles de sexismo en función de la escolaridad de los particip
 
 }
 
-\caption{Sexismo ben<U+00E9>volo y hostil, seg<U+00FA>n nivel educacional (2021)}\label{fig:sexismo-educ}
+\caption{Sexismo benévolo y hostil, según nivel educacional (2021)}\label{fig:sexismo-educ}
 \end{figure}
 
 \hypertarget{estatus-subjetivo-y-percepciuxf3n-de-muxe9rito}{%
@@ -2004,7 +2004,7 @@ Como se puede observar en la figura \ref{fig:ess-ola}, que resume el resultado d
 
 }
 
-\caption{Clase social subjetiva, seg<U+00FA>n ola de estudio}\label{fig:ess-ola}
+\caption{Clase social subjetiva, según ola de estudio}\label{fig:ess-ola}
 \end{figure}
 
 Al analizar los cambios del estatus social subjetivo entre olas, primero se constata que la mayoría de las personas que consideran pertenecer a la clase social media, tienden a mantenerse en la misma posición a lo largo de los años. Segundo, entre 2016 y 2019 se observa un importante flujo de cambio en el estatus subjetivo hacia abajo (de posición social alto hacia media y de posición social media hacía posición social baja), mientras que entre 2019 y 2021 el flujo de cambios en el estatus subjetivo se produce hacia arriba (de posición social baja hacia media y de posición social media hacía posición social alta). Tercero, es importante constatar que los cambios en el estatus subjetivo ocurren entre las posiciones cercanas, es decir, son muy pocos los casos en que se observan cambios entre extremos de la posición social subjetiva. Finalmente, es importante destacar que el grupo de personas que más experimenta cambios a lo largo del tiempo, y de manera ascendente, son aquellas que declaran pertenecer a clases sociales bajas y media baja.
@@ -2026,7 +2026,7 @@ Al analizar la percepción de estatus subjetivo en función de los niveles de in
 
 }
 
-\caption{Clase social subjetiva, seg<U+00FA>n quintiles de ingreso (2021)}\label{fig:ess-quintil}
+\caption{Clase social subjetiva, según quintiles de ingreso (2021)}\label{fig:ess-quintil}
 \end{figure}
 
 Al analizar la expectativa de movilidad social que los participantes de ELSOC tienen respecto de sus hijos en el futuro (ver Figura \ref{fig:esshijos-ess}), se constata una fuerte relación entre la percepción de clase social subjetiva declarada por los chilenos/as y la que proyectan para sus hijos/as. De esta manera, las personas que en la quinta ola perciben pertenecer a una clase social baja o media baja, piensan que un 44,1\% de sus hijos pertenecerán en el futuro a una clase social media alta y alta. Este porcentaje aumenta muy sustantivamente llegando a un 68,4 \% en el caso de quienes se perciben como de clase media y se empina a un 95,4\% en el caso de las personas que piensan que ellas pertenecen a las clase social media alta y alta.
@@ -2037,7 +2037,7 @@ Al analizar la expectativa de movilidad social que los participantes de ELSOC ti
 
 }
 
-\caption{Si usted tiene actualmente hijos o si los tuviera en el futuro, <U+00BF>d<U+00F3>nde cree usted que se ubicar<U+00ED>an ellos?, seg<U+00FA>n Clase social subjetiva (2021)}\label{fig:esshijos-ess}
+\caption{Si usted tiene actualmente hijos o si los tuviera en el futuro, ¿dónde cree usted que se ubicarían ellos?, según Clase social subjetiva (2021)}\label{fig:esshijos-ess}
 \end{figure}
 
 Al analizar la perspectiva de movilidad social medida como la diferencia entre el estatus social esperado para los hijos/as en el futuro y el que perciben los encuestas de sí mismos (ver Figura \ref{fig:mov-soc-rec}), se puede observar de manera sistemática a lo largo de las 5 olas del estudio que existe consensualmente una alta perspectiva de movilidad social ascendente en los chilenos/as (fluctuando entre un 78,5\% en 2016 y un 74,8\% en el 2021). En torno a un 20\% de los participantes percibe inmovilidad social y un porcentaje menor de toda la muestra percibe movilidad descendente. Los resultados revelan en su conjunto las altas expectativas de movilidad social que la población chilena tiene de las futuras generaciones.
@@ -2048,7 +2048,7 @@ Al analizar la perspectiva de movilidad social medida como la diferencia entre e
 
 }
 
-\caption{Perspectiva de movilidad social, seg<U+00FA>n ola}\label{fig:mov-soc-rec}
+\caption{Perspectiva de movilidad social, según ola}\label{fig:mov-soc-rec}
 \end{figure}
 
 El ideal meritocrático, entendido como la creencia de que las personas son recompensadas por el esfuerzo, ha sido un tema de alto interés en los años recientes. Como se observa en la figura \ref{fig:merit-wave}, los chilenos consideran que para surgir en la vida sones altamente relevantes aspectos como el trabajo duro y la educación, lo que se considera como adherencia al ideal meritocrático (Maldonado, et al., 2019).. En contraste, los chilenos consideran que las recompensas que reciben al por su esfuerzo y por su inteligencia son más bien bajas. Es interesante constatar lo estable de este patrón a lo largo del tiempo, en donde se observan pequeñas fluctuaciones en los distintos años de ELSOC. Esto revela una alta adherencia al ideal meritocrático, reflejado en la idea de que las personas deberían ser recompensadas por su trabajo duro, en contraste con una menor percepción de que esto ocurre.
@@ -2059,7 +2059,7 @@ El ideal meritocrático, entendido como la creencia de que las personas son reco
 
 }
 
-\caption{Percepci<U+00F3>n de importancia y recompensas del m<U+00E9>rito, seg<U+00FA>n ola de estudio}\label{fig:merit-wave}
+\caption{Percepción de importancia y recompensas del mérito, según ola de estudio}\label{fig:merit-wave}
 \end{figure}
 
 \hypertarget{referencias}{%
