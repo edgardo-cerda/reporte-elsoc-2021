@@ -604,6 +604,44 @@ tip_par %>%
 
 ```
 
+```{r tipos-educ2, fig.cap = 'Educación según perfil de participación'}
+
+# load(file.path('inputs', 'participacion_tipos5.RData'))
+# elsoc::load_elsoc('wide')
+
+tip_par %>% 
+  select(idencuesta, class_part_5, par_mov_w01, par_mov_w02, par_mov_w03, par_mov_w04, par_mov_w05, c11_w01, c11_w03, c43_w05) %>% 
+  left_join(elsoc_wide_2016_2021 %>% 
+              select(-starts_with(c('c11_', 'c43_'))), 
+            by = 'idencuesta') %>% 
+  filter(!is_nsnr(class_part_5, c15_w05))  %>%
+  drop_na(c("class_part_5", "c15_w05")) %>%
+  filter(tipo_atricion == 1) %>%
+   mutate(pos_id = factor(car::recode(m01_w05, recodes = "1:3 = 1; 4:5 = 2; 6:7 = 3; 8:10 = 4"),
+                   levels = 1:4,
+                   labels = c("Basica", "Media", "Tecnica", "Universitaria"))) %>%
+  filter(!is.na(pos_id)) %>% 
+  survey_design_elsoc(weights = 'ponderador02_w05') %>% 
+  prop(pos_id, by = class_part_5, na.rm = TRUE) %>% 
+  ggplot(aes(x = prop, y = fct_rev(class_part_5), fill = fct_rev(pos_id), 
+             label = scales::percent(ifelse(prop < .01, NA, prop), .1))) + 
+  geom_bar(stat = 'identity', position = 'stack') +
+  labs(y = NULL, x = NULL, title = NULL, fill = NULL) +
+  scale_x_continuous(labels = scales::percent) +
+  guides(fill = guide_legend(reverse = TRUE)) +
+  geom_text(position = position_stack(vjust = .5), 
+            size = 3, na.rm = TRUE,
+            color = rep(c('white', 'white', 'black', 'black'), 5)) +
+  theme_bw() + 
+  scale_fill_viridis_d(end = .85, direction = -1) +
+  theme(plot.caption = element_text(hjust = 0),
+        axis.text.x = element_text(size = rel(.9)),
+        legend.position = 'top',
+        legend.title = element_blank()) +
+  labs(caption = 'Fuente: Elaboración propia en base a datos ELSOC 2016-2021.\nNota: Se consideran observaciones de individuos sin atrición entre olas. N= 7.175 (1.435 individuos)')
+
+```
+
 
 La Figura \@ref(fig:tipos-interes2) indica que los grupos con menor interés en la política son los Desafectados e Institucionales, con un 79,1% y 70,1% de personas con nada o poco interés. A ello le siguen los Politizados y Reactivos, con un 45,1% y 44,4%, respectivamente. El grupo de Hiper-politizados es el que alcanza mayores niveles de interés, con un 62,8% de individuos muy o bastante interesados, seguido de los Reactivos y Politizados con un 27,3% y 25,6%. Este patrón resulta del todo relevante ya que confirma que en Chile las personas más politizadas expresan sus demandas y preocupaciones por los canales no institucionales, al tiempo que los menos politizados abiertamente no participan de ninguna instancia o si lo hacen emplean los canales formales.
 
